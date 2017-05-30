@@ -19,6 +19,6 @@ class StuffController extends BaseController
 
 	public function actionSettings()
 	{
-		return $this->renderTemplate('sprout-core/fields/email/_input', array());
+		return $this->renderTemplate('sprout-core/_index', array());
 	}
 }
