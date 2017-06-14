@@ -116,8 +116,8 @@ class Email extends Component
 		{
 			return Module::t($field->customPatternErrorMessage);
 		}
-		// Module::t($fieldName . ' must be a valid email.');
-		return Module::t('must be a valid email.');
+
+		return Module::t($fieldName . ' must be a valid email.');
 	}
 
 }

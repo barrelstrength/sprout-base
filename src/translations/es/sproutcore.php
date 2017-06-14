@@ -8,5 +8,5 @@
  * http://www.yiiframework.com/doc-2.0/guide-tutorial-i18n.html
  */
 return [
-    'must be a valid email.' => 'Debe ser un email valido',
+    'must be a valid email.' => 'Debe ser un email valido'
 ];
