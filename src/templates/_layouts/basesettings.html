@@ -1,0 +1,32 @@
+{% extends "_layouts/cp" %}
+
+{% set selectedSubnavItem = 'settings' %}
+
+{% set title = "Settings"|t %}
+{% set settings = plugin.getSettings() %}
+{% set navItems = settings.getSettingsNavItems() %}
+{% set selectedSettingsInfo = attribute(navItems, selectedSidebarItem) %}
+
+{% set sidebar %}
+
+    <nav>
+        <ul>
+            {% if navItems|length %}
+                {% for item in settings.getSettingsNavItems() %}
+                    {% if item.heading is defined and item.heading is not empty %}
+                        <li class="heading"><span>{{ item.heading }}</span></li>
+                    {% else %}
+                        <li>
+                            <a href="{{ url(item.url) }}"
+                               {% if selectedSidebarItem == item.selected %}class="sel"{% endif %}>
+                                {{ item.label }}
+                            </a>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+        </ul>
+    </nav>
+
+{% endset %}
+

@@ -2,7 +2,6 @@
 
 namespace barrelstrength\sproutcore;
 
-use craft;
 use yii\base\Event;
 use craft\web\UrlManager;
 use craft\events\RegisterUrlRulesEvent;
@@ -10,6 +9,7 @@ use craft\web\View;
 use craft\events\RegisterTemplateRootsEvent;
 use craft\helpers\ArrayHelper;
 use craft\i18n\PhpMessageSource;
+use Craft;
 
 class Module extends \yii\base\Module
 {
@@ -65,6 +65,8 @@ class Module extends \yii\base\Module
 
 		$this->params['foo'] = 'bar';
 		// ...  other initialization code ...
+
+		Craft::setAlias('@sproutcore', $this->getBasePath());
 
 		// Register our base template path
 		Event::on(View::class, View::EVENT_REGISTER_CP_TEMPLATE_ROOTS, function(RegisterTemplateRootsEvent $e) {
