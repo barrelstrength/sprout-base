@@ -16,16 +16,17 @@ class Module extends \yii\base\Module
 	public $handle;
 
 	/**
-	 * @var string|null The translation category that this plugin’s translation messages should use. Defaults to the lowercased plugin handle.
+	 * @var string|null The translation category that this module translation messages should use. Defaults to the lowercased plugin handle.
 	 */
 	public $t9nCategory;
 
 	/**
-	 * @var string The language that the plugin’s messages were written in
+	 * @var string The language that the module messages were written in
 	 */
 	public $sourceLanguage = 'en-US';
 
 	/**
+	 * @todo - We copied from craft/base/plugin, ask to P&T if this is the best way to do it
 	 * @inheritdoc
 	 */
 	public function __construct($id, $parent = null, array $config = [])
