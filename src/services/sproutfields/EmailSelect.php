@@ -6,8 +6,6 @@ use craft\base\Field;
 use yii\base\Component;
 use craft\db\Query;
 
-use barrelstrength\sproutforms\integrations\sproutforms\fields\EmailSelect;
-
 class EmailSelect extends Component
 {
 	/**
