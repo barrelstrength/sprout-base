@@ -2,6 +2,9 @@
 
 namespace barrelstrength\sproutcore;
 
+use barrelstrength\sproutforms\integrations\sproutreports\datasources\SproutFormsEntriesDataSource;
+use barrelstrength\sproutreports\services\DataSources;
+use craft\events\RegisterComponentTypesEvent;
 use yii\base\Event;
 use craft\web\UrlManager;
 use craft\events\RegisterUrlRulesEvent;
@@ -78,6 +81,12 @@ class Module extends \yii\base\Module
 		Event::on(UrlManager::class, UrlManager::EVENT_REGISTER_CP_URL_RULES, function(RegisterUrlRulesEvent $event) {
 			$event->rules['sprout-settings'] = 'sprout-core/stuff/settings';
 			$event->rules['sprout-settings/<pluginName:.*>'] = 'sprout-core/stuff/settings';;
+		});
+
+		// Register DataSources for sproutReports plugin integration
+		Event::on(DataSources::class, DataSources::EVENT_REGISTER_DATA_SOURCES, function(RegisterComponentTypesEvent
+		                                                                                 $event) {
+			$event->types[] = new SproutFormsEntriesDataSource();
 		});
 	}
 
