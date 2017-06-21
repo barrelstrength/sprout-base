@@ -12,7 +12,7 @@ class SettingsController extends BaseController
 	public function actionEditSettings()
 	{
 		$pluginHandle = Craft::$app->getRequest()->getSegment(1);
-		$selectedSidebarItem = Craft::$app->getRequest()->getSegment(3);
+		$selectedSidebarItem = (Craft::$app->getRequest()->getSegment(3) == null)? 'general' : Craft::$app->getRequest()->getSegment(3);
 
 		$plugin = Craft::$app->getPlugins()->getPlugin($pluginHandle);
 

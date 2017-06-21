@@ -120,11 +120,7 @@ abstract class BaseDataSource
 	 */
 	final public function getPluginName()
 	{
-		$namespaces = explode('\\', __NAMESPACE__);
-
-		$pluginName = $namespaces[1];
-
-		$plugin = Craft::$app->getPlugins()->getPlugin($pluginName);
+		$plugin = Craft::$app->getPlugins()->getPlugin('sproutReports');
 
 		return $plugin->name;
 	}
