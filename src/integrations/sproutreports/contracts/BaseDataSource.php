@@ -39,7 +39,7 @@ abstract class BaseDataSource
 	 */
 	public function __construct()
 	{
-		$namespaces = explode('\\', __NAMESPACE__);
+		$namespaces = explode('\\', get_class($this));
 
 		$class = basename(get_class($this));
 

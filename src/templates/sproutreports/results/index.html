@@ -1,36 +1,12 @@
 {% extends "sproutreports/_layouts/base" %}
 
-{% set title  = report.name|t('sproutreports') %}
-{% set groups = craft.sproutreports.getReportGroups() %}
-
-{% set crumbs = [
-	{ label: "Reports"|t('sproutreports'), url: url('sproutreports/reports') },
-	{ label: "Edit "|t('sproutreports') ~ report.name, url: report.getEditUrl() }
-] %}
+{% set title  = 'sproutreports'|t %}
 
 {% set selectedTab = 'resultView' %}
 
 {% if dataSource is defined %}
 	{% set optionsHtml = dataSource.getOptionsHtml(options) %}
 {% endif %}
-
-{% set extraPageHeaderHtml %}
-
-  <form method="post" accept-charset="UTF-8">
-    {{ getCsrfInput() }}
-    <input type="hidden" name="action" value="sprout-reports/reports/export-report">
-    <input type="hidden" name="reportId" value="{{ reportId }}">
-
-    <a id="btn-download-csv" class="btn">
-	    {{ "Download"|t('sproutreports') }}
-    </a>
-
-		{% if currentUser.can('sproutreports-editReports') %}
-	    <a id="modify-options-icon" class="btn" data-icon="settings"></a>
-		{% endif %}
-  </form>
-
-{% endset %}
 
 {% block content %}
 
@@ -40,15 +16,12 @@
 
 			<form id="report-options" method="post" accept-charset="UTF-8">
 				{{ getCsrfInput() }}
-				<input type="hidden" name="action" value="sprout-reports/reports/update-report">
-				{{ redirectInput('sproutreports/reports/view/' ~ reportId) }}
-				<input type="hidden" name="reportId" value="{{ reportId }}">
-
+				<input type="hidden" name="action" value="/u">
 				{{ optionsHtml | raw }}
 
 				<div class="button">
 					<div class="btngroup">
-						<input type="submit" class="btn submit" value="{{ 'Update Report'|t('sproutreports') }}">
+						<input type="submit" class="btn submit" value="{{ 'Submit Report'|t('sproutreports') }}">
 					</div>
 				</div>
 
