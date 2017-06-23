@@ -92,9 +92,4 @@ class Module extends \yii\base\Module
 	{
 		return Craft::t('sproutcore', $message, $params);
 	}
-
-	public function sproutReports()
-	{
-		return 'cat';
-	}
 }
