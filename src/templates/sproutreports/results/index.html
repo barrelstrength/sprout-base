@@ -8,15 +8,24 @@
 	{% set optionsHtml = dataSource.getOptionsHtml(options) %}
 {% endif %}
 
+{% set extraPageHeaderHtml %}
+
+	{% if currentUser.can('sproutreports-editReports') %}
+		<a id="modify-options-icon" class="btn" data-icon="settings"></a>
+	{% endif %}
+
+{% endset %}
+
 {% block content %}
 
 	{% if optionsHtml %}
 
-		<div id="modify-options-panel" style="display:none;">
+		<div id="modify-options-panel">
 
 			<form id="report-options" method="post" accept-charset="UTF-8">
 				{{ getCsrfInput() }}
-				<input type="hidden" name="action" value="/u">
+				<input type="hidden" name="action" value="sprout-core/reports/results-index">
+				<input type="hidden" name="dataSourceId" value="{{ dataSource.getId() }}">
 				{{ optionsHtml | raw }}
 
 				<div class="button">
@@ -77,15 +86,6 @@
 {% includejs %}
 
 	(function(){
-
-		$('#btn-download-csv').on('click', function(event) {
-
-			event.preventDefault();
-
-            $form = $(this).parents('form');
-            $form.submit();
-
-		});
 
 		$('#modify-options-icon').on('click', function() {
 			$('#modify-options-panel').slideToggle('slow');

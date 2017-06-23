@@ -2,11 +2,13 @@
 namespace barrelstrength\sproutcore\controllers;
 
 use Craft;
+use craft\helpers\DateTimeHelper;
 use craft\web\assets\cp\CpAsset;
 use craft\web\Controller;
 use barrelstrength\sproutreports\SproutReports;
 use barrelstrength\sproutreports\models\Report;
 use barrelstrength\sproutreports\records\Report as ReportRecord;
+use GuzzleHttp\Promise\Promise;
 
 class ReportsController extends Controller
 {
@@ -14,20 +16,23 @@ class ReportsController extends Controller
 	{
 		$dataSource = null;
 
+		$report = new Report();
+
+		if (Craft::$app->getRequest()->getParam('dataSourceId'))
+		{
+			$dataSourceId = Craft::$app->getRequest()->getParam('dataSourceId');
+		}
+
 		if ($dataSourceId != null)
 		{
 			$dataSource = SproutReports::$app->dataSourcesCore->getDataSourceById($dataSourceId);
+
+			$dataSource->setReport($report);
 		}
 
-		$report = new Report();
+		$options = Craft::$app->getRequest()->getParam('options');
 
-		$options = Craft::$app->getRequest()->getBodyParam('options');
 		$options = count($options) ? $options : array();
-
-		if (!empty($options))
-		{
-			Craft::dd($options);
-		}
 
 		if ($report)
 		{
