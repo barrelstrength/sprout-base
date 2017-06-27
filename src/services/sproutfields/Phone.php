@@ -3,7 +3,7 @@ namespace barrelstrength\sproutcore\services\sproutfields;
 
 use yii\base\Component;
 
-use barrelstrength\sproutcore\Module;
+use barrelstrength\sproutcore\SproutCore;
 /**
  * Class PhoneService
  *
@@ -141,12 +141,12 @@ class Phone extends Component
 		// Change empty condition to show default message when toggle settings is unchecked
 		if (!empty($field->customPatternErrorMessage))
 		{
-			return Module::t($field->customPatternErrorMessage);
+			return SproutCore::t($field->customPatternErrorMessage);
 		}
 
 		$vars = array('field' => $field->name, 'format' => $field->mask);
 
-		return Module::t('{field} is invalid. Required format: {format}', $vars);
+		return SproutCore::t('{field} is invalid. Required format: {format}', $vars);
 	}
 
 }

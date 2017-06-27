@@ -14,7 +14,7 @@ function checkSproutRegularExpressionField(id, fieldHandle, fieldContext) {
 		};
 
 		// Query the controller so the regex validation is all done through PHP.
-		Craft.postActionRequest('sprout-fields/sprout-fields/regular-expression-validate', data, function(response) {
+		Craft.postActionRequest('sprout-core/sprout-fields/regular-expression-validate', data, function(response) {
 			if (response)
 			{
 				$(sproutRegularExpressionClass).addClass('fade');

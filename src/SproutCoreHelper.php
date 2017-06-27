@@ -15,7 +15,7 @@ abstract class SproutCoreHelper
 	{
 		if (!Craft::$app->hasModule('sprout-core')) {
 
-			Craft::$app->setModule('sprout-core', Module::class);
+			Craft::$app->setModule('sprout-core', SproutCore::class);
 
 			// Have Craft load this module right away (so we can create templates)
 			Craft::$app->getModule('sprout-core');

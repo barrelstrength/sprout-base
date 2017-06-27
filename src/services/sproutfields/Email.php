@@ -6,7 +6,7 @@ use craft\base\Field;
 use yii\base\Component;
 use craft\db\Query;
 
-use barrelstrength\sproutcore\Module;
+use barrelstrength\sproutcore\SproutCore;
 /**
  * Class EmailService
  *
@@ -114,10 +114,10 @@ class Email extends Component
 	{
 		if (!empty($field->customPattern) && $field->customPatternErrorMessage)
 		{
-			return Module::t($field->customPatternErrorMessage);
+			return SproutCore::t($field->customPatternErrorMessage);
 		}
 
-		return Module::t($fieldName . ' must be a valid email.');
+		return SproutCore::t($fieldName . ' must be a valid email.');
 	}
 
 }

@@ -4,7 +4,7 @@ namespace barrelstrength\sproutcore\services\sproutfields;
 use craft\base\Field;
 use yii\base\Component;
 
-use barrelstrength\sproutcore\Module;
+use barrelstrength\sproutcore\SproutCore;
 
 /**
  * Class RegularExpression
@@ -48,10 +48,10 @@ class RegularExpression extends Component
 	{
 		if (!empty($field->customPattern) && isset($field->customPatternErrorMessage))
 		{
-			return Module::t($field->customPatternErrorMessage);
+			return SproutCore::t($field->customPatternErrorMessage);
 		}
 
-		return Module::t($field->name . ' must be a valid pattern.');
+		return SproutCore::t($field->name . ' must be a valid pattern.');
 	}
 
 }

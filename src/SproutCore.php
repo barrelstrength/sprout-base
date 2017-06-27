@@ -12,9 +12,13 @@ use craft\helpers\ArrayHelper;
 use craft\i18n\PhpMessageSource;
 use Craft;
 
-class Module extends \yii\base\Module
+use barrelstrength\sproutcore\services\App;
+
+class SproutCore extends \yii\base\Module
 {
 	public $handle;
+
+	public static $app;
 
 	/**
 	 * @var string|null The translation category that this module translation messages should use. Defaults to the lowercased plugin handle.
@@ -64,6 +68,8 @@ class Module extends \yii\base\Module
 	public function init()
 	{
 		parent::init();
+
+		self::$app = new App();
 
 		$this->params['foo'] = 'bar';
 		// ...  other initialization code ...
