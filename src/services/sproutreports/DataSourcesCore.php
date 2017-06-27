@@ -1,7 +1,7 @@
 <?php
 namespace barrelstrength\sproutcore\services\sproutreports;
 
-use barrelstrength\sproutcore\integrations\sproutreports\contracts\BaseDataSource;
+use barrelstrength\sproutcore\contracts\sproutreports\BaseDataSource;
 use yii\base\Component;
 use craft\events\RegisterComponentTypesEvent;
 

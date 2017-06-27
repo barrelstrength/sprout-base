@@ -1,9 +1,9 @@
 <?php
-namespace barrelstrength\sproutcore\integrations\sproutreports\contracts;
+namespace barrelstrength\sproutcore\contracts\sproutreports;
 
 use Craft;
 use barrelstrength\sproutreports\records\DataSource;
-use barrelstrength\sproutcore\integrations\sproutreports\models\Report as ReportModel;
+use barrelstrength\sproutcore\models\sproutreports\Report as ReportModel;
 use barrelstrength\sproutreports\SproutReports;
 use craft\helpers\UrlHelper;
 

@@ -1,9 +1,8 @@
 <?php
-namespace barrelstrength\sproutcore\integrations\sproutreports\models;
+namespace barrelstrength\sproutcore\models\sproutreports;
 
 use barrelstrength\sproutcore\services\sproutreports\DataSourcesCore;
 use craft\base\Model;
-use barrelstrength\sproutreports\SproutReports;
 use barrelstrength\sproutreports\records\Report as ReportRecord;
 use craft\validators\HandleValidator;
 use craft\validators\UniqueValidator;

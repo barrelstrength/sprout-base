@@ -1,7 +1,7 @@
 <?php
 namespace barrelstrength\sproutcore\controllers;
 
-use barrelstrength\sproutcore\integrations\sproutreports\models\Report;
+use barrelstrength\sproutcore\models\sproutreports\Report;
 use barrelstrength\sproutcore\services\sproutreports\DataSourcesCore;
 use Craft;
 
