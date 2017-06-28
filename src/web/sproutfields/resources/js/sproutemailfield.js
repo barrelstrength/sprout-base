@@ -4,7 +4,7 @@ function checkSproutEmailField(id, elementId, fieldHandle, fieldContext) {
 	var sproutEmailButtonClass = '.' + id;
 
 	// We use setTimeout to make sure our function works every time
-	setTimeout(function() 
+	setTimeout(function()
 	{
 		// Set up data for the controller.
 		var data = {
@@ -15,7 +15,7 @@ function checkSproutEmailField(id, elementId, fieldHandle, fieldContext) {
 		};
 
 		// Query the controller so the regex validation is all done through PHP.
-		Craft.postActionRequest('sprout-fields/sprout-fields/email-validate', data, function(response) {
+		Craft.postActionRequest('sprout-core/sprout-fields/email-validate', data, function(response) {
 			if (response)
 			{
 				$(sproutEmailButtonClass).addClass('fade');

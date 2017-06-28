@@ -4,7 +4,7 @@ namespace barrelstrength\sproutcore\services\sproutfields;
 use craft\base\Field;
 use yii\base\Component;
 use Craft;
-use barrelstrength\sproutcore\Module;
+use barrelstrength\sproutcore\SproutCore;
 
 /**
  * Class LinkService
@@ -57,10 +57,10 @@ class Link extends Component
 	{
 		if (!empty($field->customPattern) && isset($field->customPatternErrorMessage))
 		{
-			return Module::t($field->customPatternErrorMessage);
+			return SproutCore::t($field->customPatternErrorMessage);
 		}
 
-		return Module::t($fieldName . ' must be a valid link.');
+		return SproutCore::t($fieldName . ' must be a valid link.');
 	}
 
 }
