@@ -10,9 +10,9 @@ class Migration extends \craft\db\Migration
 
 	public function createTables()
 	{
-		$reportTable = $this->getDb()->getTableSchema($this->reportTable);
+		$reportTable = $this->getDb()->tableExists($this->reportTable);
 
-		if ($reportTable == null)
+		if ($reportTable == false)
 		{
 			$this->createTable($this->reportTable,
 				[
@@ -41,9 +41,9 @@ class Migration extends \craft\db\Migration
 				$this->reportTable, 'dataSourceId', false);
 		}
 
-		$reportGroupTable = $this->getDb()->getTableSchema($this->reportGroupTable);
+		$reportGroupTable = $this->getDb()->tableExists($this->reportGroupTable);
 
-		if ($reportGroupTable == null)
+		if ($reportGroupTable == false)
 		{
 			$this->createTable($this->reportGroupTable, [
 				'id'          => $this->primaryKey(),
@@ -57,9 +57,9 @@ class Migration extends \craft\db\Migration
 				$this->reportGroupTable, 'name', false);
 		}
 
-		$dataSourcesTable = $this->getDb()->getTableSchema($this->dataSourcesTable);
+		$dataSourcesTable = $this->getDb()->tableExists($this->dataSourcesTable);
 
-		if ($dataSourcesTable == null)
+		if ($dataSourcesTable == false)
 		{
 			$this->createTable($this->dataSourcesTable, [
 				'id'           => $this->primaryKey(),
@@ -70,6 +70,30 @@ class Migration extends \craft\db\Migration
 				'dateUpdated'  => $this->dateTime()->notNull(),
 				'uid'          => $this->uid()
 			]);
+		}
+	}
+
+	public function dropTables()
+	{
+		$reportTable = $this->getDb()->tableExists($this->reportTable);
+
+		if ($reportTable)
+		{
+			$this->dropTable($this->reportTable);
+		}
+
+		$reportGroupTable = $this->getDb()->tableExists($this->reportGroupTable);
+
+		if ($reportGroupTable)
+		{
+			$this->dropTable($this->reportGroupTable);
+		}
+
+		$dataSourcesTable = $this->getDb()->tableExists($this->dataSourcesTable);
+
+		if ($dataSourcesTable)
+		{
+			$this->dropTable($this->dataSourcesTable);
 		}
 	}
 }
