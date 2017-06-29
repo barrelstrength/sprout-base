@@ -71,6 +71,8 @@ class SproutCore extends \yii\base\Module
 
 		self::$app = new App();
 
+		$this->setComponents(['sproutCore' => SproutCoreVariable::class]);
+
 		$this->params['foo'] = 'bar';
 		// ...  other initialization code ...
 

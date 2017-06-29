@@ -3,6 +3,7 @@ namespace barrelstrength\sproutcore\controllers;
 
 use barrelstrength\sproutcore\models\sproutreports\Report;
 use barrelstrength\sproutcore\services\sproutreports\DataSourcesCore;
+use barrelstrength\sproutcore\SproutCore;
 use Craft;
 
 use craft\web\assets\cp\CpAsset;
@@ -11,6 +12,13 @@ use barrelstrength\sproutreports\SproutReports;
 
 class ReportsController extends Controller
 {
+	public function actionIndex($groupId = null)
+	{
+		return $this->renderTemplate('sprout-core/sproutreports/reports/index', [
+			'groupId' => $groupId
+		]);
+	}
+
 	public function actionResultsIndex($dataSourceId = null)
 	{
 		$dataSource = null;
