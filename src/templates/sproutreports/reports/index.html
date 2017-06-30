@@ -1,10 +1,8 @@
-{% extends "sproutreports/_layouts/base" %}
+{% extends "sprout-core/_layouts/sproutreports/base" %}
 
 {% set title  = "Reports"|t('sproutreports') %}
 
 {% set groups = craft.sproutreports.getReportGroups() %}
-
-{% set selectedSubnavItem = craft.app.request.segment(2) %}
 
 {% if groupId is not null %}
 	{% if groups[groupId] is not defined %}
@@ -22,33 +20,9 @@
 
 	{% if currentUser.can('sproutReports-editReports') %}
 
-		{% set newReportOptions = [] %}
-
-		{% for id, dataSource in dataSources %}
-			{% if dataSource.allowNew() %}
-				{% set newReportOptions = newReportOptions|merge([{
-					name: dataSource.getName(),
-					url: dataSource.getUrl('/new')
-				}]) %}
-			{% endif %}
-
-		{% endfor %}
-
-		{% if newReportOptions|length %}
-			<div class="btngroup submit first">
-				<a class="btn submit add icon" href="{{ newReportOptions[0].url }}">{{ "New Report"|t('sproutreports') }}</a>
-				{% if dataSources %}
-					<div class="btn submit menubtn"></div>
-					<div class="menu">
-						<ul>
-							{% for option in newReportOptions %}
-								<li><a class="formsubmit" href="{{ option.url }}">{{ option.name }}</a></li>
-							{% endfor %}
-						</ul>
-					</div>
-				{% endif %}
-			</div>
-		{% endif %}
+	<div class="btngroup submit first">
+		<a class="btn submit add icon" href="{{ dataSource.getUrl('/new') }}">{{ "New Report"|t('sproutreports') }}</a>
+	</div>
 
 	{% endif %}
 {% endset %}

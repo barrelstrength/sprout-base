@@ -2,6 +2,8 @@
 namespace barrelstrength\sproutcore\services\sproutreports;
 
 use barrelstrength\sproutcore\contracts\sproutreports\BaseDataSource;
+use barrelstrength\sproutcore\models\sproutreports\DataSource as DataSourceModel;
+use barrelstrength\sproutcore\records\sproutreports\DataSource as DataSourceRecord;
 use yii\base\Component;
 use craft\events\RegisterComponentTypesEvent;
 
@@ -10,7 +12,7 @@ use craft\events\RegisterComponentTypesEvent;
  *
  * @package Craft
  */
-class DataSourcesCore  extends Component
+class DataSources  extends Component
 {
 
 	const EVENT_REGISTER_DATA_SOURCES = "registerSproutReportsDataSources";
@@ -86,5 +88,63 @@ class DataSourcesCore  extends Component
 	{
 		// Sort plugins by name
 		array_multisort($names, SORT_NATURAL | SORT_FLAG_CASE, $secondaryArray);
+	}
+
+	/**
+	 * Save attributes to datasources record table
+	 *
+	 * @param DataSourceModel $model
+	 *
+	 * @return bool
+	 */
+	public function saveDataSource(DataSourceModel $model)
+	{
+		$result = false;
+
+		$record = DataSourceRecord::find()
+			->where(['dataSourceId' => $model->dataSourceId])
+			->one();
+
+		if ($record == null)
+		{
+			$record = new DataSourceRecord();
+		}
+
+		$attributes = $model->getAttributes();
+
+		if (!empty($attributes))
+		{
+			foreach ($attributes as $handle => $value)
+			{
+				// Ignore id for dataSourceId
+				if ($handle == 'id') continue;
+
+				$record->setAttribute($handle, $value);
+			}
+		}
+
+		$db = \Craft::$app->getDb();
+		$transaction = $db->beginTransaction();
+
+		if ($record->validate())
+		{
+			if ($record->save(false))
+			{
+				$model->id = $record->id;
+
+				if ($transaction)
+				{
+					$transaction->commit();
+				}
+
+				$result = true;
+			}
+		}
+		else
+		{
+			$model->addErrors($record->getErrors());
+		}
+
+		return $result;
 	}
 }
