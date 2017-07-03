@@ -16,44 +16,36 @@ class ReportsController extends Controller
 	{
 		$dataSource = SproutCore::$app->dataSources->getDataSourceById($dataSourceId);
 
+		$reports = SproutCore::$app->reports->getReportsBySourceId($dataSourceId);
+
 		return $this->renderTemplate('sprout-core/sproutreports/reports/index', [
 			'groupId' => null,
+			'reports' => $reports,
 		  'dataSource' => $dataSource
 		]);
 	}
 
-	public function actionResultsIndex($dataSourceId = null)
+	public function actionResultsIndex($reportId = null)
 	{
-		$dataSource = null;
+		$report = SproutCore::$app->reports->getReport($reportId);
 
-		$report = new Report();
-
-		if (Craft::$app->getRequest()->getParam('dataSourceId'))
-		{
-			$dataSourceId = Craft::$app->getRequest()->getParam('dataSourceId');
-		}
-
-		if ($dataSourceId != null)
-		{
-			$dataSources = new DataSources();
-
-			$dataSource = $dataSources->getDataSourceById($dataSourceId);
-
-			$dataSource->setReport($report);
-		}
-
-		$options = Craft::$app->getRequest()->getParam('options');
-
+		$options = Craft::$app->getRequest()->getBodyParam('options');
 		$options = count($options) ? $options : array();
 
 		if ($report)
 		{
+
+			$dataSource = SproutCore::$app->dataSources->getDataSourceById($report->dataSourceId);
+
+			$dataSource->setReport($report);
+
 			$labels     = $dataSource->getDefaultLabels($report, $options);
 
 			$variables['dataSource'] = null;
 			$variables['report']     = $report;
 			$variables['values']     = array();
 			$variables['options']    = $options;
+			$variables['reportId']   = $reportId;
 
 			if ($dataSource)
 			{
@@ -79,7 +71,7 @@ class ReportsController extends Controller
 		throw new \HttpException(404, SproutReports::t('Report not found.'));
 	}
 
-	public function actionEditReport(string $pluginId, string $dataSourceKey, Report $report = null, int $reportId = null)
+	public function actionEditReport(string $dataSourceKey, Report $report = null, int $reportId = null)
 	{
 		$variables = array();
 
@@ -97,7 +89,8 @@ class ReportsController extends Controller
 			$variables['report'] = $reportModel;
 		}
 
-		$variables['report']->dataSourceId = $pluginId . '.' . $dataSourceKey;
+		$variables['report']->dataSourceId = $dataSourceKey;
+
 		$variables['dataSource']           = $variables['report']->getDataSource();
 
 		$variables['continueEditingUrl']   = $variables['dataSource']->getUrl() . '/edit/{id}';

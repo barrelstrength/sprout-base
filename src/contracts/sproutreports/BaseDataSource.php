@@ -103,9 +103,11 @@ abstract class BaseDataSource
 		$partIds = explode('.', $this->getId());
 
 		$pluginName = $partIds[0];
+		$pluginHandle = Craft::$app->getRequest()->getSegment(1);
 		$url = join('/', $partIds);
 
-		return UrlHelper::cpUrl(sprintf($pluginName . '/reports/%s/%s', $url, ltrim($append, '/')));
+		//return UrlHelper::cpUrl(sprintf($pluginName . '/reports/%s/%s', $url, ltrim($append, '/')));
+		return UrlHelper::cpUrl(sprintf($pluginHandle . '/reports/%s/%s', $this->getId(), ltrim($append, '/')));
 	}
 
 	/**

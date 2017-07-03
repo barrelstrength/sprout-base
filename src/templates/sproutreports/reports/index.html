@@ -2,18 +2,6 @@
 
 {% set title  = "Reports"|t('sproutreports') %}
 
-{% set groups = craft.sproutreports.getReportGroups() %}
-
-{% if groupId is not null %}
-	{% if groups[groupId] is not defined %}
-		{% exit 404 %}
-	{% endif %}
-
-	{% set reports = craft.sproutreports.getReportsByGroupId(groupId) %}
-{% else %}
-	{% set reports = craft.sproutreports.getReports() %}
-{% endif %}
-
 {% set dataSources = craft.sproutreports.getDataSources() %}
 
 {% set extraPageHeaderHtml %}
@@ -49,7 +37,7 @@
 				{% for report in reports %}
 					<tr>
 						<td class="sproutreports-reportname">
-							<a href="{{ cpUrl('sproutreports/reports/view/' ~ report.id) }}"><strong>{{ report.name }}</strong></a>
+							<a href="{{ cpUrl('sproutforms/reports/view/' ~ report.id) }}"><strong>{{ report.name }}</strong></a>
 
 							{% if report.description %}
 								<span class="info">{{ report.description }}</span>

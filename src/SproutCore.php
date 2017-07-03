@@ -88,8 +88,7 @@ class SproutCore extends \yii\base\Module
 		// Register custom routes
 		Event::on(UrlManager::class, UrlManager::EVENT_REGISTER_CP_URL_RULES, function(RegisterUrlRulesEvent $event) {
 			$event->rules['sprout-settings'] = 'sprout-core/stuff/settings';
-			$event->rules['sprout-settings/<pluginName:.*>'] = 'sprout-core/stuff/settings';;
-			$event->rules['sproutreports/reports/<pluginId>/<dataSourceKey:{handle}>/new'] = 'sprout-core/reports/edit-report';
+			$event->rules['sprout-settings/<pluginName:.*>'] = 'sprout-core/stuff/settings';
 		});
 	}
 

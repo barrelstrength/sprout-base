@@ -62,6 +62,7 @@ class Reports extends Component
 	public function getReport($reportId)
 	{
 		$reportRecord  = ReportRecord::findOne($reportId);
+
 		$reportModel   = new ReportModel();
 
 		if ($reportRecord != null)
@@ -150,6 +151,18 @@ class Reports extends Component
 		}
 
 		return true;
+	}
+
+	/**
+	 * @return null|ReportModel[]
+	 */
+	public function getReportsBySourceId($dataSourceId)
+	{
+		$reportRecords = ReportRecord::find()->where(['dataSourceId' => $dataSourceId])->all();
+
+		$reports = $this->populateModels($reportRecords);
+
+		return $reports;
 	}
 
 	/**
@@ -244,10 +257,5 @@ class Reports extends Component
 		}
 
 		return $models;
-	}
-
-	public function test()
-	{
-		return "xx";
 	}
 }
