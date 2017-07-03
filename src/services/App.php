@@ -1,7 +1,8 @@
 <?php
 namespace barrelstrength\sproutcore\services;
 
-use barrelstrength\sproutcore\services\sproutreports\DataSourcesCore;
+use barrelstrength\sproutcore\services\sproutreports\DataSources;
+use barrelstrength\sproutcore\services\sproutreports\Migration;
 use barrelstrength\sproutcore\services\sproutreports\Reports;
 use craft\base\Component;
 use barrelstrength\sproutcore\services\sproutfields\Utilities;
@@ -25,9 +26,14 @@ class App extends Component
 	public $reports;
 
 	/**
-	 * @var DataSourcesCore
+	 * @var Migration
 	 */
-	public $dataSourcesCore;
+	public $reportsMigration;
+
+	/**
+	 * @var DataSources
+	 */
+	public $dataSources;
 
 	public function init()
 	{
@@ -38,6 +44,7 @@ class App extends Component
 		$this->regularExpression = new RegularExpression();
 		$this->emailSelect       = new EmailSelect();
 		$this->reports           = new Reports();
-		$this->dataSourcesCore   = new DataSourcesCore();
+		$this->dataSources       = new DataSources();
+		$this->reportsMigration  = new Migration();
 	}
 }

@@ -2,7 +2,7 @@
 namespace barrelstrength\sproutcore\controllers;
 
 use barrelstrength\sproutcore\models\sproutreports\Report;
-use barrelstrength\sproutcore\services\sproutreports\DataSourcesCore;
+use barrelstrength\sproutcore\services\sproutreports\DataSources;
 use barrelstrength\sproutcore\SproutCore;
 use Craft;
 
@@ -12,10 +12,13 @@ use barrelstrength\sproutreports\SproutReports;
 
 class ReportsController extends Controller
 {
-	public function actionIndex($groupId = null)
+	public function actionIndex($dataSourceId = null)
 	{
+		$dataSource = SproutCore::$app->dataSources->getDataSourceById($dataSourceId);
+
 		return $this->renderTemplate('sprout-core/sproutreports/reports/index', [
-			'groupId' => $groupId
+			'groupId' => null,
+		  'dataSource' => $dataSource
 		]);
 	}
 
@@ -32,9 +35,9 @@ class ReportsController extends Controller
 
 		if ($dataSourceId != null)
 		{
-			$dataSourcesCore = new DataSourcesCore();
+			$dataSources = new DataSources();
 
-			$dataSource = $dataSourcesCore->getDataSourceById($dataSourceId);
+			$dataSource = $dataSources->getDataSourceById($dataSourceId);
 
 			$dataSource->setReport($report);
 		}
@@ -74,5 +77,31 @@ class ReportsController extends Controller
 		}
 
 		throw new \HttpException(404, SproutReports::t('Report not found.'));
+	}
+
+	public function actionEditReport(string $pluginId, string $dataSourceKey, Report $report = null, int $reportId = null)
+	{
+		$variables = array();
+
+		$variables['report'] = new Report();
+
+		if (isset($report))
+		{
+			$variables['report'] = $report;
+		}
+
+		if ($reportId != null)
+		{
+			$reportModel = SproutReports::$app->reports->getReport($reportId);
+
+			$variables['report'] = $reportModel;
+		}
+
+		$variables['report']->dataSourceId = $pluginId . '.' . $dataSourceKey;
+		$variables['dataSource']           = $variables['report']->getDataSource();
+
+		$variables['continueEditingUrl']   = $variables['dataSource']->getUrl() . '/edit/{id}';
+
+		return $this->renderTemplate('sprout-core/sproutreports/reports/_edit', $variables);
 	}
 }

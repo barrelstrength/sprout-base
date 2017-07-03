@@ -98,11 +98,14 @@ abstract class BaseDataSource
 	 *
 	 * @return string
 	 */
-	final public function getUrl($append = null)
+	public function getUrl($append = null)
 	{
-		$url = join('/', explode('.', $this->getId()));
+		$partIds = explode('.', $this->getId());
 
-		return UrlHelper::cpUrl(sprintf('sproutreports/reports/%s/%s', $url, ltrim($append, '/')));
+		$pluginName = $partIds[0];
+		$url = join('/', $partIds);
+
+		return UrlHelper::cpUrl(sprintf($pluginName . '/reports/%s/%s', $url, ltrim($append, '/')));
 	}
 
 	/**

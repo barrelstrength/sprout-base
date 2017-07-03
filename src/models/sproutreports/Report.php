@@ -1,7 +1,7 @@
 <?php
 namespace barrelstrength\sproutcore\models\sproutreports;
 
-use barrelstrength\sproutcore\services\sproutreports\DataSourcesCore;
+use barrelstrength\sproutcore\services\sproutreports\DataSources;
 use craft\base\Model;
 use barrelstrength\sproutreports\records\Report as ReportRecord;
 use craft\validators\HandleValidator;
@@ -38,9 +38,9 @@ class Report extends Model
 
 	public function getDataSource()
 	{
-		$dataSourcesCore = new DataSourcesCore();
+		$dataSources = new DataSources();
 
-		$dataSource = $dataSourcesCore->getDataSourceById($this->dataSourceId);
+		$dataSource = $dataSources->getDataSourceById($this->dataSourceId);
 
 		$dataSource->setReport($this);
 
