@@ -2,9 +2,9 @@
 namespace barrelstrength\sproutcore\contracts\sproutreports;
 
 /**
- * Class SproutReportsBaseReport
+ * Class BaseReport
  *
- * @package Craft
+ * @package barrelstrength\sproutcore\contracts\sproutreports
  */
 abstract class BaseReport
 {

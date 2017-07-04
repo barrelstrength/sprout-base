@@ -8,7 +8,6 @@ use Craft;
 
 use craft\web\assets\cp\CpAsset;
 use craft\web\Controller;
-use barrelstrength\sproutreports\SproutReports;
 
 class ReportsController extends Controller
 {
@@ -68,7 +67,7 @@ class ReportsController extends Controller
 			return $this->renderTemplate('sprout-core/sproutreports/results/index', $variables);
 		}
 
-		throw new \HttpException(404, SproutReports::t('Report not found.'));
+		throw new \HttpException(404, SproutCore::t('Report not found.'));
 	}
 
 	public function actionEditReport(string $dataSourceKey, Report $report = null, int $reportId = null)
@@ -84,7 +83,7 @@ class ReportsController extends Controller
 
 		if ($reportId != null)
 		{
-			$reportModel = SproutReports::$app->reports->getReport($reportId);
+			$reportModel = SproutCore::$app->reports->getReport($reportId);
 
 			$variables['report'] = $reportModel;
 		}
@@ -96,5 +95,32 @@ class ReportsController extends Controller
 		$variables['continueEditingUrl']   = $variables['dataSource']->getUrl() . '/edit/{id}';
 
 		return $this->renderTemplate('sprout-core/sproutreports/reports/_edit', $variables);
+	}
+
+	public function actionExportReport()
+	{
+		$reportId = Craft::$app->getRequest()->getParam('reportId');
+
+		$report   = SproutCore::$app->reports->getReport($reportId);
+
+		$options = Craft::$app->getRequest()->getBodyParam('options');
+
+		$options = count($options) ? $options : array();
+
+		if ($report)
+		{
+			$dataSource = SproutCore::$app->dataSources->getDataSourceById($report->dataSourceId);
+
+			if ($dataSource)
+			{
+				$date = date("Ymd-his");
+
+				$filename = $report->name . '-' . $date;
+				$labels   = $dataSource->getDefaultLabels($report, $options);
+				$values   = $dataSource->getResults($report, $options);
+
+				SproutCore::$app->exports->toCsv($values, $labels, $filename);
+			}
+		}
 	}
 }

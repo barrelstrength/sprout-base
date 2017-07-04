@@ -1,10 +1,10 @@
 <?php
 namespace barrelstrength\sproutcore\contracts\sproutreports;
 
+use barrelstrength\sproutcore\SproutCore;
 use Craft;
-use barrelstrength\sproutreports\records\DataSource;
+use barrelstrength\sproutcore\records\sproutreports\DataSource;
 use barrelstrength\sproutcore\models\sproutreports\Report as ReportModel;
-use barrelstrength\sproutreports\SproutReports;
 use craft\helpers\UrlHelper;
 
 /**
@@ -123,7 +123,7 @@ abstract class BaseDataSource
 	/**
 	 * @return string
 	 */
-	final public function getPluginName()
+	public function getPluginName()
 	{
 		$plugin = Craft::$app->getPlugins()->getPlugin('sproutReports');
 
@@ -153,7 +153,7 @@ abstract class BaseDataSource
 	 */
 	final public function getReportCount()
 	{
-		return SproutReports::$app->reports->getCountByDataSourceId($this->getId());
+		return SproutCore::$app->reports->getCountByDataSourceId($this->getId());
 	}
 
 	/**

@@ -4,18 +4,9 @@ namespace barrelstrength\sproutcore\records\sproutreports;
 use craft\db\ActiveRecord;
 
 /**
- * Class SproutReports_ReportRecord
+ * Class DataSource
  *
- * @package Craft
- * --
- * @property int $id               ID
- * @property string $name          Name
- * @property string $handle        Handle
- * @property string $description   Description
- * @property array $options        Options
- * @property string $dataSourceId  Data Source ID
- * @property int $groupId          Group ID
- * @property int $enabled          Enabled
+ * @package barrelstrength\sproutcore\records\sproutreports
  */
 class DataSource extends ActiveRecord
 {

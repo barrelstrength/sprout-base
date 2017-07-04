@@ -2,22 +2,11 @@
 namespace barrelstrength\sproutcore\records\sproutreports;
 
 use craft\db\ActiveRecord;
-use yii\db\ActiveQueryInterface;
 
 /**
- * Class SproutReports_ReportRecord
+ * Class Report
  *
- * @package Craft
- * --
- * @property int $id               ID
- * @property string $name          Name
- * @property string $handle        Handle
- * @property string $description   Description
- * @property array $options        Options
- * @property string $dataSourceId  Data Source ID
- * @property int $groupId          Group ID
- * @property bool $enabled          Enabled
- * @property bool $allowHtml        Allow HTML
+ * @package barrelstrength\sproutcore\records\sproutreports
  */
 class Report extends ActiveRecord
 {

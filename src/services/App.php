@@ -2,6 +2,7 @@
 namespace barrelstrength\sproutcore\services;
 
 use barrelstrength\sproutcore\services\sproutreports\DataSources;
+use barrelstrength\sproutcore\services\sproutreports\Exports;
 use barrelstrength\sproutcore\services\sproutreports\Migration;
 use barrelstrength\sproutcore\services\sproutreports\Reports;
 use craft\base\Component;
@@ -20,6 +21,8 @@ class App extends Component
 	public $email;
 	public $regularExpression;
 	public $emailSelect;
+	public $exports;
+
 	/**
 	 * @var Reports
 	 */
@@ -45,6 +48,7 @@ class App extends Component
 		$this->emailSelect       = new EmailSelect();
 		$this->reports           = new Reports();
 		$this->dataSources       = new DataSources();
+		$this->exports           = new Exports();
 		$this->reportsMigration  = new Migration();
 	}
 }
