@@ -123,27 +123,33 @@ abstract class BaseDataSource
 	/**
 	 * @return string
 	 */
+	public function getPlugin()
+	{
+		$pluginHandle = $this->getPluginHandle();
+
+		$plugin = Craft::$app->getPlugins()->getPlugin($pluginHandle);
+
+		return $plugin;
+	}
+
 	public function getPluginName()
 	{
-		$plugin = Craft::$app->getPlugins()->getPlugin('sproutReports');
+		$plugin = $this->getPlugin();
 
 		return $plugin->name;
 	}
 
 	/**
-	 * @param string $handle
-	 */
-	final public function setPluginHandle($handle)
-	{
-		$this->pluginHandle = $handle;
-	}
-
-	/**
 	 * @return string
 	 */
-	final public function getPluginHandle()
+	public function getPluginHandle()
 	{
-		return $this->pluginHandle;
+		return 'sproutReports';
+	}
+
+	public function getLowerPluginHandle()
+	{
+		return strtolower($this->getPluginHandle());
 	}
 
 	/**

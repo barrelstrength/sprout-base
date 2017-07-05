@@ -8,34 +8,20 @@
 {% set title = report['id'] is defined and report['id'] is not empty ? "Edit Report" : "New Report" %}
 
 {% set crumbs = [
-	{ label: "Reports"|t('sproutreports'), url: url('sproutreports') }
+	{ label: "Reports"|t('sproutcore'), url: dataSource.getUrl() }
 ] %}
-
-{% set groups = craft.sproutreports.getReportGroups() %}
-
-{% if groups | length %}
-	{% set groupId = report is defined ? report.groupId : null %}
-
-	{% if not groupId %}
-		{% set groupId = groups|keys[0] %}
-	{% endif %}
-
-	{% if groups[groupId] is not defined %}
-		{% exit 404 %}
-	{% endif %}
-{% endif %}
 
 {% set fullPageForm = true %}
 
 {% block saveButton %}
 
-	<input type="hidden" name="action" value="sprout-reports/reports/save-report">
+	<input type="hidden" name="action" value="sprout-core/reports/save-report">
 
-	{{ redirectInput('sproutreports/reports') }}
+	{{ redirectInput(dataSource.getUrl()) }}
 
 	<div class="button">
 		<div class="btngroup">
-			<input type="submit" class="btn submit" value="{{ 'Save Report'|t('sproutreports') }}">
+			<input type="submit" class="btn submit" value="{{ 'Save Report'|t('sproutcore') }}">
 
 			<div class="btn submit menubtn"></div>
 			<div class="menu">
@@ -104,33 +90,15 @@
 				{% set dataSourceNameLabel = "<h6>" ~ dataSource.name ~ "</h6>" %}
 
 				{{ forms.field({
-					label: "Data Source"|t('sproutreports'),
+					label: "Data Source"|t('sproutcore'),
 				}, dataSourceNameLabel) }}
-
-				{% if groups | length %}
-
-					{% set groupOptions = [] %}
-					{% for group in groups %}
-						{% set groupOptions = groupOptions|merge([{ label: group.name, value: group.id }]) %}
-					{% endfor %}
-
-					{{ forms.selectField({
-						first: true,
-						label: "Group <span class='info'>Which group should this report be displayed in?</span>"|t('sproutreports'),
-						id: 'groupId',
-						name: 'groupId',
-						options: groupOptions,
-						value: groupId
-					}) }}
-
-				{% endif %}
 
 			</div>
 
 			<div class="pane meta">
 
 				{{ forms.textField({
-					label: "Handle"|t('sproutreports'),
+					label: "Handle"|t('sproutcore'),
 					id: 'handle',
 					name: 'handle',
 					required: true,

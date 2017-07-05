@@ -3,7 +3,7 @@ namespace barrelstrength\sproutcore\models\sproutreports;
 
 use barrelstrength\sproutcore\services\sproutreports\DataSources;
 use craft\base\Model;
-use barrelstrength\sproutreports\records\Report as ReportRecord;
+use barrelstrength\sproutcore\records\sproutreports\Report as ReportRecord;
 use craft\validators\HandleValidator;
 use craft\validators\UniqueValidator;
 

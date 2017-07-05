@@ -29,11 +29,11 @@ class ReportsController extends Controller
 		$report = SproutCore::$app->reports->getReport($reportId);
 
 		$options = Craft::$app->getRequest()->getBodyParam('options');
+
 		$options = count($options) ? $options : array();
 
 		if ($report)
 		{
-
 			$dataSource = SproutCore::$app->dataSources->getDataSourceById($report->dataSourceId);
 
 			$dataSource->setReport($report);
@@ -45,6 +45,7 @@ class ReportsController extends Controller
 			$variables['values']     = array();
 			$variables['options']    = $options;
 			$variables['reportId']   = $reportId;
+			$variables['redirectUrl'] = $dataSource->getLowerPluginHandle() . '/reports/view/' . $reportId;
 
 			if ($dataSource)
 			{
@@ -70,7 +71,7 @@ class ReportsController extends Controller
 		throw new \HttpException(404, SproutCore::t('Report not found.'));
 	}
 
-	public function actionEditReport(string $dataSourceKey, Report $report = null, int $reportId = null)
+	public function actionEditReport(string $dataSourceId, Report $report = null, int $reportId = null)
 	{
 		$variables = array();
 
@@ -88,13 +89,76 @@ class ReportsController extends Controller
 			$variables['report'] = $reportModel;
 		}
 
-		$variables['report']->dataSourceId = $dataSourceKey;
+		$variables['report']->dataSourceId = $dataSourceId;
 
 		$variables['dataSource']           = $variables['report']->getDataSource();
 
 		$variables['continueEditingUrl']   = $variables['dataSource']->getUrl() . '/edit/{id}';
 
 		return $this->renderTemplate('sprout-core/sproutreports/reports/_edit', $variables);
+	}
+
+	/**
+	 * Saves a report query to the database
+	 */
+	public function actionUpdateReport()
+	{
+		$this->requirePostRequest();
+
+		$request = Craft::$app->getRequest();
+
+		$reportId = $request->getBodyParam('reportId');
+		$options  = $request->getBodyParam('options');
+
+		if ($reportId && $options)
+		{
+			$reportModel = SproutCore::$app->reports->getReport($reportId);
+
+			if (!$reportModel)
+			{
+				throw new \Exception(SproutCore::t('No report exists with the id “{id}”', array('id' => $reportId)));
+			}
+
+			$reportModel->options = is_array($options) ? $options : array();
+
+			if (SproutCore::$app->reports->saveReport($reportModel))
+			{
+				Craft::$app->getSession()->setNotice(SproutCore::t('Query updated.'));
+
+				return $this->redirectToPostedUrl($reportModel);
+			}
+		}
+
+		Craft::$app->getSession()->setError(SproutCore::t('Could not update report.'));
+
+		return $this->redirectToPostedUrl();
+	}
+
+	/**
+	 * Saves a report query to the database
+	 * @return null|\yii\web\Response
+	 */
+	public function actionSaveReport()
+	{
+		$this->requirePostRequest();
+
+		$report = SproutCore::$app->reports->prepareFromPost();
+
+		if (!SproutCore::$app->reports->saveReport($report))
+		{
+			Craft::$app->getSession()->setError(SproutCore::t('Couldn’t save report.'));
+
+			// Send the section back to the template
+			Craft::$app->getUrlManager()->setRouteParams([
+				'report' => $report
+			]);
+
+			return null;
+		}
+
+		Craft::$app->getSession()->setNotice(SproutCore::t('Report saved.'));
+
+		return $this->redirectToPostedUrl($report);
 	}
 
 	public function actionExportReport()

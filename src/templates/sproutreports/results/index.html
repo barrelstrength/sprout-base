@@ -26,8 +26,9 @@
 
 			<form id="report-options" method="post" accept-charset="UTF-8">
 				{{ getCsrfInput() }}
-				<input type="hidden" name="action" value="sprout-core/reports/results-index">
-				<input type="hidden" name="dataSourceId" value="{{ dataSource.getId() }}">
+				<input type="hidden" name="action" value="sprout-core/reports/update-report">
+				{{ redirectInput(redirectUrl) }}
+				<input type="hidden" name="reportId" value="{{ reportId }}">
 				{{ optionsHtml | raw }}
 
 				<div class="button">

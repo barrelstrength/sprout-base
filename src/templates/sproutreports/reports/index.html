@@ -2,8 +2,6 @@
 
 {% set title  = "Reports"|t('sproutreports') %}
 
-{% set dataSources = craft.sproutreports.getDataSources() %}
-
 {% set extraPageHeaderHtml %}
 
 	{% if currentUser.can('sproutReports-editReports') %}
@@ -73,5 +71,3 @@
 	</div>
 
 {% endblock %}
-
-{% do view.registerAssetBundle("barrelstrength\\sproutreports\\assetbundles\\reports\\ReportAsset") %}

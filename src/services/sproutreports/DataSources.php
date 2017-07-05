@@ -4,6 +4,7 @@ namespace barrelstrength\sproutcore\services\sproutreports;
 use barrelstrength\sproutcore\contracts\sproutreports\BaseDataSource;
 use barrelstrength\sproutcore\models\sproutreports\DataSource as DataSourceModel;
 use barrelstrength\sproutcore\records\sproutreports\DataSource as DataSourceRecord;
+use barrelstrength\sproutcore\SproutCore;
 use yii\base\Component;
 use craft\events\RegisterComponentTypesEvent;
 
@@ -37,7 +38,7 @@ class DataSources  extends Component
 			return $sources[$id];
 		}
 
-		throw new \Exception(\Craft::t('Could not find data source with id {id}.', compact('id')));
+		throw new \Exception(SproutCore::t('Could not find data source with id {id}.', compact('id')));
 	}
 
 	/**
