@@ -2,7 +2,7 @@
 namespace barrelstrength\sproutcore\controllers;
 
 use barrelstrength\sproutcore\models\sproutreports\Report;
-use barrelstrength\sproutcore\services\sproutreports\DataSources;
+use barrelstrength\sproutcore\records\sproutreports\Report as ReportRecord;
 use barrelstrength\sproutcore\SproutCore;
 use Craft;
 
@@ -159,6 +159,26 @@ class ReportsController extends Controller
 		Craft::$app->getSession()->setNotice(SproutCore::t('Report saved.'));
 
 		return $this->redirectToPostedUrl($report);
+	}
+
+	public function actionDeleteReport()
+	{
+		$this->requirePostRequest();
+
+		$reportId = Craft::$app->getRequest()->getBodyParam('reportId');
+
+		if ($record = ReportRecord::findOne($reportId))
+		{
+			$record->delete();
+
+			Craft::$app->getSession()->setNotice(SproutCore::t('Report deleted.'));
+
+			return $this->redirectToPostedUrl($record);
+		}
+		else
+		{
+			throw new \Exception(SproutCore::t('Report not found.'));
+		}
 	}
 
 	public function actionExportReport()
