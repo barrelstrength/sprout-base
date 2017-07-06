@@ -3,14 +3,9 @@
 {% set title  = "Reports"|t('sproutreports') %}
 
 {% set extraPageHeaderHtml %}
-
-	{% if currentUser.can('sproutReports-editReports') %}
-
 	<div class="btngroup submit first">
 		<a class="btn submit add icon" href="{{ dataSource.getUrl('/new') }}">{{ "New Report"|t('sproutreports') }}</a>
 	</div>
-
-	{% endif %}
 {% endset %}
 
 {% block content %}
@@ -25,10 +20,7 @@
 					<th class="sproutreports-reportname" style="width:60%;">{{ "Name"|t('sproutreports') }}</th>
 					<th class="sproutreports-datasource" style="width:35%;">{{ "Data Source"|t('sproutreports') }}</th>
 					<th class="thin"></th>
-
-					{% if currentUser.can('sproutReports-editReports') %}
 					<th class="thin"></th>
-					{% endif %}
 				</tr>
 				</thead>
 				<tbody>
@@ -50,11 +42,9 @@
 								class="btn small">{{ "Download"|t('sproutreports') }}</a>
 						</td>
 
-						{% if currentUser.can('sproutReports-editReports') %}
 						<td class="sproutreports-reportactions">
 							<a href="{{ report.getEditUrl() }}" title="Edit Report Settings" data-icon="settings"></a>
 						</td>
-						{% endif %}
 
 					</tr>
 				{% endfor %}

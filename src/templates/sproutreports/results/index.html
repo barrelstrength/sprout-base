@@ -8,9 +8,7 @@
 {% endif %}
 
 {% set extraPageHeaderHtml %}
-	{% if currentUser.can('sproutreports-editReports') %}
 		<a id="modify-options-icon" class="btn" data-icon="settings"></a>
-	{% endif %}
 {% endset %}
 
 {% set crumbs = [
