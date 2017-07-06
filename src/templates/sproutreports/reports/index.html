@@ -1,10 +1,10 @@
 {% extends "sprout-core/_layouts/sproutreports/base" %}
 
-{% set title  = "Reports"|t('sproutreports') %}
+{% set title  = "Reports"|t('sproutcore') %}
 
 {% set extraPageHeaderHtml %}
 	<div class="btngroup submit first">
-		<a class="btn submit add icon" href="{{ dataSource.getUrl('/new') }}">{{ "New Report"|t('sproutreports') }}</a>
+		<a class="btn submit add icon" href="{{ dataSource.getUrl('/new') }}">{{ "New Report"|t('sproutcore') }}</a>
 	</div>
 {% endset %}
 
@@ -17,8 +17,8 @@
 			<table class="data fullwidth">
 				<thead>
 				<tr>
-					<th class="sproutreports-reportname" style="width:60%;">{{ "Name"|t('sproutreports') }}</th>
-					<th class="sproutreports-datasource" style="width:35%;">{{ "Data Source"|t('sproutreports') }}</th>
+					<th class="sproutreports-reportname" style="width:60%;">{{ "Name"|t('sproutcore') }}</th>
+					<th class="sproutreports-datasource" style="width:35%;">{{ "Data Source"|t('sproutcore') }}</th>
 					<th class="thin"></th>
 					<th class="thin"></th>
 				</tr>
@@ -39,7 +39,7 @@
 
 						<td class="sproutreports-reportactions">
 							<a href="{{ actionUrl('sprout-core/reports/export-report', {reportId: report.id}) }}"
-								class="btn small">{{ "Download"|t('sproutreports') }}</a>
+								class="btn small">{{ "Download"|t('sproutcore') }}</a>
 						</td>
 
 						<td class="sproutreports-reportactions">

@@ -22,9 +22,9 @@
 			<div class="btn submit menubtn"></div>
 			<div class="menu">
 				<ul>
-					<li><a class="formsubmit" data-redirect="{{ continueEditingUrl|hash }}">{{ "Save and continue editing"|t('sproutreports') }}</a></li>
-					<li><a class="formsubmit" data-redirect="{{ dataSource.getUrl('/new')|hash }}">{{ "Save and add another
-					report"|t('sproutreports') }}</a></li>
+					<li><a class="formsubmit" data-redirect="{{ continueEditingUrl|hash }}">{{ "Save and continue editing"|t('sproutcore') }}</a></li>
+					<li><a class="formsubmit" data-redirect="{{ dataSource.getUrl('/new')|hash }}">
+							{{ "Save and add another report"|t('sproutcore') }}</a></li>
 				</ul>
 			</div>
 		</div>
@@ -44,7 +44,7 @@
 				{% endif %}
 
 				{{ forms.textField({
-					label: "Name"|t('sproutreports'),
+					label: "Name"|t('sproutcore'),
 					id: "name",
 					name: 'name',
 					value: report is defined ? report.name : "",
@@ -55,7 +55,7 @@
 				}) }}
 
 				{{ forms.textField({
-					label: "Description"|t('sproutreports'),
+					label: "Description"|t('sproutcore'),
 					name: 'description',
 					rows: 3,
 					value: report is defined ? report.description : "",
@@ -104,7 +104,7 @@
 
 				{% if dataSource.isAllowHtmlEditable() %}
 					{{ forms.lightSwitchField({
-						label: 'Allow HTML <span class="info">Render HTML in your report results. Don\'t enable this setting if you allow user submitted content.</span>'|t('sproutreports'),
+						label: 'Allow HTML <span class="info">Render HTML in your report results. Don\'t enable this setting if you allow user submitted content.</span>'|t('sproutcore'),
 						name: 'allowHtml',
 						on: report.allowHtml is defined ? report.allowHtml : dataSource.getDefaultAllowHtml()
 					})}}
@@ -132,7 +132,7 @@
 				{% endset %}
 
 				{{ forms.field({
-					label: "Enabled"|t('sproutreports'),
+					label: "Enabled"|t('sproutcore'),
 				}, statusInput) }}
 
 			</div>

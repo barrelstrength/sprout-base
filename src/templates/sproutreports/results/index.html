@@ -13,7 +13,7 @@
 
 {% set crumbs = [
 { label: "Reports"|t('sproutcore'), url: dataSource.getUrl() },
-{ label: "Edit "|t('sproutreports') ~ report.name, url: report.getEditUrl() }
+{ label: "Edit "|t('sproutcore') ~ report.name, url: report.getEditUrl() }
 ] %}
 
 {% block content %}
@@ -31,7 +31,7 @@
 
 				<div class="button">
 					<div class="btngroup">
-						<input type="submit" class="btn submit" value="{{ 'Submit Report'|t('sproutreports') }}">
+						<input type="submit" class="btn submit" value="{{ 'Submit Report'|t('sproutcore') }}">
 					</div>
 				</div>
 
@@ -76,7 +76,7 @@
 				</table>
 			</div>
 		{% else %}
-			<p>{{ "This report currently has no results."|t('sproutreports') }}</p>
+			<p>{{ "This report currently has no results."|t('sproutcore') }}</p>
 		{% endif %}
 	</div>
 
