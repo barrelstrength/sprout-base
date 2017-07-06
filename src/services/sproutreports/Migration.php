@@ -2,6 +2,8 @@
 
 namespace barrelstrength\sproutcore\services\sproutreports;
 
+use craft\db\Query;
+
 class Migration extends \craft\db\Migration
 {
 	private $reportTable      = '{{%sproutreports_report}}';
@@ -71,6 +73,14 @@ class Migration extends \craft\db\Migration
 				'uid'          => $this->uid()
 			]);
 		}
+	}
+
+	public function dropTablesByDataSourceId($dataSourceId)
+	{
+		$query = new Query();
+		$query->createCommand()
+			->delete('sproutreports_report', ['dataSourceId' => $dataSourceId])
+			->execute();
 	}
 
 	public function dropTables()
