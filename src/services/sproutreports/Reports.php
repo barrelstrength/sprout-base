@@ -48,7 +48,6 @@ class Reports extends Component
 		$instance->groupId      = $request->getBodyParam('groupId', null);
 
 		$dataSource = $instance->getDataSource();
-	//	$dataSource = SproutCore::$app->dataSources->getDataSourceById($instance->dataSourceId);
 
 		$instance->allowHtml = $request->getBodyParam('allowHtml', $dataSource->getDefaultAllowHtml());
 	
