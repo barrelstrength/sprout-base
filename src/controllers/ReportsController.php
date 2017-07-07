@@ -24,32 +24,32 @@ class ReportsController extends Controller
 		]);
 	}
 
-	public function actionResultsIndex($reportId = null)
+	public function actionResultsIndex(Report $report = null, int $reportId = null)
 	{
-		$report = SproutCore::$app->reports->getReport($reportId);
-
-		$options = Craft::$app->getRequest()->getBodyParam('options');
-
-		$options = count($options) ? $options : array();
-
-		if ($report)
+		if (isset($report))
 		{
-			$dataSource = SproutCore::$app->dataSources->getDataSourceById($report->dataSourceId);
+			$reportModel = $report;
+		}
+		else
+		{
+			$reportModel = SproutCore::$app->reports->getReport($reportId);
+		}
 
-			$dataSource->setReport($report);
+		if ($reportModel)
+		{
+			$dataSource = $reportModel->getDataSource();
 
-			$labels     = $dataSource->getDefaultLabels($report, $options);
+			$labels     = $dataSource->getDefaultLabels($reportModel);
 
 			$variables['dataSource'] = null;
-			$variables['report']     = $report;
+			$variables['report']     = $reportModel;
 			$variables['values']     = array();
-			$variables['options']    = $options;
 			$variables['reportId']   = $reportId;
 			$variables['redirectUrl'] = $dataSource->getLowerPluginHandle() . '/reports/view/' . $reportId;
 
 			if ($dataSource)
 			{
-				$values = $dataSource->getResults($report, $options);
+				$values = $dataSource->getResults($reportModel);
 
 				if (empty($labels) && !empty($values))
 				{
@@ -73,29 +73,30 @@ class ReportsController extends Controller
 
 	public function actionEditReport(string $dataSourceId, Report $report = null, int $reportId = null)
 	{
-		$variables = array();
-
-		$variables['report'] = new Report();
+		$reportModel = new Report();
 
 		if (isset($report))
 		{
-			$variables['report'] = $report;
+			$reportModel = $report;
 		}
-
-		if ($reportId != null)
+		elseif ($reportId != null)
 		{
 			$reportModel = SproutCore::$app->reports->getReport($reportId);
-
-			$variables['report'] = $reportModel;
 		}
 
-		$variables['report']->dataSourceId = $dataSourceId;
+		// This is for creating new report
+		if ($dataSourceId != null)
+		{
+			$reportModel->dataSourceId = $dataSourceId;
+		}
 
-		$variables['dataSource']           = $variables['report']->getDataSource();
+		$dataSource = $reportModel->getDataSource();
 
-		$variables['continueEditingUrl']   = $variables['dataSource']->getUrl() . '/edit/{id}';
-
-		return $this->renderTemplate('sprout-core/sproutreports/reports/_edit', $variables);
+		return $this->renderTemplate('sprout-core/sproutreports/reports/_edit', array(
+			'report'             => $reportModel,
+			'dataSource'         => $dataSource,
+			'continueEditingUrl' => $dataSource->getUrl() . '/edit/{id}'
+		));
 	}
 
 	/**
@@ -106,6 +107,8 @@ class ReportsController extends Controller
 		$this->requirePostRequest();
 
 		$request = Craft::$app->getRequest();
+
+		$reportModel = new Report();
 
 		$reportId = $request->getBodyParam('reportId');
 		$options  = $request->getBodyParam('options');
@@ -129,9 +132,17 @@ class ReportsController extends Controller
 			}
 		}
 
+		// Encode back to object after validation for getResults method to recognize option object
+		$reportModel->options = json_encode($reportModel->options);
+
 		Craft::$app->getSession()->setError(SproutCore::t('Could not update report.'));
 
-		return $this->redirectToPostedUrl();
+		// Send the report back to the template
+		Craft::$app->getUrlManager()->setRouteParams([
+			'report' => $reportModel
+		]);
+
+		return null;
 	}
 
 	/**
@@ -148,7 +159,7 @@ class ReportsController extends Controller
 		{
 			Craft::$app->getSession()->setError(SproutCore::t('Couldn’t save report.'));
 
-			// Send the section back to the template
+			// Send the report back to the template
 			Craft::$app->getUrlManager()->setRouteParams([
 				'report' => $report
 			]);

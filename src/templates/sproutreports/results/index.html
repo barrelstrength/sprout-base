@@ -4,7 +4,7 @@
 
 {% set selectedSubnavItem = craft.app.request.segment(2) %}
 {% if dataSource is defined %}
-	{% set optionsHtml = dataSource.getOptionsHtml(options) %}
+	{% set optionsHtml = dataSource.getOptionsHtml() %}
 {% endif %}
 
 {% set extraPageHeaderHtml %}
