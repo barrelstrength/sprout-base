@@ -38,7 +38,7 @@ class EmailSelect extends Component
 	 * @param array $submittedFields
 	 *
 	 * @return bool
-	 */
+
 	public function unobfuscateEmailAddresses($formId, $submittedFields = array())
 	{
 		if (!is_numeric($formId))
@@ -85,7 +85,7 @@ class EmailSelect extends Component
 	 * Handles event to unobfuscate email addresses in a Sprout Forms submission
 	 *
 	 * @param Event $event
-	 */
+
 	public function handleUnobfuscateEmailAddresses(Event $event)
 	{
 		if (Craft::$app->request->getIsCpRequest())
@@ -99,4 +99,5 @@ class EmailSelect extends Component
 		// Unobfuscate email address in $_POST request
 		$this->unobfuscateEmailAddresses($formId, $submittedFields);
 	}
+	*/
 }
