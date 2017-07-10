@@ -42,7 +42,7 @@ class SproutCore extends \yii\base\Module
 		// Set some things early in case there are any settings, and the settings model's
 		// init() method needs to call Craft::t() or Plugin::getInstance().
 
-		$this->handle = 'sproutcore';
+		$this->handle = 'sprout-core';
 		$this->t9nCategory = ArrayHelper::remove($config, 't9nCategory', $this->t9nCategory ?? strtolower($this->handle));
 		$this->sourceLanguage = ArrayHelper::remove($config, 'sourceLanguage', $this->sourceLanguage);
 
@@ -100,6 +100,6 @@ class SproutCore extends \yii\base\Module
 	 */
 	public static function t($message, array $params = [])
 	{
-		return Craft::t('sproutcore', $message, $params);
+		return Craft::t('sprout-core', $message, $params);
 	}
 }
