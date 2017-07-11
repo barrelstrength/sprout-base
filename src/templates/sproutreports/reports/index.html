@@ -9,51 +9,56 @@
 {% endset %}
 
 {% block content %}
+	{% if reports is empty %}
+		{{ "There are no reports created."|t('sproutcore')  }}
+	{% else %}
+		<form method="post" accept-charset="UTF-8">
+			{{ getCsrfInput() }}
 
-	<form method="post" accept-charset="UTF-8">
-		{{ getCsrfInput() }}
-
-		<div class="tableview">
-			<table class="data fullwidth">
-				<thead>
-				<tr>
-					<th class="sproutreports-reportname" style="width:60%;">{{ "Name"|t('sproutcore') }}</th>
-					<th class="sproutreports-datasource" style="width:35%;">{{ "Data Source"|t('sproutcore') }}</th>
-					<th class="thin"></th>
-					<th class="thin"></th>
-				</tr>
-				</thead>
-				<tbody>
-				{% for report in reports %}
+			<div class="tableview">
+				<table class="data fullwidth">
+					<thead>
 					<tr>
-						<td class="sproutreports-reportname">
-							<a href="{{ cpUrl('sproutforms/reports/view/' ~ report.id) }}"><strong>{{ report.name }}</strong></a>
-
-							{% if report.description %}
-								<span class="info">{{ report.description }}</span>
-							{% endif %}
-						</td>
-						<td class="sproutreports-reportdatasource">
-							{{ report.getDataSource().getName() }}
-						</td>
-
-						<td class="sproutreports-reportactions">
-							<a href="{{ actionUrl('sprout-core/reports/export-report', {reportId: report.id}) }}"
-								class="btn small">{{ "Download"|t('sproutcore') }}</a>
-						</td>
-
-						<td class="sproutreports-reportactions">
-							<a href="{{ report.getEditUrl() }}" title="Edit Report Settings" data-icon="settings"></a>
-						</td>
-
+						<th class="sproutreports-reportname" style="width:60%;">{{ "Name"|t('sproutcore') }}</th>
+						<th class="sproutreports-datasource" style="width:35%;">{{ "Data Source"|t('sproutcore') }}</th>
+						<th class="thin"></th>
+						<th class="thin"></th>
 					</tr>
-				{% endfor %}
-				</tbody>
-			</table>
-		</div>
+					</thead>
+					<tbody>
+					{% for report in reports %}
+						<tr>
+							<td class="sproutreports-reportname">
+								<a href="{{ cpUrl(craft.request.segment(1) ~ '/reports/view/' ~ report.id) }}">
+									<strong>
+										{{ report.name}}
+									</strong></a>
 
-	</form>
+								{% if report.description %}
+									<span class="info">{{ report.description }}</span>
+								{% endif %}
+							</td>
+							<td class="sproutreports-reportdatasource">
+								{{ report.getDataSource().getName() }}
+							</td>
 
+							<td class="sproutreports-reportactions">
+								<a href="{{ actionUrl('sprout-core/reports/export-report', {reportId: report.id}) }}"
+									class="btn small">{{ "Download"|t('sproutcore') }}</a>
+							</td>
+
+							<td class="sproutreports-reportactions">
+								<a href="{{ report.getEditUrl() }}" title="Edit Report Settings" data-icon="settings"></a>
+							</td>
+
+						</tr>
+					{% endfor %}
+					</tbody>
+				</table>
+			</div>
+
+		</form>
+	{% endif %}
 	<div class="grid">
 		<div class="item">
 			{{ parent() }}

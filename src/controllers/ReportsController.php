@@ -6,6 +6,7 @@ use barrelstrength\sproutcore\records\sproutreports\Report as ReportRecord;
 use barrelstrength\sproutcore\SproutCore;
 use Craft;
 
+use craft\helpers\UrlHelper;
 use craft\web\assets\cp\CpAsset;
 use craft\web\Controller;
 
@@ -92,9 +93,18 @@ class ReportsController extends Controller
 
 		$dataSource = $reportModel->getDataSource();
 
+		$indexUrl = $dataSource->getUrl();
+		// Make sure you navigate to the right plugin page after saving and breadcrumb
+		if (Craft::$app->getPlugins()->getPlugin('sprout-reports')
+			&& Craft::$app->request->getSegment(1) == 'sprout-reports')
+		{
+			$indexUrl = UrlHelper::cpUrl('/sprout-reports/reports');
+		}
+
 		return $this->renderTemplate('sprout-core/sproutreports/reports/_edit', array(
 			'report'             => $reportModel,
 			'dataSource'         => $dataSource,
+			'indexUrl'           => $indexUrl,
 			'continueEditingUrl' => $dataSource->getUrl() . '/edit/{id}'
 		));
 	}
