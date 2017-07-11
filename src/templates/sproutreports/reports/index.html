@@ -29,7 +29,7 @@
 					{% for report in reports %}
 						<tr>
 							<td class="sproutreports-reportname">
-								<a href="{{ cpUrl(craft.request.segment(1) ~ '/reports/view/' ~ report.id) }}">
+								<a href="{{ cpUrl(craft.app.request.segment(1) ~ '/reports/view/' ~ report.id) }}">
 									<strong>
 										{{ report.name}}
 									</strong></a>

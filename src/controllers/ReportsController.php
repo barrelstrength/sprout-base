@@ -46,7 +46,7 @@ class ReportsController extends Controller
 			$variables['report']     = $reportModel;
 			$variables['values']     = array();
 			$variables['reportId']   = $reportId;
-			$variables['redirectUrl'] = $dataSource->getLowerPluginHandle() . '/reports/view/' . $reportId;
+			$variables['redirectUrl'] = Craft::$app->getRequest()->getSegment(1) . '/reports/view/' . $reportId;
 
 			if ($dataSource)
 			{
