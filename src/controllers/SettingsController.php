@@ -20,7 +20,7 @@ class SettingsController extends BaseController
 			throw new InvalidPluginException($pluginHandle);
 		}
 
-		return $this->renderTemplate('sprout-core/_settings/index', [
+		return $this->renderTemplate('sprout-core/sproutcore/_settings/index', [
 			'plugin' => $plugin,
 			'selectedSidebarItem' => $selectedSidebarItem
 		]);
