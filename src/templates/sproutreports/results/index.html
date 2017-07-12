@@ -23,7 +23,7 @@
 		<div id="modify-options-panel">
 
 			<form id="report-options" method="post" accept-charset="UTF-8">
-				{{ getCsrfInput() }}
+				{{ csrfInput() }}
 				<input type="hidden" name="action" value="sprout-core/reports/update-report">
 				{{ redirectInput(redirectUrl) }}
 				<input type="hidden" name="reportId" value="{{ reportId }}">
