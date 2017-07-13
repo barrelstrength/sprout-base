@@ -2,7 +2,7 @@
 
 {% set selectedSubnavItem = 'settings' %}
 
-{% set title = "Settings"|t %}
+{% set title = "Settings"|t('sprout-core') %}
 {% set settings = plugin.getSettings() %}
 {% set navItems = settings.getSettingsNavItems() %}
 {% set selectedSettingsInfo = attribute(navItems, selectedSidebarItem) %}

@@ -1,6 +1,6 @@
 {% extends "_layouts/cp" %}
 
-{% set title  = 'sproutreports'|t %}
+{% set title  = 'Sprout Reports'|t %}
 
 {% set selectedSubnavItem = craft.app.request.segment(2) %}
 {% if dataSource is defined %}
@@ -12,8 +12,8 @@
 {% endset %}
 
 {% set crumbs = [
-{ label: "Reports"|t('sproutcore'), url: dataSource.getUrl() },
-{ label: "Edit "|t('sproutcore') ~ report.name, url: report.getEditUrl() }
+{ label: "Reports"|t('sprout-core'), url: dataSource.getUrl() },
+{ label: "Edit "|t('sprout-core') ~ report.name, url: report.getEditUrl() }
 ] %}
 
 {% block content %}
@@ -31,7 +31,7 @@
 
 				<div class="button">
 					<div class="btngroup">
-						<input type="submit" class="btn submit" value="{{ 'Submit Report'|t('sproutcore') }}">
+						<input type="submit" class="btn submit" value="{{ 'Submit Report'|t('sprout-core') }}">
 					</div>
 				</div>
 
@@ -76,7 +76,7 @@
 				</table>
 			</div>
 		{% else %}
-			<p>{{ "This report currently has no results."|t('sproutcore') }}</p>
+			<p>{{ "This report currently has no results."|t('sprout-core') }}</p>
 		{% endif %}
 	</div>
 

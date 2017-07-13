@@ -4,7 +4,7 @@
 {% set title = report['id'] is defined and report['id'] is not empty ? "Edit Report" : "New Report" %}
 
 {% set crumbs = [
-	{ label: "Reports"|t('sproutcore'), url: indexUrl }
+	{ label: "Reports"|t('sprout-core'), url: indexUrl }
 ] %}
 
 {% set fullPageForm = true %}
@@ -17,14 +17,14 @@
 
 	<div class="button">
 		<div class="btngroup">
-			<input type="submit" class="btn submit" value="{{ 'Save Report'|t('sproutcore') }}">
+			<input type="submit" class="btn submit" value="{{ 'Save Report'|t('sprout-core') }}">
 
 			<div class="btn submit menubtn"></div>
 			<div class="menu">
 				<ul>
-					<li><a class="formsubmit" data-redirect="{{ continueEditingUrl|hash }}">{{ "Save and continue editing"|t('sproutcore') }}</a></li>
+					<li><a class="formsubmit" data-redirect="{{ continueEditingUrl|hash }}">{{ "Save and continue editing"|t('sprout-core') }}</a></li>
 					<li><a class="formsubmit" data-redirect="{{ dataSource.getUrl('/new')|hash }}">
-							{{ "Save and add another report"|t('sproutcore') }}</a></li>
+							{{ "Save and add another report"|t('sprout-core') }}</a></li>
 				</ul>
 			</div>
 		</div>
@@ -44,7 +44,7 @@
 				{% endif %}
 
 				{{ forms.textField({
-					label: "Name"|t('sproutcore'),
+					label: "Name"|t('sprout-core'),
 					id: "name",
 					name: 'name',
 					value: report is defined ? report.name : "",
@@ -55,7 +55,7 @@
 				}) }}
 
 				{{ forms.textField({
-					label: "Description"|t('sproutcore'),
+					label: "Description"|t('sprout-core'),
 					name: 'description',
 					rows: 3,
 					value: report is defined ? report.description : "",
@@ -86,7 +86,7 @@
 				{% set dataSourceNameLabel = "<h6>" ~ dataSource.name ~ "</h6>" %}
 
 				{{ forms.field({
-					label: "Data Source"|t('sproutcore'),
+					label: "Data Source"|t('sprout-core'),
 				}, dataSourceNameLabel) }}
 
 			</div>
@@ -94,7 +94,7 @@
 			<div class="pane meta">
 
 				{{ forms.textField({
-					label: "Handle"|t('sproutcore'),
+					label: "Handle"|t('sprout-core'),
 					id: 'handle',
 					name: 'handle',
 					required: true,
@@ -104,7 +104,7 @@
 
 				{% if dataSource.isAllowHtmlEditable() %}
 					{{ forms.lightSwitchField({
-						label: 'Allow HTML <span class="info">Render HTML in your report results. Don\'t enable this setting if you allow user submitted content.</span>'|t('sproutcore'),
+						label: 'Allow HTML <span class="info">Render HTML in your report results. Don\'t enable this setting if you allow user submitted content.</span>'|t('sprout-core'),
 						name: 'allowHtml',
 						on: report.allowHtml is defined ? report.allowHtml : dataSource.getDefaultAllowHtml()
 					})}}
@@ -133,7 +133,7 @@
 				{% endset %}
 
 				{{ forms.field({
-					label: "Enabled"|t('sproutcore'),
+					label: "Enabled"|t('sprout-core'),
 				}, statusInput) }}
 
 			</div>

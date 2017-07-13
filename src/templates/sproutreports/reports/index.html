@@ -1,16 +1,16 @@
 {% extends "sprout-core/sproutreports/_layouts/base" %}
 
-{% set title  = "Reports"|t('sproutcore') %}
+{% set title  = "Reports"|t('sprout-core') %}
 
 {% set extraPageHeaderHtml %}
 	<div class="btngroup submit first">
-		<a class="btn submit add icon" href="{{ dataSource.getUrl('/new') }}">{{ "New Report"|t('sproutcore') }}</a>
+		<a class="btn submit add icon" href="{{ dataSource.getUrl('/new') }}">{{ "New Report"|t('sprout-core') }}</a>
 	</div>
 {% endset %}
 
 {% block content %}
 	{% if reports is empty %}
-		{{ "There are no reports created."|t('sproutcore')  }}
+		{{ "There are no reports created."|t('sprout-core')  }}
 	{% else %}
 		<form method="post" accept-charset="UTF-8">
 			{{ csrfInput() }}
@@ -19,8 +19,8 @@
 				<table class="data fullwidth">
 					<thead>
 					<tr>
-						<th class="sproutreports-reportname" style="width:60%;">{{ "Name"|t('sproutcore') }}</th>
-						<th class="sproutreports-datasource" style="width:35%;">{{ "Data Source"|t('sproutcore') }}</th>
+						<th class="sproutreports-reportname" style="width:60%;">{{ "Name"|t('sprout-core') }}</th>
+						<th class="sproutreports-datasource" style="width:35%;">{{ "Data Source"|t('sprout-core') }}</th>
 						<th class="thin"></th>
 						<th class="thin"></th>
 					</tr>
@@ -44,7 +44,7 @@
 
 							<td class="sproutreports-reportactions">
 								<a href="{{ actionUrl('sprout-core/reports/export-report', {reportId: report.id}) }}"
-									class="btn small">{{ "Download"|t('sproutcore') }}</a>
+									class="btn small">{{ "Download"|t('sprout-core') }}</a>
 							</td>
 
 							<td class="sproutreports-reportactions">
