@@ -144,7 +144,7 @@ abstract class BaseDataSource
 	 */
 	public function getPluginHandle()
 	{
-		return 'sproutReports';
+		return 'sprout-reports';
 	}
 
 	public function getLowerPluginHandle()
