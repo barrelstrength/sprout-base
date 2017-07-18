@@ -8,7 +8,17 @@
 {% endif %}
 
 {% set extraPageHeaderHtml %}
-		<a id="modify-options-icon" class="btn" data-icon="settings"></a>
+<form method="post" accept-charset="UTF-8">
+	{{ csrfInput() }}
+	<input type="hidden" name="action" value="sprout-core/reports/export-report">
+	<input type="hidden" name="reportId" value="{{ reportId }}">
+
+	<a id="btn-download-csv" class="btn">
+		{{ "Download"|t('sprout-reports') }}
+	</a>
+
+	<a id="modify-options-icon" class="btn" data-icon="settings"></a>
+</form>
 {% endset %}
 
 {% set crumbs = [
@@ -87,6 +97,15 @@
 {% js %}
 
 	(function(){
+
+		$('#btn-download-csv').on('click', function(event) {
+
+			event.preventDefault();
+
+			$form = $(this).parents('form');
+			$form.submit();
+
+		});
 
 		$('#modify-options-icon').on('click', function() {
 			$('#modify-options-panel').slideToggle('slow');
