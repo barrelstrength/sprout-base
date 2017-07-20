@@ -1,7 +1,7 @@
 <?php
 namespace barrelstrength\sproutcore\contracts\sproutimport;
 
-abstract class BaseSproutImportSettingsImporter extends BaseSproutImportImporter
+abstract class BaseSettingsImporter extends BaseImporter
 {
 	/**
 	 * @return bool

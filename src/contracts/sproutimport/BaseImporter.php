@@ -4,11 +4,11 @@ use barrelstrength\sproutimport\SproutImport;
 use craft\base\Model;
 
 /**
- * Class BaseSproutImportImporter
+ * Class BaseImporter
  *
  * @package Craft
  */
-abstract class BaseSproutImportImporter
+abstract class BaseImporter
 {
 	/**
 	 * The model of the thing being imported: Element, Setting, Field etc.
@@ -57,7 +57,7 @@ abstract class BaseSproutImportImporter
 	protected $fakerService;
 
 	/**
-	 * BaseSproutImportImporter constructor.
+	 * BaseImporter constructor.
 	 *
 	 * @param array $rows
 	 * @param null  $fakerService
@@ -81,7 +81,6 @@ abstract class BaseSproutImportImporter
 		{
 			$this->fakerService = $fakerService;
 		}
-
 	}
 
 	/**
@@ -195,16 +194,12 @@ abstract class BaseSproutImportImporter
 		{
 			$className = $this->getModelName();
 
-			$model = SproutImport::$app->utilities->getModelNameWithNamespace($className);
-
-			if (!class_exists($model))
+			if (!class_exists($className))
 			{
-				$this->addError($model . ' not found.', 'not-found');
-
-				return $model;
+				throw new \Exception($className . ' not found.');
 			}
 
-			$this->model = new $model;
+			$this->model = new $className;
 		}
 
 		return $this->model;

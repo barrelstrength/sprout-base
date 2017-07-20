@@ -10,10 +10,10 @@ use craft\base\Model;
  *
  * @package Craft
  */
-abstract class BaseSproutImportElementImporter extends BaseSproutImportImporter
+abstract class BaseElementImporter extends BaseImporter
 {
 	/**
-	 * @inheritdoc BaseSproutImportImporter::getName()
+	 * @inheritdoc BaseImporter::getName()
 	 *
 	 * @return string
 	 */

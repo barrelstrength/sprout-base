@@ -1,7 +1,7 @@
 <?php
 namespace barrelstrength\sproutcore\contracts\sproutimport;
 
-abstract class BaseSproutImportFieldImporter extends BaseSproutImportImporter
+abstract class BaseFieldImporter extends BaseImporter
 {
 	protected $id;
 
@@ -43,9 +43,9 @@ abstract class BaseSproutImportFieldImporter extends BaseSproutImportImporter
 	 */
 	public function getModel()
 	{
-		$className = $this->getModelName() . "FieldType";
+		$className = $this->getModelName();
 
-		$this->model = sproutImport()->getModelNameWithNamespace($className);
+		$this->model = $className;
 
 		return new $this->model;
 	}
