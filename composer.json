@@ -1,13 +1,15 @@
 {
   "name": "barrelstrength/sproutcore",
   "description": "Common libraries for Sprout Plugins for Craft CMS",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "autoload": {
     "psr-4": {
       "barrelstrength\\sproutcore\\": "src/"
     }
   },
   "require": {
-    "league/csv": "^7.2"
+    "league/csv": "^7.2",
+    "commerceguys/addressing": "^0.7.1",
+    "commerceguys/intl": "^0.6.1"
   }
 }
