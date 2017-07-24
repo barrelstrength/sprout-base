@@ -8,4 +8,7 @@ $baseDir = dirname($vendorDir);
 return array(
     'barrelstrength\\sproutcore\\' => array($baseDir . '/src'),
     'League\\Csv\\' => array($vendorDir . '/league/csv/src'),
+    'CommerceGuys\\Intl\\' => array($vendorDir . '/commerceguys/intl/src'),
+    'CommerceGuys\\Enum\\' => array($vendorDir . '/commerceguys/enum/src'),
+    'CommerceGuys\\Addressing\\' => array($vendorDir . '/commerceguys/addressing/src'),
 );

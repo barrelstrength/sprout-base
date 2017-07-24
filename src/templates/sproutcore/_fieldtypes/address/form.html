@@ -7,12 +7,12 @@
 </div>
 
 {# @todo - update to use Asset Bundles if in use #}
-{% includeJsResource 'sproutseo/js/AddressForm.js' %}
+{#% includeJsResource 'sproutseo/js/AddressForm.js' %#}
 
-{% includejs %}
+{% js %}
 
 	$(document).ready(function () {
-		SproutSeo.AddressForm.init($('.sproutaddress-form'), { actionUrl: '{{ actionUrl }}' })
+		SproutCore.AddressForm.init($('.sproutaddress-form'), { actionUrl: '{{ actionUrl }}' })
 	})
 
-{% endincludejs %}
+{% endjs %}

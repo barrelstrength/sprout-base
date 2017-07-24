@@ -61,7 +61,8 @@ class Address extends Component
 			}
 		}
 
-		$transaction = Craft::$app->db->getCurrentTransaction() === null ? Craft::$app->db->beginTransaction() : null;
+		$db = Craft::$app->getDb();
+		$transaction = $db->beginTransaction();
 
 		if ($model->validate())
 		{
@@ -69,12 +70,12 @@ class Address extends Component
 			{
 				if ($record->save())
 				{
-					if ($transaction && $transaction->active)
+					if ($transaction)
 					{
 						$transaction->commit();
 					}
 
-					$model->setAttributes($record->getAttributes());
+					$model->id = $record->id;
 
 					$result = true;
 
@@ -88,7 +89,7 @@ class Address extends Component
 			}
 			catch (\Exception $e)
 			{
-				if ($transaction && $transaction->active)
+				if ($transaction)
 				{
 					$transaction->rollback();
 				}
@@ -99,7 +100,7 @@ class Address extends Component
 
 		if (!$result)
 		{
-			if ($transaction && $transaction->active)
+			if ($transaction)
 			{
 				$transaction->rollback();
 			}

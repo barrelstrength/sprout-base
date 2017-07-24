@@ -24,6 +24,10 @@ class Address extends Model
 	public $address1;
 	public $address2;
 
+	public $dateCreated;
+	public $dateUpdated;
+	public $uid;
+
 	public function init()
 	{
 		$this->addressHelper = new AddressHelper();
@@ -41,7 +45,7 @@ class Address extends Model
 		return $rules;
 	}
 
-	public function validatePostalCode($object, $attribute)
+	public function validatePostalCode($attribute)
 	{
 		$postalCode = $this->{$attribute};
 
