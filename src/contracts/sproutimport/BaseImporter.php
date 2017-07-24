@@ -2,6 +2,7 @@
 namespace barrelstrength\sproutcore\contracts\sproutimport;
 use barrelstrength\sproutimport\SproutImport;
 use craft\base\Model;
+use barrelstrength\sproutcore\SproutCore;
 
 /**
  * Class BaseImporter
@@ -40,7 +41,7 @@ abstract class BaseImporter
 	 *
 	 * @var
 	 */
-	protected $rows;
+	public $rows;
 
 	/**
 	 * Any errors that have occurred that we want to store and access later
@@ -66,10 +67,10 @@ abstract class BaseImporter
 	{
 		$this->rows = $rows;
 
+		$model = $this->getModel();
+
 		if (count($rows))
 		{
-			$model = $this->getModel();
-
 			$this->setModel($model, $rows);
 		}
 
@@ -166,7 +167,7 @@ abstract class BaseImporter
 	 *
 	 * @return mixed
 	 */
-	public function setModel(Model $model, $settings = array())
+	public function setModel($model, $settings = array())
 	{
 		if (!empty($settings['attributes']))
 		{
@@ -179,14 +180,8 @@ abstract class BaseImporter
 	}
 
 	/**
-	 * Get a model of the thing being imported, and assign it to $this->model
-	 *
-	 * Examples:
-	 * - new UserModel
-	 * - new FieldModel
-	 * - new PlainTextFieldType
-	 *
-	 * @return mixed
+	 * @return Model
+	 * @throws \Exception
 	 */
 	public function getModel()
 	{
@@ -196,7 +191,7 @@ abstract class BaseImporter
 
 			if (!class_exists($className))
 			{
-				throw new \Exception($className . ' not found.');
+				throw new \Exception(SproutCore::t($className . ' namespace on getModelName() method not found.'));
 			}
 
 			$this->model = new $className;
@@ -265,4 +260,6 @@ abstract class BaseImporter
 	{
 		return $this->model->getErrors();
 	}
+
+	abstract public function save();
 }

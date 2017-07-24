@@ -16,6 +16,7 @@ abstract class BaseSettingsImporter extends BaseImporter
 	 */
 	public function getModel()
 	{
+
 		if (!$this->model)
 		{
 			$model = null;
@@ -55,11 +56,6 @@ abstract class BaseSettingsImporter extends BaseImporter
 	{
 		return null;
 	}
-
-	/**
-	 * @return string
-	 */
-	abstract public function save();
 
 	/**
 	 * @param $id

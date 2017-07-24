@@ -31,7 +31,7 @@ abstract class BaseFieldImporter extends BaseImporter
 	 *
 	 * @return null
 	 */
-	public function setModel(FieldModel $model)
+	public function setModel($model)
 	{
 		$this->model = $model;
 	}

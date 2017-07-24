@@ -55,7 +55,7 @@ abstract class BaseElementImporter extends BaseImporter
 	 *
 	 * @return mixed
 	 */
-	public function setModel(Model $model, $settings = array())
+	public function setModel($model, $settings = array())
 	{
 		$model = $this->processUpdateElement($model, $settings);
 
