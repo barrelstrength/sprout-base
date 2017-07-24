@@ -5,13 +5,14 @@ use barrelstrength\sproutcore\services\sproutreports\DataSources;
 use barrelstrength\sproutcore\services\sproutreports\Exports;
 use barrelstrength\sproutcore\services\sproutreports\Migration;
 use barrelstrength\sproutcore\services\sproutreports\Reports;
-use craft\base\Component;
 use barrelstrength\sproutcore\services\sproutfields\Utilities;
 use barrelstrength\sproutcore\services\sproutfields\Link;
 use barrelstrength\sproutcore\services\sproutfields\Phone;
 use barrelstrength\sproutcore\services\sproutfields\RegularExpression;
 use barrelstrength\sproutcore\services\sproutfields\Email;
 use barrelstrength\sproutcore\services\sproutfields\EmailSelect;
+use barrelstrength\sproutcore\services\Address;
+use craft\base\Component;
 
 class App extends Component
 {
@@ -22,6 +23,7 @@ class App extends Component
 	public $regularExpression;
 	public $emailSelect;
 	public $exports;
+	public $address;
 
 	/**
 	 * @var Reports
@@ -50,5 +52,6 @@ class App extends Component
 		$this->dataSources       = new DataSources();
 		$this->exports           = new Exports();
 		$this->reportsMigration  = new Migration();
+		$this->address           = new Address();
 	}
 }
