@@ -56,4 +56,9 @@ abstract class BaseFieldImporter extends BaseImporter
 	 * @return mixed
 	 */
 	public abstract function getMockData();
+
+	public function save()
+	{
+
+	}
 }
