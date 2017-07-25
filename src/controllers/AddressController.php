@@ -59,7 +59,7 @@ class AddressController extends Controller
 	 */
 	public function actionChangeForm()
 	{
-		$this->requireAjaxRequest();
+		$this->requireAcceptsJson();
 		$this->requirePostRequest();
 
 		$countryCode = Craft::$app->getRequest()->getBodyParam('countryCode');
@@ -67,8 +67,9 @@ class AddressController extends Controller
 
 		$this->addressHelper->setParams($countryCode, $namespace);
 
-		echo $this->addressHelper->getAddressFormHtml();
-		exit;
+		$html = $this->addressHelper->getAddressFormHtml();
+
+		return $this->asJson(['html' => $html]);
 	}
 
 	/**
@@ -78,7 +79,7 @@ class AddressController extends Controller
 	 */
 	public function actionGetAddressFormFields()
 	{
-		$this->requireAjaxRequest();
+		$this->requireAcceptsJson();
 		$this->requirePostRequest();
 
 		$addressInfoId = null;
@@ -127,7 +128,7 @@ class AddressController extends Controller
 	 */
 	public function actionGetAddress()
 	{
-		$this->requireAjaxRequest();
+		$this->requireAcceptsJson();
 		$this->requirePostRequest();
 
 		$result = [
@@ -178,7 +179,7 @@ class AddressController extends Controller
 	 */
 	public function actionDeleteAddress()
 	{
-		$this->requireAjaxRequest();
+		$this->requireAcceptsJson();
 		$this->requirePostRequest();
 
 		$addressId        = null;
@@ -242,7 +243,7 @@ class AddressController extends Controller
 	 */
 	public function actionQueryAddress()
 	{
-		$this->requireAjaxRequest();
+		$this->requireAcceptsJson();
 		$this->requirePostRequest();
 
 		$addressInfo = null;

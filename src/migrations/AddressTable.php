@@ -26,18 +26,19 @@ class AddressTable extends Migration
 		if ($response == false)
 		{
 			$this->createTable($this->tableName, [
-				'id'                => $this->primaryKey(),
-				'modelId'           => $this->integer(),
-				'countryCode'       => $this->string(),
-				'locality'          => $this->string(),
-				'dependentLocality' => $this->string(),
-				'postalCode'        => $this->string(),
-				'sortingCode'       => $this->string(),
-				'address1'          => $this->string(),
-				'address2'          => $this->string(),
-				'dateCreated'       => $this->dateTime()->notNull(),
-				'dateUpdated'       => $this->dateTime()->notNull(),
-				'uid'               => $this->uid(),
+				'id'                 => $this->primaryKey(),
+				'modelId'            => $this->integer(),
+				'countryCode'        => $this->string(),
+				'administrativeArea' => $this->string(),
+				'locality'           => $this->string(),
+				'dependentLocality'  => $this->string(),
+				'postalCode'         => $this->string(),
+				'sortingCode'        => $this->string(),
+				'address1'           => $this->string(),
+				'address2'           => $this->string(),
+				'dateCreated'        => $this->dateTime()->notNull(),
+				'dateUpdated'        => $this->dateTime()->notNull(),
+				'uid'                => $this->uid(),
 			]);
 		}
 	}

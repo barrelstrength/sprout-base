@@ -1,7 +1,7 @@
 <?php
 
 namespace barrelstrength\sproutcore\helpers;
-
+require dirname(__FILE__) . '/../../vendor/autoload.php';
 use barrelstrength\sproutcore\SproutCore;
 use barrelstrength\sproutcore\models\Address as AddressModel;
 use Craft;
@@ -698,10 +698,15 @@ class AddressHelper
 
 	public function renderTemplates($template, $params)
 	{
-		$addressPath = Craft::getAlias('@barrelstrength/sproutcore/templates/sproutcore/_fieldtypes/address/');
-		$path = $addressPath . $template;
+		$addressPath = Craft::getAlias('@sproutcore/templates/sproutcore/_fieldtypes/address/');
 
-		$html = Craft::$app->view->renderTemplate($path, $params);
+		$originalTemplatesPath = Craft::$app->getView()->getTemplatesPath();
+
+		#Craft::$app->getView()->setTemplatesPath($addressPath);
+
+		$html = Craft::$app->view->renderTemplate('sprout-core/sproutcore/_fieldtypes/address/'.$template, $params);
+
+		#Craft::$app->getView()->setTemplatesPath($originalTemplatesPath);
 
 		return $html;
 	}
