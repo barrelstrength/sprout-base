@@ -81,9 +81,11 @@ abstract class BaseElementImporter extends BaseImporter
 			{
 				$defaults = $settings['settings']['defaults'];
 
-				foreach ($model->getAttributes() as $attribute => $value)
+				$attributes = $model->attributes();
+
+				foreach ($attributes as $attribute)
 				{
-					if (isset($model->{$attribute}) && !$model->{$attribute})
+					if (property_exists($model, $attribute) && !empty($model->{$attribute}))
 					{
 						// Check for email and username values if authorId attribute
 						if ($attribute == 'authorId' && isset($defaults['authorId']))
@@ -98,7 +100,7 @@ abstract class BaseElementImporter extends BaseImporter
 
 						if (isset($defaults[$attribute]))
 						{
-							$model->setAttribute($attribute, $defaults[$attribute]);
+							$model->{$attribute} = $defaults[$attribute];
 						}
 					}
 				}
@@ -130,7 +132,7 @@ abstract class BaseElementImporter extends BaseImporter
 				if (!empty($fields))
 				{
 					$fields = SproutImport::$app->elementImporter->resolveMatrixRelationships($fields);
-
+					$message = [];
 					if (!$fields)
 					{
 						$message['error']  = SproutImport::t("Unable to resolve matrix relationships.");
@@ -145,6 +147,7 @@ abstract class BaseElementImporter extends BaseImporter
 					$related = $settings['content']['related'];
 					$fields = SproutImport::$app->elementImporter->resolveRelationships($related, $fields);
 
+					$message = [];
 					if (!$fields)
 					{
 						$message['error']  = SproutImport::t("Unable to resolve related relationships.");
@@ -204,7 +207,7 @@ abstract class BaseElementImporter extends BaseImporter
 
 		$updateElement = $settings['settings']['updateElement'];
 
-		$element = SproutImport::$app->getElementImporter()->getModelByMatches($model, $updateElement);
+		$element = SproutImport::$app->elementImporter->getModelByMatches($model, $updateElement);
 
 		if ($element)
 		{
