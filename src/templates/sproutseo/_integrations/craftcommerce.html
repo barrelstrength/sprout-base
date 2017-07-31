@@ -1,5 +1,6 @@
 {% import "_includes/forms" as forms %}
 {% import 'sprout-core/sproutcore/_includes/sproutcp' as sprout %}
+{% do view.registerAssetBundle("barrelstrength\\sproutcore\\web\\sproutcore\\cp\\CpAsset") %}
 
 {% set boxBody %}
 	<p>{{ "Sprout SEO works beautifully with <a href='{url}' target='_blank'>Craft Commerce</a>. Generate product-specific metadata for Search and Social Sharing, build flexible Structured Data, and dynamically add all of your products to your XML sitemap."|t({
@@ -10,7 +11,7 @@
 {{ sprout.mediaBox({
 	heading: "Optimize SEO for Craft Commerce"|t('sprout-core'),
 	body: boxBody,
-	resourceUrl: resourceUrl('sprout-core/icons/craftcommerce-icon.svg'),
+	resourceUrl: cpUrl('sprout-core/icons/craftcommerce-icon.svg'),
 	resourceAltText: "Sprout Email Icon"|t('sprout-core'),
 }) }}
 

@@ -1,7 +1,6 @@
 <?php
 
 namespace barrelstrength\sproutcore\helpers;
-require dirname(__FILE__) . '/../../vendor/autoload.php';
 use barrelstrength\sproutcore\SproutCore;
 use barrelstrength\sproutcore\models\Address as AddressModel;
 use Craft;
