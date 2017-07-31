@@ -12,11 +12,10 @@ abstract class BaseSettingsImporter extends BaseImporter
 	}
 
 	/**
-	 * @return null
+	 * @return \craft\base\Model|mixed|null
 	 */
 	public function getModel()
 	{
-
 		if (!$this->model)
 		{
 			$model = null;

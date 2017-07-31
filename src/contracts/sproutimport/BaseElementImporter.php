@@ -125,10 +125,6 @@ abstract class BaseElementImporter extends BaseImporter
 
 			if (isset($settings['content']['fields']))
 			{
-				Craft::$app->getRequest()->setBodyParams($settings['content']);
-
-				$model->setFieldValuesFromRequest('fields');
-
 				$fields = $settings['content']['fields'];
 
 				if (!empty($fields))
@@ -156,13 +152,16 @@ abstract class BaseElementImporter extends BaseImporter
 
 						SproutImport::error($message);
 					}
-
-					$relatedFields = ['fields' => $fields];
-
-					Craft::$app->getRequest()->setBodyParams($relatedFields);
-
-					$model->setFieldValuesFromRequest('fields');
 				}
+
+				$fields = ['fields' => $fields];
+
+				// Required to associate fields on the element
+				$model->fieldLayoutId = $model->getType()->fieldLayoutId;
+
+				Craft::$app->getRequest()->setBodyParams($fields);
+
+				$model->setFieldValuesFromRequest('fields');
 
 				if (isset($settings['content']['title']))
 				{
