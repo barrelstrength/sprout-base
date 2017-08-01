@@ -1,0 +1,34 @@
+{% import "_includes/forms" as forms %}
+{% set name = (namespaceInputName is not defined) ? 'address' : namespaceInputName %}
+{% set addressBox = (namespaceInputId is not defined) ? 'sproutaddressinfo-box' : 'sproutaddressinfo-box-' ~ namespaceInputId
+%}
+
+{% set addressInput %}
+	<div class="{{ addressBox }}"
+		{% if addressId is defined and addressId %}
+		data-addressinfoid='{{ addressId }}'
+		{% endif %}
+		>
+		<div class='address-add-button hidden'>
+			<a class='btn add icon dashed sproutaddress-edit' href='#'>{{ "Add Address"|t('sprout-core') }}</a>
+		</div>
+		<div class='address-edit-buttons hidden'>
+			<a class='small btn right icon sproutaddress-edit clear-button' href='#'>{{ "Clear"|t('sprout-core') }}</a>
+			<a class='small btn right icon sproutaddress-edit update-button' href='#'>{{ "Edit"|t('sprout-core') }}</a>
+		</div>
+		<div class='address-format hidden'>
+			<div class='spinner'></div>
+		</div>
+	</div>
+{% endset %}
+
+{{ forms.field({
+}, addressInput) }}
+
+{% do view.registerAssetBundle("barrelstrength\\sproutcore\\web\\addressfield\\AddressFieldAsset") %}
+
+{% js %}
+	$( document ).ready(function() {
+		new Craft.SproutCore.AddressBox($('.{{ addressBox }}'), { namespace: '{{ name }}' })
+	});
+{% endjs %}
