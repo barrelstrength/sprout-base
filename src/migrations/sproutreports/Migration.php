@@ -1,6 +1,6 @@
 <?php
 
-namespace barrelstrength\sproutcore\services\sproutreports;
+namespace barrelstrength\sproutcore\migrations\sproutreports;
 
 use craft\db\Query;
 

@@ -3,7 +3,7 @@ namespace barrelstrength\sproutcore\services;
 
 use barrelstrength\sproutcore\services\sproutreports\DataSources;
 use barrelstrength\sproutcore\services\sproutreports\Exports;
-use barrelstrength\sproutcore\services\sproutreports\Migration;
+use barrelstrength\sproutcore\migrations\sproutreports\Migration;
 use barrelstrength\sproutcore\services\sproutreports\Reports;
 use barrelstrength\sproutcore\services\sproutfields\Utilities;
 use barrelstrength\sproutcore\services\sproutfields\Link;
