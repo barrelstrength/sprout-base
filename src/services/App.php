@@ -3,7 +3,8 @@ namespace barrelstrength\sproutcore\services;
 
 use barrelstrength\sproutcore\services\sproutreports\DataSources;
 use barrelstrength\sproutcore\services\sproutreports\Exports;
-use barrelstrength\sproutcore\migrations\sproutreports\Migration;
+use barrelstrength\sproutcore\migrations\sproutreports\Migration as ReportsMigration;
+use barrelstrength\sproutcore\migrations\sproutimport\Migration as ImportMigration;
 use barrelstrength\sproutcore\services\sproutreports\Reports;
 use barrelstrength\sproutcore\services\sproutfields\Utilities;
 use barrelstrength\sproutcore\services\sproutfields\Link;
@@ -31,9 +32,14 @@ class App extends Component
 	public $reports;
 
 	/**
-	 * @var Migration
+	 * @var ReportsMigration
 	 */
 	public $reportsMigration;
+
+	/**
+	 * @var ImportMigration
+	 */
+	public $importMigration;
 
 	/**
 	 * @var DataSources
@@ -51,7 +57,8 @@ class App extends Component
 		$this->reports           = new Reports();
 		$this->dataSources       = new DataSources();
 		$this->exports           = new Exports();
-		$this->reportsMigration  = new Migration();
+		$this->reportsMigration  = new ReportsMigration();
+		$this->importMigration   = new ImportMigration();
 		$this->address           = new Address();
 	}
 }
