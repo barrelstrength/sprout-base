@@ -3,7 +3,7 @@ if (typeof Craft.SproutCore === typeof undefined) {
 }
 (function($) {
 
-	// Set all the standard Craft.SproutFields.* stuff
+	// Set all the standard Craft.SproutCore.* stuff
 	$.extend(Craft.SproutCore,
 	{
 		initFields: function($container) {
