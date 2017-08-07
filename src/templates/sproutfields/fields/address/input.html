@@ -27,6 +27,39 @@
 
 {% do view.registerAssetBundle("barrelstrength\\sproutcore\\web\\addressfield\\AddressFieldAsset") %}
 
+{% css %}
+	/**
+	 * Address Field
+	 */
+	.{{addressBox}} {
+		display: inline-flex;
+		justify-content: flex-start;
+	}
+	.{{addressBox}} .address-add-button {
+		order: 1;
+	}
+	.{{addressBox}} .address-edit-buttons {
+		order: 3;
+	}
+	.{{addressBox}} .address-format {
+		order: 2;
+		padding-right: 20px;
+	}
+
+	.sproutaddress-body .text,
+	.sproutaddress-body .select {
+		padding: 0;
+	}
+
+	.sproutaddress-modal {
+		overflow: visible
+	}
+
+	.modal .sproutaddress-body {
+		padding: 0;
+	}
+{% endcss %}
+
 {% js %}
 	$( document ).ready(function() {
 		new Craft.SproutCore.AddressBox($('.{{ addressBox }}'), { namespace: '{{ name }}' })
