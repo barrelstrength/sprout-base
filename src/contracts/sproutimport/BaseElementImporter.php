@@ -188,7 +188,7 @@ abstract class BaseElementImporter extends BaseImporter
 	 */
 	public function deleteById($id)
 	{
-		return craft()->elements->deleteElementById($id);
+		return Craft::$app->getElements()->deleteElementById($id);
 	}
 
 	/**
