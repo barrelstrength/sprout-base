@@ -33,6 +33,11 @@ class Phone extends Component
 	 */
 	public function validate($value, $mask): bool
 	{
+		if ($value == $mask)
+		{
+			return true;
+		}
+		
 		$mask = preg_quote($mask);
 
 		$phonePattern = $this->convertMaskToRegEx($mask);
