@@ -12,7 +12,7 @@ abstract class BaseFieldImporter extends BaseImporter
 	 */
 	public function getName()
 	{
-		return $this->getModel()->getName();
+		return $this->getModel()->displayName();
 	}
 
 	/**
@@ -31,7 +31,7 @@ abstract class BaseFieldImporter extends BaseImporter
 	 *
 	 * @return null
 	 */
-	public function setModel($model)
+	public function setModel($model, $settings = array())
 	{
 		$this->model = $model;
 	}

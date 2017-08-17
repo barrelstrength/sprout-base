@@ -125,13 +125,14 @@ abstract class BaseElementImporter extends BaseImporter
 				$model->title = $settings['content']['title'];
 			}
 
-			if (isset($settings['content']['fields']))
+			if (!empty($settings['content']['fields']))
 			{
 				$fields = $settings['content']['fields'];
 
 				if (!empty($fields))
 				{
 					$fields = SproutImport::$app->elementImporter->resolveMatrixRelationships($fields);
+
 					$message = [];
 					if (!$fields)
 					{
@@ -160,7 +161,7 @@ abstract class BaseElementImporter extends BaseImporter
 				$fields = ['fields' => $fields];
 
 				// Required to associate fields on the element
-				$model->fieldLayoutId = $model->getType()->fieldLayoutId;
+				$model->fieldLayoutId = $this->getFieldLayoutId($model);
 
 				Craft::$app->getRequest()->setBodyParams($fields);
 
@@ -177,6 +178,8 @@ abstract class BaseElementImporter extends BaseImporter
 
 		return $this->model;
 	}
+
+	abstract function getFieldLayoutId($model);
 
 	/**
 	 * Delete an Element using the Element ID
