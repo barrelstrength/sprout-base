@@ -2,7 +2,7 @@
 
 namespace barrelstrength\sproutcore\helpers;
 use barrelstrength\sproutcore\SproutCore;
-use barrelstrength\sproutcore\models\Address as AddressModel;
+use barrelstrength\sproutcore\models\sproutfields\Address as AddressModel;
 use Craft;
 use CommerceGuys\Addressing\Repository\AddressFormatRepository;
 use CommerceGuys\Addressing\Repository\SubdivisionRepository;

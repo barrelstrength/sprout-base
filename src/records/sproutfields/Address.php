@@ -1,6 +1,6 @@
 <?php
 
-namespace barrelstrength\sproutcore\records;
+namespace barrelstrength\sproutcore\records\sproutfields;
 
 use craft\db\ActiveRecord;
 
@@ -13,6 +13,6 @@ class Address extends ActiveRecord
 	 */
 	public static function tableName(): string
 	{
-		return '{{%sproutcore_addresses}}';
+		return '{{%sproutfields_addresses}}';
 	}
 }

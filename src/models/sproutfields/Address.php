@@ -1,5 +1,5 @@
 <?php
-namespace barrelstrength\sproutcore\models;
+namespace barrelstrength\sproutcore\models\sproutfields;
 
 use barrelstrength\sproutcore\SproutCore;
 use barrelstrength\sproutcore\helpers\AddressHelper;

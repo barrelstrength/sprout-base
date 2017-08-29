@@ -1,11 +1,11 @@
 <?php
 
-namespace barrelstrength\sproutcore\services;
+namespace barrelstrength\sproutcore\services\sproutfields;
 
 use barrelstrength\sproutcore\SproutCore;
-use barrelstrength\sproutcore\models\Address as AddressModel;
+use barrelstrength\sproutcore\models\sproutfields\Address as AddressModel;
 use barrelstrength\sproutcore\events\OnSaveAddressEvent;
-use barrelstrength\sproutcore\records\Address as AddressRecord;
+use barrelstrength\sproutcore\records\sproutfields\Address as AddressRecord;
 use Craft;
 use craft\base\Component;
 

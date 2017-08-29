@@ -1,5 +1,5 @@
 <?php
-namespace barrelstrength\sproutcore\migrations;
+namespace barrelstrength\sproutcore\migrations\sproutfields;
 
 use craft\db\Migration;
 
@@ -11,7 +11,7 @@ class AddressTable extends Migration
 	/**
 	 * @var string|null The table name
 	 */
-	public $tableName = '{{%sproutcore_addresses}}';
+	public $tableName = '{{%sproutfields_addresses}}';
 
 	// Public Methods
 	// =========================================================================
@@ -48,6 +48,6 @@ class AddressTable extends Migration
 	 */
 	public function safeDown()
 	{
-		return false;
+		$this->dropTable($this->tableName);
 	}
 }

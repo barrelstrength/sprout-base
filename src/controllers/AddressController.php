@@ -2,7 +2,7 @@
 namespace barrelstrength\sproutcore\controllers;
 
 use barrelstrength\sproutcore\helpers\AddressHelper;
-use barrelstrength\sproutcore\models\Address as AddressModel;
+use barrelstrength\sproutcore\models\sproutfields\Address as AddressModel;
 use barrelstrength\sproutcore\SproutCore;
 use craft\db\Query;
 use craft\web\Controller;
