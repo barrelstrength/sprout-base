@@ -101,7 +101,7 @@ class Report extends Model
 			'id', 'name', 'handle',
 			'description', 'allowHtml', 'options',
 			'dataSourceId', 'enabled', 'groupId',
-		  'dateCreated', 'dateUpdated'
+			'dateCreated', 'dateUpdated'
 		];
 	}
 
@@ -116,7 +116,7 @@ class Report extends Model
 	/**
 	 * @param array $results
 	 */
-	public function setResults(array $results = array())
+	public function setResults(array $results = [])
 	{
 		$this->results = $results;
 	}

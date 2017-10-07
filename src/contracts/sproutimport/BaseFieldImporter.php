@@ -63,6 +63,9 @@ abstract class BaseFieldImporter extends BaseImporter
 	 */
 	public abstract function getMockData();
 
+	/**
+	 * @todo - clean up, empty method
+	 */
 	public function save()
 	{
 

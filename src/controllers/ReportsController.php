@@ -224,7 +224,7 @@ class ReportsController extends Controller
 
 			if ($dataSource)
 			{
-				$date = date("Ymd-his");
+				$date = date('Ymd-his');
 
 				$filename = $report->name . '-' . $date;
 				$labels   = $dataSource->getDefaultLabels($report, $options);
