@@ -7,10 +7,9 @@
 
 namespace barrelstrength\sproutcore;
 
+use barrelstrength\sproutcore\base\BaseSproutTrait;
 use yii\base\Event;
 use \yii\base\Module;
-use craft\web\UrlManager;
-use craft\events\RegisterUrlRulesEvent;
 use craft\web\View;
 use craft\events\RegisterTemplateRootsEvent;
 use craft\helpers\ArrayHelper;
@@ -21,12 +20,21 @@ use barrelstrength\sproutcore\services\App;
 
 class SproutCore extends Module
 {
+	use BaseSproutTrait;
+
 	public $handle;
 
 	/**
 	 * @var App
 	 */
 	public static $app;
+
+	/**
+	 * Identify our plugin for BaseSproutTrait
+	 *
+	 * @var string
+	 */
+	public static $pluginId = 'sprout-core';
 
 	/**
 	 * @var string|null The translation category that this module translation messages should use. Defaults to the lowercased plugin handle.
@@ -77,7 +85,7 @@ class SproutCore extends Module
 	{
 		parent::init();
 
-		self::$app = new App();.
+		self::$app = new App();
 
 		Craft::setAlias('@sproutcore', $this->getBasePath());
 
@@ -85,16 +93,5 @@ class SproutCore extends Module
 		Event::on(View::class, View::EVENT_REGISTER_CP_TEMPLATE_ROOTS, function(RegisterTemplateRootsEvent $e) {
 			$e->roots['sprout-core'] = $this->getBasePath().DIRECTORY_SEPARATOR.'templates';
 		});
-	}
-
-	/**
-	 * @param string $message
-	 * @param array  $params
-	 *
-	 * @return string
-	 */
-	public static function t($message, array $params = [])
-	{
-		return Craft::t('sprout-core', $message, $params);
 	}
 }
