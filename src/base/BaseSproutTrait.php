@@ -9,7 +9,7 @@ namespace barrelstrength\sproutcore\base;
 
 use Craft;
 
-trait BaseSprout
+trait BaseSproutTrait
 {
 	/**
 	 * Logs an error message using the pluginId as the category
