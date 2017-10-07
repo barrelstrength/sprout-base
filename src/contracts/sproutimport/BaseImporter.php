@@ -227,7 +227,7 @@ abstract class BaseImporter
 	 */
 	public function getSettingsHtml()
 	{
-		return "";
+		return '';
 	}
 
 	/**
@@ -237,9 +237,7 @@ abstract class BaseImporter
 	{
 		$name = $this->getModelName();
 
-		$count = sproutImport()->seed->getSeedCountByElementType($name);
-
-		return $count;
+		return SproutImport::$app->seed->getSeedCountByElementType($name);
 	}
 
 	/**
@@ -249,7 +247,7 @@ abstract class BaseImporter
 	 */
 	public function getImporterDataKeys()
 	{
-		return array();
+		return [];
 	}
 
 	/**
