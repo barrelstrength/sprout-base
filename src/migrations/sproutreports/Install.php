@@ -8,10 +8,11 @@
 namespace barrelstrength\sproutcore\migrations\sproutreports;
 
 use craft\db\Query;
+use craft\db\Migration;
 
-class Migration extends \craft\db\Migration
+class Install extends Migration
 {
-	private $reportTable      = '{{%sproutreports_report}}';
+	private $reportTable = '{{%sproutreports_report}}';
 	private $reportGroupTable = '{{%sproutreports_reportgroups}}';
 	private $dataSourcesTable = '{{%sproutreports_datasources}}';
 
@@ -23,18 +24,18 @@ class Migration extends \craft\db\Migration
 		{
 			$this->createTable($this->reportTable,
 				[
-					'id'     => $this->primaryKey(),
-					'name'   => $this->string()->notNull(),
+					'id' => $this->primaryKey(),
+					'name' => $this->string()->notNull(),
 					'handle' => $this->string()->notNull(),
-					'description'  => $this->text(),
-					'allowHtml'    => $this->boolean(),
-					'options'      => $this->text(),
+					'description' => $this->text(),
+					'allowHtml' => $this->boolean(),
+					'options' => $this->text(),
 					'dataSourceId' => $this->string(),
-					'groupId'      => $this->integer(),
-					'enabled'      => $this->boolean(),
-					'dateCreated'  => $this->dateTime()->notNull(),
-					'dateUpdated'  => $this->dateTime()->notNull(),
-					'uid'          => $this->uid()
+					'groupId' => $this->integer(),
+					'enabled' => $this->boolean(),
+					'dateCreated' => $this->dateTime()->notNull(),
+					'dateUpdated' => $this->dateTime()->notNull(),
+					'uid' => $this->uid()
 				]
 			);
 
@@ -53,11 +54,11 @@ class Migration extends \craft\db\Migration
 		if ($reportGroupTable == false)
 		{
 			$this->createTable($this->reportGroupTable, [
-				'id'          => $this->primaryKey(),
-				'name'        => $this->string()->notNull(),
+				'id' => $this->primaryKey(),
+				'name' => $this->string()->notNull(),
 				'dateCreated' => $this->dateTime()->notNull(),
 				'dateUpdated' => $this->dateTime()->notNull(),
-				'uid'         => $this->uid()
+				'uid' => $this->uid()
 			]);
 
 			$this->createIndex($this->db->getIndexName($this->reportGroupTable, 'name', false, true),
@@ -69,13 +70,13 @@ class Migration extends \craft\db\Migration
 		if ($dataSourcesTable == false)
 		{
 			$this->createTable($this->dataSourcesTable, [
-				'id'           => $this->primaryKey(),
+				'id' => $this->primaryKey(),
 				'dataSourceId' => $this->string(),
-				'options'      => $this->text(),
-				'allowNew'     => $this->boolean(),
-				'dateCreated'  => $this->dateTime()->notNull(),
-				'dateUpdated'  => $this->dateTime()->notNull(),
-				'uid'          => $this->uid()
+				'options' => $this->text(),
+				'allowNew' => $this->boolean(),
+				'dateCreated' => $this->dateTime()->notNull(),
+				'dateUpdated' => $this->dateTime()->notNull(),
+				'uid' => $this->uid()
 			]);
 		}
 	}

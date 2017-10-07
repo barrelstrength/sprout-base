@@ -9,8 +9,6 @@ namespace barrelstrength\sproutcore\services;
 
 use barrelstrength\sproutcore\services\sproutreports\DataSources;
 use barrelstrength\sproutcore\services\sproutreports\Exports;
-use barrelstrength\sproutcore\migrations\sproutreports\Migration as ReportsMigration;
-use barrelstrength\sproutcore\migrations\sproutimport\Migration as ImportMigration;
 use barrelstrength\sproutcore\services\sproutreports\Reports;
 use barrelstrength\sproutcore\services\sproutfields\Utilities;
 use barrelstrength\sproutcore\services\sproutfields\Link;
@@ -23,14 +21,40 @@ use craft\base\Component;
 
 class App extends Component
 {
-	public $phone;
-	public $utilities;
-	public $link;
-	public $email;
-	public $regularExpression;
-	public $emailSelect;
-	public $exports;
+	/**
+	 * @var Address
+	 */
 	public $address;
+
+	/**
+	 * @var Phone
+	 */
+	public $phone;
+
+	/**
+	 * @var Utilities
+	 */
+	public $utilities;
+
+	/**
+	 * @var Link
+	 */
+	public $link;
+
+	/**
+	 * @var Email
+	 */
+	public $email;
+
+	/**
+	 * @var RegularExpression
+	 */
+	public $regularExpression;
+
+	/**
+	 * @var EmailSelect
+	 */
+	public $emailSelect;
 
 	/**
 	 * @var Reports
@@ -38,33 +62,32 @@ class App extends Component
 	public $reports;
 
 	/**
-	 * @var ReportsMigration
-	 */
-	public $reportsMigration;
-
-	/**
-	 * @var ImportMigration
-	 */
-	public $importMigration;
-
-	/**
 	 * @var DataSources
 	 */
 	public $dataSources;
 
+	/**
+	 * @var Exports
+	 */
+	public $exports;
+
+	/**
+	 * @inheritdoc
+	 */
 	public function init()
 	{
-		$this->phone             = new Phone();
-		$this->utilities         = new Utilities();
-		$this->link              = new Link();
-		$this->email             = new Email();
+		// Sprout Fields
+		$this->address = new Address();
+		$this->phone = new Phone();
+		$this->utilities = new Utilities();
+		$this->link = new Link();
+		$this->email = new Email();
 		$this->regularExpression = new RegularExpression();
-		$this->emailSelect       = new EmailSelect();
-		$this->reports           = new Reports();
-		$this->dataSources       = new DataSources();
-		$this->exports           = new Exports();
-		$this->reportsMigration  = new ReportsMigration();
-		$this->importMigration   = new ImportMigration();
-		$this->address           = new Address();
+		$this->emailSelect = new EmailSelect();
+
+		// Sprout Reports
+		$this->reports = new Reports();
+		$this->dataSources = new DataSources();
+		$this->exports = new Exports();
 	}
 }

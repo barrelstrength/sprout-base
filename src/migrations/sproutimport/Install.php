@@ -7,9 +7,11 @@
 
 namespace barrelstrength\sproutcore\migrations\sproutimport;
 
-class Migration extends \craft\db\Migration
+use craft\db\Migration;
+
+class Install extends Migration
 {
-	private $seedsTable      = '{{%sproutimport_seeds}}';
+	private $seedsTable = '{{%sproutimport_seeds}}';
 
 	public function createTables()
 	{
@@ -19,14 +21,14 @@ class Migration extends \craft\db\Migration
 		{
 			$this->createTable($this->seedsTable,
 				[
-					'id'            => $this->primaryKey(),
-					'itemId'        => $this->integer()->notNull(),
+					'id' => $this->primaryKey(),
+					'itemId' => $this->integer()->notNull(),
 					'importerClass' => $this->string()->notNull(),
-					'type'          => $this->string(),
-					'details'       => $this->string(),
-					'dateCreated'   => $this->dateTime()->notNull(),
-					'dateUpdated'   => $this->dateTime()->notNull(),
-					'uid'           => $this->uid()
+					'type' => $this->string(),
+					'details' => $this->string(),
+					'dateCreated' => $this->dateTime()->notNull(),
+					'dateUpdated' => $this->dateTime()->notNull(),
+					'uid' => $this->uid()
 				]
 			);
 		}

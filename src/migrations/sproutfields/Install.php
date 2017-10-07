@@ -9,7 +9,7 @@ namespace barrelstrength\sproutcore\migrations\sproutfields;
 
 use craft\db\Migration;
 
-class AddressTable extends Migration
+class Install extends Migration
 {
 	// Properties
 	// =========================================================================
@@ -32,28 +32,20 @@ class AddressTable extends Migration
 		if ($response == false)
 		{
 			$this->createTable($this->tableName, [
-				'id'                 => $this->primaryKey(),
-				'modelId'            => $this->integer(),
-				'countryCode'        => $this->string(),
+				'id' => $this->primaryKey(),
+				'modelId' => $this->integer(),
+				'countryCode' => $this->string(),
 				'administrativeArea' => $this->string(),
-				'locality'           => $this->string(),
-				'dependentLocality'  => $this->string(),
-				'postalCode'         => $this->string(),
-				'sortingCode'        => $this->string(),
-				'address1'           => $this->string(),
-				'address2'           => $this->string(),
-				'dateCreated'        => $this->dateTime()->notNull(),
-				'dateUpdated'        => $this->dateTime()->notNull(),
-				'uid'                => $this->uid(),
+				'locality' => $this->string(),
+				'dependentLocality' => $this->string(),
+				'postalCode' => $this->string(),
+				'sortingCode' => $this->string(),
+				'address1' => $this->string(),
+				'address2' => $this->string(),
+				'dateCreated' => $this->dateTime()->notNull(),
+				'dateUpdated' => $this->dateTime()->notNull(),
+				'uid' => $this->uid(),
 			]);
 		}
-	}
-
-	/**
-	 * @inheritdoc
-	 */
-	public function safeDown()
-	{
-		$this->dropTable($this->tableName);
 	}
 }
