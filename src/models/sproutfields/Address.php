@@ -51,17 +51,24 @@ class Address extends Model
 		return $rules;
 	}
 
+	/**
+	 * @todo - this method exists in this class and in the AddressHelper class. Refactor into one method and cleanup.
+	 *
+	 * @param $attribute
+	 */
 	public function validatePostalCode($attribute)
 	{
+		$addressHelper = new AddressHelper();
+
 		$postalCode = $this->{$attribute};
 
 		if ($postalCode == null) return;
 
 		$countryCode = $this->countryCode;
 
-		if (!$this->addressHelper->validatePostalCode($countryCode, $postalCode))
+		if (!$addressHelper->validatePostalCode($countryCode, $postalCode))
     {
-	    $postalName = $this->addressHelper->getPostalName($countryCode);
+	    $postalName = $addressHelper->getPostalName($countryCode);
 
 	    $params = [
 		    'postalName' => $postalName,
@@ -83,8 +90,8 @@ class Address extends Model
 			return "";
 		}
 
-		$address = $this->addressHelper->getAddressWithFormat($this);
+		$addressHelper = new AddressHelper();
 
-		return $address;
+		return $addressHelper->getAddressWithFormat($this);
 	}
 }
