@@ -5,12 +5,12 @@
  * @license   http://sprout.barrelstrengthdesign.com/license
  */
 
-namespace barrelstrength\sproutcore\web\assets\sproutreports;
+namespace barrelstrength\sproutcore\web\sproutreports;
 
 use craft\web\AssetBundle;
 use craft\web\assets\cp\CpAsset;
 
-class ReportCoreAsset extends AssetBundle
+class SproutReportsAsset extends AssetBundle
 {
 	public function init()
 	{
