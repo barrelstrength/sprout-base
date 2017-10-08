@@ -9,7 +9,6 @@ namespace barrelstrength\sproutcore\services\sproutreports;
 
 use barrelstrength\sproutcore\contracts\sproutreports\BaseReport;
 use barrelstrength\sproutcore\models\sproutreports\ReportGroup as ReportGroupModel;
-use barrelstrength\sproutcore\SproutCore;
 use Craft;
 use yii\base\Component;
 use barrelstrength\sproutcore\models\sproutreports\Report as ReportModel;

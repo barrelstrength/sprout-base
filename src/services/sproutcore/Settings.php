@@ -11,9 +11,6 @@ use Craft;
 use craft\helpers\Json;
 use yii\base\Component;
 
-/**
- * Class Settings
- */
 class Settings extends Component
 {
 	public function saveSettings($plugin, $settings)
