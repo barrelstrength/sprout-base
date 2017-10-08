@@ -17,6 +17,7 @@ use barrelstrength\sproutcore\services\sproutfields\RegularExpression;
 use barrelstrength\sproutcore\services\sproutfields\Email;
 use barrelstrength\sproutcore\services\sproutfields\EmailSelect;
 use barrelstrength\sproutcore\services\sproutfields\Address;
+use barrelstrength\sproutcore\services\sproutcore\Settings;
 use craft\base\Component;
 
 class App extends Component
@@ -72,10 +73,18 @@ class App extends Component
 	public $exports;
 
 	/**
+	 * @var Settings
+	 */
+	public $settings;
+
+	/**
 	 * @inheritdoc
 	 */
 	public function init()
 	{
+		// Sprout Core
+		$this->settings = new Settings();
+
 		// Sprout Fields
 		$this->address = new Address();
 		$this->phone = new Phone();
