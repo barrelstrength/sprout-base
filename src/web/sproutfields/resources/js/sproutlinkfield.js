@@ -4,9 +4,9 @@
  * @license   http://sprout.barrelstrengthdesign.com/license
  */
 
-function checkSproutLinkField(id, fieldHandle, fieldContext) {
+function checkSproutLinkField(namespaceInputId, id, fieldHandle, fieldContext) {
 
-	var sproutLinkFieldId = '#' + id;
+	var sproutLinkFieldId = '#' + namespaceInputId;
 	var sproutLinkButtonClass = '.' + id;
 
 	// We use setTimeout to make sure our function works every time

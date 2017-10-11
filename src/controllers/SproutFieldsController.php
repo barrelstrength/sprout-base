@@ -7,6 +7,7 @@
 
 namespace barrelstrength\sproutcore\controllers;
 
+use barrelstrength\sproutfields\fields\Link;
 use Craft;
 use craft\web\Controller as BaseController;
 
@@ -20,15 +21,21 @@ class SproutFieldsController extends BaseController
 	{
 		$this->requirePostRequest();
 		$this->requireAcceptsJson();
-
 		$value           = Craft::$app->getRequest()->getParam('value');
 		$oldFieldContext = Craft::$app->content->fieldContext;
 		$fieldContext    = Craft::$app->getRequest()->getParam('fieldContext');
 		$fieldHandle     = Craft::$app->getRequest()->getParam('fieldHandle');
 
+		// Retrieve a Link Field, wherever it may be
 		Craft::$app->content->fieldContext = $fieldContext;
 		$field = Craft::$app->fields->getFieldByHandle($fieldHandle);
 		Craft::$app->content->fieldContext = $oldFieldContext;
+
+		// If we don't find a Link Field, return a new Link Field model
+		if (!$field)
+		{
+			$field = new Link;
+		}
 
 		if (!SproutCore::$app->link->validate($value, $field))
 		{
