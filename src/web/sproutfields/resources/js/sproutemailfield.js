@@ -4,9 +4,9 @@
  * @license   http://sprout.barrelstrengthdesign.com/license
  */
 
-function checkSproutEmailField(id, elementId, fieldHandle, fieldContext) {
+function checkSproutEmailField(namespaceInputId, id, elementId, fieldHandle, fieldContext) {
 
-	var sproutEmailFieldId = '#' + id;
+	var sproutEmailFieldId = '#' + namespaceInputId;
 	var sproutEmailButtonClass = '.' + id;
 
 	// We use setTimeout to make sure our function works every time

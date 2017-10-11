@@ -7,6 +7,7 @@
 
 namespace barrelstrength\sproutcore\controllers;
 
+use barrelstrength\sproutfields\fields\Email;
 use barrelstrength\sproutfields\fields\Link;
 use Craft;
 use craft\web\Controller as BaseController;
@@ -34,7 +35,7 @@ class SproutFieldsController extends BaseController
 		// If we don't find a Link Field, return a new Link Field model
 		if (!$field)
 		{
-			$field = new Link;
+			$field = new Link();
 		}
 
 		if (!SproutCore::$app->link->validate($value, $field))
@@ -78,11 +79,18 @@ class SproutFieldsController extends BaseController
 		$fieldContext    = Craft::$app->getRequest()->getParam('fieldContext');
 		$fieldHandle     = Craft::$app->getRequest()->getParam('fieldHandle');
 
+		// Retrieve an Email Field, wherever it may be
 		Craft::$app->content->fieldContext = $fieldContext;
 		$field = Craft::$app->fields->getFieldByHandle($fieldHandle);
 		Craft::$app->content->fieldContext = $oldFieldContext;
 
-		if (!SproutCore::$app->email->validate($value, $elementId, $field))
+		// If we don't find a Link Field, return a new Link Field model
+		if (!$field)
+		{
+			$field = new Email();
+		}
+
+		if (!SproutCore::$app->email->validate($value, $field, $elementId))
 		{
 			return $this->asJson(false);
 		}
