@@ -14,7 +14,7 @@ class SproutReportsAsset extends AssetBundle
 {
 	public function init()
 	{
-		$this->sourcePath = "@sproutcore/resources/sproutreports";
+		$this->sourcePath = "@sproutcore/web/sproutreports/dist";
 
 		$this->depends = [
 			CpAsset::class,
