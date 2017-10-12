@@ -18,56 +18,6 @@ class SproutFieldsController extends BaseController
 {
 	protected $allowAnonymous = ['actionSproutAddress'];
 
-	public function actionLinkValidate()
-	{
-		$this->requirePostRequest();
-		$this->requireAcceptsJson();
-		$value           = Craft::$app->getRequest()->getParam('value');
-		$oldFieldContext = Craft::$app->content->fieldContext;
-		$fieldContext    = Craft::$app->getRequest()->getParam('fieldContext');
-		$fieldHandle     = Craft::$app->getRequest()->getParam('fieldHandle');
-
-		// Retrieve a Link Field, wherever it may be
-		Craft::$app->content->fieldContext = $fieldContext;
-		$field = Craft::$app->fields->getFieldByHandle($fieldHandle);
-		Craft::$app->content->fieldContext = $oldFieldContext;
-
-		// If we don't find a Link Field, return a new Link Field model
-		if (!$field)
-		{
-			$field = new Link();
-		}
-
-		if (!SproutCore::$app->link->validate($value, $field))
-		{
-			return $this->asJson(false);
-		}
-
-		return $this->asJson(true);
-	}
-
-	public function actionRegularExpressionValidate()
-	{
-		$this->requirePostRequest();
-		$this->requireAcceptsJson();
-
-		$value           = Craft::$app->getRequest()->getParam('value');
-		$oldFieldContext = Craft::$app->content->fieldContext;
-		$fieldContext    = Craft::$app->getRequest()->getParam('fieldContext');
-		$fieldHandle     = Craft::$app->getRequest()->getParam('fieldHandle');
-
-		Craft::$app->content->fieldContext = $fieldContext;
-		$field           = Craft::$app->fields->getFieldByHandle($fieldHandle);
-		Craft::$app->content->fieldContext = $oldFieldContext;
-
-		if (!SproutCore::$app->regularExpression->validate($value, $field))
-		{
-			return $this->asJson(false);
-		}
-
-		return $this->asJson(true);
-	}
-
 	public function actionEmailValidate()
 	{
 		$this->requirePostRequest();
@@ -98,6 +48,35 @@ class SproutFieldsController extends BaseController
 		return $this->asJson(true);
 	}
 
+	public function actionLinkValidate()
+	{
+		$this->requirePostRequest();
+		$this->requireAcceptsJson();
+
+		$value           = Craft::$app->getRequest()->getParam('value');
+		$oldFieldContext = Craft::$app->content->fieldContext;
+		$fieldContext    = Craft::$app->getRequest()->getParam('fieldContext');
+		$fieldHandle     = Craft::$app->getRequest()->getParam('fieldHandle');
+
+		// Retrieve a Link Field, wherever it may be
+		Craft::$app->content->fieldContext = $fieldContext;
+		$field = Craft::$app->fields->getFieldByHandle($fieldHandle);
+		Craft::$app->content->fieldContext = $oldFieldContext;
+
+		// If we don't find a Link Field, return a new Link Field model
+		if (!$field)
+		{
+			$field = new Link();
+		}
+
+		if (!SproutCore::$app->link->validate($value, $field))
+		{
+			return $this->asJson(false);
+		}
+
+		return $this->asJson(true);
+	}
+
 	public function actionPhoneValidate()
 	{
 		$this->requirePostRequest();
@@ -107,6 +86,28 @@ class SproutFieldsController extends BaseController
 		$mask  = Craft::$app->getRequest()->getParam('mask');
 
 		if (!SproutCore::$app->phone->validate($value, $mask))
+		{
+			return $this->asJson(false);
+		}
+
+		return $this->asJson(true);
+	}
+
+	public function actionRegularExpressionValidate()
+	{
+		$this->requirePostRequest();
+		$this->requireAcceptsJson();
+
+		$value           = Craft::$app->getRequest()->getParam('value');
+		$oldFieldContext = Craft::$app->content->fieldContext;
+		$fieldContext    = Craft::$app->getRequest()->getParam('fieldContext');
+		$fieldHandle     = Craft::$app->getRequest()->getParam('fieldHandle');
+
+		Craft::$app->content->fieldContext = $fieldContext;
+		$field           = Craft::$app->fields->getFieldByHandle($fieldHandle);
+		Craft::$app->content->fieldContext = $oldFieldContext;
+
+		if (!SproutCore::$app->regularExpression->validate($value, $field))
 		{
 			return $this->asJson(false);
 		}
