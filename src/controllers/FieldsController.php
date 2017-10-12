@@ -14,7 +14,7 @@ use craft\web\Controller as BaseController;
 
 use barrelstrength\sproutcore\SproutCore;
 
-class SproutFieldsController extends BaseController
+class FieldsController extends BaseController
 {
 	protected $allowAnonymous = ['actionSproutAddress'];
 

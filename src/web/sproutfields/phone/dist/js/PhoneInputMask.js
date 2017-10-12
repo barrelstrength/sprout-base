@@ -97,7 +97,7 @@
 
 			function validatePhoneNumber(currentPhoneField, phoneNumber, data) {
 
-				Craft.postActionRequest('sprout-core/sprout-fields/phone-validate', data, function(response) {
+				Craft.postActionRequest('sprout-core/fields/phone-validate', data, function(response) {
 					if (response) {
 						showCallText(phoneNumber, currentPhoneField);
 					}
