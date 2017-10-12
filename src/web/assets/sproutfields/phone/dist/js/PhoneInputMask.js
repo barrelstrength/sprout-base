@@ -8,9 +8,9 @@
 
 	Craft.PhoneInputMask = Garnish.Base.extend(
 	{
-		init: function(id, mask, inputMask, inputDefault) {
+		init: function(namespaceInputId, id, mask, inputMask, inputDefault) {
 
-			var sproutPhoneFieldId     = '#' + id;
+			var sproutPhoneFieldId     = '#' + namespaceInputId;
 			var sproutPhoneButtonClass = '.' + id;
 
 			// We use setTimeout to make sure our function works every time

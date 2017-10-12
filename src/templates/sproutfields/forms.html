@@ -52,3 +52,9 @@
     {% import _self as sproutFields %}
     {{ forms.field(config, sproutFields.link(config)) }}
 {% endmacro %}
+
+{% macro phoneField(config) %}
+    {% import "_includes/forms" as forms %}
+    {% import _self as sproutFields %}
+    {{ forms.field(config, sproutFields.phone(config)) }}
+{% endmacro %}

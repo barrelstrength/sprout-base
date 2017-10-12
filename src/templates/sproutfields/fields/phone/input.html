@@ -1,18 +1,25 @@
 {% import "_includes/forms" as forms %}
 
+id: {{ id }}<br>
+namespaceInputId: {{ namespaceInputId }}<br>
+name: {{ name }}<br>
+
 {{ forms.text({
-	id: name,
+	id: id,
 	name: name,
 	class: 'sprout-phone-field',
 	value: (value is defined) ? value : '',
-	placeholder: field.placeholder is not empty ? field.placeholder : null
+	placeholder: placeholder ?? null
 }) }}
 
 <span class="sprout-phone-button {{ id }}"></span>
 
+{% set inputMask = inputMask is defined ? 'checked' : '' %}
 
-{% set inputMask = (field.inputMask ? 'checked' : '') %}
+{% do view.registerAssetBundle("barrelstrength\\sproutcore\\web\\assets\\sproutfields\\phone\\PhoneFieldAsset") %}
 
 {% js %}
-  new Craft.PhoneInputMask("{{ id }}","{{ field.mask }}","{{ inputMask }}", "{{ field.mask }}")
+	{% if inputMask %}
+		new Craft.PhoneInputMask("{{ namespaceInputId }}", "{{ id }}", "{{ mask }}", "{{ inputMask }}", "{{ mask }}")
+	{% endif %}
 {% endjs %}
