@@ -8,6 +8,9 @@
 namespace barrelstrength\sproutcore;
 
 use barrelstrength\sproutcore\base\BaseSproutTrait;
+use barrelstrength\sproutcore\web\twig\variables\SproutCoreVariable;
+use craft\events\DefineComponentsEvent;
+use craft\web\twig\variables\CraftVariable;
 use yii\base\Event;
 use \yii\base\Module;
 use craft\web\View;
@@ -92,6 +95,11 @@ class SproutCore extends Module
 		// Register our base template path
 		Event::on(View::class, View::EVENT_REGISTER_CP_TEMPLATE_ROOTS, function(RegisterTemplateRootsEvent $e) {
 			$e->roots['sprout-core'] = $this->getBasePath().DIRECTORY_SEPARATOR.'templates';
+		});
+
+		// Register our Variables
+		Event::on(CraftVariable::class, CraftVariable::EVENT_DEFINE_COMPONENTS, function (DefineComponentsEvent $event) {
+			$event->components['sproutcore'] = SproutCoreVariable::class;
 		});
 	}
 }
