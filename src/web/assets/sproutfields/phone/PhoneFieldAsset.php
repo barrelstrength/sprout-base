@@ -5,7 +5,7 @@
  * @license   http://sprout.barrelstrengthdesign.com/license
  */
 
-namespace barrelstrength\sproutcore\web\sproutfields\phone;
+namespace barrelstrength\sproutcore\web\assets\sproutfields\phone;
 
 use craft\web\AssetBundle;
 use craft\web\assets\cp\CpAsset;
@@ -15,7 +15,7 @@ class PhoneFieldAsset extends AssetBundle
 	public function init()
 	{
 		// define the path that your publishable resources live
-		$this->sourcePath = '@sproutcore/web/sproutfields';
+		$this->sourcePath = '@sproutcore/web/assets/sproutfields';
 
 		// define the dependencies
 		$this->depends = [

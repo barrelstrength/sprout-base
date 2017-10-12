@@ -5,20 +5,21 @@
  * @license   http://sprout.barrelstrengthdesign.com/license
  */
 
-namespace barrelstrength\sproutcore\web\sproutfields\address;
+namespace barrelstrength\sproutcore\web\assets\sproutcore\cp;
 
 use craft\web\AssetBundle;
 
-class AddressFieldAsset extends AssetBundle
+class CpAsset extends AssetBundle
 {
+	/**
+	 * @inheritdoc
+	 */
 	public function init()
 	{
-		$this->sourcePath = '@sproutcore/web/sproutfields/address/dist';
+		$this->sourcePath = '@sproutcore/web/assets/sproutcore/cp/dist';
 
-		$this->js = [
-			'js/AddressBox.js',
-			'js/AddressForm.js',
-			'js/EditAddressModal.js'
+		$this->css = [
+			'css/sproutcp.css',
 		];
 
 		parent::init();
