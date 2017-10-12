@@ -5,17 +5,17 @@
  * @license   http://sprout.barrelstrengthdesign.com/license
  */
 
-namespace barrelstrength\sproutcore\web\sproutfields\phonefield;
+namespace barrelstrength\sproutcore\web\sproutfields\link;
 
 use craft\web\AssetBundle;
 use craft\web\assets\cp\CpAsset;
 
-class PhoneFieldAsset extends AssetBundle
+class LinkFieldAsset extends AssetBundle
 {
 	public function init()
 	{
 		// define the path that your publishable resources live
-		$this->sourcePath = '@sproutcore/web/sproutfields/resources';
+		$this->sourcePath = '@sproutcore/web/sproutfields';
 
 		// define the dependencies
 		$this->depends = [
@@ -25,14 +25,11 @@ class PhoneFieldAsset extends AssetBundle
 		// define the relative path to CSS/JS files that should be registered with the page
 		// when this asset bundle is registered
 		$this->js = [
-			'js/inputmask.js',
-			'js/jquery.inputmask.js',
-			'js/PhoneInputMask.js',
-			'js/PhoneInputMask.js',
+			'link/dist/js/sproutlinkfield.js',
 		];
 
 		$this->css = [
-			'css/sproutfields.css',
+			'resources/css/sproutfields.css',
 		];
 
 		parent::init();

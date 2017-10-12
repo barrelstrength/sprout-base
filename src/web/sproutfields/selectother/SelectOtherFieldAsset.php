@@ -5,7 +5,7 @@
  * @license   http://sprout.barrelstrengthdesign.com/license
  */
 
-namespace barrelstrength\sproutcore\web\sproutfields\selectotherfield;
+namespace barrelstrength\sproutcore\web\sproutfields\selectother;
 
 use barrelstrength\sproutseo\web\assets\base\BaseAsset;
 use craft\web\AssetBundle;
@@ -14,7 +14,7 @@ class SelectOtherFieldAsset extends AssetBundle
 {
 	public function init()
 	{
-		$this->sourcePath = '@sproutcore/web/sproutfields/selectotherfield/dist';
+		$this->sourcePath = '@sproutcore/web/sproutfields/selectother/dist';
 
 		$this->depends = [
 			BaseAsset::class
