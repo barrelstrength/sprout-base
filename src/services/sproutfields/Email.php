@@ -13,41 +13,48 @@ use yii\base\Component;
 use craft\db\Query;
 
 use barrelstrength\sproutcore\SproutCore;
+
 /**
  * Class EmailService
  *
  */
 class Email extends Component
 {
-
 	/**
-	 * @param string     $value
-	 * @param int        $elementId
-	 * @param Field $field
+	 * Handles validation of an email address as user edits email in the UI
+	 *
+	 * @param string $value
+	 * @param int    $elementId
+	 * @param Field  $field
 	 *
 	 * @return bool
 	 */
-	public function validate($value, $elementId, Field $field): bool
+	public function validate($value, Field $field, $elementId): bool
 	{
 		$customPattern = $field->customPattern;
-		$checkPattern  = $field->customPatternToggle;
+		$checkPattern = $field->customPatternToggle;
 
 		if (!$this->validateEmailAddress($value, $customPattern, $checkPattern))
 		{
 			return false;
 		}
 
-		$element = Craft::$app->elements->getElementById($elementId);
-
-		if ($field->uniqueEmail && !$this->validateUniqueEmailAddress($value, $element, $field))
+		if ($elementId)
 		{
-			return false;
+			$element = Craft::$app->elements->getElementById($elementId);
+
+			if ($field->uniqueEmail && !$this->validateUniqueEmailAddress($value, $element, $field))
+			{
+				return false;
+			}
 		}
 
 		return true;
 	}
 
 	/**
+	 * Validates an email address or email custom pattern
+	 *
 	 * @param $value         string current email to validate
 	 * @param $customPattern string regular expression
 	 * @param $checkPattern  bool
@@ -59,16 +66,15 @@ class Email extends Component
 		if ($checkPattern)
 		{
 			// Use backticks as delimiters as they are invalid characters for emails
-			$customPattern = "`" . $customPattern . "`";
+			$customPattern = "`".$customPattern."`";
 
 			if (preg_match($customPattern, $value))
 			{
 				return true;
 			}
-		}
-		else
+		} else
 		{
-			if ((!filter_var($value, FILTER_VALIDATE_EMAIL) === false))
+			if (!filter_var($value, FILTER_VALIDATE_EMAIL) === false)
 			{
 				return true;
 			}
@@ -78,15 +84,17 @@ class Email extends Component
 	}
 
 	/**
-	 * @param string     $value
-	 * @param int        $elementId
-	 * @param Field $field
+	 * Validates that an email address is unique to a particular field type
+	 *
+	 * @param $value
+	 * @param $element
+	 * @param $field
 	 *
 	 * @return bool
 	 */
 	public function validateUniqueEmailAddress($value, $element, $field)
 	{
-		$fieldHandle  = $element->fieldColumnPrefix . $field->handle;
+		$fieldHandle = $element->fieldColumnPrefix.$field->handle;
 		$contentTable = $element->contentTable;
 
 		$query = (new Query())
@@ -111,8 +119,8 @@ class Email extends Component
 	}
 
 	/**
-	 * @param  string $fieldName
-	 * @param  array  $settings
+	 * @param $fieldName
+	 * @param $field
 	 *
 	 * @return string
 	 */
@@ -123,7 +131,7 @@ class Email extends Component
 			return SproutCore::t($field->customPatternErrorMessage);
 		}
 
-		return SproutCore::t($fieldName . ' must be a valid email.');
+		return SproutCore::t($fieldName.' must be a valid email.');
 	}
 
 }
