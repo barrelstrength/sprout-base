@@ -1,6 +1,6 @@
 {% import "_includes/forms" as forms %}
 {% import 'sprout-core/sproutcore/_includes/sproutcp' as sprout %}
-{% do view.registerAssetBundle("barrelstrength\\sproutcore\\web\\sproutcore\\cp\\CpAsset") %}
+{% do view.registerAssetBundle("barrelstrength\\sproutcore\\web\\assets\\sproutcore\\cp\\CpAsset") %}
 
 {% set boxBody %}
 	<p>{{ "Migrate to Craft with all of your existing website metadata using Sprout SEO and <a href='{url}' target='_blank'>Sprout Import</a>. Sprout Import makes it easy to keep your Search, Social Sharing, Geo, and Robots metadata, and gives you the opportunity to enhance it with additional Structured Data and improve your workflow."|t({
@@ -11,10 +11,5 @@
 {{ sprout.mediaBox({
 	heading: "Migrate all of your SEO metadata"|t('sprout-core'),
 	body: boxBody,
-	resourceUrl: cpUrl('sprout-core/icons/sprout-icon.svg'),
-	resourceAltText: "Sprout Import Icon"|t('sprout-core'),
+    resourcePath: '@sproutcore/web/assets/sproutcore/cp/dist/images/sprout-icon.svg'
 }) }}
-
-{#
-Can we add alt Text to SVGs? Or just output them like so:
-{% include('sprout-core/icons/craftcommerce-icon.svg') %}#}
