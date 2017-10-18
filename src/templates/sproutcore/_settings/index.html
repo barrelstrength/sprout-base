@@ -2,8 +2,29 @@
 
 {% block content %}
 
-    {% include [
-        selectedSettingsInfo.template
-    ] %}
+    {% set redirectUrl = navItems[selectedSidebarItem]['url'] %}
+
+    <form method="post" accept-charset="UTF-8"
+          data-saveshortcut-redirect="{{ redirectUrl|hash }}" data-saveshortcut>
+        {{ csrfInput() }}
+        <input type="hidden" name="action" value="sprout-core/settings/save-settings">
+        <input type="hidden" name="redirect" value="{{ redirectUrl|hash }}">
+
+        <div id="settings-cp">
+            {% namespace 'settings' %}
+
+            {# Display the selected settings template #}
+            {% include [
+                selectedSettingsInfo.template
+            ] %}
+
+            {% endnamespace %}
+        </div>
+
+        <div class="buttons">
+            <input class="btn submit" type="submit" value="{{ 'Save'|t('sprout-core') }}">
+        </div>
+
+    </form>
 
 {% endblock %}

@@ -12,7 +12,7 @@
     <nav>
         <ul>
             {% if navItems|length %}
-                {% for item in settings.getSettingsNavItems() %}
+                {% for item in navItems %}
                     {% if item.heading is defined and item.heading is not empty %}
                         <li class="heading"><span>{{ item.heading }}</span></li>
                     {% else %}
