@@ -47,7 +47,7 @@ abstract class BaseDataSource
 	{
 		$namespaces = explode('\\', get_class($this));
 
-		$class = basename(get_class($this));
+		$class = (new \ReflectionClass($this))->getShortName();
 
 		// get plugin name on second array
 		$dataSourceClass = $namespaces[1] . '.' . $class;
