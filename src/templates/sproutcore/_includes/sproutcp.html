@@ -8,9 +8,11 @@
 
 	<div class="sprout-mediabox-outer">
 		<div class="sprout-mediabox-inner" {% if alignItems %}style="align-items: {{ alignItems }};"{% endif %}>
+			{% if resourcePath %}
 			<div class="sprout-mediathumb">
 				{{ craft.sproutcore.getSvg(resourcePath) }}
 			</div>
+            {% endif %}
 			<div class="sprout-mediabody">
 				<h2>{{ heading }}</h2>
 				<hr>

@@ -5,6 +5,8 @@
 {% set title = "Settings"|t('sprout-core') %}
 {% set settings = plugin.getSettings() %}
 {% set navItems = settings.getSettingsNavItems() %}
+{% set redirectUrl = navItems[selectedSidebarItem]['url'] ?? craft.request.url %}
+{% set settingsForm = navItems[selectedSidebarItem]['settingsForm'] ?? true %}
 {% set selectedSettingsInfo = attribute(navItems, selectedSidebarItem) %}
 
 {% set sidebar %}
@@ -12,7 +14,7 @@
     <nav>
         <ul>
             {% if navItems|length %}
-                {% for item in settings.getSettingsNavItems() %}
+                {% for item in navItems %}
                     {% if item.heading is defined and item.heading is not empty %}
                         <li class="heading"><span>{{ item.heading }}</span></li>
                     {% else %}

@@ -84,9 +84,18 @@ class SettingsController extends BaseController
 			throw new InvalidPluginException($this->plugin->handle);
 		}
 
+		// @todo - is there a better way to do this?
+		// This was added to support the Sprout Import, SEO Redirect tool
+		//
+		// Make sure we retain any params set in another controller on this request
+		// by handing them to the settings layer as a variable. In the template,
+		// they can be accessed as params.paramName
+		$params = Craft::$app->getUrlManager()->getRouteParams();
+
 		return $this->renderTemplate('sprout-core/sproutcore/_settings/index', [
 			'plugin' => $this->plugin,
-			'selectedSidebarItem' => $this->selectedSidebarItem
+			'selectedSidebarItem' => $this->selectedSidebarItem,
+			'params' => $params
 		]);
 	}
 
