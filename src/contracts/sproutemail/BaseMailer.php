@@ -240,7 +240,7 @@ abstract class BaseMailer
 	 */
 	public function getActionForPrepareModal()
 	{
-		return 'sprout-email/mailer/get-prepareModal';
+		return 'sprout-email/mailer/get-prepare-modal';
 	}
 
 	/**
