@@ -79,12 +79,12 @@ abstract class BaseMailer
 	 */
 	final public function getId()
 	{
-		return preg_replace('/[^a-z0-9]+/i', '', StringHelper::toLowerCase($this->getName()));
+		return get_class($this);
 	}
 
 	public function getName()
 	{
-		return get_class($this);
+		return static::getId();
 	}
 
 	/**
