@@ -1,4 +1,4 @@
-{% extends "sprout-core/sproutcore/_layouts/basesettings" %}
+{% extends "sprout-base/sproutbase/_layouts/basesettings" %}
 
 {% block content %}
 
@@ -6,7 +6,7 @@
     <form method="post" accept-charset="UTF-8"
           data-saveshortcut-redirect="{{ redirectUrl|hash }}" data-saveshortcut>
         {{ csrfInput() }}
-        <input type="hidden" name="action" value="sprout-core/settings/save-settings">
+        <input type="hidden" name="action" value="sprout-base/settings/save-settings">
         <input type="hidden" name="redirect" value="{{ redirectUrl|hash }}">
 
         <div id="settings-cp">
@@ -26,7 +26,7 @@
         </div>
 
         <div class="buttons">
-            <input class="btn submit" type="submit" value="{{ 'Save'|t('sprout-core') }}">
+            <input class="btn submit" type="submit" value="{{ 'Save'|t('sprout-base') }}">
         </div>
 
     </form>

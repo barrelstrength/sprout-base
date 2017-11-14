@@ -5,11 +5,11 @@
  * @license   http://sprout.barrelstrengthdesign.com/license
  */
 
-namespace barrelstrength\sproutcore\controllers;
+namespace barrelstrength\sproutbase\controllers;
 
-use barrelstrength\sproutcore\models\sproutreports\Report;
-use barrelstrength\sproutcore\records\sproutreports\Report as ReportRecord;
-use barrelstrength\sproutcore\SproutCore;
+use barrelstrength\sproutbase\models\sproutreports\Report;
+use barrelstrength\sproutbase\records\sproutreports\Report as ReportRecord;
+use barrelstrength\sproutbase\SproutBase;
 use Craft;
 
 use craft\helpers\UrlHelper;
@@ -20,11 +20,11 @@ class ReportsController extends Controller
 {
 	public function actionIndex($dataSourceId = null)
 	{
-		$dataSource = SproutCore::$app->dataSources->getDataSourceById($dataSourceId);
+		$dataSource = SproutBase::$app->dataSources->getDataSourceById($dataSourceId);
 
-		$reports = SproutCore::$app->reports->getReportsBySourceId($dataSourceId);
+		$reports = SproutBase::$app->reports->getReportsBySourceId($dataSourceId);
 
-		return $this->renderTemplate('sprout-core/sproutreports/reports/index', [
+		return $this->renderTemplate('sprout-base/sproutreports/reports/index', [
 			'groupId' => null,
 			'reports' => $reports,
 		  'dataSource' => $dataSource
@@ -39,7 +39,7 @@ class ReportsController extends Controller
 		}
 		else
 		{
-			$reportModel = SproutCore::$app->reports->getReport($reportId);
+			$reportModel = SproutBase::$app->reports->getReport($reportId);
 		}
 
 		if ($reportModel)
@@ -72,10 +72,10 @@ class ReportsController extends Controller
 			$this->getView()->registerAssetBundle(CpAsset::class);
 
 			// @todo Hand off to the export service when a blank page and 404 issues are sorted out
-			return $this->renderTemplate('sprout-core/sproutreports/results/index', $variables);
+			return $this->renderTemplate('sprout-base/sproutreports/results/index', $variables);
 		}
 
-		throw new \HttpException(404, SproutCore::t('Report not found.'));
+		throw new \HttpException(404, SproutBase::t('Report not found.'));
 	}
 
 	public function actionEditReport(string $dataSourceId, Report $report = null, int $reportId = null)
@@ -88,7 +88,7 @@ class ReportsController extends Controller
 		}
 		elseif ($reportId != null)
 		{
-			$reportModel = SproutCore::$app->reports->getReport($reportId);
+			$reportModel = SproutBase::$app->reports->getReport($reportId);
 		}
 
 		// This is for creating new report
@@ -107,7 +107,7 @@ class ReportsController extends Controller
 			$indexUrl = UrlHelper::cpUrl('/sprout-reports/reports');
 		}
 
-		return $this->renderTemplate('sprout-core/sproutreports/reports/_edit', array(
+		return $this->renderTemplate('sprout-base/sproutreports/reports/_edit', array(
 			'report'             => $reportModel,
 			'dataSource'         => $dataSource,
 			'indexUrl'           => $indexUrl,
@@ -131,18 +131,18 @@ class ReportsController extends Controller
 
 		if ($reportId && $options)
 		{
-			$reportModel = SproutCore::$app->reports->getReport($reportId);
+			$reportModel = SproutBase::$app->reports->getReport($reportId);
 
 			if (!$reportModel)
 			{
-				throw new \Exception(SproutCore::t('No report exists with the id “{id}”', array('id' => $reportId)));
+				throw new \Exception(SproutBase::t('No report exists with the id “{id}”', array('id' => $reportId)));
 			}
 
 			$reportModel->options = is_array($options) ? $options : array();
 
-			if (SproutCore::$app->reports->saveReport($reportModel))
+			if (SproutBase::$app->reports->saveReport($reportModel))
 			{
-				Craft::$app->getSession()->setNotice(SproutCore::t('Query updated.'));
+				Craft::$app->getSession()->setNotice(SproutBase::t('Query updated.'));
 
 				return $this->redirectToPostedUrl($reportModel);
 			}
@@ -151,7 +151,7 @@ class ReportsController extends Controller
 		// Encode back to object after validation for getResults method to recognize option object
 		$reportModel->options = json_encode($reportModel->options);
 
-		Craft::$app->getSession()->setError(SproutCore::t('Could not update report.'));
+		Craft::$app->getSession()->setError(SproutBase::t('Could not update report.'));
 
 		// Send the report back to the template
 		Craft::$app->getUrlManager()->setRouteParams([
@@ -169,11 +169,11 @@ class ReportsController extends Controller
 	{
 		$this->requirePostRequest();
 
-		$report = SproutCore::$app->reports->prepareFromPost();
+		$report = SproutBase::$app->reports->prepareFromPost();
 
-		if (!SproutCore::$app->reports->saveReport($report))
+		if (!SproutBase::$app->reports->saveReport($report))
 		{
-			Craft::$app->getSession()->setError(SproutCore::t('Couldn’t save report.'));
+			Craft::$app->getSession()->setError(SproutBase::t('Couldn’t save report.'));
 
 			// Send the report back to the template
 			Craft::$app->getUrlManager()->setRouteParams([
@@ -183,7 +183,7 @@ class ReportsController extends Controller
 			return null;
 		}
 
-		Craft::$app->getSession()->setNotice(SproutCore::t('Report saved.'));
+		Craft::$app->getSession()->setNotice(SproutBase::t('Report saved.'));
 
 		return $this->redirectToPostedUrl($report);
 	}
@@ -198,13 +198,13 @@ class ReportsController extends Controller
 		{
 			$record->delete();
 
-			Craft::$app->getSession()->setNotice(SproutCore::t('Report deleted.'));
+			Craft::$app->getSession()->setNotice(SproutBase::t('Report deleted.'));
 
 			return $this->redirectToPostedUrl($record);
 		}
 		else
 		{
-			throw new \Exception(SproutCore::t('Report not found.'));
+			throw new \Exception(SproutBase::t('Report not found.'));
 		}
 	}
 
@@ -212,7 +212,7 @@ class ReportsController extends Controller
 	{
 		$reportId = Craft::$app->getRequest()->getParam('reportId');
 
-		$report   = SproutCore::$app->reports->getReport($reportId);
+		$report   = SproutBase::$app->reports->getReport($reportId);
 
 		$options = Craft::$app->getRequest()->getBodyParam('options');
 
@@ -220,7 +220,7 @@ class ReportsController extends Controller
 
 		if ($report)
 		{
-			$dataSource = SproutCore::$app->dataSources->getDataSourceById($report->dataSourceId);
+			$dataSource = SproutBase::$app->dataSources->getDataSourceById($report->dataSourceId);
 
 			if ($dataSource)
 			{
@@ -230,7 +230,7 @@ class ReportsController extends Controller
 				$labels   = $dataSource->getDefaultLabels($report, $options);
 				$values   = $dataSource->getResults($report, $options);
 
-				SproutCore::$app->exports->toCsv($values, $labels, $filename);
+				SproutBase::$app->exports->toCsv($values, $labels, $filename);
 			}
 		}
 	}

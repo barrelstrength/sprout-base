@@ -5,7 +5,7 @@
  * @license   http://sprout.barrelstrengthdesign.com/license
  */
 
-namespace barrelstrength\sproutcore\records\sproutfields;
+namespace barrelstrength\sproutbase\records\sproutfields;
 
 use craft\db\ActiveRecord;
 

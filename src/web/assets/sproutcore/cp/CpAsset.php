@@ -5,7 +5,7 @@
  * @license   http://sprout.barrelstrengthdesign.com/license
  */
 
-namespace barrelstrength\sproutcore\web\assets\sproutcore\cp;
+namespace barrelstrength\sproutbase\web\assets\sproutbase\cp;
 
 use craft\web\AssetBundle;
 
@@ -16,7 +16,7 @@ class CpAsset extends AssetBundle
 	 */
 	public function init()
 	{
-		$this->sourcePath = '@sproutcore/web/assets/sproutcore/cp/dist';
+		$this->sourcePath = '@sproutbase/web/assets/sproutbase/cp/dist';
 
 		$this->css = [
 			'css/sproutcp.css',

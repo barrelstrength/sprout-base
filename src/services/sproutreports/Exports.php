@@ -5,7 +5,7 @@
  * @license   http://sprout.barrelstrengthdesign.com/license
  */
 
-namespace barrelstrength\sproutcore\services\sproutreports;
+namespace barrelstrength\sproutbase\services\sproutreports;
 
 use League\Csv\Writer;
 use yii\base\Component;
@@ -33,7 +33,7 @@ class Exports extends Component
 		$variables['labels'] = $labels;
 		$variables['values'] = $values;
 
-		return \Craft::$app->getView()->renderTemplate('sprout-core/results/index', $variables);
+		return \Craft::$app->getView()->renderTemplate('sprout-base/results/index', $variables);
 	}
 
 	/**

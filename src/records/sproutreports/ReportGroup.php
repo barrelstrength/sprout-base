@@ -5,14 +5,14 @@
  * @license   http://sprout.barrelstrengthdesign.com/license
  */
 
-namespace barrelstrength\sproutcore\records\sproutreports;
+namespace barrelstrength\sproutbase\records\sproutreports;
 
 use craft\db\ActiveRecord;
 
 /**
  * Class ReportGroup
  *
- * @package barrelstrength\sproutcore\records\sproutreports
+ * @package barrelstrength\sproutbase\records\sproutreports
  */
 class ReportGroup extends ActiveRecord
 {

@@ -5,12 +5,12 @@
  * @license   http://sprout.barrelstrengthdesign.com/license
  */
 
-namespace barrelstrength\sproutcore\services\sproutcore;
+namespace barrelstrength\sproutbase\services\sproutbase;
 
 use Craft;
 use craft\helpers\Json;
 use yii\base\Component;
-use barrelstrength\sproutcore\events\BeforeSaveSettingsEvent;
+use barrelstrength\sproutbase\events\BeforeSaveSettingsEvent;
 
 class Settings extends Component
 {

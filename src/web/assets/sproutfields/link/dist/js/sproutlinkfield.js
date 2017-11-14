@@ -20,7 +20,7 @@ function checkSproutLinkField(namespaceInputId, id, fieldHandle, fieldContext) {
 		};
 
 		// Query the controller so the regex validation is all done through PHP.
-		Craft.postActionRequest('sprout-core/fields/link-validate', data, function(response) {
+		Craft.postActionRequest('sprout-base/fields/link-validate', data, function(response) {
 			if (response)
 			{
 				$(sproutLinkButtonClass).addClass('fade');

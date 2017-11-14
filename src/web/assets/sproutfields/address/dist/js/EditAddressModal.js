@@ -4,11 +4,11 @@
  * @license   http://sprout.barrelstrengthdesign.com/license
  */
 
-if (typeof Craft.SproutCore === typeof undefined) {
-    Craft.SproutCore = {};
+if (typeof Craft.SproutBase === typeof undefined) {
+    Craft.SproutBase = {};
 }
 
-Craft.SproutCore.EditAddressModal = Garnish.Modal.extend(
+Craft.SproutBase.EditAddressModal = Garnish.Modal.extend(
 {
     id: null,
     init: function ($addressForm, settings, target) {
@@ -24,8 +24,8 @@ Craft.SproutCore.EditAddressModal = Garnish.Modal.extend(
 
 	    $(this.$addressFormHtml).appendTo(this.$bodyMeta);
 
-      this.modalTitle = Craft.t('sprout-core','Update Address');
-      this.submitLabel = Craft.t('sprout-core','Update');
+      this.modalTitle = Craft.t('sprout-base','Update Address');
+      this.submitLabel = Craft.t('sprout-base','Update');
 
 
       // Footer and buttons
@@ -34,7 +34,7 @@ Craft.SproutCore.EditAddressModal = Garnish.Modal.extend(
       var $mainBtnGroup = $('<div class="btngroup right"/>').appendTo($footer);
       this.$updateBtn = $('<input type="button" class="btn submit" value="' + this.submitLabel + '"/>').appendTo($mainBtnGroup);
       this.$footerSpinner = $('<div class="spinner right hidden"/>').appendTo($footer);
-      this.$cancelBtn = $('<input type="button" class="btn" value="' + Craft.t('sprout-core','Cancel') + '"/>').appendTo($btnGroup);
+      this.$cancelBtn = $('<input type="button" class="btn" value="' + Craft.t('sprout-base','Cancel') + '"/>').appendTo($btnGroup);
 
       this.addListener(this.$cancelBtn, 'click', 'hide');
       this.addListener(this.$updateBtn, 'click', $.proxy(function (ev) {
@@ -61,7 +61,7 @@ Craft.SproutCore.EditAddressModal = Garnish.Modal.extend(
 			var $parents    = $target.parents('.sproutaddress-body');
 
 			var self = this;
-			Craft.postActionRequest('sprout-core/address/change-form', { countryCode: countryCode, namespace: this.settings.namespace }, $.proxy(function (response) {
+			Craft.postActionRequest('sprout-base/address/change-form', { countryCode: countryCode, namespace: this.settings.namespace }, $.proxy(function (response) {
 				$parents.find('.field-address-input').remove();
 
 				if (response.html)

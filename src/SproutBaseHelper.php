@@ -5,11 +5,11 @@
  * @license   http://sprout.barrelstrengthdesign.com/license
  */
 
-namespace barrelstrength\sproutcore;
+namespace barrelstrength\sproutbase;
 
 use Craft;
 
-abstract class SproutCoreHelper
+abstract class SproutBaseHelper
 {
 	/**
 	 * Register the Sprout Core module on the Craft::$app instance
@@ -18,12 +18,12 @@ abstract class SproutCoreHelper
 	 */
 	public static function registerModule()
 	{
-		if (!Craft::$app->hasModule('sprout-core')) {
+		if (!Craft::$app->hasModule('sprout-base')) {
 
-			Craft::$app->setModule('sprout-core', SproutCore::class);
+			Craft::$app->setModule('sprout-base', SproutBase::class);
 
 			// Have Craft load this module right away (so we can create templates)
-			Craft::$app->getModule('sprout-core');
+			Craft::$app->getModule('sprout-base');
 		}
 	}
 }

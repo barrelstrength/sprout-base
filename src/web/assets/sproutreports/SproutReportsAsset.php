@@ -5,7 +5,7 @@
  * @license   http://sprout.barrelstrengthdesign.com/license
  */
 
-namespace barrelstrength\sproutcore\web\assets\sproutreports;
+namespace barrelstrength\sproutbase\web\assets\sproutreports;
 
 use craft\web\AssetBundle;
 use craft\web\assets\cp\CpAsset;
@@ -14,7 +14,7 @@ class SproutReportsAsset extends AssetBundle
 {
 	public function init()
 	{
-		$this->sourcePath = "@sproutcore/web/assets/sproutreports/dist";
+		$this->sourcePath = "@sproutbase/web/assets/sproutreports/dist";
 
 		$this->depends = [
 			CpAsset::class,

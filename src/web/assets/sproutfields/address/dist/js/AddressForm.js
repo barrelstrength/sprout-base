@@ -4,9 +4,9 @@
  * @license   http://sprout.barrelstrengthdesign.com/license
  */
 
-var SproutCore = {};
+var SproutBase = {};
 
-SproutCore.AddressForm = {
+SproutBase.AddressForm = {
 
 	settings: null,
 	$element: null,
@@ -33,7 +33,7 @@ SproutCore.AddressForm = {
 		// public method
 		var self = this;
 		this.initFormInput = $.proxy(function(countryCode) {
-			return SproutCore.AddressForm.changeFormInput(countryCode)
+			return SproutBase.AddressForm.changeFormInput(countryCode)
 		},this)
 	},
 	changeFormInput: function(countryCode, obj) {

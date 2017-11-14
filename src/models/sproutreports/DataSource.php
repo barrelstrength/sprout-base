@@ -5,7 +5,7 @@
  * @license   http://sprout.barrelstrengthdesign.com/license
  */
 
-namespace barrelstrength\sproutcore\models\sproutreports;
+namespace barrelstrength\sproutbase\models\sproutreports;
 
 use craft\base\Model;
 

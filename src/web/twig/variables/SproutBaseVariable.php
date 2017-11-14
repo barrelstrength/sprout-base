@@ -5,12 +5,12 @@
  * @license   http://sprout.barrelstrengthdesign.com/license
  */
 
-namespace barrelstrength\sproutcore\web\twig\variables;
+namespace barrelstrength\sproutbase\web\twig\variables;
 
 use Craft;
 use craft\helpers\Template;
 
-class SproutCoreVariable
+class SproutBaseVariable
 {
 	/**
 	 * @return string

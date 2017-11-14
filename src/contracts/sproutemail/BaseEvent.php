@@ -1,6 +1,6 @@
 <?php
 
-namespace barrelstrength\sproutcore\contracts\sproutemail;
+namespace barrelstrength\sproutbase\contracts\sproutemail;
 
 /**
  * The official API for dynamic event registration and handling

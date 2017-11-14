@@ -5,12 +5,12 @@
  * @license   http://sprout.barrelstrengthdesign.com/license
  */
 
-namespace barrelstrength\sproutcore\contracts\sproutreports;
+namespace barrelstrength\sproutbase\contracts\sproutreports;
 
 /**
  * Class BaseReport
  *
- * @package barrelstrength\sproutcore\contracts\sproutreports
+ * @package barrelstrength\sproutbase\contracts\sproutreports
  */
 abstract class BaseReport
 {

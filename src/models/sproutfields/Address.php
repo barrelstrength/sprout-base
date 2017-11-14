@@ -5,10 +5,10 @@
  * @license   http://sprout.barrelstrengthdesign.com/license
  */
 
-namespace barrelstrength\sproutcore\models\sproutfields;
+namespace barrelstrength\sproutbase\models\sproutfields;
 
-use barrelstrength\sproutcore\SproutCore;
-use barrelstrength\sproutcore\helpers\AddressHelper;
+use barrelstrength\sproutbase\SproutBase;
+use barrelstrength\sproutbase\helpers\AddressHelper;
 use craft\base\Model;
 
 /**
@@ -74,7 +74,7 @@ class Address extends Model
 		    'postalName' => $postalName,
 	    ];
 
-	    $this->addError($attribute, SproutCore::t("{postalName} is not a valid.", $params));
+	    $this->addError($attribute, SproutBase::t("{postalName} is not a valid.", $params));
     }
 	}
 

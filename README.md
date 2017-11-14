@@ -10,7 +10,7 @@ Include Sprout Core in your Sprout plugin composer.json file:
 {
   ...
   "require": {
-    "barrelstrength/sproutcore": "^1.0.0"
+    "barrelstrength/sproutbase": "^1.0.0"
   },
   ...
 }

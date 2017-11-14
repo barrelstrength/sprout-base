@@ -5,7 +5,7 @@
  * @license   http://sprout.barrelstrengthdesign.com/license
  */
 
-namespace barrelstrength\sproutcore\contracts\sproutimport;
+namespace barrelstrength\sproutbase\contracts\sproutimport;
 
 abstract class BaseSettingsImporter extends BaseImporter
 {

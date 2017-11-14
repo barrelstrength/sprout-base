@@ -5,7 +5,7 @@
  * @license   http://sprout.barrelstrengthdesign.com/license
  */
 
-namespace barrelstrength\sproutcore\services\sproutfields;
+namespace barrelstrength\sproutbase\services\sproutfields;
 
 use Craft;
 use craft\base\Field;

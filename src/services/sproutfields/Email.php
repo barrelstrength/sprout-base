@@ -5,14 +5,14 @@
  * @license   http://sprout.barrelstrengthdesign.com/license
  */
 
-namespace barrelstrength\sproutcore\services\sproutfields;
+namespace barrelstrength\sproutbase\services\sproutfields;
 
 use Craft;
 use craft\base\Field;
 use yii\base\Component;
 use craft\db\Query;
 
-use barrelstrength\sproutcore\SproutCore;
+use barrelstrength\sproutbase\SproutBase;
 
 /**
  * Class EmailService
@@ -128,10 +128,10 @@ class Email extends Component
 	{
 		if (!empty($field->customPattern) && $field->customPatternErrorMessage)
 		{
-			return SproutCore::t($field->customPatternErrorMessage);
+			return SproutBase::t($field->customPatternErrorMessage);
 		}
 
-		return SproutCore::t($fieldName.' must be a valid email.');
+		return SproutBase::t($fieldName.' must be a valid email.');
 	}
 
 }

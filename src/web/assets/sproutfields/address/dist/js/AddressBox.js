@@ -4,13 +4,13 @@
  * @license   http://sprout.barrelstrengthdesign.com/license
  */
 
-if (typeof Craft.SproutCore === typeof undefined) {
-	Craft.SproutCore = {};
+if (typeof Craft.SproutBase === typeof undefined) {
+	Craft.SproutBase = {};
 }
 (function($) {
 
-	// Set all the standard Craft.SproutCore.* stuff
-	$.extend(Craft.SproutCore,
+	// Set all the standard Craft.SproutBase.* stuff
+	$.extend(Craft.SproutBase,
 	{
 		initFields: function($container) {
 			$('.sproutaddressinfo-box', $container).SproutAddressBox();
@@ -27,12 +27,12 @@ if (typeof Craft.SproutCore === typeof undefined) {
 			$container = $(this);
 			return this.each(function() {
 				console.log('sumpin sumpin');
-				new Craft.SproutCore.AddressBox($container);
+				new Craft.SproutBase.AddressBox($container);
 			});
 		}
 	});
 
-	Craft.SproutCore.AddressBox = Garnish.Base.extend({
+	Craft.SproutBase.AddressBox = Garnish.Base.extend({
 
 		$addressBox: null,
 
@@ -100,7 +100,7 @@ if (typeof Craft.SproutCore === typeof undefined) {
 
 			this._getAddressFormFields();
 
-			this.actionUrl = Craft.getActionUrl('sprout-core/address/change-form');
+			this.actionUrl = Craft.getActionUrl('sprout-base/address/change-form');
 		},
 
 		editAddressBox: function(ev) {
@@ -117,7 +117,7 @@ if (typeof Craft.SproutCore === typeof undefined) {
 
 			var countryCode = this.$addressForm.find('.sproutaddress-country-select select').val();
 
-			this.modal = new Craft.SproutCore.EditAddressModal(this.$addressForm, {
+			this.modal = new Craft.SproutBase.EditAddressModal(this.$addressForm, {
 				onSubmit:      $.proxy(this, '_getAddress'),
 				countryCode:   countryCode,
 				actionUrl:     this.actionUrl,
@@ -162,7 +162,7 @@ if (typeof Craft.SproutCore === typeof undefined) {
 			{
 				var data = { addressInfo: self.addressInfo };
 
-				Craft.postActionRequest('sprout-core/address/query-address', data, $.proxy(function(response) {
+				Craft.postActionRequest('sprout-base/address/query-address', data, $.proxy(function(response) {
 						if (response.result == true) {
 							var latitude  = response.geo.latitude;
 							var longitude = response.geo.longitude;
@@ -170,7 +170,7 @@ if (typeof Craft.SproutCore === typeof undefined) {
 							$("input[name='sproutseo[globals][identity][latitude]']").val(latitude);
 							$("input[name='sproutseo[globals][identity][longitude]']").val(longitude);
 
-							Craft.cp.displayNotice(Craft.t('sprout-core','Latitude and Longitude updated.'));
+							Craft.cp.displayNotice(Craft.t('sprout-base','Latitude and Longitude updated.'));
 						}
 						else {
 							this.onError(response.errors);
@@ -180,7 +180,7 @@ if (typeof Craft.SproutCore === typeof undefined) {
 			}
 			else
 			{
-				Craft.cp.displayError(Craft.t('sprout-core','Please add an address'));
+				Craft.cp.displayError(Craft.t('sprout-base','Please add an address'));
 			}
 		},
 
@@ -188,7 +188,7 @@ if (typeof Craft.SproutCore === typeof undefined) {
 
 			var self = this;
 
-			Craft.postActionRequest('sprout-core/address/get-address-form-fields', {
+			Craft.postActionRequest('sprout-base/address/get-address-form-fields', {
 				addressInfoId: this.addressInfoId,
 				namespace:     this.settings.namespace
 			}, $.proxy(function(response) {
@@ -207,7 +207,7 @@ if (typeof Craft.SproutCore === typeof undefined) {
 
 			var self = this;
 
-			Craft.postActionRequest('sprout-core/address/get-address', data, $.proxy(function(response) {
+			Craft.postActionRequest('sprout-base/address/get-address', data, $.proxy(function(response) {
 				if (response.result == true) {
 
 					this.$addressBox.find('.address-format').html(response.html);
@@ -231,7 +231,7 @@ if (typeof Craft.SproutCore === typeof undefined) {
 		},
 
 		onError: function(errors) {
-			Craft.cp.displayError(Craft.t('sprout-core','Unable to find the address: '+errors));
+			Craft.cp.displayError(Craft.t('sprout-base','Unable to find the address: '+errors));
 		}
 	})
 })(jQuery);

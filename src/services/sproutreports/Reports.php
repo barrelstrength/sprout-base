@@ -5,15 +5,15 @@
  * @license   http://sprout.barrelstrengthdesign.com/license
  */
 
-namespace barrelstrength\sproutcore\services\sproutreports;
+namespace barrelstrength\sproutbase\services\sproutreports;
 
-use barrelstrength\sproutcore\contracts\sproutreports\BaseReport;
-use barrelstrength\sproutcore\models\sproutreports\ReportGroup as ReportGroupModel;
+use barrelstrength\sproutbase\contracts\sproutreports\BaseReport;
+use barrelstrength\sproutbase\models\sproutreports\ReportGroup as ReportGroupModel;
 use Craft;
 use yii\base\Component;
-use barrelstrength\sproutcore\models\sproutreports\Report as ReportModel;
-use barrelstrength\sproutcore\records\sproutreports\Report as ReportRecord;
-use barrelstrength\sproutcore\records\sproutreports\ReportGroup as ReportGroupRecord;
+use barrelstrength\sproutbase\models\sproutreports\Report as ReportModel;
+use barrelstrength\sproutbase\records\sproutreports\Report as ReportRecord;
+use barrelstrength\sproutbase\records\sproutreports\ReportGroup as ReportGroupRecord;
 
 class Reports extends Component
 {
@@ -55,7 +55,7 @@ class Reports extends Component
 		$dataSource = $instance->getDataSource();
 
 		$instance->allowHtml = $request->getBodyParam('allowHtml', $dataSource->getDefaultAllowHtml());
-	
+
 		return $instance;
 	}
 
@@ -122,7 +122,7 @@ class Reports extends Component
 		try
 		{
 			$record->save(false);
-			
+
 			$model->id = $record->id;
 
 			$transaction->commit();

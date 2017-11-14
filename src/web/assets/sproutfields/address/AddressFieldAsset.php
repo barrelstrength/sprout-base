@@ -5,7 +5,7 @@
  * @license   http://sprout.barrelstrengthdesign.com/license
  */
 
-namespace barrelstrength\sproutcore\web\assets\sproutfields\address;
+namespace barrelstrength\sproutbase\web\assets\sproutfields\address;
 
 use craft\web\AssetBundle;
 
@@ -13,7 +13,7 @@ class AddressFieldAsset extends AssetBundle
 {
 	public function init()
 	{
-		$this->sourcePath = '@sproutcore/web/assets/sproutfields/address/dist';
+		$this->sourcePath = '@sproutbase/web/assets/sproutfields/address/dist';
 
 		$this->js = [
 			'js/AddressBox.js',

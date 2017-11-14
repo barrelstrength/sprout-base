@@ -5,9 +5,9 @@
  * @license   http://sprout.barrelstrengthdesign.com/license
  */
 
-namespace barrelstrength\sproutcore\helpers;
-use barrelstrength\sproutcore\SproutCore;
-use barrelstrength\sproutcore\models\sproutfields\Address as AddressModel;
+namespace barrelstrength\sproutbase\helpers;
+use barrelstrength\sproutbase\SproutBase;
+use barrelstrength\sproutbase\models\sproutfields\Address as AddressModel;
 use Craft;
 use CommerceGuys\Addressing\Repository\AddressFormatRepository;
 use CommerceGuys\Addressing\Repository\SubdivisionRepository;
@@ -379,7 +379,7 @@ class AddressHelper
 			}
 			else
 			{
-				$errors['postalCode'] = SproutCore::t(ucwords($postalName) . ' is invalid.');
+				$errors['postalCode'] = SproutBase::t(ucwords($postalName) . ' is invalid.');
 			}
 		}
 
@@ -432,7 +432,7 @@ class AddressHelper
 	 */
 	public function renderHeading($title)
 	{
-		return SproutCore::t(str_replace('_', ' ', ucwords($title)));
+		return SproutBase::t(str_replace('_', ' ', ucwords($title)));
 	}
 
 	/**
@@ -702,13 +702,13 @@ class AddressHelper
 
 	public function renderTemplates($template, $params)
 	{
-		$addressPath = Craft::getAlias('@sproutcore/templates/sproutfields/_includes/forms/address/');
+		$addressPath = Craft::getAlias('@sproutbase/templates/sproutfields/_includes/forms/address/');
 
 		$originalTemplatesPath = Craft::$app->getView()->getTemplatesPath();
 
 		#Craft::$app->getView()->setTemplatesPath($addressPath);
 
-		$html = Craft::$app->view->renderTemplate('sprout-core/sproutfields/_includes/forms/address/'.$template, $params);
+		$html = Craft::$app->view->renderTemplate('sprout-base/sproutfields/_includes/forms/address/'.$template, $params);
 
 		#Craft::$app->getView()->setTemplatesPath($originalTemplatesPath);
 

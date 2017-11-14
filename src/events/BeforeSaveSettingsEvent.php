@@ -5,7 +5,7 @@
  * @license   http://sprout.barrelstrengthdesign.com/license
  */
 
-namespace barrelstrength\sproutcore\events;
+namespace barrelstrength\sproutbase\events;
 
 use yii\base\Event;
 

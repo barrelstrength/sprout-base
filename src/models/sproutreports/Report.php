@@ -5,11 +5,11 @@
  * @license   http://sprout.barrelstrengthdesign.com/license
  */
 
-namespace barrelstrength\sproutcore\models\sproutreports;
+namespace barrelstrength\sproutbase\models\sproutreports;
 
-use barrelstrength\sproutcore\SproutCore;
+use barrelstrength\sproutbase\SproutBase;
 use craft\base\Model;
-use barrelstrength\sproutcore\records\sproutreports\Report as ReportRecord;
+use barrelstrength\sproutbase\records\sproutreports\Report as ReportRecord;
 use craft\validators\HandleValidator;
 use craft\validators\UniqueValidator;
 
@@ -44,7 +44,7 @@ class Report extends Model
 
 	public function getDataSource()
 	{
-		$dataSource = SproutCore::$app->dataSources->getDataSourceById($this->dataSourceId);
+		$dataSource = SproutBase::$app->dataSources->getDataSourceById($this->dataSourceId);
 
 		$dataSource->setReport($this);
 

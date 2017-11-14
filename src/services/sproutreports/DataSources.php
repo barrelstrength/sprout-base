@@ -5,12 +5,12 @@
  * @license   http://sprout.barrelstrengthdesign.com/license
  */
 
-namespace barrelstrength\sproutcore\services\sproutreports;
+namespace barrelstrength\sproutbase\services\sproutreports;
 
-use barrelstrength\sproutcore\contracts\sproutreports\BaseDataSource;
-use barrelstrength\sproutcore\models\sproutreports\DataSource as DataSourceModel;
-use barrelstrength\sproutcore\records\sproutreports\DataSource as DataSourceRecord;
-use barrelstrength\sproutcore\SproutCore;
+use barrelstrength\sproutbase\contracts\sproutreports\BaseDataSource;
+use barrelstrength\sproutbase\models\sproutreports\DataSource as DataSourceModel;
+use barrelstrength\sproutbase\records\sproutreports\DataSource as DataSourceRecord;
+use barrelstrength\sproutbase\SproutBase;
 use yii\base\Component;
 use craft\events\RegisterComponentTypesEvent;
 
@@ -44,7 +44,7 @@ class DataSources  extends Component
 			return $sources[$id];
 		}
 
-		throw new \Exception(SproutCore::t('Could not find data source with id {id}.', compact('id')));
+		throw new \Exception(SproutBase::t('Could not find data source with id {id}.', compact('id')));
 	}
 
 	/**

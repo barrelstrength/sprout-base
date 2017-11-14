@@ -10,11 +10,11 @@
 		{% endif %}
 		>
 		<div class='address-add-button hidden'>
-			<a class='btn add icon dashed sproutaddress-edit' href='#'>{{ "Add Address"|t('sprout-core') }}</a>
+			<a class='btn add icon dashed sproutaddress-edit' href='#'>{{ "Add Address"|t('sprout-base') }}</a>
 		</div>
 		<div class='address-edit-buttons hidden'>
-			<a class='small btn right icon sproutaddress-edit clear-button' href='#'>{{ "Clear"|t('sprout-core') }}</a>
-			<a class='small btn right icon sproutaddress-edit update-button' href='#'>{{ "Edit"|t('sprout-core') }}</a>
+			<a class='small btn right icon sproutaddress-edit clear-button' href='#'>{{ "Clear"|t('sprout-base') }}</a>
+			<a class='small btn right icon sproutaddress-edit update-button' href='#'>{{ "Edit"|t('sprout-base') }}</a>
 		</div>
 		<div class='address-format hidden'>
 			<div class='spinner'></div>
@@ -25,7 +25,7 @@
 {{ forms.field({
 }, addressInput) }}
 
-{% do view.registerAssetBundle("barrelstrength\\sproutcore\\web\\assets\\sproutfields\\address\\AddressFieldAsset") %}
+{% do view.registerAssetBundle("barrelstrength\\sproutbase\\web\\assets\\sproutfields\\address\\AddressFieldAsset") %}
 
 {% css %}
 	/**
@@ -62,6 +62,6 @@
 
 {% js %}
 	$( document ).ready(function() {
-		new Craft.SproutCore.AddressBox($('.{{ addressBox }}'), { namespace: '{{ name }}' })
+		new Craft.SproutBase.AddressBox($('.{{ addressBox }}'), { namespace: '{{ name }}' })
 	});
 {% endjs %}

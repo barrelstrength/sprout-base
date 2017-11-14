@@ -1,10 +1,10 @@
 {
-  "name": "barrelstrength/sproutcore",
+  "name": "barrelstrength/sprout-base",
   "description": "Common libraries for Sprout Plugins for Craft CMS",
   "version": "1.0.1",
   "autoload": {
     "psr-4": {
-      "barrelstrength\\sproutcore\\": "src/"
+      "barrelstrength\\sproutbase\\": "src/"
     }
   },
   "require": {

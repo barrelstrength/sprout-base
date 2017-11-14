@@ -5,19 +5,19 @@
  * @license   http://sprout.barrelstrengthdesign.com/license
  */
 
-namespace barrelstrength\sproutcore\services;
+namespace barrelstrength\sproutbase\services;
 
-use barrelstrength\sproutcore\services\sproutreports\DataSources;
-use barrelstrength\sproutcore\services\sproutreports\Exports;
-use barrelstrength\sproutcore\services\sproutreports\Reports;
-use barrelstrength\sproutcore\services\sproutfields\Utilities;
-use barrelstrength\sproutcore\services\sproutfields\Link;
-use barrelstrength\sproutcore\services\sproutfields\Phone;
-use barrelstrength\sproutcore\services\sproutfields\RegularExpression;
-use barrelstrength\sproutcore\services\sproutfields\Email;
-use barrelstrength\sproutcore\services\sproutfields\EmailSelect;
-use barrelstrength\sproutcore\services\sproutfields\Address;
-use barrelstrength\sproutcore\services\sproutcore\Settings;
+use barrelstrength\sproutbase\services\sproutreports\DataSources;
+use barrelstrength\sproutbase\services\sproutreports\Exports;
+use barrelstrength\sproutbase\services\sproutreports\Reports;
+use barrelstrength\sproutbase\services\sproutfields\Utilities;
+use barrelstrength\sproutbase\services\sproutfields\Link;
+use barrelstrength\sproutbase\services\sproutfields\Phone;
+use barrelstrength\sproutbase\services\sproutfields\RegularExpression;
+use barrelstrength\sproutbase\services\sproutfields\Email;
+use barrelstrength\sproutbase\services\sproutfields\EmailSelect;
+use barrelstrength\sproutbase\services\sproutfields\Address;
+use barrelstrength\sproutbase\services\sproutbase\Settings;
 use craft\base\Component;
 
 class App extends Component

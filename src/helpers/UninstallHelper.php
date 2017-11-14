@@ -5,7 +5,7 @@
  * @license   http://sprout.barrelstrengthdesign.com/license
  */
 
-namespace barrelstrength\sproutcore\helpers;
+namespace barrelstrength\sproutbase\helpers;
 
 use Craft;
 

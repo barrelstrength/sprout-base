@@ -5,10 +5,10 @@
  * @license   http://sprout.barrelstrengthdesign.com/license
  */
 
-namespace barrelstrength\sproutcore;
+namespace barrelstrength\sproutbase;
 
-use barrelstrength\sproutcore\base\BaseSproutTrait;
-use barrelstrength\sproutcore\web\twig\variables\SproutCoreVariable;
+use barrelstrength\sproutbase\base\BaseSproutTrait;
+use barrelstrength\sproutbase\web\twig\variables\SproutBaseVariable;
 use craft\events\DefineComponentsEvent;
 use craft\web\twig\variables\CraftVariable;
 use yii\base\Event;
@@ -19,9 +19,9 @@ use craft\helpers\ArrayHelper;
 use craft\i18n\PhpMessageSource;
 use Craft;
 
-use barrelstrength\sproutcore\services\App;
+use barrelstrength\sproutbase\services\App;
 
-class SproutCore extends Module
+class SproutBase extends Module
 {
 	use BaseSproutTrait;
 
@@ -37,7 +37,7 @@ class SproutCore extends Module
 	 *
 	 * @var string
 	 */
-	public static $pluginId = 'sprout-core';
+	public static $pluginId = 'sprout-base';
 
 	/**
 	 * @var string|null The translation category that this module translation messages should use. Defaults to the lowercased plugin handle.
@@ -58,7 +58,7 @@ class SproutCore extends Module
 		// Set some things early in case there are any settings, and the settings model's
 		// init() method needs to call Craft::t() or Plugin::getInstance().
 
-		$this->handle = 'sprout-core';
+		$this->handle = 'sprout-base';
 		$this->t9nCategory = ArrayHelper::remove($config, 't9nCategory', $this->t9nCategory ?? strtolower($this->handle));
 		$this->sourceLanguage = ArrayHelper::remove($config, 'sourceLanguage', $this->sourceLanguage);
 
@@ -90,16 +90,16 @@ class SproutCore extends Module
 
 		self::$app = new App();
 
-		Craft::setAlias('@sproutcore', $this->getBasePath());
+		Craft::setAlias('@sproutbase', $this->getBasePath());
 
 		// Register our base template path
 		Event::on(View::class, View::EVENT_REGISTER_CP_TEMPLATE_ROOTS, function(RegisterTemplateRootsEvent $e) {
-			$e->roots['sprout-core'] = $this->getBasePath().DIRECTORY_SEPARATOR.'templates';
+			$e->roots['sprout-base'] = $this->getBasePath().DIRECTORY_SEPARATOR.'templates';
 		});
 
 		// Register our Variables
 		Event::on(CraftVariable::class, CraftVariable::EVENT_DEFINE_COMPONENTS, function (DefineComponentsEvent $event) {
-			$event->components['sproutcore'] = SproutCoreVariable::class;
+			$event->components['sproutbase'] = SproutBaseVariable::class;
 		});
 	}
 }

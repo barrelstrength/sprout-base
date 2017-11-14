@@ -5,12 +5,12 @@
  * @license   http://sprout.barrelstrengthdesign.com/license
  */
 
-namespace barrelstrength\sproutcore\services\sproutfields;
+namespace barrelstrength\sproutbase\services\sproutfields;
 
 use craft\base\Field;
 use yii\base\Component;
 use Craft;
-use barrelstrength\sproutcore\SproutCore;
+use barrelstrength\sproutbase\SproutBase;
 
 /**
  * Class LinkService
@@ -63,10 +63,10 @@ class Link extends Component
 	{
 		if (!empty($field->customPattern) && isset($field->customPatternErrorMessage))
 		{
-			return SproutCore::t($field->customPatternErrorMessage);
+			return SproutBase::t($field->customPatternErrorMessage);
 		}
 
-		return SproutCore::t($fieldName . ' must be a valid link.');
+		return SproutBase::t($fieldName . ' must be a valid link.');
 	}
 
 }

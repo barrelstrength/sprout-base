@@ -5,12 +5,12 @@
  * @license   http://sprout.barrelstrengthdesign.com/license
  */
 
-namespace barrelstrength\sproutcore\contracts\sproutreports;
+namespace barrelstrength\sproutbase\contracts\sproutreports;
 
-use barrelstrength\sproutcore\SproutCore;
+use barrelstrength\sproutbase\SproutBase;
 use Craft;
-use barrelstrength\sproutcore\records\sproutreports\DataSource;
-use barrelstrength\sproutcore\models\sproutreports\Report as ReportModel;
+use barrelstrength\sproutbase\records\sproutreports\DataSource;
+use barrelstrength\sproutbase\models\sproutreports\Report as ReportModel;
 use craft\helpers\UrlHelper;
 
 /**
@@ -160,7 +160,7 @@ abstract class BaseDataSource
 	 */
 	final public function getReportCount()
 	{
-		return SproutCore::$app->reports->getCountByDataSourceId($this->getId());
+		return SproutBase::$app->reports->getCountByDataSourceId($this->getId());
 	}
 
 	/**

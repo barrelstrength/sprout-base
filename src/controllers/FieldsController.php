@@ -5,14 +5,14 @@
  * @license   http://sprout.barrelstrengthdesign.com/license
  */
 
-namespace barrelstrength\sproutcore\controllers;
+namespace barrelstrength\sproutbase\controllers;
 
 use barrelstrength\sproutfields\fields\Email;
 use barrelstrength\sproutfields\fields\Link;
 use Craft;
 use craft\web\Controller as BaseController;
 
-use barrelstrength\sproutcore\SproutCore;
+use barrelstrength\sproutbase\SproutBase;
 
 class FieldsController extends BaseController
 {
@@ -40,7 +40,7 @@ class FieldsController extends BaseController
 			$field = new Email();
 		}
 
-		if (!SproutCore::$app->email->validate($value, $field, $elementId))
+		if (!SproutBase::$app->email->validate($value, $field, $elementId))
 		{
 			return $this->asJson(false);
 		}
@@ -69,7 +69,7 @@ class FieldsController extends BaseController
 			$field = new Link();
 		}
 
-		if (!SproutCore::$app->link->validate($value, $field))
+		if (!SproutBase::$app->link->validate($value, $field))
 		{
 			return $this->asJson(false);
 		}
@@ -85,7 +85,7 @@ class FieldsController extends BaseController
 		$value = Craft::$app->getRequest()->getParam('value');
 		$mask  = Craft::$app->getRequest()->getParam('mask');
 
-		if (!SproutCore::$app->phone->validate($value, $mask))
+		if (!SproutBase::$app->phone->validate($value, $mask))
 		{
 			return $this->asJson(false);
 		}
@@ -107,7 +107,7 @@ class FieldsController extends BaseController
 		$field           = Craft::$app->fields->getFieldByHandle($fieldHandle);
 		Craft::$app->content->fieldContext = $oldFieldContext;
 
-		if (!SproutCore::$app->regularExpression->validate($value, $field))
+		if (!SproutBase::$app->regularExpression->validate($value, $field))
 		{
 			return $this->asJson(false);
 		}

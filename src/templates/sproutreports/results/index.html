@@ -10,7 +10,7 @@
 {% set extraPageHeaderHtml %}
 <form method="post" accept-charset="UTF-8">
 	{{ csrfInput() }}
-	<input type="hidden" name="action" value="sprout-core/reports/export-report">
+	<input type="hidden" name="action" value="sprout-base/reports/export-report">
 	<input type="hidden" name="reportId" value="{{ reportId }}">
 
 	<a id="btn-download-csv" class="btn">
@@ -22,8 +22,8 @@
 {% endset %}
 
 {% set crumbs = [
-{ label: "Reports"|t('sprout-core'), url: dataSource.getUrl() },
-{ label: "Edit "|t('sprout-core') ~ report.name, url: report.getEditUrl() }
+{ label: "Reports"|t('sprout-base'), url: dataSource.getUrl() },
+{ label: "Edit "|t('sprout-base') ~ report.name, url: report.getEditUrl() }
 ] %}
 
 {% block content %}
@@ -34,14 +34,14 @@
 
 			<form id="report-options" method="post" accept-charset="UTF-8">
 				{{ csrfInput() }}
-				<input type="hidden" name="action" value="sprout-core/reports/update-report">
+				<input type="hidden" name="action" value="sprout-base/reports/update-report">
 				{{ redirectInput(redirectUrl) }}
 				<input type="hidden" name="reportId" value="{{ reportId }}">
 				{{ optionsHtml | raw }}
 
 				<div class="button">
 					<div class="btngroup">
-						<input type="submit" class="btn submit" value="{{ 'Submit Report'|t('sprout-core') }}">
+						<input type="submit" class="btn submit" value="{{ 'Submit Report'|t('sprout-base') }}">
 					</div>
 				</div>
 
@@ -86,13 +86,13 @@
 				</table>
 			</div>
 		{% else %}
-			<p>{{ "This report currently has no results."|t('sprout-core') }}</p>
+			<p>{{ "This report currently has no results."|t('sprout-base') }}</p>
 		{% endif %}
 	</div>
 
 {% endblock %}
 
-{% do view.registerAssetBundle("barrelstrength\\sproutcore\\web\\assets\\sproutreports\\SproutReportsAsset") %}
+{% do view.registerAssetBundle("barrelstrength\\sproutbase\\web\\assets\\sproutreports\\SproutReportsAsset") %}
 
 {% js %}
 

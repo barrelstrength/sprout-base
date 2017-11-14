@@ -1,6 +1,6 @@
 {% import "_includes/forms" as forms %}
-{% import 'sprout-core/sproutcore/_includes/sproutcp' as sprout %}
-{% do view.registerAssetBundle("barrelstrength\\sproutcore\\web\\assets\\sproutcore\\cp\\CpAsset") %}
+{% import 'sprout-base/sproutbase/_includes/sproutcp' as sprout %}
+{% do view.registerAssetBundle("barrelstrength\\sproutbase\\web\\assets\\sproutbase\\cp\\CpAsset") %}
 
 {% set boxBody %}
 	<p>{{ "Use <a href='{url}' target='_blank'>Sprout Email</a> to create Email Marketing Campaigns that integrate closely with your website content  and complement your SEO strategy. Automatically add Campaign Emails to your XML sitemap and customize your email pages with targeted SEO metadata using Sprout SEO."|t({
@@ -9,9 +9,9 @@
 {% endset %}
 
 {{ sprout.mediaBox({
-	heading: "SEO-friendly Email Marketing"|t('sprout-core'),
+	heading: "SEO-friendly Email Marketing"|t('sprout-base'),
 	body: boxBody,
-    resourcePath: '@sproutcore/web/assets/sproutemail/dist/images/sproutemail-icon.svg'
+    resourcePath: '@sproutbase/web/assets/sproutemail/dist/images/sproutemail-icon.svg'
 }) }}
 
 

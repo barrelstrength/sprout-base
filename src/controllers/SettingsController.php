@@ -5,9 +5,9 @@
  * @license   http://sprout.barrelstrengthdesign.com/license
  */
 
-namespace barrelstrength\sproutcore\controllers;
+namespace barrelstrength\sproutbase\controllers;
 
-use barrelstrength\sproutcore\SproutCore;
+use barrelstrength\sproutbase\SproutBase;
 use Craft;
 use craft\base\Plugin;
 use craft\errors\InvalidPluginException;
@@ -21,11 +21,11 @@ use yii\web\BadRequestHttpException;
  * Using the Sprout Core settings controller requires:
  *
  * 1. Adding two routes to a plugin:
- * 'sprout-seo/settings' => 'sprout-core/settings/edit-settings',
- * 'sprout-seo/settings/<settingsSectionHandle:.*>' => 'sprout-core/settings/edit-settings'
+ * 'sprout-seo/settings' => 'sprout-base/settings/edit-settings',
+ * 'sprout-seo/settings/<settingsSectionHandle:.*>' => 'sprout-base/settings/edit-settings'
  *
  * 2. Submitting your settings form to Sprout Core
- * <input type="hidden" name="action" value="sprout-core/settings/save-settings">
+ * <input type="hidden" name="action" value="sprout-base/settings/save-settings">
  *
  * 3. Ensuring all settings are included in a settings array of the submitted form
  * <input type="text" name="settings[pluginNameOverride]" value="">
@@ -92,7 +92,7 @@ class SettingsController extends BaseController
 		// they can be accessed as params.paramName
 		$params = Craft::$app->getUrlManager()->getRouteParams();
 
-		return $this->renderTemplate('sprout-core/sproutcore/_settings/index', [
+		return $this->renderTemplate('sprout-base/sproutbase/_settings/index', [
 			'plugin' => $this->plugin,
 			'selectedSidebarItem' => $this->selectedSidebarItem,
 			'params' => $params
@@ -111,14 +111,14 @@ class SettingsController extends BaseController
 		// the submitted settings
 		$settings = Craft::$app->getRequest()->getBodyParam('settings');
 
-		if (SproutCore::$app->settings->saveSettings($this->plugin, $settings))
+		if (SproutBase::$app->settings->saveSettings($this->plugin, $settings))
 		{
-			Craft::$app->getSession()->setNotice(SproutCore::t('Settings saved.'));
+			Craft::$app->getSession()->setNotice(SproutBase::t('Settings saved.'));
 
 			$this->redirectToPostedUrl();
 		} else
 		{
-			Craft::$app->getSession()->setError(SproutCore::t('Couldn’t save settings.'));
+			Craft::$app->getSession()->setError(SproutBase::t('Couldn’t save settings.'));
 
 			Craft::$app->getUrlManager()->setRouteParams([
 				'settings' => $settings

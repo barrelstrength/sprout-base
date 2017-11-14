@@ -5,7 +5,7 @@
  * @license   http://sprout.barrelstrengthdesign.com/license
  */
 
-namespace barrelstrength\sproutcore\web\assets\sproutfields\email;
+namespace barrelstrength\sproutbase\web\assets\sproutfields\email;
 
 use craft\web\AssetBundle;
 use craft\web\assets\cp\CpAsset;
@@ -15,7 +15,7 @@ class EmailFieldAsset extends AssetBundle
 	public function init()
 	{
 		// define the path that your publishable resources live
-		$this->sourcePath = '@sproutcore/web/assets/sproutfields';
+		$this->sourcePath = '@sproutbase/web/assets/sproutfields';
 
 		// define the dependencies
 		$this->depends = [

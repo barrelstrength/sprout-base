@@ -5,10 +5,10 @@
  * @license   http://sprout.barrelstrengthdesign.com/license
  */
 
-namespace barrelstrength\sproutcore\contracts\sproutimport;
+namespace barrelstrength\sproutbase\contracts\sproutimport;
 use barrelstrength\sproutimport\SproutImport;
 use craft\base\Model;
-use barrelstrength\sproutcore\SproutCore;
+use barrelstrength\sproutbase\SproutBase;
 
 /**
  * Class BaseImporter
@@ -197,7 +197,7 @@ abstract class BaseImporter
 
 			if (!class_exists($className))
 			{
-				throw new \Exception(SproutCore::t($className . ' namespace on getModelName() method not found.'));
+				throw new \Exception(SproutBase::t($className . ' namespace on getModelName() method not found.'));
 			}
 
 			$this->model = new $className;

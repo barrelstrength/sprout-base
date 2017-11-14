@@ -5,11 +5,11 @@
  * @license   http://sprout.barrelstrengthdesign.com/license
  */
 
-namespace barrelstrength\sproutcore\services\sproutfields;
+namespace barrelstrength\sproutbase\services\sproutfields;
 
 use yii\base\Component;
 
-use barrelstrength\sproutcore\SproutCore;
+use barrelstrength\sproutbase\SproutBase;
 /**
  * Class PhoneService
  *
@@ -43,7 +43,7 @@ class Phone extends Component
 		{
 			return true;
 		}
-		
+
 		$mask = preg_quote($mask);
 
 		$phonePattern = $this->convertMaskToRegEx($mask);
@@ -152,12 +152,12 @@ class Phone extends Component
 		// Change empty condition to show default message when toggle settings is unchecked
 		if (!empty($field->customPatternErrorMessage))
 		{
-			return SproutCore::t($field->customPatternErrorMessage);
+			return SproutBase::t($field->customPatternErrorMessage);
 		}
 
 		$vars = array('field' => $field->name, 'format' => $field->mask);
 
-		return SproutCore::t('{field} is invalid. Required format: {format}', $vars);
+		return SproutBase::t('{field} is invalid. Required format: {format}', $vars);
 	}
 
 }

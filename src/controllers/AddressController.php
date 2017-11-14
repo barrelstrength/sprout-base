@@ -5,11 +5,11 @@
  * @license   http://sprout.barrelstrengthdesign.com/license
  */
 
-namespace barrelstrength\sproutcore\controllers;
+namespace barrelstrength\sproutbase\controllers;
 
-use barrelstrength\sproutcore\helpers\AddressHelper;
-use barrelstrength\sproutcore\models\sproutfields\Address as AddressModel;
-use barrelstrength\sproutcore\SproutCore;
+use barrelstrength\sproutbase\helpers\AddressHelper;
+use barrelstrength\sproutbase\models\sproutfields\Address as AddressModel;
+use barrelstrength\sproutbase\SproutBase;
 use craft\db\Query;
 use craft\web\Controller;
 use Craft;
@@ -47,7 +47,7 @@ class AddressController extends Controller
 	{
 		$addressInfoId = Craft::$app->getRequest()->getBodyParam('addressInfoId');
 
-		$addressInfoModel = SproutCore::$app->address->getAddressById($addressInfoId);
+		$addressInfoModel = SproutBase::$app->address->getAddressById($addressInfoId);
 
 		$countryCode = $addressInfoModel->countryCode;
 
@@ -93,7 +93,7 @@ class AddressController extends Controller
 		if (Craft::$app->getRequest()->getBodyParam('addressInfoId') != null) {
 			$addressInfoId = Craft::$app->getRequest()->getBodyParam('addressInfoId');
 
-			$addressInfoModel = SproutCore::$app->address->getAddressById($addressInfoId);
+			$addressInfoModel = SproutBase::$app->address->getAddressById($addressInfoId);
 		} else {
 			$addressInfoModel = new AddressModel();
 
@@ -185,7 +185,7 @@ class AddressController extends Controller
 
 		if (Craft::$app->getRequest()->getBodyParam('addressInfoId') != null) {
 			$addressId = Craft::$app->getRequest()->getBodyParam('addressInfoId');
-			$addressInfoModel = SproutCore::$app->address->getAddressById($addressId);
+			$addressInfoModel = SproutBase::$app->address->getAddressById($addressId);
 		}
 
 		$result = [

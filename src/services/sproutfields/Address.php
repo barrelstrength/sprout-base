@@ -5,12 +5,12 @@
  * @license   http://sprout.barrelstrengthdesign.com/license
  */
 
-namespace barrelstrength\sproutcore\services\sproutfields;
+namespace barrelstrength\sproutbase\services\sproutfields;
 
-use barrelstrength\sproutcore\SproutCore;
-use barrelstrength\sproutcore\models\sproutfields\Address as AddressModel;
-use barrelstrength\sproutcore\events\OnSaveAddressEvent;
-use barrelstrength\sproutcore\records\sproutfields\Address as AddressRecord;
+use barrelstrength\sproutbase\SproutBase;
+use barrelstrength\sproutbase\models\sproutfields\Address as AddressModel;
+use barrelstrength\sproutbase\events\OnSaveAddressEvent;
+use barrelstrength\sproutbase\records\sproutfields\Address as AddressRecord;
 use Craft;
 use craft\base\Component;
 
@@ -52,7 +52,7 @@ class Address extends Component
 
 			if (!$record)
 			{
-				throw new \Exception(SproutCore::t('No entry exists with the ID “{id}”', ['id' => $model->id]));
+				throw new \Exception(SproutBase::t('No entry exists with the ID “{id}”', ['id' => $model->id]));
 			}
 		}
 
