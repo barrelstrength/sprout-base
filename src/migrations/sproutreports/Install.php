@@ -16,6 +16,14 @@ class Install extends Migration
 	private $reportGroupTable = '{{%sproutreports_reportgroups}}';
 	private $dataSourcesTable = '{{%sproutreports_datasources}}';
 
+	/**
+	 * @inheritdoc
+	 */
+	public function safeUp()
+	{
+		$this->createTables();
+	}
+
 	public function createTables()
 	{
 		$reportTable = $this->getDb()->tableExists($this->reportTable);
