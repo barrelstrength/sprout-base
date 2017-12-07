@@ -2,34 +2,25 @@
 
 {% block content %}
 
-    {% if settingsForm %}
-    <form method="post" accept-charset="UTF-8"
-          data-saveshortcut-redirect="{{ redirectUrl|hash }}" data-saveshortcut>
-        {{ csrfInput() }}
-        <input type="hidden" name="action" value="sprout-base/settings/save-settings">
-        <input type="hidden" name="redirect" value="{{ redirectUrl|hash }}">
+	{% if settingsForm %}
+		<input type="hidden" name="action" value="sprout-base/settings/save-settings">
+		<input type="hidden" name="redirect" value="{{ redirectUrl|hash }}">
 
-        <div id="settings-cp">
+		<div id="settings-cp">
 
-    {% endif %}
+	{% endif %}
 
-            {% namespace (settingsForm ? 'settings' : '') %}
+		{% namespace (settingsForm ? 'settings' : '') %}
 
-            {# Display the selected settings template #}
-            {% include [
-                selectedSettingsInfo.template
-            ] %}
+		{# Display the selected settings template #}
+		{% include [
+			selectedSettingsInfo.template
+		] %}
 
-            {% endnamespace %}
+		{% endnamespace %}
 
-    {% if settingsForm %}
-        </div>
-
-        <div class="buttons">
-            <input class="btn submit" type="submit" value="{{ 'Save'|t('sprout-base') }}">
-        </div>
-
-    </form>
-    {% endif %}
+	{% if settingsForm %}
+		</div>
+	{% endif %}
 
 {% endblock %}
