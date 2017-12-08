@@ -3,7 +3,7 @@
 {% block content %}
 
 	{% if settingsForm %}
-		<input type="hidden" name="action" value="sprout-base/settings/save-settings">
+		<input type="hidden" name="action" value="{{ actionUrl }}">
 		<input type="hidden" name="redirect" value="{{ redirectUrl|hash }}">
 
 		<div id="settings-cp">
