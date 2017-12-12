@@ -28,6 +28,9 @@ class Settings extends Component
 
 		$this->trigger(self::EVENT_BEFORE_SAVE_SETTINGS, $event);
 
+		// Have namespace?
+		$settings = $settings['settings'] ?? $settings;
+
 		foreach ($pluginSettings->getAttributes() as $settingHandle => $value)
 		{
 			if (isset($settings[$settingHandle]))

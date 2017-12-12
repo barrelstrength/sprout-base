@@ -13,6 +13,7 @@ use barrelstrength\sproutbase\records\sproutreports\DataSource as DataSourceReco
 use barrelstrength\sproutbase\SproutBase;
 use yii\base\Component;
 use craft\events\RegisterComponentTypesEvent;
+use craft\db\Query;
 
 /**
  * Class DataSources
@@ -151,6 +152,22 @@ class DataSources  extends Component
 		{
 			$model->addErrors($record->getErrors());
 		}
+
+		return $result;
+	}
+
+	/**
+	 * Delete reports by dataSourceId
+	 *
+	 * @param $dataSourceId
+	 * @return bool
+	 */
+	public function deleteReportsByDataSourceId($dataSourceId)
+	{
+		$query  = new Query();
+		$result = $query->createCommand()
+			->delete('sproutreports_report', ['dataSourceId' => $dataSourceId])
+			->execute();
 
 		return $result;
 	}
