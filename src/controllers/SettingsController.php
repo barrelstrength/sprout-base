@@ -90,13 +90,15 @@ class SettingsController extends BaseController
 		// Make sure we retain any params set in another controller on this request
 		// by handing them to the settings layer as a variable. In the template,
 		// they can be accessed as params.paramName
-		$params = Craft::$app->getUrlManager()->getRouteParams();
+		$settingsNav = $this->plugin->getSettings()->getSettingsNavItems();
+		$variables = $settingsNav[$this->selectedSidebarItem]['variables'] ?? [];
 
-		return $this->renderTemplate('sprout-base/sproutbase/_settings/index', [
-			'plugin' => $this->plugin,
-			'selectedSidebarItem' => $this->selectedSidebarItem,
-			'params' => $params
-		]);
+		$variables['plugin'] = $this->plugin;
+		$variables['selectedSidebarItem'] = $this->selectedSidebarItem;
+
+		$variables = array_merge($variables, Craft::$app->getUrlManager()->getRouteParams());
+
+		return $this->renderTemplate('sprout-base/sproutbase/_settings/index', $variables);
 	}
 
 	/**
