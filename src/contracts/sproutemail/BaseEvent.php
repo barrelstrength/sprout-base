@@ -1,6 +1,7 @@
 <?php
 
 namespace barrelstrength\sproutbase\contracts\sproutemail;
+use yii\base\Event;
 
 /**
  * The official API for dynamic event registration and handling
@@ -40,25 +41,13 @@ class BaseEvent
 	}
 
 	/**
-	 * Returns the string we use as the unique ID for the trigger event
+	 * Returns the string with namespace that is for html attribute class compatibility
 	 *
 	 * @return string
 	 */
 	public function getEventId()
 	{
-		return get_class($this);
-	}
-
-	/**
-	 * Returns the event name or action to use as the formal identifier
-	 *
-	 * @example entries-saveEntry
-	 *
-	 * @return string
-	 */
-	public function getEventAction()
-	{
-		return str_replace('.', '-', $this->getName());
+		return strtolower(str_replace('\\', '-', get_class($this)));
 	}
 
 	/**
@@ -168,7 +157,7 @@ class BaseEvent
 	 *
 	 * @return mixed
 	 */
-	public function prepareParams(BaseEvent $event)
+	public function prepareParams(Event $event)
 	{
 		return $event->params;
 	}
