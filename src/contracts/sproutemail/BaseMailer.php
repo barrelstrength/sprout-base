@@ -202,6 +202,7 @@ abstract class BaseMailer
 	 */
 	public function sendNotificationEmail(NotificationEmail $notificationEmail, $object)
 	{
+		return true;
 	}
 
 	/**
