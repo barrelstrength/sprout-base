@@ -2,11 +2,11 @@
 
 {% set title  = "Reports"|t('sprout-base') %}
 
-{% set extraPageHeaderHtml %}
+{% block actionButton %}
 	<div class="btngroup submit first">
 		<a class="btn submit add icon" href="{{ dataSource.getUrl('/new') }}">{{ "New Report"|t('sprout-base') }}</a>
 	</div>
-{% endset %}
+{% endblock %}
 
 {% block content %}
 	{% if reports is empty %}
