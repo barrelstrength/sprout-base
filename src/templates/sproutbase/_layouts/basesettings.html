@@ -35,7 +35,7 @@
 {% block actionButton %}
 	{% set fullForm = selectedSettingsInfo.fullPageForm ?? true %}
 
-	{% if fullForm %}
+	{% if fullForm and settingsForm == true %}
 
 	 {% set actionTemplate = selectedSettingsInfo.actionTemplate ?? 'sprout-base/sproutbase/_includes/actionButton' %}
 	 {% include actionTemplate %}
