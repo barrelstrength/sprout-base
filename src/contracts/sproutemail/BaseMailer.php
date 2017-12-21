@@ -9,7 +9,7 @@ namespace barrelstrength\sproutbase\contracts\sproutemail;
 
 use barrelstrength\sproutemail\elements\CampaignEmail;
 use barrelstrength\sproutemail\elements\NotificationEmail;
-use barrelstrength\sproutemail\models\CampaignTypeModel;
+use barrelstrength\sproutemail\models\CampaignType;
 use barrelstrength\sproutemail\SproutEmail;
 use yii\base\Model;
 use craft\helpers\StringHelper;
@@ -210,12 +210,12 @@ abstract class BaseMailer
 	 * if they implement SproutEmailCampaignEmailSenderInterface
 	 *
 	 * @param CampaignEmail $campaignEmail
-	 * @param CampaignTypeModel  $campaign
+	 * @param CampaignType  $campaign
 	 *
 	 * @internal param SproutEmail_CampaignEmailModel $campaignEmail
 	 */
 	abstract public function sendCampaignEmail(CampaignEmail $campaignEmail,
-	                                           CampaignTypeModel $campaignType);
+	                                           CampaignType $campaignType);
 
 	/**
 	 * Gives mailers the ability to include their own modal resources and register their dynamic action handlers
@@ -246,12 +246,12 @@ abstract class BaseMailer
 
 	/**
 	 * @param CampaignEmail $campaignEmail
-	 * @param CampaignTypeModel  $campaignType
+	 * @param CampaignType  $campaignType
 	 *
 	 * @return mixed
 	 */
 	abstract public function getPrepareModalHtml(CampaignEmail $campaignEmail,
-	                                             CampaignTypeModel $campaignType);
+	                                             CampaignType $campaignType);
 
 	/**
 	 * Returns whether this Mailer supports mailing lists
@@ -308,11 +308,11 @@ abstract class BaseMailer
 	/**
 	 * Allow modification of campaignType model before it is saved.
 	 *
-	 * @param CampaignTypeModel $model
+	 * @param CampaignType $model
 	 *
-	 * @return CampaignTypeModel
+	 * @return CampaignType
 	 */
-	public function prepareSave(CampaignTypeModel $model)
+	public function prepareSave(CampaignType $model)
 	{
 		return $model;
 	}
