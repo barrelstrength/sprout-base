@@ -107,10 +107,18 @@ class ReportsController extends Controller
 			$indexUrl = UrlHelper::cpUrl('/sprout-reports/reports');
 		}
 
+		$groups = [];
+
+		if (Craft::$app->getPlugins()->getPlugin('sprout-reports'))
+		{
+			$groups = \barrelstrength\sproutreports\SproutReports::$app->reportGroups->getAllReportGroups();
+		}
+
 		return $this->renderTemplate('sprout-base/sproutreports/reports/_edit', array(
 			'report'             => $reportModel,
 			'dataSource'         => $dataSource,
 			'indexUrl'           => $indexUrl,
+			'groups'              => $groups,
 			'continueEditingUrl' => $dataSource->getUrl() . '/edit/{id}'
 		));
 	}

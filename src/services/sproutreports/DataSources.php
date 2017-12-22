@@ -30,11 +30,9 @@ class DataSources  extends Component
 	protected $dataSources;
 
 	/**
+	 * @param $id
 	 *
-	 * @param string $id
-	 *
-	 * @throws \Exception
-	 * @return BaseDataSource
+	 * @return BaseDataSource|null
 	 */
 	public function getDataSourceById($id)
 	{
@@ -45,7 +43,7 @@ class DataSources  extends Component
 			return $sources[$id];
 		}
 
-		throw new \Exception(SproutBase::t('Could not find data source with id {id}.', compact('id')));
+		return null;
 	}
 
 	/**

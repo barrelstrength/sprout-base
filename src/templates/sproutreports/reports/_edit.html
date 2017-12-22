@@ -9,6 +9,19 @@
 
 {% set fullPageForm = true %}
 
+{% if groups | length %}
+	{% set groupId = report is defined ? report.groupId : null %}
+
+	{% if not groupId %}
+		{% set groupId = groups|keys[0] %}
+	{% endif %}
+
+	{% if groups[groupId] is not defined %}
+		{% exit 404 %}
+	{% endif %}
+{% endif %}
+
+
 {% block actionButton %}
 
 	<input type="hidden" name="action" value="sprout-base/reports/save-report">
@@ -87,9 +100,26 @@
 			label: "Data Source"|t('sprout-base'),
 		}, dataSourceNameLabel) }}
 
-	</div>
 
-	<div class="meta">
+
+	{% if groups | length %}
+
+		{% set groupOptions = [] %}
+		{% for group in groups %}
+			{% set groupOptions = groupOptions|merge([{ label: group.name, value: group.id }]) %}
+		{% endfor %}
+
+		{{ forms.selectField({
+			first: true,
+			label: "Group <span class='info'>Which group should this report be displayed in?</span>"|t,
+			id: 'groupId',
+			name: 'groupId',
+			options: groupOptions,
+			value: groupId
+		}) }}
+
+	{% endif %}
+
 
 		{{ forms.textField({
 			label: "Handle"|t('sprout-base'),
