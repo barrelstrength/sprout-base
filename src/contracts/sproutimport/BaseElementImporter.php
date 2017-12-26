@@ -9,6 +9,7 @@ namespace barrelstrength\sproutbase\contracts\sproutimport;
 
 use Craft;
 use barrelstrength\sproutimport\SproutImport;
+use craft\base\Element;
 use craft\base\Model;
 
 /**
@@ -25,6 +26,9 @@ abstract class BaseElementImporter extends BaseImporter
 	 */
 	public function getName()
 	{
+		/**
+		 * @var $model Element
+		 */
 		$model = $this->getModel();
 
 		if (!is_object($model))
@@ -189,11 +193,10 @@ abstract class BaseElementImporter extends BaseImporter
 
 	/**
 	 * Delete an Element using the Element ID
-	 *
 	 * @param $id
 	 *
 	 * @return bool
-	 * @throws \Exception
+	 * @throws \Throwable
 	 */
 	public function deleteById($id)
 	{
@@ -247,6 +250,7 @@ abstract class BaseElementImporter extends BaseImporter
 
 	/**
 	 * @return bool
+	 * @throws \Throwable
 	 */
 	public function save()
 	{
