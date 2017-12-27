@@ -8,11 +8,10 @@
 namespace barrelstrength\sproutbase\contracts\sproutemail;
 
 use barrelstrength\sproutemail\elements\CampaignEmail;
-use barrelstrength\sproutemail\elements\NotificationEmail;
+use barrelstrength\sproutbase\elements\sproutemail\NotificationEmail;
 use barrelstrength\sproutemail\models\CampaignType;
 use barrelstrength\sproutemail\SproutEmail;
 use yii\base\Model;
-use craft\helpers\StringHelper;
 use craft\helpers\UrlHelper;
 
 abstract class BaseMailer

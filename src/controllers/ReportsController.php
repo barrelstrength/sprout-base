@@ -125,6 +125,9 @@ class ReportsController extends Controller
 
 	/**
 	 * Saves a report query to the database
+	 * @return null|\yii\web\Response
+	 * @throws \Exception
+	 * @throws \yii\web\BadRequestHttpException
 	 */
 	public function actionUpdateReport()
 	{
