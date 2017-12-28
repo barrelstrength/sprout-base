@@ -7,6 +7,7 @@
 
 namespace barrelstrength\sproutbase\services;
 
+use barrelstrength\sproutbase\services\sproutemail\NotificationEmails;
 use barrelstrength\sproutbase\services\sproutreports\DataSources;
 use barrelstrength\sproutbase\services\sproutreports\Exports;
 use barrelstrength\sproutbase\services\sproutreports\Reports;
@@ -63,6 +64,11 @@ class App extends Component
 	public $reports;
 
 	/**
+	 * @var NotificationEmails
+	 */
+	public $notifications;
+
+	/**
 	 * @var DataSources
 	 */
 	public $dataSources;
@@ -98,5 +104,8 @@ class App extends Component
 		$this->reports = new Reports();
 		$this->dataSources = new DataSources();
 		$this->exports = new Exports();
+
+		// Notifications
+		$this->notifications = new NotificationEmails();
 	}
 }

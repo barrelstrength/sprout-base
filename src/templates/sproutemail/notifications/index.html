@@ -1,16 +1,16 @@
-{% extends "sprout-base/sproutreports/_layouts/base" %}
+{% extends "sprout-base/sproutbase/_layouts/base" %}
 
-{% set title  = "Reports"|t('sprout-base') %}
+{% set title  = "Notifications"|t('sprout-base') %}
 
 {% block actionButton %}
 	<div class="btngroup submit first">
-		<a class="btn submit add icon" href="{{ dataSource.getUrl('/new') }}">{{ "New Report"|t('sprout-base') }}</a>
+		<a class="btn submit add icon" href="">{{ "New Notification"|t('sprout-base') }}</a>
 	</div>
 {% endblock %}
 
 {% block content %}
-	{% if reports is empty %}
-		{{ "There are no reports created."|t('sprout-base')  }}
+	{% if notifications is empty %}
+		{{ "There are no notifications created."|t('sprout-base')  }}
 	{% else %}
 		<form method="post" accept-charset="UTF-8">
 			{{ csrfInput() }}
@@ -19,38 +19,32 @@
 				<table class="data fullwidth">
 					<thead>
 					<tr>
-						<th class="sproutreports-reportname" style="width:60%;">{{ "Name"|t('sprout-base') }}</th>
-						<th class="sproutreports-datasource" style="width:35%;">{{ "Data Source"|t('sprout-base') }}</th>
-						<th class="thin"></th>
-						<th class="thin"></th>
+						<th>{{ "Subject Line"|t('sprout-base') }}</th>
+						<th>{{ "Notification Name"|t('sprout-base') }}</th>
+						<th>{{ "Date Created"|t('sprout-base') }}</th>
+						<th>{{ "Date Updated"|t('sprout-base') }}</th>
 					</tr>
 					</thead>
 					<tbody>
-					{% for report in reports %}
+					{% for notification in notifications %}
 						<tr>
-							<td class="sproutreports-reportname">
-								<a href="{{ cpUrl(craft.app.request.segment(1) ~ '/reports/view/' ~ report.id) }}">
+							<td>
+								<a href="{{ cpUrl(craft.app.request.segment(1) ~ '/notification/edit/' ~ notification.id) }}">
 									<strong>
-										{{ report.name}}
+										{{ notification.subjectLine}}
 									</strong></a>
-
-								{% if report.description %}
-									<span class="info">{{ report.description }}</span>
-								{% endif %}
 							</td>
-							<td class="sproutreports-reportdatasource">
-								{{ report.getDataSource().getName() }}
+							<td>
+								{{ notification.name }}
 							</td>
 
-							<td class="sproutreports-reportactions">
-								<a href="{{ actionUrl('sprout-base/reports/export-report', {reportId: report.id}) }}"
-									class="btn small">{{ "Download"|t('sprout-base') }}</a>
+							<td>
+								{{ notification.dateCreated|date('Y-m-d h:m:s') }}
 							</td>
 
-							<td class="sproutreports-reportactions">
-								<a href="{{ report.getEditUrl() }}" title="Edit Report Settings" data-icon="settings"></a>
+							<td>
+								{{ notification.dateUpdated|date('Y-m-d h:m:s') }}
 							</td>
-
 						</tr>
 					{% endfor %}
 					</tbody>
