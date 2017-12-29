@@ -4,7 +4,8 @@
 
 {% block actionButton %}
 	<div class="btngroup submit first">
-		<a class="btn submit add icon" href="">{{ "New Notification"|t('sprout-base') }}</a>
+		<a class="btn submit add icon"
+			href="{{ url('sprout-forms/settings/notifications/edit/new') }}">{{ "New Notification"|t('sprout-base') }}</a>
 	</div>
 {% endblock %}
 
@@ -29,7 +30,7 @@
 					{% for notification in notifications %}
 						<tr>
 							<td>
-								<a href="{{ cpUrl(craft.app.request.segment(1) ~ '/notification/edit/' ~ notification.id) }}">
+								<a href="{{ cpUrl(craft.app.request.segment(1) ~ '/notifications/edit/' ~ notification.id) }}">
 									<strong>
 										{{ notification.subjectLine}}
 									</strong></a>

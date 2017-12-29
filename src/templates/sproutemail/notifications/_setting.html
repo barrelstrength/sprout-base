@@ -1,0 +1,106 @@
+{% extends "sprout-base/sproutbase/_layouts/base" %}
+{% import "_includes/forms" as forms %}
+
+{% set title = "Edit Notification"|t %}
+
+{% set crumbs = [
+	{ label: "Notifications", url: url('sprout-base/notifications') },
+] %}
+
+{% set fullPageForm = true %}
+{% set saveShortcutRedirect = url('sprout-base/settings/notifications/edit/{id}') %}
+
+{% if notificationEmail['id'] %}
+	{% set notificationEmailId = notificationEmail['id'] %}
+{% else %}
+	{% set notificationEmailId = '{id}' %}
+{% endif %}
+
+{% block actionButton %}
+
+	<div class="buttons">
+		<div class="btngroup">
+			<input class="btn submit" type="submit" value="{{ 'Save'|t }}">
+
+			{% if notificationEmail['id'] is defined %}
+
+				{% set dataSaveEditRedirect = cpUrl('sprout-base/notifications/edit/' ~ notificationEmailId) %}
+
+				<div class="btn submit menubtn"></div>
+				<div class="menu">
+					<ul>
+						{% if notificationEmail.id is not null %}
+						<li><a class="formsubmit" data-redirect="{{ craft.request.url|hash }}" title="{{ 'Save and continue
+						editing'|t }}">{{ 'Save and continue editing'|t }}</a></li>
+						{% endif %}
+						<li><a class="formsubmit" data-redirect="{{ dataSaveEditRedirect|hash }}" title="{{ 'Save and edit notification email'|t }}">{{ 'Save and edit notification email'|t }}</a></li>
+						<li><a class="formsubmit" data-redirect="{{ cpUrl('sprout-base/settings/notifications/edit/new')|hash
+							}}">{{
+								'Save and add another'|t }}</a></li>
+					</ul>
+				</div>
+
+			{% endif %}
+
+		</div>
+
+		<div class="secondary-buttons" style="float:left;">
+		{% if notificationEmail is defined and notificationEmail['id'] %}
+			<a class="btn icon add submit" href="{{ cpUrl('sprout-base/notifications/edit/' ~ notificationEmailId) }}"
+				title="{{ "Edit Notification Email"|t }}" style="float:none;margin:0;">{{ "Edit Notification Email"|t }}</a>
+		{% endif %}
+		</div>
+	</div>
+
+{% endblock %}
+
+{% set content %}
+		<input type="hidden" name="action" value="sprout-base/notification-emails/save-notification-email-settings">
+		<input type="hidden" name="redirect" value="sprout-base/settings/notifications">
+
+		<input type="hidden" name="emailId" value="{{ emailId }}">
+		<input type="hidden" name="mailer" value="defaultmailer">
+
+		{{ forms.textField({
+			label: "Subject Line"|t,
+			id: 'subjectLine',
+			name: 'sproutEmail[subjectLine]',
+			instructions: "The subject line of your email (will be seen by the public)"|t,
+			value: notificationEmail.subjectLine,
+			errors:  (notificationEmail is defined ? notificationEmail.getErrors('subjectLine') : null),
+			first: true,
+			autofocus: true,
+			required: true,
+			maxlength: 255
+		}) }}
+
+		{{ forms.textField({
+			label: "Notification Name"|t,
+			id: 'name',
+			name: 'sproutEmail[name]',
+			instructions: "Human readable notification name (only visible in Control Panel)"|t,
+			value: (notificationEmail is defined ? notificationEmail.name : null),
+			autofocus: true,
+			required: true,
+			first: true,
+			errors: (notificationEmail is defined ? notificationEmail.getErrors('name') : null)
+		}) }}
+
+		{{ forms.textField({
+			label: "Email Template"|t,
+			id: 'template',
+			name: 'sproutEmail[template]',
+			instructions: "The template to use when an Email's URL is requested.  The text version of the Email will use the same template name and append .txt"|t,
+			placeholder: 'email/_emailtemplate',
+			value: (notificationEmail is defined ? notificationEmail.template : null),
+			errors: (notificationEmail is defined ? notificationEmail.getErrors('template') : null)
+		}) }}
+
+		<hr>
+
+		{% include "_includes/fieldlayoutdesigner" with {
+			fieldLayout: notificationEmail.getFieldLayout()
+		} only %}
+	</form>
+
+{% endset %}

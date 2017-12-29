@@ -4,6 +4,7 @@ namespace barrelstrength\sproutbase\services\sproutemail;
 
 use barrelstrength\sproutbase\contracts\sproutemail\BaseEvent;
 use barrelstrength\sproutbase\elements\sproutemail\NotificationEmail;
+use barrelstrength\sproutbase\SproutBase;
 use barrelstrength\sproutemail\events\RegisterNotificationEvent;
 use barrelstrength\sproutemail\mail\Message;
 use barrelstrength\sproutemail\models\Response;
@@ -169,7 +170,7 @@ class NotificationEmails extends Component
 
 		$eventId = $notificationEmail->eventId;
 
-		$event   = SproutEmail::$app->notificationEmails->getEventById($eventId);
+		$event   = SproutBase::$app->notifications->getEventById($eventId);
 
 		if ($event && $isSettingPage == false)
 		{

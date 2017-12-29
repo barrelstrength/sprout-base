@@ -1,4 +1,4 @@
-{% extends "sprout-email/_layouts/base" %}
+{% extends "sprout-base/sproutbase/_layouts/base" %}
 {% import "_includes/forms" as forms %}
 
 {% if notificationEmail.id is null %}
@@ -6,10 +6,11 @@
 {% else %}
 	{% set notificationId = notificationEmail.id  %}
 {% endif %}
+{% set currentBase = craft.request.segment(1) %}
 
 {% set crumbs = [
-{ label: "Notifications"|t, url: url('sprout-email/notifications') },
-{ label: "Settings"|t, url: url('sprout-email/settings/notifications/edit/' ~ notificationId) },
+{ label: "Notifications"|t, url: url(currentBase ~ '/notifications') },
+{ label: "Settings"|t, url: url(currentBase ~ '/settings/notifications/edit/' ~ notificationId) },
 ] %}
 
 {% set title  = notificationEmail is defined and notificationEmail.title is not empty ? notificationEmail.name : 'Create a new Notification Email'|t %}
