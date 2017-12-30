@@ -20,153 +20,143 @@ use craft\db\Query;
  *
  * @package Craft
  */
-class DataSources  extends Component
+class DataSources extends Component
 {
 
-	const EVENT_REGISTER_DATA_SOURCES = "registerSproutReportsDataSources";
-	/**
-	 * @var BaseDataSource[]
-	 */
-	protected $dataSources;
+    const EVENT_REGISTER_DATA_SOURCES = "registerSproutReportsDataSources";
+    /**
+     * @var BaseDataSource[]
+     */
+    protected $dataSources;
 
-	/**
-	 * @param $id
-	 *
-	 * @return BaseDataSource|null
-	 */
-	public function getDataSourceById($id)
-	{
-		$sources = $this->getAllDataSources();
+    /**
+     * @param $id
+     *
+     * @return BaseDataSource|null
+     */
+    public function getDataSourceById($id)
+    {
+        $sources = $this->getAllDataSources();
 
-		if (isset($sources[$id]))
-		{
-			return $sources[$id];
-		}
+        if (isset($sources[$id])) {
+            return $sources[$id];
+        }
 
-		return null;
-	}
+        return null;
+    }
 
-	/**
-	 * @return null|BaseDataSource[]
-	 */
-	public function getAllDataSources()
-	{
-		if (is_null($this->dataSources))
-		{
-			$event = new RegisterComponentTypesEvent([
-				'types' => []
-			]);
+    /**
+     * @return null|BaseDataSource[]
+     */
+    public function getAllDataSources()
+    {
+        if (is_null($this->dataSources)) {
+            $event = new RegisterComponentTypesEvent([
+                'types' => []
+            ]);
 
-			$this->trigger(self::EVENT_REGISTER_DATA_SOURCES, $event);
+            $this->trigger(self::EVENT_REGISTER_DATA_SOURCES, $event);
 
-			$responses = $event->types;
+            $responses = $event->types;
 
-			$names = array();
+            $names = [];
 
-			if ($responses)
-			{
-				/**
-				 * @var BaseDataSource $dataSource
-				 */
-				foreach ($responses as $dataSource)
-				{
-					if ($dataSource && $dataSource instanceof BaseDataSource)
-					{
-						$this->dataSources[$dataSource->getId()] = $dataSource;
+            if ($responses) {
+                /**
+                 * @var BaseDataSource $dataSource
+                 */
+                foreach ($responses as $dataSource) {
+                    if ($dataSource && $dataSource instanceof BaseDataSource) {
+                        $this->dataSources[$dataSource->getId()] = $dataSource;
 
-						$names[] = $dataSource->getName();
-					}
-				}
+                        $names[] = $dataSource->getName();
+                    }
+                }
 
-				// Sort data sources by name
-				$this->_sortDataSources($names, $this->dataSources);
-			}
-		}
+                // Sort data sources by name
+                $this->_sortDataSources($names, $this->dataSources);
+            }
+        }
 
-		return $this->dataSources;
-	}
+        return $this->dataSources;
+    }
 
-	/**
-	 * @param $names
-	 * @param $secondaryArray
-	 */
-	private function _sortDataSources(&$names, &$secondaryArray)
-	{
-		// Sort plugins by name
-		array_multisort($names, SORT_NATURAL | SORT_FLAG_CASE, $secondaryArray);
-	}
+    /**
+     * @param $names
+     * @param $secondaryArray
+     */
+    private function _sortDataSources(&$names, &$secondaryArray)
+    {
+        // Sort plugins by name
+        array_multisort($names, SORT_NATURAL | SORT_FLAG_CASE, $secondaryArray);
+    }
 
-	/**
-	 * Save attributes to datasources record table
-	 *
-	 * @param DataSourceModel $model
-	 *
-	 * @return bool
-	 */
-	public function saveDataSource(DataSourceModel $model)
-	{
-		$result = false;
+    /**
+     * Save attributes to datasources record table
+     *
+     * @param DataSourceModel $model
+     *
+     * @return bool
+     */
+    public function saveDataSource(DataSourceModel $model)
+    {
+        $result = false;
 
-		$record = DataSourceRecord::find()
-			->where(['dataSourceId' => $model->dataSourceId])
-			->one();
+        $record = DataSourceRecord::find()
+            ->where(['dataSourceId' => $model->dataSourceId])
+            ->one();
 
-		if ($record == null)
-		{
-			$record = new DataSourceRecord();
-		}
+        if ($record == null) {
+            $record = new DataSourceRecord();
+        }
 
-		$attributes = $model->getAttributes();
+        $attributes = $model->getAttributes();
 
-		if (!empty($attributes))
-		{
-			foreach ($attributes as $handle => $value)
-			{
-				// Ignore id for dataSourceId
-				if ($handle == 'id') continue;
+        if (!empty($attributes)) {
+            foreach ($attributes as $handle => $value) {
+                // Ignore id for dataSourceId
+                if ($handle == 'id') {
+                    continue;
+                }
 
-				$record->setAttribute($handle, $value);
-			}
-		}
+                $record->setAttribute($handle, $value);
+            }
+        }
 
-		$db = \Craft::$app->getDb();
-		$transaction = $db->beginTransaction();
+        $db = \Craft::$app->getDb();
+        $transaction = $db->beginTransaction();
 
-		if ($record->validate())
-		{
-			if ($record->save(false))
-			{
-				$model->id = $record->id;
+        if ($record->validate()) {
+            if ($record->save(false)) {
+                $model->id = $record->id;
 
-				if ($transaction)
-				{
-					$transaction->commit();
-				}
+                if ($transaction) {
+                    $transaction->commit();
+                }
 
-				$result = true;
-			}
-		}
-		else
-		{
-			$model->addErrors($record->getErrors());
-		}
+                $result = true;
+            }
+        } else {
+            $model->addErrors($record->getErrors());
+        }
 
-		return $result;
-	}
+        return $result;
+    }
 
-	/**
-	 * Delete reports by dataSourceId
-	 *
-	 * @param $dataSourceId
-	 * @return bool
-	 */
-	public function deleteReportsByDataSourceId($dataSourceId)
-	{
-		$query  = new Query();
-		$result = $query->createCommand()
-			->delete('sproutreports_report', ['dataSourceId' => $dataSourceId])
-			->execute();
+    /**
+     * Delete reports by dataSourceId
+     *
+     * @param $dataSourceId
+     *
+     * @return bool
+     */
+    public function deleteReportsByDataSourceId($dataSourceId)
+    {
+        $query = new Query();
+        $result = $query->createCommand()
+            ->delete('sproutreports_report', ['dataSourceId' => $dataSourceId])
+            ->execute();
 
-		return $result;
-	}
+        return $result;
+    }
 }

@@ -11,17 +11,17 @@ use craft\web\AssetBundle;
 
 class CpAsset extends AssetBundle
 {
-	/**
-	 * @inheritdoc
-	 */
-	public function init()
-	{
-		$this->sourcePath = '@sproutbase/web/assets/sproutbase/cp/dist';
+    /**
+     * @inheritdoc
+     */
+    public function init()
+    {
+        $this->sourcePath = '@sproutbase/web/assets/sproutbase/cp/dist';
 
-		$this->css = [
-			'css/sproutcp.css',
-		];
+        $this->css = [
+            'css/sproutcp.css',
+        ];
 
-		parent::init();
-	}
+        parent::init();
+    }
 }

@@ -12,18 +12,18 @@ use craft\web\assets\cp\CpAsset;
 
 class SproutReportsAsset extends AssetBundle
 {
-	public function init()
-	{
-		$this->sourcePath = "@sproutbase/web/assets/sproutreports/dist";
+    public function init()
+    {
+        $this->sourcePath = "@sproutbase/web/assets/sproutreports/dist";
 
-		$this->depends = [
-			CpAsset::class,
-		];
+        $this->depends = [
+            CpAsset::class,
+        ];
 
-		$this->css = [
-			'css/styles.css'
-		];
+        $this->css = [
+            'css/styles.css'
+        ];
 
-		parent::init();
-	}
+        parent::init();
+    }
 }

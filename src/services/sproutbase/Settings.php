@@ -14,40 +14,38 @@ use barrelstrength\sproutbase\events\BeforeSaveSettingsEvent;
 
 class Settings extends Component
 {
-	const EVENT_BEFORE_SAVE_SETTINGS = 'beforeSaveSettings';
+    const EVENT_BEFORE_SAVE_SETTINGS = 'beforeSaveSettings';
 
-	public function saveSettings($plugin, $settings)
-	{
-		// The existing settings
-		$pluginSettings = $plugin->getSettings();
+    public function saveSettings($plugin, $settings)
+    {
+        // The existing settings
+        $pluginSettings = $plugin->getSettings();
 
-		$event = new BeforeSaveSettingsEvent([
-			'plugin'   => $plugin,
-			'settings' => $settings
-		]);
+        $event = new BeforeSaveSettingsEvent([
+            'plugin' => $plugin,
+            'settings' => $settings
+        ]);
 
-		$this->trigger(self::EVENT_BEFORE_SAVE_SETTINGS, $event);
+        $this->trigger(self::EVENT_BEFORE_SAVE_SETTINGS, $event);
 
-		// Have namespace?
-		$settings = $settings['settings'] ?? $settings;
+        // Have namespace?
+        $settings = $settings['settings'] ?? $settings;
 
-		foreach ($pluginSettings->getAttributes() as $settingHandle => $value)
-		{
-			if (isset($settings[$settingHandle]))
-			{
-				$pluginSettings->{$settingHandle} = $settings[$settingHandle] ?? $value;
-			}
-		}
+        foreach ($pluginSettings->getAttributes() as $settingHandle => $value) {
+            if (isset($settings[$settingHandle])) {
+                $pluginSettings->{$settingHandle} = $settings[$settingHandle] ?? $value;
+            }
+        }
 
-		$settings = Json::encode($pluginSettings);
+        $settings = Json::encode($pluginSettings);
 
-		$affectedRows = Craft::$app->db->createCommand()->update('{{%plugins}}', [
-			'settings' => $settings
-		], [
-			'handle' => strtolower($plugin->handle)
-		])->execute();
+        $affectedRows = Craft::$app->db->createCommand()->update('{{%plugins}}', [
+            'settings' => $settings
+        ], [
+            'handle' => strtolower($plugin->handle)
+        ])->execute();
 
-		return (bool)$affectedRows;
-	}
+        return (bool)$affectedRows;
+    }
 
 }

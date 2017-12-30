@@ -11,9 +11,9 @@ use yii\base\Event;
 
 class BeforeSaveSettingsEvent extends Event
 {
-	// Properties
-	// =========================================================================
+    // Properties
+    // =========================================================================
 
-	public $plugin = null;
-	public $settings = null;
+    public $plugin = null;
+    public $settings = null;
 }

@@ -11,52 +11,50 @@ use craft\db\Migration;
 
 class Install extends Migration
 {
-	private $notificationEmailTable = '{{%sproutemail_notificationemails}}';
+    private $notificationEmailTable = '{{%sproutemail_notificationemails}}';
 
-	/**
-	 * @inheritdoc
-	 */
-	public function safeUp()
-	{
-		$this->createTables();
-	}
+    /**
+     * @inheritdoc
+     */
+    public function safeUp()
+    {
+        $this->createTables();
+    }
 
-	public function createTables()
-	{
-		$notificationTable = $this->getDb()->tableExists($this->notificationEmailTable);
+    public function createTables()
+    {
+        $notificationTable = $this->getDb()->tableExists($this->notificationEmailTable);
 
-		if ($notificationTable == false)
-		{
-			$this->createTable($this->notificationEmailTable,
-				[
-					'id' => $this->primaryKey(),
-					'name'     => $this->string()->notNull(),
-					'template'  => $this->string()->notNull(),
-					'eventId'      => $this->string(),
-					'options'   => $this->text(),
-					'subjectLine'  => $this->string(),
-					'recipients'   => $this->string(),
-					'listSettings' => $this->text(),
-					'fromName' => $this->string(),
-					'fromEmail' => $this->string(),
-					'replyToEmail' => $this->string(),
-					'enableFileAttachments' => $this->boolean(),
-					'dateCreated' => $this->dateTime(),
-					'dateUpdated' => $this->dateTime(),
-					'fieldLayoutId' => $this->integer(),
-					'uid'          => $this->uid()
-				]
-			);
-		}
-	}
+        if ($notificationTable == false) {
+            $this->createTable($this->notificationEmailTable,
+                [
+                    'id' => $this->primaryKey(),
+                    'name' => $this->string()->notNull(),
+                    'template' => $this->string()->notNull(),
+                    'eventId' => $this->string(),
+                    'options' => $this->text(),
+                    'subjectLine' => $this->string(),
+                    'recipients' => $this->string(),
+                    'listSettings' => $this->text(),
+                    'fromName' => $this->string(),
+                    'fromEmail' => $this->string(),
+                    'replyToEmail' => $this->string(),
+                    'enableFileAttachments' => $this->boolean(),
+                    'dateCreated' => $this->dateTime(),
+                    'dateUpdated' => $this->dateTime(),
+                    'fieldLayoutId' => $this->integer(),
+                    'uid' => $this->uid()
+                ]
+            );
+        }
+    }
 
-	public function dropTables()
-	{
-		$notificationTable = $this->getDb()->tableExists($this->notificationEmailTable);
+    public function dropTables()
+    {
+        $notificationTable = $this->getDb()->tableExists($this->notificationEmailTable);
 
-		if ($notificationTable)
-		{
-			$this->dropTable($this->notificationEmailTable);
-		}
-	}
+        if ($notificationTable) {
+            $this->dropTable($this->notificationEmailTable);
+        }
+    }
 }
