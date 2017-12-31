@@ -21,7 +21,7 @@ class SproutReportsAsset extends AssetBundle
         ];
 
         $this->css = [
-            'css/styles.css'
+            'css/sproutreports.css'
         ];
 
         parent::init();
