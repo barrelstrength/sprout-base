@@ -1,9 +1,9 @@
 {# @todo - where is this in use? #}
 
 <div class="sproutaddress-form">
-	{{ countryInput  }}
+    {{ countryInput }}
 
-	{{ form }}
+    {{ form }}
 </div>
 
 {# @todo - update to use Asset Bundles if in use #}
@@ -11,8 +11,8 @@
 
 {% js %}
 
-	$(document).ready(function () {
-		SproutBase.AddressForm.init($('.sproutaddress-form'), { actionUrl: '{{ actionUrl }}' })
-	})
+    $(document).ready(function () {
+    SproutBase.AddressForm.init($('.sproutaddress-form'), { actionUrl: '{{ actionUrl }}' })
+    })
 
 {% endjs %}

@@ -1,7 +1,7 @@
 {% if field.output == "html" or field.output == "richText" %}
-	{{ field.instructions | raw }}
+    {{ field.instructions | raw }}
 {% else %}
-	{{ field.instructions | markdown }}
+    {{ field.instructions | markdown }}
 {% endif %}
 
 
@@ -15,40 +15,40 @@
 #}
 {% css %}
 
-	{{ selectedStyleCss }}
+    {{ selectedStyleCss }}
 
 {% endcss %}
 
 {% js %}
 
-	var notesToggleStatus = localStorage.getItem('{{ id }}-field');
+    var notesToggleStatus = localStorage.getItem('{{ id }}-field');
 
-	if (notesToggleStatus == 'hidden')
-	{
-		$('#' + '{{ id }}-field' + ' .input').css('display', 'none');
-	}
+    if (notesToggleStatus == 'hidden')
+    {
+    $('#' + '{{ id }}-field' + ' .input').css('display', 'none');
+    }
 
-	$('#' + '{{ id }}-field' + ' label').on('click', function() {
-		console.log('{{ id }}-field');
-		$('#' + '{{ id }}-field' + ' .input').slideToggle('fast', function(test) {
+    $('#' + '{{ id }}-field' + ' label').on('click', function() {
+    console.log('{{ id }}-field');
+    $('#' + '{{ id }}-field' + ' .input').slideToggle('fast', function(test) {
 
-			var visibility = $('#' + '{{ id }}-field' + ' .input:hidden');
+    var visibility = $('#' + '{{ id }}-field' + ' .input:hidden');
 
-			if (visibility.length == 0)
-			{
-				localStorage.setItem('{{ id }}-field', 'visible');
-			}
-			else
-			{
-				localStorage.setItem('{{ id }}-field', 'hidden');
-			}
-		});
-	});
+    if (visibility.length == 0)
+    {
+    localStorage.setItem('{{ id }}-field', 'visible');
+    }
+    else
+    {
+    localStorage.setItem('{{ id }}-field', 'hidden');
+    }
+    });
+    });
 
 
-	{% if (field.hideLabel)  %}
-		$('#' + '{{ id }}-field' + ' .heading').remove();
-		$('#' + '{{ id }}-field' + ' .input').css('display', 'block');
-	{% endif %}
+    {% if (field.hideLabel) %}
+        $('#' + '{{ id }}-field' + ' .heading').remove();
+        $('#' + '{{ id }}-field' + ' .input').css('display', 'block');
+    {% endif %}
 
 {% endjs %}
