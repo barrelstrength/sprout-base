@@ -7,7 +7,7 @@
     {% set optionsHtml = dataSource.getOptionsHtml() %}
 {% endif %}
 
-{% set extraPageHeaderHtml %}
+{% block actionButton %}
     <form method="post" accept-charset="UTF-8">
         {{ csrfInput() }}
         <input type="hidden" name="action"
@@ -20,7 +20,7 @@
 
         <a id="modify-options-icon" class="btn" data-icon="settings"></a>
     </form>
-{% endset %}
+{% endblock %}
 
 {% set crumbs = [
     { label: "Reports"|t('sprout-base'), url: dataSource.getUrl() },
