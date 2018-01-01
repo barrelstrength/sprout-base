@@ -2,17 +2,48 @@
 
 {% set title  = "Reports"|t('sprout-base') %}
 
+{% if reportContext == 'sprout-reports' %}
+    {% set selectedTab = 'reports' %}
+{% endif %}
+
 {% block actionButton %}
-    <div class="btngroup submit first">
-        <a class="btn submit add icon"
-           href="{{ dataSource.getUrl('/new') }}">{{ "New Report"|t('sprout-base') }}</a>
-    </div>
+
+    {# @todo - where do we add a report edit permission to Sprout Integrations?
+       Can we have each integration define a permission with the same name? #}
+    {% if currentUser.can('sproutReports-editReports') %}
+
+        {% if newReportOptions|length > 1 %}
+            <div class="btngroup submit first">
+                <a class="btn submit add icon"
+                   href="{{ newReportOptions[0].url }}">{{ "New Report"|t('sprout-base') }}</a>
+                {% if dataSources %}
+                    <div class="btn submit menubtn"></div>
+                    <div class="menu">
+                        <ul>
+                            {% for option in newReportOptions %}
+                                <li><a class="formsubmit"
+                                       href="{{ option.url }}">{{ option.name }}</a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endif %}
+            </div>
+        {% else %}
+            <div class="btngroup submit first">
+                <a class="btn submit add icon"
+                   href="{{ newReportOptions[0].url }}">{{ "New Report"|t('sprout-base') }}</a>
+            </div>
+        {% endif %}
+
+    {% endif %}
+
 {% endblock %}
 
 {% block content %}
-    {% if reports is empty %}
-        {{ "There are no reports created."|t('sprout-base') }}
-    {% else %}
+
+    {% if reports %}
+
         <form method="post" accept-charset="UTF-8">
             {{ csrfInput() }}
 
@@ -63,11 +94,86 @@
             </div>
 
         </form>
+
+    {% else %}
+
+        {{ "Create your first report."|t('sprout-base') }}
+
     {% endif %}
-    <div class="grid">
-        <div class="item">
-            {{ parent() }}
-        </div>
-    </div>
 
 {% endblock %}
+
+{% block sidebar %}
+
+    {% if reportContext == 'sprout-reports' %}
+
+        {% set groups = craft.sproutreports.getReportGroups() %}
+
+        <nav>
+            <ul id="groups">
+
+                <li>
+                    <a href="{{ url('sprout-reports') }}"{% if groupId is null %} class="sel"{% endif %} data-key="*">
+                        {{ "All Reports"|t('sprout-reports') }}</a></li>
+
+                {% for group in groups %}
+                    <li>
+                        <a href="{{ url('sprout-reports/reports/'~group.id) }}"{% if groupId is defined and group.id == groupId %} class="sel"{% endif %}
+                           data-id="{{ group.id }}">{{ group.name }}</a></li>
+                {% endfor %}
+
+            </ul>
+        </nav>
+
+        {% if currentUser.can('sproutReports-editReports') %}
+
+            <div class="buttons">
+                <div id="newgroupbtn"
+                     class="btn add icon">{{ "New Group"|t('sprout-reports') }}</div>
+
+                {% if groupId is defined %}
+                    <div id="groupsettingsbtn" class="btn settings icon menubtn hidden"
+                         title="{{ 'Settings' }}"></div>
+                    <div class="menu">
+                        <ul>
+                            <li><a data-action="rename"
+                                   role="button">{{ "Rename selected group"|t('sprout-reports') }}</a>
+                            </li>
+                            <li><a data-action="delete"
+                                   role="button">{{ "Delete selected group"|t('sprout-reports') }}</a>
+                            </li>
+                        </ul>
+                    </div>
+                {% endif %}
+            </div>
+
+        {% endif %}
+
+    {% endif %}
+
+{% endblock %}
+
+{% do view.registerAssetBundle("barrelstrength\\sproutbase\\web\\assets\\sproutbase\\groups\\GroupsAsset") %}
+
+{% js %}
+    new Craft.SproutBase.GroupsAdmin({
+        groupsSelector: '#groups',
+        newGroupButtonSelector: '#newgroupbtn',
+        groupSettingsSelector: '#groupsettingsbtn',
+
+        newGroupAction: 'sprout-base/reports/save-group',
+        newGroupOnSuccessUrlBase: 'sprout-reports/reports',
+        newGroupOnErrorMessage: Craft.t('sprout-base', 'Could not create the group:'),
+
+        renameGroupAction: 'sprout-base/reports/save-group',
+        renameGroupOnSuccessMessage: Craft.t('sprout-base', 'Group renamed.'),
+        renameGroupOnErrorMessage: Craft.t('sprout-base', 'Could not rename the group:'),
+
+        promptForGroupNameMessage: Craft.t('sprout-base', 'What do you want to name your group?'),
+
+        deleteGroupAction: 'sprout-base/reports/delete-group',
+        deleteGroupOnSuccessUrl: 'sprout-reports/reports',
+        deleteGroupConfirmMessage: Craft.t('sprout-base', 'Are you sure you want to delete this group and all its reports?'),
+        deleteGroupOnErrorMessage: Craft.t('sprout-base', 'Could not delete the group.'),
+    });
+{% endjs %}

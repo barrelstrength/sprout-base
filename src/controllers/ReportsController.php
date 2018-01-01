@@ -8,8 +8,10 @@
 namespace barrelstrength\sproutbase\controllers;
 
 use barrelstrength\sproutbase\models\sproutreports\Report;
+use barrelstrength\sproutbase\models\sproutreports\ReportGroup;
 use barrelstrength\sproutbase\records\sproutreports\Report as ReportRecord;
 use barrelstrength\sproutbase\SproutBase;
+use barrelstrength\sproutreports\SproutReports;
 use Craft;
 
 use craft\helpers\UrlHelper;
@@ -18,16 +20,50 @@ use craft\web\Controller;
 
 class ReportsController extends Controller
 {
-    public function actionIndex($dataSourceId = null)
+    public function actionIndex($dataSourceId = null, $groupId = null)
     {
-        $dataSource = SproutBase::$app->dataSources->getDataSourceById($dataSourceId);
+        $reportContext = 'sprout-reports';
 
-        $reports = SproutBase::$app->reports->getReportsBySourceId($dataSourceId);
+        // If a dataSourceId is provided we have an integration
+        if ($dataSourceId !== null) {
+            $reportContext = 'sprout-integration';
+
+            $dataSource = SproutBase::$app->dataSources->getDataSourceById($dataSourceId);
+
+            // Update to match the multi-datasource syntax
+            $dataSources[$dataSource->getId()] = $dataSource;
+
+            $reports = SproutBase::$app->reports->getReportsBySourceId($dataSourceId);
+        } else {
+
+            $dataSources = SproutBase::$app->dataSources->getAllDataSources();
+
+            if ($groupId !== null) {
+                // @todo - if groupId is not available in existing groups, throw an error
+
+                $reports = SproutBase::$app->reports->getReportsByGroupId($groupId);
+            } else {
+                $reports = SproutBase::$app->reports->getAllReports();
+            }
+        }
+
+        $newReportOptions = [];
+
+        foreach ($dataSources as $dataSource) {
+            if ((bool) $dataSource->allowNew()) {
+                $newReportOptions[] = [
+                    'name' => $dataSource->getName(),
+                    'url' => $dataSource->getUrl('/new')
+                ];
+            }
+        }
 
         return $this->renderTemplate('sprout-base/sproutreports/reports/index', [
-            'groupId' => null,
+            'dataSources' => $dataSources,
+            'groupId' => $groupId,
             'reports' => $reports,
-            'dataSource' => $dataSource
+            'newReportOptions' => $newReportOptions,
+            'reportContext' => $reportContext
         ]);
     }
 
@@ -89,11 +125,11 @@ class ReportsController extends Controller
 
         $dataSource = $reportModel->getDataSource();
 
-        $indexUrl = $dataSource->getUrl();
+        $reportIndexUrl = $dataSource->getUrl();
+
         // Make sure you navigate to the right plugin page after saving and breadcrumb
-        if (Craft::$app->getPlugins()->getPlugin('sprout-reports')
-            && Craft::$app->request->getSegment(1) == 'sprout-reports') {
-            $indexUrl = UrlHelper::cpUrl('/sprout-reports/reports');
+        if (Craft::$app->request->getSegment(1) == 'sprout-reports') {
+            $reportIndexUrl = UrlHelper::cpUrl('/sprout-reports/reports');
         }
 
         $groups = [];
@@ -105,7 +141,7 @@ class ReportsController extends Controller
         return $this->renderTemplate('sprout-base/sproutreports/reports/_edit', [
             'report' => $reportModel,
             'dataSource' => $dataSource,
-            'indexUrl' => $indexUrl,
+            'reportIndexUrl' => $reportIndexUrl,
             'groups' => $groups,
             'continueEditingUrl' => $dataSource->getUrl().'/edit/{id}'
         ]);
@@ -162,6 +198,8 @@ class ReportsController extends Controller
      * Saves a report query to the database
      *
      * @return null|\yii\web\Response
+     * @throws \Exception
+     * @throws \yii\web\BadRequestHttpException
      */
     public function actionSaveReport()
     {
@@ -185,6 +223,15 @@ class ReportsController extends Controller
         return $this->redirectToPostedUrl($report);
     }
 
+    /**
+     * Deletes a Report
+     *
+     * @return \yii\web\Response
+     * @throws \Exception
+     * @throws \Throwable
+     * @throws \yii\db\StaleObjectException
+     * @throws \yii\web\BadRequestHttpException
+     */
     public function actionDeleteReport()
     {
         $this->requirePostRequest();
@@ -200,6 +247,63 @@ class ReportsController extends Controller
         } else {
             throw new \Exception(SproutBase::t('Report not found.'));
         }
+    }
+
+    /**
+     * Saves a Report Group
+     *
+     * @return \yii\web\Response
+     * @throws \Exception
+     * @throws \yii\web\BadRequestHttpException
+     */
+    public function actionSaveGroup()
+    {
+        $this->requirePostRequest();
+
+        $request = Craft::$app->getRequest();
+
+        $groupName = $request->getBodyParam('name');
+
+        $group = new ReportGroup();
+        $group->id = $request->getBodyParam('id');
+        $group->name = $groupName;
+        
+        if (SproutBase::$app->reportGroups->saveGroup($group)) {
+
+            Craft::$app->getSession()->setNotice(SproutBase::t('Report group saved.'));
+
+            return $this->asJson([
+                'success' => true,
+                'group' => $group->getAttributes(),
+            ]);
+        } else {
+            return $this->asJson([
+                'errors' => $group->getErrors(),
+            ]);
+        }
+    }
+
+    /**
+     * Deletes a Report Group
+     *
+     * @return \yii\web\Response
+     * @throws \Exception
+     * @throws \Throwable
+     * @throws \yii\db\StaleObjectException
+     * @throws \yii\web\BadRequestHttpException
+     */
+    public function actionDeleteGroup()
+    {
+        $this->requirePostRequest();
+
+        $groupId = Craft::$app->getRequest()->getBodyParam('id');
+        $success = SproutBase::$app->reportGroups->deleteGroup($groupId);
+
+        Craft::$app->getSession()->setNotice(SproutBase::t('Group deleted..'));
+
+        return $this->asJson([
+            'success' => $success,
+        ]);
     }
 
     public function actionExportReport()

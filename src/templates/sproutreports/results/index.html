@@ -7,6 +7,11 @@
     {% set optionsHtml = dataSource.getOptionsHtml() %}
 {% endif %}
 
+{% set crumbs = [
+    { label: "Reports"|t('sprout-base'), url: url('sprout-reports') },
+    { label: "Edit "|t('sprout-base') ~ report.name, url: report.getEditUrl() }
+] %}
+
 {% block actionButton %}
     <form method="post" accept-charset="UTF-8">
         {{ csrfInput() }}
@@ -21,11 +26,6 @@
         <a id="modify-options-icon" class="btn" data-icon="settings"></a>
     </form>
 {% endblock %}
-
-{% set crumbs = [
-    { label: "Reports"|t('sprout-base'), url: dataSource.getUrl() },
-    { label: "Edit "|t('sprout-base') ~ report.name, url: report.getEditUrl() }
-] %}
 
 {% block content %}
 
