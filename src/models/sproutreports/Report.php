@@ -10,14 +10,18 @@ namespace barrelstrength\sproutbase\models\sproutreports;
 use barrelstrength\sproutbase\SproutBase;
 use craft\base\Model;
 use barrelstrength\sproutbase\records\sproutreports\Report as ReportRecord;
+use craft\helpers\Json;
 use craft\validators\HandleValidator;
 use craft\validators\UniqueValidator;
+use Craft;
 
 class Report extends Model
 {
     public $id;
 
     public $name;
+
+    public $nameFormat;
 
     public $handle;
 
@@ -49,6 +53,15 @@ class Report extends Model
         $dataSource->setReport($this);
 
         return $dataSource;
+    }
+
+    public function processNameFormat()
+    {
+        $dataSource = $this->getDataSource();
+        $optionsArray = Json::decode($this->options);
+        $options = $dataSource->prepOptions($optionsArray);
+
+        return Craft::$app->getView()->renderObjectTemplate($this->nameFormat, $options);
     }
 
     public function getOptions()
@@ -96,7 +109,7 @@ class Report extends Model
     public function safeAttributes()
     {
         return [
-            'id', 'name', 'handle',
+            'id', 'name', 'nameFormat', 'handle',
             'description', 'allowHtml', 'options',
             'dataSourceId', 'enabled', 'groupId',
             'dateCreated', 'dateUpdated'

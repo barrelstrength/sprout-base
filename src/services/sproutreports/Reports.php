@@ -18,45 +18,7 @@ use barrelstrength\sproutbase\records\sproutreports\ReportGroup as ReportGroupRe
 class Reports extends Component
 {
     /**
-     * Returns a report model populated from saved/POSTed data
-     *
-     * @return ReportModel
-     */
-    public function prepareFromPost()
-    {
-        $request = Craft::$app->getRequest();
-
-        $reportId = $request->getBodyParam('id');
-
-        if ($reportId && is_numeric($reportId)) {
-            $instance = $this->getReport($reportId);
-
-            if (!$instance) {
-                $instance->addError('id', Craft::t('Could not find a report with id {reportId}', compact('reportId')));
-            }
-        } else {
-            $instance = new ReportModel();
-        }
-
-        $options = $request->getBodyParam('options');
-
-        $instance->name = $request->getBodyParam('name');
-        $instance->handle = $request->getBodyParam('handle');
-        $instance->description = $request->getBodyParam('description');
-        $instance->options = is_array($options) ? $options : [];
-        $instance->dataSourceId = $request->getBodyParam('dataSourceId');
-        $instance->enabled = $request->getBodyParam('enabled');
-        $instance->groupId = $request->getBodyParam('groupId', null);
-
-        $dataSource = $instance->getDataSource();
-
-        $instance->allowHtml = $request->getBodyParam('allowHtml', $dataSource->getDefaultAllowHtml());
-
-        return $instance;
-    }
-
-    /**
-     * @param $id
+     * @param $reportId
      *
      * @return ReportModel
      */
@@ -67,7 +29,7 @@ class Reports extends Component
         $reportModel = new ReportModel();
 
         if ($reportRecord != null) {
-            $reportModel->attributes = $reportRecord->getAttributes();
+            $reportModel->setAttributes($reportRecord->getAttributes());
         }
 
         return $reportModel;
@@ -100,6 +62,7 @@ class Reports extends Component
 
         $record->id = $model->id;
         $record->name = $model->name;
+        $record->nameFormat = $model->nameFormat;
         $record->handle = $model->handle;
         $record->description = $model->description;
         $record->allowHtml = $model->allowHtml;

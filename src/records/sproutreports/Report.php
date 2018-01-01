@@ -30,7 +30,7 @@ class Report extends ActiveRecord
     {
         return [
             self::SCENARIO_ALL => [
-                'id', 'name', 'handle',
+                'id', 'name', 'nameFormat', 'handle',
                 'description', 'options', 'dataSourceId',
                 'groupId', 'enabled', 'allowHtml'
             ]

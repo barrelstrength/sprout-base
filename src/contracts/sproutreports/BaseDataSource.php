@@ -202,6 +202,18 @@ abstract class BaseDataSource
     }
 
     /**
+     * Give a Data Source a chance to prepare options before they are processed by the Dynamic Name field
+     *
+     * @param array $options
+     *
+     * @return null
+     */
+    public function prepOptions(array $options)
+    {
+        return $options;
+    }
+
+    /**
      * Validate the data sources options
      *
      * @return boolean

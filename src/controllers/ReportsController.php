@@ -7,11 +7,11 @@
 
 namespace barrelstrength\sproutbase\controllers;
 
+use barrelstrength\sproutbase\models\sproutreports\Report as ReportModel;
 use barrelstrength\sproutbase\models\sproutreports\Report;
 use barrelstrength\sproutbase\models\sproutreports\ReportGroup;
 use barrelstrength\sproutbase\records\sproutreports\Report as ReportRecord;
 use barrelstrength\sproutbase\SproutBase;
-use barrelstrength\sproutreports\SproutReports;
 use Craft;
 
 use craft\helpers\UrlHelper;
@@ -135,7 +135,7 @@ class ReportsController extends Controller
         $groups = [];
 
         if (Craft::$app->getPlugins()->getPlugin('sprout-reports')) {
-            $groups = \barrelstrength\sproutreports\SproutReports::$app->reportGroups->getAllReportGroups();
+            $groups = SproutBase::$app->reportGroups->getAllReportGroups();
         }
 
         return $this->renderTemplate('sprout-base/sproutreports/reports/_edit', [
@@ -205,7 +205,7 @@ class ReportsController extends Controller
     {
         $this->requirePostRequest();
 
-        $report = SproutBase::$app->reports->prepareFromPost();
+        $report = $this->prepareFromPost();
 
         if (!SproutBase::$app->reports->saveReport($report)) {
             Craft::$app->getSession()->setError(SproutBase::t('Couldn’t save report.'));
@@ -329,5 +329,44 @@ class ReportsController extends Controller
                 SproutBase::$app->exports->toCsv($values, $labels, $filename);
             }
         }
+    }
+
+    /**
+     * Returns a report model populated from saved/POSTed data
+     *
+     * @return ReportModel
+     */
+    public function prepareFromPost()
+    {
+        $request = Craft::$app->getRequest();
+
+        $reportId = $request->getBodyParam('id');
+
+        if ($reportId && is_numeric($reportId)) {
+            $instance = SproutBase::$app->reports->getReport($reportId);
+
+            if (!$instance) {
+                $instance->addError('id', Craft::t('Could not find a report with id {reportId}', compact('reportId')));
+            }
+        } else {
+            $instance = new ReportModel();
+        }
+
+        $options = $request->getBodyParam('options');
+
+        $instance->name = $request->getBodyParam('name');
+        $instance->nameFormat = $request->getBodyParam('nameFormat');
+        $instance->handle = $request->getBodyParam('handle');
+        $instance->description = $request->getBodyParam('description');
+        $instance->options = is_array($options) ? $options : [];
+        $instance->dataSourceId = $request->getBodyParam('dataSourceId');
+        $instance->enabled = $request->getBodyParam('enabled');
+        $instance->groupId = $request->getBodyParam('groupId', null);
+
+        $dataSource = $instance->getDataSource();
+
+        $instance->allowHtml = $request->getBodyParam('allowHtml', $dataSource->getDefaultAllowHtml());
+
+        return $instance;
     }
 }
