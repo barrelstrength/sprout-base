@@ -2,6 +2,7 @@
 
 namespace barrelstrength\sproutbase\controllers;
 
+use barrelstrength\sproutbase\assetbundles\notifications\NotificationAsset;
 use barrelstrength\sproutbase\base\TemplateTrait;
 use barrelstrength\sproutbase\elements\sproutemail\NotificationEmail;
 use barrelstrength\sproutbase\SproutBase;
@@ -20,9 +21,17 @@ class NotificationsController extends Controller
 {
 	use TemplateTrait;
 
+	/**
+	 * @param null                   $emailId
+	 * @param NotificationEmail|null $notificationEmail
+	 *
+	 * @return \yii\web\Response
+	 * @throws \yii\base\InvalidConfigException
+	 */
 	public function actionEditNotificationEmailSettingsTemplate($emailId = null, NotificationEmail $notificationEmail =
 	null)
 	{
+
 		$currentUser = Craft::$app->getUser()->getIdentity();
 
 		if (!$currentUser->can('editSproutEmailSettings'))
@@ -107,7 +116,7 @@ class NotificationsController extends Controller
 			// retain options attribute by the second parameter
 			SproutBase::$app->notifications->saveNotification($notificationEmail, true);
 
-			$this->redirectToPostedUrl($notificationEmail);
+			return $this->redirectToPostedUrl($notificationEmail);
 		}
 		else
 		{
@@ -117,8 +126,6 @@ class NotificationsController extends Controller
 				'notificationEmail' => $notificationEmail
 			));
 		}
-
-		return null;
 	}
 
 
@@ -133,6 +140,8 @@ class NotificationsController extends Controller
 	public function actionEditNotificationEmailTemplate($notificationId = null, NotificationEmail $notificationEmail =
 	null)
 	{
+		Craft::$app->getView()->registerAssetBundle(NotificationAsset::class);
+
 		if (!$notificationEmail)
 		{
 			$notificationEmail = SproutBase::$app->notifications->getNotificationEmailById($notificationId);

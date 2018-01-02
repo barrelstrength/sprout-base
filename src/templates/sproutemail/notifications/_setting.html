@@ -3,12 +3,13 @@
 
 {% set title = "Edit Notification"|t %}
 
+{% set currentBase = craft.request.segment(1) %}
 {% set crumbs = [
-	{ label: "Notifications", url: url('sprout-base/notifications') },
+	{ label: "Notifications", url: url(currentBase ~ '/notifications') },
 ] %}
 
 {% set fullPageForm = true %}
-{% set saveShortcutRedirect = url('sprout-base/settings/notifications/edit/{id}') %}
+{% set saveShortcutRedirect = url(currentBase ~ '/settings/notifications/edit/{id}') %}
 
 {% if notificationEmail['id'] %}
 	{% set notificationEmailId = notificationEmail['id'] %}
@@ -24,7 +25,7 @@
 
 			{% if notificationEmail['id'] is defined %}
 
-				{% set dataSaveEditRedirect = cpUrl('sprout-base/notifications/edit/' ~ notificationEmailId) %}
+				{% set dataSaveEditRedirect = cpUrl(currentBase ~ '/notifications/edit/' ~ notificationEmailId) %}
 
 				<div class="btn submit menubtn"></div>
 				<div class="menu">
@@ -33,10 +34,11 @@
 						<li><a class="formsubmit" data-redirect="{{ craft.request.url|hash }}" title="{{ 'Save and continue
 						editing'|t }}">{{ 'Save and continue editing'|t }}</a></li>
 						{% endif %}
-						<li><a class="formsubmit" data-redirect="{{ dataSaveEditRedirect|hash }}" title="{{ 'Save and edit notification email'|t }}">{{ 'Save and edit notification email'|t }}</a></li>
-						<li><a class="formsubmit" data-redirect="{{ cpUrl('sprout-base/settings/notifications/edit/new')|hash
-							}}">{{
-								'Save and add another'|t }}</a></li>
+						<li><a class="formsubmit" data-redirect="{{ dataSaveEditRedirect|hash }}"
+								title="{{ 'Save and edit notification email'|t }}">{{ 'Save and edit notification email'|t }}</a></li>
+						<li><a class="formsubmit"
+								data-redirect="{{ cpUrl(currentBase ~ '/settings/notifications/edit/new')|hash }}">
+								{{ 'Save and add another'|t }}</a></li>
 					</ul>
 				</div>
 
@@ -46,7 +48,7 @@
 
 		<div class="secondary-buttons" style="float:left;">
 		{% if notificationEmail is defined and notificationEmail['id'] %}
-			<a class="btn icon add submit" href="{{ cpUrl('sprout-base/notifications/edit/' ~ notificationEmailId) }}"
+			<a class="btn icon add submit" href="{{ cpUrl(currentBase ~ '/notifications/edit/' ~ notificationEmailId) }}"
 				title="{{ "Edit Notification Email"|t }}" style="float:none;margin:0;">{{ "Edit Notification Email"|t }}</a>
 		{% endif %}
 		</div>
@@ -55,8 +57,8 @@
 {% endblock %}
 
 {% set content %}
-		<input type="hidden" name="action" value="sprout-base/notification-emails/save-notification-email-settings">
-		<input type="hidden" name="redirect" value="sprout-base/settings/notifications">
+		<input type="hidden" name="action" value="sprout-base/notifications/save-notification-email-settings">
+		<input type="hidden" name="redirect" value="{{ currentBase }}/settings/notifications">
 
 		<input type="hidden" name="emailId" value="{{ emailId }}">
 		<input type="hidden" name="mailer" value="defaultmailer">
