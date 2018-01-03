@@ -21,6 +21,8 @@ class NotificationsController extends Controller
 {
 	use TemplateTrait;
 
+	private $notification;
+
 	/**
 	 * @param null                   $emailId
 	 * @param NotificationEmail|null $notificationEmail
@@ -137,14 +139,14 @@ class NotificationsController extends Controller
 	 * @return \yii\web\Response
 	 * @throws \yii\base\Exception
 	 */
-	public function actionEditNotificationEmailTemplate($notificationId = null, NotificationEmail $notificationEmail =
+	public function actionEditNotificationEmailTemplate($emailId = null, NotificationEmail $notificationEmail =
 	null)
 	{
 		Craft::$app->getView()->registerAssetBundle(NotificationAsset::class);
 
 		if (!$notificationEmail)
 		{
-			$notificationEmail = SproutBase::$app->notifications->getNotificationEmailById($notificationId);
+			$notificationEmail = SproutBase::$app->notifications->getNotificationEmailById($emailId);
 		}
 
 		$lists = array();
@@ -154,8 +156,9 @@ class NotificationsController extends Controller
 
 		$isMobileBrowser    = Craft::$app->getRequest()->isMobileBrowser(true);
 		$siteTemplateExists = $this->doesSiteTemplateExist($notificationEmail->template);
+		$isPluginActive     = (Craft::$app->plugins->getPlugin('sprout-email'));
 
-		if (!$isMobileBrowser && $siteTemplateExists)
+		if (!$isMobileBrowser && $siteTemplateExists && $isPluginActive)
 		{
 			$showPreviewBtn = true;
 
@@ -183,16 +186,13 @@ class NotificationsController extends Controller
 
 		$tabs = $this->getModelTabs($notificationEmail);
 
-		$continueEditingUrl = 'sprout-base/notifications/edit/' . $notificationEmail->id;
-
 		return $this->renderTemplate('sprout-base/sproutemail/notifications/_edit', array(
 			'notificationEmail' => $notificationEmail,
 			'lists'             => $lists,
 			'mailer'            => $notificationEmail->getMailer(),
 			'showPreviewBtn'    => $showPreviewBtn,
 			'shareUrl'          => $shareUrl,
-			'tabs'              => $tabs,
-			'continueEditingUrl' => $continueEditingUrl
+			'tabs'              => $tabs
 		));
 	}
 
@@ -251,7 +251,7 @@ class NotificationsController extends Controller
 		{
 			$notificationEmail->title = $notificationEmail->subjectLine;
 
-			if (SproutEmail::$app->notificationEmails->saveNotification($notificationEmail))
+			if (SproutBase::$app->notifications->saveNotification($notificationEmail))
 			{
 				Craft::$app->getSession()->setNotice(Craft::t('sprout-email', 'Notification saved.'));
 
@@ -261,13 +261,13 @@ class NotificationsController extends Controller
 			{
 				Craft::$app->getSession()->setError(Craft::t('sprout-email','Unable to save notification.'));
 
-				$errors = SproutEmail::$app->utilities->getErrors();
+				$errors = SproutBase::$app->utilities->getErrors();
 
 				$errorMessage = print_r($errors, true);
 
 				Craft::error('sprout-email', $errorMessage);
 
-				Craft::$app->getUrlManager()->setRouteParams(array(
+				return Craft::$app->getUrlManager()->setRouteParams(array(
 					'notificationEmail' => $notificationEmail
 				));
 			}
@@ -276,12 +276,10 @@ class NotificationsController extends Controller
 		{
 			Craft::$app->getSession()->setError(Craft::t('sprout-email', 'Unable to save notification email.'));
 
-			Craft::$app->getUrlManager()->setRouteParams(array(
+			return Craft::$app->getUrlManager()->setRouteParams(array(
 				'notificationEmail' => $notificationEmail
 			));
 		}
-
-		return null;
 	}
 
 	/**

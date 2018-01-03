@@ -16,7 +16,7 @@
 {% set title  = notificationEmail is defined and notificationEmail.title is not empty ? notificationEmail.name : 'Create a new Notification Email'|t %}
 
 {% set fullPageForm = true %}
-{% set saveShortcutRedirect = url('sprout-email/notifications/edit/' ~ notificationId) %}
+{% set saveShortcutRedirect = url(currentBase ~ '/notifications/edit/' ~ notificationId) %}
 
 {% set settings = craft.sproutEmail.getSettings() %}
 
@@ -44,12 +44,12 @@
 			<div class="btn submit menubtn"></div>
 			<div class="menu">
 				<ul>
-					<li><a class="formsubmit" data-redirect="{{ continueEditingUrl|hash }}">
+					<li><a class="formsubmit" data-redirect="{{ saveShortcutRedirect|hash }}">
 							{{ "Save and continue editing"|t }} <span class="shortcut">⌘S</span></a></li>
-					<li><a class="formsubmit" data-redirect="sprout-email/settings/notifications/edit/new">
+					<li><a class="formsubmit" data-redirect="{{ currentBase }}/settings/notifications/edit/new">
 							{{ "Save and add another"|t }}</a>
 					</li>
-					<li><a class="formsubmit" data-redirect="sprout-email/settings/notifications/edit/{{ notificationId }}">
+					<li><a class="formsubmit" data-redirect="{{ currentBase }}/settings/notifications/edit/{{ notificationId }}">
 							{{ "Save and edit notification settings"|t }}</a></li>
 				</ul>
 			</div>
@@ -57,7 +57,7 @@
 
 		<div class="secondary-buttons" style="float:left;">
 			<a class="btn icon settings submit"
-				href="{{ cpUrl('sprout-email/settings/notifications/edit/' ~ notificationId) }}"
+				href="{{ cpUrl(currentBase ~ '/settings/notifications/edit/' ~ notificationId) }}"
 				title="{{ "Edit Notification Email"|t }}" style="float:none;margin:0;">{{ "Edit Notification Setting"|t }}</a>
 		</div>
 	</div>
@@ -65,8 +65,8 @@
 {% endblock %}
 
 {% block content %}
-	<input type="hidden" name="action" value="sprout-email/notification-emails/save-notification-email">
-	{{ redirectInput('sprout-email/notifications') }}
+	<input type="hidden" name="action" value="sprout-base/notifications/save-notification-email">
+	{{ redirectInput(currentBase ~ '/notifications') }}
 	{% if notificationEmail.id is not null %}
 		<input type="hidden" name="sproutEmail[id]" value="{{ notificationEmail.id }}">
 	{% endif %}
