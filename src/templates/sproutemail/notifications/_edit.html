@@ -18,8 +18,6 @@
 {% set fullPageForm = true %}
 {% set saveShortcutRedirect = url(currentBase ~ '/notifications/edit/' ~ notificationId) %}
 
-{% set settings = craft.sproutEmail.getSettings() %}
-
 {% block header %}
 	{{ block('pageTitle') }}
 	{{ block('contextMenu') }}
@@ -74,7 +72,7 @@
 	{% if namespace is not defined %}{% set namespace = 'fields' %}{% endif %}
 
 		<div id="fields">
-			{% include "sprout-email/_partials/notifications/fields" %}
+			{% include "sprout-base/sproutemail/notifications/fields" %}
 		</div>
 
 {% endblock %}
@@ -149,7 +147,7 @@
 					errors: notificationEmail is defined ? notificationEmail.getErrors('recipients')
 				}) }}
 
-				{% if mailer.getListsHtml()|length %}
+				{% if (mailer is not null and mailer.getListsHtml()|length) %}
 					<div class="field mailing-lists">
 						<div class="heading">
 							Lists
@@ -162,7 +160,7 @@
 					</div>
 				{% endif %}
 
-				{% set events = craft.sproutEmail.getAvailableEvents() %}
+				{% set events = craft.sproutbase.getAvailableEvents() %}
 
 				{% if events|length %}
 
@@ -183,7 +181,7 @@
 									Settings
 								</div>
 								<div class="input">
-									{% set options = craft.sproutEmail.getEventSelectedOptions(event, notificationEmail) %}
+									{% set options = craft.sproutbase.getEventSelectedOptions(event, notificationEmail) %}
 
 									{{ event.getOptionsHtml({
 										options: options

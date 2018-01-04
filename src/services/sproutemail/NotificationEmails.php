@@ -98,6 +98,37 @@ class NotificationEmails extends Component
 		return $events;
 	}
 
+	public function getEventsWithBase()
+	{
+		$availableEvents = $this->getAvailableEvents();
+
+		$events = [];
+
+		if (!empty($availableEvents))
+		{
+			foreach ($availableEvents as $availableEvent)
+			{
+				$pluginId = $availableEvent->getPluginId();
+
+				$events[$pluginId] = $availableEvent;
+			}
+		}
+
+		return $events;
+	}
+
+	public function getEventByBase($base)
+	{
+		$events = $this->getEventsWithBase();
+
+		if (isset($events[$base]))
+		{
+			return $events[$base];
+		}
+
+		return null;
+	}
+
 	/**
 	 * Returns a single notification event
 	 *
