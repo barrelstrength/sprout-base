@@ -33,7 +33,6 @@ class NotificationsController extends Controller
 	public function actionEditNotificationEmailSettingsTemplate($emailId = null, NotificationEmail $notificationEmail =
 	null)
 	{
-
 		$currentUser = Craft::$app->getUser()->getIdentity();
 
 		if (!$currentUser->can('editSproutEmailSettings'))
@@ -113,6 +112,17 @@ class NotificationsController extends Controller
 					// Remove previous field layout
 					Craft::$app->getFields()->deleteLayoutById($notificationEmail->fieldLayoutId);
 				}
+			}
+
+			$currentBase = Craft::$app->request->getSegment(1);
+
+			$eventObject = SproutBase::$app->notifications->getEventByBase($currentBase);
+
+			if ($eventObject)
+			{
+				$namespace = get_class($eventObject);
+
+				$notificationEmail->eventId = $namespace;
 			}
 
 			// retain options attribute by the second parameter
