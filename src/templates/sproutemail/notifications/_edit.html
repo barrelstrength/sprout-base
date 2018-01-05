@@ -22,7 +22,7 @@
 	{{ block('pageTitle') }}
 	{{ block('contextMenu') }}
 	<div class="flex-grow"></div>
-	{% if showPreviewBtn or shareUrl is defined %}
+	{% if showPreviewBtn or shareUrl is not null %}
 		{% if showPreviewBtn %}
 			<div class="btn livepreviewbtn">{{ "Live Preview"|t('app') }}</div>
 		{% endif %}
@@ -125,9 +125,9 @@
 					{% if notificationEmail.id is not null %}
 						<div class="right">
 							<input type="button" class="btn small formsubmit" value="{{ 'Delete'|t }}"
-								data-action="sprout-email/notification-emails/delete-notification-email"
+								data-action="sprout-base/notifications/delete-notification-email"
 								data-confirm="Are you sure you want to delete this notification email and all of it's data?"
-								data-redirect="sprout-email/notifications">
+								data-redirect="{{ currentBase }}/notifications">
 						</div>
 					{% endif %}
 
@@ -164,11 +164,17 @@
 
 				{% if events|length %}
 
+					{% set eventOptions =  [{label: "Select event..."|t, value: null}]|merge(events) %}
+
+					{% if (events|length == 1) %}
+						{% set eventOptions = events %}
+					{% endif %}
+
 					{{ forms.selectField({
 						id: "notificationEvent",
 						name: "sproutEmail[eventId]",
 						label: "Event <span class='info'>The event that will trigger your notification.</span>"|t,
-						options: [{label: "Select event..."|t, value: null}]|merge(events),
+						options: eventOptions,
 						value: notificationEmail.eventId is defined ? notificationEmail.eventId : null,
 					}) }}
 
