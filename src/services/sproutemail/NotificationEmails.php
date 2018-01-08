@@ -483,11 +483,11 @@ class NotificationEmails extends Component
 	 */
 	protected function relayNotificationThroughAssignedMailer(ElementInterface $notificationEmail, $object)
 	{
-		$mailer = SproutEmail::$app->mailers->getMailerByName('barrelstrength\\sproutemail\\integrations\\sproutemail\\mailers\\DefaultMailer');
+		$mailer = SproutBase::$app->mailers->getMailerByName('barrelstrength\\sproutbase\\mailers\\DefaultMailer');
 
 		if (!method_exists($mailer, 'sendNotificationEmail'))
 		{
-			throw new \Exception(Craft::t('sprout-email', 'The {mailer} does not have a sendNotificationEmail() method.',
+			throw new \Exception(Craft::t('sprout-base', 'The {mailer} does not have a sendNotificationEmail() method.',
 				array('mailer' => get_class($mailer))));
 		}
 

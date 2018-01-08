@@ -8,9 +8,14 @@
 namespace barrelstrength\sproutbase;
 
 use barrelstrength\sproutbase\base\BaseSproutTrait;
+use barrelstrength\sproutbase\events\RegisterMailersEvent;
+use barrelstrength\sproutbase\mailers\DefaultMailer;
+use barrelstrength\sproutbase\services\sproutemail\Mailers;
 use barrelstrength\sproutbase\web\twig\variables\SproutBaseVariable;
 use craft\events\DefineComponentsEvent;
+use craft\web\Application;
 use craft\web\twig\variables\CraftVariable;
+use yii\base\ActionEvent;
 use yii\base\Event;
 use \yii\base\Module;
 use craft\web\View;
@@ -100,6 +105,14 @@ class SproutBase extends Module
 		// Register our Variables
 		Event::on(CraftVariable::class, CraftVariable::EVENT_DEFINE_COMPONENTS, function (DefineComponentsEvent $event) {
 			$event->components['sproutbase'] = SproutBaseVariable::class;
+		});
+
+		Event::on(Application::class, Application::EVENT_INIT, function() {
+			SproutBase::$app->notifications->registerDynamicEventHandler();
+		});
+
+		Event::on(Mailers::class, Mailers::EVENT_REGISTER_MAILERS, function(RegisterMailersEvent $event) {
+			$event->mailers[] = new DefaultMailer();
 		});
 	}
 }

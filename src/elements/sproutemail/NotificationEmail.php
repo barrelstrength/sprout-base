@@ -283,7 +283,7 @@ class NotificationEmail extends Element
 	 */
 	public function getRecipients($element = null)
 	{
-		return SproutEmail::$app->getRecipients($element, $this);
+		return SproutBase::$app->mailers->getRecipients($element, $this);
 	}
 
 	/**
