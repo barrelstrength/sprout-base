@@ -6,7 +6,7 @@ use barrelstrength\sproutbase\SproutBase;
 use barrelstrength\sproutemail\assetbundles\email\EmailAsset;
 use barrelstrength\sproutemail\elements\actions\DeleteEmail;
 use barrelstrength\sproutbase\elements\sproutemail\db\NotificationEmailQuery;
-use barrelstrength\sproutemail\records\NotificationEmail as NotificationEmailRecord;
+use barrelstrength\sproutbase\records\sproutemail\NotificationEmail as NotificationEmailRecord;
 use barrelstrength\sproutemail\SproutEmail;
 use craft\base\Element;
 use Craft;
@@ -267,7 +267,7 @@ class NotificationEmail extends Element
 	public function getMailer()
 	{
 		// All Notification Emails use the Default Mailer
-		return SproutBase::$app->mailers->getMailerByName('barrelstrength\\sproutemail\\integrations\\sproutemail\\mailers\\DefaultMailer');
+		return SproutBase::$app->mailers->getMailerByName('barrelstrength\\sproutbase\\mailers\\DefaultMailer');
 	}
 
 	public function isReady()
