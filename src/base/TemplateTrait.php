@@ -11,6 +11,7 @@ use barrelstrength\sproutbase\models\sproutemail\EmailMessage;
 use barrelstrength\sproutbase\models\sproutemail\SimpleRecipient;
 use barrelstrength\sproutbase\SproutBase;
 use Craft;
+use craft\base\Element;
 use craft\base\Model;
 use craft\helpers\Html;
 use craft\mail\Message;
@@ -46,7 +47,7 @@ trait TemplateTrait
 	{
 		$tabs = array();
 		/**
-		 * @var $model Model
+		 * @var $model Element
 		 */
 		if (!empty($model->getFieldLayout()))
 		{
@@ -83,7 +84,13 @@ trait TemplateTrait
 		return $tabs;
 	}
 
-
+	/**
+	 * @param       $template
+	 * @param array $variables
+	 *
+	 * @return null|string
+	 * @throws \yii\base\Exception
+	 */
 	public function renderSiteTemplateIfExists($template, array $variables = array())
 	{
 		$renderedTemplate = null;
@@ -123,6 +130,15 @@ trait TemplateTrait
 		return $renderedTemplate;
 	}
 
+	/**
+	 * @param Message $emailModel
+	 * @param         $template
+	 * @param         $notification
+	 * @param null    $object
+	 *
+	 * @return EmailMessage
+	 * @throws \yii\base\Exception
+	 */
 	public function renderEmailTemplates(Message $emailModel, $template, $notification, $object = null)
 	{
 		// Render Email Entry fields that have dynamic values

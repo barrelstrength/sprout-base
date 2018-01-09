@@ -5,7 +5,7 @@ namespace barrelstrength\sproutbase\services\sproutemail;
 use barrelstrength\sproutbase\contracts\sproutemail\BaseEvent;
 use barrelstrength\sproutbase\elements\sproutemail\NotificationEmail;
 use barrelstrength\sproutbase\SproutBase;
-use barrelstrength\sproutemail\events\RegisterNotificationEvent;
+use barrelstrength\sproutbase\events\RegisterNotificationEvent;
 use barrelstrength\sproutemail\mail\Message;
 use barrelstrength\sproutemail\models\Response;
 use barrelstrength\sproutemail\records\NotificationEmail as NotificationEmailRecord;
@@ -607,7 +607,7 @@ class NotificationEmails extends Component
 		{
 			try
 			{
-				$mailer = SproutEmail::$app->mailers->getMailerByName('barrelstrength\\sproutemail\\integrations\\sproutemail\\mailers\\DefaultMailer');
+				$mailer = SproutBase::$app->mailers->getMailerByName('barrelstrength\\sproutbase\\mailers\\DefaultMailer');
 
 				// Must pass email options for getMockedParams methods to use $this->options
 				$event->setOptions($notificationEmail->options);

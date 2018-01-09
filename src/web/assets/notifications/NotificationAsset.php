@@ -1,6 +1,6 @@
 <?php
 
-namespace barrelstrength\sproutbase\assetbundles\notifications;
+namespace barrelstrength\sproutbase\web\assets\notifications;
 
 use craft\web\AssetBundle;
 use craft\web\assets\cp\CpAsset;
@@ -13,7 +13,7 @@ class NotificationAsset extends AssetBundle
 			CpAsset::class,
 		];
 		
-		$this->sourcePath = "@sproutbase/assetbundles/notifications/dist";
+		$this->sourcePath = "@sproutbase/web/assets/notifications/dist";
 
 		$this->js = [
 			'js/notification.js'

@@ -2,7 +2,7 @@
 
 namespace barrelstrength\sproutbase\controllers;
 
-use barrelstrength\sproutbase\assetbundles\notifications\NotificationAsset;
+use barrelstrength\sproutbase\web\assets\notifications\NotificationAsset;
 use barrelstrength\sproutbase\base\TemplateTrait;
 use barrelstrength\sproutbase\elements\sproutemail\NotificationEmail;
 use barrelstrength\sproutbase\SproutBase;
@@ -123,6 +123,8 @@ class NotificationsController extends Controller
 					Craft::$app->getFields()->deleteLayoutById($notificationEmail->fieldLayoutId);
 				}
 			}
+
+			$currentBase = Craft::$app->request->getSegment(1);
 
 			$eventObject = SproutBase::$app->notifications->getEventByBase($currentBase);
 
