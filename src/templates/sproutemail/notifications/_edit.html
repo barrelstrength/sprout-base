@@ -2,15 +2,15 @@
 {% import "_includes/forms" as forms %}
 
 {% if notificationEmail.id is null %}
-	{% set notificationId = 'new'  %}
+    {% set notificationId = 'new' %}
 {% else %}
-	{% set notificationId = notificationEmail.id  %}
+    {% set notificationId = notificationEmail.id %}
 {% endif %}
 {% set currentBase = craft.request.segment(1) %}
 
 {% set crumbs = [
-{ label: "Notifications"|t, url: url(currentBase ~ '/notifications') },
-{ label: "Settings"|t, url: url(currentBase ~ '/settings/notifications/edit/' ~ notificationId) },
+    { label: "Notifications"|t, url: url(currentBase ~ '/notifications') },
+    { label: "Settings"|t, url: url(currentBase ~ '/settings/notifications/edit/' ~ notificationId) },
 ] %}
 
 {% set title  = notificationEmail is defined and notificationEmail.title is not empty ? notificationEmail.name : 'Create a new Notification Email'|t %}
@@ -19,200 +19,210 @@
 {% set saveShortcutRedirect = url(currentBase ~ '/notifications/edit/' ~ notificationId) %}
 
 {% block header %}
-	{{ block('pageTitle') }}
-	{{ block('contextMenu') }}
-	<div class="flex-grow"></div>
-	{% if showPreviewBtn or shareUrl is not null %}
-		{% if showPreviewBtn %}
-			<div class="btn livepreviewbtn">{{ "Live Preview"|t('app') }}</div>
-		{% endif %}
-		{% if shareUrl is defined %}
-			<a href="{{ shareUrl }}" class="btn sharebtn" target="_blank">{{ 'Share'|t('app') }}</a>
-		{% endif %}
-		<div class="flex-grow"></div>
-	{% endif %}
-	{{ block('actionButton') }}
+    {{ block('pageTitle') }}
+    {{ block('contextMenu') }}
+    <div class="flex-grow"></div>
+    {% if showPreviewBtn or shareUrl is not null %}
+        {% if showPreviewBtn %}
+            <div class="btn livepreviewbtn">{{ "Live Preview"|t('app') }}</div>
+        {% endif %}
+        {% if shareUrl is defined %}
+            <a href="{{ shareUrl }}" class="btn sharebtn"
+               target="_blank">{{ 'Share'|t('app') }}</a>
+        {% endif %}
+        <div class="flex-grow"></div>
+    {% endif %}
+    {{ block('actionButton') }}
 {% endblock %}
 
 {% block actionButton %}
 
-	<div class="buttons">
-		<div class="btngroup">
-			<input class="btn submit" type="submit" value="{{ 'Save'|t }}">
-			<div class="btn submit menubtn"></div>
-			<div class="menu">
-				<ul>
-					<li><a class="formsubmit" data-redirect="{{ saveShortcutRedirect|hash }}">
-							{{ "Save and continue editing"|t }} <span class="shortcut">⌘S</span></a></li>
-					<li><a class="formsubmit" data-redirect="{{ currentBase }}/settings/notifications/edit/new">
-							{{ "Save and add another"|t }}</a>
-					</li>
-					<li><a class="formsubmit" data-redirect="{{ currentBase }}/settings/notifications/edit/{{ notificationId }}">
-							{{ "Save and edit notification settings"|t }}</a></li>
-				</ul>
-			</div>
-		</div>
+    <div class="buttons">
+        <div class="btngroup">
+            <input class="btn submit" type="submit" value="{{ 'Save'|t }}">
+            <div class="btn submit menubtn"></div>
+            <div class="menu">
+                <ul>
+                    <li><a class="formsubmit"
+                           data-redirect="{{ saveShortcutRedirect|hash }}">
+                            {{ "Save and continue editing"|t }} <span
+                                    class="shortcut">⌘S</span></a></li>
+                    <li><a class="formsubmit"
+                           data-redirect="{{ currentBase }}/settings/notifications/edit/new">
+                            {{ "Save and add another"|t }}</a>
+                    </li>
+                    <li><a class="formsubmit"
+                           data-redirect="{{ currentBase }}/settings/notifications/edit/{{ notificationId }}">
+                            {{ "Save and edit notification settings"|t }}</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
 
-		<div class="secondary-buttons" style="float:left;">
-			<a class="btn icon settings submit"
-				href="{{ cpUrl(currentBase ~ '/settings/notifications/edit/' ~ notificationId) }}"
-				title="{{ "Edit Notification Email"|t }}" style="float:none;margin:0;">{{ "Edit Notification Setting"|t }}</a>
-		</div>
-	</div>
+        <div class="secondary-buttons" style="float:left;">
+            <a class="btn icon settings submit"
+               href="{{ cpUrl(currentBase ~ '/settings/notifications/edit/' ~ notificationId) }}"
+               title="{{ "Edit Notification Email"|t }}"
+               style="float:none;margin:0;">{{ "Edit Notification Setting"|t }}</a>
+        </div>
+    </div>
 
 {% endblock %}
 
 {% block content %}
-	<input type="hidden" name="action" value="sprout-base/notifications/save-notification-email">
-	{{ redirectInput(currentBase ~ '/notifications') }}
-	{% if notificationEmail.id is not null %}
-		<input type="hidden" name="sproutEmail[id]" value="{{ notificationEmail.id }}">
-	{% endif %}
+    <input type="hidden" name="action"
+           value="sprout-base/notifications/save-notification-email">
+    {{ redirectInput(currentBase ~ '/notifications') }}
+    {% if notificationEmail.id is not null %}
+        <input type="hidden" name="sproutEmail[id]"
+               value="{{ notificationEmail.id }}">
+    {% endif %}
 
-	{% if namespace is not defined %}{% set namespace = 'fields' %}{% endif %}
+    {% if namespace is not defined %}{% set namespace = 'fields' %}{% endif %}
 
-		<div id="fields">
-			{% include "sprout-base/sproutemail/notifications/fields" %}
-		</div>
+    <div id="fields">
+        {% include "sprout-base/sproutemail/notifications/fields" %}
+    </div>
 
 {% endblock %}
 
 {% block details %}
 
-	<div id="settings" class="meta">
+    <div id="settings" class="meta">
 
-				{{ forms.textField({
-					label: "From Name <span class='info'>The person or business sending the email</span>"|t,
-					name: 'sproutEmail[fromName]',
-					value: (notificationEmail.fromName is not empty ? notificationEmail.fromName : '' ),
-					errors: (notificationEmail is defined ? notificationEmail.getErrors('fromName') : null),
-					required: true
-				}) }}
+        {{ forms.textField({
+            label: "From Name <span class='info'>The person or business sending the email</span>"|t,
+            name: 'sproutEmail[fromName]',
+            value: (notificationEmail.fromName is not empty ? notificationEmail.fromName : '' ),
+        errors: (notificationEmail is defined ? notificationEmail.getErrors('fromName') : null),
+        required: true
+        }) }}
 
-				{{ forms.textField({
-					name: 'sproutEmail[fromEmail]',
-					value: (notificationEmail.fromEmail is not empty ? notificationEmail.fromEmail : ''),
-					label: "From Email <span class='info'>The email address of the person or business sending the email</span>"|t,
-					errors: (notificationEmail is defined ? notificationEmail.getErrors('fromEmail') : null),
-					required: true
-				}) }}
+        {{ forms.textField({
+            name: 'sproutEmail[fromEmail]',
+            value: (notificationEmail.fromEmail is not empty ? notificationEmail.fromEmail : ''),
+        label: "From Email <span class='info'>The email address of the person or business sending the email</span>"|t,
+        errors: (notificationEmail is defined ? notificationEmail.getErrors('fromEmail') : null),
+        required: true
+        }) }}
 
-				{{ forms.textField({
-					name: 'sproutEmail[replyToEmail]',
-					value: (notificationEmail.replyToEmail is not empty ? notificationEmail.replyToEmail : ''),
-					label: "Reply To <span class='info'>The email address which will be used if any recipients reply to your email</span>"|t,
-					errors: (notificationEmail is defined ? notificationEmail.getErrors('replyToEmail') : null),
-					required: true
-				}) }}
+        {{ forms.textField({
+            name: 'sproutEmail[replyToEmail]',
+            value: (notificationEmail.replyToEmail is not empty ? notificationEmail.replyToEmail : ''),
+        label: "Reply To <span class='info'>The email address which will be used if any recipients reply to your email</span>"|t,
+        errors: (notificationEmail is defined ? notificationEmail.getErrors('replyToEmail') : null),
+        required: true
+        }) }}
 
-				{{ forms.textField({
-					label: "Slug"|t,
-					id: 'slug',
-					name: 'slug',
-					value: notificationEmail.slug,
-					errors: (notificationEmail ? notificationEmail.getErrors('slug')|merge(notificationEmail.getErrors('uri'))),
-				}) }}
+        {{ forms.textField({
+            label: "Slug"|t,
+            id: 'slug',
+            name: 'slug',
+            value: notificationEmail.slug,
+            errors: (notificationEmail ? notificationEmail.getErrors('slug')|merge(notificationEmail.getErrors('uri'))),
+        }) }}
 
-				{% set statusInput %}
-					<div class="left">
-						{{ forms.lightswitch({
-							id: 'enabled',
-							name: 'enabled',
-							on: notificationEmail.enabled
-						}) }}
-					</div>
+        {% set statusInput %}
+            <div class="left">
+                {{ forms.lightswitch({
+                    id: 'enabled',
+                    name: 'enabled',
+                    on: notificationEmail.enabled
+                }) }}
+            </div>
 
-					{% if notificationEmail.id is not null %}
-						<div class="right">
-							<input type="button" class="btn small formsubmit" value="{{ 'Delete'|t }}"
-								data-action="sprout-base/notifications/delete-notification-email"
-								data-confirm="Are you sure you want to delete this notification email and all of it's data?"
-								data-redirect="{{ currentBase }}/notifications">
-						</div>
-					{% endif %}
+            {% if notificationEmail.id is not null %}
+                <div class="right">
+                    <input type="button" class="btn small formsubmit"
+                           value="{{ 'Delete'|t }}"
+                           data-action="sprout-base/notifications/delete-notification-email"
+                           data-confirm="Are you sure you want to delete this notification email and all of it's data?"
+                           data-redirect="{{ currentBase }}/notifications">
+                </div>
+            {% endif %}
 
-				{% endset %}
+        {% endset %}
 
-				{{ forms.field({
-					label: "Status"|t,
-					id: 'enabled'
-				}, statusInput) }}
+        {{ forms.field({
+            label: "Status"|t,
+            id: 'enabled'
+        }, statusInput) }}
 
-				{{ forms.textField({
-					label: "Recipients <span class='info'>A comma separated list of email addresses.</span>"|t,
-					placeholder: "user@domain.com, other@domain.com"|t,
-					name: "sproutEmail[recipients]",
-					class: "code",
-					value: notificationEmail is defined ? notificationEmail.recipients : "",
-					errors: notificationEmail is defined ? notificationEmail.getErrors('recipients')
-				}) }}
+        {{ forms.textField({
+            label: "Recipients <span class='info'>A comma separated list of email addresses.</span>"|t,
+            placeholder: "user@domain.com, other@domain.com"|t,
+            name: "sproutEmail[recipients]",
+            class: "code",
+            value: notificationEmail is defined ? notificationEmail.recipients : "",
+            errors: notificationEmail is defined ? notificationEmail.getErrors('recipients')
+        }) }}
 
-				{% if (mailer is not null and mailer.getListsHtml()|length) %}
-					<div class="field mailing-lists">
-						<div class="heading">
-							Lists
-						</div>
-						<div class="input">
-							{% namespace 'lists' %}
-							{{ mailer.getListsHtml(notificationEmail.listSettings)|raw }}
-							{% endnamespace %}
-						</div>
-					</div>
-				{% endif %}
+        {% if (mailer is not null and mailer.getListsHtml()|length) %}
+            <div class="field mailing-lists">
+                <div class="heading">
+                    Lists
+                </div>
+                <div class="input">
+                    {% namespace 'lists' %}
+                        {{ mailer.getListsHtml(notificationEmail.listSettings)|raw }}
+                    {% endnamespace %}
+                </div>
+            </div>
+        {% endif %}
 
-				{% set events = craft.sproutbase.getAvailableEvents() %}
+        {% set events = craft.sproutbase.getAvailableEvents() %}
 
-				{% if events|length %}
+        {% if events|length %}
 
-					{% set eventOptions =  [{label: "Select event..."|t, value: null}]|merge(events) %}
+            {% set eventOptions =  [{label: "Select event..."|t, value: null}]|merge(events) %}
 
-					{% if (events|length == 1) %}
-						{% set eventOptions = events %}
-					{% endif %}
+            {% if (events|length == 1) %}
+                {% set eventOptions = events %}
+            {% endif %}
 
-					{{ forms.selectField({
-						id: "notificationEvent",
-						name: "sproutEmail[eventId]",
-						label: "Event <span class='info'>The event that will trigger your notification.</span>"|t,
-						options: eventOptions,
-						value: notificationEmail.eventId is defined ? notificationEmail.eventId : null,
-					}) }}
+            {{ forms.selectField({
+                id: "notificationEvent",
+                name: "sproutEmail[eventId]",
+                label: "Event <span class='info'>The event that will trigger your notification.</span>"|t,
+                options: eventOptions,
+                value: notificationEmail.eventId is defined ? notificationEmail.eventId : null,
+            }) }}
 
-					{% for id, event in events %}
-						{% if event.getOptionsHtml is defined %}
+            {% for id, event in events %}
+                {% if event.getOptionsHtml is defined %}
 
-							{# Avoid jquery get object error. #}
-							<div class="field event-options {{ event.getEventId() }}">
-								<div class="heading">
-									Settings
-								</div>
-								<div class="input">
-									{% set options = craft.sproutbase.getEventSelectedOptions(event, notificationEmail) %}
+                    {# Avoid jquery get object error. #}
+                    <div class="field event-options {{ event.getEventId() }}">
+                        <div class="heading">
+                            Settings
+                        </div>
+                        <div class="input">
+                            {% set options = craft.sproutbase.getEventSelectedOptions(event, notificationEmail) %}
 
-									{{ event.getOptionsHtml({
-										options: options
-									})|raw }}
-								</div>
-							</div>
-						{% endif %}
-					{% endfor %}
+                            {{ event.getOptionsHtml({
+                                options: options
+                            })|raw }}
+                        </div>
+                    </div>
+                {% endif %}
+            {% endfor %}
 
-					{{ forms.lightswitchField({
-						first: true,
-						label: "Attach Files <span class='info'>All files submitted with your entries will be attached to the notification email</span>"|t,
-						id: 'sproutEmail[enableFileAttachments]',
-						name: 'sproutEmail[enableFileAttachments]',
-						on: notificationEmail.enableFileAttachments,
-						onLabel: "Enable"|t,
-						offLabel: "Disable"|t
-					}) }}
+            {{ forms.lightswitchField({
+                first: true,
+                label: "Attach Files <span class='info'>All files submitted with your entries will be attached to the notification email</span>"|t,
+                id: 'sproutEmail[enableFileAttachments]',
+                name: 'sproutEmail[enableFileAttachments]',
+                on: notificationEmail.enableFileAttachments,
+                onLabel: "Enable"|t,
+                offLabel: "Disable"|t
+            }) }}
 
-				{% endif %}
+        {% endif %}
 
-			</div>
+    </div>
 
 {% endblock %}
 
 {% if not notificationEmail.slug %}
-	{% includeJs "window.slugGenerator = new Craft.SlugGenerator('#subjectLine', '#slug');" %}
+    {% includeJs "window.slugGenerator = new Craft.SlugGenerator('#subjectLine', '#slug');" %}
 {% endif %}
