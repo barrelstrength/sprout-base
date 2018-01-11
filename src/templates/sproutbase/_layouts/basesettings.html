@@ -12,34 +12,34 @@
 {% set fullPageForm = true %}
 
 {% set sidebar %}
-	<nav>
-		<ul>
-			{% if navItems|length %}
-				{% for item in navItems %}
-					{% if item.heading is defined and item.heading is not empty %}
-						<li class="heading"><span>{{ item.heading }}</span></li>
-					{% else %}
-						<li>
-							<a href="{{ url(item.url) }}"
-							   {% if selectedSidebarItem == item.selected %}class="sel"{% endif %}>
-								{{ item.label }}
-							</a>
-						</li>
-					{% endif %}
-				{% endfor %}
-			{% endif %}
-		</ul>
-	</nav>
+    <nav>
+        <ul>
+            {% if navItems|length %}
+                {% for item in navItems %}
+                    {% if item.heading is defined and item.heading is not empty %}
+                        <li class="heading"><span>{{ item.heading }}</span></li>
+                    {% else %}
+                        <li>
+                            <a href="{{ url(item.url) }}"
+                               {% if selectedSidebarItem == item.selected %}class="sel"{% endif %}>
+                                {{ item.label }}
+                            </a>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+        </ul>
+    </nav>
 {% endset %}
 
 {% block actionButton %}
-	{% set fullForm = selectedSettingsInfo.fullPageForm ?? true %}
+    {% set fullForm = selectedSettingsInfo.fullPageForm ?? true %}
 
-	{% if fullForm and settingsForm == true %}
+    {% if fullForm and settingsForm == true %}
 
-	 {% set actionTemplate = selectedSettingsInfo.actionTemplate ?? 'sprout-base/sproutbase/_includes/actionButton' %}
-	 {% include actionTemplate %}
+        {% set actionTemplate = selectedSettingsInfo.actionTemplate ?? 'sprout-base/sproutbase/_includes/actionButton' %}
+        {% include actionTemplate %}
 
-	{% endif %}
+    {% endif %}
 {% endblock %}
 

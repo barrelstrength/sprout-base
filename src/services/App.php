@@ -24,95 +24,95 @@ use craft\base\Component;
 
 class App extends Component
 {
-	/**
-	 * @var Address
-	 */
-	public $address;
+    /**
+     * @var Address
+     */
+    public $address;
 
-	/**
-	 * @var Phone
-	 */
-	public $phone;
+    /**
+     * @var Phone
+     */
+    public $phone;
 
-	/**
-	 * @var Utilities
-	 */
-	public $utilities;
+    /**
+     * @var Utilities
+     */
+    public $utilities;
 
-	/**
-	 * @var Link
-	 */
-	public $link;
+    /**
+     * @var Link
+     */
+    public $link;
 
-	/**
-	 * @var Email
-	 */
-	public $email;
+    /**
+     * @var Email
+     */
+    public $email;
 
-	/**
-	 * @var RegularExpression
-	 */
-	public $regularExpression;
+    /**
+     * @var RegularExpression
+     */
+    public $regularExpression;
 
-	/**
-	 * @var EmailSelect
-	 */
-	public $emailSelect;
+    /**
+     * @var EmailSelect
+     */
+    public $emailSelect;
 
-	/**
-	 * @var Reports
-	 */
-	public $reports;
+    /**
+     * @var Reports
+     */
+    public $reports;
 
-	/**
-	 * @var NotificationEmails
-	 */
-	public $notifications;
+    /**
+     * @var NotificationEmails
+     */
+    public $notifications;
 
-	/**
-	 * @var DataSources
-	 */
-	public $dataSources;
+    /**
+     * @var DataSources
+     */
+    public $dataSources;
 
-	/**
-	 * @var Exports
-	 */
-	public $exports;
+    /**
+     * @var Exports
+     */
+    public $exports;
 
-	/**
-	 * @var Settings
-	 */
-	public $settings;
+    /**
+     * @var Settings
+     */
+    public $settings;
 
-	/**
-	 * @var Mailers
-	 */
-	public $mailers;
+    /**
+     * @var Mailers
+     */
+    public $mailers;
 
-	/**
-	 * @inheritdoc
-	 */
-	public function init()
-	{
-		// Sprout Core
-		$this->settings = new Settings();
+    /**
+     * @inheritdoc
+     */
+    public function init()
+    {
+        // Sprout Core
+        $this->settings = new Settings();
 
-		// Sprout Fields
-		$this->address = new Address();
-		$this->phone = new Phone();
-		$this->utilities = new Utilities();
-		$this->link = new Link();
-		$this->email = new Email();
-		$this->regularExpression = new RegularExpression();
-		$this->emailSelect = new EmailSelect();
+        // Sprout Fields
+        $this->address = new Address();
+        $this->phone = new Phone();
+        $this->utilities = new Utilities();
+        $this->link = new Link();
+        $this->email = new Email();
+        $this->regularExpression = new RegularExpression();
+        $this->emailSelect = new EmailSelect();
 
-		// Sprout Reports
-		$this->reports = new Reports();
-		$this->dataSources = new DataSources();
-		$this->exports = new Exports();
+        // Sprout Reports
+        $this->reports = new Reports();
+        $this->dataSources = new DataSources();
+        $this->exports = new Exports();
 
-		// Notifications
-		$this->notifications = new NotificationEmails();
-		$this->mailers = new Mailers();
-	}
+        // Notifications
+        $this->notifications = new NotificationEmails();
+        $this->mailers = new Mailers();
+    }
 }

@@ -6,5 +6,5 @@ use yii\base\Event;
 
 class RegisterNotificationEvent extends Event
 {
-	public $availableEvents = [];
+    public $availableEvents = [];
 }

@@ -16,11 +16,11 @@ use craft\db\ActiveRecord;
  */
 class DataSource extends ActiveRecord
 {
-	/**
-	 * @return string
-	 */
-	public static function tableName(): string
-	{
-		return '{{%sproutreports_datasources}}';
-	}
+    /**
+     * @return string
+     */
+    public static function tableName(): string
+    {
+        return '{{%sproutreports_datasources}}';
+    }
 }

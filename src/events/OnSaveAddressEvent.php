@@ -11,9 +11,9 @@ use yii\base\Event;
 
 class OnSaveAddressEvent extends Event
 {
-	// Properties
-	// =========================================================================
+    // Properties
+    // =========================================================================
 
-	public $model  = null;
-	public $source = null;
+    public $model = null;
+    public $source = null;
 }

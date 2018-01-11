@@ -3,61 +3,61 @@
 {% set title  = "Notifications"|t('sprout-base') %}
 
 {% block actionButton %}
-	<div class="btngroup submit first">
-		<a class="btn submit add icon"
-			href="{{ url('sprout-forms/settings/notifications/edit/new') }}">{{ "New Notification"|t('sprout-base') }}</a>
-	</div>
+    <div class="btngroup submit first">
+        <a class="btn submit add icon"
+           href="{{ url('sprout-forms/settings/notifications/edit/new') }}">{{ "New Notification"|t('sprout-base') }}</a>
+    </div>
 {% endblock %}
 
 {% block content %}
-	{% if notifications is empty %}
-		{{ "There are no notifications created."|t('sprout-base')  }}
-	{% else %}
-		<form method="post" accept-charset="UTF-8">
-			{{ csrfInput() }}
+    {% if notifications is empty %}
+        {{ "There are no notifications created."|t('sprout-base') }}
+    {% else %}
+        <form method="post" accept-charset="UTF-8">
+            {{ csrfInput() }}
 
-			<div class="tableview">
-				<table class="data fullwidth">
-					<thead>
-					<tr>
-						<th>{{ "Subject Line"|t('sprout-base') }}</th>
-						<th>{{ "Notification Name"|t('sprout-base') }}</th>
-						<th>{{ "Date Created"|t('sprout-base') }}</th>
-						<th>{{ "Date Updated"|t('sprout-base') }}</th>
-					</tr>
-					</thead>
-					<tbody>
-					{% for notification in notifications %}
-						<tr>
-							<td>
-								<a href="{{ cpUrl(craft.app.request.segment(1) ~ '/notifications/edit/' ~ notification.id) }}">
-									<strong>
-										{{ notification.subjectLine}}
-									</strong></a>
-							</td>
-							<td>
-								{{ notification.name }}
-							</td>
+            <div class="tableview">
+                <table class="data fullwidth">
+                    <thead>
+                    <tr>
+                        <th>{{ "Subject Line"|t('sprout-base') }}</th>
+                        <th>{{ "Notification Name"|t('sprout-base') }}</th>
+                        <th>{{ "Date Created"|t('sprout-base') }}</th>
+                        <th>{{ "Date Updated"|t('sprout-base') }}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for notification in notifications %}
+                        <tr>
+                            <td>
+                                <a href="{{ cpUrl(craft.app.request.segment(1) ~ '/notifications/edit/' ~ notification.id) }}">
+                                    <strong>
+                                        {{ notification.subjectLine }}
+                                    </strong></a>
+                            </td>
+                            <td>
+                                {{ notification.name }}
+                            </td>
 
-							<td>
-								{{ notification.dateCreated|date('Y-m-d h:m:s') }}
-							</td>
+                            <td>
+                                {{ notification.dateCreated|date('Y-m-d h:m:s') }}
+                            </td>
 
-							<td>
-								{{ notification.dateUpdated|date('Y-m-d h:m:s') }}
-							</td>
-						</tr>
-					{% endfor %}
-					</tbody>
-				</table>
-			</div>
+                            <td>
+                                {{ notification.dateUpdated|date('Y-m-d h:m:s') }}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
 
-		</form>
-	{% endif %}
-	<div class="grid">
-		<div class="item">
-			{{ parent() }}
-		</div>
-	</div>
+        </form>
+    {% endif %}
+    <div class="grid">
+        <div class="item">
+            {{ parent() }}
+        </div>
+    </div>
 
 {% endblock %}

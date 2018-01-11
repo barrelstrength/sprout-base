@@ -17,81 +17,81 @@ use craft\base\Model;
  */
 class Address extends Model
 {
-	protected $addressHelper;
+    protected $addressHelper;
 
-	public $id;
-	public $modelId;
-	public $countryCode;
-	public $administrativeArea;
-	public $locality;
-	public $dependentLocality;
-	public $postalCode;
-	public $sortingCode;
-	public $address1;
-	public $address2;
+    public $id;
+    public $modelId;
+    public $countryCode;
+    public $administrativeArea;
+    public $locality;
+    public $dependentLocality;
+    public $postalCode;
+    public $sortingCode;
+    public $address1;
+    public $address2;
 
-	public $dateCreated;
-	public $dateUpdated;
-	public $uid;
+    public $dateCreated;
+    public $dateUpdated;
+    public $uid;
 
-	public function init()
-	{
-		$this->addressHelper = new AddressHelper();
-
-		parent::init();
-	}
-
-	public function rules()
-	{
-		$rules = parent::rules();
-
-		$rules[] = ['postalCode', 'validatePostalCode'];
-		$rules[] = ['address1', 'required'];
-
-		return $rules;
-	}
-
-	/**
-	 * @todo - this method exists in this class and in the AddressHelper class. Refactor into one method and cleanup.
-	 *
-	 * @param $attribute
-	 */
-	public function validatePostalCode($attribute)
-	{
-		$addressHelper = new AddressHelper();
-
-		$postalCode = $this->{$attribute};
-
-		if ($postalCode == null) return;
-
-		$countryCode = $this->countryCode;
-
-		if (!$addressHelper->validatePostalCode($countryCode, $postalCode))
+    public function init()
     {
-	    $postalName = $addressHelper->getPostalName($countryCode);
+        $this->addressHelper = new AddressHelper();
 
-	    $params = [
-		    'postalName' => $postalName,
-	    ];
-
-	    $this->addError($attribute, SproutBase::t("{postalName} is not a valid.", $params));
+        parent::init();
     }
-	}
 
-	/**
-	 * Return the Address HTML for the appropriate region
-	 *
-	 * @return string
-	 */
-	public function getAddressHtml()
-	{
-		if (!$this->id)
-		{
-			return "";
-		}
+    public function rules()
+    {
+        $rules = parent::rules();
 
-		$addressHelper = new AddressHelper();
+        $rules[] = ['postalCode', 'validatePostalCode'];
+        $rules[] = ['address1', 'required'];
 
-		return $addressHelper->getAddressWithFormat($this);
-	}
+        return $rules;
+    }
+
+    /**
+     * @todo - this method exists in this class and in the AddressHelper class. Refactor into one method and cleanup.
+     *
+     * @param $attribute
+     */
+    public function validatePostalCode($attribute)
+    {
+        $addressHelper = new AddressHelper();
+
+        $postalCode = $this->{$attribute};
+
+        if ($postalCode == null) {
+            return;
+        }
+
+        $countryCode = $this->countryCode;
+
+        if (!$addressHelper->validatePostalCode($countryCode, $postalCode)) {
+            $postalName = $addressHelper->getPostalName($countryCode);
+
+            $params = [
+                'postalName' => $postalName,
+            ];
+
+            $this->addError($attribute, SproutBase::t("{postalName} is not a valid.", $params));
+        }
+    }
+
+    /**
+     * Return the Address HTML for the appropriate region
+     *
+     * @return string
+     */
+    public function getAddressHtml()
+    {
+        if (!$this->id) {
+            return "";
+        }
+
+        $addressHelper = new AddressHelper();
+
+        return $addressHelper->getAddressWithFormat($this);
+    }
 }

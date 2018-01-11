@@ -15,21 +15,21 @@ use craft\base\Model;
  */
 class SimpleRecipient extends Model
 {
-	public $firstName;
-	public $lastName;
-	public $email;
+    public $firstName;
+    public $lastName;
+    public $email;
 
-	/**
-	 * @param array $attributes
-	 *
-	 * @return SimpleRecipient
-	 */
-	public static function create(array $attributes = array())
-	{
-		$self = new self;
+    /**
+     * @param array $attributes
+     *
+     * @return SimpleRecipient
+     */
+    public static function create(array $attributes = [])
+    {
+        $self = new self;
 
-		$self->setAttributes($attributes, false);
+        $self->setAttributes($attributes, false);
 
-		return $self;
-	}
+        return $self;
+    }
 }

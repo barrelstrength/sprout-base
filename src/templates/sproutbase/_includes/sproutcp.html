@@ -1,33 +1,34 @@
 {% macro mediaBox(settings) %}
 
-	{% set resourcePath = settings.resourcePath ?? null %}
-	{% set resourceAltText = settings.resourceAltText ?? null %}
-	{% set heading = settings.heading ?? null %}
-	{% set body = settings.body ?? null %}
-	{% set alignItems = settings.alignItems ?? null %}
+    {% set resourcePath = settings.resourcePath ?? null %}
+    {% set resourceAltText = settings.resourceAltText ?? null %}
+    {% set heading = settings.heading ?? null %}
+    {% set body = settings.body ?? null %}
+    {% set alignItems = settings.alignItems ?? null %}
 
-	<div class="sprout-mediabox-outer">
-		<div class="sprout-mediabox-inner" {% if alignItems %}style="align-items: {{ alignItems }};"{% endif %}>
-			{% if resourcePath %}
-			<div class="sprout-mediathumb">
-				{{ craft.sproutbase.getSvg(resourcePath) }}
-			</div>
+    <div class="sprout-mediabox-outer">
+        <div class="sprout-mediabox-inner"
+             {% if alignItems %}style="align-items: {{ alignItems }};"{% endif %}>
+            {% if resourcePath %}
+                <div class="sprout-mediathumb">
+                    {{ craft.sproutbase.getSvg(resourcePath) }}
+                </div>
             {% endif %}
-			<div class="sprout-mediabody">
-				<h2>{{ heading }}</h2>
-				<hr>
+            <div class="sprout-mediabody">
+                <h2>{{ heading }}</h2>
+                <hr>
 
-				{{ body|raw }}
+                {{ body|raw }}
 
-			</div>
-		</div>
-	</div>
+            </div>
+        </div>
+    </div>
 
-	<style>
-		.sprout-mediathumb svg {
-			height: 140px;
-			width: 140px;
-		}
-	</style>
+    <style>
+        .sprout-mediathumb svg {
+            height: 140px;
+            width: 140px;
+        }
+    </style>
 
 {% endmacro %}

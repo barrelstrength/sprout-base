@@ -34,98 +34,96 @@ use yii\web\BadRequestHttpException;
  */
 class SettingsController extends BaseController
 {
-	/**
-	 * The active Plugin class
-	 *
-	 * @var Plugin
-	 */
-	public $plugin;
+    /**
+     * The active Plugin class
+     *
+     * @var Plugin
+     */
+    public $plugin;
 
-	/**
-	 * The section of the settings area that is being edited
-	 *
-	 * <plugin-name>/settings/<settingsSection>
-	 *
-	 * @var string
-	 */
-	public $settingsSection;
+    /**
+     * The section of the settings area that is being edited
+     *
+     * <plugin-name>/settings/<settingsSection>
+     *
+     * @var string
+     */
+    public $settingsSection;
 
-	/**
-	 * The selected settings tab
-	 *
-	 * @var string
-	 */
-	public $selectedSidebarItem;
+    /**
+     * The selected settings tab
+     *
+     * @var string
+     */
+    public $selectedSidebarItem;
 
-	/**
-	 * @inheritdoc
-	 */
-	public function init()
-	{
-		$pluginHandle = Craft::$app->getRequest()->getSegment(1);
+    /**
+     * @inheritdoc
+     */
+    public function init()
+    {
+        $pluginHandle = Craft::$app->getRequest()->getSegment(1);
 
-		$this->settingsSection = Craft::$app->getRequest()->getSegment(3);
-		$this->selectedSidebarItem = $this->settingsSection ?? 'general';
+        $this->settingsSection = Craft::$app->getRequest()->getSegment(3);
+        $this->selectedSidebarItem = $this->settingsSection ?? 'general';
 
-		$this->plugin = Craft::$app->getPlugins()->getPlugin($pluginHandle);
-	}
+        $this->plugin = Craft::$app->getPlugins()->getPlugin($pluginHandle);
+    }
 
-	/**
-	 * Prepare plugin settings for output
-	 *
-	 * @return \yii\web\Response
-	 * @throws InvalidPluginException
-	 * @throws InvalidParamException
-	 */
-	public function actionEditSettings()
-	{
-		if (!$this->plugin)
-		{
-			throw new InvalidPluginException($this->plugin->handle);
-		}
+    /**
+     * Prepare plugin settings for output
+     *
+     * @return \yii\web\Response
+     * @throws InvalidPluginException
+     * @throws InvalidParamException
+     */
+    public function actionEditSettings()
+    {
+        if (!$this->plugin) {
+            throw new InvalidPluginException($this->plugin->handle);
+        }
 
-		// @todo - is there a better way to do this?
-		// This was added to support the Sprout Import, SEO Redirect tool
-		//
-		// Make sure we retain any params set in another controller on this request
-		// by handing them to the settings layer as a variable. In the template,
-		// they can be accessed as params.paramName
-		$settingsNav = $this->plugin->getSettings()->getSettingsNavItems();
-		$variables = $settingsNav[$this->selectedSidebarItem]['variables'] ?? [];
+        // @todo - is there a better way to do this?
+        // This was added to support the Sprout Import, SEO Redirect tool
+        //
+        // Make sure we retain any params set in another controller on this request
+        // by handing them to the settings layer as a variable. In the template,
+        // they can be accessed as params.paramName
+        $settingsNav = $this->plugin->getSettings()->getSettingsNavItems();
+        $variables = $settingsNav[$this->selectedSidebarItem]['variables'] ?? [];
 
-		$variables['plugin'] = $this->plugin;
-		$variables['selectedSidebarItem'] = $this->selectedSidebarItem;
+        $variables['plugin'] = $this->plugin;
+        $variables['selectedSidebarItem'] = $this->selectedSidebarItem;
 
-		$variables = array_merge($variables, Craft::$app->getUrlManager()->getRouteParams());
+        $variables = array_merge($variables, Craft::$app->getUrlManager()->getRouteParams());
 
-		return $this->renderTemplate('sprout-base/sproutbase/_settings/index', $variables);
-	}
+        return $this->renderTemplate('sprout-base/sproutbase/_settings/index', $variables);
+    }
 
-	/**
-	 * Saves plugin settings
-	 *
-	 * @throws BadRequestHttpException
-	 */
-	public function actionSaveSettings()
-	{
-		$this->requirePostRequest();
+    /**
+     * Saves plugin settings
+     *
+     * @throws BadRequestHttpException
+     */
+    public function actionSaveSettings()
+    {
+        $this->requirePostRequest();
 
-		// the submitted settings
-		$settings = Craft::$app->getRequest()->getBodyParam('settings');
+        // the submitted settings
+        $settings = Craft::$app->getRequest()->getBodyParam('settings');
 
-		if (!SproutBase::$app->settings->saveSettings($this->plugin, $settings))
-		{
-			Craft::$app->getSession()->setError(SproutBase::t('Couldn’t save settings.'));
+        if (!SproutBase::$app->settings->saveSettings($this->plugin, $settings)) {
+            Craft::$app->getSession()->setError(SproutBase::t('Couldn’t save settings.'));
 
-			Craft::$app->getUrlManager()->setRouteParams([
-				'settings' => $settings
-			]);
+            Craft::$app->getUrlManager()->setRouteParams([
+                'settings' => $settings
+            ]);
 
-			return null;
-		}
+            return null;
+        }
 
-		Craft::$app->getSession()->setNotice(SproutBase::t('Settings saved.'));
+        Craft::$app->getSession()->setNotice(SproutBase::t('Settings saved.'));
 
-		return $this->redirectToPostedUrl();
-	}
+        return $this->redirectToPostedUrl();
+    }
 }

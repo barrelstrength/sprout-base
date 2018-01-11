@@ -14,147 +14,131 @@ use Craft;
 
 class Mailers extends Component
 {
-	const EVENT_REGISTER_MAILERS = 'defineSproutEmailMailers';
-	const ON_SEND_EMAIL       = "onSendEmail";
+    const EVENT_REGISTER_MAILERS = 'defineSproutEmailMailers';
+    const ON_SEND_EMAIL = "onSendEmail";
 
-	protected $mailers;
+    protected $mailers;
 
-	public function getMailers()
-	{
-		$event = new RegisterMailersEvent([
-			'mailers' => []
-		]);
+    public function getMailers()
+    {
+        $event = new RegisterMailersEvent([
+            'mailers' => []
+        ]);
 
-		$this->trigger(self::EVENT_REGISTER_MAILERS, $event);
+        $this->trigger(self::EVENT_REGISTER_MAILERS, $event);
 
-		$eventMailers = $event->mailers;
+        $eventMailers = $event->mailers;
 
-		$mailers = [];
+        $mailers = [];
 
-		if (!empty($eventMailers))
-		{
-			foreach ($eventMailers as $eventMailer)
-			{
-				$namespace = get_class($eventMailer);
-				$mailers[$namespace] = $eventMailer;
-			}
-		}
+        if (!empty($eventMailers)) {
+            foreach ($eventMailers as $eventMailer) {
+                $namespace = get_class($eventMailer);
+                $mailers[$namespace] = $eventMailer;
+            }
+        }
 
-		return $mailers;
-	}
+        return $mailers;
+    }
 
-	/**
-	 * @param string $name
-	 *
-	 * @return BaseMailer|null
-	 * @internal param bool $includeMailersNotYetLoaded
-	 *
-	 */
-	public function getMailerByName($name)
-	{
-		$this->mailers = $this->getMailers();
+    /**
+     * @param string $name
+     *
+     * @return BaseMailer|null
+     * @internal param bool $includeMailersNotYetLoaded
+     *
+     */
+    public function getMailerByName($name)
+    {
+        $this->mailers = $this->getMailers();
 
-		return isset($this->mailers[$name]) ? $this->mailers[$name] : null;
-	}
+        return isset($this->mailers[$name]) ? $this->mailers[$name] : null;
+    }
 
 
-	public function sendEmail(Message $message, $variables = array())
-	{
-		$errorMessage = SproutBase::$app->utilities->getErrors();
+    public function sendEmail(Message $message, $variables = [])
+    {
+        $errorMessage = SproutBase::$app->utilities->getErrors();
 
-		if (!empty($errorMessage))
-		{
-			// @todo work on error handling for send email event
-			if (is_array($errorMessage))
-			{
-				$errorMessage = print_r($errorMessage, true);
-			}
+        if (!empty($errorMessage)) {
+            // @todo work on error handling for send email event
+            if (is_array($errorMessage)) {
+                $errorMessage = print_r($errorMessage, true);
+            }
 
-			//$this->handleOnSendEmailErrorEvent($errorMessage, $message, $variables);
+            //$this->handleOnSendEmailErrorEvent($errorMessage, $message, $variables);
 
-			return false;
-		}
+            return false;
+        }
 
-		$mailer = Craft::$app->getMailer();
+        $mailer = Craft::$app->getMailer();
 
-		try
-		{
-			$result =  $mailer->send($message);
+        try {
+            $result = $mailer->send($message);
 
-			if ($result)
-			{
-				$event = new RegisterSendEmailEvent([
-					'mailer'    => $mailer,
-					'message'   => $message,
-					'variables' => $variables
-				]);
+            if ($result) {
+                $event = new RegisterSendEmailEvent([
+                    'mailer' => $mailer,
+                    'message' => $message,
+                    'variables' => $variables
+                ]);
 
-				$this->trigger(self::ON_SEND_EMAIL, $event);
-			}
+                $this->trigger(self::ON_SEND_EMAIL, $event);
+            }
 
-			return $result;
-		}
-		catch (\Exception  $e)
-		{
-			SproutBase::$app->utilities->addError($e->getMessage());
-		}
+            return $result;
+        } catch (\Exception  $e) {
+            SproutBase::$app->utilities->addError($e->getMessage());
+        }
 
-		return null;
-	}
+        return null;
+    }
 
-	/**
-	 * @param null $element
-	 * @param      $model
-	 *
-	 * @return array|mixed
-	 * @throws \Exception
-	 */
-	public function getRecipients($element = null, $model)
-	{
-		$recipientsString = $model->recipients;
+    /**
+     * @param null $element
+     * @param      $model
+     *
+     * @return array|mixed
+     * @throws \Exception
+     */
+    public function getRecipients($element = null, $model)
+    {
+        $recipientsString = $model->recipients;
 
-		// Possibly called from entry edit screen
-		if (is_null($element))
-		{
-			return $recipientsString;
-		}
+        // Possibly called from entry edit screen
+        if (is_null($element)) {
+            return $recipientsString;
+        }
 
-		// Previously converted to array somehow?
-		if (is_array($recipientsString))
-		{
-			return $recipientsString;
-		}
+        // Previously converted to array somehow?
+        if (is_array($recipientsString)) {
+            return $recipientsString;
+        }
 
-		// Previously stored as JSON string?
-		if (stripos($recipientsString, '[') === 0)
-		{
-			return Json::decode($recipientsString);
-		}
+        // Previously stored as JSON string?
+        if (stripos($recipientsString, '[') === 0) {
+            return Json::decode($recipientsString);
+        }
 
-		// Still a string with possible twig generator code?
-		if (stripos($recipientsString, '{') !== false)
-		{
-			try
-			{
-				$recipients = Craft::$app->getView()->renderObjectTemplate(
-					$recipientsString,
-					$element
-				);
+        // Still a string with possible twig generator code?
+        if (stripos($recipientsString, '{') !== false) {
+            try {
+                $recipients = Craft::$app->getView()->renderObjectTemplate(
+                    $recipientsString,
+                    $element
+                );
 
-				return array_unique(ArrayHelper::filterEmptyStringsFromArray(ArrayHelper::toArray($recipients)));
-			}
-			catch (\Exception $e)
-			{
-				throw $e;
-			}
-		}
+                return array_unique(ArrayHelper::filterEmptyStringsFromArray(ArrayHelper::toArray($recipients)));
+            } catch (\Exception $e) {
+                throw $e;
+            }
+        }
 
-		// Just a regular CSV list
-		if (!empty($recipientsString))
-		{
-			return ArrayHelper::filterEmptyStringsFromArray(ArrayHelper::toArray($recipientsString));
-		}
+        // Just a regular CSV list
+        if (!empty($recipientsString)) {
+            return ArrayHelper::filterEmptyStringsFromArray(ArrayHelper::toArray($recipientsString));
+        }
 
-		return array();
-	}
+        return [];
+    }
 }

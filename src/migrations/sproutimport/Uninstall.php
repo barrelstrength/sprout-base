@@ -11,8 +11,8 @@ use craft\db\Migration;
 
 class Uninstall extends Migration
 {
-	public function uninstall()
-	{
+    public function uninstall()
+    {
 
-	}
+    }
 }

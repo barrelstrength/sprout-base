@@ -13,23 +13,23 @@ use craft\helpers\Template;
 
 class SproutBaseVariable
 {
-	/**
-	 * @return string
-	 */
-	public function getSvg($path)
-	{
-		$svg = Craft::getAlias($path);
+    /**
+     * @return string
+     */
+    public function getSvg($path)
+    {
+        $svg = Craft::getAlias($path);
 
-		return Template::raw(file_get_contents($svg));
-	}
+        return Template::raw(file_get_contents($svg));
+    }
 
-	public function getAvailableEvents()
-	{
-		return SproutBase::$app->notifications->getAvailableEvents();
-	}
+    public function getAvailableEvents()
+    {
+        return SproutBase::$app->notifications->getAvailableEvents();
+    }
 
-	public function getEventSelectedOptions($event, $notificationEmail)
-	{
-		return SproutBase::$app->notifications->getEventSelectedOptions($event, $notificationEmail);
-	}
+    public function getEventSelectedOptions($event, $notificationEmail)
+    {
+        return SproutBase::$app->notifications->getEventSelectedOptions($event, $notificationEmail);
+    }
 }

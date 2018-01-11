@@ -18,46 +18,43 @@ use barrelstrength\sproutbase\SproutBase;
  */
 class RegularExpression extends Component
 {
-	/**
-	 *
-	 * @param $value
-	 * @param Field $field
-	 *
-	 * @return bool
-	 */
-	public function validate($value, Field $field): bool
-	{
-		$customPattern = $field->customPattern;
+    /**
+     *
+     * @param       $value
+     * @param Field $field
+     *
+     * @return bool
+     */
+    public function validate($value, Field $field): bool
+    {
+        $customPattern = $field->customPattern;
 
-		if (!empty($customPattern))
-		{
-			// Use backticks as delimiters
-			$customPattern = "`" . $customPattern . "`";
+        if (!empty($customPattern)) {
+            // Use backticks as delimiters
+            $customPattern = "`".$customPattern."`";
 
-			if (!preg_match($customPattern, $value))
-			{
-				return false;
-			}
-		}
+            if (!preg_match($customPattern, $value)) {
+                return false;
+            }
+        }
 
-		return true;
-	}
+        return true;
+    }
 
-	/**
-	 * Return error message
-	 *
-	 * @param  mixed  $field
-	 *
-	 * @return string
-	 */
-	public function getErrorMessage($field): string
-	{
-		if (!empty($field->customPattern) && isset($field->customPatternErrorMessage))
-		{
-			return SproutBase::t($field->customPatternErrorMessage);
-		}
+    /**
+     * Return error message
+     *
+     * @param  mixed $field
+     *
+     * @return string
+     */
+    public function getErrorMessage($field): string
+    {
+        if (!empty($field->customPattern) && isset($field->customPatternErrorMessage)) {
+            return SproutBase::t($field->customPatternErrorMessage);
+        }
 
-		return SproutBase::t($field->name . ' must be a valid pattern.');
-	}
+        return SproutBase::t($field->name.' must be a valid pattern.');
+    }
 
 }

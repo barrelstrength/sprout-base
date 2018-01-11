@@ -15,117 +15,115 @@ use craft\validators\UniqueValidator;
 
 class Report extends Model
 {
-	public $id;
+    public $id;
 
-	public $name;
+    public $name;
 
-	public $handle;
+    public $handle;
 
-	public $description;
+    public $description;
 
-	public $allowHtml;
+    public $allowHtml;
 
-	public $options;
+    public $options;
 
-	public $dataSourceId;
+    public $dataSourceId;
 
-	public $enabled;
+    public $enabled;
 
-	public $groupId;
+    public $groupId;
 
-	public $dateCreated;
+    public $dateCreated;
 
-	public $dateUpdated;
+    public $dateUpdated;
 
-	public function getDataSourceId()
-	{
-		return $this->dataSourceId;
-	}
+    public function getDataSourceId()
+    {
+        return $this->dataSourceId;
+    }
 
-	public function getDataSource()
-	{
-		$dataSource = SproutBase::$app->dataSources->getDataSourceById($this->dataSourceId);
+    public function getDataSource()
+    {
+        $dataSource = SproutBase::$app->dataSources->getDataSourceById($this->dataSourceId);
 
-		$dataSource->setReport($this);
+        $dataSource->setReport($this);
 
-		return $dataSource;
-	}
+        return $dataSource;
+    }
 
-	public function getOptions()
-	{
-		$options = $this->options;
+    public function getOptions()
+    {
+        $options = $this->options;
 
-		if (is_string($this->options))
-		{
-			$options = json_decode($this->options);
-		}
+        if (is_string($this->options)) {
+            $options = json_decode($this->options);
+        }
 
-		return $options;
-	}
+        return $options;
+    }
 
-	/**
-	 * Returns a user supplied option if it exists or $default otherwise
-	 *
-	 * @param string     $name
-	 * @param null|mixed $default
-	 *
-	 * @return null
-	 */
-	public function getOption($name, $default = null)
-	{
-		$options = $this->getOptions();
+    /**
+     * Returns a user supplied option if it exists or $default otherwise
+     *
+     * @param string     $name
+     * @param null|mixed $default
+     *
+     * @return null
+     */
+    public function getOption($name, $default = null)
+    {
+        $options = $this->getOptions();
 
-		if (is_string($name) && !empty($name) && isset($options->$name))
-		{
-			return $options->$name;
-		}
+        if (is_string($name) && !empty($name) && isset($options->$name)) {
+            return $options->$name;
+        }
 
-		return $default;
-	}
+        return $default;
+    }
 
-	/**
-	 * @inheritdoc
-	 */
-	public function rules()
-	{
-		return [
-			[['name', 'handle'], 'required'],
-			[['handle'], HandleValidator::class, 'reservedWords' => ['id', 'dateCreated', 'dateUpdated', 'uid', 'title']],
-			[['name', 'handle'], UniqueValidator::class, 'targetClass' => ReportRecord::class]
-		];
-	}
+    /**
+     * @inheritdoc
+     */
+    public function rules()
+    {
+        return [
+            [['name', 'handle'], 'required'],
+            [['handle'], HandleValidator::class, 'reservedWords' => ['id', 'dateCreated', 'dateUpdated', 'uid', 'title']],
+            [['name', 'handle'], UniqueValidator::class, 'targetClass' => ReportRecord::class]
+        ];
+    }
 
-	public function safeAttributes()
-	{
-		return [
-			'id', 'name', 'handle',
-			'description', 'allowHtml', 'options',
-			'dataSourceId', 'enabled', 'groupId',
-			'dateCreated', 'dateUpdated'
-		];
-	}
+    public function safeAttributes()
+    {
+        return [
+            'id', 'name', 'handle',
+            'description', 'allowHtml', 'options',
+            'dataSourceId', 'enabled', 'groupId',
+            'dateCreated', 'dateUpdated'
+        ];
+    }
 
-	/**
-	 * @return string
-	 */
-	public function getEditUrl()
-	{
-		return $this->getDataSource()->getUrl('edit/'.$this->id);
-	}
+    /**
+     * @return string
+     */
+    public function getEditUrl()
+    {
+        return $this->getDataSource()->getUrl('edit/'.$this->id);
+    }
 
-	/**
-	 * @param array $results
-	 */
-	public function setResults(array $results = [])
-	{
-		$this->results = $results;
-	}
+    /**
+     * @param array $results
+     */
+    public function setResults(array $results = [])
+    {
+        $this->results = $results;
+    }
 
-	/**
-	 * @param string $message
-	 */
-	public function setResultsError($message)
-	{
-		$this->addError('results', $message);
-	}
+    /**
+     * @param string $message
+     */
+    public function setResultsError($message)
+    {
+        $this->addError('results', $message);
+    }
 }

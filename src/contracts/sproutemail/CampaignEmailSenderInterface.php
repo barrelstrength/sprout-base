@@ -12,12 +12,12 @@ use barrelstrength\sproutemail\models\CampaignType;
 
 interface CampaignEmailSenderInterface
 {
-	/**
-	 * @param CampaignEmail $campaignEmail
-	 * @param CampaignType  $campaign
-	 *
-	 * @return mixed
-	 * @internal param SproutEmail_CampaignEmailModel $campaignEmail
-	 */
-	public function sendCampaignEmail(CampaignEmail $campaignEmail, CampaignType $campaignType);
+    /**
+     * @param CampaignEmail $campaignEmail
+     * @param CampaignType  $campaign
+     *
+     * @return mixed
+     * @internal param SproutEmail_CampaignEmailModel $campaignEmail
+     */
+    public function sendCampaignEmail(CampaignEmail $campaignEmail, CampaignType $campaignType);
 }

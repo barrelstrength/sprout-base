@@ -11,26 +11,25 @@ use craft\db\Migration;
 
 class Install extends Migration
 {
-	private $seedsTable = '{{%sproutimport_seeds}}';
+    private $seedsTable = '{{%sproutimport_seeds}}';
 
-	public function createTables()
-	{
-		$seedsTable = $this->getDb()->tableExists($this->seedsTable);
+    public function createTables()
+    {
+        $seedsTable = $this->getDb()->tableExists($this->seedsTable);
 
-		if ($seedsTable == false)
-		{
-			$this->createTable($this->seedsTable,
-				[
-					'id' => $this->primaryKey(),
-					'itemId' => $this->integer()->notNull(),
-					'importerClass' => $this->string()->notNull(),
-					'type' => $this->string(),
-					'details' => $this->string(),
-					'dateCreated' => $this->dateTime()->notNull(),
-					'dateUpdated' => $this->dateTime()->notNull(),
-					'uid' => $this->uid()
-				]
-			);
-		}
-	}
+        if ($seedsTable == false) {
+            $this->createTable($this->seedsTable,
+                [
+                    'id' => $this->primaryKey(),
+                    'itemId' => $this->integer()->notNull(),
+                    'importerClass' => $this->string()->notNull(),
+                    'type' => $this->string(),
+                    'details' => $this->string(),
+                    'dateCreated' => $this->dateTime()->notNull(),
+                    'dateUpdated' => $this->dateTime()->notNull(),
+                    'uid' => $this->uid()
+                ]
+            );
+        }
+    }
 }

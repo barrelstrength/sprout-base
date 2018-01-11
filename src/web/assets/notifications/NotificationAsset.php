@@ -7,18 +7,18 @@ use craft\web\assets\cp\CpAsset;
 
 class NotificationAsset extends AssetBundle
 {
-	public function init()
-	{
-		$this->depends = [
-			CpAsset::class,
-		];
-		
-		$this->sourcePath = "@sproutbase/web/assets/notifications/dist";
+    public function init()
+    {
+        $this->depends = [
+            CpAsset::class,
+        ];
 
-		$this->js = [
-			'js/notification.js'
-		];
+        $this->sourcePath = "@sproutbase/web/assets/notifications/dist";
 
-		parent::init();
-	}
+        $this->js = [
+            'js/notification.js'
+        ];
+
+        parent::init();
+    }
 }
