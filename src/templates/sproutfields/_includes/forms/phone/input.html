@@ -1,11 +1,11 @@
 {% import "_includes/forms" as forms %}
 
 {{ forms.text({
-	id: id,
-	name: name,
-	class: 'sprout-phone-field',
-	value: (value is defined) ? value : '',
-	placeholder: placeholder ?? null
+    id: id,
+    name: name,
+    class: 'sprout-phone-field',
+    value: (value is defined) ? value : '',
+placeholder: placeholder ?? null
 }) }}
 
 <span class="sprout-phone-button {{ id }}"></span>
@@ -15,7 +15,7 @@
 {% do view.registerAssetBundle("barrelstrength\\sproutbase\\web\\assets\\sproutfields\\phone\\PhoneFieldAsset") %}
 
 {% js %}
-	{% if inputMask %}
-		new Craft.PhoneInputMask("{{ namespaceInputId }}", "{{ id }}", "{{ mask }}", "{{ inputMask }}", "{{ mask }}")
-	{% endif %}
+    {% if inputMask %}
+        new Craft.PhoneInputMask("{{ namespaceInputId }}", "{{ id }}", "{{ mask }}", "{{ inputMask }}", "{{ mask }}")
+    {% endif %}
 {% endjs %}

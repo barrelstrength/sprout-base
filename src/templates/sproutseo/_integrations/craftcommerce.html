@@ -2,14 +2,14 @@
 {% import 'sprout-base/sproutbase/_includes/sproutcp' as sprout %}
 
 {% set boxBody %}
-	<p>{{ "Sprout SEO works beautifully with <a href='{url}' target='_blank'>Craft Commerce</a>. Generate product-specific metadata for Search and Social Sharing, build flexible Structured Data, and dynamically add all of your products to your XML sitemap."|t({
-			url: "https://craftcommerce.com/"
-		})|raw }}</p>
+    <p>{{ "Sprout SEO works beautifully with <a href='{url}' target='_blank'>Craft Commerce</a>. Generate product-specific metadata for Search and Social Sharing, build flexible Structured Data, and dynamically add all of your products to your XML sitemap."|t({
+            url: "https://craftcommerce.com/"
+        })|raw }}</p>
 {% endset %}
 
 {{ sprout.mediaBox({
-	heading: "Optimize SEO for Craft Commerce"|t('sprout-base'),
-	body: boxBody,
+    heading: "Optimize SEO for Craft Commerce"|t('sprout-base'),
+    body: boxBody,
     resourcePath: '@sproutbase/web/assets/craftcommerce/dist/images/craftcommerce-icon.svg'
 }) }}
 
