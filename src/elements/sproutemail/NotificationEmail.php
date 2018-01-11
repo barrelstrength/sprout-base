@@ -2,10 +2,11 @@
 
 namespace barrelstrength\sproutbase\elements\sproutemail;
 
+use barrelstrength\sproutbase\SproutBase;
 use barrelstrength\sproutemail\assetbundles\email\EmailAsset;
 use barrelstrength\sproutemail\elements\actions\DeleteEmail;
-use barrelstrength\sproutemail\elements\db\NotificationEmailQuery;
-use barrelstrength\sproutemail\records\NotificationEmail as NotificationEmailRecord;
+use barrelstrength\sproutbase\elements\sproutemail\db\NotificationEmailQuery;
+use barrelstrength\sproutbase\records\sproutemail\NotificationEmail as NotificationEmailRecord;
 use barrelstrength\sproutemail\SproutEmail;
 use craft\base\Element;
 use Craft;
@@ -135,6 +136,18 @@ class NotificationEmail extends Element
     }
 
     /**
+     * @inheritdoc
+     */
+    protected static function defineSortOptions(): array
+    {
+        return [
+            'title' => SproutEmail::t('Subject Line'),
+            'elements.dateCreated' => SproutEmail::t('Date Created'),
+            'elements.dateUpdated' => SproutEmail::t('Date Updated'),
+        ];
+    }
+
+    /**
      * @param string $attribute
      *
      * @return string
@@ -167,6 +180,9 @@ class NotificationEmail extends Element
         return parent::getTableAttributeHtml($attribute);
     }
 
+    /**
+     * @return ElementQueryInterface
+     */
     public static function find(): ElementQueryInterface
     {
         return new NotificationEmailQuery(static::class);
@@ -177,6 +193,11 @@ class NotificationEmail extends Element
         return Craft::$app->getFields()->getLayoutByType(static::class);
     }
 
+    /**
+     * @param bool $isNew
+     *
+     * @throws \Exception
+     */
     public function afterSave(bool $isNew)
     {
         // Get the entry record
@@ -212,6 +233,18 @@ class NotificationEmail extends Element
         parent::afterSave($isNew);
     }
 
+    /**
+     * @param ElementQueryInterface $elementQuery
+     * @param array|null            $disabledElementIds
+     * @param array                 $viewState
+     * @param string|null           $sourceKey
+     * @param string|null           $context
+     * @param bool                  $includeContainer
+     * @param bool                  $showCheckboxes
+     *
+     * @return string
+     * @throws \yii\base\InvalidConfigException
+     */
     public static function indexHtml(ElementQueryInterface $elementQuery, array $disabledElementIds = null, array $viewState, string $sourceKey = null, string $context = null, bool $includeContainer, bool $showCheckboxes): string
     {
         $html = parent::indexHtml($elementQuery, $disabledElementIds, $viewState, $sourceKey, $context, $includeContainer,
@@ -227,7 +260,7 @@ class NotificationEmail extends Element
     public function getMailer()
     {
         // All Notification Emails use the Default Mailer
-        return SproutEmail::$app->mailers->getMailerByName('barrelstrength\\sproutemail\\integrations\\sproutemail\\mailers\\DefaultMailer');
+        return SproutBase::$app->mailers->getMailerByName('barrelstrength\\sproutbase\\mailers\\DefaultMailer');
     }
 
     public function isReady()
@@ -243,7 +276,7 @@ class NotificationEmail extends Element
      */
     public function getRecipients($element = null)
     {
-        return SproutEmail::$app->getRecipients($element, $this);
+        return SproutBase::$app->mailers->getRecipients($element, $this);
     }
 
     /**
@@ -263,6 +296,10 @@ class NotificationEmail extends Element
         return "sprout-email/{slug}";
     }
 
+    /**
+     * @return null|string
+     * @throws \yii\base\Exception
+     */
     public function getUrl()
     {
         if ($this->uri !== null) {
@@ -274,6 +311,10 @@ class NotificationEmail extends Element
         return null;
     }
 
+    /**
+     * @return array|mixed
+     * @throws \HttpException
+     */
     public function route()
     {
         // Only expose notification emails that have tokens and allow Live Preview requests
@@ -310,6 +351,10 @@ class NotificationEmail extends Element
         ];
     }
 
+    /**
+     * @return array
+     * @throws \yii\base\InvalidConfigException
+     */
     public function rules()
     {
         $rules = parent::rules();

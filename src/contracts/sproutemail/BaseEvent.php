@@ -21,14 +21,19 @@ class BaseEvent
     /**
      * @var string
      */
-    protected $pluginName;
+    protected $pluginId;
 
     /**
      * @param $pluginName
      */
-    public function setPluginName($pluginName)
+    public function setPluginId($pluginId)
     {
-        $this->pluginName = $pluginName;
+        $this->pluginId = $pluginId;
+    }
+
+    public function getPluginId()
+    {
+        return $this->pluginId;
     }
 
     /**
@@ -49,6 +54,13 @@ class BaseEvent
     public function getEventId()
     {
         return strtolower(str_replace('\\', '-', get_class($this)));
+    }
+
+    public function getBaseName()
+    {
+        $namespaceArray = explode('\\', get_class($this));
+
+        return $namespaceArray[1];
     }
 
     /**

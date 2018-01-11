@@ -7,13 +7,19 @@
 
 namespace barrelstrength\sproutbase\contracts\sproutemail;
 
+
 use barrelstrength\sproutemail\elements\CampaignEmail;
 use barrelstrength\sproutbase\elements\sproutemail\NotificationEmail;
 use barrelstrength\sproutemail\models\CampaignType;
-use barrelstrength\sproutemail\SproutEmail;
 use yii\base\Model;
 use craft\helpers\UrlHelper;
+use Craft;
 
+/**
+ * Class BaseMailer
+ *
+ * @package barrelstrength\sproutbase\contracts\sproutemail
+ */
 abstract class BaseMailer
 {
     /**
@@ -169,15 +175,17 @@ abstract class BaseMailer
      */
     public function getSettings()
     {
-        $record = SproutEmail::$app->mailers->getMailerRecordByName($this->getId());
+        $currentBase = Craft::$app->request->getSegment(1);
 
-        $settingsFromDb = isset($record->settings) ? $record->settings : [];
+        $plugin = Craft::$app->plugins->getPlugin($currentBase);
 
-        $model = new Model($this->defineSettings());
+        $settings = null;
 
-        $model->setAttributes($settingsFromDb);
+        if ($plugin) {
+            $settings = $plugin->getSettings();
+        }
 
-        return $model;
+        return $settings;
     }
 
     /**
@@ -316,5 +324,10 @@ abstract class BaseMailer
     public function prepareSave(CampaignType $model)
     {
         return $model;
+    }
+
+    public function sendTestEmail(CampaignEmail $campaignEmail, CampaignType $campaignType, $emails = [])
+    {
+        return null;
     }
 }

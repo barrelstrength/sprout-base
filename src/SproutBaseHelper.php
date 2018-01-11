@@ -16,6 +16,7 @@ abstract class SproutBaseHelper
      *
      * This should be called in the plugin init() method
      */
+
     public static function registerModule()
     {
         if (!Craft::$app->hasModule('sprout-base')) {
