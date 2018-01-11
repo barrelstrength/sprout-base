@@ -11,16 +11,16 @@ use craft\web\AssetBundle;
 
 class AddressFieldAsset extends AssetBundle
 {
-	public function init()
-	{
-		$this->sourcePath = '@sproutbase/web/assets/sproutfields/address/dist';
+    public function init()
+    {
+        $this->sourcePath = '@sproutbase/web/assets/sproutfields/address/dist';
 
-		$this->js = [
-			'js/AddressBox.js',
-			'js/AddressForm.js',
-			'js/EditAddressModal.js'
-		];
+        $this->js = [
+            'js/AddressBox.js',
+            'js/AddressForm.js',
+            'js/EditAddressModal.js'
+        ];
 
-		parent::init();
-	}
+        parent::init();
+    }
 }

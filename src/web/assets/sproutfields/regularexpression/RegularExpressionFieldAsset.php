@@ -12,26 +12,26 @@ use craft\web\assets\cp\CpAsset;
 
 class RegularExpressionFieldAsset extends AssetBundle
 {
-	public function init()
-	{
-		// define the path that your publishable resources live
-		$this->sourcePath = '@sproutbase/web/assets/sproutfields';
+    public function init()
+    {
+        // define the path that your publishable resources live
+        $this->sourcePath = '@sproutbase/web/assets/sproutfields';
 
-		// define the dependencies
-		$this->depends = [
-			CpAsset::class,
-		];
+        // define the dependencies
+        $this->depends = [
+            CpAsset::class,
+        ];
 
-		// define the relative path to CSS/JS files that should be registered with the page
-		// when this asset bundle is registered
-		$this->js = [
-			'regularexpression/dist/js/sproutregularexpressionfield.js',
-		];
+        // define the relative path to CSS/JS files that should be registered with the page
+        // when this asset bundle is registered
+        $this->js = [
+            'regularexpression/dist/js/sproutregularexpressionfield.js',
+        ];
 
-		$this->css = [
-			'resources/css/sproutfields.css',
-		];
+        $this->css = [
+            'resources/css/sproutfields.css',
+        ];
 
-		parent::init();
-	}
+        parent::init();
+    }
 }
