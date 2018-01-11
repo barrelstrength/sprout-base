@@ -4,7 +4,7 @@
 {% set title = report['id'] is defined and report['id'] is not empty ? "Edit Report" : "New Report" %}
 
 {% set crumbs = [
-    { label: "Reports"|t('sprout-base'), url: indexUrl }
+    { label: "Reports"|t('sprout-base'), url: reportIndexUrl }
 ] %}
 
 {% set fullPageForm = true %}
@@ -26,7 +26,7 @@
 
     <input type="hidden" name="action" value="sprout-base/reports/save-report">
 
-    {{ redirectInput(indexUrl) }}
+    {{ redirectInput(reportIndexUrl) }}
 
     <div class="button">
         <div class="btngroup">

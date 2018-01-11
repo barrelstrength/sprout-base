@@ -11,6 +11,7 @@ use barrelstrength\sproutbase\services\sproutemail\Mailers;
 use barrelstrength\sproutbase\services\sproutemail\NotificationEmails;
 use barrelstrength\sproutbase\services\sproutreports\DataSources;
 use barrelstrength\sproutbase\services\sproutreports\Exports;
+use barrelstrength\sproutbase\services\sproutreports\ReportGroups;
 use barrelstrength\sproutbase\services\sproutreports\Reports;
 use barrelstrength\sproutbase\services\sproutfields\Utilities;
 use barrelstrength\sproutbase\services\sproutfields\Link;
@@ -65,6 +66,11 @@ class App extends Component
     public $reports;
 
     /**
+     * @var ReportGroups
+     */
+    public $reportGroups;
+
+    /**
      * @var NotificationEmails
      */
     public $notifications;
@@ -108,6 +114,7 @@ class App extends Component
 
         // Sprout Reports
         $this->reports = new Reports();
+        $this->reportGroups = new ReportGroups();
         $this->dataSources = new DataSources();
         $this->exports = new Exports();
 
