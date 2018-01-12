@@ -47,5 +47,27 @@ class Utilities extends Component
 
         return false;
     }
+
+    public function formatErrors()
+    {
+        $errors = $this->getErrors();
+
+        $text = '';
+        if (!empty($errors))
+        {
+            $text.= '<ul>';
+            foreach ($errors as $key => $error)
+            {
+                if (is_array($error))
+                {
+                    foreach ($error as $desc)
+                    $text.= '<li>' . $desc . '</li>';
+                }
+            }
+            $text.= '</ul>';
+        }
+
+        return $text;
+    }
 }
 

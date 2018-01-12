@@ -201,9 +201,10 @@ abstract class BaseMailer
     /**
      * Gives a mailer the responsibility to send Notification Emails
      * if they implement SproutEmailNotificationEmailSenderInterface
+     * @param NotificationEmail $notificationEmail
+     * @param                   $object
      *
-     * @param NotificationEmail                  $notificationEmail
-     * @param                                    $object
+     * @return bool
      */
     public function sendNotificationEmail(NotificationEmail $notificationEmail, $object)
     {

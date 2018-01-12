@@ -11,11 +11,14 @@ use craft\helpers\ArrayHelper;
 use craft\helpers\Json;
 use craft\mail\Message;
 use Craft;
+use craft\elements\User;
+use yii\base\Event;
 
 class Mailers extends Component
 {
-    const EVENT_REGISTER_MAILERS = 'defineSproutEmailMailers';
-    const ON_SEND_EMAIL = "onSendEmail";
+    public const EVENT_REGISTER_MAILERS = 'defineSproutEmailMailers';
+    public const ON_SEND_EMAIL = "onSendEmail";
+    public const ON_SEND_EMAIL_ERROR = "onSendEmailError";
 
     protected $mailers;
 
@@ -61,12 +64,10 @@ class Mailers extends Component
         $errorMessage = SproutBase::$app->utilities->getErrors();
 
         if (!empty($errorMessage)) {
-            // @todo work on error handling for send email event
-            if (is_array($errorMessage)) {
-                $errorMessage = print_r($errorMessage, true);
-            }
 
-            //$this->handleOnSendEmailErrorEvent($errorMessage, $message, $variables);
+            $errorMessage = SproutBase::$app->utilities->formatErrors();
+
+            $this->handleOnSendEmailErrorEvent($errorMessage, $message, $variables);
 
             return false;
         }
@@ -140,5 +141,32 @@ class Mailers extends Component
         }
 
         return [];
+    }
+
+
+    public function handleOnSendEmailErrorEvent($message, Message $emailModel, $variables = [])
+    {
+        $user = Craft::$app->getUsers()->getUserByUsernameOrEmail($emailModel->toEmail);
+
+        if (!$user) {
+            $user = new User();
+            $user->email = $emailModel->toEmail;
+            $user->firstName = $emailModel->toFirstName;
+            $user->lastName = $emailModel->toLastName;
+        }
+
+        // Call Email service class instead of $this to get sender settings
+
+        $event = new Event([
+            'user' => $user,
+            'emailModel' => $emailModel,
+            'variables' => $variables,
+            'message' => $message,
+
+            // Set this here so we can set the status properly when saving
+            'deliveryStatus' => 'failed',
+        ]);
+
+        $this->trigger(self::ON_SEND_EMAIL_ERROR, $event);
     }
 }

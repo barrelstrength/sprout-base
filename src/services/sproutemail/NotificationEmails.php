@@ -3,6 +3,7 @@
 namespace barrelstrength\sproutbase\services\sproutemail;
 
 use barrelstrength\sproutbase\contracts\sproutemail\BaseEvent;
+use barrelstrength\sproutbase\contracts\sproutemail\BaseMailer;
 use barrelstrength\sproutbase\elements\sproutemail\NotificationEmail;
 use barrelstrength\sproutbase\SproutBase;
 use barrelstrength\sproutbase\events\RegisterNotificationEvent;
@@ -110,6 +111,11 @@ class NotificationEmails extends Component
         return $events;
     }
 
+    /**
+     * @param $base
+     *
+     * @return mixed|null
+     */
     public function getEventByBase($base)
     {
         $events = $this->getEventsWithBase();
@@ -546,18 +552,30 @@ class NotificationEmails extends Component
         }
     }
 
+    /**
+     * @param NotificationEmail $notificationEmail
+     *
+     * @return bool
+     * @throws \Exception
+     */
     public function sendMockNotificationEmail(NotificationEmail $notificationEmail)
     {
         $event = $this->getEventById($notificationEmail->eventId);
 
         if ($event) {
             try {
+
                 $mailer = SproutBase::$app->mailers->getMailerByName('barrelstrength\\sproutbase\\mailers\\DefaultMailer');
 
                 // Must pass email options for getMockedParams methods to use $this->options
                 $event->setOptions($notificationEmail->options);
 
-                $sent = $mailer->sendNotificationEmail($notificationEmail, $event->getMockedParams());
+                $sent = false;
+
+                if ($mailer)
+                {
+                    $sent = $mailer->sendNotificationEmail($notificationEmail, $event->getMockedParams());
+                }
 
                 if (!$sent) {
                     $customErrorMessage = SproutEmail::$app->utilities->getErrors();

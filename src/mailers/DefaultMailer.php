@@ -118,6 +118,9 @@ class DefaultMailer extends BaseMailer implements CampaignEmailSenderInterface
             //	Craft::dump($recipient);
             $toEmail = $this->renderObjectTemplateSafely($recipient->email, $object);
             $name = $recipient->firstName.' '.$recipient->lastName;
+            /**
+             * @var $email Message
+             */
             $email->setTo([$toEmail => $name]);
 
             if (array_key_exists($toEmail, $processedRecipients)) {
