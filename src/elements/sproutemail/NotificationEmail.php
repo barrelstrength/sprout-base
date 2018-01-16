@@ -3,7 +3,7 @@
 namespace barrelstrength\sproutbase\elements\sproutemail;
 
 use barrelstrength\sproutbase\SproutBase;
-use barrelstrength\sproutemail\assetbundles\email\EmailAsset;
+use barrelstrength\sproutemail\web\assets\email\EmailAsset;
 use barrelstrength\sproutemail\elements\actions\DeleteEmail;
 use barrelstrength\sproutbase\elements\sproutemail\db\NotificationEmailQuery;
 use barrelstrength\sproutbase\records\sproutemail\NotificationEmail as NotificationEmailRecord;
