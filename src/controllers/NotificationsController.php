@@ -47,7 +47,7 @@ class NotificationsController extends Controller
         $currentUser = Craft::$app->getUser()->getIdentity();
 
         if (!$currentUser->can('editSproutEmailSettings')) {
-            return $this->redirect('sprout-email');
+            return $this->redirect($this->currentBase);
         }
 
         $isNewNotificationEmail = isset($emailId) && $emailId == 'new' ? true : false;
@@ -312,5 +312,57 @@ class NotificationsController extends Controller
         if ($email == true && filter_var($value, FILTER_VALIDATE_EMAIL) === false) {
             $notification->addError($attribute, Craft::t('sprout-base', "$label is not a valid email address."));
         }
+    }
+
+    /**
+     * Delete a Notification Email
+     *
+     * @return null|\yii\web\Response
+     * @throws \Exception
+     * @throws \yii\web\BadRequestHttpException
+     */
+    public function actionDeleteNotificationEmail()
+    {
+        $this->requirePostRequest();
+
+        $notificationEmailId = Craft::$app->getRequest()->getBodyParam('sproutEmail.id');
+
+        /**
+         * @var $notificationEmail NotificationEmail
+         */
+        $notificationEmail = SproutBase::$app->notifications->getNotificationEmailById($notificationEmailId);
+
+        if (!$notificationEmail) {
+            throw new \Exception(Craft::t('sprout-base', 'No Notification Email exists with the ID “{id}”.', [
+                'id' => $notificationEmailId
+            ]));
+        }
+
+        $session = Craft::$app->getSession();
+
+        if ($session AND SproutBase::$app->notifications->deleteNotificationEmailById($notificationEmailId)) {
+            if (Craft::$app->getRequest()->getIsAjax()) {
+                return $this->asJson(['success' => true]);
+            }
+
+            $session->setNotice(Craft::t('sprout-base', 'Notification deleted.'));
+
+            return $this->redirect($this->currentBase . '/notifications');
+        }
+
+        if (Craft::$app->getRequest()->getIsAjax()) {
+            return $this->asJson(['success' => false]);
+        }
+
+        Craft::info(json_encode($notificationEmail->getErrors()));
+
+        $session->setNotice(Craft::t('sprout-base', 'Couldn’t delete notification.'));
+
+        // Send the entry back to the template
+        Craft::$app->getUrlManager()->setRouteParams([
+            'notificationEmail' => $notificationEmail
+        ]);
+
+        return null;
     }
 }

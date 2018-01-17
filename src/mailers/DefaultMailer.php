@@ -391,6 +391,7 @@ class DefaultMailer extends BaseMailer implements CampaignEmailSenderInterface
         // Get recipients for live emails
         // @todo Craft 3 - improve and standardize how we use entryRecipents and dynamicRecipients
         $entryRecipients = $this->getRecipientsFromCampaignEmailModel($email, $object);
+
         $dynamicRecipients = SproutBase::$app->notifications->getDynamicRecipientsFromElement($object);
 
         $recipients = array_merge(
@@ -437,6 +438,7 @@ class DefaultMailer extends BaseMailer implements CampaignEmailSenderInterface
     public function getRecipientsFromCampaignEmailModel($campaignEmail, $element)
     {
         $recipients = [];
+
         $onTheFlyRecipients = $campaignEmail->getRecipients($element);
 
         if (is_string($onTheFlyRecipients)) {

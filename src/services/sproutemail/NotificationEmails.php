@@ -3,13 +3,12 @@
 namespace barrelstrength\sproutbase\services\sproutemail;
 
 use barrelstrength\sproutbase\contracts\sproutemail\BaseEvent;
-use barrelstrength\sproutbase\contracts\sproutemail\BaseMailer;
 use barrelstrength\sproutbase\elements\sproutemail\NotificationEmail;
 use barrelstrength\sproutbase\SproutBase;
 use barrelstrength\sproutbase\events\RegisterNotificationEvent;
 use barrelstrength\sproutemail\mail\Message;
 use barrelstrength\sproutemail\models\Response;
-use barrelstrength\sproutemail\records\NotificationEmail as NotificationEmailRecord;
+use barrelstrength\sproutbase\records\sproutemail\NotificationEmail as NotificationEmailRecord;
 use barrelstrength\sproutemail\SproutEmail;
 use craft\base\Component;
 use Craft;
@@ -26,7 +25,7 @@ use craft\base\ElementInterface;
 class NotificationEmails extends Component
 {
 
-    const EVENT_REGISTER_EMAIL_EVENTS = 'defineSproutEmailEvents';
+    public const EVENT_REGISTER_EMAIL_EVENTS = 'defineSproutEmailEvents';
     /**
      * @var BaseEvent[]
      */
@@ -336,11 +335,12 @@ class NotificationEmails extends Component
     }
 
     /**
-     * @param string    $eventId
+     * @param           $eventId
      * @param Event     $event
      * @param BaseEvent $listener
      *
      * @return bool
+     * @throws \Exception
      */
     public function handleDynamicEvent($eventId, Event $event, BaseEvent $listener)
     {
@@ -349,7 +349,6 @@ class NotificationEmails extends Component
         if ($params == false) {
             return false;
         }
-
         $element = isset($params['value']) ? $params['value'] : null;
 
         if ($notificationEmails = $this->getAllNotificationEmails($eventId)) {
@@ -363,7 +362,11 @@ class NotificationEmails extends Component
                      * @var $notificationEmail NotificationEmailRecord
                      */
                     $notificationEmailElement = Craft::$app->getElements()->getElementById($notificationEmail->id);
-                    $this->relayNotificationThroughAssignedMailer($notificationEmailElement, $element);
+
+                    if ($notificationEmailElement)
+                    {
+                        $this->relayNotificationThroughAssignedMailer($notificationEmailElement, $element);
+                    }
                 }
             }
         }
@@ -440,9 +443,7 @@ class NotificationEmails extends Component
     }
 
     /**
-     *
      * @param ElementInterface $notificationEmail
-     *
      * @param                  $object - will be an element model most of the time
      *
      * @return bool
@@ -458,10 +459,15 @@ class NotificationEmails extends Component
         }
 
         try {
-            /**
-             * @var $notificationEmail NotificationEmail
-             */
-            return $mailer->sendNotificationEmail($notificationEmail, $object);
+
+            if ($mailer)
+            {
+                /**
+                 * @var $notificationEmail NotificationEmail
+                 */
+                return $mailer->sendNotificationEmail($notificationEmail, $object);
+            }
+
         } catch (\Exception $e) {
             throw $e;
         }
