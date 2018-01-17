@@ -147,7 +147,7 @@ class DefaultMailer extends BaseMailer implements CampaignEmailSenderInterface
                 }
 
                 if (SproutBase::$app->mailers->sendEmail($email, $variables)) {
-                    $processedRecipients[] = $email->toEmail;
+                    $processedRecipients[] = $toEmail;
                 } else {
                     return false;
                 }
