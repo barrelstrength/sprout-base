@@ -238,9 +238,9 @@ class NotificationsController extends Controller
 
         $this->validateAttribute('fromName', 'From Name', $fields['fromName']);
 
-        $this->validateAttribute('fromEmail', 'From Email', $fields['fromEmail']);
+        $this->validateAttribute('fromEmail', 'From Email', $fields['fromEmail'], true);
 
-        $this->validateAttribute('replyToEmail', 'Reply To', $fields['replyToEmail']);
+        $this->validateAttribute('replyToEmail', 'Reply To', $fields['replyToEmail'], true);
 
         $notificationEmail = $this->notification;
 
