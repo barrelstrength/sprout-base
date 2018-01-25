@@ -36,7 +36,7 @@ class ReportGroup extends ActiveRecord
                         ':groupId' => $this->id
                     )
                 );
-        
+
                 foreach ($reports as $report)
                 {
                     $record = SproutReports_ReportRecord::model()->findById($report->id);

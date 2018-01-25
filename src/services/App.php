@@ -7,6 +7,7 @@
 
 namespace barrelstrength\sproutbase\services;
 
+use barrelstrength\sproutbase\services\sproutemail\Mailers;
 use barrelstrength\sproutbase\services\sproutemail\NotificationEmails;
 use barrelstrength\sproutbase\services\sproutreports\DataSources;
 use barrelstrength\sproutbase\services\sproutreports\Exports;
@@ -90,6 +91,11 @@ class App extends Component
     public $settings;
 
     /**
+     * @var Mailers
+     */
+    public $mailers;
+
+    /**
      * @inheritdoc
      */
     public function init()
@@ -114,5 +120,6 @@ class App extends Component
 
         // Notifications
         $this->notifications = new NotificationEmails();
+        $this->mailers = new Mailers();
     }
 }
