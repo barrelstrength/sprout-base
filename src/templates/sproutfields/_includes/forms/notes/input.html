@@ -1,10 +1,8 @@
 {% if field.output == "html" or field.output == "richText" %}
-    {{ field.instructions | raw }}
+    {{ field.notes | raw }}
 {% else %}
-    {{ field.instructions | markdown }}
+    {{ field.notes | markdown }}
 {% endif %}
-
-
 
 {#
 	Pull in the styles from our settings
