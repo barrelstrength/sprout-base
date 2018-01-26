@@ -25,7 +25,7 @@ use craft\base\ElementInterface;
 class NotificationEmails extends Component
 {
 
-    public const EVENT_REGISTER_EMAIL_EVENTS = 'defineSproutEmailEvents';
+    const EVENT_REGISTER_EMAIL_EVENTS = 'defineSproutEmailEvents';
     /**
      * @var BaseEvent[]
      */

@@ -16,9 +16,9 @@ use yii\base\Event;
 
 class Mailers extends Component
 {
-    public const EVENT_REGISTER_MAILERS = 'defineSproutEmailMailers';
-    public const ON_SEND_EMAIL = "onSendEmail";
-    public const ON_SEND_EMAIL_ERROR = "onSendEmailError";
+    const EVENT_REGISTER_MAILERS = 'defineSproutEmailMailers';
+    const ON_SEND_EMAIL = "onSendEmail";
+    const ON_SEND_EMAIL_ERROR = "onSendEmailError";
 
     protected $mailers;
 
