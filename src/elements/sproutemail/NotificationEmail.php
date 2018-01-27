@@ -38,7 +38,7 @@ class NotificationEmail extends Element
 
     public static function displayName(): string
     {
-        return SproutEmail::t('Notification Email');
+        return Craft::t('sprout-base',('Notification Email');
     }
 
     public static function refHandle()
@@ -111,7 +111,7 @@ class NotificationEmail extends Element
         $sources = [
             [
                 'key' => '*',
-                'label' => SproutEmail::t('All notifications')
+                'label' => Craft::t('sprout-base',('All notifications')
             ]
         ];
 
@@ -141,9 +141,9 @@ class NotificationEmail extends Element
     protected static function defineSortOptions(): array
     {
         return [
-            'title' => SproutEmail::t('Subject Line'),
-            'elements.dateCreated' => SproutEmail::t('Date Created'),
-            'elements.dateUpdated' => SproutEmail::t('Date Updated'),
+            'title' => Craft::t('sprout-base',('Subject Line'),
+            'elements.dateCreated' => Craft::t('sprout-base',('Date Created'),
+            'elements.dateUpdated' => Craft::t('sprout-base',('Date Updated'),
         ];
     }
 
