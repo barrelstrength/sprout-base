@@ -36,16 +36,21 @@ class NotificationEmail extends Element
     const PENDING = 'pending';
     const DISABLED = 'disabled';
 
+    /**
+     * @return string
+     */
     public static function displayName(): string
     {
         return Craft::t('sprout-base','Notification Email');
     }
 
+    /**
+     * @return null|string
+     */
     public static function refHandle()
     {
         return 'notificationEmail';
     }
-
 
     /**
      * @inheritdoc
@@ -87,6 +92,9 @@ class NotificationEmail extends Element
         return true;
     }
 
+    /**
+     * @return array
+     */
     public function getStatuses()
     {
         return [
@@ -106,6 +114,11 @@ class NotificationEmail extends Element
         );
     }
 
+    /**
+     * @param string|null $context
+     *
+     * @return array
+     */
     protected static function defineSources(string $context = null): array
     {
         $sources = [
@@ -188,6 +201,9 @@ class NotificationEmail extends Element
         return new NotificationEmailQuery(static::class);
     }
 
+    /**
+     * @return \craft\models\FieldLayout|null
+     */
     public function getFieldLayout()
     {
         return Craft::$app->getFields()->getLayoutByType(static::class);
@@ -257,12 +273,18 @@ class NotificationEmail extends Element
         return $html;
     }
 
+    /**
+     * @return \barrelstrength\sproutbase\contracts\sproutemail\BaseMailer|null
+     */
     public function getMailer()
     {
         // All Notification Emails use the Default Mailer
         return SproutBase::$app->mailers->getMailerByName('barrelstrength\\sproutbase\\mailers\\DefaultMailer');
     }
 
+    /**
+     * @return bool
+     */
     public function isReady()
     {
         return (bool)($this->getStatus() == static::ENABLED);
@@ -291,9 +313,12 @@ class NotificationEmail extends Element
         return $actions;
     }
 
+    /**
+     * @return null|string
+     */
     public function getUriFormat()
     {
-        return "sprout-email/{slug}";
+        return 'sprout-email/{slug}';
     }
 
     /**
@@ -303,9 +328,7 @@ class NotificationEmail extends Element
     public function getUrl()
     {
         if ($this->uri !== null) {
-            $url = UrlHelper::siteUrl($this->uri, null, null);
-
-            return $url;
+            return UrlHelper::siteUrl($this->uri, null, null);
         }
 
         return null;

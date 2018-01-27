@@ -13,7 +13,7 @@ use barrelstrength\sproutbase\SproutBase;
 use craft\db\Query;
 use craft\web\Controller;
 use Craft;
-use craft\web\Response;
+use yii\base\Exception;
 use yii\web\BadRequestHttpException;
 
 class AddressController extends Controller
@@ -81,7 +81,8 @@ class AddressController extends Controller
     /**
      * Return all Address Form Fields for the selected Country
      *
-     * @return Response
+     * @return \yii\web\Response
+     * @throws BadRequestHttpException
      */
     public function actionGetAddressFormFields()
     {

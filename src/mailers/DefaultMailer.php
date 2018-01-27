@@ -60,7 +60,9 @@ class DefaultMailer extends BaseMailer implements CampaignEmailSenderInterface
     /**
      * @param array $settings
      *
-     * @return \Twig_Markup
+     * @return string|\Twig_Markup
+     * @throws \Twig_Error_Loader
+     * @throws \yii\base\Exception
      */
     public function getSettingsHtml(array $settings = [])
     {
@@ -115,9 +117,9 @@ class DefaultMailer extends BaseMailer implements CampaignEmailSenderInterface
         $processedRecipients = [];
 
         foreach ($recipients as $recipient) {
-            //	Craft::dump($recipient);
             $toEmail = $this->renderObjectTemplateSafely($recipient->email, $object);
             $name = $recipient->firstName.' '.$recipient->lastName;
+
             /**
              * @var $email Message
              */
@@ -164,6 +166,12 @@ class DefaultMailer extends BaseMailer implements CampaignEmailSenderInterface
         return true;
     }
 
+    /**
+     * @param CampaignEmail $campaignEmail
+     * @param CampaignType  $campaignType
+     *
+     * @return Response|mixed
+     */
     public function sendCampaignEmail(CampaignEmail $campaignEmail, CampaignType $campaignType)
     {
         $lists = [];
@@ -186,7 +194,7 @@ class DefaultMailer extends BaseMailer implements CampaignEmailSenderInterface
             $recipients = Craft::$app->getRequest()->getBodyParam('recipients');
 
             if ($recipients === null) {
-                throw new \Exception(Craft::t('sprout-base', 'Empty recipients.'));
+                throw new \InvalidArgumentException(Craft::t('sprout-base', 'Empty recipients.'));
             }
 
             $result = SproutEmail::$app->getValidAndInvalidRecipients($recipients);
@@ -197,7 +205,7 @@ class DefaultMailer extends BaseMailer implements CampaignEmailSenderInterface
             if (!empty($invalidRecipients)) {
                 $invalidEmails = implode('<br/>', $invalidRecipients);
 
-                throw new \Exception(Craft::t('sprout-base', 'The following recipient email addresses do not validate: {invalidEmails}',
+                throw new \InvalidArgumentException(Craft::t('sprout-base', 'The following recipient email addresses do not validate: {invalidEmails}',
                     [
                         'invalidEmails' => $invalidEmails
                     ]));
@@ -253,7 +261,9 @@ class DefaultMailer extends BaseMailer implements CampaignEmailSenderInterface
      * @param CampaignEmail $campaignEmail
      * @param CampaignType  $campaignType
      *
-     * @return mixed
+     * @return mixed|string
+     * @throws \Twig_Error_Loader
+     * @throws \yii\base\Exception
      */
     public function getPrepareModalHtml(CampaignEmail $campaignEmail, CampaignType $campaignType)
     {
@@ -302,7 +312,9 @@ class DefaultMailer extends BaseMailer implements CampaignEmailSenderInterface
      *
      * @param array $values
      *
-     * @return string
+     * @return null|string
+     * @throws \Twig_Error_Loader
+     * @throws \yii\base\Exception
      */
     public function getListsHtml($values = [])
     {
@@ -380,7 +392,7 @@ class DefaultMailer extends BaseMailer implements CampaignEmailSenderInterface
             if (!empty($invalidRecipients)) {
                 $invalidEmails = implode("<br />", $invalidRecipients);
 
-                throw new \Exception(Craft::t('sprout-base', "Recipient email addresses do not validate: <br /> {invalidEmails}", [
+                throw new \InvalidArgumentException(Craft::t('sprout-base', "Recipient email addresses do not validate: <br /> {invalidEmails}", [
                     'invalidEmails' => $invalidEmails
                 ]));
             }
@@ -402,28 +414,28 @@ class DefaultMailer extends BaseMailer implements CampaignEmailSenderInterface
         // @todo implment this when we develop sprout lists plugin
         if (Craft::$app->getPlugins()->getPlugin('sprout-lists') != null) {
             // Get all subscribers by list IDs from the SproutLists_SubscriberListType
-            /*			$listRecords = SproutLists_ListRecord::model()->findAllByPk($email->listSettings['listIds']);
-
-                        $sproutListsRecipientsInfo = array();
-                        if ($listRecords != null)
-                        {
-                            foreach ($listRecords as $listRecord)
-                            {
-                                if (!empty($listRecord->subscribers))
-                                {
-                                    foreach ($listRecord->subscribers as $subscriber)
-                                    {
-                                        // Assign email as key to not repeat subscriber
-                                        $sproutListsRecipientsInfo[$subscriber->email] = $subscriber->getAttributes();
-                                    }
-                                }
-                            }
-                        }
-
-                        $simpleRecipientModel = new SimpleRecipient();
-                        $sproutListsRecipients = $simpleRecipientModel->setAttributes($sproutListsRecipientsInfo, false);
-
-                        $recipients = array_merge($recipients, $sproutListsRecipients);*/
+//            $listRecords = SproutLists_ListRecord::model()->findAllByPk($email->listSettings['listIds']);
+//
+//            $sproutListsRecipientsInfo = array();
+//            if ($listRecords != null)
+//            {
+//                foreach ($listRecords as $listRecord)
+//                {
+//                    if (!empty($listRecord->subscribers))
+//                    {
+//                        foreach ($listRecord->subscribers as $subscriber)
+//                        {
+//                            // Assign email as key to not repeat subscriber
+//                            $sproutListsRecipientsInfo[$subscriber->email] = $subscriber->getAttributes();
+//                        }
+//                    }
+//                }
+//            }
+//
+//            $simpleRecipientModel = new SimpleRecipient();
+//            $sproutListsRecipients = $simpleRecipientModel->setAttributes($sproutListsRecipientsInfo, false);
+//
+//            $recipients = array_merge($recipients, $sproutListsRecipients);
         }
 
         return $recipients;

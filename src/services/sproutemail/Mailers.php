@@ -22,6 +22,9 @@ class Mailers extends Component
 
     protected $mailers;
 
+    /**
+     * @return array
+     */
     public function getMailers()
     {
         $event = new RegisterMailersEvent([
@@ -58,7 +61,12 @@ class Mailers extends Component
         return isset($this->mailers[$name]) ? $this->mailers[$name] : null;
     }
 
-
+    /**
+     * @param Message $message
+     * @param array   $variables
+     *
+     * @return bool|null
+     */
     public function sendEmail(Message $message, $variables = [])
     {
         $errorMessage = SproutBase::$app->utilities->getErrors();
@@ -143,7 +151,11 @@ class Mailers extends Component
         return [];
     }
 
-
+    /**
+     * @param         $message
+     * @param Message $emailModel
+     * @param array   $variables
+     */
     public function handleOnSendEmailErrorEvent($message, Message $emailModel, $variables = [])
     {
         $user = Craft::$app->getUsers()->getUserByUsernameOrEmail($emailModel->toEmail);

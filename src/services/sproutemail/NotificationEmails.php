@@ -24,8 +24,8 @@ use craft\base\ElementInterface;
  */
 class NotificationEmails extends Component
 {
-
     const EVENT_REGISTER_EMAIL_EVENTS = 'defineSproutEmailEvents';
+
     /**
      * @var BaseEvent[]
      */
@@ -93,6 +93,9 @@ class NotificationEmails extends Component
         return $events;
     }
 
+    /**
+     * @return array
+     */
     public function getEventsWithBase()
     {
         $availableEvents = $this->getAvailableEvents();
@@ -169,10 +172,9 @@ class NotificationEmails extends Component
      * @param bool              $isSettingPage
      *
      * @return NotificationEmail|bool
-     * @throws \Exception
+     * @throws \InvalidArgumentException
      * @throws \Throwable
      */
-
     public function saveNotification(NotificationEmail $notificationEmail, $isSettingPage = false)
     {
         $result = false;
@@ -183,7 +185,7 @@ class NotificationEmails extends Component
             $notificationEmailRecord = NotificationEmail::findOne($notificationEmail->id);
 
             if (!$notificationEmailRecord) {
-                throw new \Exception(Craft::t('sprout-email',
+                throw new \InvalidArgumentException(Craft::t('sprout-email',
                     'No entry exists with the ID “{id}”', ['id' => $notificationEmail->id]));
             }
         } else {
@@ -202,8 +204,7 @@ class NotificationEmails extends Component
 
         $fieldLayout = $notificationEmail->getFieldLayout();
 
-        // Assign our new layout id info to our
-        // form model and records
+        // Assign our new layout id info to our form model and records
         $notificationEmail->fieldLayoutId = $fieldLayout->id;
         $notificationEmailRecord->fieldLayoutId = $fieldLayout->id;
 
@@ -228,12 +229,11 @@ class NotificationEmails extends Component
      * @param $id
      *
      * @return bool
+     * @throws \Throwable
      */
     public function deleteNotificationEmailById($id)
     {
-        $result = Craft::$app->getElements()->deleteElementById($id);
-
-        return $result;
+        return Craft::$app->getElements()->deleteElementById($id);
     }
 
     /**
@@ -453,7 +453,7 @@ class NotificationEmails extends Component
         $mailer = SproutBase::$app->mailers->getMailerByName('barrelstrength\\sproutbase\\mailers\\DefaultMailer');
 
         if (!method_exists($mailer, 'sendNotificationEmail')) {
-            throw new \Exception(Craft::t('sprout-base', 'The {mailer} does not have a sendNotificationEmail() method.',
+            throw new \BadMethodCallException(Craft::t('sprout-base', 'The {mailer} does not have a sendNotificationEmail() method.',
                 ['mailer' => get_class($mailer)]));
         }
 
@@ -534,7 +534,11 @@ class NotificationEmails extends Component
         );
     }
 
-
+    /**
+     * @param NotificationEmail $notificationEmail
+     *
+     * @return Response
+     */
     public function sendTestNotificationEmail(NotificationEmail $notificationEmail)
     {
         try {
@@ -603,6 +607,9 @@ class NotificationEmails extends Component
      *
      * @param      $notificationId
      * @param null $type
+     *
+     * @throws \yii\base\Exception
+     * @throws \yii\base\ExitException
      */
     public function getPreviewNotificationEmailById($notificationId, $type = null)
     {
@@ -631,12 +638,13 @@ class NotificationEmails extends Component
     }
 
     /**
-     * @param $notificationEmail
-     * @param $errors
+     * @param       $notificationEmail
+     * @param array $errors
      *
      * @return array
+     * @throws \yii\base\Exception
      */
-    public function getNotificationErrors($notificationEmail, $errors = [])
+    public function getNotificationErrors($notificationEmail, array $errors = [])
     {
         $notificationEditUrl = UrlHelper::cpUrl('sprout-email/notifications/edit/'.$notificationEmail->id);
         $notificationEditSettingsUrl = UrlHelper::cpUrl('sprout-email/settings/notifications/edit/'.

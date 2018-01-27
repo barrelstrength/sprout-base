@@ -7,13 +7,12 @@
 
 namespace barrelstrength\sproutbase\models\sproutfields;
 
-use barrelstrength\sproutbase\SproutBase;
+use Craft;
 use barrelstrength\sproutbase\helpers\AddressHelper;
 use craft\base\Model;
 
 /**
- * Class sproutSeo_AddressInfoModel
- *
+ * Class Address
  */
 class Address extends Model
 {
@@ -41,6 +40,9 @@ class Address extends Model
         parent::init();
     }
 
+    /**
+     * @return array
+     */
     public function rules()
     {
         $rules = parent::rules();
@@ -71,11 +73,9 @@ class Address extends Model
         if (!$addressHelper->validatePostalCode($countryCode, $postalCode)) {
             $postalName = $addressHelper->getPostalName($countryCode);
 
-            $params = [
+            $this->addError($attribute, Craft::t('sprout-base','{postalName} is not a valid.', [
                 'postalName' => $postalName,
-            ];
-
-            $this->addError($attribute, Craft::t('sprout-base',"{postalName} is not a valid.", $params));
+            ]));
         }
     }
 
@@ -87,7 +87,7 @@ class Address extends Model
     public function getAddressHtml()
     {
         if (!$this->id) {
-            return "";
+            return '';
         }
 
         $addressHelper = new AddressHelper();

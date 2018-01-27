@@ -41,11 +41,17 @@ class Report extends Model
 
     public $dateUpdated;
 
+    /**
+     * @return mixed
+     */
     public function getDataSourceId()
     {
         return $this->dataSourceId;
     }
 
+    /**
+     * @return \barrelstrength\sproutbase\contracts\sproutreports\BaseDataSource|null
+     */
     public function getDataSource()
     {
         $dataSource = SproutBase::$app->dataSources->getDataSourceById($this->dataSourceId);
@@ -55,6 +61,10 @@ class Report extends Model
         return $dataSource;
     }
 
+    /**
+     * @return string
+     * @throws \yii\base\Exception
+     */
     public function processNameFormat()
     {
         $dataSource = $this->getDataSource();
@@ -64,6 +74,9 @@ class Report extends Model
         return Craft::$app->getView()->renderObjectTemplate($this->nameFormat, $options);
     }
 
+    /**
+     * @return mixed
+     */
     public function getOptions()
     {
         $options = $this->options;
@@ -106,6 +119,9 @@ class Report extends Model
         ];
     }
 
+    /**
+     * @return array|string[]
+     */
     public function safeAttributes()
     {
         return [

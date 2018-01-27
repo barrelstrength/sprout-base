@@ -7,7 +7,7 @@
 
 namespace barrelstrength\sproutbase\services\sproutreports;
 
-use League\Csv\Writer;
+use League\Csv\Writer as LeagueCsvWriter;
 use yii\base\Component;
 
 class Exports extends Component
@@ -18,6 +18,8 @@ class Exports extends Component
      * @param array $variables
      *
      * @return string
+     * @throws \Twig_Error_Loader
+     * @throws \yii\base\Exception
      */
     public function toHtml(array &$values, array $labels = [], array $variables = [])
     {
@@ -46,7 +48,7 @@ class Exports extends Component
         $json = json_encode($values);
 
         if (json_last_error()) {
-            throw new \Exception(json_last_error_msg());
+            throw new \LogicException(json_last_error_msg());
         }
 
         return $json;
@@ -70,7 +72,7 @@ class Exports extends Component
             $labels = array_keys($firstRowOfArray);
         }
 
-        $csv = Writer::createFromFileObject(new \SplTempFileObject());
+        $csv = LeagueCsvWriter::createFromFileObject(new \SplTempFileObject());
 
         $csv->insertOne($labels);
         $csv->insertAll($values);

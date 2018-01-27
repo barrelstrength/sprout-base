@@ -111,10 +111,12 @@ class SproutBase extends Module
             $event->components['sproutbase'] = SproutBaseVariable::class;
         });
 
+        // Register Sprout Email Events
         Event::on(Application::class, Application::EVENT_INIT, function() {
             SproutBase::$app->notifications->registerDynamicEventHandler();
         });
 
+        // Register Sprout Email Mailers
         Event::on(Mailers::class, Mailers::EVENT_REGISTER_MAILERS, function(RegisterMailersEvent $event) {
             $event->mailers[] = new DefaultMailer();
         });

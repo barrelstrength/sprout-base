@@ -18,6 +18,13 @@ class Address extends Component
 {
     const EVENT_ON_SAVE_ADDRESS = 'onSaveAddressEvent';
 
+    /**
+     * @param string   $namespace
+     * @param int|null $modelId
+     *
+     * @return bool
+     * @throws \Exception
+     */
     public function saveAddressByPost($namespace = 'address', int $modelId = null)
     {
         if (Craft::$app->getRequest()->getBodyParam($namespace) != null) {
@@ -37,6 +44,14 @@ class Address extends Component
         return false;
     }
 
+    /**
+     * @param AddressModel $model
+     * @param string       $source
+     *
+     * @return bool
+     * @throws \Exception
+     * @throws \yii\db\Exception
+     */
     public function saveAddress(AddressModel $model, $source = '')
     {
         $result = false;
@@ -98,6 +113,11 @@ class Address extends Component
         return $result;
     }
 
+    /**
+     * @param $id
+     *
+     * @return AddressModel
+     */
     public function getAddressById($id)
     {
         if ($record = AddressRecord::findOne($id)) {
@@ -110,7 +130,10 @@ class Address extends Component
     /**
      * @param null $id
      *
-     * @return int
+     * @return bool|false|int
+     * @throws \Exception
+     * @throws \Throwable
+     * @throws \yii\db\StaleObjectException
      */
     public function deleteAddressById($id = null)
     {
@@ -127,7 +150,10 @@ class Address extends Component
     /**
      * @param null $id
      *
-     * @return int
+     * @return bool|false|int
+     * @throws \Exception
+     * @throws \Throwable
+     * @throws \yii\db\StaleObjectException
      */
     public function deleteAddressByModelId($id = null)
     {

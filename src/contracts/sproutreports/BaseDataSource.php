@@ -11,6 +11,7 @@ use barrelstrength\sproutbase\SproutBase;
 use Craft;
 use barrelstrength\sproutbase\records\sproutreports\DataSource;
 use barrelstrength\sproutbase\models\sproutreports\Report as ReportModel;
+use craft\base\Plugin;
 use craft\helpers\UrlHelper;
 
 /**
@@ -41,7 +42,7 @@ abstract class BaseDataSource
     protected $report;
 
     /**
-     * @param string $pluginHandle
+     * BaseDataSource constructor.
      */
     public function __construct()
     {
@@ -127,16 +128,17 @@ abstract class BaseDataSource
     {
         $pluginHandle = $this->getPluginHandle();
 
-        $plugin = Craft::$app->getPlugins()->getPlugin($pluginHandle);
-
-        return $plugin;
+        return Craft::$app->getPlugins()->getPlugin($pluginHandle);
     }
 
+    /**
+     * @var $plugin Plugin
+     *
+     * @return string
+     */
     public function getPluginName()
     {
-        $plugin = $this->getPlugin();
-
-        return $plugin->name;
+        return $this->getPlugin()->name;
     }
 
     /**
@@ -155,7 +157,7 @@ abstract class BaseDataSource
     /**
      * Returns the total count of reports created based on the given data source
      *
-     * @return [type] [description]
+     * @return int
      */
     final public function getReportCount()
     {
@@ -184,7 +186,7 @@ abstract class BaseDataSource
      *
      * @return array
      */
-    public function getDefaultLabels(ReportModel &$report, $options = [])
+    public function getDefaultLabels(ReportModel &$report, array $options = [])
     {
         return [];
     }
@@ -196,7 +198,7 @@ abstract class BaseDataSource
      *
      * @return null|array
      */
-    public function getResults(ReportModel &$report, $options = [])
+    public function getResults(ReportModel &$report, array $options = [])
     {
         return [];
     }

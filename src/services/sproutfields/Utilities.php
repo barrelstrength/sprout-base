@@ -35,6 +35,12 @@ class Utilities extends Component
         return $context;
     }
 
+    /**
+     * @param      $options
+     * @param null $value
+     *
+     * @return bool
+     */
     public function isAnyOptionsSelected($options, $value = null)
     {
         if (!empty($options)) {
@@ -48,6 +54,9 @@ class Utilities extends Component
         return false;
     }
 
+    /**
+     * @return string
+     */
     public function formatErrors()
     {
         $errors = $this->getErrors();

@@ -16,6 +16,13 @@ class Settings extends Component
 {
     const EVENT_BEFORE_SAVE_SETTINGS = 'beforeSaveSettings';
 
+    /**
+     * @param $plugin
+     * @param $settings
+     *
+     * @return bool
+     * @throws \yii\db\Exception
+     */
     public function saveSettings($plugin, $settings)
     {
         // The existing settings

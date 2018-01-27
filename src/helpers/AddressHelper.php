@@ -98,6 +98,9 @@ class AddressHelper
         return $format;
     }
 
+    /**
+     * @return string
+     */
     private function getAddressInfoInput()
     {
         return $this->renderTemplates('hidden', [
@@ -106,6 +109,12 @@ class AddressHelper
         ]);
     }
 
+    /**
+     * @param AddressModel|null $addressModel
+     * @param string            $namespace
+     *
+     * @return \Twig_Markup
+     */
     public function displayAddressForm(AddressModel $addressModel = null, $namespace = 'address')
     {
         $countryCode = $this->defaultCountryCode();
@@ -306,9 +315,9 @@ class AddressHelper
     }
 
     /**
-     * @param SproutFields_AddressModel $model
+     * @param AddressModel $model
      *
-     * @return mixed
+     * @return string
      */
     public function getAddressWithFormat(AddressModel $model)
     {
@@ -361,7 +370,7 @@ class AddressHelper
         if ($addressObj->getPostalCodePattern() != null) {
             $pattern = $addressObj->getPostalCodePattern();
 
-            if (preg_match("/^".$pattern."$/", $value['postalCode'])) {
+            if (preg_match('/^'.$pattern.'$/', $value['postalCode'])) {
                 return true;
             } else {
                 $errors['postalCode'] = Craft::t('sprout-base',ucwords($postalName).' is invalid.');
@@ -375,6 +384,12 @@ class AddressHelper
         return true;
     }
 
+    /**
+     * @param $countryCode
+     * @param $postalCode
+     *
+     * @return bool
+     */
     public function validatePostalCode($countryCode, $postalCode)
     {
         $addressFormatRepository = new AddressFormatRepository();
@@ -386,7 +401,7 @@ class AddressHelper
         if ($addressObj->getPostalCodePattern() != null) {
             $pattern = $addressObj->getPostalCodePattern();
 
-            if (preg_match("/^".$pattern."$/", $postalCode)) {
+            if (preg_match('/^'.$pattern.'$/', $postalCode)) {
                 return true;
             } else {
                 return false;
@@ -680,6 +695,14 @@ class AddressHelper
         return 'US';
     }
 
+    /**
+     * @param $template
+     * @param $params
+     *
+     * @return string
+     * @throws \Twig_Error_Loader
+     * @throws \yii\base\Exception
+     */
     public function renderTemplates($template, $params)
     {
         $addressPath = Craft::getAlias('@sproutbase/templates/sproutfields/_includes/forms/address/');

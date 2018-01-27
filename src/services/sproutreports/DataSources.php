@@ -97,6 +97,7 @@ class DataSources extends Component
      * @param DataSourceModel $model
      *
      * @return bool
+     * @throws \yii\db\Exception
      */
     public function saveDataSource(DataSourceModel $model)
     {
@@ -148,7 +149,8 @@ class DataSources extends Component
      *
      * @param $dataSourceId
      *
-     * @return bool
+     * @return int
+     * @throws \yii\db\Exception
      */
     public function deleteReportsByDataSourceId($dataSourceId)
     {

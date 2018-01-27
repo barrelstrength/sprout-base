@@ -115,9 +115,7 @@ class Reports extends Component
     {
         $reportRecords = ReportRecord::find()->where(['dataSourceId' => $dataSourceId])->all();
 
-        $reports = $this->populateModels($reportRecords);
-
-        return $reports;
+        return $this->populateModels($reportRecords);
     }
 
     /**
@@ -127,11 +125,13 @@ class Reports extends Component
     {
         $reportRecords = ReportRecord::find()->all();
 
-        $reports = $this->populateModels($reportRecords);
-
-        return $reports;
+        return $this->populateModels($reportRecords);
     }
 
+    /**
+     * @param                  $reports
+     * @param ReportGroupModel $group
+     */
     public function registerReports($reports, ReportGroupModel $group)
     {
         if (!is_array($reports)) {
@@ -190,6 +190,11 @@ class Reports extends Component
         return (int)ReportRecord::find()->where(['dataSourceId' => $dataSourceId])->count();
     }
 
+    /**
+     * @param array $records
+     *
+     * @return array
+     */
     public function populateModels(array $records)
     {
         $models = [];

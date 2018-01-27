@@ -7,8 +7,6 @@
 
 namespace barrelstrength\sproutbase\helpers;
 
-use Craft;
-
 class UninstallHelper
 {
     public $plugin;

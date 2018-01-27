@@ -81,5 +81,10 @@ abstract class SproutListsBaseListType extends Component
      */
     abstract public function getSubscriberCount($list);
 
+    /**
+     * @param $listId
+     *
+     * @return mixed
+     */
     abstract public function getListById($listId);
 }
