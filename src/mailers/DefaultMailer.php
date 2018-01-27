@@ -46,7 +46,7 @@ class DefaultMailer extends BaseMailer implements CampaignEmailSenderInterface
      */
     public function getDescription()
     {
-        return Craft::t('sprout-base',('Smart transactional email, easy recipient management, and advanced third party integrations.');
+        return Craft::t('sprout-base','Smart transactional email, easy recipient management, and advanced third party integrations.');
     }
 
     /**
