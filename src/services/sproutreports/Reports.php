@@ -9,6 +9,7 @@ namespace barrelstrength\sproutbase\services\sproutreports;
 
 use barrelstrength\sproutbase\contracts\sproutreports\BaseReport;
 use barrelstrength\sproutbase\models\sproutreports\ReportGroup as ReportGroupModel;
+use barrelstrength\sproutbase\SproutBase;
 use Craft;
 use yii\base\Component;
 use barrelstrength\sproutbase\models\sproutreports\Report as ReportModel;
@@ -93,7 +94,7 @@ class Reports extends Component
      *
      * @return bool
      */
-    protected function validateOptions(ReportModel &$report)
+    protected function validateOptions(ReportModel $report)
     {
         $errors = [];
 
@@ -153,7 +154,7 @@ class Reports extends Component
                 $record->groupId = $group->id;
 
                 if (!$record->save()) {
-                    Craft::warning(print_r($record->getErrors(), true), 'sproutReports');
+                    SproutBase::warning($record->getErrors(), 'sproutReports');
                 }
             }
         }

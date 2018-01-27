@@ -17,6 +17,7 @@ use Craft;
 use craft\helpers\UrlHelper;
 use craft\web\assets\cp\CpAsset;
 use craft\web\Controller;
+use yii\web\NotFoundHttpException;
 
 class ReportsController extends Controller
 {
@@ -169,7 +170,7 @@ class ReportsController extends Controller
             $reportModel = SproutBase::$app->reports->getReport($reportId);
 
             if (!$reportModel) {
-                throw new \Exception(Craft::t('sprout-base','No report exists with the id “{id}”', ['id' => $reportId]));
+                throw new \InvalidArgumentException(Craft::t('sprout-base','No report exists with the id “{id}”', ['id' => $reportId]));
             }
 
             $reportModel->options = is_array($options) ? $options : [];
@@ -245,7 +246,7 @@ class ReportsController extends Controller
 
             return $this->redirectToPostedUrl($record);
         } else {
-            throw new \Exception(Craft::t('sprout-base','Report not found.'));
+            throw new NotFoundHttpException(Craft::t('sprout-base','Report not found.'));
         }
     }
 

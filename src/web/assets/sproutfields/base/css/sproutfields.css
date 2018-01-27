@@ -19,6 +19,7 @@
 }
 
 .sproutfields-icon {
+    /*noinspection CssNoGenericFontName*/
     font-family: "fontello";
     font-style: normal;
     font-weight: normal;

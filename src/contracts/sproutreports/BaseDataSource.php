@@ -81,7 +81,7 @@ abstract class BaseDataSource
      */
     public function setReport(ReportModel $report = null)
     {
-        if (is_null($report)) {
+        if (null === $report) {
             $report = new ReportModel();
         }
 
@@ -189,7 +189,7 @@ abstract class BaseDataSource
      *
      * @return array
      */
-    public function getDefaultLabels(ReportModel &$report, array $options = [])
+    public function getDefaultLabels(ReportModel $report, array $options = [])
     {
         return [];
     }
@@ -202,7 +202,7 @@ abstract class BaseDataSource
      *
      * @return array
      */
-    public function getResults(ReportModel &$report, array $options = [])
+    public function getResults(ReportModel $report, array $options = [])
     {
         return [];
     }

@@ -43,7 +43,7 @@
                         },
                         'onKeyDown': function(res) {
                             // Remove if delete and backspace key is input
-                            if (res.keyCode == 8 || res.keyCode == 46) {
+                            if (res.keyCode === 8 || res.keyCode === 46) {
                                 // hide call text if incomplete
                                 $(sproutPhoneButtonClass).html('');
                                 $(sproutPhoneFieldId).removeClass('complete');
@@ -74,13 +74,13 @@
                             },
                             '+': {
                                 validator: "[+]",
-                                cardinality: 1,
+                                cardinality: 1
                             }
                         }
                     }
                 };
 
-                if (inputMask == 'checked') {
+                if (inputMask === 'checked') {
                     var maskingOption = maskOptions.checked;
                     $(sproutPhoneFieldId).inputmask(maskingOption);
                 }

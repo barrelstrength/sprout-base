@@ -57,7 +57,7 @@ class SproutBase extends Module
     public $sourceLanguage = 'en-US';
 
     /**
-     * @todo - We copied from craft/base/plugin, ask P&T if this is the best way to do it
+     * @todo - Copied from craft/base/plugin. Ask P&T if this is the best approach
      *
      * @inheritdoc
      */

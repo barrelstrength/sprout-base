@@ -38,7 +38,7 @@ class EmailSelect extends Component
      *
      * @return bool
 
-    public function unobfuscateEmailAddresses($formId, $submittedFields = array())
+    public function unobfuscateEmailAddresses($formId, $submittedFields = [])
      * {
      * if (!is_numeric($formId))
      * {

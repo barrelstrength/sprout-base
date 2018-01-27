@@ -60,7 +60,7 @@ class Email extends Component
     {
         if ($checkPattern) {
             // Use backticks as delimiters as they are invalid characters for emails
-            $customPattern = "`".$customPattern."`";
+            $customPattern = '`'.$customPattern.'`';
 
             if (preg_match($customPattern, $value)) {
                 return true;

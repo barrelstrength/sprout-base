@@ -70,7 +70,7 @@ trait TemplateTrait
                     $tabs[] = [
                         'label' => Craft::t('sprout-base', $tab->name),
                         'url' => '#tab'.($index + 1),
-                        'class' => ($hasErrors ? 'error' : null)
+                        'class' => $hasErrors ? 'error' : null
                     ];
                 }
             }
@@ -245,7 +245,7 @@ trait TemplateTrait
         $emails = [];
 
         if (!empty($recipients)) {
-            $recipients = explode(",", $recipients);
+            $recipients = explode(',', $recipients);
 
             foreach ($recipients as $recipient) {
                 $email = trim($recipient);

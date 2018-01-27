@@ -26,7 +26,7 @@ class Phone extends Component
      */
     public function getDefaultMask(): string
     {
-        return "###-###-####";
+        return '###-###-####';
     }
 
     /**
@@ -43,7 +43,7 @@ class Phone extends Component
             return true;
         }
 
-        $mask = preg_quote($mask);
+        $mask = preg_quote($mask, '`');
 
         $phonePattern = $this->convertMaskToRegEx($mask);
 
@@ -80,7 +80,7 @@ class Phone extends Component
         $mask = $this->mask;
 
         // Explode hashes
-        preg_match_all("/#*/", $mask, $matches);
+        preg_match_all('/#*/', $mask, $matches);
 
         // Remove empty array values
         $hashes = array_values(array_filter($matches[0]));
@@ -95,9 +95,9 @@ class Phone extends Component
             foreach ($hashes as $hash) {
                 $length = strlen($hash);
 
-                $hashPatterns[$i]['pattern'] = "([0-9]{".$length."})";
+                $hashPatterns[$i]['pattern'] = '([0-9]{'.$length.'})';
                 $hashPatterns[$i]['hash'] = $hash;
-                $hashPatterns[$i]['preg_replace'] = "([#]{".$length."})";
+                $hashPatterns[$i]['preg_replace'] = '([#]{'.$length.'})';
 
                 $i++;
             }

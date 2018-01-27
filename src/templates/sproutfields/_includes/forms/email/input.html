@@ -7,8 +7,8 @@
 {{ forms.text({
     id: id,
     name: name,
-    value: (value is defined) ? value : '',
-placeholder: placeholder ?? null,
+    value: value is defined ? value : '',
+    placeholder: placeholder ?? null,
 }) }}
 
 <span class="sprout-email-button {{ id }}"></span>

@@ -4,14 +4,14 @@
     {{ forms.passwordField({
         id: id,
         name: name,
-        disabled: (not field.allowEdits),
+        disabled: not field.allowEdits,
     value: value is defined ? value : ''
     }) }}
 {% else %}
     {{ forms.textField({
         id: id,
         name: name,
-        disabled: (not field.allowEdits),
-    value: value is defined ? value : ''
+        disabled: not field.allowEdits,
+        value: value is defined ? value : ''
     }) }}
 {% endif %}

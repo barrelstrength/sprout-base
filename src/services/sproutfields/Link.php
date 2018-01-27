@@ -32,13 +32,13 @@ class Link extends Component
 
         if ($customPattern && $checkPattern) {
             // Use backticks as delimiters as they are invalid characters for emails
-            $customPattern = "`".$customPattern."`";
+            $customPattern = '`'.$customPattern.'`';
 
             if (preg_match($customPattern, $value)) {
                 return true;
             }
         } else {
-            if ((!filter_var($value, FILTER_VALIDATE_URL) === false)) {
+            if (!filter_var($value, FILTER_VALIDATE_URL) === false) {
                 return true;
             }
         }

@@ -168,7 +168,7 @@ class NotificationsController extends Controller
 
         $isMobileBrowser = Craft::$app->getRequest()->isMobileBrowser(true);
         $siteTemplateExists = $this->doesSiteTemplateExist($notificationEmail->template);
-        $isPluginActive = (Craft::$app->plugins->getPlugin('sprout-email'));
+        $isPluginActive = Craft::$app->plugins->getPlugin('sprout-email');
 
         if (!$isMobileBrowser && $siteTemplateExists && $isPluginActive) {
             $showPreviewBtn = true;

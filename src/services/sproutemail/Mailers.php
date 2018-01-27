@@ -17,8 +17,8 @@ use yii\base\Event;
 class Mailers extends Component
 {
     const EVENT_REGISTER_MAILERS = 'defineSproutEmailMailers';
-    const ON_SEND_EMAIL = "onSendEmail";
-    const ON_SEND_EMAIL_ERROR = "onSendEmailError";
+    const ON_SEND_EMAIL = 'onSendEmail';
+    const ON_SEND_EMAIL_ERROR = 'onSendEmailError';
 
     protected $mailers;
 
@@ -58,7 +58,7 @@ class Mailers extends Component
     {
         $this->mailers = $this->getMailers();
 
-        return isset($this->mailers[$name]) ? $this->mailers[$name] : null;
+        return isset($this->mailers[$name]) ?? $this->mailers[$name];
     }
 
     /**
@@ -115,7 +115,7 @@ class Mailers extends Component
         $recipientsString = $model->recipients;
 
         // Possibly called from entry edit screen
-        if (is_null($element)) {
+        if (null === $element) {
             return $recipientsString;
         }
 

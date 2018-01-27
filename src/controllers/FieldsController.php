@@ -33,7 +33,7 @@ class FieldsController extends BaseController
         Craft::$app->content->fieldContext = $oldFieldContext;
 
         // If we don't find a Link Field, return a new Link Field model
-        // @todo - discuss with ben why we need return a model? we can't assume the user has Sprout Fields installed
+        // @todo - why do we need to return a model? can we assume the user has Sprout Fields installed?
         if (!$field) {
             return $this->asJson(false);
         }

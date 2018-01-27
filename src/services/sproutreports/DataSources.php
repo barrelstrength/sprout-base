@@ -22,7 +22,7 @@ use craft\db\Query;
 class DataSources extends Component
 {
 
-    const EVENT_REGISTER_DATA_SOURCES = "registerSproutReportsDataSources";
+    const EVENT_REGISTER_DATA_SOURCES = 'registerSproutReportsDataSources';
     /**
      * @var BaseDataSource[]
      */
@@ -49,7 +49,7 @@ class DataSources extends Component
      */
     public function getAllDataSources()
     {
-        if (is_null($this->dataSources)) {
+        if (null === $this->dataSources) {
             $event = new RegisterComponentTypesEvent([
                 'types' => []
             ]);

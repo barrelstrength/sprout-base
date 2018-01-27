@@ -30,7 +30,7 @@ if (typeof Craft.SproutFields === typeof undefined) {
                         new Craft.SproutFields.SelectOtherField(this);
                     }
                 });
-            },
+            }
         });
 
     Craft.SproutFields.SelectOtherField = Garnish.Base.extend(
@@ -55,7 +55,7 @@ if (typeof Craft.SproutFields === typeof undefined) {
             handleSelectOtherChange: function() {
                 selectedValue = this.$dropdownField.val();
 
-                if (selectedValue == 'custom') {
+                if (selectedValue === 'custom') {
                     // Hide the Select Field and it's wrapping div
                     this.$dropdownField.parent().addClass('hidden');
 
@@ -78,7 +78,7 @@ if (typeof Craft.SproutFields === typeof undefined) {
                 // Show our dropdown again
                 this.$dropdownField.parent().removeClass('hidden');
 
-            },
+            }
 
         });
 

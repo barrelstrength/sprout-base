@@ -142,6 +142,7 @@ class NotificationEmails extends Component
     {
         $events = $this->getAvailableEvents();
 
+        /** @noinspection NullCoalescingOperatorCanBeUsedInspection */
         return isset($events[$id]) ? $events[$id] : $default;
     }
 
@@ -304,10 +305,9 @@ class NotificationEmails extends Component
     {
         if (isset($this->registeredEvents[$eventId])) {
             return $this->registeredEvents[$eventId];
-        };
+        }
 
-        return function() {
-        };
+        return function(){};
     }
 
     /**
@@ -350,7 +350,7 @@ class NotificationEmails extends Component
         if ($params == false) {
             return false;
         }
-        $element = isset($params['value']) ? $params['value'] : null;
+        $element = isset($params['value']) ?? $params['value'];
 
         if ($notificationEmails = $this->getAllNotificationEmails($eventId)) {
             foreach ($notificationEmails as $notificationEmail) {
@@ -498,7 +498,9 @@ class NotificationEmails extends Component
             }
         } else {
             $response->success = false;
-            $response->message = "<p>".Craft::t('sprout-email', 'No actions available for this notification.')."</p>";
+
+//            @todo - move html to response template
+            $response->message = '<p>'.Craft::t('sprout-email', 'No actions available for this notification.').'</p>';
         }
 
         return $response;

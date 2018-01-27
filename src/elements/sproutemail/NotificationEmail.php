@@ -213,7 +213,7 @@ class NotificationEmail extends Element
     /**
      * @param bool $isNew
      *
-     * @throws \Exception
+     * @throws \InvalidArgumentException
      */
     public function afterSave(bool $isNew)
     {
@@ -222,7 +222,7 @@ class NotificationEmail extends Element
             $record = NotificationEmailRecord::findOne($this->id);
 
             if (!$record) {
-                throw new \Exception('Invalid campaign email ID: '.$this->id);
+                throw new \InvalidArgumentException('Invalid campaign email ID: '.$this->id);
             }
         } else {
             $record = new NotificationEmailRecord();
@@ -268,7 +268,7 @@ class NotificationEmail extends Element
             true);
 
         Craft::$app->getView()->registerAssetBundle(EmailAsset::class);
-        Craft::$app->getView()->registerJs("var sproutModalInstance = new SproutModal(); sproutModalInstance.init();");
+        Craft::$app->getView()->registerJs('var sproutModalInstance = new SproutModal(); sproutModalInstance.init();');
         SproutEmail::$app->mailers->includeMailerModalResources();
 
         return $html;
@@ -348,7 +348,7 @@ class NotificationEmail extends Element
         }
         $extension = null;
 
-        if (($type = Craft::$app->request->get('type'))) {
+        if ($type = Craft::$app->request->get('type')) {
             $extension = in_array(strtolower($type), ['txt', 'text']) ? '.txt' : null;
         }
 

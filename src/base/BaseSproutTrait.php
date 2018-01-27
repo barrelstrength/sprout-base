@@ -19,6 +19,7 @@ trait BaseSproutTrait
     public static function error($message)
     {
         if (is_array($message)) {
+            /** @noinspection ForgottenDebugOutputInspection */
             $message = print_r($message, true);
         }
 
@@ -33,6 +34,7 @@ trait BaseSproutTrait
     public static function warning($message)
     {
         if (is_array($message)) {
+            /** @noinspection ForgottenDebugOutputInspection */
             $message = print_r($message, true);
         }
 
@@ -47,6 +49,7 @@ trait BaseSproutTrait
     public static function info($message)
     {
         if (is_array($message)) {
+            /** @noinspection ForgottenDebugOutputInspection */
             $message = print_r($message, true);
         }
 

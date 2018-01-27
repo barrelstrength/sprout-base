@@ -278,8 +278,11 @@ class AddressHelper
         $options = [];
 
         if ($this->subdivisonObj->getAll($this->countryCode)) {
+
             $states = $this->subdivisonObj->getAll($this->countryCode);
+
             if (!empty($states)) {
+
                 foreach ($states as $state) {
                     $stateName = $state->getName();
                     $options[$stateName] = $stateName;
@@ -298,19 +301,19 @@ class AddressHelper
                     ]
                 );
             }
-        } else {
-            return $this->renderTemplates(
-                'text',
-                [
-                    'fieldClass' => 'field-address-input',
-                    'label' => $this->renderHeading($this->addressObj->getAdministrativeAreaType()),
-                    'name' => $this->name.'[administrativeArea]',
-                    'value' => $value,
-                    'inputName' => 'administrativeArea',
-                    'addressInfo' => $this->addressModel
-                ]
-            );
         }
+
+        return $this->renderTemplates(
+            'text',
+            [
+                'fieldClass' => 'field-address-input',
+                'label' => $this->renderHeading($this->addressObj->getAdministrativeAreaType()),
+                'name' => $this->name.'[administrativeArea]',
+                'value' => $value,
+                'inputName' => 'administrativeArea',
+                'addressInfo' => $this->addressModel
+            ]
+        );
     }
 
     /**
@@ -424,12 +427,17 @@ class AddressHelper
 
             if (preg_match('/^'.$pattern.'$/', $postalCode)) {
                 return true;
-            } else {
-                return false;
             }
         }
+
+        return false;
     }
 
+    /**
+     * @param $countryCode
+     *
+     * @return string
+     */
     public function getPostalName($countryCode)
     {
         $addressFormatRepository = new AddressFormatRepository();

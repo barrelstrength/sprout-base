@@ -61,7 +61,7 @@ class Address extends Component
             $record = AddressRecord::findOne($model->id);
 
             if (!$record) {
-                throw new \Exception(Craft::t('sprout-base','No entry exists with the ID “{id}”', ['id' => $model->id]));
+                throw new \InvalidArgumentException(Craft::t('sprout-base','No entry exists with the ID “{id}”', ['id' => $model->id]));
             }
         }
 
@@ -96,7 +96,7 @@ class Address extends Component
                 }
             } catch (\Exception $e) {
                 if ($transaction) {
-                    $transaction->rollback();
+                    $transaction->rollBack();
                 }
 
                 throw $e;
@@ -104,9 +104,7 @@ class Address extends Component
         }
 
         if (!$result) {
-            if ($transaction) {
-                $transaction->rollback();
-            }
+            $transaction->rollBack();
         }
 
         return $result;

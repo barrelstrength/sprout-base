@@ -98,6 +98,7 @@ class BaseEvent
      */
     public function getTitle()
     {
+        return null;
     }
 
     /**
@@ -109,6 +110,7 @@ class BaseEvent
      */
     public function getDescription()
     {
+        return null;
     }
 
     /**
@@ -137,6 +139,7 @@ class BaseEvent
      */
     public function prepareOptions()
     {
+        return [];
     }
 
     /**

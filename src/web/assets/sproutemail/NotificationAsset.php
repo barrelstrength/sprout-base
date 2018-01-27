@@ -13,7 +13,7 @@ class NotificationAsset extends AssetBundle
             CpAsset::class,
         ];
 
-        $this->sourcePath = "@sproutbase/web/assets/sproutemail/dist";
+        $this->sourcePath = '@sproutbase/web/assets/sproutemail/dist';
 
         $this->js = [
             'js/notification.js'
