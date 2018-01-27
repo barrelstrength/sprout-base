@@ -49,7 +49,7 @@ class NotificationsController extends Controller
             return $this->redirect($this->currentBase);
         }
 
-        $isNewNotificationEmail = isset($emailId) && $emailId == 'new' ? true : false;
+        $isNewNotificationEmail = ($emailId !== null && $emailId === 'new') ? true : false;
 
         if (!$notificationEmail) {
             if (!$isNewNotificationEmail) {
@@ -81,7 +81,7 @@ class NotificationsController extends Controller
 
         $emailId = Craft::$app->getRequest()->getBodyParam('emailId');
         $fields = Craft::$app->getRequest()->getBodyParam('sproutEmail');
-        $isNewNotificationEmail = isset($emailId) && $emailId == 'new' ? true : false;
+        $isNewNotificationEmail = ($emailId !== null && $emailId === 'new') ? true : false;
 
         if (!$isNewNotificationEmail) {
             $notificationEmail = Craft::$app->getElements()->getElementById($emailId);

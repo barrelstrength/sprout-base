@@ -43,6 +43,9 @@ class AddressController extends Controller
 
     /**
      * Display the Country Input for the selected Country
+     *
+     * @throws Exception
+     * @throws \Twig_Error_Loader
      */
     public function actionCountryInput()
     {
@@ -63,6 +66,11 @@ class AddressController extends Controller
 
     /**
      * Update the Address Form HTML
+     *
+     * @return \yii\web\Response
+     * @throws BadRequestHttpException
+     * @throws Exception
+     * @throws \Twig_Error_Loader
      */
     public function actionChangeForm()
     {
@@ -179,6 +187,9 @@ class AddressController extends Controller
 
     /**
      * Delete an address
+     *
+     * @return \yii\web\Response
+     * @throws BadRequestHttpException
      */
     public function actionDeleteAddress()
     {
@@ -201,7 +212,7 @@ class AddressController extends Controller
         try {
             $response = false;
 
-            if (isset($addressInfoModel->id) && $addressInfoModel->id) {
+            if ($addressInfoModel->id !== null && $addressInfoModel->id) {
                 $addressRecord = new AddressRecord();
                 $response = $addressRecord->deleteByPk($addressInfoModel->id);
             }
@@ -235,7 +246,8 @@ class AddressController extends Controller
     }
 
     /**
-     * Find the longitude and latitude of an address
+     * @return \yii\web\Response
+     * @throws BadRequestHttpException
      */
     public function actionQueryAddress()
     {
@@ -276,7 +288,7 @@ class AddressController extends Controller
                     ];
                 }
             }
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $result['result'] = false;
             $result['errors'] = $e->getMessage();
         }

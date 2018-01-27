@@ -16,6 +16,10 @@ class FieldsController extends BaseController
 {
     protected $allowAnonymous = ['actionSproutAddress'];
 
+    /**
+     * @return \yii\web\Response
+     * @throws \yii\web\BadRequestHttpException
+     */
     public function actionEmailValidate()
     {
         $this->requirePostRequest();
@@ -45,6 +49,10 @@ class FieldsController extends BaseController
         return $this->asJson(true);
     }
 
+    /**
+     * @return \yii\web\Response
+     * @throws \yii\web\BadRequestHttpException
+     */
     public function actionLinkValidate()
     {
         $this->requirePostRequest();
@@ -72,6 +80,10 @@ class FieldsController extends BaseController
         return $this->asJson(true);
     }
 
+    /**
+     * @return \yii\web\Response
+     * @throws \yii\web\BadRequestHttpException
+     */
     public function actionPhoneValidate()
     {
         $this->requirePostRequest();
@@ -87,6 +99,10 @@ class FieldsController extends BaseController
         return $this->asJson(true);
     }
 
+    /**
+     * @return \yii\web\Response
+     * @throws \yii\web\BadRequestHttpException
+     */
     public function actionRegularExpressionValidate()
     {
         $this->requirePostRequest();

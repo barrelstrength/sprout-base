@@ -124,7 +124,7 @@ class AddressHelper
     {
         $countryCode = $this->defaultCountryCode();
 
-        if (isset($addressModel->countryCode)) {
+        if ($addressModel->countryCode !== null) {
             $countryCode = $addressModel->countryCode;
         }
 

@@ -21,6 +21,12 @@ use yii\web\NotFoundHttpException;
 
 class ReportsController extends Controller
 {
+    /**
+     * @param null $dataSourceId
+     * @param null $groupId
+     *
+     * @return \yii\web\Response
+     */
     public function actionIndex($dataSourceId = null, $groupId = null)
     {
         $reportContext = 'sprout-reports';
@@ -68,9 +74,17 @@ class ReportsController extends Controller
         ]);
     }
 
+    /**
+     * @param Report|null $report
+     * @param int|null    $reportId
+     *
+     * @return \yii\web\Response
+     * @throws \HttpException
+     * @throws \yii\base\InvalidConfigException
+     */
     public function actionResultsIndex(Report $report = null, int $reportId = null)
     {
-        if (isset($report)) {
+        if ($report !== null) {
             $reportModel = $report;
         } else {
             $reportModel = SproutBase::$app->reports->getReport($reportId);
@@ -109,18 +123,25 @@ class ReportsController extends Controller
         throw new \HttpException(404, Craft::t('sprout-base','Report not found.'));
     }
 
+    /**
+     * @param string      $dataSourceId
+     * @param Report|null $report
+     * @param int|null    $reportId
+     *
+     * @return \yii\web\Response
+     */
     public function actionEditReport(string $dataSourceId, Report $report = null, int $reportId = null)
     {
         $reportModel = new Report();
 
-        if (isset($report)) {
+        if ($report !== null) {
             $reportModel = $report;
-        } elseif ($reportId != null) {
+        } elseif ($reportId !== null) {
             $reportModel = SproutBase::$app->reports->getReport($reportId);
         }
 
         // This is for creating new report
-        if ($dataSourceId != null) {
+        if ($dataSourceId !== null) {
             $reportModel->dataSourceId = $dataSourceId;
         }
 
