@@ -38,4 +38,4 @@ var SproutEmail = {
 	{
 
 	}
-}
+};

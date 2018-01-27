@@ -38,7 +38,6 @@ class NotificationsController extends Controller
      * @param NotificationEmail|null $notificationEmail
      *
      * @return \yii\web\Response
-     * @throws \yii\base\InvalidConfigException
      */
     public function actionEditNotificationEmailSettingsTemplate(
         $emailId = null, NotificationEmail $notificationEmail =
@@ -317,7 +316,8 @@ class NotificationsController extends Controller
      * Delete a Notification Email
      *
      * @return null|\yii\web\Response
-     * @throws \Exception
+     * @throws \InvalidArgumentException
+     * @throws \Throwable
      * @throws \yii\web\BadRequestHttpException
      */
     public function actionDeleteNotificationEmail()
@@ -332,7 +332,7 @@ class NotificationsController extends Controller
         $notificationEmail = SproutBase::$app->notifications->getNotificationEmailById($notificationEmailId);
 
         if (!$notificationEmail) {
-            throw new \Exception(Craft::t('sprout-base', 'No Notification Email exists with the ID “{id}”.', [
+            throw new \InvalidArgumentException(Craft::t('sprout-base', 'No Notification Email exists with the ID “{id}”.', [
                 'id' => $notificationEmailId
             ]));
         }

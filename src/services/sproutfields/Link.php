@@ -50,7 +50,8 @@ class Link extends Component
     /**
      * Return error message
      *
-     * @param  mixed $field
+     * @param $fieldName
+     * @param $field
      *
      * @return string
      */

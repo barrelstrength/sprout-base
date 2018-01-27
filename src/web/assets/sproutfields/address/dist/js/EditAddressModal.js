@@ -94,20 +94,21 @@ Craft.SproutBase.EditAddressModal = Garnish.Modal.extend(
                 'sortingCode',
                 'address1',
                 'address2'
-            ]
+            ];
 
-            var formValues = {}
+            var formValues = {};
 
-            var self = this
+            var self = this;
+
             $.each(formKeys, function(index, el) {
                 formValues[el] = self.$form.find("[name='" + namespace + "[" + el + "]']").val()
-            })
+            });
 
             formValues.id = this.settings.addressInfoId;
 
             var data = {
                 formValues: formValues
-            }
+            };
 
             if (this.settings.source != null) {
                 data.source = this.settings.source;
@@ -121,11 +122,11 @@ Craft.SproutBase.EditAddressModal = Garnish.Modal.extend(
 
                     var errorHtml = "<ul class='errors'>";
 
-                    $element = self.$form.find("[name='" + namespace + "[" + index + "]']")
-                    $element.parent().addClass('errors')
+                    $element = self.$form.find("[name='" + namespace + "[" + index + "]']");
+                    $element.parent().addClass('errors');
 
-                    errorHtml += "<li>" + val + "</li>"
-                    errorHtml += "</ul>"
+                    errorHtml += "<li>" + val + "</li>";
+                    errorHtml += "</ul>";
 
                     if ($element.parent().find('.errors') != null) {
                         $element.parent().find('.errors').remove();

@@ -193,6 +193,8 @@ abstract class BaseMailer
     /**
      * Returns a rendered html string to use for capturing settings input
      *
+     * @param array $settings
+     *
      * @return string
      */
     public function getSettingsHtml(array $settings = [])

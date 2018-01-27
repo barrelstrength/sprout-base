@@ -290,7 +290,7 @@ class DefaultMailer extends BaseMailer implements CampaignEmailSenderInterface
     /**
      * Get all supported Lists. Requires Sprout Lists.
      *
-     * @return array()|null
+     * @return array|void
      */
     public function getLists()
     {

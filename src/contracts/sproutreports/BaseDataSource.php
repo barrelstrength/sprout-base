@@ -184,6 +184,9 @@ abstract class BaseDataSource
     /**
      * Should return an array of strings to be used as column headings in display/output
      *
+     * @param ReportModel $report
+     * @param array       $options
+     *
      * @return array
      */
     public function getDefaultLabels(ReportModel &$report, array $options = [])
@@ -195,8 +198,9 @@ abstract class BaseDataSource
      * Should return an array of records to use in the report
      *
      * @param ReportModel $report
+     * @param array       $options
      *
-     * @return null|array
+     * @return array
      */
     public function getResults(ReportModel &$report, array $options = [])
     {
@@ -218,7 +222,10 @@ abstract class BaseDataSource
     /**
      * Validate the data sources options
      *
-     * @return boolean
+     * @param array $options
+     * @param array $errors
+     *
+     * @return bool
      */
     public function validateOptions(array $options = [], array &$errors = [])
     {

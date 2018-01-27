@@ -79,10 +79,10 @@ class AddressController extends Controller
     }
 
     /**
-     * Return all Address Form Fields for the selected Country
-     *
      * @return \yii\web\Response
      * @throws BadRequestHttpException
+     * @throws Exception
+     * @throws \Twig_Error_Loader
      */
     public function actionGetAddressFormFields()
     {
@@ -127,7 +127,10 @@ class AddressController extends Controller
     /**
      * Get an address
      *
+     * @return \yii\web\Response
      * @throws BadRequestHttpException
+     * @throws Exception
+     * @throws \Twig_Error_Loader
      */
     public function actionGetAddress()
     {

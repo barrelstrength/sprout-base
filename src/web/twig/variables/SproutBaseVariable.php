@@ -14,7 +14,9 @@ use craft\helpers\Template;
 class SproutBaseVariable
 {
     /**
-     * @return string
+     * @param $path
+     *
+     * @return \Twig_Markup
      */
     public function getSvg($path)
     {

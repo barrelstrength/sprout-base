@@ -58,7 +58,9 @@ class AddressHelper
     }
 
     /**
-     * @return mixed
+     * @return null|string|string[]
+     * @throws \Twig_Error_Loader
+     * @throws \yii\base\Exception
      */
     public function getAddressFormHtml()
     {
@@ -100,6 +102,8 @@ class AddressHelper
 
     /**
      * @return string
+     * @throws \Twig_Error_Loader
+     * @throws \yii\base\Exception
      */
     private function getAddressInfoInput()
     {
@@ -114,6 +118,8 @@ class AddressHelper
      * @param string            $namespace
      *
      * @return \Twig_Markup
+     * @throws \Twig_Error_Loader
+     * @throws \yii\base\Exception
      */
     public function displayAddressForm(AddressModel $addressModel = null, $namespace = 'address')
     {
@@ -139,7 +145,11 @@ class AddressHelper
     }
 
     /**
+     * @param null $hidden
+     *
      * @return string
+     * @throws \Twig_Error_Loader
+     * @throws \yii\base\Exception
      */
     public function countryInput($hidden = null)
     {
@@ -165,6 +175,8 @@ class AddressHelper
      * @param $addressName
      *
      * @return string
+     * @throws \Twig_Error_Loader
+     * @throws \yii\base\Exception
      */
     private function addressLine($addressName)
     {
@@ -191,6 +203,8 @@ class AddressHelper
 
     /**
      * @return string
+     * @throws \Twig_Error_Loader
+     * @throws \yii\base\Exception
      */
     private function sortingCode()
     {
@@ -211,6 +225,8 @@ class AddressHelper
 
     /**
      * @return string
+     * @throws \Twig_Error_Loader
+     * @throws \yii\base\Exception
      */
     private function locality()
     {
@@ -231,6 +247,8 @@ class AddressHelper
 
     /**
      * @return string
+     * @throws \Twig_Error_Loader
+     * @throws \yii\base\Exception
      */
     private function dependentLocality()
     {
@@ -251,6 +269,8 @@ class AddressHelper
 
     /**
      * @return string
+     * @throws \Twig_Error_Loader
+     * @throws \yii\base\Exception
      */
     private function administrativeArea()
     {
@@ -296,6 +316,8 @@ class AddressHelper
 
     /**
      * @return string
+     * @throws \Twig_Error_Loader
+     * @throws \yii\base\Exception
      */
     public function postalCode()
     {

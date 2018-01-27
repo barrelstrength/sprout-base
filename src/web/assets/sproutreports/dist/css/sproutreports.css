@@ -20,15 +20,11 @@
 }
 
 .tablecontent tr td:last-child {
-    border-right: 0px solid transparent;
+    border-right: 0 solid transparent;
 }
 
 /* SELECT REPORT HEADING
 -----------------------------------*/
-
-.selectreport {
-    margin-left: -25px;
-}
 
 .selectreport h3,
 .selectreport form {
@@ -55,17 +51,8 @@
 }
 
 .tableview td.sproutreports-reportname,
-.tableview td.sproutreports-reportdescription,
 .tableview td.sproutreports-reportactions {
     vertical-align: text-top;
-}
-
-form.btn-download {
-    display: inline;
-}
-
-form.btn-download input {
-    outline: none;
 }
 
 .tableview.sproutreports {

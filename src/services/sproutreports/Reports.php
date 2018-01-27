@@ -109,7 +109,9 @@ class Reports extends Component
     }
 
     /**
-     * @return null|ReportModel[]
+     * @param $dataSourceId
+     *
+     * @return array
      */
     public function getReportsBySourceId($dataSourceId)
     {
