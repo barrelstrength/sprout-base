@@ -24,13 +24,16 @@ class BaseEvent
     protected $pluginId;
 
     /**
-     * @param $pluginName
+     * @param $pluginId
      */
     public function setPluginId($pluginId)
     {
         $this->pluginId = $pluginId;
     }
 
+    /**
+     * @return string
+     */
     public function getPluginId()
     {
         return $this->pluginId;
@@ -56,6 +59,9 @@ class BaseEvent
         return strtolower(str_replace('\\', '-', get_class($this)));
     }
 
+    /**
+     * @return mixed
+     */
     public function getBaseName()
     {
         $namespaceArray = explode('\\', get_class($this));

@@ -6,7 +6,7 @@
 {% else %}
     {% set notificationId = notificationEmail.id %}
 {% endif %}
-{% set currentBase = craft.request.segment(1) %}
+{% set currentBase = craft.app.request.getSegment(1) %}
 
 {% set crumbs = [
     { label: "Notifications"|t, url: url(currentBase ~ '/notifications') },

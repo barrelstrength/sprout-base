@@ -1,5 +1,7 @@
 {% import "_includes/forms" as forms %}
 
+{# Form Input Macros #}
+
 {% macro address(config) %}
     {% include 'sprout-base/sproutfields/_includes/forms/address/input' with config %}
 {% endmacro %}
@@ -40,6 +42,7 @@
     {% include 'sprout-base/sproutfields/_includes/forms/selectother/input' with config only %}
 {%- endmacro %}
 
+{# Form Field Macros #}
 
 {% macro emailField(config) %}
     {% import "_includes/forms" as forms %}
@@ -47,14 +50,14 @@
     {{ forms.field(config, sproutFields.email(config)) }}
 {% endmacro %}
 
-    {% macro linkField(config) %}
-        {% import "_includes/forms" as forms %}
-        {% import _self as sproutFields %}
-        {{ forms.field(config, sproutFields.link(config)) }}
-    {% endmacro %}
+{% macro linkField(config) %}
+    {% import "_includes/forms" as forms %}
+    {% import _self as sproutFields %}
+    {{ forms.field(config, sproutFields.link(config)) }}
+{% endmacro %}
 
-        {% macro phoneField(config) %}
-            {% import "_includes/forms" as forms %}
-            {% import _self as sproutFields %}
-            {{ forms.field(config, sproutFields.phone(config)) }}
-        {% endmacro %}
+{% macro phoneField(config) %}
+    {% import "_includes/forms" as forms %}
+    {% import _self as sproutFields %}
+    {{ forms.field(config, sproutFields.phone(config)) }}
+{% endmacro %}

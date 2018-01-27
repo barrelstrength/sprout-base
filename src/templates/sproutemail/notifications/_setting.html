@@ -3,7 +3,7 @@
 
 {% set title = "Edit Notification"|t %}
 
-{% set currentBase = craft.request.segment(1) %}
+{% set currentBase = craft.app.request.getSegment(1) %}
 {% set crumbs = [
 { label: "Notifications", url: url(currentBase ~ '/notifications') },
 ] %}

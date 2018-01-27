@@ -53,7 +53,6 @@ abstract class BaseMailer
         }
     }
 
-
     /**
      * Returns the mailer title when used in string context
      *
@@ -86,9 +85,12 @@ abstract class BaseMailer
         return get_class($this);
     }
 
+    /**
+     * @return string
+     */
     public function getName()
     {
-        return static::getId();
+        return $this->getId();
     }
 
     /**
@@ -217,9 +219,9 @@ abstract class BaseMailer
      * if they implement SproutEmailCampaignEmailSenderInterface
      *
      * @param CampaignEmail $campaignEmail
-     * @param CampaignType  $campaign
+     * @param CampaignType  $campaignType
      *
-     * @internal param SproutEmail_CampaignEmailModel $campaignEmail
+     * @return mixed
      */
     abstract public function sendCampaignEmail(
         CampaignEmail $campaignEmail,
@@ -328,7 +330,14 @@ abstract class BaseMailer
         return $model;
     }
 
-    public function sendTestEmail(CampaignEmail $campaignEmail, CampaignType $campaignType, $emails = [])
+    /**
+     * @param CampaignEmail $campaignEmail
+     * @param CampaignType  $campaignType
+     * @param array         $emails
+     *
+     * @return null
+     */
+    public function sendTestEmail(CampaignEmail $campaignEmail, CampaignType $campaignType, array $emails = [])
     {
         return null;
     }

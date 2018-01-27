@@ -97,7 +97,7 @@ class ReportGroups extends Component
             $groupRecord = ReportGroupRecord::findOne($group->id);
 
             if (!$groupRecord) {
-                throw new \Exception(SproutReports::t('No field group exists with the ID “{id}”', ['id' => $group->id]));
+                throw new \Exception(Craft::t('sprout-import','No field group exists with the ID “{id}”', ['id' => $group->id]));
             }
         } else {
             $groupRecord = new ReportGroupRecord();
