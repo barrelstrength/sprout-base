@@ -15,7 +15,6 @@ use barrelstrength\sproutbase\web\twig\variables\SproutBaseVariable;
 use craft\events\DefineComponentsEvent;
 use craft\web\Application;
 use craft\web\twig\variables\CraftVariable;
-use yii\base\ActionEvent;
 use yii\base\Event;
 use \yii\base\Module;
 use craft\web\View;

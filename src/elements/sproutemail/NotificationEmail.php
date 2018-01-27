@@ -2,6 +2,7 @@
 
 namespace barrelstrength\sproutbase\elements\sproutemail;
 
+use barrelstrength\sproutbase\mailers\DefaultMailer;
 use barrelstrength\sproutbase\SproutBase;
 use barrelstrength\sproutemail\web\assets\email\EmailAsset;
 use barrelstrength\sproutemail\elements\actions\DeleteEmail;
@@ -279,7 +280,7 @@ class NotificationEmail extends Element
     public function getMailer()
     {
         // All Notification Emails use the Default Mailer
-        return SproutBase::$app->mailers->getMailerByName('barrelstrength\\sproutbase\\mailers\\DefaultMailer');
+        return SproutBase::$app->mailers->getMailerByName(DefaultMailer::class);
     }
 
     /**

@@ -41,6 +41,8 @@ class Report extends Model
 
     public $dateUpdated;
 
+    public $results;
+
     /**
      * @return mixed
      */

@@ -7,7 +7,7 @@
 
 namespace barrelstrength\sproutbase\services\sproutreports;
 
-use League\Csv\Writer as LeagueCsvWriter;
+use League\Csv\Writer;
 use yii\base\Component;
 
 class Exports extends Component
@@ -72,7 +72,7 @@ class Exports extends Component
             $labels = array_keys($firstRowOfArray);
         }
 
-        $csv = LeagueCsvWriter::createFromFileObject(new \SplTempFileObject());
+        $csv = Writer::createFromFileObject(new \SplTempFileObject());
 
         $csv->insertOne($labels);
         $csv->insertAll($values);

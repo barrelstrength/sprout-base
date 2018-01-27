@@ -9,6 +9,7 @@ namespace barrelstrength\sproutbase\controllers;
 
 use barrelstrength\sproutbase\helpers\AddressHelper;
 use barrelstrength\sproutbase\models\sproutfields\Address as AddressModel;
+use barrelstrength\sproutbase\records\sproutfields\Address as AddressRecord;
 use barrelstrength\sproutbase\SproutBase;
 use craft\db\Query;
 use craft\web\Controller;
@@ -201,7 +202,7 @@ class AddressController extends Controller
             $response = false;
 
             if (isset($addressInfoModel->id) && $addressInfoModel->id) {
-                $addressRecord = new SproutSeo_AddressRecord;
+                $addressRecord = new AddressRecord();
                 $response = $addressRecord->deleteByPk($addressInfoModel->id);
             }
 

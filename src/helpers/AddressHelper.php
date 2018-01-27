@@ -7,7 +7,6 @@
 
 namespace barrelstrength\sproutbase\helpers;
 
-use barrelstrength\sproutbase\SproutBase;
 use barrelstrength\sproutbase\models\sproutfields\Address as AddressModel;
 use Craft;
 use CommerceGuys\Addressing\Repository\AddressFormatRepository;

@@ -10,7 +10,6 @@ namespace barrelstrength\sproutbase\services\sproutfields;
 use craft\base\Field;
 use yii\base\Component;
 use Craft;
-use barrelstrength\sproutbase\SproutBase;
 
 /**
  * Class LinkService

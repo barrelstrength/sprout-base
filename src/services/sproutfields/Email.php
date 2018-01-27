@@ -12,8 +12,6 @@ use craft\base\Field;
 use yii\base\Component;
 use craft\db\Query;
 
-use barrelstrength\sproutbase\SproutBase;
-
 /**
  * Class EmailService
  *

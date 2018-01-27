@@ -297,7 +297,7 @@ class DefaultMailer extends BaseMailer implements CampaignEmailSenderInterface
         /**
          * @todo update when sprout list when we develop sprout lists plugin
          */
-        /*if ($this->lists === null && Craft::$app->getPlugins()->getPlugin('srout-lists') != null)
+        /*if ($this->lists === null && Craft::$app->getPlugins()->getPlugin('sprout-lists') != null)
         {
             $listType = SproutLists::$app->lists->getListType('subscriber');
 
@@ -316,7 +316,7 @@ class DefaultMailer extends BaseMailer implements CampaignEmailSenderInterface
      * @throws \Twig_Error_Loader
      * @throws \yii\base\Exception
      */
-    public function getListsHtml($values = [])
+    public function getListsHtml(array $values = [])
     {
         $selected = [];
         $options = [];
@@ -411,7 +411,7 @@ class DefaultMailer extends BaseMailer implements CampaignEmailSenderInterface
             $dynamicRecipients
         );
 
-        // @todo implment this when we develop sprout lists plugin
+        // @todo implement this when we develop sprout lists plugin
         if (Craft::$app->getPlugins()->getPlugin('sprout-lists') != null) {
             // Get all subscribers by list IDs from the SproutLists_SubscriberListType
 //            $listRecords = SproutLists_ListRecord::model()->findAllByPk($email->listSettings['listIds']);

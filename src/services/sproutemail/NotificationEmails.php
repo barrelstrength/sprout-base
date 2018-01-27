@@ -4,6 +4,7 @@ namespace barrelstrength\sproutbase\services\sproutemail;
 
 use barrelstrength\sproutbase\contracts\sproutemail\BaseEvent;
 use barrelstrength\sproutbase\elements\sproutemail\NotificationEmail;
+use barrelstrength\sproutbase\mailers\DefaultMailer;
 use barrelstrength\sproutbase\SproutBase;
 use barrelstrength\sproutbase\events\RegisterNotificationEvent;
 use barrelstrength\sproutemail\mail\Message;
@@ -450,7 +451,7 @@ class NotificationEmails extends Component
      */
     protected function relayNotificationThroughAssignedMailer(ElementInterface $notificationEmail, $object)
     {
-        $mailer = SproutBase::$app->mailers->getMailerByName('barrelstrength\\sproutbase\\mailers\\DefaultMailer');
+        $mailer = SproutBase::$app->mailers->getMailerByName(DefaultMailer::class);
 
         if (!method_exists($mailer, 'sendNotificationEmail')) {
             throw new \BadMethodCallException(Craft::t('sprout-base', 'The {mailer} does not have a sendNotificationEmail() method.',
@@ -572,7 +573,7 @@ class NotificationEmails extends Component
         if ($event) {
             try {
 
-                $mailer = SproutBase::$app->mailers->getMailerByName('barrelstrength\\sproutbase\\mailers\\DefaultMailer');
+                $mailer = SproutBase::$app->mailers->getMailerByName(DefaultMailer::class);
 
                 // Must pass email options for getMockedParams methods to use $this->options
                 $event->setOptions($notificationEmail->options);

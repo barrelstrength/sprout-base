@@ -8,8 +8,7 @@
 namespace barrelstrength\sproutbase\services\sproutfields;
 
 use yii\base\Component;
-
-use barrelstrength\sproutbase\SproutBase;
+use Craft;
 
 /**
  * Class PhoneService

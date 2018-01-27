@@ -293,7 +293,7 @@ abstract class BaseMailer
      *
      * @return null
      */
-    public function getListsHtml($values = [])
+    public function getListsHtml(array $values = [])
     {
         return null;
     }

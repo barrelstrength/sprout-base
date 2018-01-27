@@ -7,7 +7,6 @@
 
 namespace barrelstrength\sproutbase\services\sproutfields;
 
-use barrelstrength\sproutbase\SproutBase;
 use barrelstrength\sproutbase\models\sproutfields\Address as AddressModel;
 use barrelstrength\sproutbase\events\OnSaveAddressEvent;
 use barrelstrength\sproutbase\records\sproutfields\Address as AddressRecord;

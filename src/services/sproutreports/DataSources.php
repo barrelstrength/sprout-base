@@ -10,7 +10,6 @@ namespace barrelstrength\sproutbase\services\sproutreports;
 use barrelstrength\sproutbase\contracts\sproutreports\BaseDataSource;
 use barrelstrength\sproutbase\models\sproutreports\DataSource as DataSourceModel;
 use barrelstrength\sproutbase\records\sproutreports\DataSource as DataSourceRecord;
-use barrelstrength\sproutbase\SproutBase;
 use yii\base\Component;
 use craft\events\RegisterComponentTypesEvent;
 use craft\db\Query;

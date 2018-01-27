@@ -8,7 +8,6 @@
 namespace barrelstrength\sproutbase\contracts\sproutimport;
 
 use barrelstrength\sproutimport\SproutImport;
-use craft\base\Model;
 use Craft;
 
 /**
