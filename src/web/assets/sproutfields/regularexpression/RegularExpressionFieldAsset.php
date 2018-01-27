@@ -29,7 +29,7 @@ class RegularExpressionFieldAsset extends AssetBundle
         ];
 
         $this->css = [
-            'resources/css/sproutfields.css',
+            'base/css/sproutfields.css',
         ];
 
         parent::init();
