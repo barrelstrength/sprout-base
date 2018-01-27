@@ -75,7 +75,7 @@ class Address extends Model
                 'postalName' => $postalName,
             ];
 
-            $this->addError($attribute, SproutBase::t("{postalName} is not a valid.", $params));
+            $this->addError($attribute, Craft::t('sprout-base',"{postalName} is not a valid.", $params));
         }
     }
 

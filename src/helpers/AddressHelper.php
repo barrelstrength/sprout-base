@@ -364,7 +364,7 @@ class AddressHelper
             if (preg_match("/^".$pattern."$/", $value['postalCode'])) {
                 return true;
             } else {
-                $errors['postalCode'] = SproutBase::t(ucwords($postalName).' is invalid.');
+                $errors['postalCode'] = Craft::t('sprout-base',ucwords($postalName).' is invalid.');
             }
         }
 
@@ -412,7 +412,7 @@ class AddressHelper
      */
     public function renderHeading($title)
     {
-        return SproutBase::t(str_replace('_', ' ', ucwords($title)));
+        return Craft::t('sprout-base',str_replace('_', ' ', ucwords($title)));
     }
 
     /**

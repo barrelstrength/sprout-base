@@ -51,10 +51,10 @@ class RegularExpression extends Component
     public function getErrorMessage($field): string
     {
         if (!empty($field->customPattern) && isset($field->customPatternErrorMessage)) {
-            return SproutBase::t($field->customPatternErrorMessage);
+            return Craft::t('sprout-base',$field->customPatternErrorMessage);
         }
 
-        return SproutBase::t($field->name.' must be a valid pattern.');
+        return Craft::t('sprout-base',$field->name.' must be a valid pattern.');
     }
 
 }

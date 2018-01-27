@@ -47,7 +47,7 @@ class Address extends Component
             $record = AddressRecord::findOne($model->id);
 
             if (!$record) {
-                throw new \Exception(SproutBase::t('No entry exists with the ID “{id}”', ['id' => $model->id]));
+                throw new \Exception(Craft::t('sprout-base','No entry exists with the ID “{id}”', ['id' => $model->id]));
             }
         }
 

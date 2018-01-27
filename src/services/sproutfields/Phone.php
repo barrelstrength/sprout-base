@@ -146,12 +146,12 @@ class Phone extends Component
     {
         // Change empty condition to show default message when toggle settings is unchecked
         if (!empty($field->customPatternErrorMessage)) {
-            return SproutBase::t($field->customPatternErrorMessage);
+            return Craft::t('sprout-base',$field->customPatternErrorMessage);
         }
 
         $vars = ['field' => $field->name, 'format' => $field->mask];
 
-        return SproutBase::t('{field} is invalid. Required format: {format}', $vars);
+        return Craft::t('sprout-base','{field} is invalid. Required format: {format}', $vars);
     }
 
 }

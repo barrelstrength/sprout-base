@@ -113,7 +113,7 @@ class SettingsController extends BaseController
         $settings = Craft::$app->getRequest()->getBodyParam('settings');
 
         if (!SproutBase::$app->settings->saveSettings($this->plugin, $settings)) {
-            Craft::$app->getSession()->setError(SproutBase::t('Couldn’t save settings.'));
+            Craft::$app->getSession()->setError(Craft::t('sprout-base','Couldn’t save settings.'));
 
             Craft::$app->getUrlManager()->setRouteParams([
                 'settings' => $settings
@@ -122,7 +122,7 @@ class SettingsController extends BaseController
             return null;
         }
 
-        Craft::$app->getSession()->setNotice(SproutBase::t('Settings saved.'));
+        Craft::$app->getSession()->setNotice(Craft::t('sprout-base','Settings saved.'));
 
         return $this->redirectToPostedUrl();
     }

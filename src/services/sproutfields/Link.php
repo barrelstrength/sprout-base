@@ -57,10 +57,10 @@ class Link extends Component
     public function getErrorMessage($fieldName, $field): string
     {
         if (!empty($field->customPattern) && isset($field->customPatternErrorMessage)) {
-            return SproutBase::t($field->customPatternErrorMessage);
+            return Craft::t('sprout-base',$field->customPatternErrorMessage);
         }
 
-        return SproutBase::t($fieldName.' must be a valid link.');
+        return Craft::t('sprout-base',$fieldName.' must be a valid link.');
     }
 
 }
