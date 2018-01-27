@@ -23,11 +23,20 @@ class SproutBaseVariable
         return Template::raw(file_get_contents($svg));
     }
 
+    /**
+     * @return array
+     */
     public function getAvailableEvents()
     {
         return SproutBase::$app->notifications->getAvailableEvents();
     }
 
+    /**
+     * @param $event
+     * @param $notificationEmail
+     *
+     * @return mixed
+     */
     public function getEventSelectedOptions($event, $notificationEmail)
     {
         return SproutBase::$app->notifications->getEventSelectedOptions($event, $notificationEmail);

@@ -2,7 +2,7 @@
 
 namespace barrelstrength\sproutbase\controllers;
 
-use barrelstrength\sproutbase\web\assets\notifications\NotificationAsset;
+use barrelstrength\sproutbase\web\assets\sproutemail\NotificationAsset;
 use barrelstrength\sproutbase\base\TemplateTrait;
 use barrelstrength\sproutbase\elements\sproutemail\NotificationEmail;
 use barrelstrength\sproutbase\SproutBase;
@@ -146,7 +146,7 @@ class NotificationsController extends Controller
     /**
      * Renders the Edit Notification Email template
      *
-     * @param null                   $notificationId
+     * @param null                   $emailId
      * @param NotificationEmail|null $notificationEmail
      *
      * @return \yii\web\Response

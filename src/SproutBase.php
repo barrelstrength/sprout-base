@@ -30,6 +30,9 @@ class SproutBase extends Module
 {
     use BaseSproutTrait;
 
+    /**
+     * @var string
+     */
     public $handle;
 
     /**
@@ -55,7 +58,8 @@ class SproutBase extends Module
     public $sourceLanguage = 'en-US';
 
     /**
-     * @todo - We copied from craft/base/plugin, ask to P&T if this is the best way to do it
+     * @todo - We copied from craft/base/plugin, ask P&T if this is the best way to do it
+     *
      * @inheritdoc
      */
     public function __construct($id, $parent = null, array $config = [])
