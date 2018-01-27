@@ -363,8 +363,7 @@ class NotificationEmails extends Component
                      */
                     $notificationEmailElement = Craft::$app->getElements()->getElementById($notificationEmail->id);
 
-                    if ($notificationEmailElement)
-                    {
+                    if ($notificationEmailElement) {
                         $this->relayNotificationThroughAssignedMailer($notificationEmailElement, $element);
                     }
                 }
@@ -460,14 +459,12 @@ class NotificationEmails extends Component
 
         try {
 
-            if ($mailer)
-            {
+            if ($mailer) {
                 /**
                  * @var $notificationEmail NotificationEmail
                  */
                 return $mailer->sendNotificationEmail($notificationEmail, $object);
             }
-
         } catch (\Exception $e) {
             throw $e;
         }
@@ -578,8 +575,7 @@ class NotificationEmails extends Component
 
                 $sent = false;
 
-                if ($mailer)
-                {
+                if ($mailer) {
                     $sent = $mailer->sendNotificationEmail($notificationEmail, $event->getMockedParams());
                 }
 

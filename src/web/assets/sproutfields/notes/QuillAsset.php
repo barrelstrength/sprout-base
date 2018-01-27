@@ -11,20 +11,20 @@ use craft\web\AssetBundle;
 
 class QuillAsset extends AssetBundle
 {
-	public function init()
-	{
-		// define the path that your publishable resources live
-		$this->sourcePath = dirname(__DIR__, 5).'/lib/quill';
-		// define the relative path to CSS/JS files that should be registered with the page
-		// when this asset bundle is registered
-		$this->js = [
-			'quill.min.js',
-		];
+    public function init()
+    {
+        // define the path that your publishable resources live
+        $this->sourcePath = dirname(__DIR__, 5).'/lib/quill';
+        // define the relative path to CSS/JS files that should be registered with the page
+        // when this asset bundle is registered
+        $this->js = [
+            'quill.min.js',
+        ];
 
-		$this->css = [
-			'quill.snow.css',
-		];
+        $this->css = [
+            'quill.snow.css',
+        ];
 
-		parent::init();
-	}
+        parent::init();
+    }
 }

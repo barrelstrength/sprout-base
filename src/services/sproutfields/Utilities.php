@@ -53,18 +53,16 @@ class Utilities extends Component
         $errors = $this->getErrors();
 
         $text = '';
-        if (!empty($errors))
-        {
-            $text.= '<ul>';
-            foreach ($errors as $key => $error)
-            {
-                if (is_array($error))
-                {
-                    foreach ($error as $desc)
-                    $text.= '<li>' . $desc . '</li>';
+        if (!empty($errors)) {
+            $text .= '<ul>';
+            foreach ($errors as $key => $error) {
+                if (is_array($error)) {
+                    foreach ($error as $desc) {
+                        $text .= '<li>'.$desc.'</li>';
+                    }
                 }
             }
-            $text.= '</ul>';
+            $text .= '</ul>';
         }
 
         return $text;

@@ -50,7 +50,7 @@ class ReportsController extends Controller
         $newReportOptions = [];
 
         foreach ($dataSources as $dataSource) {
-            if ((bool) $dataSource->allowNew()) {
+            if ((bool)$dataSource->allowNew()) {
                 $newReportOptions[] = [
                     'name' => $dataSource->getName(),
                     'url' => $dataSource->getUrl('/new')
@@ -267,7 +267,7 @@ class ReportsController extends Controller
         $group = new ReportGroup();
         $group->id = $request->getBodyParam('id');
         $group->name = $groupName;
-        
+
         if (SproutBase::$app->reportGroups->saveGroup($group)) {
 
             Craft::$app->getSession()->setNotice(SproutBase::t('Report group saved.'));

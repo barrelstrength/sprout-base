@@ -133,8 +133,7 @@ class NotificationsController extends Controller
             return $this->redirectToPostedUrl($notificationEmail);
         }
 
-        if ($session)
-        {
+        if ($session) {
             $session->setError(Craft::t('sprout-base', 'Unable to save setting.'));
         }
 
@@ -347,7 +346,7 @@ class NotificationsController extends Controller
 
             $session->setNotice(Craft::t('sprout-base', 'Notification deleted.'));
 
-            return $this->redirect($this->currentBase . '/notifications');
+            return $this->redirect($this->currentBase.'/notifications');
         }
 
         if (Craft::$app->getRequest()->getIsAjax()) {
