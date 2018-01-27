@@ -5,25 +5,22 @@
  * @license   http://sprout.barrelstrengthdesign.com/license
  */
 
-namespace barrelstrength\sproutbase\web\assets\sproutfields\notes;
+namespace barrelstrength\sproutbase\web\assets\sproutfields\phone;
 
 use craft\web\AssetBundle;
 
-class QuillAsset extends AssetBundle
+class InputMaskAsset extends AssetBundle
 {
     public function init()
     {
         // define the path that your publishable resources live
-        $this->sourcePath = '@sproutbaselib/quill';
+        $this->sourcePath = '@sproutbaselib/inputmask';
 
         // define the relative path to CSS/JS files that should be registered with the page
         // when this asset bundle is registered
         $this->js = [
-            'quill.min.js',
-        ];
-
-        $this->css = [
-            'quill.snow.css',
+            'inputmask.js',
+            'jquery.inputmask.js'
         ];
 
         parent::init();

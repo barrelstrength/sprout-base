@@ -100,6 +100,7 @@ class SproutBase extends Module
         self::$app = new App();
 
         Craft::setAlias('@sproutbase', $this->getBasePath());
+        Craft::setAlias('@sproutbaselib', dirname(__DIR__, 2).'/sprout-base/lib');
 
         // Register our base template path
         Event::on(View::class, View::EVENT_REGISTER_CP_TEMPLATE_ROOTS, function(RegisterTemplateRootsEvent $e) {

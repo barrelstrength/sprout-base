@@ -21,7 +21,7 @@
                     var data = {
                         'mask': mask,
                         'value': phoneNumber
-                    }
+                    };
 
                     // Determine if we should show Phone link on initial load
                     validatePhoneNumber($(sproutPhoneFieldId), phoneNumber, data);
@@ -78,7 +78,7 @@
                             }
                         }
                     }
-                }
+                };
 
                 if (inputMask == 'checked') {
                     var maskingOption = maskOptions.checked;
@@ -91,7 +91,7 @@
                     var data = {
                         'mask': mask,
                         'value': phoneNumber
-                    }
+                    };
                     validatePhoneNumber(currentPhoneField, phoneNumber, data);
                 });
 
