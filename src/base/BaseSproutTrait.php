@@ -52,17 +52,4 @@ trait BaseSproutTrait
 
         Craft::info($message, static::$pluginId);
     }
-
-    /**
-     * Translates a message to the specified language using the pluginId as the category
-     *
-     * @param string $message
-     * @param array  $params
-     *
-     * @return string
-     */
-    public static function t($message, array $params = [])
-    {
-        return Craft::t(static::$pluginId, $message, $params);
-    }
 }
