@@ -34,36 +34,36 @@
     * Address Field
     */
     .{{ addressBox }} {
-    display: inline-flex;
-    justify-content: flex-start;
+        display: inline-flex;
+        justify-content: flex-start;
     }
     .{{ addressBox }} .address-add-button {
-    order: 1;
+        order: 1;
     }
     .{{ addressBox }} .address-edit-buttons {
-    order: 3;
+        order: 3;
     }
     .{{ addressBox }} .address-format {
-    order: 2;
-    padding-right: 20px;
+        order: 2;
+        padding-right: 20px;
     }
 
     .sproutaddress-body .text,
     .sproutaddress-body .select {
-    padding: 0;
+        padding: 0;
     }
 
     .sproutaddress-modal {
-    overflow: visible
+        overflow: visible
     }
 
     .modal .sproutaddress-body {
-    padding: 0;
+        padding: 0;
     }
 {% endcss %}
 
 {% js %}
     $( document ).ready(function() {
-    new Craft.SproutBase.AddressBox($('.{{ addressBox }}'), { namespace: '{{ name }}' })
+        new Craft.SproutBase.AddressBox($('.{{ addressBox }}'), { namespace: '{{ name }}' })
     });
 {% endjs %}
