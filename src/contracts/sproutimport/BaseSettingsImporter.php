@@ -19,6 +19,7 @@ abstract class BaseSettingsImporter extends BaseImporter
 
     /**
      * @return \craft\base\Model|mixed|null
+     * @throws \Exception
      */
     public function getModel()
     {

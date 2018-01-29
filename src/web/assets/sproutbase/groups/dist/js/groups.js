@@ -85,7 +85,7 @@ if (typeof Craft.SproutBase === typeof undefined) {
             var oldName = this.$selectedGroup.text(),
                 newName = this.promptForGroupName(oldName);
 
-            if (newName && newName != oldName) {
+            if (newName && newName !== oldName) {
                 var data = {
                     id: this.$selectedGroup.data('id'),
                     name: newName
@@ -130,7 +130,7 @@ if (typeof Craft.SproutBase === typeof undefined) {
         {
             this.$selectedGroup = this.$groups.find('a.sel:first');
 
-            if (this.$selectedGroup.data('key') == '*')
+            if (this.$selectedGroup.data('key') === '*')
             {
                 $(this.$groupSettingsBtn).addClass('hidden');
             }

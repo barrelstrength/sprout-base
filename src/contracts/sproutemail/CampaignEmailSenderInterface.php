@@ -14,10 +14,9 @@ interface CampaignEmailSenderInterface
 {
     /**
      * @param CampaignEmail $campaignEmail
-     * @param CampaignType  $campaign
+     * @param CampaignType  $campaignType
      *
      * @return mixed
-     * @internal param SproutEmail_CampaignEmailModel $campaignEmail
      */
     public function sendCampaignEmail(CampaignEmail $campaignEmail, CampaignType $campaignType);
 }

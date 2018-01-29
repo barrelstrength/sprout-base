@@ -21,13 +21,13 @@ SproutBase.AddressForm = {
 
         $element.find('.sproutaddress-country-select select').change($.proxy(function(e) {
 
-            var target = e.currentTarget
+            var target = e.currentTarget;
 
             var $target = $(target);
             var countryCode = $target.val();
 
             this.changeFormInput(countryCode, this)
-        }, this))
+        }, this));
 
         // public method
         var self = this;
@@ -39,7 +39,7 @@ SproutBase.AddressForm = {
 
         var data = {
             'countryCode': countryCode
-        }
+        };
 
         var actionUrl = obj.settings.actionUrl;
 
@@ -52,4 +52,4 @@ SproutBase.AddressForm = {
     defaults: {
         onChange: $.noop
     }
-}
+};

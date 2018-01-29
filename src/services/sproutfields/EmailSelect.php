@@ -7,10 +7,7 @@
 
 namespace barrelstrength\sproutbase\services\sproutfields;
 
-use Craft;
-use craft\base\Field;
 use yii\base\Component;
-use craft\db\Query;
 
 class EmailSelect extends Component
 {
@@ -41,7 +38,7 @@ class EmailSelect extends Component
      *
      * @return bool
 
-    public function unobfuscateEmailAddresses($formId, $submittedFields = array())
+    public function unobfuscateEmailAddresses($formId, $submittedFields = [])
      * {
      * if (!is_numeric($formId))
      * {

@@ -8,8 +8,7 @@
 namespace barrelstrength\sproutbase\contracts\sproutimport;
 
 use barrelstrength\sproutimport\SproutImport;
-use craft\base\Model;
-use barrelstrength\sproutbase\SproutBase;
+use Craft;
 
 /**
  * Class BaseImporter
@@ -40,7 +39,7 @@ abstract class BaseImporter
      *
      * @var null
      */
-    protected $importerClass = null;
+    protected $importerClass;
 
     /**
      * Any data an importer needs to store and access at another time such as
@@ -69,8 +68,10 @@ abstract class BaseImporter
      *
      * @param array $rows
      * @param null  $fakerService
+     *
+     * @throws \Exception
      */
-    public function __construct($rows = [], $fakerService = null)
+    public function __construct(array $rows = [], $fakerService = null)
     {
         $this->rows = $rows;
 
@@ -170,7 +171,7 @@ abstract class BaseImporter
      *
      * @return mixed
      */
-    public function setModel($model, $settings = [])
+    public function setModel($model, array $settings = [])
     {
         if (!empty($settings['attributes'])) {
             $model->setAttributes($settings['attributes'], false);
@@ -182,8 +183,7 @@ abstract class BaseImporter
     }
 
     /**
-     * @return Model
-     * @throws \Exception
+     * @return mixed
      */
     public function getModel()
     {
@@ -191,7 +191,7 @@ abstract class BaseImporter
             $className = $this->getModelName();
 
             if (!class_exists($className)) {
-                throw new \Exception(SproutBase::t($className.' namespace on getModelName() method not found.'));
+                throw new \InvalidArgumentException(Craft::t('sprout-base',$className.' namespace on getModelName() method not found.'));
             }
 
             $this->model = new $className;
@@ -209,6 +209,9 @@ abstract class BaseImporter
     }
 
     /**
+     * @param $model
+     * @param $settings
+     *
      * @return bool
      */
     public function resolveNestedSettings($model, $settings)

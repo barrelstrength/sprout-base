@@ -10,7 +10,6 @@ namespace barrelstrength\sproutbase\services\sproutreports;
 use barrelstrength\sproutbase\contracts\sproutreports\BaseDataSource;
 use barrelstrength\sproutbase\models\sproutreports\DataSource as DataSourceModel;
 use barrelstrength\sproutbase\records\sproutreports\DataSource as DataSourceRecord;
-use barrelstrength\sproutbase\SproutBase;
 use yii\base\Component;
 use craft\events\RegisterComponentTypesEvent;
 use craft\db\Query;
@@ -23,7 +22,7 @@ use craft\db\Query;
 class DataSources extends Component
 {
 
-    const EVENT_REGISTER_DATA_SOURCES = "registerSproutReportsDataSources";
+    const EVENT_REGISTER_DATA_SOURCES = 'registerSproutReportsDataSources';
     /**
      * @var BaseDataSource[]
      */
@@ -50,7 +49,7 @@ class DataSources extends Component
      */
     public function getAllDataSources()
     {
-        if (is_null($this->dataSources)) {
+        if (null === $this->dataSources) {
             $event = new RegisterComponentTypesEvent([
                 'types' => []
             ]);
@@ -97,6 +96,7 @@ class DataSources extends Component
      * @param DataSourceModel $model
      *
      * @return bool
+     * @throws \yii\db\Exception
      */
     public function saveDataSource(DataSourceModel $model)
     {
@@ -148,7 +148,8 @@ class DataSources extends Component
      *
      * @param $dataSourceId
      *
-     * @return bool
+     * @return int
+     * @throws \yii\db\Exception
      */
     public function deleteReportsByDataSourceId($dataSourceId)
     {

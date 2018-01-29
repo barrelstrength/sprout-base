@@ -5,7 +5,7 @@ namespace barrelstrength\sproutbase\services\sproutreports;
 use yii\base\Component;
 use barrelstrength\sproutbase\models\sproutreports\ReportGroup as ReportGroupModel;
 use barrelstrength\sproutbase\records\sproutreports\ReportGroup as ReportGroupRecord;
-use barrelstrength\sproutreports\SproutReports;
+use Craft;
 
 /**
  * Class ReportGroups
@@ -20,7 +20,7 @@ class ReportGroups extends Component
      * @return bool
      * @throws \Exception
      */
-    public function saveGroup(ReportGroupModel &$group)
+    public function saveGroup(ReportGroupModel $group)
     {
         $groupRecord = $this->_getGroupRecord($group);
 
@@ -65,9 +65,7 @@ class ReportGroups extends Component
      */
     public function getAllReportGroups()
     {
-        $groups = ReportGroupRecord::find()->indexBy('id')->all();
-
-        return $groups;
+        return ReportGroupRecord::find()->indexBy('id')->all();
     }
 
     /**
@@ -97,7 +95,7 @@ class ReportGroups extends Component
             $groupRecord = ReportGroupRecord::findOne($group->id);
 
             if (!$groupRecord) {
-                throw new \Exception(SproutReports::t('No field group exists with the ID “{id}”', ['id' => $group->id]));
+                throw new \InvalidArgumentException(Craft::t('sprout-import','No field group exists with the ID “{id}”', ['id' => $group->id]));
             }
         } else {
             $groupRecord = new ReportGroupRecord();

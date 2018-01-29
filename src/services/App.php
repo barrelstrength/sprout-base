@@ -100,8 +100,12 @@ class App extends Component
      */
     public function init()
     {
-        // Sprout Core
+        // Sprout Base
         $this->settings = new Settings();
+
+        // Sprout Email
+        $this->notifications = new NotificationEmails();
+        $this->mailers = new Mailers();
 
         // Sprout Fields
         $this->address = new Address();
@@ -117,9 +121,5 @@ class App extends Component
         $this->reportGroups = new ReportGroups();
         $this->dataSources = new DataSources();
         $this->exports = new Exports();
-
-        // Notifications
-        $this->notifications = new NotificationEmails();
-        $this->mailers = new Mailers();
     }
 }

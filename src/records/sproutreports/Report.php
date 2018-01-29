@@ -12,7 +12,16 @@ use craft\db\ActiveRecord;
 /**
  * Class Report
  *
- * @package barrelstrength\sproutbase\records\sproutreports
+ * @property int $id
+ * @property string $name
+ * @property string $nameFormat
+ * @property string $handle
+ * @property string $description
+ * @property bool $allowHtml
+ * @property mixed $options
+ * @property int $dataSourceId
+ * @property bool $enabled
+ * @property int $groupId
  */
 class Report extends ActiveRecord
 {
@@ -30,7 +39,7 @@ class Report extends ActiveRecord
     {
         return [
             self::SCENARIO_ALL => [
-                'id', 'name', 'handle',
+                'id', 'name', 'nameFormat', 'handle',
                 'description', 'options', 'dataSourceId',
                 'groupId', 'enabled', 'allowHtml'
             ]

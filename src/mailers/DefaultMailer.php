@@ -46,7 +46,7 @@ class DefaultMailer extends BaseMailer implements CampaignEmailSenderInterface
      */
     public function getDescription()
     {
-        return SproutEmail::t('Smart transactional email, easy recipient management, and advanced third party integrations.');
+        return Craft::t('sprout-base','Smart transactional email, easy recipient management, and advanced third party integrations.');
     }
 
     /**
@@ -60,10 +60,13 @@ class DefaultMailer extends BaseMailer implements CampaignEmailSenderInterface
     /**
      * @param array $settings
      *
-     * @return \Twig_Markup
+     * @return string|\Twig_Markup
+     * @throws \Twig_Error_Loader
+     * @throws \yii\base\Exception
      */
     public function getSettingsHtml(array $settings = [])
     {
+        /** @noinspection NullCoalescingOperatorCanBeUsedInspection */
         $settings = isset($settings['settings']) ? $settings['settings'] : $this->getSettings();
 
         $html = Craft::$app->getView()->renderTemplate('sprout-base/_integrations/mailers/defaultmailer/settings', [
@@ -115,9 +118,9 @@ class DefaultMailer extends BaseMailer implements CampaignEmailSenderInterface
         $processedRecipients = [];
 
         foreach ($recipients as $recipient) {
-            //	Craft::dump($recipient);
             $toEmail = $this->renderObjectTemplateSafely($recipient->email, $object);
             $name = $recipient->firstName.' '.$recipient->lastName;
+
             /**
              * @var $email Message
              */
@@ -164,6 +167,12 @@ class DefaultMailer extends BaseMailer implements CampaignEmailSenderInterface
         return true;
     }
 
+    /**
+     * @param CampaignEmail $campaignEmail
+     * @param CampaignType  $campaignType
+     *
+     * @return Response|mixed
+     */
     public function sendCampaignEmail(CampaignEmail $campaignEmail, CampaignType $campaignType)
     {
         $lists = [];
@@ -186,7 +195,7 @@ class DefaultMailer extends BaseMailer implements CampaignEmailSenderInterface
             $recipients = Craft::$app->getRequest()->getBodyParam('recipients');
 
             if ($recipients === null) {
-                throw new \Exception(Craft::t('sprout-base', 'Empty recipients.'));
+                throw new \InvalidArgumentException(Craft::t('sprout-base', 'Empty recipients.'));
             }
 
             $result = SproutEmail::$app->getValidAndInvalidRecipients($recipients);
@@ -197,7 +206,7 @@ class DefaultMailer extends BaseMailer implements CampaignEmailSenderInterface
             if (!empty($invalidRecipients)) {
                 $invalidEmails = implode('<br/>', $invalidRecipients);
 
-                throw new \Exception(Craft::t('sprout-base', 'The following recipient email addresses do not validate: {invalidEmails}',
+                throw new \InvalidArgumentException(Craft::t('sprout-base', 'The following recipient email addresses do not validate: {invalidEmails}',
                     [
                         'invalidEmails' => $invalidEmails
                     ]));
@@ -253,7 +262,9 @@ class DefaultMailer extends BaseMailer implements CampaignEmailSenderInterface
      * @param CampaignEmail $campaignEmail
      * @param CampaignType  $campaignType
      *
-     * @return mixed
+     * @return mixed|string
+     * @throws \Twig_Error_Loader
+     * @throws \yii\base\Exception
      */
     public function getPrepareModalHtml(CampaignEmail $campaignEmail, CampaignType $campaignType)
     {
@@ -280,14 +291,14 @@ class DefaultMailer extends BaseMailer implements CampaignEmailSenderInterface
     /**
      * Get all supported Lists. Requires Sprout Lists.
      *
-     * @return array()|null
+     * @return array|void
      */
     public function getLists()
     {
         /**
          * @todo update when sprout list when we develop sprout lists plugin
          */
-        /*if ($this->lists === null && Craft::$app->getPlugins()->getPlugin('srout-lists') != null)
+        /*if ($this->lists === null && Craft::$app->getPlugins()->getPlugin('sprout-lists') != null)
         {
             $listType = SproutLists::$app->lists->getListType('subscriber');
 
@@ -302,9 +313,11 @@ class DefaultMailer extends BaseMailer implements CampaignEmailSenderInterface
      *
      * @param array $values
      *
-     * @return string
+     * @return null|string
+     * @throws \Twig_Error_Loader
+     * @throws \yii\base\Exception
      */
-    public function getListsHtml($values = [])
+    public function getListsHtml(array $values = [])
     {
         $selected = [];
         $options = [];
@@ -330,7 +343,7 @@ class DefaultMailer extends BaseMailer implements CampaignEmailSenderInterface
             return '';
         }
 
-        $listIds = isset($values['listIds']) ? $values['listIds'] : null;
+        $listIds = isset($values['listIds']) ?? $values['listIds'];
 
         if (is_array($listIds) && count($listIds)) {
             foreach ($listIds as $key => $listId) {
@@ -378,9 +391,9 @@ class DefaultMailer extends BaseMailer implements CampaignEmailSenderInterface
             $validRecipients = $result['valid'];
 
             if (!empty($invalidRecipients)) {
-                $invalidEmails = implode("<br />", $invalidRecipients);
+                $invalidEmails = implode('<br>', $invalidRecipients);
 
-                throw new \Exception(Craft::t('sprout-base', "Recipient email addresses do not validate: <br /> {invalidEmails}", [
+                throw new \InvalidArgumentException(Craft::t('sprout-base', 'Recipient email addresses do not validate: <br /> {invalidEmails}', [
                     'invalidEmails' => $invalidEmails
                 ]));
             }
@@ -399,32 +412,32 @@ class DefaultMailer extends BaseMailer implements CampaignEmailSenderInterface
             $dynamicRecipients
         );
 
-        // @todo implment this when we develop sprout lists plugin
-        if (Craft::$app->getPlugins()->getPlugin('sprout-lists') != null) {
-            // Get all subscribers by list IDs from the SproutLists_SubscriberListType
-            /*			$listRecords = SproutLists_ListRecord::model()->findAllByPk($email->listSettings['listIds']);
-
-                        $sproutListsRecipientsInfo = array();
-                        if ($listRecords != null)
-                        {
-                            foreach ($listRecords as $listRecord)
-                            {
-                                if (!empty($listRecord->subscribers))
-                                {
-                                    foreach ($listRecord->subscribers as $subscriber)
-                                    {
-                                        // Assign email as key to not repeat subscriber
-                                        $sproutListsRecipientsInfo[$subscriber->email] = $subscriber->getAttributes();
-                                    }
-                                }
-                            }
-                        }
-
-                        $simpleRecipientModel = new SimpleRecipient();
-                        $sproutListsRecipients = $simpleRecipientModel->setAttributes($sproutListsRecipientsInfo, false);
-
-                        $recipients = array_merge($recipients, $sproutListsRecipients);*/
-        }
+        // @todo implement this when we develop sprout lists plugin
+//        if (Craft::$app->getPlugins()->getPlugin('sprout-lists') != null) {
+//            // Get all subscribers by list IDs from the SproutLists_SubscriberListType
+//            $listRecords = SproutLists_ListRecord::model()->findAllByPk($email->listSettings['listIds']);
+//
+//            $sproutListsRecipientsInfo = array();
+//            if ($listRecords != null)
+//            {
+//                foreach ($listRecords as $listRecord)
+//                {
+//                    if (!empty($listRecord->subscribers))
+//                    {
+//                        foreach ($listRecord->subscribers as $subscriber)
+//                        {
+//                            // Assign email as key to not repeat subscriber
+//                            $sproutListsRecipientsInfo[$subscriber->email] = $subscriber->getAttributes();
+//                        }
+//                    }
+//                }
+//            }
+//
+//            $simpleRecipientModel = new SimpleRecipient();
+//            $sproutListsRecipients = $simpleRecipientModel->setAttributes($sproutListsRecipientsInfo, false);
+//
+//            $recipients = array_merge($recipients, $sproutListsRecipients);
+//        }
 
         return $recipients;
     }
@@ -442,7 +455,7 @@ class DefaultMailer extends BaseMailer implements CampaignEmailSenderInterface
         $onTheFlyRecipients = $campaignEmail->getRecipients($element);
 
         if (is_string($onTheFlyRecipients)) {
-            $onTheFlyRecipients = explode(",", $onTheFlyRecipients);
+            $onTheFlyRecipients = explode(',', $onTheFlyRecipients);
         }
 
         if (count($onTheFlyRecipients)) {

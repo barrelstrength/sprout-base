@@ -59,6 +59,7 @@
 
     {{ forms.textField({
         label: "Name"|t('sprout-base'),
+        instructions: "What this report will be called in the CP."|t('sprout-base'),
         id: "name",
         name: 'name',
         value: report is defined ? report.name : "",
@@ -70,17 +71,36 @@
 
     {{ forms.textField({
         label: "Description"|t('sprout-base'),
+        instructions: "A description of your report that will appear in the info bubble next to your Report Name on the Reports Index page."|t('sprout-base'),
         name: 'description',
         rows: 3,
         value: report is defined ? report.description : "",
         errors: report is defined ? report.getErrors('description') : ""
     }) }}
 
+    {{ forms.lightswitchField({
+        label: "Use a dynamic report name"|t('sprout-base'),
+        name: 'nameFormatToggle',
+        on: report.nameFormat,
+        toggle: "name-format-field"
+    }) }}
+
+    <div id="name-format-field" class="{% if not report.nameFormat %}hidden{% endif %}">
+        {{ forms.textField({
+            label: "Name Format"|t('sprout-base'),
+            instructions: "Auto-generate your report name using option values, such as {startDate|date('F d, Y')}"|t('sprout-base'),
+            name: 'nameFormat',
+            value: report is defined ? report.nameFormat : "",
+            errors: report is defined ? report.getErrors('nameFormat') : ""
+        }) }}
+    </div>
+
     {% if dataSource is defined %}
 
         {% set optionsHtml = dataSource.getOptionsHtml() %}
 
         {% if optionsHtml %}
+            <hr>
             {{ optionsHtml | raw }}
         {% endif %}
 

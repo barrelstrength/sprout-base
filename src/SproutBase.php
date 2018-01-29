@@ -15,7 +15,6 @@ use barrelstrength\sproutbase\web\twig\variables\SproutBaseVariable;
 use craft\events\DefineComponentsEvent;
 use craft\web\Application;
 use craft\web\twig\variables\CraftVariable;
-use yii\base\ActionEvent;
 use yii\base\Event;
 use \yii\base\Module;
 use craft\web\View;
@@ -30,6 +29,9 @@ class SproutBase extends Module
 {
     use BaseSproutTrait;
 
+    /**
+     * @var string
+     */
     public $handle;
 
     /**
@@ -55,7 +57,8 @@ class SproutBase extends Module
     public $sourceLanguage = 'en-US';
 
     /**
-     * @todo - We copied from craft/base/plugin, ask to P&T if this is the best way to do it
+     * @todo - Copied from craft/base/plugin. Ask P&T if this is the best approach
+     *
      * @inheritdoc
      */
     public function __construct($id, $parent = null, array $config = [])
@@ -96,6 +99,7 @@ class SproutBase extends Module
         self::$app = new App();
 
         Craft::setAlias('@sproutbase', $this->getBasePath());
+        Craft::setAlias('@sproutbaselib', dirname(__DIR__, 2).'/sprout-base/lib');
 
         // Register our base template path
         Event::on(View::class, View::EVENT_REGISTER_CP_TEMPLATE_ROOTS, function(RegisterTemplateRootsEvent $e) {
@@ -107,10 +111,12 @@ class SproutBase extends Module
             $event->components['sproutbase'] = SproutBaseVariable::class;
         });
 
+        // Register Sprout Email Events
         Event::on(Application::class, Application::EVENT_INIT, function() {
             SproutBase::$app->notifications->registerDynamicEventHandler();
         });
 
+        // Register Sprout Email Mailers
         Event::on(Mailers::class, Mailers::EVENT_REGISTER_MAILERS, function(RegisterMailersEvent $event) {
             $event->mailers[] = new DefaultMailer();
         });

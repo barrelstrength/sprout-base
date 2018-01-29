@@ -20,18 +20,17 @@ class PhoneFieldAsset extends AssetBundle
         // define the dependencies
         $this->depends = [
             CpAsset::class,
+            InputMaskAsset::class
         ];
 
         // define the relative path to CSS/JS files that should be registered with the page
         // when this asset bundle is registered
         $this->js = [
-            'phone/dist/js/inputmask.js',
-            'phone/dist/js/jquery.inputmask.js',
             'phone/dist/js/PhoneInputMask.js'
         ];
 
         $this->css = [
-            'resources/css/sproutfields.css',
+            'base/css/sproutfields.css',
         ];
 
         parent::init();

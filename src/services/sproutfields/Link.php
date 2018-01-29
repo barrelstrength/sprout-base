@@ -10,7 +10,6 @@ namespace barrelstrength\sproutbase\services\sproutfields;
 use craft\base\Field;
 use yii\base\Component;
 use Craft;
-use barrelstrength\sproutbase\SproutBase;
 
 /**
  * Class LinkService
@@ -33,13 +32,13 @@ class Link extends Component
 
         if ($customPattern && $checkPattern) {
             // Use backticks as delimiters as they are invalid characters for emails
-            $customPattern = "`".$customPattern."`";
+            $customPattern = '`'.$customPattern.'`';
 
             if (preg_match($customPattern, $value)) {
                 return true;
             }
         } else {
-            if ((!filter_var($value, FILTER_VALIDATE_URL) === false)) {
+            if (!filter_var($value, FILTER_VALIDATE_URL) === false) {
                 return true;
             }
         }
@@ -50,17 +49,18 @@ class Link extends Component
     /**
      * Return error message
      *
-     * @param  mixed $field
+     * @param $fieldName
+     * @param $field
      *
      * @return string
      */
     public function getErrorMessage($fieldName, $field): string
     {
         if (!empty($field->customPattern) && isset($field->customPatternErrorMessage)) {
-            return SproutBase::t($field->customPatternErrorMessage);
+            return Craft::t('sprout-base',$field->customPatternErrorMessage);
         }
 
-        return SproutBase::t($fieldName.' must be a valid link.');
+        return Craft::t('sprout-base',$fieldName.' must be a valid link.');
     }
 
 }

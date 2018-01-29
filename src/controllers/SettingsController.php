@@ -18,13 +18,13 @@ use yii\web\BadRequestHttpException;
 /**
  * Manage plugin settings from a custom plugin settings area on the Plugin tab
  *
- * Using the Sprout Core settings controller requires:
+ * Using the Sprout Base settings controller requires:
  *
  * 1. Adding two routes to a plugin:
  * 'sprout-seo/settings' => 'sprout-base/settings/edit-settings',
  * 'sprout-seo/settings/<settingsSectionHandle:.*>' => 'sprout-base/settings/edit-settings'
  *
- * 2. Submitting your settings form to Sprout Core
+ * 2. Submitting your settings form to Sprout Base
  * <input type="hidden" name="action" value="sprout-base/settings/save-settings">
  *
  * 3. Ensuring all settings are included in a settings array of the submitted form
@@ -103,7 +103,9 @@ class SettingsController extends BaseController
     /**
      * Saves plugin settings
      *
+     * @return null|\yii\web\Response
      * @throws BadRequestHttpException
+     * @throws \yii\db\Exception
      */
     public function actionSaveSettings()
     {
@@ -113,7 +115,7 @@ class SettingsController extends BaseController
         $settings = Craft::$app->getRequest()->getBodyParam('settings');
 
         if (!SproutBase::$app->settings->saveSettings($this->plugin, $settings)) {
-            Craft::$app->getSession()->setError(SproutBase::t('Couldn’t save settings.'));
+            Craft::$app->getSession()->setError(Craft::t('sprout-base','Couldn’t save settings.'));
 
             Craft::$app->getUrlManager()->setRouteParams([
                 'settings' => $settings
@@ -122,7 +124,7 @@ class SettingsController extends BaseController
             return null;
         }
 
-        Craft::$app->getSession()->setNotice(SproutBase::t('Settings saved.'));
+        Craft::$app->getSession()->setNotice(Craft::t('sprout-base','Settings saved.'));
 
         return $this->redirectToPostedUrl();
     }

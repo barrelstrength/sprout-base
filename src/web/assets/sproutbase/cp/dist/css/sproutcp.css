@@ -39,7 +39,8 @@
     margin-right: 2em;
 }
 
-.sprout-mediathumb img {
+.sprout-mediathumb img,
+.sprout-mediathumb svg {
     height: 140px;
     opacity: .3;
     width: 140px;

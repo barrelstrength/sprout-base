@@ -1,6 +1,6 @@
 # Sprout Base
 
-Common libraries for Sprout Plugins for Craft CMS.
+A collection of common classes and libraries for the Sprout Plugins Suite for Craft CMS.
 
 ## Usage
 
@@ -8,11 +8,9 @@ Include Sprout Base in your Sprout plugin composer.json file:
 
 ``` json
 {
-  ...
   "require": {
     "barrelstrength/sproutbase": "^1.0.0"
-  },
-  ...
+  }
 }
 ```
 

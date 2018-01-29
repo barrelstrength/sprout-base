@@ -13,9 +13,7 @@ abstract class SproutListsBaseListType extends Component
      */
     final public function getClassName()
     {
-        $class = str_replace('Craft\\', '', get_class($this));
-
-        return $class;
+        return str_replace('Craft\\', '', get_class($this));
     }
 
     /**
@@ -81,5 +79,10 @@ abstract class SproutListsBaseListType extends Component
      */
     abstract public function getSubscriberCount($list);
 
+    /**
+     * @param $listId
+     *
+     * @return mixed
+     */
     abstract public function getListById($listId);
 }

@@ -10,7 +10,6 @@ namespace barrelstrength\sproutbase\contracts\sproutimport;
 use Craft;
 use barrelstrength\sproutimport\SproutImport;
 use craft\base\Element;
-use craft\base\Model;
 
 /**
  * Class BaseSproutImportElementImporter
@@ -32,10 +31,10 @@ abstract class BaseElementImporter extends BaseImporter
         $model = $this->getModel();
 
         if (!is_object($model)) {
-            return $model.SproutImport::t(" Model definition not found.");
+            return $model.Craft::t('sprout-import',' Model definition not found.');
         }
 
-        return $model->displayName();
+        return $model::displayName();
     }
 
     /**
@@ -62,9 +61,10 @@ abstract class BaseElementImporter extends BaseImporter
      * @param       $model
      * @param array $settings
      *
-     * @return mixed
+     * @return bool|mixed
+     * @throws \barrelstrength\sproutimport\services\Exception
      */
-    public function setModel($model, $settings = [])
+    public function setModel($model, array $settings = [])
     {
         $model = $this->processUpdateElement($model, $settings);
 
@@ -76,10 +76,8 @@ abstract class BaseElementImporter extends BaseImporter
             $model->setAttributes($attributes, false);
 
             // Check for email and username values if authorId attribute
-            if (isset($attributes['authorId'])) {
-                if ($authorId = $this->getAuthorId($attributes['authorId'])) {
-                    $model->authorId = $authorId;
-                }
+            if (isset($attributes['authorId']) && $authorId = $this->getAuthorId($attributes['authorId'])) {
+                $model->authorId = $authorId;
             }
 
             // Check if we have defaults for any unset attributes
@@ -107,8 +105,8 @@ abstract class BaseElementImporter extends BaseImporter
             }
 
             // Check only for models that has authorId attribute.
-            if ($authorId == null && in_array('authorId', $model->attributes())) {
-                $message = SproutImport::t("Could not find Author by ID, Email, or Username.");
+            if ($authorId == null && in_array('authorId', $model->attributes(),false)) {
+                $message = Craft::t('sprout-import','Could not find Author by ID, Email, or Username.');
 
                 SproutImport::error($message);
 
@@ -130,7 +128,7 @@ abstract class BaseElementImporter extends BaseImporter
 
                     $message = [];
                     if (!$fields) {
-                        $message['error'] = SproutImport::t("Unable to resolve matrix relationships.");
+                        $message['error'] = Craft::t('sprout-import','Unable to resolve matrix relationships.');
                         $message['fields'] = $fields;
 
                         SproutImport::error($message);
@@ -143,7 +141,7 @@ abstract class BaseElementImporter extends BaseImporter
 
                     $message = [];
                     if (!$fields) {
-                        $message['error'] = SproutImport::t("Unable to resolve related relationships.");
+                        $message['error'] = Craft::t('sprout-import','Unable to resolve related relationships.');
                         $message['fields'] = $fields;
 
                         SproutImport::error($message);
@@ -170,7 +168,7 @@ abstract class BaseElementImporter extends BaseImporter
         return $this->model;
     }
 
-    abstract function getFieldLayoutId($model);
+    public abstract function getFieldLayoutId($model);
 
     /**
      * Delete an Element using the Element ID
@@ -188,9 +186,10 @@ abstract class BaseElementImporter extends BaseImporter
     /**
      * Determine if we have any elements we should handle before handling the current Element
      *
+     * @param $model
      * @param $settings
      *
-     * @return mixed
+     * @return bool
      */
     protected function processUpdateElement($model, $settings)
     {

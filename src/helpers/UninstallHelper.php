@@ -7,8 +7,6 @@
 
 namespace barrelstrength\sproutbase\helpers;
 
-use Craft;
-
 class UninstallHelper
 {
     public $plugin;
@@ -82,12 +80,12 @@ class UninstallHelper
         $this->pluginsToUninstall = $pluginsToUninstall;
     }
 
-    public function uninstall()
-    {
-        foreach ($this->pluginsToUninstall as $plugin) {
-            // Check to see if an Uninstall Class exists
-            //
-            // Run the uninstall method of that class
-        }
-    }
+//    public function uninstall()
+//    {
+//        foreach ($this->pluginsToUninstall as $plugin) {
+//            // Check to see if an Uninstall Class exists
+//            //
+//            // Run the uninstall method of that class
+//        }
+//    }
 }

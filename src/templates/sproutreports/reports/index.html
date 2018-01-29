@@ -65,8 +65,13 @@
                             <td class="sproutreports-reportname">
                                 <a href="{{ cpUrl(craft.app.request.segment(1) ~ '/reports/view/' ~ report.id) }}">
                                     <strong>
-                                        {{ report.name }}
-                                    </strong></a>
+                                        {% if report.nameFormat %}
+                                            {{ report.processNameFormat() }}
+                                        {% else %}
+                                            {{ report.name }}
+                                        {% endif %}
+                                    </strong>
+                                </a>
 
                                 {% if report.description %}
                                     <span class="info">{{ report.description }}</span>
@@ -107,7 +112,7 @@
 
     {% if reportContext == 'sprout-reports' %}
 
-        {% set groups = craft.sproutreports.getReportGroups() %}
+        {% set groups = craft.sproutReports.getReportGroups() %}
 
         <nav>
             <ul id="groups">

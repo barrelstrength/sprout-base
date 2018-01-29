@@ -6,7 +6,7 @@
 {% else %}
     {% set notificationId = notificationEmail.id %}
 {% endif %}
-{% set currentBase = craft.request.segment(1) %}
+{% set currentBase = craft.app.request.getSegment(1) %}
 
 {% set crumbs = [
     { label: "Notifications"|t, url: url(currentBase ~ '/notifications') },
@@ -93,25 +93,25 @@
         {{ forms.textField({
             label: "From Name <span class='info'>The person or business sending the email</span>"|t,
             name: 'sproutEmail[fromName]',
-            value: (notificationEmail.fromName is not empty ? notificationEmail.fromName : '' ),
-        errors: (notificationEmail is defined ? notificationEmail.getErrors('fromName') : null),
-        required: true
+            value: notificationEmail.fromName is not empty ? notificationEmail.fromName : '',
+            errors: notificationEmail is defined ? notificationEmail.getErrors('fromName') : null,
+            required: true
         }) }}
 
         {{ forms.textField({
             name: 'sproutEmail[fromEmail]',
-            value: (notificationEmail.fromEmail is not empty ? notificationEmail.fromEmail : ''),
-        label: "From Email <span class='info'>The email address of the person or business sending the email</span>"|t,
-        errors: (notificationEmail is defined ? notificationEmail.getErrors('fromEmail') : null),
-        required: true
+            label: "From Email <span class='info'>The email address of the person or business sending the email</span>"|t,
+            value: notificationEmail.fromEmail is not empty ? notificationEmail.fromEmail : '',
+            errors: notificationEmail is defined ? notificationEmail.getErrors('fromEmail') : null,
+            required: true
         }) }}
 
         {{ forms.textField({
             name: 'sproutEmail[replyToEmail]',
-            value: (notificationEmail.replyToEmail is not empty ? notificationEmail.replyToEmail : ''),
-        label: "Reply To <span class='info'>The email address which will be used if any recipients reply to your email</span>"|t,
-        errors: (notificationEmail is defined ? notificationEmail.getErrors('replyToEmail') : null),
-        required: true
+            label: "Reply To <span class='info'>The email address which will be used if any recipients reply to your email</span>"|t,
+            value: notificationEmail.replyToEmail is not empty ? notificationEmail.replyToEmail : '',
+            errors: notificationEmail is defined ? notificationEmail.getErrors('replyToEmail') : null,
+            required: true
         }) }}
 
         {{ forms.textField({
@@ -119,7 +119,7 @@
             id: 'slug',
             name: 'slug',
             value: notificationEmail.slug,
-            errors: (notificationEmail ? notificationEmail.getErrors('slug')|merge(notificationEmail.getErrors('uri'))),
+            errors: notificationEmail ? notificationEmail.getErrors('slug')|merge(notificationEmail.getErrors('uri')),
         }) }}
 
         {% set statusInput %}

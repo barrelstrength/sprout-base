@@ -19,6 +19,7 @@ trait BaseSproutTrait
     public static function error($message)
     {
         if (is_array($message)) {
+            /** @noinspection ForgottenDebugOutputInspection */
             $message = print_r($message, true);
         }
 
@@ -33,6 +34,7 @@ trait BaseSproutTrait
     public static function warning($message)
     {
         if (is_array($message)) {
+            /** @noinspection ForgottenDebugOutputInspection */
             $message = print_r($message, true);
         }
 
@@ -47,22 +49,10 @@ trait BaseSproutTrait
     public static function info($message)
     {
         if (is_array($message)) {
+            /** @noinspection ForgottenDebugOutputInspection */
             $message = print_r($message, true);
         }
 
         Craft::info($message, static::$pluginId);
-    }
-
-    /**
-     * Translates a message to the specified language using the pluginId as the category
-     *
-     * @param string $message
-     * @param array  $params
-     *
-     * @return string
-     */
-    public static function t($message, array $params = [])
-    {
-        return Craft::t(static::$pluginId, $message, $params);
     }
 }

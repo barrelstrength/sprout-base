@@ -16,6 +16,10 @@ class FieldsController extends BaseController
 {
     protected $allowAnonymous = ['actionSproutAddress'];
 
+    /**
+     * @return \yii\web\Response
+     * @throws \yii\web\BadRequestHttpException
+     */
     public function actionEmailValidate()
     {
         $this->requirePostRequest();
@@ -33,7 +37,7 @@ class FieldsController extends BaseController
         Craft::$app->content->fieldContext = $oldFieldContext;
 
         // If we don't find a Link Field, return a new Link Field model
-        // @todo - discuss with ben why we need return a model? we can't assume the user has Sprout Fields installed
+        // @todo - why do we need to return a model? can we assume the user has Sprout Fields installed?
         if (!$field) {
             return $this->asJson(false);
         }
@@ -45,6 +49,10 @@ class FieldsController extends BaseController
         return $this->asJson(true);
     }
 
+    /**
+     * @return \yii\web\Response
+     * @throws \yii\web\BadRequestHttpException
+     */
     public function actionLinkValidate()
     {
         $this->requirePostRequest();
@@ -72,6 +80,10 @@ class FieldsController extends BaseController
         return $this->asJson(true);
     }
 
+    /**
+     * @return \yii\web\Response
+     * @throws \yii\web\BadRequestHttpException
+     */
     public function actionPhoneValidate()
     {
         $this->requirePostRequest();
@@ -87,6 +99,10 @@ class FieldsController extends BaseController
         return $this->asJson(true);
     }
 
+    /**
+     * @return \yii\web\Response
+     * @throws \yii\web\BadRequestHttpException
+     */
     public function actionRegularExpressionValidate()
     {
         $this->requirePostRequest();

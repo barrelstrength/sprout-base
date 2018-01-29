@@ -32,6 +32,7 @@ class Install extends Migration
                 [
                     'id' => $this->primaryKey(),
                     'name' => $this->string()->notNull(),
+                    'nameFormat' => $this->string(),
                     'handle' => $this->string()->notNull(),
                     'description' => $this->text(),
                     'allowHtml' => $this->boolean(),

@@ -18,6 +18,8 @@ class Exports extends Component
      * @param array $variables
      *
      * @return string
+     * @throws \Twig_Error_Loader
+     * @throws \yii\base\Exception
      */
     public function toHtml(array &$values, array $labels = [], array $variables = [])
     {
@@ -46,7 +48,7 @@ class Exports extends Component
         $json = json_encode($values);
 
         if (json_last_error()) {
-            throw new \Exception(json_last_error_msg());
+            throw new \LogicException(json_last_error_msg());
         }
 
         return $json;

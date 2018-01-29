@@ -7,7 +7,6 @@
 
 namespace barrelstrength\sproutbase\helpers;
 
-use barrelstrength\sproutbase\SproutBase;
 use barrelstrength\sproutbase\models\sproutfields\Address as AddressModel;
 use Craft;
 use CommerceGuys\Addressing\Repository\AddressFormatRepository;
@@ -58,7 +57,9 @@ class AddressHelper
     }
 
     /**
-     * @return mixed
+     * @return null|string|string[]
+     * @throws \Twig_Error_Loader
+     * @throws \yii\base\Exception
      */
     public function getAddressFormHtml()
     {
@@ -98,6 +99,11 @@ class AddressHelper
         return $format;
     }
 
+    /**
+     * @return string
+     * @throws \Twig_Error_Loader
+     * @throws \yii\base\Exception
+     */
     private function getAddressInfoInput()
     {
         return $this->renderTemplates('hidden', [
@@ -106,11 +112,19 @@ class AddressHelper
         ]);
     }
 
+    /**
+     * @param AddressModel|null $addressModel
+     * @param string            $namespace
+     *
+     * @return \Twig_Markup
+     * @throws \Twig_Error_Loader
+     * @throws \yii\base\Exception
+     */
     public function displayAddressForm(AddressModel $addressModel = null, $namespace = 'address')
     {
         $countryCode = $this->defaultCountryCode();
 
-        if (isset($addressModel->countryCode)) {
+        if ($addressModel->countryCode !== null) {
             $countryCode = $addressModel->countryCode;
         }
 
@@ -130,7 +144,11 @@ class AddressHelper
     }
 
     /**
+     * @param null $hidden
+     *
      * @return string
+     * @throws \Twig_Error_Loader
+     * @throws \yii\base\Exception
      */
     public function countryInput($hidden = null)
     {
@@ -156,6 +174,8 @@ class AddressHelper
      * @param $addressName
      *
      * @return string
+     * @throws \Twig_Error_Loader
+     * @throws \yii\base\Exception
      */
     private function addressLine($addressName)
     {
@@ -182,6 +202,8 @@ class AddressHelper
 
     /**
      * @return string
+     * @throws \Twig_Error_Loader
+     * @throws \yii\base\Exception
      */
     private function sortingCode()
     {
@@ -202,6 +224,8 @@ class AddressHelper
 
     /**
      * @return string
+     * @throws \Twig_Error_Loader
+     * @throws \yii\base\Exception
      */
     private function locality()
     {
@@ -222,6 +246,8 @@ class AddressHelper
 
     /**
      * @return string
+     * @throws \Twig_Error_Loader
+     * @throws \yii\base\Exception
      */
     private function dependentLocality()
     {
@@ -242,6 +268,8 @@ class AddressHelper
 
     /**
      * @return string
+     * @throws \Twig_Error_Loader
+     * @throws \yii\base\Exception
      */
     private function administrativeArea()
     {
@@ -250,8 +278,11 @@ class AddressHelper
         $options = [];
 
         if ($this->subdivisonObj->getAll($this->countryCode)) {
+
             $states = $this->subdivisonObj->getAll($this->countryCode);
+
             if (!empty($states)) {
+
                 foreach ($states as $state) {
                     $stateName = $state->getName();
                     $options[$stateName] = $stateName;
@@ -270,23 +301,25 @@ class AddressHelper
                     ]
                 );
             }
-        } else {
-            return $this->renderTemplates(
-                'text',
-                [
-                    'fieldClass' => 'field-address-input',
-                    'label' => $this->renderHeading($this->addressObj->getAdministrativeAreaType()),
-                    'name' => $this->name.'[administrativeArea]',
-                    'value' => $value,
-                    'inputName' => 'administrativeArea',
-                    'addressInfo' => $this->addressModel
-                ]
-            );
         }
+
+        return $this->renderTemplates(
+            'text',
+            [
+                'fieldClass' => 'field-address-input',
+                'label' => $this->renderHeading($this->addressObj->getAdministrativeAreaType()),
+                'name' => $this->name.'[administrativeArea]',
+                'value' => $value,
+                'inputName' => 'administrativeArea',
+                'addressInfo' => $this->addressModel
+            ]
+        );
     }
 
     /**
      * @return string
+     * @throws \Twig_Error_Loader
+     * @throws \yii\base\Exception
      */
     public function postalCode()
     {
@@ -306,9 +339,9 @@ class AddressHelper
     }
 
     /**
-     * @param SproutFields_AddressModel $model
+     * @param AddressModel $model
      *
-     * @return mixed
+     * @return string
      */
     public function getAddressWithFormat(AddressModel $model)
     {
@@ -361,10 +394,10 @@ class AddressHelper
         if ($addressObj->getPostalCodePattern() != null) {
             $pattern = $addressObj->getPostalCodePattern();
 
-            if (preg_match("/^".$pattern."$/", $value['postalCode'])) {
+            if (preg_match('/^'.$pattern.'$/', $value['postalCode'])) {
                 return true;
             } else {
-                $errors['postalCode'] = SproutBase::t(ucwords($postalName).' is invalid.');
+                $errors['postalCode'] = Craft::t('sprout-base',ucwords($postalName).' is invalid.');
             }
         }
 
@@ -375,6 +408,12 @@ class AddressHelper
         return true;
     }
 
+    /**
+     * @param $countryCode
+     * @param $postalCode
+     *
+     * @return bool
+     */
     public function validatePostalCode($countryCode, $postalCode)
     {
         $addressFormatRepository = new AddressFormatRepository();
@@ -386,14 +425,19 @@ class AddressHelper
         if ($addressObj->getPostalCodePattern() != null) {
             $pattern = $addressObj->getPostalCodePattern();
 
-            if (preg_match("/^".$pattern."$/", $postalCode)) {
+            if (preg_match('/^'.$pattern.'$/', $postalCode)) {
                 return true;
-            } else {
-                return false;
             }
         }
+
+        return false;
     }
 
+    /**
+     * @param $countryCode
+     *
+     * @return string
+     */
     public function getPostalName($countryCode)
     {
         $addressFormatRepository = new AddressFormatRepository();
@@ -412,7 +456,7 @@ class AddressHelper
      */
     public function renderHeading($title)
     {
-        return SproutBase::t(str_replace('_', ' ', ucwords($title)));
+        return Craft::t('sprout-base',str_replace('_', ' ', ucwords($title)));
     }
 
     /**
@@ -680,6 +724,14 @@ class AddressHelper
         return 'US';
     }
 
+    /**
+     * @param $template
+     * @param $params
+     *
+     * @return string
+     * @throws \Twig_Error_Loader
+     * @throws \yii\base\Exception
+     */
     public function renderTemplates($template, $params)
     {
         $addressPath = Craft::getAlias('@sproutbase/templates/sproutfields/_includes/forms/address/');

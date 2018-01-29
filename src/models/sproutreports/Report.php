@@ -10,14 +10,18 @@ namespace barrelstrength\sproutbase\models\sproutreports;
 use barrelstrength\sproutbase\SproutBase;
 use craft\base\Model;
 use barrelstrength\sproutbase\records\sproutreports\Report as ReportRecord;
+use craft\helpers\Json;
 use craft\validators\HandleValidator;
 use craft\validators\UniqueValidator;
+use Craft;
 
 class Report extends Model
 {
     public $id;
 
     public $name;
+
+    public $nameFormat;
 
     public $handle;
 
@@ -37,11 +41,19 @@ class Report extends Model
 
     public $dateUpdated;
 
+    public $results;
+
+    /**
+     * @return mixed
+     */
     public function getDataSourceId()
     {
         return $this->dataSourceId;
     }
 
+    /**
+     * @return \barrelstrength\sproutbase\contracts\sproutreports\BaseDataSource|null
+     */
     public function getDataSource()
     {
         $dataSource = SproutBase::$app->dataSources->getDataSourceById($this->dataSourceId);
@@ -51,6 +63,22 @@ class Report extends Model
         return $dataSource;
     }
 
+    /**
+     * @return string
+     * @throws \yii\base\Exception
+     */
+    public function processNameFormat()
+    {
+        $dataSource = $this->getDataSource();
+        $optionsArray = Json::decode($this->options);
+        $options = $dataSource->prepOptions($optionsArray);
+
+        return Craft::$app->getView()->renderObjectTemplate($this->nameFormat, $options);
+    }
+
+    /**
+     * @return mixed
+     */
     public function getOptions()
     {
         $options = $this->options;
@@ -93,10 +121,13 @@ class Report extends Model
         ];
     }
 
+    /**
+     * @return array|string[]
+     */
     public function safeAttributes()
     {
         return [
-            'id', 'name', 'handle',
+            'id', 'name', 'nameFormat', 'handle',
             'description', 'allowHtml', 'options',
             'dataSourceId', 'enabled', 'groupId',
             'dateCreated', 'dateUpdated'

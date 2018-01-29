@@ -12,8 +12,6 @@ use craft\base\Field;
 use yii\base\Component;
 use craft\db\Query;
 
-use barrelstrength\sproutbase\SproutBase;
-
 /**
  * Class EmailService
  *
@@ -62,7 +60,7 @@ class Email extends Component
     {
         if ($checkPattern) {
             // Use backticks as delimiters as they are invalid characters for emails
-            $customPattern = "`".$customPattern."`";
+            $customPattern = '`'.$customPattern.'`';
 
             if (preg_match($customPattern, $value)) {
                 return true;
@@ -118,10 +116,10 @@ class Email extends Component
     public function getErrorMessage($fieldName, $field)
     {
         if (!empty($field->customPattern) && $field->customPatternErrorMessage) {
-            return SproutBase::t($field->customPatternErrorMessage);
+            return Craft::t('sprout-base',$field->customPatternErrorMessage);
         }
 
-        return SproutBase::t($fieldName.' must be a valid email.');
+        return Craft::t('sprout-base',$fieldName.' must be a valid email.');
     }
 
 }

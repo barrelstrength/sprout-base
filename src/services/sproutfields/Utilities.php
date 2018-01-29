@@ -35,6 +35,12 @@ class Utilities extends Component
         return $context;
     }
 
+    /**
+     * @param      $options
+     * @param null $value
+     *
+     * @return bool
+     */
     public function isAnyOptionsSelected($options, $value = null)
     {
         if (!empty($options)) {
@@ -48,23 +54,24 @@ class Utilities extends Component
         return false;
     }
 
+    /**
+     * @return string
+     */
     public function formatErrors()
     {
         $errors = $this->getErrors();
 
         $text = '';
-        if (!empty($errors))
-        {
-            $text.= '<ul>';
-            foreach ($errors as $key => $error)
-            {
-                if (is_array($error))
-                {
-                    foreach ($error as $desc)
-                    $text.= '<li>' . $desc . '</li>';
+        if (!empty($errors)) {
+            $text .= '<ul>';
+            foreach ($errors as $key => $error) {
+                if (is_array($error)) {
+                    foreach ($error as $desc) {
+                        $text .= '<li>'.$desc.'</li>';
+                    }
                 }
             }
-            $text.= '</ul>';
+            $text .= '</ul>';
         }
 
         return $text;

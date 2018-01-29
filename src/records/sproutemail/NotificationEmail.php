@@ -13,7 +13,7 @@ class NotificationEmail extends ActiveRecord
      */
     public static function tableName(): string
     {
-        return 'sproutemail_notificationemails';
+        return '{{%sproutemail_notificationemails}}';
     }
 
     /**

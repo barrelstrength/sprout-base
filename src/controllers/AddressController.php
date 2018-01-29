@@ -9,11 +9,12 @@ namespace barrelstrength\sproutbase\controllers;
 
 use barrelstrength\sproutbase\helpers\AddressHelper;
 use barrelstrength\sproutbase\models\sproutfields\Address as AddressModel;
+use barrelstrength\sproutbase\records\sproutfields\Address as AddressRecord;
 use barrelstrength\sproutbase\SproutBase;
 use craft\db\Query;
 use craft\web\Controller;
 use Craft;
-use craft\web\Response;
+use yii\base\Exception;
 use yii\web\BadRequestHttpException;
 
 class AddressController extends Controller
@@ -42,6 +43,9 @@ class AddressController extends Controller
 
     /**
      * Display the Country Input for the selected Country
+     *
+     * @throws Exception
+     * @throws \Twig_Error_Loader
      */
     public function actionCountryInput()
     {
@@ -62,6 +66,11 @@ class AddressController extends Controller
 
     /**
      * Update the Address Form HTML
+     *
+     * @return \yii\web\Response
+     * @throws BadRequestHttpException
+     * @throws Exception
+     * @throws \Twig_Error_Loader
      */
     public function actionChangeForm()
     {
@@ -79,9 +88,10 @@ class AddressController extends Controller
     }
 
     /**
-     * Return all Address Form Fields for the selected Country
-     *
-     * @return Response
+     * @return \yii\web\Response
+     * @throws BadRequestHttpException
+     * @throws Exception
+     * @throws \Twig_Error_Loader
      */
     public function actionGetAddressFormFields()
     {
@@ -126,7 +136,10 @@ class AddressController extends Controller
     /**
      * Get an address
      *
+     * @return \yii\web\Response
      * @throws BadRequestHttpException
+     * @throws Exception
+     * @throws \Twig_Error_Loader
      */
     public function actionGetAddress()
     {
@@ -174,6 +187,9 @@ class AddressController extends Controller
 
     /**
      * Delete an address
+     *
+     * @return \yii\web\Response
+     * @throws BadRequestHttpException
      */
     public function actionDeleteAddress()
     {
@@ -196,8 +212,8 @@ class AddressController extends Controller
         try {
             $response = false;
 
-            if (isset($addressInfoModel->id) && $addressInfoModel->id) {
-                $addressRecord = new SproutSeo_AddressRecord;
+            if ($addressInfoModel->id !== null && $addressInfoModel->id) {
+                $addressRecord = new AddressRecord();
                 $response = $addressRecord->deleteByPk($addressInfoModel->id);
             }
 
@@ -230,7 +246,8 @@ class AddressController extends Controller
     }
 
     /**
-     * Find the longitude and latitude of an address
+     * @return \yii\web\Response
+     * @throws BadRequestHttpException
      */
     public function actionQueryAddress()
     {
@@ -271,7 +288,7 @@ class AddressController extends Controller
                     ];
                 }
             }
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $result['result'] = false;
             $result['errors'] = $e->getMessage();
         }

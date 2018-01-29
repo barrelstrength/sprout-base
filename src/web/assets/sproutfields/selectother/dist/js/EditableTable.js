@@ -107,11 +107,11 @@ Craft.SproutSeo.EditableTable = Garnish.Base.extend(
             for (var colId in columns) {
                 var col = columns[colId],
                     name = baseName + '[' + rowId + '][' + colId + ']',
-                    value = (typeof values[colId] != 'undefined' ? values[colId] : ''),
+                    value = (typeof values[colId] !== 'undefined' ? values[colId] : ''),
                     textual = Craft.inArray(col.type, Craft.SproutSeo.EditableTable.textualColTypes);
 
-                rowHtml += '<td class="' + (textual ? 'textual' : '') + ' ' + (typeof col['class'] != 'undefined' ? col['class'] : '') + '"' +
-                    (typeof col['width'] != 'undefined' ? ' width="' + col['width'] + '"' : '') +
+                rowHtml += '<td class="' + (textual ? 'textual' : '') + ' ' + (typeof col['class'] !== 'undefined' ? col['class'] : '') + '"' +
+                    (typeof col['width'] !== 'undefined' ? ' width="' + col['width'] + '"' : '') +
                     '>';
 
                 switch (col.type) {
@@ -130,7 +130,7 @@ Craft.SproutSeo.EditableTable = Garnish.Base.extend(
                         for (var key in col.options) {
                             var option = col.options[key];
 
-                            if (typeof option.optgroup != 'undefined') {
+                            if (typeof option.optgroup !== 'undefined') {
                                 if (hasOptgroups) {
                                     rowHtml += '</optgroup>';
                                 }
@@ -141,9 +141,9 @@ Craft.SproutSeo.EditableTable = Garnish.Base.extend(
                                 rowHtml += '<optgroup label="' + option.optgroup + '">';
                             }
                             else {
-                                var optionLabel = (typeof option.label != 'undefined' ? option.label : option),
-                                    optionValue = (typeof option.value != 'undefined' ? option.value : key),
-                                    optionDisabled = (typeof option.disabled != 'undefined' ? option.disabled : false);
+                                var optionLabel = (typeof option.label !== 'undefined' ? option.label : option),
+                                    optionValue = (typeof option.value !== 'undefined' ? option.value : key),
+                                    optionDisabled = (typeof option.disabled !== 'undefined' ? option.disabled : false);
 
                                 rowHtml += '<option ' + firstRow + ' value="' + optionValue + '"' + (optionValue == value ? ' selected' : '') + (optionDisabled ? ' disabled' : '') + '>' + optionLabel + '</option>';
                             }
@@ -234,7 +234,7 @@ Craft.SproutSeo.EditableTable.Row = Garnish.Base.extend(
                         onHeightChange: $.proxy(this, 'onTextareaHeightChange')
                     }));
 
-                    if (col.type == 'singleline' || col.type == 'number') {
+                    if (col.type === 'singleline' || col.type === 'number') {
                         this.addListener($textarea, 'keypress', {type: col.type}, 'validateKeypress');
                         this.addListener($textarea, 'textchange', {type: col.type}, 'validateValue');
                     }
@@ -254,7 +254,7 @@ Craft.SproutSeo.EditableTable.Row = Garnish.Base.extend(
             for (var colId in this.table.columns) {
                 var col = this.table.columns[colId];
 
-                if (col.autopopulate && typeof textareasByColId[col.autopopulate] != 'undefined' && !textareasByColId[colId].val()) {
+                if (col.autopopulate && typeof textareasByColId[col.autopopulate] !== 'undefined' && !textareasByColId[colId].val()) {
                     new Craft.HandleGenerator(textareasByColId[colId], textareasByColId[col.autopopulate]);
                 }
             }
@@ -281,7 +281,7 @@ Craft.SproutSeo.EditableTable.Row = Garnish.Base.extend(
                 var val = $textarea.val();
 
                 // Does the browser support setSelectionRange()?
-                if (typeof $textarea[0].setSelectionRange != 'undefined') {
+                if (typeof $textarea[0].setSelectionRange !== 'undefined') {
                     // Select the whole value
                     var length = val.length * 2;
                     $textarea[0].setSelectionRange(0, length);
@@ -301,8 +301,8 @@ Craft.SproutSeo.EditableTable.Row = Garnish.Base.extend(
             var keyCode = ev.keyCode ? ev.keyCode : ev.charCode;
 
             if (!Garnish.isCtrlKeyPressed(ev) && (
-                    (keyCode == Garnish.RETURN_KEY) ||
-                    (ev.data.type == 'number' && !Craft.inArray(keyCode, Craft.SproutSeo.EditableTable.Row.numericKeyCodes))
+                    (keyCode === Garnish.RETURN_KEY) ||
+                    (ev.data.type === 'number' && !Craft.inArray(keyCode, Craft.SproutSeo.EditableTable.Row.numericKeyCodes))
                 )) {
                 ev.preventDefault();
             }
@@ -311,7 +311,7 @@ Craft.SproutSeo.EditableTable.Row = Garnish.Base.extend(
         validateValue: function(ev) {
             var safeValue;
 
-            if (ev.data.type == 'number') {
+            if (ev.data.type === 'number') {
                 // Only grab the number at the beginning of the value (if any)
                 var match = ev.currentTarget.value.match(/^\s*(-?[\d\.]*)/);
 

@@ -11,6 +11,7 @@ use barrelstrength\sproutbase\SproutBase;
 use Craft;
 use barrelstrength\sproutbase\records\sproutreports\DataSource;
 use barrelstrength\sproutbase\models\sproutreports\Report as ReportModel;
+use craft\base\Plugin;
 use craft\helpers\UrlHelper;
 
 /**
@@ -41,7 +42,7 @@ abstract class BaseDataSource
     protected $report;
 
     /**
-     * @param string $pluginHandle
+     * BaseDataSource constructor.
      */
     public function __construct()
     {
@@ -80,7 +81,7 @@ abstract class BaseDataSource
      */
     public function setReport(ReportModel $report = null)
     {
-        if (is_null($report)) {
+        if (null === $report) {
             $report = new ReportModel();
         }
 
@@ -127,16 +128,17 @@ abstract class BaseDataSource
     {
         $pluginHandle = $this->getPluginHandle();
 
-        $plugin = Craft::$app->getPlugins()->getPlugin($pluginHandle);
-
-        return $plugin;
+        return Craft::$app->getPlugins()->getPlugin($pluginHandle);
     }
 
+    /**
+     * @var $plugin Plugin
+     *
+     * @return string
+     */
     public function getPluginName()
     {
-        $plugin = $this->getPlugin();
-
-        return $plugin->name;
+        return $this->getPlugin()->name;
     }
 
     /**
@@ -155,7 +157,7 @@ abstract class BaseDataSource
     /**
      * Returns the total count of reports created based on the given data source
      *
-     * @return [type] [description]
+     * @return int
      */
     final public function getReportCount()
     {
@@ -182,9 +184,12 @@ abstract class BaseDataSource
     /**
      * Should return an array of strings to be used as column headings in display/output
      *
+     * @param ReportModel $report
+     * @param array       $options
+     *
      * @return array
      */
-    public function getDefaultLabels(ReportModel &$report, $options = [])
+    public function getDefaultLabels(ReportModel $report, array $options = [])
     {
         return [];
     }
@@ -193,18 +198,34 @@ abstract class BaseDataSource
      * Should return an array of records to use in the report
      *
      * @param ReportModel $report
+     * @param array       $options
      *
-     * @return null|array
+     * @return array
      */
-    public function getResults(ReportModel &$report, $options = [])
+    public function getResults(ReportModel $report, array $options = [])
     {
         return [];
     }
 
     /**
+     * Give a Data Source a chance to prepare options before they are processed by the Dynamic Name field
+     *
+     * @param array $options
+     *
+     * @return null
+     */
+    public function prepOptions(array $options)
+    {
+        return $options;
+    }
+
+    /**
      * Validate the data sources options
      *
-     * @return boolean
+     * @param array $options
+     * @param array $errors
+     *
+     * @return bool
      */
     public function validateOptions(array $options = [], array &$errors = [])
     {

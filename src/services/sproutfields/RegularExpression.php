@@ -9,8 +9,7 @@ namespace barrelstrength\sproutbase\services\sproutfields;
 
 use craft\base\Field;
 use yii\base\Component;
-
-use barrelstrength\sproutbase\SproutBase;
+use Craft;
 
 /**
  * Class RegularExpression
@@ -19,7 +18,6 @@ use barrelstrength\sproutbase\SproutBase;
 class RegularExpression extends Component
 {
     /**
-     *
      * @param       $value
      * @param Field $field
      *
@@ -31,7 +29,7 @@ class RegularExpression extends Component
 
         if (!empty($customPattern)) {
             // Use backticks as delimiters
-            $customPattern = "`".$customPattern."`";
+            $customPattern = '`'.$customPattern.'`';
 
             if (!preg_match($customPattern, $value)) {
                 return false;
@@ -51,10 +49,10 @@ class RegularExpression extends Component
     public function getErrorMessage($field): string
     {
         if (!empty($field->customPattern) && isset($field->customPatternErrorMessage)) {
-            return SproutBase::t($field->customPatternErrorMessage);
+            return Craft::t('sprout-base',$field->customPatternErrorMessage);
         }
 
-        return SproutBase::t($field->name.' must be a valid pattern.');
+        return Craft::t('sprout-base',$field->name.' must be a valid pattern.');
     }
 
 }

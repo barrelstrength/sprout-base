@@ -16,12 +16,15 @@ use yii\base\Event;
 
 class Mailers extends Component
 {
-    public const EVENT_REGISTER_MAILERS = 'defineSproutEmailMailers';
-    public const ON_SEND_EMAIL = "onSendEmail";
-    public const ON_SEND_EMAIL_ERROR = "onSendEmailError";
+    const EVENT_REGISTER_MAILERS = 'defineSproutEmailMailers';
+    const ON_SEND_EMAIL = 'onSendEmail';
+    const ON_SEND_EMAIL_ERROR = 'onSendEmailError';
 
     protected $mailers;
 
+    /**
+     * @return array
+     */
     public function getMailers()
     {
         $event = new RegisterMailersEvent([
@@ -55,10 +58,15 @@ class Mailers extends Component
     {
         $this->mailers = $this->getMailers();
 
-        return isset($this->mailers[$name]) ? $this->mailers[$name] : null;
+        return isset($this->mailers[$name]) ?? $this->mailers[$name];
     }
 
-
+    /**
+     * @param Message $message
+     * @param array   $variables
+     *
+     * @return bool|null
+     */
     public function sendEmail(Message $message, $variables = [])
     {
         $errorMessage = SproutBase::$app->utilities->getErrors();
@@ -107,7 +115,7 @@ class Mailers extends Component
         $recipientsString = $model->recipients;
 
         // Possibly called from entry edit screen
-        if (is_null($element)) {
+        if (null === $element) {
             return $recipientsString;
         }
 
@@ -143,7 +151,11 @@ class Mailers extends Component
         return [];
     }
 
-
+    /**
+     * @param         $message
+     * @param Message $emailModel
+     * @param array   $variables
+     */
     public function handleOnSendEmailErrorEvent($message, Message $emailModel, $variables = [])
     {
         $user = Craft::$app->getUsers()->getUserByUsernameOrEmail($emailModel->toEmail);

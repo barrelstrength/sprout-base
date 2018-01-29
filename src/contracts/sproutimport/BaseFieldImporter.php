@@ -33,11 +33,12 @@ abstract class BaseFieldImporter extends BaseImporter
      * Set our $this->model variable to the FieldModel Class.
      * Our setModel() Method for Fields will always use FieldModel.
      *
-     * @param FieldModel $model
+     * @param       $model
+     * @param array $settings
      *
-     * @return null
+     * @return mixed|void
      */
-    public function setModel($model, $settings = [])
+    public function setModel($model, array $settings = [])
     {
         $this->model = $model;
     }
@@ -64,7 +65,7 @@ abstract class BaseFieldImporter extends BaseImporter
     public abstract function getMockData();
 
     /**
-     * @todo - clean up, empty method
+     * @todo - clean up, empty method.
      */
     public function save()
     {

@@ -2,6 +2,7 @@
 
 namespace barrelstrength\sproutbase\elements\sproutemail;
 
+use barrelstrength\sproutbase\mailers\DefaultMailer;
 use barrelstrength\sproutbase\SproutBase;
 use barrelstrength\sproutemail\web\assets\email\EmailAsset;
 use barrelstrength\sproutemail\elements\actions\DeleteEmail;
@@ -36,16 +37,21 @@ class NotificationEmail extends Element
     const PENDING = 'pending';
     const DISABLED = 'disabled';
 
+    /**
+     * @return string
+     */
     public static function displayName(): string
     {
-        return SproutEmail::t('Notification Email');
+        return Craft::t('sprout-base','Notification Email');
     }
 
+    /**
+     * @return null|string
+     */
     public static function refHandle()
     {
         return 'notificationEmail';
     }
-
 
     /**
      * @inheritdoc
@@ -87,6 +93,9 @@ class NotificationEmail extends Element
         return true;
     }
 
+    /**
+     * @return array
+     */
     public function getStatuses()
     {
         return [
@@ -106,12 +115,17 @@ class NotificationEmail extends Element
         );
     }
 
+    /**
+     * @param string|null $context
+     *
+     * @return array
+     */
     protected static function defineSources(string $context = null): array
     {
         $sources = [
             [
                 'key' => '*',
-                'label' => SproutEmail::t('All notifications')
+                'label' => Craft::t('sprout-base','All notifications')
             ]
         ];
 
@@ -141,9 +155,9 @@ class NotificationEmail extends Element
     protected static function defineSortOptions(): array
     {
         return [
-            'title' => SproutEmail::t('Subject Line'),
-            'elements.dateCreated' => SproutEmail::t('Date Created'),
-            'elements.dateUpdated' => SproutEmail::t('Date Updated'),
+            'title' => Craft::t('sprout-base','Subject Line'),
+            'elements.dateCreated' => Craft::t('sprout-base','Date Created'),
+            'elements.dateUpdated' => Craft::t('sprout-base','Date Updated'),
         ];
     }
 
@@ -188,6 +202,9 @@ class NotificationEmail extends Element
         return new NotificationEmailQuery(static::class);
     }
 
+    /**
+     * @return \craft\models\FieldLayout|null
+     */
     public function getFieldLayout()
     {
         return Craft::$app->getFields()->getLayoutByType(static::class);
@@ -196,7 +213,7 @@ class NotificationEmail extends Element
     /**
      * @param bool $isNew
      *
-     * @throws \Exception
+     * @throws \InvalidArgumentException
      */
     public function afterSave(bool $isNew)
     {
@@ -205,7 +222,7 @@ class NotificationEmail extends Element
             $record = NotificationEmailRecord::findOne($this->id);
 
             if (!$record) {
-                throw new \Exception('Invalid campaign email ID: '.$this->id);
+                throw new \InvalidArgumentException('Invalid campaign email ID: '.$this->id);
             }
         } else {
             $record = new NotificationEmailRecord();
@@ -251,18 +268,24 @@ class NotificationEmail extends Element
             true);
 
         Craft::$app->getView()->registerAssetBundle(EmailAsset::class);
-        Craft::$app->getView()->registerJs("var sproutModalInstance = new SproutModal(); sproutModalInstance.init();");
+        Craft::$app->getView()->registerJs('var sproutModalInstance = new SproutModal(); sproutModalInstance.init();');
         SproutEmail::$app->mailers->includeMailerModalResources();
 
         return $html;
     }
 
+    /**
+     * @return \barrelstrength\sproutbase\contracts\sproutemail\BaseMailer|null
+     */
     public function getMailer()
     {
         // All Notification Emails use the Default Mailer
-        return SproutBase::$app->mailers->getMailerByName('barrelstrength\\sproutbase\\mailers\\DefaultMailer');
+        return SproutBase::$app->mailers->getMailerByName(DefaultMailer::class);
     }
 
+    /**
+     * @return bool
+     */
     public function isReady()
     {
         return (bool)($this->getStatus() == static::ENABLED);
@@ -291,9 +314,12 @@ class NotificationEmail extends Element
         return $actions;
     }
 
+    /**
+     * @return null|string
+     */
     public function getUriFormat()
     {
-        return "sprout-email/{slug}";
+        return 'sprout-email/{slug}';
     }
 
     /**
@@ -303,9 +329,7 @@ class NotificationEmail extends Element
     public function getUrl()
     {
         if ($this->uri !== null) {
-            $url = UrlHelper::siteUrl($this->uri, null, null);
-
-            return $url;
+            return UrlHelper::siteUrl($this->uri, null, null);
         }
 
         return null;
@@ -324,7 +348,7 @@ class NotificationEmail extends Element
         }
         $extension = null;
 
-        if (($type = Craft::$app->request->get('type'))) {
+        if ($type = Craft::$app->request->get('type')) {
             $extension = in_array(strtolower($type), ['txt', 'text']) ? '.txt' : null;
         }
 
