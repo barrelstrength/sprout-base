@@ -29,10 +29,6 @@ class Address extends Model
     public $address1;
     public $address2;
 
-    public $dateCreated;
-    public $dateUpdated;
-    public $uid;
-
     public function init()
     {
         $this->addressHelper = new AddressHelper();

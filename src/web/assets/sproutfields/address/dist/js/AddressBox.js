@@ -222,7 +222,12 @@ if (typeof Craft.SproutBase === typeof undefined) {
                 }
                 else {
                     Garnish.shake(this.modal.$form);
-                    this.onError(response.errors);
+                    var errors = response.errors;
+                    $.each(errors, function(key, value) {
+                        $.each(value, function(key2, value2) {
+                            Craft.cp.displayError(Craft.t('sprout-base', value2));
+                        });
+                    });
                 }
 
             }, this));
