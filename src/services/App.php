@@ -18,7 +18,7 @@ use barrelstrength\sproutbase\services\sproutfields\Link;
 use barrelstrength\sproutbase\services\sproutfields\Phone;
 use barrelstrength\sproutbase\services\sproutfields\RegularExpression;
 use barrelstrength\sproutbase\services\sproutfields\Email;
-use barrelstrength\sproutbase\services\sproutfields\EmailSelect;
+use barrelstrength\sproutbase\services\sproutfields\EmailDropdown;
 use barrelstrength\sproutbase\services\sproutfields\Address;
 use barrelstrength\sproutbase\services\sproutbase\Settings;
 use craft\base\Component;
@@ -56,9 +56,9 @@ class App extends Component
     public $regularExpression;
 
     /**
-     * @var EmailSelect
+     * @var EmailDropdown
      */
-    public $emailSelect;
+    public $emailDropdown;
 
     /**
      * @var Reports
@@ -114,7 +114,7 @@ class App extends Component
         $this->link = new Link();
         $this->email = new Email();
         $this->regularExpression = new RegularExpression();
-        $this->emailSelect = new EmailSelect();
+        $this->emailDropdown = new EmailDropdown();
 
         // Sprout Reports
         $this->reports = new Reports();

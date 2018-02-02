@@ -9,7 +9,7 @@ namespace barrelstrength\sproutbase\services\sproutfields;
 
 use yii\base\Component;
 
-class EmailSelect extends Component
+class EmailDropdown extends Component
 {
     /**
      * @param      $options
@@ -51,7 +51,7 @@ class EmailSelect extends Component
      * $emailSelectFieldHandles = (new Query())
      * ->select('handle')
      * ->from('{{%fields}}')
-     * ->where(['context' => $fieldContext, 'type' => EmailSelect::class])
+     * ->where(['context' => $fieldContext, 'type' => EmailDropdown::class])
      * ->all();
      *
      * $oldContext = Craft::$app->content->fieldContext;
