@@ -100,14 +100,16 @@ class AddressController extends Controller
 
         $addressInfoId = null;
 
+        $addressInfoModel = new AddressModel();
+
         if (Craft::$app->getRequest()->getBodyParam('addressInfoId') != null) {
             $addressInfoId = Craft::$app->getRequest()->getBodyParam('addressInfoId');
 
             $addressInfoModel = SproutBase::$app->address->getAddressById($addressInfoId);
-        } else {
-            $addressInfoModel = new AddressModel();
+        } elseif (Craft::$app->getRequest()->getBodyParam('defaultCountryCode') != null) {
+            $defaultCountryCode = Craft::$app->getRequest()->getBodyParam('defaultCountryCode');
 
-            $addressInfoModel->countryCode = $this->addressHelper->defaultCountryCode();
+            $addressInfoModel->countryCode = $defaultCountryCode;
         }
 
         $html = $this->addressHelper->getAddressWithFormat($addressInfoModel);

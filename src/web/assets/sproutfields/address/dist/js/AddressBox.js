@@ -186,8 +186,11 @@ if (typeof Craft.SproutBase === typeof undefined) {
 
             var self = this;
 
+            var defaultCountryCode = this.$addressBox.data('defaultcountrycode');
+
             Craft.postActionRequest('sprout-base/address/get-address-form-fields', {
                 addressInfoId: this.addressInfoId,
+                defaultCountryCode: defaultCountryCode,
                 namespace: this.settings.namespace
             }, $.proxy(function(response) {
 

@@ -7,6 +7,10 @@
             {% if addressId is defined and addressId %}
                 data-addressinfoid='{{ addressId }}'
             {% endif %}
+
+            {% if defaultCountryCode is defined and defaultCountryCode %}
+                data-defaultcountrycode='{{ defaultCountryCode }}'
+            {% endif %}
     >
         <div class='address-add-button hidden'>
             <a class='btn add icon dashed sproutaddress-edit'
