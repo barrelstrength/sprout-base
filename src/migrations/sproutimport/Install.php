@@ -13,6 +13,11 @@ class Install extends Migration
 {
     private $seedsTable = '{{%sproutimport_seeds}}';
 
+    public function safeUp()
+    {
+        $this->createTables();
+    }
+
     public function createTables()
     {
         $seedsTable = $this->getDb()->tableExists($this->seedsTable);
