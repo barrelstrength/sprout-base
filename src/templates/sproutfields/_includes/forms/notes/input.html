@@ -21,32 +21,28 @@
 
     var notesToggleStatus = localStorage.getItem('{{ id }}-field');
 
-    if (notesToggleStatus == 'hidden')
-    {
-    $('#' + '{{ id }}-field' + ' .input').css('display', 'none');
+    if (notesToggleStatus == 'hidden') {
+        $('#' + '{{ id }}-field' + ' .input').css('display', 'none');
     }
 
     $('#' + '{{ id }}-field' + ' label').on('click', function() {
-    console.log('{{ id }}-field');
-    $('#' + '{{ id }}-field' + ' .input').slideToggle('fast', function(test) {
+        $('#' + '{{ id }}-field' + ' .input').slideToggle('fast', function(test) {
 
-    var visibility = $('#' + '{{ id }}-field' + ' .input:hidden');
+            var visibility = $('#' + '{{ id }}-field' + ' .input:hidden');
 
-    if (visibility.length == 0)
-    {
-    localStorage.setItem('{{ id }}-field', 'visible');
-    }
-    else
-    {
-    localStorage.setItem('{{ id }}-field', 'hidden');
-    }
-    });
+            if (visibility.length == 0) {
+                localStorage.setItem('{{ id }}-field', 'visible');
+            }
+            else {
+                localStorage.setItem('{{ id }}-field', 'hidden');
+            }
+        });
     });
 
 
     {% if (field.hideLabel) %}
-        $('#' + '{{ id }}-field' + ' .heading').remove();
-        $('#' + '{{ id }}-field' + ' .input').css('display', 'block');
+    $('#' + '{{ id }}-field' + ' .heading').remove();
+    $('#' + '{{ id }}-field' + ' .input').css('display', 'block');
     {% endif %}
 
 {% endjs %}
