@@ -7,6 +7,7 @@
 
 namespace barrelstrength\sproutbase\web\assets\sproutfields\phone;
 
+use barrelstrength\sproutbase\web\assets\sproutbase\fontello\FontelloAsset;
 use craft\web\AssetBundle;
 use craft\web\assets\cp\CpAsset;
 
@@ -20,7 +21,8 @@ class PhoneFieldAsset extends AssetBundle
         // define the dependencies
         $this->depends = [
             CpAsset::class,
-            InputMaskAsset::class
+            InputMaskAsset::class,
+            FontelloAsset::class
         ];
 
         // define the relative path to CSS/JS files that should be registered with the page

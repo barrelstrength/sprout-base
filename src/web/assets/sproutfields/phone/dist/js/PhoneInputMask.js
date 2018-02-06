@@ -117,7 +117,9 @@
                     $(currentPhoneField).next('.sprout-phone-button').addClass('fade');
 
                     $(currentPhoneField).next('.sprout-phone-button').html('<a href="tel:' + phoneNumber +
-                        '" target="_blank" class="sproutfields-icon">&#xe801;</a>');
+                        '" target="_blank" class="fontello-icon">&#xe802;</a>');
+
+                    console.log($(currentPhoneField));
 
                     $(currentPhoneField).addClass('complete');
                 }

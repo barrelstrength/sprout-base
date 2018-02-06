@@ -23,7 +23,8 @@ class SelectOtherFieldAsset extends AssetBundle
         // @todo - update this file to be named better
         $this->js = [
             'js/sproutfields.js',
-            'js/EditableTable.js'
+            'js/EditableTable.js',
+            'js/initialize.js'
         ];
 
         parent::init();

@@ -117,11 +117,12 @@ class Address extends Component
      */
     public function getAddressById($id)
     {
+        $model = new AddressModel();
         if ($record = AddressRecord::findOne($id)) {
-            return new AddressModel($record->getAttributes());
-        } else {
-            return new AddressModel();
+            $model->setAttributes($record->getAttributes(), false);
         }
+
+        return $model;
     }
 
     /**
