@@ -9,13 +9,3 @@
 }) }}
 
 <span class="sprout-phone-button {{ id }}"></span>
-
-{% set inputMask = inputMask is defined ? 'checked' : '' %}
-
-{% do view.registerAssetBundle("barrelstrength\\sproutbase\\web\\assets\\sproutfields\\phone\\PhoneFieldAsset") %}
-
-{% js %}
-    {% if inputMask %}
-        new Craft.PhoneInputMask("{{ namespaceInputId }}", "{{ id }}", "{{ mask }}", "{{ inputMask }}", "{{ mask }}")
-    {% endif %}
-{% endjs %}
