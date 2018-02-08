@@ -7,8 +7,11 @@
 
 namespace barrelstrength\sproutbase\services\sproutfields;
 
+use barrelstrength\sproutbase\SproutBase;
 use craft\base\Component;
 use craft\base\Element;
+use Craft;
+use yii\base\Exception;
 
 class Utilities extends Component
 {
@@ -75,6 +78,31 @@ class Utilities extends Component
         }
 
         return $text;
+    }
+
+    /**
+     * @param $field
+     * @param $element
+     *
+     * @throws \yii\db\Exception
+     */
+    public function processAutoField($field, $element)
+    {
+        $fieldPattern = $field->value;
+        $value = '';
+
+        try {
+            $value = Craft::$app->view->renderObjectTemplate($fieldPattern, $element);
+        } catch (Exception $e) {
+            SproutBase::error($e->getMessage());
+        }
+
+        $column = 'field_'.$field->handle;
+
+        Craft::$app->db->createCommand()->update('{{%content}}', [
+            $column => $value,
+        ], 'elementId=:id', [':id'=>$element->id])
+        ->execute();
     }
 }
 
