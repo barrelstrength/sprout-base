@@ -100,7 +100,7 @@ class Reports extends Component
 
         $dataSource = $report->getDataSource();
 
-        if (!$dataSource->validateOptions($report->options, $errors)) {
+        if ($dataSource AND !$dataSource->validateOptions($report->options, $errors)) {
             $report->addError('options', $errors);
 
             return false;
@@ -129,6 +129,31 @@ class Reports extends Component
         $reportRecords = ReportRecord::find()->all();
 
         return $this->populateModels($reportRecords);
+    }
+
+    /**
+     * Get only dataSources that are activated by other plugins
+     * @return array
+     */
+    public function getAvailableReports()
+    {
+        $reports = $this->getAllReports();
+        $dataSources = SproutBase::$app->dataSources->getAllDataSources();
+
+        $dataSourceIds = array_keys($dataSources);
+
+        $availableReports = [];
+        if ($reports) {
+            foreach ($reports as $report) {
+                $dataSourceId = $report['dataSourceId'];
+
+                if (in_array($dataSourceId, $dataSourceIds)) {
+                    $availableReports[] = $report;
+                }
+            }
+        }
+
+        return $availableReports;
     }
 
     /**

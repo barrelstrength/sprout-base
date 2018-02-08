@@ -33,9 +33,9 @@ class NotificationEmail extends Element
     public $send;
     public $preview;
 
-    const ENABLED = 'enabled';
-    const PENDING = 'pending';
-    const DISABLED = 'disabled';
+    public const ENABLED = 'enabled';
+    public const PENDING = 'pending';
+    public const DISABLED = 'disabled';
 
     /**
      * @return string

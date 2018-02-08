@@ -50,14 +50,14 @@ class ReportsController extends Controller
 
                 $reports = SproutBase::$app->reports->getReportsByGroupId($groupId);
             } else {
-                $reports = SproutBase::$app->reports->getAllReports();
+                $reports = SproutBase::$app->reports->getAvailableReports();
             }
         }
 
         $newReportOptions = [];
 
         foreach ($dataSources as $dataSource) {
-            if ((bool)$dataSource->allowNew()) {
+            if ($dataSource AND (bool)$dataSource->allowNew()) {
                 $newReportOptions[] = [
                     'name' => $dataSource->getName(),
                     'url' => $dataSource->getUrl('/new')
