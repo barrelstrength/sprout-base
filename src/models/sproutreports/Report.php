@@ -58,7 +58,10 @@ class Report extends Model
     {
         $dataSource = SproutBase::$app->dataSources->getDataSourceById($this->dataSourceId);
 
+        if (!$dataSource) return null;
+
         $dataSource->setReport($this);
+
 
         return $dataSource;
     }
