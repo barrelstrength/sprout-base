@@ -25,7 +25,27 @@ use craft\db\ActiveRecord;
  */
 class Report extends ActiveRecord
 {
-    const SCENARIO_ALL = 'all';
+    public $id;
+
+    public $name;
+
+    public $nameFormat;
+
+    public $handle;
+
+    public $description;
+
+    public $allowHtml;
+
+    public $options;
+
+    public $dataSourceId;
+
+    public $enabled;
+
+    public $groupId;
+
+    public const SCENARIO_ALL = 'all';
 
     /**
      * @return string
