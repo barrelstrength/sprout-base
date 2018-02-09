@@ -1,8 +1,14 @@
 {% import "_includes/forms" as forms %}
 
+{{ forms.selectField({
+    name: name~'[country]',
+    options: countries,
+    value: country
+}) }}
+
 {{ forms.text({
     id: id,
-    name: name,
+    name: name~'[phone]',
     class: 'sprout-phone-field',
     value: value is defined ? value : '',
     placeholder: placeholder ?? null

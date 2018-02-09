@@ -20,19 +20,6 @@ use Craft;
 class Phone extends Component
 {
     /**
-     * @var string
-     */
-    protected $mask;
-
-    /**
-     * @return string
-     */
-    public function getDefaultMask(): string
-    {
-        return '###-###-####';
-    }
-
-    /**
      * Validates a phone number
      *
      * @param $value
