@@ -8,6 +8,7 @@
 namespace barrelstrength\sproutbase\web\assets\sproutbase\cp;
 
 use craft\web\AssetBundle;
+use craft\web\assets\cp\CpAsset as CraftCpAsset;
 
 class CpAsset extends AssetBundle
 {
@@ -17,6 +18,10 @@ class CpAsset extends AssetBundle
     public function init()
     {
         $this->sourcePath = '@sproutbase/web/assets/sproutbase/cp/dist';
+
+        $this->depends = [
+            CraftCpAsset::class
+        ];
 
         $this->css = [
             'css/sproutcp.css',
