@@ -2,14 +2,15 @@
 
 <div class="sprout-phone-field compoundSelectText-wrapper">
     <div class="compoundSelectText-dropdown">
-        {{ forms.select({
+        {{ forms.selectField({
             name: name~'[country]',
             options: countries,
-            value: country
+            value: country,
+            disabled: limitToSingleCountry == 1 ? true : false
         }) }}
     </div>
     <div class="compoundSelectText-text">
-        {{ forms.text({
+        {{ forms.textField({
             id: id,
             name: name~'[phone]',
             value: value is defined ? value : '',
