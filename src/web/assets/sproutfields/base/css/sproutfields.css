@@ -60,14 +60,29 @@
     opacity: 1;
 }
 
-/* Reduce opacity when empty */
-.sprout-phone-field {
-    opacity: .3;
+.sprout-phone-field.compoundSelectText-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.sprout-phone-field .compoundSelectText-text {
+    flex-grow: 1;
+    margin-left: 10px;
 }
 
-.sprout-phone-field:focus,
-.sprout-phone-field.complete {
-    opacity: 1;
+@media (max-width: 600px) {
+    .sprout-phone-field.compoundSelectText-wrapper {
+        flex-direction: column;
+    }
+    .sprout-phone-field .compoundSelectText-dropdown .select,
+    .sprout-phone-field .compoundSelectText-dropdown select {
+        width: 100%;
+    }
+    .sprout-phone-field .compoundSelectText-text {
+        flex-grow: 1;
+        margin-left: 0;
+        margin-top: 10px;
+    }
 }
 
 /* Sprout Link Field

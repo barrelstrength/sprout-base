@@ -1,17 +1,20 @@
 {% import "_includes/forms" as forms %}
 
-{{ forms.selectField({
-    name: name~'[country]',
-    options: countries,
-    value: country
-}) }}
-
-{{ forms.text({
-    id: id,
-    name: name~'[phone]',
-    class: 'sprout-phone-field',
-    value: value is defined ? value : '',
-    placeholder: placeholder ?? null
-}) }}
-
-<span class="sprout-phone-button {{ id }}"></span>
+<div class="sprout-phone-field compoundSelectText-wrapper">
+    <div class="compoundSelectText-dropdown">
+        {{ forms.select({
+            name: name~'[country]',
+            options: countries,
+            value: country
+        }) }}
+    </div>
+    <div class="compoundSelectText-text">
+        {{ forms.text({
+            id: id,
+            name: name~'[phone]',
+            value: value is defined ? value : '',
+            placeholder: placeholder ?? null
+        }) }}
+    </div>
+    <span class="sprout-phone-button {{ id }}"></span>
+</div>
