@@ -86,23 +86,27 @@ class Utilities extends Component
      *
      * @throws \yii\db\Exception
      */
-    public function processAutoField($field, $element)
+    public function processPredefinedField($field, $element)
     {
         $fieldPattern = $field->value;
         $value = '';
 
         try {
             $value = Craft::$app->view->renderObjectTemplate($fieldPattern, $element);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             SproutBase::error($e->getMessage());
         }
 
-        $column = 'field_'.$field->handle;
+        $fieldColumnPrefix = Craft::$app->getContent()->fieldColumnPrefix;
+        $column = $fieldColumnPrefix.$field->handle;
 
         Craft::$app->db->createCommand()->update('{{%content}}', [
             $column => $value,
-        ], 'elementId=:id', [':id'=>$element->id])
-        ->execute();
+        ], 'elementId=:elementId AND siteId=:siteId', [
+            ':elementId' => $element->id,
+            ':siteId' => $element->siteId
+        ])
+            ->execute();
     }
 }
 
