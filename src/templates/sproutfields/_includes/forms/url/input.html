@@ -9,16 +9,16 @@
 
 <span class="sprout-link-button {{ id }}"></span>
 
-{% do view.registerAssetBundle("barrelstrength\\sproutbase\\web\\assets\\sproutfields\\link\\LinkFieldAsset") %}
+{% do view.registerAssetBundle("barrelstrength\\sproutbase\\web\\assets\\sproutfields\\url\\UrlFieldAsset") %}
 
 {% js %}
 
     (function() {
-    checkSproutLinkField("{{ namespaceInputId }}", "{{ id }}", "{{ name }}", "{{ fieldContext }}");
+    checkSproutUrlField("{{ namespaceInputId }}", "{{ id }}", "{{ name }}", "{{ fieldContext }}");
     })();
 
     $('input#{{ namespaceInputId }}').on('input', function () {
-    checkSproutLinkField("{{ namespaceInputId }}", "{{ id }}", "{{ name }}", "{{ fieldContext }}");
+    checkSproutUrlField("{{ namespaceInputId }}", "{{ id }}", "{{ name }}", "{{ fieldContext }}");
     });
 
 {% endjs %}

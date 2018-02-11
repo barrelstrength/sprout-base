@@ -14,7 +14,7 @@ use barrelstrength\sproutbase\services\sproutreports\Exports;
 use barrelstrength\sproutbase\services\sproutreports\ReportGroups;
 use barrelstrength\sproutbase\services\sproutreports\Reports;
 use barrelstrength\sproutbase\services\sproutfields\Utilities;
-use barrelstrength\sproutbase\services\sproutfields\Link;
+use barrelstrength\sproutbase\services\sproutfields\Url;
 use barrelstrength\sproutbase\services\sproutfields\Phone;
 use barrelstrength\sproutbase\services\sproutfields\RegularExpression;
 use barrelstrength\sproutbase\services\sproutfields\Email;
@@ -41,9 +41,9 @@ class App extends Component
     public $utilities;
 
     /**
-     * @var Link
+     * @var Url
      */
-    public $link;
+    public $url;
 
     /**
      * @var Email
@@ -111,7 +111,7 @@ class App extends Component
         $this->address = new Address();
         $this->phone = new Phone();
         $this->utilities = new Utilities();
-        $this->link = new Link();
+        $this->url = new Url();
         $this->email = new Email();
         $this->regularExpression = new RegularExpression();
         $this->emailDropdown = new EmailDropdown();

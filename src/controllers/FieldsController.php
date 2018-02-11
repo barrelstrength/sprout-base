@@ -36,7 +36,7 @@ class FieldsController extends BaseController
         $field = Craft::$app->fields->getFieldByHandle($fieldHandle);
         Craft::$app->content->fieldContext = $oldFieldContext;
 
-        // If we don't find a Link Field, return a new Link Field model
+        // If we don't find a URL Field, return a new URL Field model
         // @todo - why do we need to return a model? can we assume the user has Sprout Fields installed?
         if (!$field) {
             return $this->asJson(false);
@@ -53,7 +53,7 @@ class FieldsController extends BaseController
      * @return \yii\web\Response
      * @throws \yii\web\BadRequestHttpException
      */
-    public function actionLinkValidate()
+    public function actionUrlValidate()
     {
         $this->requirePostRequest();
         $this->requireAcceptsJson();
@@ -63,17 +63,17 @@ class FieldsController extends BaseController
         $fieldContext = Craft::$app->getRequest()->getParam('fieldContext');
         $fieldHandle = Craft::$app->getRequest()->getParam('fieldHandle');
 
-        // Retrieve a Link Field, wherever it may be
+        // Retrieve a URL Field, wherever it may be
         Craft::$app->content->fieldContext = $fieldContext;
         $field = Craft::$app->fields->getFieldByHandle($fieldHandle);
         Craft::$app->content->fieldContext = $oldFieldContext;
 
-        // If we don't find a Link Field, return a new Link Field model
+        // If we don't find a URL Field, return a new URL Field model
         if (!$field) {
             return $this->asJson(false);
         }
 
-        if (!SproutBase::$app->link->validate($value, $field)) {
+        if (!SproutBase::$app->url->validate($value, $field)) {
             return $this->asJson(false);
         }
 

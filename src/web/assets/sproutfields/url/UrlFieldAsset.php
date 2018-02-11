@@ -5,12 +5,12 @@
  * @license   http://sprout.barrelstrengthdesign.com/license
  */
 
-namespace barrelstrength\sproutbase\web\assets\sproutfields\link;
+namespace barrelstrength\sproutbase\web\assets\sproutfields\url;
 
 use craft\web\AssetBundle;
 use craft\web\assets\cp\CpAsset;
 
-class LinkFieldAsset extends AssetBundle
+class UrlFieldAsset extends AssetBundle
 {
     public function init()
     {
@@ -25,7 +25,7 @@ class LinkFieldAsset extends AssetBundle
         // define the relative path to CSS/JS files that should be registered with the page
         // when this asset bundle is registered
         $this->js = [
-            'link/dist/js/sproutlinkfield.js',
+            'link/dist/js/sprouturlfield.js',
         ];
 
         $this->css = [
