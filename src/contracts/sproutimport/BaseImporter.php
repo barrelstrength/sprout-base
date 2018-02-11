@@ -7,8 +7,11 @@
 
 namespace barrelstrength\sproutbase\contracts\sproutimport;
 
+use barrelstrength\sproutimport\models\Settings;
+use barrelstrength\sproutimport\services\Faker;
 use barrelstrength\sproutimport\SproutImport;
 use Craft;
+use craft\helpers\ArrayHelper;
 
 /**
  * Class BaseImporter
@@ -21,7 +24,7 @@ abstract class BaseImporter
      * The model of the thing being imported: Element, Setting, Field etc.
      *
      * Examples:
-     * - UserModel
+     * - User
      * - FieldModel
      * - PlainTextFieldType
      *
@@ -50,6 +53,11 @@ abstract class BaseImporter
     public $rows;
 
     /**
+     * @var $seedSettings []
+     */
+    public $seedSettings;
+
+    /**
      * Any errors that have occurred that we want to store and access later
      *
      * @var array
@@ -59,7 +67,7 @@ abstract class BaseImporter
     /**
      * Access to the Faker Service layer
      *
-     * @var null
+     * @var Faker
      */
     protected $fakerService;
 
@@ -86,6 +94,10 @@ abstract class BaseImporter
         } else {
             $this->fakerService = $fakerService;
         }
+
+        $settings = Craft::$app->plugins->getPlugin('sprout-import')->getSettings();
+
+        $this->seedSettings = $settings['seedSettings'];
     }
 
     /**
