@@ -53,16 +53,21 @@ class Phone extends Component
      *
      * @return string
      */
-    public function getErrorMessage($field): string
+    public function getErrorMessage($field, $country): string
     {
         // Change empty condition to show default message when toggle settings is unchecked
         if (!empty($field->customPatternErrorMessage)) {
             return Craft::t('sprout-base',$field->customPatternErrorMessage);
         }
 
-        $vars = ['field' => $field->name];
+        $phoneUtil = PhoneNumberUtil::getInstance();
 
-        return Craft::t('sprout-base','{field} is invalid', $vars);
+        $exampleNumber = $phoneUtil->getExampleNumber($country);
+
+        return Craft::t('sprout-base','{field} is invalid. Required format: ' .  $exampleNumber->getNationalNumber(), [
+            'field' => $field->name,
+            'exampleNumber' => $exampleNumber
+        ]);
     }
 
 }
