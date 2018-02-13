@@ -8,6 +8,10 @@
             value: country,
             disabled: limitToSingleCountry == 1 ? true : false
         }) }}
+
+        {% if limitToSingleCountry %}
+            <input type="hidden" name="{{ name }}[country]" value="{{ country }}">
+        {% endif %}
     </div>
     <div class="compoundSelectText-text">
         {{ forms.textField({
