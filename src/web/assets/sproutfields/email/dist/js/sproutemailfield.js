@@ -23,7 +23,7 @@ function checkSproutEmailField(namespaceInputId, id, elementId, fieldHandle, fie
         Craft.postActionRequest('sprout-base/fields/email-validate', data, function(response) {
             if (response) {
                 $(sproutEmailButtonClass).addClass('fade');
-                $(sproutEmailButtonClass).html('<a href="mailto:' + data.value + '" target="_blank" class="sproutfields-icon">&#xf0e0;</a>');
+                $(sproutEmailButtonClass).html('<a href="mailto:' + data.value + '" target="_blank" class="fontello-icon">&#xf0e0;</a>');
             }
             else {
                 $(sproutEmailButtonClass).removeClass('fade');
