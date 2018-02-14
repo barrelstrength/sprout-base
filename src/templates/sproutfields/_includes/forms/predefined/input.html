@@ -1,7 +1,15 @@
 {% import "_includes/forms" as forms %}
 
-{{ forms.text({
+{{ forms.textField({
     id: name,
     name: name,
-    value: value is defined ? value : ''
+    placeholder: field.settings.fieldFormat,
+    value: value is defined ? value : '',
+    readonly: true
 }) }}
+
+{% css %}
+    #fields-{{ name }}-field input {
+        color: #aaa;
+    }
+{% endcss %}

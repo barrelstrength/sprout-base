@@ -26,7 +26,6 @@ if (typeof Craft.SproutBase === typeof undefined) {
             SproutAddressBox: function() {
                 $container = $(this);
                 return this.each(function() {
-                    console.log('sumpin sumpin');
                     new Craft.SproutBase.AddressBox($container);
                 });
             }

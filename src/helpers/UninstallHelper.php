@@ -80,12 +80,15 @@ class UninstallHelper
         $this->pluginsToUninstall = $pluginsToUninstall;
     }
 
-//    public function uninstall()
-//    {
-//        foreach ($this->pluginsToUninstall as $plugin) {
-//            // Check to see if an Uninstall Class exists
-//            //
-//            // Run the uninstall method of that class
-//        }
-//    }
+    /**
+     * Assists with uninstalling Sprout Plugins that no longer have any other plugin dependencies
+     */
+    public function uninstall()
+    {
+        foreach ($this->pluginsToUninstall as $plugin) {
+            // Check to see if an Uninstall Class exists
+            //
+            // Run the uninstall method of that class
+        }
+    }
 }

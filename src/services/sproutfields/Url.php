@@ -12,10 +12,9 @@ use yii\base\Component;
 use Craft;
 
 /**
- * Class LinkService
- *
+ * Class Url
  */
-class Link extends Component
+class Url extends Component
 {
     /**
      * Validates a phone number against a given mask/pattern
@@ -60,7 +59,7 @@ class Link extends Component
             return Craft::t('sprout-base',$field->customPatternErrorMessage);
         }
 
-        return Craft::t('sprout-base',$fieldName.' must be a valid link.');
+        return Craft::t('sprout-base',$fieldName.' must be a valid URL.');
     }
 
 }

@@ -1,21 +1,25 @@
 {% import "_includes/forms" as forms %}
 
-{{ forms.text({
-    id: id,
-    name: name,
-    class: 'sprout-phone-field',
-    value: value is defined ? value : '',
-    placeholder: placeholder ?? null
-}) }}
+<div class="sprout-phone-field compoundSelectText-wrapper">
+    <div class="compoundSelectText-dropdown">
+        {{ forms.selectField({
+            name: name~'[country]',
+            options: countries,
+            value: country,
+            disabled: limitToSingleCountry == 1 ? true : false
+        }) }}
 
-<span class="sprout-phone-button {{ id }}"></span>
-
-{% set inputMask = inputMask is defined ? 'checked' : '' %}
-
-{% do view.registerAssetBundle("barrelstrength\\sproutbase\\web\\assets\\sproutfields\\phone\\PhoneFieldAsset") %}
-
-{% js %}
-    {% if inputMask %}
-        new Craft.PhoneInputMask("{{ namespaceInputId }}", "{{ id }}", "{{ mask }}", "{{ inputMask }}", "{{ mask }}")
-    {% endif %}
-{% endjs %}
+        {% if limitToSingleCountry %}
+            <input type="hidden" name="{{ name }}[country]" value="{{ country }}">
+        {% endif %}
+    </div>
+    <div class="compoundSelectText-text">
+        {{ forms.textField({
+            id: id,
+            name: name~'[phone]',
+            value: value is defined ? value : '',
+            placeholder: placeholder ?? null
+        }) }}
+    </div>
+    <span class="sprout-phone-button {{ id }}"></span>
+</div>

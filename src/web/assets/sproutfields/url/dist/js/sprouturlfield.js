@@ -4,10 +4,10 @@
  * @license   http://sprout.barrelstrengthdesign.com/license
  */
 
-function checkSproutLinkField(namespaceInputId, id, fieldHandle, fieldContext) {
+function checkSproutUrlField(namespaceInputId, id, fieldHandle, fieldContext) {
 
-    var sproutLinkFieldId = '#' + namespaceInputId;
-    var sproutLinkButtonClass = '.' + id;
+    var sproutUrlFieldId = '#' + namespaceInputId;
+    var sproutUrlButtonClass = '.' + id;
 
     // We use setTimeout to make sure our function works every time
     setTimeout(function() {
@@ -15,17 +15,17 @@ function checkSproutLinkField(namespaceInputId, id, fieldHandle, fieldContext) {
         var data = {
             'fieldHandle': fieldHandle,
             'fieldContext': fieldContext,
-            'value': $(sproutLinkFieldId).val()
+            'value': $(sproutUrlFieldId).val()
         };
 
         // Query the controller so the regex validation is all done through PHP.
-        Craft.postActionRequest('sprout-base/fields/link-validate', data, function(response) {
+        Craft.postActionRequest('sprout-base/fields/url-validate', data, function(response) {
             if (response) {
-                $(sproutLinkButtonClass).addClass('fade');
-                $(sproutLinkButtonClass).html('<a href="' + data.value + '" target="_blank" class="fontello-icon">&#xf0a9;</a>');
+                $(sproutUrlButtonClass).addClass('fade');
+                $(sproutUrlButtonClass).html('<a href="' + data.value + '" target="_blank" class="fontello-icon">&#xf0a9;</a>');
             }
             else {
-                $(sproutLinkButtonClass).removeClass('fade');
+                $(sproutUrlButtonClass).removeClass('fade');
             }
         });
 

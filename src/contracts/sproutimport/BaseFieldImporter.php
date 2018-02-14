@@ -65,6 +65,16 @@ abstract class BaseFieldImporter extends BaseImporter
     public abstract function getMockData();
 
     /**
+     * Return any settings that can be customized when generating seed data for this field type
+     *
+     * @return string
+     */
+    public function getSeedSettingsHtml() : string
+    {
+        return '';
+    }
+
+    /**
      * @todo - clean up, empty method.
      */
     public function save()
