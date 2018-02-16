@@ -1,5 +1,9 @@
 {% import "_includes/forms" as forms %}
 
+{% if limitToSingleCountry %}
+    <input type="hidden" name="{{ name }}[country]" value="{{ country }}">
+{% endif %}
+
 <div class="sprout-phone-field compoundSelectText-wrapper">
     <div class="compoundSelectText-dropdown">
         {{ forms.selectField({
@@ -8,10 +12,6 @@
             value: country,
             disabled: limitToSingleCountry == 1 ? true : false
         }) }}
-
-        {% if limitToSingleCountry %}
-            <input type="hidden" name="{{ name }}[country]" value="{{ country }}">
-        {% endif %}
     </div>
     <div class="compoundSelectText-text">
         {{ forms.textField({
@@ -23,3 +23,5 @@
     </div>
     <span class="sprout-phone-button {{ id }}"></span>
 </div>
+
+{% do view.registerAssetBundle("barrelstrength\\sproutbase\\web\\assets\\sproutfields\\phone\\PhoneFieldAsset") %}
