@@ -186,10 +186,12 @@ if (typeof Craft.SproutBase === typeof undefined) {
             var self = this;
 
             var defaultCountryCode = this.$addressBox.data('defaultcountrycode');
+            var hideCountry = this.$addressBox.data('hidecountrydropdown');
 
             Craft.postActionRequest('sprout-base/address/get-address-form-fields', {
                 addressInfoId: this.addressInfoId,
                 defaultCountryCode: defaultCountryCode,
+                hideCountry: hideCountry,
                 namespace: this.settings.namespace
             }, $.proxy(function(response) {
 

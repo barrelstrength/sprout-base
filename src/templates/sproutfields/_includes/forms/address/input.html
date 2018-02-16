@@ -11,6 +11,10 @@
             {% if defaultCountryCode is defined and defaultCountryCode %}
                 data-defaultcountrycode='{{ defaultCountryCode }}'
             {% endif %}
+
+            {% if hideCountryDropdown is defined and hideCountryDropdown %}
+                data-hidecountrydropdown='{{ hideCountryDropdown }}'
+            {% endif %}
     >
         <div class='address-add-button hidden'>
             <a class='btn add icon dashed sproutaddress-edit'
