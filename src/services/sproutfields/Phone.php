@@ -9,6 +9,7 @@ namespace barrelstrength\sproutbase\services\sproutfields;
 
 use barrelstrength\sproutbase\SproutBase;
 use libphonenumber\NumberParseException;
+use libphonenumber\PhoneNumberFormat;
 use libphonenumber\PhoneNumberUtil;
 use yii\base\Component;
 use Craft;
@@ -63,8 +64,9 @@ class Phone extends Component
         $phoneUtil = PhoneNumberUtil::getInstance();
 
         $exampleNumber = $phoneUtil->getExampleNumber($country);
+        $national = $phoneUtil->format($exampleNumber, PhoneNumberFormat::NATIONAL);
 
-        return Craft::t('sprout-base','{field} is invalid. Required format: ' .  $exampleNumber->getNationalNumber(), [
+        return Craft::t('sprout-base','{field} is invalid. Required format: ' .  $national, [
             'field' => $field->name,
             'exampleNumber' => $exampleNumber
         ]);
