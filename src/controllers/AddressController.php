@@ -124,7 +124,10 @@ class AddressController extends Controller
 
         $this->addressHelper->setParams($countryCode, $namespace, $addressInfoModel);
 
-        $countryCodeHtml = $this->addressHelper->countryInput();
+        $hiddenCountry = (Craft::$app->getRequest()->getBodyParam('hideCountry')) != null ? true : false;
+
+        $countryCodeHtml = $this->addressHelper->countryInput($hiddenCountry);
+
         $formInputHtml = $this->addressHelper->getAddressFormHtml();
 
         return $this->asJson([
