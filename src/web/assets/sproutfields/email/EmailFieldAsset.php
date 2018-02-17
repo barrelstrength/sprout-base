@@ -7,7 +7,6 @@
 
 namespace barrelstrength\sproutbase\web\assets\sproutfields\email;
 
-use barrelstrength\sproutbase\web\assets\sproutbase\fontello\FontelloAsset;
 use craft\web\AssetBundle;
 use barrelstrength\sproutbase\web\assets\sproutbase\cp\CpAsset;
 
@@ -20,8 +19,7 @@ class EmailFieldAsset extends AssetBundle
 
         // define the dependencies
         $this->depends = [
-            CpAsset::class,
-            FontelloAsset::class
+            CpAsset::class
         ];
 
         // define the relative path to CSS/JS files that should be registered with the page

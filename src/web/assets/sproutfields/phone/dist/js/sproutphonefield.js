@@ -6,12 +6,13 @@
 
 (function($) {
 
-    Craft.PhoneInputMask = Garnish.Base.extend(
+    Craft.PhoneField = Garnish.Base.extend(
         {
             init: function(namespaceInputId, countryId) {
 
                 var sproutPhoneFieldId = '#' + namespaceInputId;
                 var sproutPhoneCountryId = '#' + countryId;
+                var sproutPhoneFieldButtonClass = sproutPhoneFieldId + '-field .sprout-phone-button';
 
                 // We use setTimeout to make sure our function works every time
                 setTimeout(function() {
@@ -42,27 +43,19 @@
                 function validatePhoneNumber(currentPhoneField, phoneNumber, data) {
 
                     Craft.postActionRequest('sprout-base/fields/phone-validate', data, function(response) {
+
                         if (response) {
-                            showCallText(phoneNumber, currentPhoneField);
+                            $(sproutPhoneFieldButtonClass).addClass('fade');
+                            $(sproutPhoneFieldButtonClass + ' a').attr("href", "tel:" + phoneNumber);
+
+                            console.log('add');
                         }
                         else {
-                            $('.sprout-phone-button').html('');
+                            console.log('remove');
+                            $('.sprout-phone-button').removeClass('fade');
+
                         }
                     })
-                }
-
-                // Show Call Phone Text
-                function showCallText(phoneNumber, currentPhoneField) {
-
-                    if (phoneNumber == '') {
-                        return;
-                    }
-                    $('.sprout-phone-button').addClass('fade');
-
-                    $('.sprout-phone-button').html('<a href="tel:' + phoneNumber +
-                        '" target="_blank" class="fontello-icon">&#xe802;</a>');
-
-                    $(currentPhoneField).addClass('complete');
                 }
             }
         });

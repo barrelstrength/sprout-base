@@ -21,12 +21,16 @@
             value: value is defined ? value : '',
             placeholder: placeholder ?? null
         }) }}
-        <span class="sprout-phone-button {{ id }}"></span>
+        <span class="sprout-phone-button {{ id }}">
+            <a href="" target="_blank">{{ craft.sproutbase.getSvg('@sproutbaseicons/phone.svg') }}</a>
+        </span>
     </div>
 </div>
+
+{#{{ craft.sproutbase.getSvg('@sproutbaseicons/envelope.svg') }}#}
 
 {% do view.registerAssetBundle("barrelstrength\\sproutbase\\web\\assets\\sproutfields\\phone\\PhoneFieldAsset") %}
 
 {% js %}
-    new Craft.PhoneInputMask("{{ namespaceInputId }}","{{ namespaceCountryId }}");
+    new Craft.PhoneField("{{ namespaceInputId }}","{{ namespaceCountryId }}");
 {% endjs %}

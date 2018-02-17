@@ -7,17 +7,16 @@
 /* Icons
 ------------------------------------------------------------ */
 
-.sprout-link-button a,
-.sprout-phone-button a,
-.sprout-email-button a {
-    color: #b9bfc6;
+.sprout-link-button svg path,
+.sprout-phone-button svg path,
+.sprout-email-button svg path {
+    fill: #b9bfc6;
 }
 
-.sprout-link-button a:hover,
-.sprout-phone-button a:hover,
-.sprout-email-button a:hover {
-    color: #333f4d;
-    text-decoration: none;
+.sprout-link-button svg:hover path,
+.sprout-phone-button svg:hover path,
+.sprout-email-button svg:hover path {
+    fill: #333f4d;
 }
 
 /* Sprout Email Field
@@ -26,11 +25,13 @@
 .sprout-email-button {
     background-color: #fff;
     display: inline-block;
+    height: 14px;
+    width: 14px;
     opacity: 0;
-    padding: 2px 4px 3px 8px;
+    padding: 8px 6px 8px 6px;
     position: absolute;
-    right: 2px;
-    margin-top: -28px;
+    right: 1px;
+    top: 1px;
     transition: opacity .15s ease-in-out;
     -moz-transition: opacity .15s ease-in-out;
     -webkit-transition: opacity .15s ease-in-out;
@@ -46,11 +47,13 @@
 .sprout-phone-button {
     background-color: #fff;
     display: inline-block;
+    height: 14px;
+    width: 14px;
     opacity: 0;
-    padding: 2px 4px 3px 8px;
+    padding: 8px 6px 8px 6px;
     position: absolute;
-    right: 2px;
-    margin-top: -50px;
+    right: 1px;
+    top: 1px;
     transition: opacity .15s ease-in-out;
     -moz-transition: opacity .15s ease-in-out;
     -webkit-transition: opacity .15s ease-in-out;
@@ -91,11 +94,13 @@
 .sprout-link-button {
     background-color: #fff;
     display: inline-block;
+    height: 14px;
+    width: 14px;
     opacity: 0;
-    padding: 2px 4px 3px 8px;
+    padding: 8px 6px 8px 6px;
     position: absolute;
-    right: 2px;
-    margin-top: -28px;
+    right: 1px;
+    top: 1px;
     transition: opacity .15s ease-in-out;
     -moz-transition: opacity .15s ease-in-out;
     -webkit-transition: opacity .15s ease-in-out;

@@ -8,7 +8,6 @@
 namespace barrelstrength\sproutbase\web\assets\sproutfields\url;
 
 use barrelstrength\sproutbase\web\assets\sproutbase\cp\CpAsset;
-use barrelstrength\sproutbase\web\assets\sproutbase\fontello\FontelloAsset;
 use craft\web\AssetBundle;
 
 class UrlFieldAsset extends AssetBundle
@@ -20,8 +19,7 @@ class UrlFieldAsset extends AssetBundle
 
         // define the dependencies
         $this->depends = [
-            CpAsset::class,
-            FontelloAsset::class
+            CpAsset::class
         ];
 
         // define the relative path to CSS/JS files that should be registered with the page
