@@ -88,7 +88,7 @@ class Utilities extends Component
      */
     public function processPredefinedField($field, $element)
     {
-        $fieldPattern = $field->value;
+        $fieldPattern = $field->fieldFormat;
         $value = '';
 
         try {
