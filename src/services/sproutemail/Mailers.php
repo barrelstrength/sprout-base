@@ -58,7 +58,7 @@ class Mailers extends Component
     {
         $this->mailers = $this->getMailers();
 
-        return isset($this->mailers[$name]) ?? $this->mailers[$name];
+        return ($this->mailers[$name] ?? null) ? $this->mailers[$name] : null;
     }
 
     /**

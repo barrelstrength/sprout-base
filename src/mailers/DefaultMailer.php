@@ -11,7 +11,9 @@ use barrelstrength\sproutbase\elements\sproutemail\NotificationEmail;
 use barrelstrength\sproutemail\models\CampaignType;
 use barrelstrength\sproutemail\models\Response;
 use barrelstrength\sproutbase\models\sproutemail\SimpleRecipient;
-use barrelstrength\sproutemail\SproutEmail;
+use barrelstrength\sproutemail\SproutEmail;;
+
+use craft\helpers\Json;
 use craft\helpers\Template;
 use Craft;
 use craft\helpers\UrlHelper;
@@ -293,31 +295,33 @@ class DefaultMailer extends BaseMailer implements CampaignEmailSenderInterface
      *
      * @return array|void
      */
+    /**
+     * @return array|null
+     * @throws \Exception
+     */
     public function getLists()
     {
-        /**
-         * @todo update when sprout list when we develop sprout lists plugin
-         */
-        /*if ($this->lists === null && Craft::$app->getPlugins()->getPlugin('sprout-lists') != null)
+        if ($this->lists === null && Craft::$app->getPlugins()->getPlugin('sprout-lists') != null)
         {
-            $listType = SproutLists::$app->lists->getListType('subscriber');
+            $listType = \barrelstrength\sproutlists\SproutLists::$app->lists
+                ->getListType(\barrelstrength\sproutlists\SproutLists::$defaultSubscriber);
 
             $this->lists = $listType ? $listType->getLists() : array();
         }
 
-        return $this->lists;*/
+        return $this->lists;
     }
-
+    
     /**
      * Get the HTML for our List Settings on the Notification Email edit page
-     *
      * @param array $values
      *
      * @return null|string
+     * @throws \Exception
      * @throws \Twig_Error_Loader
      * @throws \yii\base\Exception
      */
-    public function getListsHtml(array $values = [])
+    public function getListsHtml($values = [])
     {
         $selected = [];
         $options = [];
@@ -343,9 +347,14 @@ class DefaultMailer extends BaseMailer implements CampaignEmailSenderInterface
             return '';
         }
 
-        $listIds = isset($values['listIds']) ?? $values['listIds'];
+        $listIds = [];
+        // Convert json format to array
+        if ($values != null AND is_string($values)) {
+            $listIds = Json::decode($values);
+            $listIds = $listIds['listIds'];
+        }
 
-        if (is_array($listIds) && count($listIds)) {
+        if (!empty($listIds)) {
             foreach ($listIds as $key => $listId) {
                 $selected[] = $listId;
             }
@@ -413,31 +422,48 @@ class DefaultMailer extends BaseMailer implements CampaignEmailSenderInterface
         );
 
         // @todo implement this when we develop sprout lists plugin
-//        if (Craft::$app->getPlugins()->getPlugin('sprout-lists') != null) {
-//            // Get all subscribers by list IDs from the SproutLists_SubscriberListType
-//            $listRecords = SproutLists_ListRecord::model()->findAllByPk($email->listSettings['listIds']);
-//
-//            $sproutListsRecipientsInfo = array();
-//            if ($listRecords != null)
-//            {
-//                foreach ($listRecords as $listRecord)
-//                {
-//                    if (!empty($listRecord->subscribers))
-//                    {
-//                        foreach ($listRecord->subscribers as $subscriber)
-//                        {
-//                            // Assign email as key to not repeat subscriber
-//                            $sproutListsRecipientsInfo[$subscriber->email] = $subscriber->getAttributes();
-//                        }
-//                    }
-//                }
-//            }
-//
-//            $simpleRecipientModel = new SimpleRecipient();
-//            $sproutListsRecipients = $simpleRecipientModel->setAttributes($sproutListsRecipientsInfo, false);
-//
-//            $recipients = array_merge($recipients, $sproutListsRecipients);
-//        }
+        if (Craft::$app->getPlugins()->getPlugin('sprout-lists') != null) {
+
+            $listSettings = $email->listSettings;
+            $listIds = [];
+            // Convert json format to array
+            if ($listSettings != null AND is_string($listSettings)) {
+                $listIds = Json::decode($listSettings);
+                $listIds = $listIds['listIds'];
+            }
+
+            // Get all subscribers by list IDs from the SproutLists_SubscriberListType
+            $listRecords = \barrelstrength\sproutlists\records\Lists::find()
+                ->where(['id' => $listIds])->all();
+
+            $sproutListsRecipientsInfo = array();
+            if ($listRecords != null)
+            {
+                foreach ($listRecords as $listRecord)
+                {
+                    if (!empty($listRecord->subscribers))
+                    {
+                        foreach ($listRecord->subscribers as $subscriber)
+                        {
+                            // Assign email as key to not repeat subscriber
+                            $sproutListsRecipientsInfo[$subscriber->email] = $subscriber->getAttributes();
+                        }
+                    }
+                }
+            }
+
+            $listRecipients = [];
+            if ($sproutListsRecipientsInfo) {
+                foreach ($sproutListsRecipientsInfo as $listRecipient) {
+                    $simpleRecipientModel = new SimpleRecipient();
+                    $simpleRecipientModel->setAttributes($listRecipient, false);
+
+                    $listRecipients[] = $simpleRecipientModel;
+                }
+            }
+
+            $recipients = array_merge($recipients, $listRecipients);
+        }
 
         return $recipients;
     }

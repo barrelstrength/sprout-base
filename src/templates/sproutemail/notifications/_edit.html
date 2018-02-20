@@ -157,7 +157,7 @@
             errors: notificationEmail is defined ? notificationEmail.getErrors('recipients')
         }) }}
 
-        {% if (mailer is not null and mailer.getListsHtml()|length) %}
+        {% if (mailer is not null and mailer.getLists()|length) %}
             <div class="field mailing-lists">
                 <div class="heading">
                     Lists

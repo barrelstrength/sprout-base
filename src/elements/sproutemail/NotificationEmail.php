@@ -13,6 +13,8 @@ use craft\base\Element;
 use Craft;
 use craft\elements\db\ElementQueryInterface;
 use craft\helpers\UrlHelper;
+use nystudio107\recipe\helpers\Json;
+use yii\helpers\ArrayHelper;
 
 class NotificationEmail extends Element
 {
@@ -239,9 +241,10 @@ class NotificationEmail extends Element
         $record->fromEmail = $this->fromEmail;
         $record->replyToEmail = $this->replyToEmail;
         $record->recipients = $this->recipients;
+        $record->listSettings = $this->listSettings;
         $record->dateCreated = $this->dateCreated;
         $record->dateUpdated = $this->dateUpdated;
-
+  
         $record->save(false);
 
         // Update the entry's descendants, who may be using this entry's URI in their own URIs

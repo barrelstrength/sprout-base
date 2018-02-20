@@ -350,7 +350,7 @@ class NotificationEmails extends Component
         if ($params == false) {
             return false;
         }
-        $element = isset($params['value']) ?? $params['value'];
+        $element = ($params['value'] != null)? $params['value'] : null;
 
         if ($notificationEmails = $this->getAllNotificationEmails($eventId)) {
             foreach ($notificationEmails as $notificationEmail) {

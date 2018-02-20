@@ -245,6 +245,7 @@ class NotificationsController extends Controller
         $notificationEmail->subjectLine = Craft::$app->getRequest()->getBodyParam('subjectLine');
         $notificationEmail->slug = Craft::$app->getRequest()->getBodyParam('slug');
         $notificationEmail->enabled = Craft::$app->getRequest()->getBodyParam('enabled');
+
         $notificationEmail->listSettings = Craft::$app->getRequest()->getBodyParam('lists');
 
         if ($notificationEmail AND $notificationEmail->slug != null) {
