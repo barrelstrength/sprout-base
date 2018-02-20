@@ -44,15 +44,13 @@
 
                     Craft.postActionRequest('sprout-base/fields/phone-validate', data, function(response) {
 
+
                         if (response) {
                             $(sproutPhoneFieldButtonClass).addClass('fade');
                             $(sproutPhoneFieldButtonClass + ' a').attr("href", "tel:" + phoneNumber);
-
-                            console.log('add');
                         }
                         else {
-                            console.log('remove');
-                            $('.sprout-phone-button').removeClass('fade');
+                            $(sproutPhoneFieldButtonClass).removeClass('fade');
 
                         }
                     })
