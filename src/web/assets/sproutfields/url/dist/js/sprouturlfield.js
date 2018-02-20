@@ -22,7 +22,7 @@ function checkSproutUrlField(namespaceInputId, id, fieldHandle, fieldContext) {
         Craft.postActionRequest('sprout-base/fields/url-validate', data, function(response) {
             if (response) {
                 $(sproutUrlButtonClass).addClass('fade');
-                $(sproutUrlButtonClass).html('<a href="' + data.value + '" target="_blank" class="fontello-icon">&#xf0a9;</a>');
+                $(sproutUrlButtonClass + ' a').attr("href", data.value);
             }
             else {
                 $(sproutUrlButtonClass).removeClass('fade');

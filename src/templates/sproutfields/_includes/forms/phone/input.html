@@ -6,7 +6,8 @@
 
 <div class="sprout-phone-field compoundSelectText-wrapper">
     <div class="compoundSelectText-dropdown">
-        {{ forms.selectField({
+        {{ forms.select({
+            id: countryId,
             name: name~'[country]',
             options: countries,
             value: country,
@@ -14,14 +15,20 @@
         }) }}
     </div>
     <div class="compoundSelectText-text">
-        {{ forms.textField({
+        {{ forms.text({
             id: id,
             name: name~'[phone]',
             value: value is defined ? value : '',
             placeholder: placeholder ?? null
         }) }}
+        <span class="sprout-phone-button {{ id }}">
+            <a href="" target="_blank">{{ craft.sproutbase.getSvg('@sproutbaseicons/phone.svg') }}</a>
+        </span>
     </div>
-    <span class="sprout-phone-button {{ id }}"></span>
 </div>
 
 {% do view.registerAssetBundle("barrelstrength\\sproutbase\\web\\assets\\sproutfields\\phone\\PhoneFieldAsset") %}
+
+{% js %}
+    new Craft.PhoneField("{{ namespaceInputId }}","{{ namespaceCountryId }}");
+{% endjs %}

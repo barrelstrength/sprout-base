@@ -7,7 +7,9 @@
     placeholder: placeholder ?? null,
 }) }}
 
-<span class="sprout-link-button {{ id }}"></span>
+<span class="sprout-link-button {{ id }}">
+    <a href="" target="_blank">{{ craft.sproutbase.getSvg('@sproutbaseicons/arrow-circle-right.svg') }}</a>
+</span>
 
 {% do view.registerAssetBundle("barrelstrength\\sproutbase\\web\\assets\\sproutfields\\url\\UrlFieldAsset") %}
 

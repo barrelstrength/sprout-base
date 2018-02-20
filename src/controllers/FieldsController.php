@@ -89,10 +89,10 @@ class FieldsController extends BaseController
         $this->requirePostRequest();
         $this->requireAcceptsJson();
 
-        $value = Craft::$app->getRequest()->getParam('value');
-        $mask = Craft::$app->getRequest()->getParam('mask');
+        $phone = Craft::$app->getRequest()->getParam('phone');
+        $country = Craft::$app->getRequest()->getParam('country');
 
-        if (!SproutBase::$app->phone->validate($value, $mask)) {
+        if (!SproutBase::$app->phone->validate($phone, $country)) {
             return $this->asJson(false);
         }
 
