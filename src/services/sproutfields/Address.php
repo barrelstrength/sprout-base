@@ -19,18 +19,18 @@ class Address extends Component
 
     /**
      * @param string   $namespace
-     * @param int|null $modelId
+     * @param int|null $fieldId
      *
      * @return bool
      * @throws \Exception
      */
-    public function saveAddressByPost($namespace = 'address', int $modelId = null)
+    public function saveAddressByPost($namespace = 'address', int $fieldId = null)
     {
         if (Craft::$app->getRequest()->getBodyParam($namespace) != null) {
             $addressInfo = Craft::$app->getRequest()->getBodyParam($namespace);
 
-            if ($modelId != null) {
-                $addressInfo['modelId'] = $modelId;
+            if ($fieldId != null) {
+                $addressInfo['fieldId'] = $fieldId;
             }
 
             $addressInfoModel = new AddressModel($addressInfo);
@@ -61,7 +61,7 @@ class Address extends Component
             $record = AddressRecord::findOne($model->id);
 
             if (!$record) {
-                throw new \InvalidArgumentException(Craft::t('sprout-base','No entry exists with the ID “{id}”', ['id' => $model->id]));
+                throw new \InvalidArgumentException(Craft::t('sprout-base','No Address exists with the ID “{id}”', ['id' => $model->id]));
             }
         }
 
@@ -79,6 +79,7 @@ class Address extends Component
         if ($model->validate()) {
             try {
                 if ($record->save()) {
+
                     if ($transaction) {
                         $transaction->commit();
                     }
@@ -125,6 +126,22 @@ class Address extends Component
         return $model;
     }
 
+    public function getAddress($elementId, $siteId, $fieldId)
+    {
+        $model = new AddressModel();
+
+        if ($record = AddressRecord::findOne([
+            'elementId' => $elementId,
+            'siteId' => $siteId,
+            'fieldId' => $fieldId
+        ])) {
+            $model->setAttributes($record->getAttributes(), false);
+        }
+
+        return $model;
+    }
+
+
     /**
      * @param null $id
      *
@@ -153,9 +170,9 @@ class Address extends Component
      * @throws \Throwable
      * @throws \yii\db\StaleObjectException
      */
-    public function deleteAddressByModelId($id = null)
+    public function deleteAddressByFieldId($id = null)
     {
-        $record = AddressRecord::findOne(['modelId' => $id]);
+        $record = AddressRecord::findOne(['fieldId' => $id]);
         $result = false;
 
         if ($record) {

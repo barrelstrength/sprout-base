@@ -32,7 +32,9 @@ class Install extends Migration
         if ($response == false) {
             $this->createTable($this->tableName, [
                 'id' => $this->primaryKey(),
-                'modelId' => $this->integer(),
+                'elementId' => $this->integer(),
+                'siteId' => $this->integer(),
+                'fieldId' => $this->integer(),
                 'countryCode' => $this->string(),
                 'administrativeArea' => $this->string(),
                 'locality' => $this->string(),

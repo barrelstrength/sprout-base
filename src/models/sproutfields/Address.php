@@ -19,7 +19,9 @@ class Address extends Model
     protected $addressHelper;
 
     public $id;
-    public $modelId;
+    public $elementId;
+    public $siteId;
+    public $fieldId;
     public $countryCode;
     public $administrativeArea;
     public $locality;
