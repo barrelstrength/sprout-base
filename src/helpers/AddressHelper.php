@@ -107,6 +107,7 @@ class AddressHelper
     private function getAddressInfoInput()
     {
         return $this->renderTemplates('hidden', [
+            'fieldClass' => 'field-address-id',
             'name' => $this->name.'[id]',
             'value' => $this->addressModel->id
         ]);
