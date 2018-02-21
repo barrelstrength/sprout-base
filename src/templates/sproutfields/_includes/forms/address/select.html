@@ -16,7 +16,7 @@
 
 {% if hidden is defined and hidden %}
 
-    <div class="hidden">
+    <div class="hidden {{ fieldClass }}">
         <div class="{{ class }}">
             <input type="hidden" name="{{ name }}" value="{{ value }}"/>
         </div>
