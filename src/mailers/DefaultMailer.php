@@ -11,8 +11,8 @@ use barrelstrength\sproutbase\elements\sproutemail\NotificationEmail;
 use barrelstrength\sproutemail\models\CampaignType;
 use barrelstrength\sproutemail\models\Response;
 use barrelstrength\sproutbase\models\sproutemail\SimpleRecipient;
-use barrelstrength\sproutemail\SproutEmail;;
-
+use barrelstrength\sproutemail\SproutEmail;
+use barrelstrength\sproutlists\SproutLists;
 use craft\helpers\Json;
 use craft\helpers\Template;
 use Craft;
@@ -303,7 +303,7 @@ class DefaultMailer extends BaseMailer implements CampaignEmailSenderInterface
     {
         if ($this->lists === null && Craft::$app->getPlugins()->getPlugin('sprout-lists') != null)
         {
-            $listType = \barrelstrength\sproutlists\SproutLists::$app->lists
+            $listType = SproutLists::$app->lists
                 ->getListType(\barrelstrength\sproutlists\SproutLists::$defaultSubscriber);
 
             $this->lists = $listType ? $listType->getLists() : array();

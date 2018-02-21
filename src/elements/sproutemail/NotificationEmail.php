@@ -35,9 +35,9 @@ class NotificationEmail extends Element
     public $send;
     public $preview;
 
-    public const ENABLED = 'enabled';
-    public const PENDING = 'pending';
-    public const DISABLED = 'disabled';
+    const ENABLED = 'enabled';
+    const PENDING = 'pending';
+    const DISABLED = 'disabled';
 
     /**
      * @return string
@@ -244,7 +244,7 @@ class NotificationEmail extends Element
         $record->listSettings = $this->listSettings;
         $record->dateCreated = $this->dateCreated;
         $record->dateUpdated = $this->dateUpdated;
-  
+
         $record->save(false);
 
         // Update the entry's descendants, who may be using this entry's URI in their own URIs

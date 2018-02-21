@@ -45,7 +45,7 @@ class Report extends ActiveRecord
 
     public $groupId;
 
-    public const SCENARIO_ALL = 'all';
+    const SCENARIO_ALL = 'all';
 
     /**
      * @return string
