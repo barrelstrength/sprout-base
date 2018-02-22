@@ -7,6 +7,7 @@ use craft\base\Component;
 
 abstract class SproutListsBaseListType extends Component
 {
+    abstract public function getHandle();
     /**
      * Returns the class name of this List Type
      *
