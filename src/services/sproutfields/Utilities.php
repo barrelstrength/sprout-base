@@ -81,13 +81,13 @@ class Utilities extends Component
     }
 
     /**
-     * @param $fieldPattern
+     * @param $field
      * @param $element
      *
      * @return string
      * @throws \yii\db\Exception
      */
-    public function processPredefinedField($fieldPattern, $element)
+    public function processPredefinedField($field, $element)
     {
         $value = '';
 
