@@ -21,6 +21,9 @@ class SproutBaseVariable
     public function getSvg($path)
     {
         $svg = Craft::getAlias($path);
+        if (!file_exists($svg)){
+            return null;
+        }
 
         return Template::raw(file_get_contents($svg));
     }
