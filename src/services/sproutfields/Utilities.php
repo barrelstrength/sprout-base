@@ -97,7 +97,16 @@ class Utilities extends Component
             SproutBase::error($e->getMessage());
         }
 
-        return $value;
+        $fieldColumnPrefix = $element->getFieldColumnPrefix();
+        $column = $fieldColumnPrefix.$field->handle;
+
+        Craft::$app->db->createCommand()->update($element->contentTable, [
+            $column => $value,
+        ], 'elementId=:elementId AND siteId=:siteId', [
+            ':elementId' => $element->id,
+            ':siteId' => $element->siteId
+        ])
+            ->execute();
     }
 }
 
