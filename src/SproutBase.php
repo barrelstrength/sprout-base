@@ -108,9 +108,14 @@ class SproutBase extends Module
         });
 
         // Register our Variables
-        Event::on(CraftVariable::class, CraftVariable::EVENT_DEFINE_COMPONENTS, function(DefineComponentsEvent $event) {
-            $event->components['sproutbase'] = SproutBaseVariable::class;
-        });
+        Event::on(
+            CraftVariable::class,
+            CraftVariable::EVENT_INIT,
+            function(Event $event) {
+                $variable = $event->sender;
+                $variable->set('sproutbase', SproutBaseVariable::class);
+            }
+        );
 
         // Register Sprout Email Events
         Event::on(Application::class, Application::EVENT_INIT, function() {

@@ -81,14 +81,14 @@ class Utilities extends Component
     }
 
     /**
-     * @param $field
+     * @param $fieldPattern
      * @param $element
      *
+     * @return string
      * @throws \yii\db\Exception
      */
-    public function processPredefinedField($field, $element)
+    public function processPredefinedField($fieldPattern, $element)
     {
-        $fieldPattern = $field->fieldFormat;
         $value = '';
 
         try {
@@ -97,16 +97,7 @@ class Utilities extends Component
             SproutBase::error($e->getMessage());
         }
 
-        $fieldColumnPrefix = Craft::$app->getContent()->fieldColumnPrefix;
-        $column = $fieldColumnPrefix.$field->handle;
-
-        Craft::$app->db->createCommand()->update('{{%content}}', [
-            $column => $value,
-        ], 'elementId=:elementId AND siteId=:siteId', [
-            ':elementId' => $element->id,
-            ':siteId' => $element->siteId
-        ])
-            ->execute();
+        return $value;
     }
 }
 
