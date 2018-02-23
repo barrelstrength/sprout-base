@@ -20,8 +20,8 @@
   "require": {
     "craftcms/cms": "^3.0.0-RC1",
     "league/csv": "^7.2",
-    "commerceguys/addressing": "^0.7.1",
-    "commerceguys/intl": "^0.6.1",
+    "commerceguys/addressing": "^0.8.4",
+    "commerceguys/intl": "^0.7.5",
     "giggsey/libphonenumber-for-php": "^8.8.11"
   },
   "autoload": {

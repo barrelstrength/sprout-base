@@ -66,13 +66,8 @@ class Address extends Component
         }
 
         $attributes = $model->getAttributes();
-
-        if (!empty($attributes)) {
-            foreach ($model->getAttributes() as $handle => $value) {
-                $record->setAttribute($handle, $value);
-            }
-        }
-
+        $record->setAttributes($attributes, false);
+        
         $db = Craft::$app->getDb();
         $transaction = $db->beginTransaction();
 

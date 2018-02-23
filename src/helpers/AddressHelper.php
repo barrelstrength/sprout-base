@@ -74,6 +74,16 @@ class AddressHelper
         $format = preg_replace('/%recipient/', '', $format);
         $format = preg_replace('/%organization/', '', $format);
 
+        // Removed the extra country name embedded on the commerceguys addressing json file
+        $countryName = $this->getCountryNameByCode($countryCode);
+        if ($countryName) {
+            $countryName = strtoupper($countryName);
+
+            $format = preg_replace('/' . $countryName . '/', '', $format);
+        }
+        // Remove dash on format
+        $format = preg_replace('/-/', '', $format);
+
         // Insert line break based on the format
         //$format = nl2br($format);
 
@@ -715,6 +725,22 @@ class AddressHelper
             ];
 
         return $countries;
+    }
+
+    /**
+     * @param $code
+     *
+     * @return mixed|null
+     */
+    public function getCountryNameByCode($code)
+    {
+        $countries = $this->getCountries();
+
+        if ($countries[$code]) {
+            return $countries[$code];
+        }
+
+        return null;
     }
 
     /**
