@@ -8,7 +8,6 @@
     ]|filter|join(' ') %}
 
 {%- set fieldClass = [
-    'field',
     first is defined and first ? 'first' : null,
     errors ? 'has-errors' : null,
     fieldClass is defined and fieldClass ? fieldClass : null
