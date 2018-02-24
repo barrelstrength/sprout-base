@@ -92,7 +92,7 @@ class Utilities extends Component
         $value = '';
 
         try {
-            $value = Craft::$app->view->renderObjectTemplate($fieldPattern, $element);
+            $value = Craft::$app->view->renderObjectTemplate($field->fieldFormat, $element);
         } catch (\Exception $e) {
             SproutBase::error($e->getMessage());
         }
