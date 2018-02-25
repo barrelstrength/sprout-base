@@ -1,0 +1,8 @@
+{% import "_includes/forms" as forms %}
+
+{{ forms.text({
+    id: id,
+    name: name,
+    value: value is defined ? value : '',
+    placeholder: placeholder ?? null,
+}) }}
