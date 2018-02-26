@@ -10,6 +10,7 @@ namespace barrelstrength\sproutbase\contracts\sproutimport;
 use Craft;
 use barrelstrength\sproutimport\SproutImport;
 use craft\base\Element;
+use craft\helpers\DateTimeHelper;
 
 /**
  * Class BaseSproutImportElementImporter
@@ -73,7 +74,16 @@ abstract class BaseElementImporter extends BaseImporter
         if (isset($settings['attributes'])) {
             $attributes = $settings['attributes'];
 
-            $model->setAttributes($attributes, false);
+            foreach ($attributes as $handle => $attribute) {
+                // Convert date time object to fix error when storing date attributes
+                if ($this->isDateAttribute($handle)) {
+                    $value = DateTimeHelper::toDateTime($attribute) ?: null;
+                } else {
+                    $value = $attribute;
+                }
+
+                $model->{$handle} = $value;
+            }
 
             // Check for email and username values if authorId attribute
             if (isset($attributes['authorId']) && $authorId = $this->getAuthorId($attributes['authorId'])) {
@@ -241,5 +251,12 @@ abstract class BaseElementImporter extends BaseImporter
 
             return false;
         }
+    }
+
+    private function isDateAttribute($handle)
+    {
+        $dates = ['postDate', 'dateCreated', 'dateUpdated'];
+
+        return in_array($handle, $dates);
     }
 }
