@@ -81,23 +81,32 @@ class Utilities extends Component
     }
 
     /**
-     * @param $fieldPattern
+     * @param $field
      * @param $element
      *
      * @return string
      * @throws \yii\db\Exception
      */
-    public function processPredefinedField($fieldPattern, $element)
+    public function processPredefinedField($field, $element)
     {
         $value = '';
 
         try {
-            $value = Craft::$app->view->renderObjectTemplate($fieldPattern, $element);
+            $value = Craft::$app->view->renderObjectTemplate($field->fieldFormat, $element);
         } catch (\Exception $e) {
             SproutBase::error($e->getMessage());
         }
 
-        return $value;
+        $fieldColumnPrefix = $element->getFieldColumnPrefix();
+        $column = $fieldColumnPrefix.$field->handle;
+
+        Craft::$app->db->createCommand()->update($element->contentTable, [
+            $column => $value,
+        ], 'elementId=:elementId AND siteId=:siteId', [
+            ':elementId' => $element->id,
+            ':siteId' => $element->siteId
+        ])
+            ->execute();
     }
 }
 

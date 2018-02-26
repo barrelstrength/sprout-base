@@ -120,11 +120,11 @@ class AddressController extends Controller
 
         $countryCode = $addressInfoModel->countryCode;
 
-        $namespace = (Craft::$app->getRequest()->getBodyParam('namespace') != null) ? Craft::$app->getRequest()->getBodyParam('namespace') : 'address';
+        $namespace = Craft::$app->getRequest()->getBodyParam('namespace') != null ? Craft::$app->getRequest()->getBodyParam('namespace') : 'address';
 
         $this->addressHelper->setParams($countryCode, $namespace, $addressInfoModel);
 
-        $hiddenCountry = (Craft::$app->getRequest()->getBodyParam('hideCountry')) != null ? true : false;
+        $hiddenCountry = Craft::$app->getRequest()->getBodyParam('hideCountry') != null ? true : false;
 
         $countryCodeHtml = $this->addressHelper->countryInput($hiddenCountry);
 

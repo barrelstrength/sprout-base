@@ -761,13 +761,13 @@ class AddressHelper
      */
     public function renderTemplates($template, $params)
     {
-        $addressPath = Craft::getAlias('@sproutbase/templates/sproutfields/_includes/forms/address/');
+        $addressPath = Craft::getAlias('@sproutbase/templates/sproutfields/_fields/address/');
 
         $originalTemplatesPath = Craft::$app->getView()->getTemplatesPath();
 
         #Craft::$app->getView()->setTemplatesPath($addressPath);
 
-        $html = Craft::$app->view->renderTemplate('sprout-base/sproutfields/_includes/forms/address/'.$template, $params);
+        $html = Craft::$app->view->renderTemplate('sprout-base/sproutfields/_fields/address/'.$template, $params);
 
         #Craft::$app->getView()->setTemplatesPath($originalTemplatesPath);
 

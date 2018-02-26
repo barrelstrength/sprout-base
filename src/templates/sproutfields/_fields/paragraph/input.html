@@ -1,0 +1,14 @@
+{% import "_includes/forms" as forms %}
+
+{% set config = {
+    id: name,
+    name: name,
+    value: value,
+    class: 'nicetext',
+    maxlength: field.charLimit,
+    showCharsLeft: true,
+    placeholder: field.placeholder|t('site'),
+    rows: field.initialRows
+} %}
+
+{{ forms.textarea(config) }}

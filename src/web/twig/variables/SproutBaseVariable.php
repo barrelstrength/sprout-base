@@ -14,18 +14,6 @@ use craft\helpers\Template;
 class SproutBaseVariable
 {
     /**
-     * @param $path
-     *
-     * @return \Twig_Markup
-     */
-    public function getSvg($path)
-    {
-        $svg = Craft::getAlias($path);
-
-        return Template::raw(file_get_contents($svg));
-    }
-
-    /**
      * @return array
      */
     public function getAvailableEvents()
