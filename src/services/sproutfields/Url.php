@@ -55,7 +55,7 @@ class Url extends Component
      */
     public function getErrorMessage($fieldName, $field): string
     {
-        if (!empty($field->customPattern) && isset($field->customPatternErrorMessage)) {
+        if ($field->customPatternToggle && $field->customPatternErrorMessage) {
             return Craft::t('sprout-base',$field->customPatternErrorMessage);
         }
 

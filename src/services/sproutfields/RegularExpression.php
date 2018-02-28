@@ -48,7 +48,7 @@ class RegularExpression extends Component
      */
     public function getErrorMessage($field): string
     {
-        if (!empty($field->customPattern) && isset($field->customPatternErrorMessage)) {
+        if ($field->customPattern && $field->customPatternErrorMessage) {
             return Craft::t('sprout-base',$field->customPatternErrorMessage);
         }
 
