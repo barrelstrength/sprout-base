@@ -10,6 +10,7 @@ namespace barrelstrength\sproutbase\contracts\sproutimport;
 use Craft;
 use barrelstrength\sproutimport\SproutImport;
 use craft\base\Element;
+use craft\elements\db\ElementQuery;
 use craft\helpers\DateTimeHelper;
 
 /**
@@ -63,10 +64,13 @@ abstract class BaseElementImporter extends BaseImporter
      * @param array $settings
      *
      * @return bool|mixed
-     * @throws \barrelstrength\sproutimport\services\Exception
+     * @throws \Exception
      */
     public function setModel($model, array $settings = [])
     {
+        /**
+         * @var $model Element
+         */
         $model = $this->processUpdateElement($model, $settings);
 
         $authorId = null;
@@ -93,10 +97,14 @@ abstract class BaseElementImporter extends BaseImporter
             // Check if we have defaults for any unset attributes
             if (isset($settings['settings']['defaults'])) {
                 $defaults = $settings['settings']['defaults'];
+                /**
+                 * @var $elementQuery ElementQuery
+                 */
+                $elementQuery = $model::find();
 
-                $attributes = $model->attributes();
+                $criteriaAttributes = $elementQuery->criteriaAttributes();
 
-                foreach ($attributes as $attribute) {
+                foreach ($criteriaAttributes as $attribute) {
                     if (property_exists($model, $attribute) && !empty($model->{$attribute})) {
                         // Check for email and username values if authorId attribute
                         if ($attribute == 'authorId' && isset($defaults['authorId'])) {
@@ -118,10 +126,10 @@ abstract class BaseElementImporter extends BaseImporter
             if ($authorId == null && in_array('authorId', $model->attributes(),false)) {
                 $message = Craft::t('sprout-import','Could not find Author by ID, Email, or Username.');
 
-                SproutImport::error($message);
+                Craft::error($message);
 
-                $model->addError('invalid-author', $message);
-                $model->addError('invalid-author', $settings);
+                SproutImport::$app->utilities->addError('invalid-author', $message);
+                SproutImport::$app->utilities->addError('invalid-author', $settings);
             }
         }
 
