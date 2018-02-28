@@ -18,6 +18,11 @@ class Name extends Model
     /**
      * @var string
      */
+    public $fullName;
+
+    /**
+     * @var string
+     */
     public $prefix;
 
     /**
@@ -43,9 +48,17 @@ class Name extends Model
     /**
      * @return string
      */
-    public function getFullNameShort() {
+    public function __toString()
+    {
+        return $this->getFullName();
+    }
 
-        return $this->firstName . ' ' . $this->lastName;
+    /**
+     * @return string
+     */
+    public function getFriendlyName() {
+
+        return trim($this->firstName);
     }
 
     /**
@@ -53,33 +66,50 @@ class Name extends Model
      */
     public function getFullName() {
 
-        $fullName = '';
+        $firstName = trim($this->firstName);
+        $lastName = trim($this->lastName);
 
-        if ($this->prefix)
-        {
-            $fullName .= $this->prefix;
+        if (!$firstName && !$lastName) {
+            return null;
         }
 
-        if ($this->prefix)
-        {
-            $fullName .= $this->firstName;
+        $name = $firstName;
+
+        if ($firstName && $lastName) {
+            $name .= ' ';
         }
 
-        if ($this->prefix)
-        {
-            $fullName .= $this->middleName;
-        }
+        $name .= $lastName;
 
-        if ($this->prefix)
-        {
-            $fullName .= $this->lastName;
-        }
+        return $name;
+    }
 
-        if ($this->prefix)
-        {
-            $fullName .= $this->suffix;
-        }
+    /**
+     * @return string
+     */
+    public function getFullNameExtended() {
 
-        return $fullName;
+        $this->fullName = '';
+
+        $this->addName($this->prefix);
+        $this->addName($this->firstName);
+        $this->addName($this->middleName);
+        $this->addName($this->lastName);
+        $this->addName($this->suffix);
+
+        $this->fullName = trim($this->fullName);
+
+        return $this->fullName;
+    }
+
+    /**
+     * @param $name
+     */
+    protected function addName($name)
+    {
+        if ($name)
+        {
+            $this->fullName .= ' ' . $name;
+        }
     }
 }
