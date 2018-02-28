@@ -21,7 +21,6 @@ use barrelstrength\sproutbase\services\sproutfields\Email;
 use barrelstrength\sproutbase\services\sproutfields\EmailDropdown;
 use barrelstrength\sproutbase\services\sproutfields\Address;
 use barrelstrength\sproutbase\services\sproutbase\Settings;
-use barrelstrength\sproutbase\services\sproutfields\EmailDropdown;
 use craft\base\Component;
 
 class App extends Component
