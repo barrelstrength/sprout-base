@@ -67,7 +67,7 @@ abstract class BaseImporter
     /**
      * Access to the Faker Service layer
      *
-     * @var Faker
+     * @var $fakerService \Faker\Generator
      */
     protected $fakerService;
 
