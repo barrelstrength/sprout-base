@@ -50,7 +50,14 @@ class Name extends Model
      */
     public function __toString()
     {
-        return $this->getFullName();
+        $name = '';
+
+        if ($this->getFullName())
+        {
+            $name = $this->getFullName();
+        }
+
+        return $name;
     }
 
     /**
@@ -81,7 +88,7 @@ class Name extends Model
 
         $name .= $lastName;
 
-        return $name;
+        return $name ?? '';
     }
 
     /**
