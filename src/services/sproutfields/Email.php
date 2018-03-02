@@ -115,7 +115,7 @@ class Email extends Component
      */
     public function getErrorMessage($fieldName, $field)
     {
-        if (!empty($field->customPattern) && $field->customPatternErrorMessage) {
+        if ($field->customPatternToggle && $field->customPatternErrorMessage) {
             return Craft::t('sprout-base',$field->customPatternErrorMessage);
         }
 

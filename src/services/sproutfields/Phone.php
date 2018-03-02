@@ -57,7 +57,7 @@ class Phone extends Component
     public function getErrorMessage($field, $country): string
     {
         // Change empty condition to show default message when toggle settings is unchecked
-        if (!empty($field->customPatternErrorMessage)) {
+        if ($field->customPatternErrorMessage) {
             return Craft::t('sprout-base',$field->customPatternErrorMessage);
         }
 
