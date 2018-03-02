@@ -51,7 +51,10 @@ class Phone extends Model
      */
     public $RFC3966;
 
-    public $phoneUtil;
+    /**
+     * @var PhoneNumberUtil
+     */
+    private $phoneUtil;
 
     /**
      * @return string
