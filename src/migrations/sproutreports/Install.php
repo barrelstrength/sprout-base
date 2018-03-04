@@ -31,14 +31,14 @@ class Install extends Migration
             $this->createTable($this->reportTable,
                 [
                     'id' => $this->primaryKey(),
+                    'dataSourceId' => $this->integer(),
+                    'groupId' => $this->integer(),
                     'name' => $this->string()->notNull(),
                     'nameFormat' => $this->string(),
                     'handle' => $this->string()->notNull(),
                     'description' => $this->text(),
                     'allowHtml' => $this->boolean(),
                     'settings' => $this->text(),
-                    'type' => $this->string(),
-                    'groupId' => $this->integer(),
                     'enabled' => $this->boolean(),
                     'dateCreated' => $this->dateTime()->notNull(),
                     'dateUpdated' => $this->dateTime()->notNull(),
@@ -47,13 +47,10 @@ class Install extends Migration
             );
 
             $this->createIndex($this->db->getIndexName($this->reportTable, 'handle', true, true),
-                $this->reportTable, 'name', true);
+                $this->reportTable, 'handle', true);
 
             $this->createIndex($this->db->getIndexName($this->reportTable, 'name', true, true),
                 $this->reportTable, 'name', true);
-
-            $this->createIndex($this->db->getIndexName($this->reportTable, 'type', true, false),
-                $this->reportTable, 'type', false);
         }
 
         $reportGroupTable = $this->getDb()->tableExists($this->reportGroupTable);
@@ -77,7 +74,6 @@ class Install extends Migration
             $this->createTable($this->dataSourcesTable, [
                 'id' => $this->primaryKey(),
                 'type' => $this->string(),
-                'settings' => $this->text(),
                 'allowNew' => $this->boolean(),
                 'dateCreated' => $this->dateTime()->notNull(),
                 'dateUpdated' => $this->dateTime()->notNull(),
