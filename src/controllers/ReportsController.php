@@ -256,8 +256,8 @@ class ReportsController extends Controller
     {
         $this->requirePostRequest();
 
-        $reportId = Craft::$app->getRequest()->getBodyParam('reportId');
-
+        $reportId = Craft::$app->getRequest()->getBodyParam('id');
+        
         if ($record = ReportRecord::findOne($reportId)) {
             $record->delete();
 
