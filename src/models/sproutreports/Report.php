@@ -87,7 +87,7 @@ class Report extends Model
         $settings = $this->settings;
 
         if (is_string($this->settings)) {
-            $settings = json_decode($this->settings);
+            $settings = json_decode($this->settings, true);
         }
 
         return $settings;
@@ -105,8 +105,9 @@ class Report extends Model
     {
         $settings = $this->getSettings();
 
-        if (is_string($name) && !empty($name) && isset($settings->$name)) {
-            return $settings->$name;
+        if (isset($settings[$name])) {
+
+            return $settings[$name];
         }
 
         return $default;
