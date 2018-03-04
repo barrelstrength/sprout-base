@@ -58,7 +58,7 @@
 
 {% block content %}
 
-    <input type="hidden" name="dataSourceId" value="{{ dataSource.databaseId }}">
+    <input type="hidden" name="dataSourceId" value="{{ dataSource.dataSourceId }}">
 
     {% if report is defined %}
         <input type="hidden" name="id" value="{{ report.id }}">

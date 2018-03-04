@@ -24,7 +24,7 @@ abstract class BaseDataSource
     /**
      * @var int
      */
-    public $databaseId;
+    public $dataSourceId;
 
     /**
      * @var string
@@ -46,37 +46,19 @@ abstract class BaseDataSource
      */
     public function __construct()
     {
-        $namespaces = explode('\\', get_class($this));
-
-        $class = (new \ReflectionClass($this))->getShortName();
-
-        // get plugin name on second array
-        $dataSourceClass = $namespaces[1].'-'.$class;
-
-        $this->dataSourceSlug = strtolower($dataSourceClass);
-
-
+        // Get plugin class
         $pluginHandle = Craft::$app->getPlugins()->getPluginHandleByClass(get_class($this));
 
         $this->plugin = Craft::$app->getPlugins()->getPlugin($pluginHandle);
-    }
 
-    /**
-     * Returns a fully qualified string that uniquely identifies the given data source
-     *
-     * @format {plugin}-{source}
-     * 1. {plugin} should be the lower case version of the plugin handle
-     * 3. {source} should be the lower case version of your data source without prefixes or suffixes
-     *
-     * @example
-     * - SproutFormsSubmissionsDataSource   > sproutforms-submissions
-     * - CustomQuery > sproutreports-customquery
-     *
-     * @return string
-     */
-    final public function getDataSourceSlug()
-    {
-        return $this->dataSourceSlug;
+        // Build $dataSourceSlug: pluginname-datasourceclassname
+        $pluginHandleWithoutSpaces = str_replace('-', '', $pluginHandle);
+
+        $dataSourceClass = (new \ReflectionClass($this))->getShortName();
+
+        $dataSourceSlug = $pluginHandleWithoutSpaces.'-'.$dataSourceClass;
+
+        $this->dataSourceSlug = strtolower($dataSourceSlug);
     }
 
     /**
@@ -94,84 +76,13 @@ abstract class BaseDataSource
     }
 
     /**
-     * Returns the CP URL for the given data source with the option to append to it once composed
+     * Returns the Plugin Class of the plugin that provided the Data Source
      *
-     * @legend
-     * Breaks apart the data source id and transforms its components into a URL friendly string
-     *
-     * @example
-     * sproutReports.customQuery > sproutreports/customquery
-     * sproutreports.customquery > sproutreports/customquery
-     *
-     * @see getDataSourceSlug()
-     *
-     * @param string $append
-     *
-     * @return string
+     * @return \craft\base\PluginInterface|null|string
      */
-    public function getUrl($append = null)
-    {
-        $pluginHandle = Craft::$app->getRequest()->getSegment(1);
-
-        $baseUrl = $pluginHandle.'/reports/'. $this->databaseId . '-' . $this->getDataSourceSlug() . '/';
-
-        $appendedUrl = ltrim($append, '/');
-
-        return UrlHelper::cpUrl($baseUrl . $appendedUrl);
-    }
-
-    /**
-     * Returns the name of the plugin name that the given data source is bundled with
-     *
-     * @param string $name
-     */
-    final public function setPluginName($name)
-    {
-        $this->pluginName = $name;
-    }
-
-    /**
-     * @return string
-     */
-    public function getPlugin()
+    final public function getPlugin()
     {
         return $this->plugin;
-    }
-
-    /**
-     * @var $plugin Plugin
-     *
-     * @return string
-     */
-    public function getPluginName()
-    {
-        return $this->getPlugin()->name;
-    }
-
-    /**
-     * @return string
-     */
-    public function getPluginHandle()
-    {
-        return $this->getPlugin()->getHandle();
-    }
-
-    /**
-     * @return string
-     */
-    public function getLowerPluginHandle()
-    {
-        return strtolower($this->getPluginHandle());
-    }
-
-    /**
-     * Returns the total count of reports created based on the given data source
-     *
-     * @return int
-     */
-    final public function getReportCount()
-    {
-        return SproutBase::$app->reports->getCountByDataSourceId($this->getDataSourceSlug());
     }
 
     /**
@@ -243,20 +154,30 @@ abstract class BaseDataSource
     }
 
     /**
-     * Allows a user to disable a Data Source from displaying in the New Report dropdown
+     * Returns the CP URL for the given data source with the option to append to it once composed
      *
-     * @return bool|mixed
+     * @legend
+     * Breaks apart the data source id and transforms its components into a URL friendly string
+     *
+     * @example
+     * sproutReports.customQuery > sproutreports/customquery
+     * sproutreports.customquery > sproutreports/customquery
+     *
+     * @see getDataSourceSlug()
+     *
+     * @param string $append
+     *
+     * @return string
      */
-    public function allowNew()
+    public function getUrl($append = null)
     {
-        $record = DataSource::findOne(['type' => $this->dataSourceSlug]);
+        $pluginHandle = Craft::$app->getRequest()->getSegment(1);
 
-        // $record->allowNew != null
-        if ($record != null) {
-            return $record->allowNew;
-        }
+        $baseUrl = $pluginHandle.'/reports/'.$this->dataSourceId.'-'.$this->getDataSourceSlug().'/';
 
-        return true;
+        $appendedUrl = ltrim($append, '/');
+
+        return UrlHelper::cpUrl($baseUrl.$appendedUrl);
     }
 
     /**
@@ -278,5 +199,50 @@ abstract class BaseDataSource
     public function getDefaultAllowHtml()
     {
         return false;
+    }
+
+    /**
+     * Allows a user to disable a Data Source from displaying in the New Report dropdown
+     *
+     * @return bool|mixed
+     */
+    public function allowNew()
+    {
+        $record = DataSource::findOne(['id' => $this->dataSourceId]);
+
+        // $record->allowNew != null
+        if ($record != null) {
+            return $record->allowNew;
+        }
+
+        return true;
+    }
+
+    /**
+     * Returns a fully qualified string that uniquely identifies the given data source
+     *
+     * @format {plugin}-{source}
+     * 1. {plugin} should be the lower case version of the plugin handle
+     * 3. {source} should be the lower case version of your data source without prefixes or suffixes
+     *
+     * @example
+     * - SproutFormsSubmissionsDataSource   > sproutforms-submissions
+     * - CustomQuery > sproutreports-customquery
+     *
+     * @return string
+     */
+    final public function getDataSourceSlug()
+    {
+        return $this->dataSourceSlug;
+    }
+
+    /**
+     * Returns the total count of reports created based on the given data source
+     *
+     * @return int
+     */
+    final public function getReportCount()
+    {
+        return SproutBase::$app->reports->getCountByDataSourceId($this->dataSourceId);
     }
 }

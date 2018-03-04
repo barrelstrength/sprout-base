@@ -10,8 +10,6 @@ namespace barrelstrength\sproutbase\services\sproutreports;
 use barrelstrength\sproutbase\contracts\sproutreports\BaseDataSource;
 use barrelstrength\sproutbase\models\sproutreports\DataSource as DataSourceModel;
 use barrelstrength\sproutbase\records\sproutreports\DataSource as DataSourceRecord;
-use barrelstrength\sproutreports\integrations\sproutreports\datasources\CustomQuery;
-use barrelstrength\sproutreports\integrations\sproutreports\datasources\CustomTwigTemplate;
 use yii\base\Component;
 use craft\events\RegisterComponentTypesEvent;
 use craft\db\Query;
@@ -46,7 +44,7 @@ class DataSources extends Component
         }
 
         $dataSource = new $dataSourceRecord->type;
-        $dataSource->databaseId = $dataSourceRecord->id;
+        $dataSource->dataSourceId = $dataSourceRecord->id;
 
         return $dataSource;
     }
@@ -95,12 +93,14 @@ class DataSources extends Component
             $dataSources[$dataSourceType] = new $dataSourceType;
         }
 
+
+
         // Add the additional data we store in the database to the Data Source classes
         foreach ($dataSourceRecords as $dataSourceRecord)
         {
             if ($dataSourceRecord->type === get_class($dataSources[$dataSourceRecord->type]))
             {
-                $dataSources[$dataSourceRecord->type]->databaseId = $dataSourceRecord->id;
+                $dataSources[$dataSourceRecord->type]->dataSourceId = $dataSourceRecord->id;
                 $dataSources[$dataSourceRecord->type]->allowNew = $dataSourceRecord->allowNew;
             }
         }
@@ -108,7 +108,7 @@ class DataSources extends Component
         // Make sure all registered datasources have a record in the database
         foreach ($dataSources as $dataSourceClass => $dataSource)
         {
-            if ($dataSource->databaseId === null)
+            if ($dataSource->dataSourceId === null)
             {
                 $this->installDataSources([$dataSourceClass]);
             }
