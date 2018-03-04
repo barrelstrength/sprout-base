@@ -33,6 +33,8 @@ class Report extends Model
 
     public $dataSourceId;
 
+    public $dataSourceSlug;
+
     public $enabled;
 
     public $groupId;
@@ -46,7 +48,7 @@ class Report extends Model
     /**
      * @return mixed
      */
-    public function getDataSourceId()
+    public function getType()
     {
         return $this->dataSourceId;
     }
@@ -58,10 +60,11 @@ class Report extends Model
     {
         $dataSource = SproutBase::$app->dataSources->getDataSourceById($this->dataSourceId);
 
-        if (!$dataSource) return null;
+        if ($dataSource === null) {
+            return null;
+        }
 
         $dataSource->setReport($this);
-
 
         return $dataSource;
     }

@@ -26,19 +26,20 @@ class ReportsController extends Controller
      * @param null $groupId
      *
      * @return \yii\web\Response
+     * @throws \yii\base\Exception
      */
     public function actionIndex($dataSourceId = null, $groupId = null)
     {
         $reportContext = 'sprout-reports';
 
-        // If a dataSourceId is provided we have an integration
+        // If a type is provided we have an integration
         if ($dataSourceId !== null) {
             $reportContext = 'sprout-integration';
 
             $dataSource = SproutBase::$app->dataSources->getDataSourceById($dataSourceId);
 
             // Update to match the multi-datasource syntax
-            $dataSources[$dataSource->getId()] = $dataSource;
+            $dataSources[$dataSource->getDataSourceSlug()] = $dataSource;
 
             $reports = SproutBase::$app->reports->getReportsBySourceId($dataSourceId);
         } else {
@@ -48,7 +49,7 @@ class ReportsController extends Controller
             if ($groupId !== null) {
                 $reports = SproutBase::$app->reports->getReportsByGroupId($groupId);
             } else {
-                $reports = SproutBase::$app->reports->getAvailableReports();
+                $reports = SproutBase::$app->reports->getAllReports();
             }
         }
 
@@ -128,7 +129,7 @@ class ReportsController extends Controller
      *
      * @return \yii\web\Response
      */
-    public function actionEditReport(string $dataSourceId, Report $report = null, int $reportId = null)
+    public function actionEditReport(string $dataSourceId, string $dataSourceSlug, Report $report = null, int $reportId = null)
     {
         $reportModel = new Report();
 
@@ -257,7 +258,7 @@ class ReportsController extends Controller
         $this->requirePostRequest();
 
         $reportId = Craft::$app->getRequest()->getBodyParam('id');
-        
+
         if ($record = ReportRecord::findOne($reportId)) {
             $record->delete();
 
@@ -326,6 +327,9 @@ class ReportsController extends Controller
         ]);
     }
 
+    /**
+     * Export a Report
+     */
     public function actionExportReport()
     {
         $reportId = Craft::$app->getRequest()->getParam('reportId');
@@ -337,7 +341,7 @@ class ReportsController extends Controller
         $settings = count($settings) ? $settings : [];
 
         if ($report) {
-            $dataSource = SproutBase::$app->dataSources->getDataSourceById($report->dataSourceId);
+            $dataSource = SproutBase::$app->dataSources->getDataSourceById($report->type);
 
             if ($dataSource) {
                 $date = date('Ymd-his');

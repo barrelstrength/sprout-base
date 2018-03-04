@@ -75,6 +75,7 @@ class Reports extends Component
 
         $db = Craft::$app->getDb();
         $transaction = $db->beginTransaction();
+
         try {
             $record->save(false);
 
@@ -134,6 +135,9 @@ class Reports extends Component
 
     /**
      * Get only dataSources that are activated by other plugins
+     *
+     * @todo - Is this in use?
+     *
      * @return array
      */
     public function getAvailableReports()
@@ -144,6 +148,7 @@ class Reports extends Component
         $dataSourceIds = array_keys($dataSources);
 
         $availableReports = [];
+
         if ($reports) {
             foreach ($reports as $report) {
                 $dataSourceId = $report['dataSourceId'];
@@ -175,7 +180,7 @@ class Reports extends Component
                 $record->handle = $report->getHandle();
                 $record->description = $report->getDescription();
                 $record->settings = $report->getSettings();
-                $record->dataSourceId = $report->getDataSource()->getId();
+                $record->dataSourceSlug = $report->getDataSource()->getDataSourceSlug();
                 $record->enabled = true;
                 $record->groupId = $group->id;
 

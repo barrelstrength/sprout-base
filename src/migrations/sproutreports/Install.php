@@ -37,7 +37,7 @@ class Install extends Migration
                     'description' => $this->text(),
                     'allowHtml' => $this->boolean(),
                     'settings' => $this->text(),
-                    'dataSourceId' => $this->string(),
+                    'type' => $this->string(),
                     'groupId' => $this->integer(),
                     'enabled' => $this->boolean(),
                     'dateCreated' => $this->dateTime()->notNull(),
@@ -52,8 +52,8 @@ class Install extends Migration
             $this->createIndex($this->db->getIndexName($this->reportTable, 'name', true, true),
                 $this->reportTable, 'name', true);
 
-            $this->createIndex($this->db->getIndexName($this->reportTable, 'dataSourceId', true, false),
-                $this->reportTable, 'dataSourceId', false);
+            $this->createIndex($this->db->getIndexName($this->reportTable, 'type', true, false),
+                $this->reportTable, 'type', false);
         }
 
         $reportGroupTable = $this->getDb()->tableExists($this->reportGroupTable);
@@ -76,7 +76,7 @@ class Install extends Migration
         if ($dataSourcesTable == false) {
             $this->createTable($this->dataSourcesTable, [
                 'id' => $this->primaryKey(),
-                'dataSourceId' => $this->string(),
+                'type' => $this->string(),
                 'settings' => $this->text(),
                 'allowNew' => $this->boolean(),
                 'dateCreated' => $this->dateTime()->notNull(),

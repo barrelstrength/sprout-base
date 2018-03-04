@@ -22,19 +22,19 @@ use craft\helpers\UrlHelper;
 abstract class BaseDataSource
 {
     /**
-     * @var string
+     * @var int
      */
-    protected $id;
+    public $databaseId;
 
     /**
      * @var string
      */
-    protected $pluginName;
+    protected $dataSourceSlug;
 
     /**
      * @var string
      */
-    protected $pluginHandle;
+    protected $plugin;
 
     /**
      * @var ReportModel()
@@ -51,27 +51,32 @@ abstract class BaseDataSource
         $class = (new \ReflectionClass($this))->getShortName();
 
         // get plugin name on second array
-        $dataSourceClass = $namespaces[1].'.'.$class;
+        $dataSourceClass = $namespaces[1].'-'.$class;
 
-        $this->id = strtolower($dataSourceClass);
+        $this->dataSourceSlug = strtolower($dataSourceClass);
+
+
+        $pluginHandle = Craft::$app->getPlugins()->getPluginHandleByClass(get_class($this));
+
+        $this->plugin = Craft::$app->getPlugins()->getPlugin($pluginHandle);
     }
 
     /**
      * Returns a fully qualified string that uniquely identifies the given data source
      *
-     * @format {plugin}.{source}
+     * @format {plugin}-{source}
      * 1. {plugin} should be the lower case version of the plugin handle
      * 3. {source} should be the lower case version of your data source without prefixes or suffixes
      *
      * @example
-     * - SproutFormsSubmissionsDataSource   > sproutforms.submissions
-     * - CustomQuery > sproutreports.customquery
+     * - SproutFormsSubmissionsDataSource   > sproutforms-submissions
+     * - CustomQuery > sproutreports-customquery
      *
      * @return string
      */
-    final public function getId()
+    final public function getDataSourceSlug()
     {
-        return $this->id;
+        return $this->dataSourceSlug;
     }
 
     /**
@@ -98,7 +103,7 @@ abstract class BaseDataSource
      * sproutReports.customQuery > sproutreports/customquery
      * sproutreports.customquery > sproutreports/customquery
      *
-     * @see getId()
+     * @see getDataSourceSlug()
      *
      * @param string $append
      *
@@ -108,7 +113,11 @@ abstract class BaseDataSource
     {
         $pluginHandle = Craft::$app->getRequest()->getSegment(1);
 
-        return UrlHelper::cpUrl(sprintf($pluginHandle.'/reports/%s/%s', $this->getId(), ltrim($append, '/')));
+        $baseUrl = $pluginHandle.'/reports/'. $this->databaseId . '-' . $this->getDataSourceSlug() . '/';
+
+        $appendedUrl = ltrim($append, '/');
+
+        return UrlHelper::cpUrl($baseUrl . $appendedUrl);
     }
 
     /**
@@ -126,9 +135,7 @@ abstract class BaseDataSource
      */
     public function getPlugin()
     {
-        $pluginHandle = $this->getPluginHandle();
-
-        return Craft::$app->getPlugins()->getPlugin($pluginHandle);
+        return $this->plugin;
     }
 
     /**
@@ -146,9 +153,12 @@ abstract class BaseDataSource
      */
     public function getPluginHandle()
     {
-        return 'sprout-reports';
+        return $this->getPlugin()->getHandle();
     }
 
+    /**
+     * @return string
+     */
     public function getLowerPluginHandle()
     {
         return strtolower($this->getPluginHandle());
@@ -161,7 +171,7 @@ abstract class BaseDataSource
      */
     final public function getReportCount()
     {
-        return SproutBase::$app->reports->getCountByDataSourceId($this->getId());
+        return SproutBase::$app->reports->getCountByDataSourceId($this->getDataSourceSlug());
     }
 
     /**
@@ -239,7 +249,7 @@ abstract class BaseDataSource
      */
     public function allowNew()
     {
-        $record = DataSource::findOne(['dataSourceId' => $this->id]);
+        $record = DataSource::findOne(['type' => $this->dataSourceSlug]);
 
         // $record->allowNew != null
         if ($record != null) {
