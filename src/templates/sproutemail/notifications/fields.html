@@ -1,7 +1,7 @@
 {% from "_includes/forms" import textField %}
 
 {{ textField({
-    label: "Subject Line"|t,
+    label: "Subject Line"|t('sprout-base'),
     id: 'subjectLine',
     name: 'subjectLine',
     value: notificationEmail.subjectLine,

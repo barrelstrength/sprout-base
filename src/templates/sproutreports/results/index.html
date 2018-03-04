@@ -1,6 +1,6 @@
 {% extends "_layouts/cp" %}
 
-{% set title  = 'Sprout Reports'|t %}
+{% set title  = 'Sprout Reports'|t('sprout-base') %}
 
 {% set selectedSubnavItem = craft.app.request.segment(2) %}
 {% if dataSource is defined %}

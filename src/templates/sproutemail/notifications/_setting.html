@@ -1,7 +1,7 @@
 {% extends "sprout-base/sproutbase/_layouts/base" %}
 {% import "_includes/forms" as forms %}
 
-{% set title = "Edit Notification"|t %}
+{% set title = "Edit Notification"|t('sprout-base') %}
 
 {% set currentBase = craft.app.request.getSegment(1) %}
 {% set crumbs = [
@@ -21,7 +21,7 @@
 
 <div class="buttons">
     <div class="btngroup">
-        <input class="btn submit" type="submit" value="{{ 'Save'|t }}">
+        <input class="btn submit" type="submit" value="{{ 'Save'|t('sprout-base') }}">
 
         {% if notificationEmail['id'] is defined %}
 
@@ -33,16 +33,16 @@
                     {% if notificationEmail.id is not null %}
                         <li><a class="formsubmit"
                                data-redirect="{{ craft.request.url|hash }}"
-                               title="{{ 'Save and continue editing'|t }}">{{ 'Save and continue editing'|t }}</a>
+                               title="{{ 'Save and continue editing'|t('sprout-base') }}">{{ 'Save and continue editing'|t('sprout-base') }}</a>
                         </li>
                     {% endif %}
                     <li><a class="formsubmit"
                            data-redirect="{{ dataSaveEditRedirect|hash }}"
-                           title="{{ 'Save and edit notification email'|t }}">{{ 'Save and edit notification email'|t }}</a>
+                           title="{{ 'Save and edit notification email'|t('sprout-base') }}">{{ 'Save and edit notification email'|t('sprout-base') }}</a>
                     </li>
                     <li><a class="formsubmit"
                            data-redirect="{{ cpUrl(currentBase ~ '/settings/notifications/edit/new')|hash }}">
-                            {{ 'Save and add another'|t }}</a></li>
+                            {{ 'Save and add another'|t('sprout-base') }}</a></li>
                 </ul>
             </div>
 
@@ -54,8 +54,8 @@
         {% if notificationEmail is defined and notificationEmail['id'] %}
             <a class="btn icon add submit"
                href="{{ cpUrl(currentBase ~ '/notifications/edit/' ~ notificationEmailId) }}"
-               title="{{ "Edit Notification Email"|t }}"
-               style="float:none;margin:0;">{{ "Edit Notification Email"|t }}</a>
+               title="{{ "Edit Notification Email"|t('sprout-base') }}"
+               style="float:none;margin:0;">{{ "Edit Notification Email"|t('sprout-base') }}</a>
         {% endif %}
     </div>
 </div>
@@ -72,10 +72,10 @@
 <input type="hidden" name="mailer" value="defaultmailer">
 
 {{ forms.textField({
-    label: "Subject Line"|t,
+    label: "Subject Line"|t('sprout-base'),
     id: 'subjectLine',
     name: 'sproutEmail[subjectLine]',
-    instructions: "The subject line of your email (will be seen by the public)"|t,
+    instructions: "The subject line of your email (will be seen by the public)"|t('sprout-base'),
     value: notificationEmail.subjectLine,
     errors: notificationEmail is defined ? notificationEmail.getErrors('subjectLine') : null,
     first: true,
@@ -85,10 +85,10 @@
 }) }}
 
 {{ forms.textField({
-    label: "Notification Name"|t,
+    label: "Notification Name"|t('sprout-base'),
     id: 'name',
     name: 'sproutEmail[name]',
-    instructions: "Human readable notification name (only visible in Control Panel)"|t,
+    instructions: "Human readable notification name (only visible in Control Panel)"|t('sprout-base'),
     value: notificationEmail is defined ? notificationEmail.name : null,
     autofocus: true,
     required: true,
@@ -97,10 +97,10 @@
 }) }}
 
 {{ forms.textField({
-    label: "Email Template"|t,
+    label: "Email Template"|t('sprout-base'),
     id: 'template',
     name: 'sproutEmail[template]',
-    instructions: "The template to use when an Email's URL is requested.  The text version of the Email will use the same template name and append .txt"|t,
+    instructions: "The template to use when an Email's URL is requested.  The text version of the Email will use the same template name and append .txt"|t('sprout-base'),
     placeholder: 'email/_emailtemplate',
     value: notificationEmail is defined ? notificationEmail.template : null,
     errors: notificationEmail is defined ? notificationEmail.getErrors('template') : null
