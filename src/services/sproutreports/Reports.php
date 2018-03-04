@@ -203,10 +203,9 @@ class Reports extends Component
 
         $group = ReportGroupRecord::findOne($groupId);
 
-        if ($group === null)
-        {
+        if ($group === null) {
             throw new Exception(Craft::t('sprout-base', 'No Report Group exists with id: {id}', [
-                'id' =>  $groupId
+                'id' => $groupId
             ]));
         }
 

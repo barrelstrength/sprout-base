@@ -71,7 +71,7 @@ class Address extends Model
         if (!$addressHelper->validatePostalCode($countryCode, $postalCode)) {
             $postalName = $addressHelper->getPostalName($countryCode);
 
-            $this->addError($attribute, Craft::t('sprout-base','{postalName} is not a valid.', [
+            $this->addError($attribute, Craft::t('sprout-base', '{postalName} is not a valid.', [
                 'postalName' => $postalName,
             ]));
         }

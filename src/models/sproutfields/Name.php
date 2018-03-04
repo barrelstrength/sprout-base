@@ -52,8 +52,7 @@ class Name extends Model
     {
         $name = '';
 
-        if ($this->getFullName())
-        {
+        if ($this->getFullName()) {
             $name = $this->getFullName();
         }
 
@@ -63,7 +62,8 @@ class Name extends Model
     /**
      * @return string
      */
-    public function getFriendlyName() {
+    public function getFriendlyName()
+    {
 
         return trim($this->firstName);
     }
@@ -71,7 +71,8 @@ class Name extends Model
     /**
      * @return string
      */
-    public function getFullName() {
+    public function getFullName()
+    {
 
         $firstName = trim($this->firstName);
         $lastName = trim($this->lastName);
@@ -94,7 +95,8 @@ class Name extends Model
     /**
      * @return string
      */
-    public function getFullNameExtended() {
+    public function getFullNameExtended()
+    {
 
         $this->fullName = '';
 
@@ -114,9 +116,8 @@ class Name extends Model
      */
     protected function addName($name)
     {
-        if ($name)
-        {
-            $this->fullName .= ' ' . $name;
+        if ($name) {
+            $this->fullName .= ' '.$name;
         }
     }
 }

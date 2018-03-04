@@ -48,7 +48,7 @@ class DefaultMailer extends BaseMailer implements CampaignEmailSenderInterface
      */
     public function getDescription()
     {
-        return Craft::t('sprout-base','Smart transactional email, easy recipient management, and advanced third party integrations.');
+        return Craft::t('sprout-base', 'Smart transactional email, easy recipient management, and advanced third party integrations.');
     }
 
     /**
@@ -301,19 +301,19 @@ class DefaultMailer extends BaseMailer implements CampaignEmailSenderInterface
      */
     public function getLists()
     {
-        if ($this->lists === null && Craft::$app->getPlugins()->getPlugin('sprout-lists') != null)
-        {
+        if ($this->lists === null && Craft::$app->getPlugins()->getPlugin('sprout-lists') != null) {
             $listType = SproutLists::$app->lists
                 ->getListType(\barrelstrength\sproutlists\SproutLists::$defaultSubscriber);
 
-            $this->lists = $listType ? $listType->getLists() : array();
+            $this->lists = $listType ? $listType->getLists() : [];
         }
 
         return $this->lists;
     }
-    
+
     /**
      * Get the HTML for our List Settings on the Notification Email edit page
+     *
      * @param array $values
      *
      * @return null|string
@@ -436,15 +436,11 @@ class DefaultMailer extends BaseMailer implements CampaignEmailSenderInterface
             $listRecords = \barrelstrength\sproutlists\records\Lists::find()
                 ->where(['id' => $listIds])->all();
 
-            $sproutListsRecipientsInfo = array();
-            if ($listRecords != null)
-            {
-                foreach ($listRecords as $listRecord)
-                {
-                    if (!empty($listRecord->subscribers))
-                    {
-                        foreach ($listRecord->subscribers as $subscriber)
-                        {
+            $sproutListsRecipientsInfo = [];
+            if ($listRecords != null) {
+                foreach ($listRecords as $listRecord) {
+                    if (!empty($listRecord->subscribers)) {
+                        foreach ($listRecord->subscribers as $subscriber) {
                             // Assign email as key to not repeat subscriber
                             $sproutListsRecipientsInfo[$subscriber->email] = $subscriber->getAttributes();
                         }

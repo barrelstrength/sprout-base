@@ -39,14 +39,14 @@ abstract class BaseTheme
      *
      * @return string
      */
-    abstract public function getName() : string;
+    abstract public function getName(): string;
 
     /**
      * The Theme Description
      *
      * @return string
      */
-    abstract public function getDescription() : string;
+    abstract public function getDescription(): string;
 
     /**
      * Get Class name
@@ -81,7 +81,7 @@ abstract class BaseTheme
      */
     public function getSchemaFolder()
     {
-        return $this->pluginClass->getBasePath() . DIRECTORY_SEPARATOR . 'schema';
+        return $this->pluginClass->getBasePath().DIRECTORY_SEPARATOR.'schema';
     }
 
     /**
@@ -93,7 +93,7 @@ abstract class BaseTheme
      */
     public function getSourceTemplateFolder()
     {
-        return $this->pluginClass->getBasePath() . DIRECTORY_SEPARATOR . 'templates';
+        return $this->pluginClass->getBasePath().DIRECTORY_SEPARATOR.'templates';
     }
 
     /**

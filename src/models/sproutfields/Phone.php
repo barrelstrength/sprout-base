@@ -66,6 +66,7 @@ class Phone extends Model
 
     /**
      * Phone constructor.
+     *
      * @param string $phone
      * @param string $country
      */

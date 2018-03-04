@@ -38,8 +38,7 @@ class DataSources extends Component
             'id' => $dataSourceId
         ])->one();
 
-        if ($dataSourceRecord === null)
-        {
+        if ($dataSourceRecord === null) {
             return null;
         }
 
@@ -94,22 +93,17 @@ class DataSources extends Component
         }
 
 
-
         // Add the additional data we store in the database to the Data Source classes
-        foreach ($dataSourceRecords as $dataSourceRecord)
-        {
-            if ($dataSourceRecord->type === get_class($dataSources[$dataSourceRecord->type]))
-            {
+        foreach ($dataSourceRecords as $dataSourceRecord) {
+            if ($dataSourceRecord->type === get_class($dataSources[$dataSourceRecord->type])) {
                 $dataSources[$dataSourceRecord->type]->dataSourceId = $dataSourceRecord->id;
                 $dataSources[$dataSourceRecord->type]->allowNew = $dataSourceRecord->allowNew;
             }
         }
 
         // Make sure all registered datasources have a record in the database
-        foreach ($dataSources as $dataSourceClass => $dataSource)
-        {
-            if ($dataSource->dataSourceId === null)
-            {
+        foreach ($dataSources as $dataSourceClass => $dataSource) {
+            if ($dataSource->dataSourceId === null) {
                 $this->installDataSources([$dataSourceClass]);
             }
         }
@@ -141,12 +135,9 @@ class DataSources extends Component
             ->where(['id' => $dataSourceModel->id])
             ->one();
 
-        if ($dataSourceRecord !== null)
-        {
+        if ($dataSourceRecord !== null) {
             $dataSourceRecord->id = $dataSourceModel->id;
-        }
-        else
-        {
+        } else {
             $dataSourceRecord = new DataSourceRecord();
             $dataSourceRecord->type = $dataSourceModel->type;
         }

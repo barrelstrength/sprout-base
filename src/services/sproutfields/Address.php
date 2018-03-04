@@ -61,13 +61,13 @@ class Address extends Component
             $record = AddressRecord::findOne($model->id);
 
             if (!$record) {
-                throw new \InvalidArgumentException(Craft::t('sprout-base','No Address exists with the ID “{id}”', ['id' => $model->id]));
+                throw new \InvalidArgumentException(Craft::t('sprout-base', 'No Address exists with the ID “{id}”', ['id' => $model->id]));
             }
         }
 
         $attributes = $model->getAttributes();
         $record->setAttributes($attributes, false);
-        
+
         $db = Craft::$app->getDb();
         $transaction = $db->beginTransaction();
 
