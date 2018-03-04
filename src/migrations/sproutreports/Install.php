@@ -36,7 +36,7 @@ class Install extends Migration
                     'handle' => $this->string()->notNull(),
                     'description' => $this->text(),
                     'allowHtml' => $this->boolean(),
-                    'options' => $this->text(),
+                    'settings' => $this->text(),
                     'dataSourceId' => $this->string(),
                     'groupId' => $this->integer(),
                     'enabled' => $this->boolean(),
@@ -77,7 +77,7 @@ class Install extends Migration
             $this->createTable($this->dataSourcesTable, [
                 'id' => $this->primaryKey(),
                 'dataSourceId' => $this->string(),
-                'options' => $this->text(),
+                'settings' => $this->text(),
                 'allowNew' => $this->boolean(),
                 'dateCreated' => $this->dateTime()->notNull(),
                 'dateUpdated' => $this->dateTime()->notNull(),

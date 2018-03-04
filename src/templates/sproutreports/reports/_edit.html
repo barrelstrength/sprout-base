@@ -88,7 +88,7 @@
     <div id="name-format-field" class="{% if not report.nameFormat %}hidden{% endif %}">
         {{ forms.textField({
             label: "Name Format"|t('sprout-base'),
-            instructions: "Auto-generate your report name using option values, such as {startDate|date('F d, Y')}"|t('sprout-base'),
+            instructions: "Auto-generate your report name using settings values, such as {startDate|date('F d, Y')}"|t('sprout-base'),
             name: 'nameFormat',
             value: report is defined ? report.nameFormat : "",
             errors: report is defined ? report.getErrors('nameFormat') : ""
@@ -97,11 +97,11 @@
 
     {% if dataSource is defined %}
 
-        {% set optionsHtml = dataSource.getOptionsHtml() %}
+        {% set settingsHtml = dataSource.getSettingsHtml() %}
 
-        {% if optionsHtml %}
+        {% if settingsHtml %}
             <hr>
-            {{ optionsHtml | raw }}
+            {{ settingsHtml | raw }}
         {% endif %}
 
     {% endif %}

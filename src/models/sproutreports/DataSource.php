@@ -15,7 +15,7 @@ class DataSource extends Model
 
     public $dataSourceId;
 
-    public $options;
+    public $settings;
 
     public $allowNew;
 
@@ -24,6 +24,6 @@ class DataSource extends Model
      */
     public function safeAttributes()
     {
-        return ['id', 'dataSourceId', 'options', 'allowNew'];
+        return ['id', 'dataSourceId', 'settings', 'allowNew'];
     }
 }

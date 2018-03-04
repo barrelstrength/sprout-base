@@ -176,7 +176,7 @@ abstract class BaseDataSource
      *
      * @return null|string
      */
-    public function getOptionsHtml()
+    public function getSettingsHtml()
     {
         return null;
     }
@@ -185,11 +185,11 @@ abstract class BaseDataSource
      * Should return an array of strings to be used as column headings in display/output
      *
      * @param ReportModel $report
-     * @param array       $options
+     * @param array       $settings
      *
      * @return array
      */
-    public function getDefaultLabels(ReportModel $report, array $options = [])
+    public function getDefaultLabels(ReportModel $report, array $settings = [])
     {
         return [];
     }
@@ -198,36 +198,36 @@ abstract class BaseDataSource
      * Should return an array of records to use in the report
      *
      * @param ReportModel $report
-     * @param array       $options
+     * @param array       $settings
      *
      * @return array
      */
-    public function getResults(ReportModel $report, array $options = [])
+    public function getResults(ReportModel $report, array $settings = [])
     {
         return [];
     }
 
     /**
-     * Give a Data Source a chance to prepare options before they are processed by the Dynamic Name field
+     * Give a Data Source a chance to prepare settings before they are processed by the Dynamic Name field
      *
-     * @param array $options
+     * @param array $settings
      *
      * @return null
      */
-    public function prepOptions(array $options)
+    public function prepSettings(array $settings)
     {
-        return $options;
+        return $settings;
     }
 
     /**
-     * Validate the data sources options
+     * Validate the data sources settings
      *
-     * @param array $options
+     * @param array $settings
      * @param array $errors
      *
      * @return bool
      */
-    public function validateOptions(array $options = [], array &$errors = [])
+    public function validateSettings(array $settings = [], array &$errors)
     {
         return true;
     }

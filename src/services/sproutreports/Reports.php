@@ -15,6 +15,7 @@ use yii\base\Component;
 use barrelstrength\sproutbase\models\sproutreports\Report as ReportModel;
 use barrelstrength\sproutbase\records\sproutreports\Report as ReportRecord;
 use barrelstrength\sproutbase\records\sproutreports\ReportGroup as ReportGroupRecord;
+use yii\base\Exception;
 
 class Reports extends Component
 {
@@ -57,7 +58,7 @@ class Reports extends Component
             $record = ReportRecord::findOne($model->id);
         }
 
-        if (!$this->validateOptions($model)) {
+        if (!$this->validateSettings($model)) {
             return false;
         }
 
@@ -67,7 +68,7 @@ class Reports extends Component
         $record->handle = $model->handle;
         $record->description = $model->description;
         $record->allowHtml = $model->allowHtml;
-        $record->options = $model->options;
+        $record->settings = $model->settings;
         $record->dataSourceId = $model->dataSourceId;
         $record->enabled = $model->enabled;
         $record->groupId = $model->groupId;
@@ -94,14 +95,14 @@ class Reports extends Component
      *
      * @return bool
      */
-    protected function validateOptions(ReportModel $report)
+    protected function validateSettings(ReportModel $report)
     {
         $errors = [];
 
         $dataSource = $report->getDataSource();
 
-        if ($dataSource AND !$dataSource->validateOptions($report->options, $errors)) {
-            $report->addError('options', $errors);
+        if ($dataSource AND !$dataSource->validateSettings($report->settings, $errors)) {
+            $report->addError('settings', $errors);
 
             return false;
         }
@@ -173,7 +174,7 @@ class Reports extends Component
                 $record->name = $report->getName();
                 $record->handle = $report->getHandle();
                 $record->description = $report->getDescription();
-                $record->options = $report->getOptions();
+                $record->settings = $report->getSettings();
                 $record->dataSourceId = $report->getDataSource()->getId();
                 $record->enabled = true;
                 $record->groupId = $group->id;
@@ -186,9 +187,10 @@ class Reports extends Component
     }
 
     /**
-     * @param int $groupId
+     * @param $groupId
      *
-     * @return null|ReportModel[]
+     * @return array
+     * @throws Exception
      */
     public function getReportsByGroupId($groupId)
     {
@@ -196,8 +198,17 @@ class Reports extends Component
 
         $group = ReportGroupRecord::findOne($groupId);
 
-        if ($group != null) {
-            $reportRecords = $group->getReports()->all();
+        if ($group === null)
+        {
+            throw new Exception(Craft::t('sprout-base', 'No Report Group exists with id: {id}', [
+                'id' =>  $groupId
+            ]));
+        }
+
+        if ($group !== null) {
+            $reportRecords = $group->getReports()->where([
+                'groupId' => $groupId
+            ])->all();
 
             $reports = $this->populateModels($reportRecords);
         }

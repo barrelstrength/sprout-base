@@ -46,8 +46,6 @@ class ReportsController extends Controller
             $dataSources = SproutBase::$app->dataSources->getAllDataSources();
 
             if ($groupId !== null) {
-                // @todo - if groupId is not available in existing groups, throw an error
-
                 $reports = SproutBase::$app->reports->getReportsByGroupId($groupId);
             } else {
                 $reports = SproutBase::$app->reports->getAvailableReports();

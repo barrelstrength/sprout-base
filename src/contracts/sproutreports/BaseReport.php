@@ -37,7 +37,7 @@ abstract class BaseReport
     /**
      * @return array
      */
-    abstract public function getOptions();
+    abstract public function getSettings();
 
     /**
      * @return BaseDataSource

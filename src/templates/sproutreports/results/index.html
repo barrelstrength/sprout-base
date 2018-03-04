@@ -4,7 +4,7 @@
 
 {% set selectedSubnavItem = craft.app.request.segment(2) %}
 {% if dataSource is defined %}
-    {% set optionsHtml = dataSource.getOptionsHtml() %}
+    {% set settingsHtml = dataSource.getSettingsHtml() %}
 {% endif %}
 
 {% set crumbs = [
@@ -23,23 +23,24 @@
             {{ "Download"|t('sprout-reports') }}
         </a>
 
-        <a id="modify-options-icon" class="btn" data-icon="settings"></a>
+        <a id="modify-settings-icon" class="btn" data-icon="settings"></a>
     </form>
 {% endblock %}
 
 {% block content %}
 
-    {% if optionsHtml %}
+    {% if settingsHtml %}
 
-        <div id="modify-options-panel">
+        <div id="modify-settings-panel">
 
-            <form id="report-options" method="post" accept-charset="UTF-8">
+            <form id="report-settings" method="post" accept-charset="UTF-8">
                 {{ csrfInput() }}
+                {{ redirectInput(redirectUrl) }}
                 <input type="hidden" name="action"
                        value="sprout-base/reports/update-report">
-                {{ redirectInput(redirectUrl) }}
                 <input type="hidden" name="reportId" value="{{ reportId }}">
-                {{ optionsHtml | raw }}
+
+                {{ settingsHtml | raw }}
 
                 <div class="button">
                     <div class="btngroup">
@@ -111,8 +112,8 @@
 
     });
 
-    $('#modify-options-icon').on('click', function() {
-    $('#modify-options-panel').slideToggle('slow');
+    $('#modify-settings-icon').on('click', function() {
+    $('#modify-settings-panel').slideToggle('slow');
     });
 
     })();
