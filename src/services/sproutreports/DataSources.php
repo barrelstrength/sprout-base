@@ -50,6 +50,8 @@ class DataSources extends Component
 
     public function installDataSources(array $dataSourceClasses = [])
     {
+        $dataSources = null;
+
         foreach ($dataSourceClasses as $dataSourceClass) {
 
             $dataSourceModel = new DataSourceModel();
@@ -57,7 +59,11 @@ class DataSources extends Component
             $dataSourceModel->allowNew = 1;
 
             $this->saveDataSource($dataSourceModel);
+
+            $dataSources = $dataSourceModel;
         }
+
+        return $dataSources;
     }
 
     /**
@@ -79,6 +85,10 @@ class DataSources extends Component
     /**
      * Returns all Data Sources
      *
+     * @todo - refactor
+     *       Using too many foreach loops as arrays aren't indexed by class name. We could probably
+     *       simplify this if we could get certain arrays indexed by class name / type.
+     *
      * @return array
      */
     public function getAllDataSources()
@@ -87,11 +97,11 @@ class DataSources extends Component
         $dataSourceRecords = DataSourceRecord::find()->all();
 
         $dataSources = [];
+        $savedDataSources = [];
 
         foreach ($dataSourceTypes as $dataSourceType) {
             $dataSources[$dataSourceType] = new $dataSourceType;
         }
-
 
         // Add the additional data we store in the database to the Data Source classes
         foreach ($dataSourceRecords as $dataSourceRecord) {
@@ -104,21 +114,23 @@ class DataSources extends Component
         // Make sure all registered datasources have a record in the database
         foreach ($dataSources as $dataSourceClass => $dataSource) {
             if ($dataSource->dataSourceId === null) {
-                $this->installDataSources([$dataSourceClass]);
+                $savedDataSources[] = $this->installDataSources([$dataSourceClass]);
             }
         }
 
-        return $dataSources;
-    }
+        // Make sure we assign any new dataSource IDs so we can build our URLs
+        foreach ($savedDataSources as $savedDataSource) {
+            if ($savedDataSource->type === get_class($dataSources[$savedDataSource->type])) {
+                $dataSources[$savedDataSource->type]->dataSourceId = $savedDataSource->id;
+            }
+        }
 
-    /**
-     * @param $names
-     * @param $secondaryArray
-     */
-    private function _sortDataSources(&$names, &$secondaryArray)
-    {
-        // Sort plugins by name
-        array_multisort($names, SORT_NATURAL | SORT_FLAG_CASE, $secondaryArray);
+        // Sort Data Sources alphabetical
+        usort($dataSources, function($a, $b) {
+            return $a->getName() <=> $b->getName();
+        });
+
+        return $dataSources;
     }
 
     /**
