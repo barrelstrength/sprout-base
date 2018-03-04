@@ -183,16 +183,16 @@ class ReportsController extends Controller
         $reportModel = new Report();
 
         $reportId = $request->getBodyParam('reportId');
-        $options = $request->getBodyParam('options');
+        $settings = $request->getBodyParam('settings');
 
-        if ($reportId && $options) {
+        if ($reportId && $settings) {
             $reportModel = SproutBase::$app->reports->getReport($reportId);
 
             if (!$reportModel) {
                 throw new \InvalidArgumentException(Craft::t('sprout-base','No report exists with the id “{id}”', ['id' => $reportId]));
             }
 
-            $reportModel->options = is_array($options) ? $options : [];
+            $reportModel->settings = is_array($settings) ? $settings : [];
 
             if (SproutBase::$app->reports->saveReport($reportModel)) {
                 Craft::$app->getSession()->setNotice(Craft::t('sprout-base','Query updated.'));
@@ -202,7 +202,7 @@ class ReportsController extends Controller
         }
 
         // Encode back to object after validation for getResults method to recognize option object
-        $reportModel->options = json_encode($reportModel->options);
+        $reportModel->settings = json_encode($reportModel->settings);
 
         Craft::$app->getSession()->setError(Craft::t('sprout-base','Could not update report.'));
 
@@ -332,9 +332,9 @@ class ReportsController extends Controller
 
         $report = SproutBase::$app->reports->getReport($reportId);
 
-        $options = Craft::$app->getRequest()->getBodyParam('options');
+        $settings = Craft::$app->getRequest()->getBodyParam('settings');
 
-        $options = count($options) ? $options : [];
+        $settings = count($settings) ? $settings : [];
 
         if ($report) {
             $dataSource = SproutBase::$app->dataSources->getDataSourceById($report->dataSourceId);
@@ -343,8 +343,8 @@ class ReportsController extends Controller
                 $date = date('Ymd-his');
 
                 $filename = $report->name.'-'.$date;
-                $labels = $dataSource->getDefaultLabels($report, $options);
-                $values = $dataSource->getResults($report, $options);
+                $labels = $dataSource->getDefaultLabels($report, $settings);
+                $values = $dataSource->getResults($report, $settings);
 
                 SproutBase::$app->exports->toCsv($values, $labels, $filename);
             }
@@ -372,13 +372,13 @@ class ReportsController extends Controller
             $instance = new ReportModel();
         }
 
-        $options = $request->getBodyParam('options');
+        $settings = $request->getBodyParam('settings');
 
         $instance->name = $request->getBodyParam('name');
         $instance->nameFormat = $request->getBodyParam('nameFormat');
         $instance->handle = $request->getBodyParam('handle');
         $instance->description = $request->getBodyParam('description');
-        $instance->options = is_array($options) ? $options : [];
+        $instance->settings = is_array($settings) ? $settings : [];
         $instance->dataSourceId = $request->getBodyParam('dataSourceId');
         $instance->enabled = $request->getBodyParam('enabled');
         $instance->groupId = $request->getBodyParam('groupId', null);
