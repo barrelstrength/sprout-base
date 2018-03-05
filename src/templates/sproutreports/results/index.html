@@ -1,4 +1,5 @@
 {% extends "_layouts/cp" %}
+{% import 'sprout-base/sproutbase/_includes/sproutcp' as sprout %}
 
 {% set title  = 'Sprout Reports'|t('sprout-base') %}
 
@@ -31,7 +32,7 @@
 
     {% if settingsHtml %}
 
-        <div id="modify-settings-panel">
+        <div id="modify-settings-panel" style="display:none;">
 
             <form id="report-settings" method="post" accept-charset="UTF-8">
                 {{ csrfInput() }}
@@ -91,30 +92,40 @@
                 </table>
             </div>
         {% else %}
-            <p>{{ "This report currently has no results."|t('sprout-base') }}</p>
+
+            {% set boxBody %}
+                <p>{{ "This report currently has no results. Check your report settings and ensure you have content for the report you are trying to run. To quickly edit the Report Settings, click on the gear icon in the upper right."|t('sprout-base')|raw }}</p>
+            {% endset %}
+
+            {{ sprout.mediaBox({
+                heading: "No results found"|t('sprout-base'),
+                body: boxBody,
+                resourcePath: '@sproutbase/web/assets/sproutreports/dist/images/icon.svg'
+            }) }}
+
+
         {% endif %}
     </div>
 
 {% endblock %}
 
+{% do view.registerAssetBundle("barrelstrength\\sproutbase\\web\\assets\\sproutbase\\cp\\CpAsset") %}
 {% do view.registerAssetBundle("barrelstrength\\sproutbase\\web\\assets\\sproutreports\\SproutReportsAsset") %}
 
 {% js %}
 
     (function(){
 
-    $('#btn-download-csv').on('click', function(event) {
+        $('#btn-download-csv').on('click', function(event) {
+            event.preventDefault();
 
-    event.preventDefault();
+            $form = $(this).parents('form');
+            $form.submit();
+        });
 
-    $form = $(this).parents('form');
-    $form.submit();
-
-    });
-
-    $('#modify-settings-icon').on('click', function() {
-    $('#modify-settings-panel').slideToggle('slow');
-    });
+        $('#modify-settings-icon').on('click', function() {
+            $('#modify-settings-panel').slideToggle('slow');
+        });
 
     })();
 
