@@ -11,7 +11,6 @@ use barrelstrength\sproutbase\SproutBase;
 use Craft;
 use barrelstrength\sproutbase\records\sproutreports\DataSource;
 use barrelstrength\sproutbase\models\sproutreports\Report as ReportModel;
-use craft\base\Plugin;
 use craft\helpers\UrlHelper;
 
 /**
@@ -43,6 +42,8 @@ abstract class BaseDataSource
 
     /**
      * BaseDataSource constructor.
+     *
+     * @throws \ReflectionException
      */
     public function __construct()
     {

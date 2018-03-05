@@ -50,7 +50,8 @@ class Phone extends Component
     /**
      * Return error message
      *
-     * @param  mixed $field
+     * @param $field
+     * @param $country
      *
      * @return string
      */

@@ -28,7 +28,7 @@ class RegularExpression extends Component
         $customPattern = $field->customPattern;
 
         if (!empty($customPattern)) {
-            // Use backticks as delimiters
+            // Use backtick as delimiters
             $customPattern = '`'.$customPattern.'`';
 
             if (!preg_match($customPattern, $value)) {

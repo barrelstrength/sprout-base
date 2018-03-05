@@ -59,7 +59,7 @@ class Email extends Component
     public function validateEmailAddress($value, $customPattern, $checkPattern = false): bool
     {
         if ($checkPattern) {
-            // Use backticks as delimiters as they are invalid characters for emails
+            // Use backtick as delimiters as they are invalid characters for emails
             $customPattern = '`'.$customPattern.'`';
 
             if (preg_match($customPattern, $value)) {

@@ -24,7 +24,7 @@ if (typeof Craft.SproutBase === typeof undefined) {
     $.extend($.fn,
         {
             SproutAddressBox: function() {
-                $container = $(this);
+                var $container = $(this);
                 return this.each(function() {
                     new Craft.SproutBase.AddressBox($container);
                 });

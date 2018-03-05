@@ -8,7 +8,6 @@
 namespace barrelstrength\sproutbase\contracts\sproutimport;
 
 use Craft;
-use ReflectionClass;
 
 /**
  * Class BaseTheme

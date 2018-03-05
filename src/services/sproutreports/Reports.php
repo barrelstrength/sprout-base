@@ -185,7 +185,7 @@ class Reports extends Component
                 $record->groupId = $group->id;
 
                 if (!$record->save()) {
-                    SproutBase::warning($record->getErrors(), 'sproutReports');
+                    SproutBase::warning($record->getErrors());
                 }
             }
         }

@@ -7,7 +7,6 @@
 
 namespace barrelstrength\sproutbase\models\sproutfields;
 
-use Craft;
 use craft\base\Model;
 use libphonenumber\PhoneNumberFormat;
 use libphonenumber\PhoneNumberUtil;

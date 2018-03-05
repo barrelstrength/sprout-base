@@ -48,6 +48,12 @@ class DataSources extends Component
         return $dataSource;
     }
 
+    /**
+     * @param array $dataSourceClasses
+     *
+     * @return DataSourceModel|null
+     * @throws \yii\db\Exception
+     */
     public function installDataSources(array $dataSourceClasses = [])
     {
         $dataSources = null;

@@ -13,8 +13,6 @@ use craft\base\Element;
 use Craft;
 use craft\elements\db\ElementQueryInterface;
 use craft\helpers\UrlHelper;
-use nystudio107\recipe\helpers\Json;
-use yii\helpers\ArrayHelper;
 
 class NotificationEmail extends Element
 {

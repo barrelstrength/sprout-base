@@ -30,7 +30,7 @@ class Url extends Component
         $checkPattern = $field->customPatternToggle;
 
         if ($customPattern && $checkPattern) {
-            // Use backticks as delimiters as they are invalid characters for emails
+            // Use backtick as delimiters as they are invalid characters for emails
             $customPattern = '`'.$customPattern.'`';
 
             if (preg_match($customPattern, $value)) {
