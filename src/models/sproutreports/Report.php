@@ -21,6 +21,8 @@ class Report extends Model
 
     public $name;
 
+    public $hasNameFormat;
+
     public $nameFormat;
 
     public $handle;
@@ -77,6 +79,7 @@ class Report extends Model
     {
         $dataSource = $this->getDataSource();
         $settingsArray = Json::decode($this->settings);
+
         $settings = $dataSource->prepSettings($settingsArray);
 
         return Craft::$app->getView()->renderObjectTemplate($this->nameFormat, $settings);
@@ -134,7 +137,7 @@ class Report extends Model
     public function safeAttributes()
     {
         return [
-            'id', 'name', 'nameFormat', 'handle',
+            'id', 'name', 'hasNameFormat', 'nameFormat', 'handle',
             'description', 'allowHtml', 'settings',
             'dataSourceId', 'enabled', 'groupId',
             'dateCreated', 'dateUpdated'

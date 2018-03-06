@@ -65,7 +65,7 @@
                         <tr>
                             <td class="sproutreports-reportname">
                                 <a href="{{ cpUrl(craft.app.request.segment(1) ~ '/reports/view/' ~ report.id) }}">
-                                    {% if report.nameFormat %}
+                                    {% if report.nameFormat and report.hasNameFormat %}
                                         {{ report.processNameFormat() }}
                                     {% else %}
                                         {{ report.name }}

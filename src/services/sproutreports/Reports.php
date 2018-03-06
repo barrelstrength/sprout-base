@@ -11,6 +11,7 @@ use barrelstrength\sproutbase\contracts\sproutreports\BaseReport;
 use barrelstrength\sproutbase\models\sproutreports\ReportGroup as ReportGroupModel;
 use barrelstrength\sproutbase\SproutBase;
 use Craft;
+use craft\models\CraftSupport;
 use yii\base\Component;
 use barrelstrength\sproutbase\models\sproutreports\Report as ReportModel;
 use barrelstrength\sproutbase\records\sproutreports\Report as ReportRecord;
@@ -64,6 +65,7 @@ class Reports extends Component
 
         $record->id = $model->id;
         $record->name = $model->name;
+        $record->hasNameFormat = $model->hasNameFormat;
         $record->nameFormat = $model->nameFormat;
         $record->handle = $model->handle;
         $record->description = $model->description;

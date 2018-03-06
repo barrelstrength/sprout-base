@@ -34,6 +34,7 @@ class Install extends Migration
                     'dataSourceId' => $this->integer(),
                     'groupId' => $this->integer(),
                     'name' => $this->string()->notNull(),
+                    'hasNameFormat' => $this->boolean(),
                     'nameFormat' => $this->string(),
                     'handle' => $this->string()->notNull(),
                     'description' => $this->text(),

@@ -380,6 +380,7 @@ class ReportsController extends Controller
         $settings = $request->getBodyParam('settings');
 
         $instance->name = $request->getBodyParam('name');
+        $instance->hasNameFormat = $request->getBodyParam('hasNameFormat');
         $instance->nameFormat = $request->getBodyParam('nameFormat');
         $instance->handle = $request->getBodyParam('handle');
         $instance->description = $request->getBodyParam('description');
