@@ -26,19 +26,20 @@ class ReportsController extends Controller
      * @param null $groupId
      *
      * @return \yii\web\Response
+     * @throws \yii\base\Exception
      */
     public function actionIndex($dataSourceId = null, $groupId = null)
     {
         $reportContext = 'sprout-reports';
 
-        // If a dataSourceId is provided we have an integration
+        // If a type is provided we have an integration
         if ($dataSourceId !== null) {
             $reportContext = 'sprout-integration';
 
             $dataSource = SproutBase::$app->dataSources->getDataSourceById($dataSourceId);
 
             // Update to match the multi-datasource syntax
-            $dataSources[$dataSource->getId()] = $dataSource;
+            $dataSources[$dataSource->getDataSourceSlug()] = $dataSource;
 
             $reports = SproutBase::$app->reports->getReportsBySourceId($dataSourceId);
         } else {
@@ -46,11 +47,9 @@ class ReportsController extends Controller
             $dataSources = SproutBase::$app->dataSources->getAllDataSources();
 
             if ($groupId !== null) {
-                // @todo - if groupId is not available in existing groups, throw an error
-
                 $reports = SproutBase::$app->reports->getReportsByGroupId($groupId);
             } else {
-                $reports = SproutBase::$app->reports->getAvailableReports();
+                $reports = SproutBase::$app->reports->getAllReports();
             }
         }
 
@@ -120,17 +119,18 @@ class ReportsController extends Controller
             return $this->renderTemplate('sprout-base/sproutreports/results/index', $variables);
         }
 
-        throw new \HttpException(404, Craft::t('sprout-base','Report not found.'));
+        throw new \HttpException(404, Craft::t('sprout-base', 'Report not found.'));
     }
 
     /**
      * @param string      $dataSourceId
+     * @param string      $dataSourceSlug
      * @param Report|null $report
      * @param int|null    $reportId
      *
      * @return \yii\web\Response
      */
-    public function actionEditReport(string $dataSourceId, Report $report = null, int $reportId = null)
+    public function actionEditReport(string $dataSourceId, string $dataSourceSlug, Report $report = null, int $reportId = null)
     {
         $reportModel = new Report();
 
@@ -185,28 +185,28 @@ class ReportsController extends Controller
         $reportModel = new Report();
 
         $reportId = $request->getBodyParam('reportId');
-        $options = $request->getBodyParam('options');
+        $settings = $request->getBodyParam('settings');
 
-        if ($reportId && $options) {
+        if ($reportId && $settings) {
             $reportModel = SproutBase::$app->reports->getReport($reportId);
 
             if (!$reportModel) {
-                throw new \InvalidArgumentException(Craft::t('sprout-base','No report exists with the id “{id}”', ['id' => $reportId]));
+                throw new \InvalidArgumentException(Craft::t('sprout-base', 'No report exists with the id “{id}”', ['id' => $reportId]));
             }
 
-            $reportModel->options = is_array($options) ? $options : [];
+            $reportModel->settings = is_array($settings) ? $settings : [];
 
             if (SproutBase::$app->reports->saveReport($reportModel)) {
-                Craft::$app->getSession()->setNotice(Craft::t('sprout-base','Query updated.'));
+                Craft::$app->getSession()->setNotice(Craft::t('sprout-base', 'Query updated.'));
 
                 return $this->redirectToPostedUrl($reportModel);
             }
         }
 
         // Encode back to object after validation for getResults method to recognize option object
-        $reportModel->options = json_encode($reportModel->options);
+        $reportModel->settings = json_encode($reportModel->settings);
 
-        Craft::$app->getSession()->setError(Craft::t('sprout-base','Could not update report.'));
+        Craft::$app->getSession()->setError(Craft::t('sprout-base', 'Could not update report.'));
 
         // Send the report back to the template
         Craft::$app->getUrlManager()->setRouteParams([
@@ -230,7 +230,7 @@ class ReportsController extends Controller
         $report = $this->prepareFromPost();
 
         if (!SproutBase::$app->reports->saveReport($report)) {
-            Craft::$app->getSession()->setError(Craft::t('sprout-base','Couldn’t save report.'));
+            Craft::$app->getSession()->setError(Craft::t('sprout-base', 'Couldn’t save report.'));
 
             // Send the report back to the template
             Craft::$app->getUrlManager()->setRouteParams([
@@ -240,7 +240,7 @@ class ReportsController extends Controller
             return null;
         }
 
-        Craft::$app->getSession()->setNotice(Craft::t('sprout-base','Report saved.'));
+        Craft::$app->getSession()->setNotice(Craft::t('sprout-base', 'Report saved.'));
 
         return $this->redirectToPostedUrl($report);
     }
@@ -258,16 +258,16 @@ class ReportsController extends Controller
     {
         $this->requirePostRequest();
 
-        $reportId = Craft::$app->getRequest()->getBodyParam('reportId');
+        $reportId = Craft::$app->getRequest()->getBodyParam('id');
 
         if ($record = ReportRecord::findOne($reportId)) {
             $record->delete();
 
-            Craft::$app->getSession()->setNotice(Craft::t('sprout-base','Report deleted.'));
+            Craft::$app->getSession()->setNotice(Craft::t('sprout-base', 'Report deleted.'));
 
             return $this->redirectToPostedUrl($record);
         } else {
-            throw new NotFoundHttpException(Craft::t('sprout-base','Report not found.'));
+            throw new NotFoundHttpException(Craft::t('sprout-base', 'Report not found.'));
         }
     }
 
@@ -292,7 +292,7 @@ class ReportsController extends Controller
 
         if (SproutBase::$app->reportGroups->saveGroup($group)) {
 
-            Craft::$app->getSession()->setNotice(Craft::t('sprout-base','Report group saved.'));
+            Craft::$app->getSession()->setNotice(Craft::t('sprout-base', 'Report group saved.'));
 
             return $this->asJson([
                 'success' => true,
@@ -321,32 +321,35 @@ class ReportsController extends Controller
         $groupId = Craft::$app->getRequest()->getBodyParam('id');
         $success = SproutBase::$app->reportGroups->deleteGroup($groupId);
 
-        Craft::$app->getSession()->setNotice(Craft::t('sprout-base','Group deleted..'));
+        Craft::$app->getSession()->setNotice(Craft::t('sprout-base', 'Group deleted..'));
 
         return $this->asJson([
             'success' => $success,
         ]);
     }
 
+    /**
+     * Export a Report
+     */
     public function actionExportReport()
     {
         $reportId = Craft::$app->getRequest()->getParam('reportId');
 
         $report = SproutBase::$app->reports->getReport($reportId);
 
-        $options = Craft::$app->getRequest()->getBodyParam('options');
+        $settings = Craft::$app->getRequest()->getBodyParam('settings');
 
-        $options = count($options) ? $options : [];
+        $settings = count($settings) ? $settings : [];
 
         if ($report) {
-            $dataSource = SproutBase::$app->dataSources->getDataSourceById($report->dataSourceId);
+            $dataSource = SproutBase::$app->dataSources->getDataSourceById($report->type);
 
             if ($dataSource) {
                 $date = date('Ymd-his');
 
                 $filename = $report->name.'-'.$date;
-                $labels = $dataSource->getDefaultLabels($report, $options);
-                $values = $dataSource->getResults($report, $options);
+                $labels = $dataSource->getDefaultLabels($report, $settings);
+                $values = $dataSource->getResults($report, $settings);
 
                 SproutBase::$app->exports->toCsv($values, $labels, $filename);
             }
@@ -374,13 +377,13 @@ class ReportsController extends Controller
             $instance = new ReportModel();
         }
 
-        $options = $request->getBodyParam('options');
+        $settings = $request->getBodyParam('settings');
 
         $instance->name = $request->getBodyParam('name');
         $instance->nameFormat = $request->getBodyParam('nameFormat');
         $instance->handle = $request->getBodyParam('handle');
         $instance->description = $request->getBodyParam('description');
-        $instance->options = is_array($options) ? $options : [];
+        $instance->settings = is_array($settings) ? $settings : [];
         $instance->dataSourceId = $request->getBodyParam('dataSourceId');
         $instance->enabled = $request->getBodyParam('enabled');
         $instance->groupId = $request->getBodyParam('groupId', null);

@@ -13,6 +13,7 @@ use barrelstrength\sproutbase\records\sproutreports\DataSource as DataSourceReco
 use yii\base\Component;
 use craft\events\RegisterComponentTypesEvent;
 use craft\db\Query;
+use Craft;
 
 /**
  * Class DataSources
@@ -21,141 +22,178 @@ use craft\db\Query;
  */
 class DataSources extends Component
 {
-
-    const EVENT_REGISTER_DATA_SOURCES = 'registerSproutReportsDataSources';
     /**
-     * @var BaseDataSource[]
+     * @event
      */
-    protected $dataSources;
+    const EVENT_REGISTER_DATA_SOURCES = 'registerSproutReportsDataSources';
 
     /**
-     * @param $id
+     * @param $dataSourceId
      *
      * @return BaseDataSource|null
      */
-    public function getDataSourceById($id)
+    public function getDataSourceById($dataSourceId)
     {
-        $sources = $this->getAllDataSources();
+        $dataSourceRecord = DataSourceRecord::find()->where([
+            'id' => $dataSourceId
+        ])->one();
 
-        if (isset($sources[$id])) {
-            return $sources[$id];
+        if ($dataSourceRecord === null) {
+            return null;
         }
 
-        return null;
+        $dataSource = new $dataSourceRecord->type;
+        $dataSource->dataSourceId = $dataSourceRecord->id;
+
+        return $dataSource;
     }
 
     /**
-     * @return null|BaseDataSource[]
+     * @param array $dataSourceClasses
+     *
+     * @return DataSourceModel|null
+     * @throws \yii\db\Exception
+     */
+    public function installDataSources(array $dataSourceClasses = [])
+    {
+        $dataSources = null;
+
+        foreach ($dataSourceClasses as $dataSourceClass) {
+
+            $dataSourceModel = new DataSourceModel();
+            $dataSourceModel->type = $dataSourceClass;
+            $dataSourceModel->allowNew = 1;
+
+            $this->saveDataSource($dataSourceModel);
+
+            $dataSources = $dataSourceModel;
+        }
+
+        return $dataSources;
+    }
+
+    /**
+     * Returns all available Data Source classes
+     *
+     * @return string[]
+     */
+    public function getAllDataSourceTypes()
+    {
+        $event = new RegisterComponentTypesEvent([
+            'types' => []
+        ]);
+
+        $this->trigger(self::EVENT_REGISTER_DATA_SOURCES, $event);
+
+        return $event->types;
+    }
+
+    /**
+     * Returns all Data Sources
+     *
+     * @todo - refactor
+     *       Using too many foreach loops as arrays aren't indexed by class name. We could probably
+     *       simplify this if we could get certain arrays indexed by class name / type.
+     *
+     * @return array
      */
     public function getAllDataSources()
     {
-        if (null === $this->dataSources) {
-            $event = new RegisterComponentTypesEvent([
-                'types' => []
-            ]);
+        $dataSourceTypes = $this->getAllDataSourceTypes();
+        $dataSourceRecords = DataSourceRecord::find()->all();
 
-            $this->trigger(self::EVENT_REGISTER_DATA_SOURCES, $event);
+        $dataSources = [];
+        $savedDataSources = [];
 
-            $responses = $event->types;
+        foreach ($dataSourceTypes as $dataSourceType) {
+            $dataSources[$dataSourceType] = new $dataSourceType;
+        }
 
-            $names = [];
-
-            if ($responses) {
-                /**
-                 * @var BaseDataSource $dataSource
-                 */
-                foreach ($responses as $dataSource) {
-                    if ($dataSource && $dataSource instanceof BaseDataSource) {
-                        $this->dataSources[$dataSource->getId()] = $dataSource;
-
-                        $names[] = $dataSource->getName();
-                    }
-                }
-
-                // Sort data sources by name
-                $this->_sortDataSources($names, $this->dataSources);
+        // Add the additional data we store in the database to the Data Source classes
+        foreach ($dataSourceRecords as $dataSourceRecord) {
+            if ($dataSourceRecord->type === get_class($dataSources[$dataSourceRecord->type])) {
+                $dataSources[$dataSourceRecord->type]->dataSourceId = $dataSourceRecord->id;
+                $dataSources[$dataSourceRecord->type]->allowNew = $dataSourceRecord->allowNew;
             }
         }
 
-        return $this->dataSources;
-    }
+        // Make sure all registered datasources have a record in the database
+        foreach ($dataSources as $dataSourceClass => $dataSource) {
+            if ($dataSource->dataSourceId === null) {
+                $savedDataSources[] = $this->installDataSources([$dataSourceClass]);
+            }
+        }
 
-    /**
-     * @param $names
-     * @param $secondaryArray
-     */
-    private function _sortDataSources(&$names, &$secondaryArray)
-    {
-        // Sort plugins by name
-        array_multisort($names, SORT_NATURAL | SORT_FLAG_CASE, $secondaryArray);
+        // Make sure we assign any new dataSource IDs so we can build our URLs
+        foreach ($savedDataSources as $savedDataSource) {
+            if ($savedDataSource->type === get_class($dataSources[$savedDataSource->type])) {
+                $dataSources[$savedDataSource->type]->dataSourceId = $savedDataSource->id;
+            }
+        }
+
+        // Sort Data Sources alphabetical
+        usort($dataSources, function($a, $b) {
+            return $a->getName() <=> $b->getName();
+        });
+
+        return $dataSources;
     }
 
     /**
      * Save attributes to datasources record table
      *
-     * @param DataSourceModel $model
+     * @param DataSourceModel $dataSourceModel
      *
      * @return bool
      * @throws \yii\db\Exception
      */
-    public function saveDataSource(DataSourceModel $model)
+    public function saveDataSource(DataSourceModel $dataSourceModel)
     {
-        $result = false;
-
-        $record = DataSourceRecord::find()
-            ->where(['dataSourceId' => $model->dataSourceId])
+        $dataSourceRecord = DataSourceRecord::find()
+            ->where(['id' => $dataSourceModel->id])
             ->one();
 
-        if ($record == null) {
-            $record = new DataSourceRecord();
+        if ($dataSourceRecord !== null) {
+            $dataSourceRecord->id = $dataSourceModel->id;
+        } else {
+            $dataSourceRecord = new DataSourceRecord();
+            $dataSourceRecord->type = $dataSourceModel->type;
         }
 
-        $attributes = $model->getAttributes();
+        $dataSourceRecord->allowNew = $dataSourceModel->allowNew;
 
-        if (!empty($attributes)) {
-            foreach ($attributes as $handle => $value) {
-                // Ignore id for dataSourceId
-                if ($handle == 'id') {
-                    continue;
-                }
+        $transaction = Craft::$app->getDb()->beginTransaction();
 
-                $record->setAttribute($handle, $value);
-            }
-        }
-
-        $db = \Craft::$app->getDb();
-        $transaction = $db->beginTransaction();
-
-        if ($record->validate()) {
-            if ($record->save(false)) {
-                $model->id = $record->id;
+        if ($dataSourceRecord->validate()) {
+            if ($dataSourceRecord->save(false)) {
+                $dataSourceModel->id = $dataSourceRecord->id;
 
                 if ($transaction) {
                     $transaction->commit();
                 }
 
-                $result = true;
+                return true;
             }
         } else {
-            $model->addErrors($record->getErrors());
+            $dataSourceModel->addErrors($dataSourceRecord->getErrors());
         }
 
-        return $result;
+        return false;
     }
 
     /**
-     * Delete reports by dataSourceId
+     * Delete reports by type
      *
-     * @param $dataSourceId
+     * @param $type
      *
      * @return int
      * @throws \yii\db\Exception
      */
-    public function deleteReportsByDataSourceId($dataSourceId)
+    public function deleteReportsByType($type)
     {
         $query = new Query();
         $result = $query->createCommand()
-            ->delete('sproutreports_report', ['dataSourceId' => $dataSourceId])
+            ->delete('sproutreports_report', ['type' => $type])
             ->execute();
 
         return $result;

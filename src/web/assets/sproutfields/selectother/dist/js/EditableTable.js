@@ -83,7 +83,7 @@ Craft.SproutSeo.EditableTable = Garnish.Base.extend(
 
             new Craft.SproutSeo.EditableTable.Row(this, $tr);
 
-            $container = $tr.find('.sprout-selectother');
+            var $container = $tr.find('.sprout-selectother');
 
             this.sorter.addItems($tr);
 
@@ -224,7 +224,7 @@ Craft.SproutSeo.EditableTable.Row = Garnish.Base.extend(
                 var col = this.table.columns[colId];
 
                 if (Craft.inArray(col.type, Craft.SproutSeo.EditableTable.textualColTypes)) {
-                    $textarea = $('textarea', this.$tds[i]);
+                    var $textarea = $('textarea', this.$tds[i]);
                     this.$textareas = this.$textareas.add($textarea);
 
                     this.addListener($textarea, 'focus', 'onTextareaFocus');

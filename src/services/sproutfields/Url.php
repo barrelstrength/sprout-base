@@ -30,7 +30,7 @@ class Url extends Component
         $checkPattern = $field->customPatternToggle;
 
         if ($customPattern && $checkPattern) {
-            // Use backticks as delimiters as they are invalid characters for emails
+            // Use backtick as delimiters as they are invalid characters for emails
             $customPattern = '`'.$customPattern.'`';
 
             if (preg_match($customPattern, $value)) {
@@ -56,10 +56,10 @@ class Url extends Component
     public function getErrorMessage($fieldName, $field): string
     {
         if ($field->customPatternToggle && $field->customPatternErrorMessage) {
-            return Craft::t('sprout-base',$field->customPatternErrorMessage);
+            return Craft::t('sprout-base', $field->customPatternErrorMessage);
         }
 
-        return Craft::t('sprout-base',$fieldName.' must be a valid URL.');
+        return Craft::t('sprout-base', $fieldName.' must be a valid URL.');
     }
 
 }

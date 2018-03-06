@@ -13,8 +13,6 @@ use craft\base\Element;
 use Craft;
 use craft\elements\db\ElementQueryInterface;
 use craft\helpers\UrlHelper;
-use nystudio107\recipe\helpers\Json;
-use yii\helpers\ArrayHelper;
 
 class NotificationEmail extends Element
 {
@@ -44,7 +42,7 @@ class NotificationEmail extends Element
      */
     public static function displayName(): string
     {
-        return Craft::t('sprout-base','Notification Email');
+        return Craft::t('sprout-base', 'Notification Email');
     }
 
     /**
@@ -127,7 +125,7 @@ class NotificationEmail extends Element
         $sources = [
             [
                 'key' => '*',
-                'label' => Craft::t('sprout-base','All notifications')
+                'label' => Craft::t('sprout-base', 'All notifications')
             ]
         ];
 
@@ -157,9 +155,9 @@ class NotificationEmail extends Element
     protected static function defineSortOptions(): array
     {
         return [
-            'title' => Craft::t('sprout-base','Subject Line'),
-            'elements.dateCreated' => Craft::t('sprout-base','Date Created'),
-            'elements.dateUpdated' => Craft::t('sprout-base','Date Updated'),
+            'title' => Craft::t('sprout-base', 'Subject Line'),
+            'elements.dateCreated' => Craft::t('sprout-base', 'Date Created'),
+            'elements.dateUpdated' => Craft::t('sprout-base', 'Date Updated'),
         ];
     }
 

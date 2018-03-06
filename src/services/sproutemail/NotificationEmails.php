@@ -307,7 +307,8 @@ class NotificationEmails extends Component
             return $this->registeredEvents[$eventId];
         }
 
-        return function(){};
+        return function() {
+        };
     }
 
     /**
@@ -350,7 +351,7 @@ class NotificationEmails extends Component
         if ($params == false) {
             return false;
         }
-        $element = ($params['value'] != null)? $params['value'] : null;
+        $element = ($params['value'] != null) ? $params['value'] : null;
 
         if ($notificationEmails = $this->getAllNotificationEmails($eventId)) {
             foreach ($notificationEmails as $notificationEmail) {

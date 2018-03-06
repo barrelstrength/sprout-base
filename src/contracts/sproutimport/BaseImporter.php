@@ -7,11 +7,8 @@
 
 namespace barrelstrength\sproutbase\contracts\sproutimport;
 
-use barrelstrength\sproutimport\models\Settings;
-use barrelstrength\sproutimport\services\Faker;
 use barrelstrength\sproutimport\SproutImport;
 use Craft;
-use craft\helpers\ArrayHelper;
 
 /**
  * Class BaseImporter
@@ -107,8 +104,9 @@ abstract class BaseImporter
      * - Craft\UserSproutImportElementImporter
      * - Craft\FieldSproutImportSettingsImporter
      * - Craft\PlainTextSproutImportFieldImporter
-     *
+     * 
      * @return string
+     * @throws \ReflectionException
      */
     final public function getImporterClass()
     {
@@ -203,7 +201,7 @@ abstract class BaseImporter
             $className = $this->getModelName();
 
             if (!class_exists($className)) {
-                throw new \InvalidArgumentException(Craft::t('sprout-base',$className.' namespace on getModelName() method not found.'));
+                throw new \InvalidArgumentException(Craft::t('sprout-base', $className.' namespace on getModelName() method not found.'));
             }
 
             $this->model = new $className;

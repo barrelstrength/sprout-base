@@ -8,8 +8,6 @@
 namespace barrelstrength\sproutbase\web\twig\variables;
 
 use barrelstrength\sproutbase\SproutBase;
-use Craft;
-use craft\helpers\Template;
 
 class SproutBaseVariable
 {

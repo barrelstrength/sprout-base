@@ -5,9 +5,8 @@ namespace barrelstrength\sproutbase\contracts\sproutlists;
 use barrelstrength\sproutlists\elements\Lists;
 use craft\base\Component;
 
-abstract class SproutListsBaseListType extends Component
+abstract class BaseListType extends Component
 {
-    abstract public function getHandle();
     /**
      * Returns the class name of this List Type
      *
@@ -88,5 +87,10 @@ abstract class SproutListsBaseListType extends Component
      */
     abstract public function getListById($listId);
 
+    /**
+     * @param Lists $list
+     *
+     * @return mixed
+     */
     abstract public function saveList(Lists $list);
 }

@@ -44,6 +44,13 @@
                             {{ "Save and add another report"|t('sprout-base') }}</a>
                     </li>
                 </ul>
+
+                {% if report.id is not null %}
+                <hr>
+                <ul>
+                    <li><a class="formsubmit error" data-action="sprout-base/reports/delete-report" data-confirm="{{ 'Are you sure you want to delete this report?'|t('sprout-base') }}" data-redirect="{{ 'sprout-reports/reports'|hash }}">{{ "Delete"|t('sprout-base') }}</a></li>
+                </ul>
+                {% endif %}
             </div>
         </div>
     </div>
@@ -51,7 +58,7 @@
 
 {% block content %}
 
-    <input type="hidden" name="dataSourceId" value="{{ dataSource.id }}">
+    <input type="hidden" name="dataSourceId" value="{{ dataSource.dataSourceId }}">
 
     {% if report is defined %}
         <input type="hidden" name="id" value="{{ report.id }}">
@@ -88,7 +95,7 @@
     <div id="name-format-field" class="{% if not report.nameFormat %}hidden{% endif %}">
         {{ forms.textField({
             label: "Name Format"|t('sprout-base'),
-            instructions: "Auto-generate your report name using option values, such as {startDate|date('F d, Y')}"|t('sprout-base'),
+            instructions: "Auto-generate your report name using settings values, such as {startDate|date('F d, Y')}"|t('sprout-base'),
             name: 'nameFormat',
             value: report is defined ? report.nameFormat : "",
             errors: report is defined ? report.getErrors('nameFormat') : ""
@@ -97,11 +104,11 @@
 
     {% if dataSource is defined %}
 
-        {% set optionsHtml = dataSource.getOptionsHtml() %}
+        {% set settingsHtml = dataSource.getSettingsHtml() %}
 
-        {% if optionsHtml %}
+        {% if settingsHtml %}
             <hr>
-            {{ optionsHtml | raw }}
+            {{ settingsHtml | raw }}
         {% endif %}
 
     {% endif %}
@@ -120,7 +127,7 @@
 
             {{ forms.selectField({
                 first: true,
-                label: "Group <span class='info'>The group where this report should be displayed</span>"|t,
+                label: "Group <span class='info'>The group where this report should be displayed</span>"|t('sprout-base'),
                 id: 'groupId',
                 name: 'groupId',
                 options: groupOptions,
@@ -128,7 +135,6 @@
             }) }}
 
         {% endif %}
-
 
         {{ forms.textField({
             label: "Handle"|t('sprout-base'),
@@ -147,32 +153,11 @@
             }) }}
         {% endif %}
 
-        {% set statusInput %}
-            <div class="left">
-                {{ forms.lightSwitchField({
-                    name: 'enabled',
-                    on: report is defined ? report.enabled : true
-                }) }}
-            </div>
-            {% if report.id is not null %}
-                <div class="right">
-                    {% if report is defined %}
-                        <input type="button" class="btn small formsubmit"
-                               value="Delete"
-                               data-param="reportId"
-                               data-value="{{ report.id }}"
-                               data-action="sprout-base/reports/delete-report"
-                               data-confirm="Are you sure you want to delete this report?"
-                               data-redirect="{{ dataSource.getUrl()|hash }}"
-                               tabindex="0">
-                    {% endif %}
-                </div>
-            {% endif %}
-        {% endset %}
-
-        {{ forms.field({
+        {{ forms.lightSwitchField({
             label: "Enabled"|t('sprout-base'),
-        }, statusInput) }}
+            name: 'enabled',
+            on: report is defined ? report.enabled : true
+        }) }}
 
     </div>
 

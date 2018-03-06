@@ -12,7 +12,6 @@ use barrelstrength\sproutbase\events\RegisterMailersEvent;
 use barrelstrength\sproutbase\mailers\DefaultMailer;
 use barrelstrength\sproutbase\services\sproutemail\Mailers;
 use barrelstrength\sproutbase\web\twig\variables\SproutBaseVariable;
-use craft\events\DefineComponentsEvent;
 use craft\web\Application;
 use craft\web\twig\variables\CraftVariable;
 use yii\base\Event;
@@ -47,7 +46,7 @@ class SproutBase extends Module
     public static $pluginId = 'sprout-base';
 
     /**
-     * @var string|null The translation category that this module translation messages should use. Defaults to the lowercased plugin handle.
+     * @var string|null The translation category that this module translation messages should use. Defaults to the lowercase plugin handle.
      */
     public $t9nCategory;
 

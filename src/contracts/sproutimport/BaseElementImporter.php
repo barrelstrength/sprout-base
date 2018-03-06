@@ -33,7 +33,7 @@ abstract class BaseElementImporter extends BaseImporter
         $model = $this->getModel();
 
         if (!is_object($model)) {
-            return $model.Craft::t('sprout-import',' Model definition not found.');
+            return $model.Craft::t('sprout-import', ' Model definition not found.');
         }
 
         return $model::displayName();
@@ -123,8 +123,8 @@ abstract class BaseElementImporter extends BaseImporter
             }
 
             // Check only for models that has authorId attribute.
-            if ($authorId == null && in_array('authorId', $model->attributes(),false)) {
-                $message = Craft::t('sprout-import','Could not find Author by ID, Email, or Username.');
+            if ($authorId == null && in_array('authorId', $model->attributes(), false)) {
+                $message = Craft::t('sprout-import', 'Could not find Author by ID, Email, or Username.');
 
                 Craft::error($message);
 
@@ -146,7 +146,7 @@ abstract class BaseElementImporter extends BaseImporter
 
                     $message = [];
                     if (!$fields) {
-                        $message['error'] = Craft::t('sprout-import','Unable to resolve matrix relationships.');
+                        $message['error'] = Craft::t('sprout-import', 'Unable to resolve matrix relationships.');
                         $message['fields'] = $fields;
 
                         SproutImport::error($message);
@@ -159,7 +159,7 @@ abstract class BaseElementImporter extends BaseImporter
 
                     $message = [];
                     if (!$fields) {
-                        $message['error'] = Craft::t('sprout-import','Unable to resolve related relationships.');
+                        $message['error'] = Craft::t('sprout-import', 'Unable to resolve related relationships.');
                         $message['fields'] = $fields;
 
                         SproutImport::error($message);

@@ -11,7 +11,6 @@ use barrelstrength\sproutbase\SproutBase;
 use craft\base\Component;
 use craft\base\Element;
 use Craft;
-use yii\base\Exception;
 
 class Utilities extends Component
 {

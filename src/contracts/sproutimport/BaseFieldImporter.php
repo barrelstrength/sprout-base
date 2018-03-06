@@ -69,7 +69,7 @@ abstract class BaseFieldImporter extends BaseImporter
      *
      * @return string
      */
-    public function getSeedSettingsHtml() : string
+    public function getSeedSettingsHtml(): string
     {
         return '';
     }

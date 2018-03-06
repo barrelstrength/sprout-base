@@ -29,9 +29,11 @@ class Report extends Model
 
     public $allowHtml;
 
-    public $options;
+    public $settings;
 
     public $dataSourceId;
+
+    public $dataSourceSlug;
 
     public $enabled;
 
@@ -46,7 +48,7 @@ class Report extends Model
     /**
      * @return mixed
      */
-    public function getDataSourceId()
+    public function getType()
     {
         return $this->dataSourceId;
     }
@@ -58,10 +60,11 @@ class Report extends Model
     {
         $dataSource = SproutBase::$app->dataSources->getDataSourceById($this->dataSourceId);
 
-        if (!$dataSource) return null;
+        if ($dataSource === null) {
+            return null;
+        }
 
         $dataSource->setReport($this);
-
 
         return $dataSource;
     }
@@ -73,40 +76,41 @@ class Report extends Model
     public function processNameFormat()
     {
         $dataSource = $this->getDataSource();
-        $optionsArray = Json::decode($this->options);
-        $options = $dataSource->prepOptions($optionsArray);
+        $settingsArray = Json::decode($this->settings);
+        $settings = $dataSource->prepSettings($settingsArray);
 
-        return Craft::$app->getView()->renderObjectTemplate($this->nameFormat, $options);
+        return Craft::$app->getView()->renderObjectTemplate($this->nameFormat, $settings);
     }
 
     /**
      * @return mixed
      */
-    public function getOptions()
+    public function getSettings()
     {
-        $options = $this->options;
+        $settings = $this->settings;
 
-        if (is_string($this->options)) {
-            $options = json_decode($this->options);
+        if (is_string($this->settings)) {
+            $settings = json_decode($this->settings, true);
         }
 
-        return $options;
+        return $settings;
     }
 
     /**
-     * Returns a user supplied option if it exists or $default otherwise
+     * Returns a user supplied setting if it exists or $default otherwise
      *
      * @param string     $name
      * @param null|mixed $default
      *
      * @return null
      */
-    public function getOption($name, $default = null)
+    public function getSetting($name, $default = null)
     {
-        $options = $this->getOptions();
+        $settings = $this->getSettings();
 
-        if (is_string($name) && !empty($name) && isset($options->$name)) {
-            return $options->$name;
+        if (isset($settings[$name])) {
+
+            return $settings[$name];
         }
 
         return $default;
@@ -131,7 +135,7 @@ class Report extends Model
     {
         return [
             'id', 'name', 'nameFormat', 'handle',
-            'description', 'allowHtml', 'options',
+            'description', 'allowHtml', 'settings',
             'dataSourceId', 'enabled', 'groupId',
             'dateCreated', 'dateUpdated'
         ];

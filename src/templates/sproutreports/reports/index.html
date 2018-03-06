@@ -1,4 +1,5 @@
 {% extends "sprout-base/sproutreports/_layouts/base" %}
+{% import 'sprout-base/sproutbase/_includes/sproutcp' as sprout %}
 
 {% set title  = "Reports"|t('sprout-base') %}
 
@@ -64,13 +65,11 @@
                         <tr>
                             <td class="sproutreports-reportname">
                                 <a href="{{ cpUrl(craft.app.request.segment(1) ~ '/reports/view/' ~ report.id) }}">
-                                    <strong>
-                                        {% if report.nameFormat %}
-                                            {{ report.processNameFormat() }}
-                                        {% else %}
-                                            {{ report.name }}
-                                        {% endif %}
-                                    </strong>
+                                    {% if report.nameFormat %}
+                                        {{ report.processNameFormat() }}
+                                    {% else %}
+                                        {{ report.name }}
+                                    {% endif %}
                                 </a>
 
                                 {% if report.description %}
@@ -102,7 +101,16 @@
 
     {% else %}
 
-        {{ "Create your first report."|t('sprout-base') }}
+        {% set boxBody %}
+            <p>{{ "Select the 'New Report' button in the top right to get started. Active Reports will be listed right here once they have been created."|t('sprout-base')|raw }}</p>
+        {% endset %}
+
+        {{ sprout.mediaBox({
+            heading: "Create a custom report"|t('sprout-base'),
+            body: boxBody,
+            resourcePath: '@sproutbase/web/assets/sproutreports/dist/images/icon.svg'
+        }) }}
+
 
     {% endif %}
 
@@ -158,6 +166,7 @@
 
 {% endblock %}
 
+{% do view.registerAssetBundle("barrelstrength\\sproutbase\\web\\assets\\sproutbase\\cp\\CpAsset") %}
 {% do view.registerAssetBundle("barrelstrength\\sproutbase\\web\\assets\\sproutbase\\groups\\GroupsAsset") %}
 
 {% js %}

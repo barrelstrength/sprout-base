@@ -53,7 +53,7 @@ if (typeof Craft.SproutFields === typeof undefined) {
             },
 
             handleSelectOtherChange: function() {
-                selectedValue = this.$dropdownField.val();
+                var selectedValue = this.$dropdownField.val();
 
                 if (selectedValue === 'custom') {
                     // Hide the Select Field and it's wrapping div

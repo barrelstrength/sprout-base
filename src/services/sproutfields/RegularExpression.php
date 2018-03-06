@@ -28,7 +28,7 @@ class RegularExpression extends Component
         $customPattern = $field->customPattern;
 
         if (!empty($customPattern)) {
-            // Use backticks as delimiters
+            // Use backtick as delimiters
             $customPattern = '`'.$customPattern.'`';
 
             if (!preg_match($customPattern, $value)) {
@@ -49,10 +49,10 @@ class RegularExpression extends Component
     public function getErrorMessage($field): string
     {
         if ($field->customPattern && $field->customPatternErrorMessage) {
-            return Craft::t('sprout-base',$field->customPatternErrorMessage);
+            return Craft::t('sprout-base', $field->customPatternErrorMessage);
         }
 
-        return Craft::t('sprout-base',$field->name.' must be a valid pattern.');
+        return Craft::t('sprout-base', $field->name.' must be a valid pattern.');
     }
 
 }

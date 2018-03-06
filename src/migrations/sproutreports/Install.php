@@ -31,14 +31,14 @@ class Install extends Migration
             $this->createTable($this->reportTable,
                 [
                     'id' => $this->primaryKey(),
+                    'dataSourceId' => $this->integer(),
+                    'groupId' => $this->integer(),
                     'name' => $this->string()->notNull(),
                     'nameFormat' => $this->string(),
                     'handle' => $this->string()->notNull(),
                     'description' => $this->text(),
                     'allowHtml' => $this->boolean(),
-                    'options' => $this->text(),
-                    'dataSourceId' => $this->string(),
-                    'groupId' => $this->integer(),
+                    'settings' => $this->text(),
                     'enabled' => $this->boolean(),
                     'dateCreated' => $this->dateTime()->notNull(),
                     'dateUpdated' => $this->dateTime()->notNull(),
@@ -47,13 +47,10 @@ class Install extends Migration
             );
 
             $this->createIndex($this->db->getIndexName($this->reportTable, 'handle', true, true),
-                $this->reportTable, 'name', true);
+                $this->reportTable, 'handle', true);
 
             $this->createIndex($this->db->getIndexName($this->reportTable, 'name', true, true),
                 $this->reportTable, 'name', true);
-
-            $this->createIndex($this->db->getIndexName($this->reportTable, 'dataSourceId', true, false),
-                $this->reportTable, 'dataSourceId', false);
         }
 
         $reportGroupTable = $this->getDb()->tableExists($this->reportGroupTable);
@@ -76,8 +73,7 @@ class Install extends Migration
         if ($dataSourcesTable == false) {
             $this->createTable($this->dataSourcesTable, [
                 'id' => $this->primaryKey(),
-                'dataSourceId' => $this->string(),
-                'options' => $this->text(),
+                'type' => $this->string(),
                 'allowNew' => $this->boolean(),
                 'dateCreated' => $this->dateTime()->notNull(),
                 'dateUpdated' => $this->dateTime()->notNull(),

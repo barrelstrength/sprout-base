@@ -1,10 +1,11 @@
 {% extends "_layouts/cp" %}
+{% import 'sprout-base/sproutbase/_includes/sproutcp' as sprout %}
 
-{% set title  = 'Sprout Reports'|t %}
+{% set title  = 'Sprout Reports'|t('sprout-base') %}
 
 {% set selectedSubnavItem = craft.app.request.segment(2) %}
 {% if dataSource is defined %}
-    {% set optionsHtml = dataSource.getOptionsHtml() %}
+    {% set settingsHtml = dataSource.getSettingsHtml() %}
 {% endif %}
 
 {% set crumbs = [
@@ -23,23 +24,24 @@
             {{ "Download"|t('sprout-reports') }}
         </a>
 
-        <a id="modify-options-icon" class="btn" data-icon="settings"></a>
+        <a id="modify-settings-icon" class="btn" data-icon="settings"></a>
     </form>
 {% endblock %}
 
 {% block content %}
 
-    {% if optionsHtml %}
+    {% if settingsHtml %}
 
-        <div id="modify-options-panel">
+        <div id="modify-settings-panel" style="display:none;">
 
-            <form id="report-options" method="post" accept-charset="UTF-8">
+            <form id="report-settings" method="post" accept-charset="UTF-8">
                 {{ csrfInput() }}
+                {{ redirectInput(redirectUrl) }}
                 <input type="hidden" name="action"
                        value="sprout-base/reports/update-report">
-                {{ redirectInput(redirectUrl) }}
                 <input type="hidden" name="reportId" value="{{ reportId }}">
-                {{ optionsHtml | raw }}
+
+                {{ settingsHtml | raw }}
 
                 <div class="button">
                     <div class="btngroup">
@@ -90,30 +92,40 @@
                 </table>
             </div>
         {% else %}
-            <p>{{ "This report currently has no results."|t('sprout-base') }}</p>
+
+            {% set boxBody %}
+                <p>{{ "This report currently has no results. Check your report settings and ensure you have content for the report you are trying to run. To quickly edit the Report Settings, click on the gear icon in the upper right."|t('sprout-base')|raw }}</p>
+            {% endset %}
+
+            {{ sprout.mediaBox({
+                heading: "No results found"|t('sprout-base'),
+                body: boxBody,
+                resourcePath: '@sproutbase/web/assets/sproutreports/dist/images/icon.svg'
+            }) }}
+
+
         {% endif %}
     </div>
 
 {% endblock %}
 
+{% do view.registerAssetBundle("barrelstrength\\sproutbase\\web\\assets\\sproutbase\\cp\\CpAsset") %}
 {% do view.registerAssetBundle("barrelstrength\\sproutbase\\web\\assets\\sproutreports\\SproutReportsAsset") %}
 
 {% js %}
 
     (function(){
 
-    $('#btn-download-csv').on('click', function(event) {
+        $('#btn-download-csv').on('click', function(event) {
+            event.preventDefault();
 
-    event.preventDefault();
+            $form = $(this).parents('form');
+            $form.submit();
+        });
 
-    $form = $(this).parents('form');
-    $form.submit();
-
-    });
-
-    $('#modify-options-icon').on('click', function() {
-    $('#modify-options-panel').slideToggle('slow');
-    });
+        $('#modify-settings-icon').on('click', function() {
+            $('#modify-settings-panel').slideToggle('slow');
+        });
 
     })();
 

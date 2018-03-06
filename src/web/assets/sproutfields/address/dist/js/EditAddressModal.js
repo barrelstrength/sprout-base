@@ -54,7 +54,7 @@ Craft.SproutBase.EditAddressModal = Garnish.Modal.extend(
             this.base(this.$form, settings);
         },
         changeFormInput: function(target) {
-            $target = $(target);
+            var $target = $(target);
             var countryCode = $(target).val();
             var $parents = $target.parents('.sproutaddress-body');
 
@@ -65,7 +65,7 @@ Craft.SproutBase.EditAddressModal = Garnish.Modal.extend(
             }, $.proxy(function(response) {
                 $parents.find('.field-address-input').remove();
 
-                $addressIdInput = $parents.find('.field-address-id');
+                var $addressIdInput = $parents.find('.field-address-id');
                 $parents.find('.field-address-id').remove();
 
                 if (response.html) {
@@ -130,7 +130,7 @@ Craft.SproutBase.EditAddressModal = Garnish.Modal.extend(
 
                     var errorHtml = "<ul class='errors'>";
 
-                    $element = self.$form.find("[name='" + namespace + "[" + index + "]']");
+                    var $element = self.$form.find("[name='" + namespace + "[" + index + "]']");
                     $element.parent().addClass('errors');
 
                     errorHtml += "<li>" + val + "</li>";
