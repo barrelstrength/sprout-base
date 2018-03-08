@@ -56,7 +56,8 @@ class ReportsController extends Controller
         $newReportOptions = [];
 
         foreach ($dataSources as $dataSource) {
-            if ($dataSource AND (bool)$dataSource->allowNew()) {
+            // Make sure we ignore the allowNew setting if we're displaying a Reports integration
+            if ($dataSource AND (bool)$dataSource->allowNew() OR $reportContext === 'sprout-integration') {
                 $newReportOptions[] = [
                     'name' => $dataSource->getName(),
                     'url' => $dataSource->getUrl('/new')
