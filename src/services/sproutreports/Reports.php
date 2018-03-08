@@ -8,9 +8,11 @@
 namespace barrelstrength\sproutbase\services\sproutreports;
 
 use barrelstrength\sproutbase\contracts\sproutreports\BaseReport;
+use barrelstrength\sproutbase\models\sproutreports\Report;
 use barrelstrength\sproutbase\models\sproutreports\ReportGroup as ReportGroupModel;
 use barrelstrength\sproutbase\SproutBase;
 use Craft;
+use craft\db\Query;
 use craft\models\CraftSupport;
 use yii\base\Component;
 use barrelstrength\sproutbase\models\sproutreports\Report as ReportModel;
@@ -130,9 +132,25 @@ class Reports extends Component
      */
     public function getAllReports()
     {
-        $reportRecords = ReportRecord::find()->all();
+        $query = new Query();
+        // We only get reports that currently has dataSourceId or existing installed dataSource
+        $rows = $query->select('reports.*')
+            ->from('{{%sproutreports_reports}} as reports')
+            ->innerJoin('{{%sproutreports_datasources}} as datasource', 'datasource.id = reports.dataSourceId')
+            ->all();
 
-        return $this->populateModels($reportRecords);
+        $reports = [];
+
+        if ($rows) {
+            foreach ($rows as $row) {
+
+                $model = new Report();
+                $model->setAttributes($row, false);
+                $reports[] = $model;
+            }
+        }
+
+        return $reports;
     }
 
     /**

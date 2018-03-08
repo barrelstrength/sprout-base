@@ -7,6 +7,7 @@
 
 namespace barrelstrength\sproutbase\controllers;
 
+use barrelstrength\sproutbase\contracts\sproutreports\BaseDataSource;
 use barrelstrength\sproutbase\models\sproutreports\Report as ReportModel;
 use barrelstrength\sproutbase\models\sproutreports\Report;
 use barrelstrength\sproutbase\models\sproutreports\ReportGroup;
@@ -39,7 +40,9 @@ class ReportsController extends Controller
             $dataSource = SproutBase::$app->dataSources->getDataSourceById($dataSourceId);
 
             // Update to match the multi-datasource syntax
-            $dataSources[$dataSource->getDataSourceSlug()] = $dataSource;
+            if ($dataSource) {
+                $dataSources[$dataSource->getDataSourceSlug()] = $dataSource;
+            }
 
             $reports = SproutBase::$app->reports->getReportsBySourceId($dataSourceId);
         } else {
@@ -56,6 +59,9 @@ class ReportsController extends Controller
         $newReportOptions = [];
 
         foreach ($dataSources as $dataSource) {
+            /**
+             * @var $dataSource BaseDataSource
+             */
             // Make sure we ignore the allowNew setting if we're displaying a Reports integration
             if ($dataSource AND (bool)$dataSource->allowNew() OR $reportContext === 'sprout-integration') {
                 $newReportOptions[] = [
