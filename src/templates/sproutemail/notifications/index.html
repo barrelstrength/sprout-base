@@ -1,60 +1,34 @@
-{% extends "sprout-base/sproutbase/_layouts/base" %}
-
-{% set title  = "Notifications"|t('sprout-base') %}
+{% extends "sprout-base/sproutemail/_layouts/elementindex" %}
+{% set title = "Notification Email"|t('sprout-base') %}
+{% set elementType = 'barrelstrength\\sproutbase\\elements\\sproutemail\\NotificationEmail' %}
 
 {% block actionButton %}
-    <div class="btngroup submit first">
+    <div class="buttons">
         <a class="btn submit add icon"
-           href="{{ url('sprout-forms/settings/notifications/edit/new') }}">{{ "New Notification"|t('sprout-base') }}</a>
+           href="{{ url('sprout-email/settings/notifications/edit/new') }}">
+            {{ "New Notification"|t('sprout-email') }} {{ hideSidebar ?? false }}
+        </a>
     </div>
 {% endblock %}
 
 {% block content %}
-    {% if notifications is empty %}
-        {{ "There are no notifications created."|t('sprout-base') }}
-    {% else %}
-        <form method="post" accept-charset="UTF-8">
-            {{ csrfInput() }}
 
-            <div class="tableview">
-                <table class="data fullwidth">
-                    <thead>
-                    <tr>
-                        <th>{{ "Subject Line"|t('sprout-base') }}</th>
-                        <th>{{ "Notification Name"|t('sprout-base') }}</th>
-                        <th>{{ "Date Created"|t('sprout-base') }}</th>
-                        <th>{{ "Date Updated"|t('sprout-base') }}</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {% for notification in notifications %}
-                        <tr>
-                            <td>
-                                <a href="{{ cpUrl(craft.app.request.segment(1) ~ '/notifications/edit/' ~ notification.id) }}">
-                                    {{ notification.subjectLine }}
-                                </a>
-                            </td>
-                            <td>
-                                {{ notification.name }}
-                            </td>
-                            <td>
-                                {{ notification.dateCreated|date('Y-m-d h:m:s') }}
-                            </td>
-                            <td>
-                                {{ notification.dateUpdated|date('Y-m-d h:m:s') }}
-                            </td>
-                        </tr>
-                    {% endfor %}
-                    </tbody>
-                </table>
-            </div>
+    {{ parent() }}
 
-        </form>
-    {% endif %}
-    <div class="grid">
-        <div class="item">
-            {{ parent() }}
-        </div>
-    </div>
+    {% include "sprout-email/_modals/base" %}
 
 {% endblock %}
+
+{% block initJs %}
+    Craft.elementIndex = Craft.createElementIndex('{{ elementType|e("js") }}', $('#main'), {
+        context:        '{{ context }}',
+        storageKey:     'elementindex.{{ elementType }}',
+        criteria:       Craft.defaultIndexCriteria,
+        hideSidebar:    {{ hideSidebar ?? false }}
+    });
+{% endblock %}
+
+
+
+
+
