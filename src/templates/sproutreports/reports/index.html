@@ -32,8 +32,9 @@
             </div>
         {% else %}
             <div class="btngroup submit first">
-                <a class="btn submit add icon"
-                   href="{{ newReportOptions[0].url }}">{{ "New Report"|t('sprout-base') }}</a>
+                {% if newReportOptions[0] is defined %}
+                <a class="btn submit add icon" href="{{ newReportOptions[0].url }}">{{ "New Report"|t('sprout-base') }}</a>
+                {% endif %}
             </div>
         {% endif %}
 
