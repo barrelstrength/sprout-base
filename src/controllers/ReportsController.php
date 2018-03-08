@@ -94,6 +94,7 @@ class ReportsController extends Controller
 
             $labels = $dataSource->getDefaultLabels($reportModel);
 
+            $variables['reportIndexUrl'] = $dataSource->getUrl();
             $variables['dataSource'] = null;
             $variables['report'] = $reportModel;
             $variables['values'] = [];
