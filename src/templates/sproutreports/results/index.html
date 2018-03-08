@@ -9,7 +9,7 @@
 {% endif %}
 
 {% set crumbs = [
-    { label: "Reports"|t('sprout-base'), url: url('sprout-reports') },
+    { label: "Reports"|t('sprout-base'), url: reportIndexUrl },
     { label: "Edit "|t('sprout-base') ~ report.name, url: report.getEditUrl() }
 ] %}
 
