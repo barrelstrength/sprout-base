@@ -24,7 +24,7 @@
         context:        '{{ context }}',
         storageKey:     'elementindex.{{ elementType }}',
         criteria:       Craft.defaultIndexCriteria,
-        hideSidebar:    {{ hideSidebar ?? false }}
+        hideSidebar:    '{{ hideSidebar ?? false }}'
     });
 {% endblock %}
 
