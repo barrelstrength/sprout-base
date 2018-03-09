@@ -15,7 +15,7 @@ use Craft;
 class ReportGroups extends Component
 {
     /**
-     * @param ReportGroupModel $group
+     * @param $group ReportGroupModel
      *
      * @return bool
      * @throws \Exception

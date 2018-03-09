@@ -8,8 +8,6 @@
 namespace barrelstrength\sproutbase\services\sproutreports;
 
 use barrelstrength\sproutbase\models\sproutreports\Report;
-use barrelstrength\sproutbase\models\sproutreports\ReportGroup as ReportGroupModel;
-use barrelstrength\sproutbase\SproutBase;
 use Craft;
 use craft\db\Query;
 use yii\base\Component;
@@ -54,34 +52,34 @@ class Reports extends Component
         }
 
         if (empty($model->id)) {
-            $record = new ReportRecord();
+            $reportRecord = new ReportRecord();
         } else {
-            $record = ReportRecord::findOne($model->id);
+            $reportRecord = ReportRecord::findOne($model->id);
         }
 
         if (!$this->validateSettings($model)) {
             return false;
         }
 
-        $record->id = $model->id;
-        $record->name = $model->name;
-        $record->hasNameFormat = $model->hasNameFormat;
-        $record->nameFormat = $model->nameFormat;
-        $record->handle = $model->handle;
-        $record->description = $model->description;
-        $record->allowHtml = $model->allowHtml;
-        $record->settings = $model->settings;
-        $record->dataSourceId = $model->dataSourceId;
-        $record->enabled = $model->enabled;
-        $record->groupId = $model->groupId;
+        $reportRecord->id = $model->id;
+        $reportRecord->name = $model->name;
+        $reportRecord->hasNameFormat = $model->hasNameFormat;
+        $reportRecord->nameFormat = $model->nameFormat;
+        $reportRecord->handle = $model->handle;
+        $reportRecord->description = $model->description;
+        $reportRecord->allowHtml = $model->allowHtml;
+        $reportRecord->settings = $model->settings;
+        $reportRecord->dataSourceId = $model->dataSourceId;
+        $reportRecord->enabled = $model->enabled;
+        $reportRecord->groupId = $model->groupId;
 
         $db = Craft::$app->getDb();
         $transaction = $db->beginTransaction();
 
         try {
-            $record->save(false);
+            $reportRecord->save(false);
 
-            $model->id = $record->id;
+            $model->id = $reportRecord->id;
 
             $transaction->commit();
         } catch (\Exception $e) {

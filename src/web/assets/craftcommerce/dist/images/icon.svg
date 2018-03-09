@@ -1,6 +1,5 @@
 <svg width="83px" height="82px" viewBox="0 0 83 82" version="1.1"
-     xmlns="http://www.w3.org/2000/svg"
-     xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+     xmlns="http://www.w3.org/2000/svg">
     <title>icon</title>
     <desc>Created with Sketch.</desc>
     <defs>
@@ -13,11 +12,10 @@
         </linearGradient>
     </defs>
     <g id="Page-1" stroke="none" stroke-width="1" fill="none"
-       fill-rule="evenodd" sketch:type="MSPage">
-        <g id="opt-2" sketch:type="MSLayerGroup"
+       fill-rule="evenodd">
+        <g id="opt-2"
            transform="translate(-484.000000, -482.000000)">
-            <g id="icon" transform="translate(484.912024, 482.000000)"
-               sketch:type="MSShapeGroup">
+            <g id="icon" transform="translate(484.912024, 482.000000)">
                 <circle id="Oval-1" fill="url(#linearGradient-1)"
                         transform="translate(41.000000, 41.000000) scale(-1, 1) translate(-41.000000, -41.000000) "
                         cx="41" cy="41" r="41"></circle>
