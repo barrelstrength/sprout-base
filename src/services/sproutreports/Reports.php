@@ -7,13 +7,11 @@
 
 namespace barrelstrength\sproutbase\services\sproutreports;
 
-use barrelstrength\sproutbase\contracts\sproutreports\BaseReport;
 use barrelstrength\sproutbase\models\sproutreports\Report;
 use barrelstrength\sproutbase\models\sproutreports\ReportGroup as ReportGroupModel;
 use barrelstrength\sproutbase\SproutBase;
 use Craft;
 use craft\db\Query;
-use craft\models\CraftSupport;
 use yii\base\Component;
 use barrelstrength\sproutbase\models\sproutreports\Report as ReportModel;
 use barrelstrength\sproutbase\records\sproutreports\Report as ReportRecord;
@@ -132,13 +130,24 @@ class Reports extends Component
      */
     public function getAllReports()
     {
+        $rows = $this->getReportsQuery()->all();
+
+        return $this->populateReports($rows);
+    }
+
+    private function getReportsQuery()
+    {
         $query = new Query();
         // We only get reports that currently has dataSourceId or existing installed dataSource
-        $rows = $query->select('reports.*')
-            ->from('{{%sproutreports_reports}} as reports')
-            ->innerJoin('{{%sproutreports_datasources}} as datasource', 'datasource.id = reports.dataSourceId')
-            ->all();
+        $query->select('reports.*')
+        ->from('{{%sproutreports_reports}} as reports')
+        ->innerJoin('{{%sproutreports_datasources}} as datasource', 'datasource.id = reports.dataSourceId');
 
+        return $query;
+    }
+
+    private function populateReports($rows)
+    {
         $reports = [];
 
         if ($rows) {
@@ -183,35 +192,6 @@ class Reports extends Component
     }
 
     /**
-     * @param                  $reports
-     * @param ReportGroupModel $group
-     */
-    public function registerReports($reports, ReportGroupModel $group)
-    {
-        if (!is_array($reports)) {
-            $reports = [$reports];
-        }
-
-        foreach ($reports as $report) {
-            if ($report instanceof BaseReport) {
-                $record = new ReportRecord();
-
-                $record->name = $report->getName();
-                $record->handle = $report->getHandle();
-                $record->description = $report->getDescription();
-                $record->settings = $report->getSettings();
-                $record->dataSourceSlug = $report->getDataSource()->getDataSourceSlug();
-                $record->enabled = true;
-                $record->groupId = $group->id;
-
-                if (!$record->save()) {
-                    SproutBase::warning($record->getErrors());
-                }
-            }
-        }
-    }
-
-    /**
      * @param $groupId
      *
      * @return array
@@ -230,11 +210,11 @@ class Reports extends Component
         }
 
         if ($group !== null) {
-            $reportRecords = $group->getReports()->where([
+            $rows = $this->getReportsQuery()->where([
                 'groupId' => $groupId
             ])->all();
 
-            $reports = $this->populateModels($reportRecords);
+            $reports = $this->populateReports($rows);
         }
 
         return $reports;
