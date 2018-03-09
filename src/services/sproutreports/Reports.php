@@ -152,35 +152,6 @@ class Reports extends Component
     }
 
     /**
-     * Get only dataSources that are activated by other plugins
-     *
-     * @todo - Is this in use?
-     *
-     * @return array
-     */
-    public function getAvailableReports()
-    {
-        $reports = $this->getAllReports();
-        $dataSources = SproutBase::$app->dataSources->getAllDataSources();
-
-        $dataSourceIds = array_keys($dataSources);
-
-        $availableReports = [];
-
-        if ($reports) {
-            foreach ($reports as $report) {
-                $dataSourceId = $report['dataSourceId'];
-
-                if (in_array($dataSourceId, $dataSourceIds)) {
-                    $availableReports[] = $report;
-                }
-            }
-        }
-
-        return $availableReports;
-    }
-
-    /**
      * @param $groupId
      *
      * @return array
