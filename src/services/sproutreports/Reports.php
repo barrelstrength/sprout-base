@@ -7,13 +7,11 @@
 
 namespace barrelstrength\sproutbase\services\sproutreports;
 
-use barrelstrength\sproutbase\contracts\sproutreports\BaseReport;
 use barrelstrength\sproutbase\models\sproutreports\Report;
 use barrelstrength\sproutbase\models\sproutreports\ReportGroup as ReportGroupModel;
 use barrelstrength\sproutbase\SproutBase;
 use Craft;
 use craft\db\Query;
-use craft\models\CraftSupport;
 use yii\base\Component;
 use barrelstrength\sproutbase\models\sproutreports\Report as ReportModel;
 use barrelstrength\sproutbase\records\sproutreports\Report as ReportRecord;
@@ -180,35 +178,6 @@ class Reports extends Component
         }
 
         return $availableReports;
-    }
-
-    /**
-     * @param                  $reports
-     * @param ReportGroupModel $group
-     */
-    public function registerReports($reports, ReportGroupModel $group)
-    {
-        if (!is_array($reports)) {
-            $reports = [$reports];
-        }
-
-        foreach ($reports as $report) {
-            if ($report instanceof BaseReport) {
-                $record = new ReportRecord();
-
-                $record->name = $report->getName();
-                $record->handle = $report->getHandle();
-                $record->description = $report->getDescription();
-                $record->settings = $report->getSettings();
-                $record->dataSourceSlug = $report->getDataSource()->getDataSourceSlug();
-                $record->enabled = true;
-                $record->groupId = $group->id;
-
-                if (!$record->save()) {
-                    SproutBase::warning($record->getErrors());
-                }
-            }
-        }
     }
 
     /**
