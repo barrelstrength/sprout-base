@@ -214,7 +214,7 @@ class DataSources extends Component
     {
         $query = new Query();
         $result = $query->createCommand()
-            ->delete('sproutreports_report', ['type' => $type])
+            ->delete('sproutreports_reports', ['type' => $type])
             ->execute();
 
         return $result;
