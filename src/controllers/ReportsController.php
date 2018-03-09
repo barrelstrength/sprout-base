@@ -32,6 +32,7 @@ class ReportsController extends Controller
     public function actionIndex($dataSourceId = null, $groupId = null)
     {
         $reportContext = 'sprout-reports';
+        $dataSources = [];
 
         // If a type is provided we have an integration
         if ($dataSourceId !== null) {

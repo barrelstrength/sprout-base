@@ -175,6 +175,8 @@ class DefaultMailer extends BaseMailer implements CampaignEmailSenderInterface
      * @param CampaignType  $campaignType
      *
      * @return Response|mixed
+     * @throws \Twig_Error_Loader
+     * @throws \yii\base\Exception
      */
     public function sendCampaignEmail(CampaignEmail $campaignEmail, CampaignType $campaignType)
     {

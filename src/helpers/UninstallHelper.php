@@ -82,13 +82,16 @@ class UninstallHelper
 
     /**
      * Assists with uninstalling Sprout Plugins that no longer have any other plugin dependencies
+     *
+     * @todo - do we need this?
+     *       Removing it caused an issue in another plugin. Investigate.
      */
     public function uninstall()
     {
-        foreach ($this->pluginsToUninstall as $plugin) {
-            // Check to see if an Uninstall Class exists
-            //
-            // Run the uninstall method of that class
-        }
+//        foreach ($this->pluginsToUninstall as $plugin) {
+//             Check to see if an Uninstall Class exists
+//
+//             Run the uninstall method of that class
+//        }
     }
 }

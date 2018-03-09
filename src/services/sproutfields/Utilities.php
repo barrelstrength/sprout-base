@@ -81,7 +81,7 @@ class Utilities extends Component
 
     /**
      * @param $field
-     * @param $element
+     * @param $element Element
      *
      * @return string
      * @throws \yii\db\Exception

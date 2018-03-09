@@ -18,8 +18,8 @@ use Craft;
 class RegularExpression extends Component
 {
     /**
-     * @param       $value
-     * @param Field $field
+     * @param $value
+     * @param $field
      *
      * @return bool
      */

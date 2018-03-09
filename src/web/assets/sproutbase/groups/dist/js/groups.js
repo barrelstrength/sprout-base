@@ -30,7 +30,7 @@ if (typeof Craft.SproutBase === typeof undefined) {
 
             this.$groupSettingsBtn = $(settings.groupSettingsSelector);
 
-            // Should we dispay the Groups Setting Selector or not?
+            // Should we display the Groups Setting Selector or not?
             this.toggleGroupSettingsSelector();
             this.addListener(this.$groups, 'click', 'toggleGroupSettingsSelector');
 
