@@ -7,12 +7,23 @@
 
 namespace barrelstrength\sproutbase\helpers;
 
+use craft\base\Plugin;
+
 class UninstallHelper
 {
+    /**
+     * @var $plugin Plugin
+     */
     public $plugin;
 
+    /**
+     * @var $dependencyMap array
+     */
     public $dependencyMap;
 
+    /**
+     * @var $pluginsToUninstall array
+     */
     public $pluginsToUninstall;
 
     public function __construct($plugin)

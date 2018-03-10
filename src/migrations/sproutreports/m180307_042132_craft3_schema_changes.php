@@ -28,6 +28,7 @@ class m180307_042132_craft3_schema_changes extends Migration
             $this->renameColumn('{{%sproutreports_datasources}}', 'dataSourceId', 'type');
         }
 
+        /** @noinspection ClassConstantCanBeUsedInspection */
         $dataSourcesMap = [
             'sproutreports.query' => 'barrelstrength\sproutreports\integrations\sproutreports\datasources\CustomQuery',
             'sproutreports.twig' => 'barrelstrength\sproutreports\integrations\sproutreports\datasources\CustomTwigTemplate'

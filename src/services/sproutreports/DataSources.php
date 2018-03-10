@@ -30,9 +30,9 @@ class DataSources extends Component
     const EVENT_REGISTER_DATA_SOURCES = 'registerSproutReportsDataSources';
 
     /**
-     * @param $dataSourceId
+     * @param int $dataSourceId
      *
-     * @return null
+     * @return BaseDataSource|null
      * @throws Exception
      */
     public function getDataSourceById($dataSourceId)
@@ -48,16 +48,13 @@ class DataSources extends Component
             return null;
         }
 
-        if (class_exists($dataSourceRecord->type))
-        {
+        if (class_exists($dataSourceRecord->type)) {
             $dataSource = new $dataSourceRecord->type;
 
             $dataSource->dataSourceId = $dataSourceRecord->id;
 
             return $dataSource;
-        }
-        else
-        {
+        } else {
             throw new Exception(Craft::t('sprout-base', 'Unable to find the class: {type}. Confirm the appropriate Data Source integrations are installed.', [
                 'type' => $dataSourceRecord->type
             ]));
@@ -178,6 +175,10 @@ class DataSources extends Component
         }
 
         usort($dataSources, function($a, $b) {
+            /**
+             * @var $a BaseDataSource
+             * @var $b BaseDataSource
+             */
             return $a->getName() <=> $b->getName();
         });
 

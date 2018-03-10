@@ -183,7 +183,7 @@ class NotificationEmails extends Component
 
         $notificationEmailRecord = new NotificationEmail();
 
-        if (!empty($notificationEmail->id)) {
+        if ($notificationEmail->id !== null) {
             $notificationEmailRecord = NotificationEmail::findOne($notificationEmail->id);
 
             if (!$notificationEmailRecord) {
@@ -661,7 +661,7 @@ class NotificationEmails extends Component
 
         $template = $notificationEmail->template;
 
-        if (empty($event)) {
+        if ($event === null) {
             $errors[] = Craft::t('sprout-email', 'No Event is selected. <a href="{url}">Edit Notification</a>.', [
                 'url' => $notificationEditUrl
             ]);

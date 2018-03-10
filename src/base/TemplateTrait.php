@@ -40,27 +40,25 @@ trait TemplateTrait
     }
 
     /**
-     * @param Model $model
+     * @param Element $element
      *
      * @return array
      */
-    public function getModelTabs(Model $model)
+    public function getModelTabs(Element $element)
     {
         $tabs = [];
-        /**
-         * @var $model Element
-         */
-        if (!empty($model->getFieldLayout())) {
-            $modelTabs = $model->getFieldLayout()->getTabs();
+
+        if (count($element->getFieldLayout()) === 0) {
+            $modelTabs = $element->getFieldLayout()->getTabs();
 
             if (!empty($modelTabs)) {
                 foreach ($modelTabs as $index => $tab) {
                     // Do any of the fields on this tab have errors?
                     $hasErrors = false;
 
-                    if ($model->hasErrors()) {
+                    if ($element->hasErrors()) {
                         foreach ($tab->getFields() as $field) {
-                            if ($model->getErrors($field->handle)) {
+                            if ($element->getErrors($field->handle)) {
                                 $hasErrors = true;
                                 break;
                             }

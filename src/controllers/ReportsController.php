@@ -342,6 +342,8 @@ class ReportsController extends Controller
 
     /**
      * Export a Report
+     *
+     * @throws \yii\base\Exception
      */
     public function actionExportReport()
     {
@@ -354,7 +356,7 @@ class ReportsController extends Controller
         $settings = count($settings) ? $settings : [];
 
         if ($report) {
-            $dataSource = SproutBase::$app->dataSources->getDataSourceById($report->type);
+            $dataSource = SproutBase::$app->dataSources->getDataSourceById($report->dataSourceId);
 
             if ($dataSource) {
                 $date = date('Ymd-his');

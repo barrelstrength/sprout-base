@@ -7,6 +7,7 @@
 
 namespace barrelstrength\sproutbase\models\sproutreports;
 
+use barrelstrength\sproutbase\contracts\sproutreports\BaseDataSource;
 use barrelstrength\sproutbase\SproutBase;
 use craft\base\Model;
 use barrelstrength\sproutbase\records\sproutreports\Report as ReportRecord;
@@ -56,7 +57,8 @@ class Report extends Model
     }
 
     /**
-     * @return \barrelstrength\sproutbase\contracts\sproutreports\BaseDataSource|null
+     * @return BaseDataSource
+     * @throws \yii\base\Exception
      */
     public function getDataSource()
     {
@@ -145,7 +147,8 @@ class Report extends Model
     }
 
     /**
-     * @return string
+     * @return mixed
+     * @throws \yii\base\Exception
      */
     public function getEditUrl()
     {
