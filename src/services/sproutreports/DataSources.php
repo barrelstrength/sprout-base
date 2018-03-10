@@ -15,6 +15,7 @@ use yii\base\Component;
 use craft\events\RegisterComponentTypesEvent;
 use craft\db\Query;
 use Craft;
+use yii\base\Exception;
 
 /**
  * Class DataSources
@@ -31,7 +32,8 @@ class DataSources extends Component
     /**
      * @param $dataSourceId
      *
-     * @return BaseDataSource|null
+     * @return null
+     * @throws Exception
      */
     public function getDataSourceById($dataSourceId)
     {
@@ -46,10 +48,20 @@ class DataSources extends Component
             return null;
         }
 
-        $dataSource = new $dataSourceRecord->type;
-        $dataSource->dataSourceId = $dataSourceRecord->id;
+        if (class_exists($dataSourceRecord->type))
+        {
+            $dataSource = new $dataSourceRecord->type;
 
-        return $dataSource;
+            $dataSource->dataSourceId = $dataSourceRecord->id;
+
+            return $dataSource;
+        }
+        else
+        {
+            throw new Exception(Craft::t('sprout-base', 'Unable to find the class: {type}. Confirm the appropriate Data Source integrations are installed.', [
+                'type' => $dataSourceRecord->type
+            ]));
+        }
     }
 
     /**
@@ -144,7 +156,7 @@ class DataSources extends Component
          * @var $dataSourceRecord DataSourceRecord
          */
         foreach ($dataSourceRecords as $dataSourceRecord) {
-            if ($dataSourceRecord->type === get_class($dataSources[$dataSourceRecord->type])) {
+            if (class_exists($dataSourceRecord->type) && $dataSourceRecord->type === get_class($dataSources[$dataSourceRecord->type])) {
                 $dataSources[$dataSourceRecord->type]->dataSourceId = $dataSourceRecord->id;
                 $dataSources[$dataSourceRecord->type]->allowNew = $dataSourceRecord->allowNew;
             }
@@ -152,6 +164,7 @@ class DataSources extends Component
 
         // Make sure all registered datasources have a record in the database
         foreach ($dataSources as $dataSourceClass => $dataSource) {
+
             if ($dataSource->dataSourceId === null) {
                 $savedDataSources[] = $this->installDataSources([$dataSourceClass]);
             }
