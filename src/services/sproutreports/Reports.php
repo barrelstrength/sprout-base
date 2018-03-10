@@ -190,6 +190,25 @@ class Reports extends Component
         return $reports;
     }
 
+    public function getReportsAsSelectFieldOptions()
+    {
+        $options = array();
+
+        $reports = $this->getAllReports();
+
+        if ($reports)
+        {
+            foreach ($reports as $report)
+            {
+                $options[] = array(
+                    'label' => $report->name,
+                    'value' => $report->id,
+                );
+            }
+        }
+        return $options;
+    }
+
     /**
      * Returns the number of reports that have been created based on a given data source
      *
