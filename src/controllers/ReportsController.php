@@ -87,6 +87,7 @@ class ReportsController extends Controller
      *
      * @return \yii\web\Response
      * @throws \HttpException
+     * @throws \yii\base\Exception
      * @throws \yii\base\InvalidConfigException
      */
     public function actionResultsIndex(Report $report = null, int $reportId = null)
@@ -138,10 +139,12 @@ class ReportsController extends Controller
      * @param int|null    $reportId
      *
      * @return \yii\web\Response
+     * @throws \yii\base\Exception
      */
     public function actionEditReport(string $dataSourceId, string $dataSourceSlug, Report $report = null, int $reportId = null)
     {
         $reportModel = new Report();
+        $reportModel->enabled = 1;
 
         if ($report !== null) {
             $reportModel = $report;
@@ -368,7 +371,8 @@ class ReportsController extends Controller
     /**
      * Returns a report model populated from saved/POSTed data
      *
-     * @return ReportModel
+     * @return Report
+     * @throws \yii\base\Exception
      */
     public function prepareFromPost()
     {
@@ -395,7 +399,7 @@ class ReportsController extends Controller
         $instance->description = $request->getBodyParam('description');
         $instance->settings = is_array($settings) ? $settings : [];
         $instance->dataSourceId = $request->getBodyParam('dataSourceId');
-        $instance->enabled = $request->getBodyParam('enabled');
+        $instance->enabled = $request->getBodyParam('enabled', false);
         $instance->groupId = $request->getBodyParam('groupId', null);
 
         $dataSource = $instance->getDataSource();

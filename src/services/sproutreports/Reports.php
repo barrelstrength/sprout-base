@@ -37,41 +37,41 @@ class Reports extends Component
     }
 
     /**
-     * @param ReportModel $model
+     * @param ReportModel $reportModel
      *
      * @throws \Exception
      * @return bool
      */
-    public function saveReport(&$model)
+    public function saveReport(ReportModel $reportModel)
     {
-        if (!$model) {
+        if (!$reportModel) {
 
             Craft::info('Report not saved due to validation error.', __METHOD__);
 
             return false;
         }
 
-        if (empty($model->id)) {
+        if (empty($reportModel->id)) {
             $reportRecord = new ReportRecord();
         } else {
-            $reportRecord = ReportRecord::findOne($model->id);
+            $reportRecord = ReportRecord::findOne($reportModel->id);
         }
 
-        if (!$this->validateSettings($model)) {
+        if (!$this->validateSettings($reportModel)) {
             return false;
         }
 
-        $reportRecord->id = $model->id;
-        $reportRecord->name = $model->name;
-        $reportRecord->hasNameFormat = $model->hasNameFormat;
-        $reportRecord->nameFormat = $model->nameFormat;
-        $reportRecord->handle = $model->handle;
-        $reportRecord->description = $model->description;
-        $reportRecord->allowHtml = $model->allowHtml;
-        $reportRecord->settings = $model->settings;
-        $reportRecord->dataSourceId = $model->dataSourceId;
-        $reportRecord->enabled = $model->enabled;
-        $reportRecord->groupId = $model->groupId;
+        $reportRecord->id = $reportModel->id;
+        $reportRecord->name = $reportModel->name;
+        $reportRecord->hasNameFormat = (bool) $reportModel->hasNameFormat;
+        $reportRecord->nameFormat = $reportModel->nameFormat;
+        $reportRecord->handle = $reportModel->handle;
+        $reportRecord->description = $reportModel->description;
+        $reportRecord->allowHtml = (bool) $reportModel->allowHtml;
+        $reportRecord->settings = $reportModel->settings;
+        $reportRecord->dataSourceId = $reportModel->dataSourceId;
+        $reportRecord->enabled = (bool) $reportModel->enabled;
+        $reportRecord->groupId = $reportModel->groupId;
 
         $db = Craft::$app->getDb();
         $transaction = $db->beginTransaction();
@@ -79,7 +79,7 @@ class Reports extends Component
         try {
             $reportRecord->save(false);
 
-            $model->id = $reportRecord->id;
+            $reportModel->id = $reportRecord->id;
 
             $transaction->commit();
         } catch (\Exception $e) {
@@ -92,9 +92,10 @@ class Reports extends Component
     }
 
     /**
-     * @param $report
+     * @param ReportModel $report
      *
      * @return bool
+     * @throws Exception
      */
     protected function validateSettings(ReportModel $report)
     {
