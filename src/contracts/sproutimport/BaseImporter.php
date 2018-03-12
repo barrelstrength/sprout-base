@@ -9,6 +9,7 @@ namespace barrelstrength\sproutbase\contracts\sproutimport;
 
 use barrelstrength\sproutimport\SproutImport;
 use Craft;
+use Faker\Generator;
 
 /**
  * Class BaseImporter
@@ -64,7 +65,7 @@ abstract class BaseImporter
     /**
      * Access to the Faker Service layer
      *
-     * @var $fakerService \Faker\Generator
+     * @var $fakerService Generator
      */
     protected $fakerService;
 
@@ -104,7 +105,7 @@ abstract class BaseImporter
      * - Craft\UserSproutImportElementImporter
      * - Craft\FieldSproutImportSettingsImporter
      * - Craft\PlainTextSproutImportFieldImporter
-     * 
+     *
      * @return string
      * @throws \ReflectionException
      */
@@ -227,14 +228,6 @@ abstract class BaseImporter
     public function resolveNestedSettings($model, $settings)
     {
         return true;
-    }
-
-    /**
-     * @return string
-     */
-    public function getSettingsHtml()
-    {
-        return '';
     }
 
     /**
