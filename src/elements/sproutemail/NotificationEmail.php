@@ -17,6 +17,7 @@ use craft\helpers\UrlHelper;
 class NotificationEmail extends Element
 {
     public $subjectLine;
+    public $pluginId;
     public $name;
     public $template;
     public $eventId;
@@ -234,6 +235,7 @@ class NotificationEmail extends Element
             $notificationEmailRecord->id = $this->id;
         }
 
+        $notificationEmailRecord->pluginId = $this->pluginId;
         $notificationEmailRecord->name = $this->name;
         $notificationEmailRecord->template = $this->template;
         $notificationEmailRecord->eventId = $this->eventId;

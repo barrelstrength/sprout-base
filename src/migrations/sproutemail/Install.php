@@ -29,6 +29,7 @@ class Install extends Migration
             $this->createTable($this->notificationEmailTable,
                 [
                     'id' => $this->primaryKey(),
+                    'pluginId' => $this->string(),
                     'name' => $this->string()->notNull(),
                     'template' => $this->string()->notNull(),
                     'eventId' => $this->string(),
