@@ -7,7 +7,7 @@
 
 namespace barrelstrength\sproutbase\contracts\sproutimport;
 
-use barrelstrength\sproutimport\models\SeedJobModel;
+use barrelstrength\sproutimport\models\jobs\SeedJob;
 use Craft;
 use barrelstrength\sproutimport\SproutImport;
 use craft\base\Element;
@@ -284,7 +284,12 @@ abstract class BaseElementImporter extends BaseImporter
         return null;
     }
 
-    public function getSettingsHtml(SeedJobModel $seedJob)
+    /**
+     * @param SeedJob $seedJob
+     *
+     * @return string
+     */
+    public function getSettingsHtml(SeedJob $seedJob)
     {
         return '';
     }
