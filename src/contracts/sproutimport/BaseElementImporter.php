@@ -7,6 +7,7 @@
 
 namespace barrelstrength\sproutbase\contracts\sproutimport;
 
+use barrelstrength\sproutimport\models\jobs\SeedJob;
 use Craft;
 use barrelstrength\sproutimport\SproutImport;
 use craft\base\Element;
@@ -266,5 +267,30 @@ abstract class BaseElementImporter extends BaseImporter
         $dates = ['postDate', 'dateCreated', 'dateUpdated'];
 
         return in_array($handle, $dates);
+    }
+
+    /**
+     * Validate any settings required by this Element's seed importer
+     *
+     * string = error message
+     * null = no errors
+     *
+     * @param $settings
+     *
+     * @return string|null
+     */
+    public function getSeedSettingsErrors($settings)
+    {
+        return null;
+    }
+
+    /**
+     * @param SeedJob $seedJob
+     *
+     * @return string
+     */
+    public function getSettingsHtml(SeedJob $seedJob)
+    {
+        return '';
     }
 }
