@@ -183,7 +183,7 @@ class NotificationEmails extends Component
 
         $notificationEmailRecord = new NotificationEmail();
 
-        if (!empty($notificationEmail->id)) {
+        if ($notificationEmail->id !== null) {
             $notificationEmailRecord = NotificationEmail::findOne($notificationEmail->id);
 
             if (!$notificationEmailRecord) {
@@ -354,15 +354,16 @@ class NotificationEmails extends Component
         $element = ($params['value'] != null) ? $params['value'] : null;
 
         if ($notificationEmails = $this->getAllNotificationEmails($eventId)) {
+
+            /**
+             * @var $notificationEmail NotificationEmail
+             */
             foreach ($notificationEmails as $notificationEmail) {
                 $options = $notificationEmail['options'];
 
                 $options = json_decode($options, true);
 
                 if ($listener->validateOptions($options, $element, $params)) {
-                    /**
-                     * @var $notificationEmail NotificationEmailRecord
-                     */
                     $notificationEmailElement = Craft::$app->getElements()->getElementById($notificationEmail->id);
 
                     if ($notificationEmailElement) {
@@ -542,6 +543,8 @@ class NotificationEmails extends Component
      * @param NotificationEmail $notificationEmail
      *
      * @return Response
+     * @throws \Twig_Error_Loader
+     * @throws \yii\base\Exception
      */
     public function sendTestNotificationEmail(NotificationEmail $notificationEmail)
     {
@@ -658,7 +661,7 @@ class NotificationEmails extends Component
 
         $template = $notificationEmail->template;
 
-        if (empty($event)) {
+        if ($event === null) {
             $errors[] = Craft::t('sprout-email', 'No Event is selected. <a href="{url}">Edit Notification</a>.', [
                 'url' => $notificationEditUrl
             ]);

@@ -12,6 +12,9 @@ use craft\db\ActiveRecord;
 /**
  * Class ReportGroup
  *
+ * @property int    $id
+ * @property string $name
+ *
  * @package barrelstrength\sproutbase\records\sproutreports
  */
 class ReportGroup extends ActiveRecord

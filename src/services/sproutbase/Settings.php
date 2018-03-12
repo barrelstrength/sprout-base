@@ -8,6 +8,7 @@
 namespace barrelstrength\sproutbase\services\sproutbase;
 
 use Craft;
+use craft\base\Plugin;
 use craft\helpers\Json;
 use yii\base\Component;
 use barrelstrength\sproutbase\events\BeforeSaveSettingsEvent;
@@ -17,7 +18,7 @@ class Settings extends Component
     const EVENT_BEFORE_SAVE_SETTINGS = 'beforeSaveSettings';
 
     /**
-     * @param $plugin
+     * @param $plugin Plugin
      * @param $settings
      *
      * @return bool

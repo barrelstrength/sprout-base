@@ -209,11 +209,10 @@ abstract class BaseDataSource
      */
     public function allowNew()
     {
-        $record = DataSource::findOne(['id' => $this->dataSourceId]);
+        $dataSourceRecord = DataSource::findOne(['id' => $this->dataSourceId]);
 
-        // $record->allowNew != null
-        if ($record != null) {
-            return $record->allowNew;
+        if ($dataSourceRecord != null) {
+            return $dataSourceRecord->allowNew;
         }
 
         return true;

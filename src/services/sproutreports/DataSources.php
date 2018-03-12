@@ -9,11 +9,13 @@ namespace barrelstrength\sproutbase\services\sproutreports;
 
 use barrelstrength\sproutbase\contracts\sproutreports\BaseDataSource;
 use barrelstrength\sproutbase\models\sproutreports\DataSource as DataSourceModel;
+use barrelstrength\sproutbase\models\sproutreports\DataSource;
 use barrelstrength\sproutbase\records\sproutreports\DataSource as DataSourceRecord;
 use yii\base\Component;
 use craft\events\RegisterComponentTypesEvent;
 use craft\db\Query;
 use Craft;
+use yii\base\Exception;
 
 /**
  * Class DataSources
@@ -28,12 +30,16 @@ class DataSources extends Component
     const EVENT_REGISTER_DATA_SOURCES = 'registerSproutReportsDataSources';
 
     /**
-     * @param $dataSourceId
+     * @param int $dataSourceId
      *
      * @return BaseDataSource|null
+     * @throws Exception
      */
     public function getDataSourceById($dataSourceId)
     {
+        /**
+         * @var $dataSourceRecord DataSource
+         */
         $dataSourceRecord = DataSourceRecord::find()->where([
             'id' => $dataSourceId
         ])->one();
@@ -42,10 +48,17 @@ class DataSources extends Component
             return null;
         }
 
-        $dataSource = new $dataSourceRecord->type;
-        $dataSource->dataSourceId = $dataSourceRecord->id;
+        if (class_exists($dataSourceRecord->type)) {
+            $dataSource = new $dataSourceRecord->type;
 
-        return $dataSource;
+            $dataSource->dataSourceId = $dataSourceRecord->id;
+
+            return $dataSource;
+        } else {
+            throw new Exception(Craft::t('sprout-base', 'Unable to find the class: {type}. Confirm the appropriate Data Source integrations are installed.', [
+                'type' => $dataSourceRecord->type
+            ]));
+        }
     }
 
     /**
@@ -55,6 +68,9 @@ class DataSources extends Component
      */
     public function getDataSourceByType($dataSourceClass)
     {
+        /**
+         * @var $dataSourceRecord DataSourceRecord
+         */
         $dataSourceRecord = DataSourceRecord::find()->where([
             'type' => $dataSourceClass
         ])->one();
@@ -117,6 +133,7 @@ class DataSources extends Component
      *       simplify this if we could get certain arrays indexed by class name / type.
      *
      * @return array
+     * @throws \yii\db\Exception
      */
     public function getAllDataSources()
     {
@@ -130,9 +147,13 @@ class DataSources extends Component
             $dataSources[$dataSourceType] = new $dataSourceType;
         }
 
-        // Add the additional data we store in the database to the Data Source classes
+        /**
+         * Add the additional data we store in the database to the Data Source classes
+         *
+         * @var $dataSourceRecord DataSourceRecord
+         */
         foreach ($dataSourceRecords as $dataSourceRecord) {
-            if ($dataSourceRecord->type === get_class($dataSources[$dataSourceRecord->type])) {
+            if (class_exists($dataSourceRecord->type) && $dataSourceRecord->type === get_class($dataSources[$dataSourceRecord->type])) {
                 $dataSources[$dataSourceRecord->type]->dataSourceId = $dataSourceRecord->id;
                 $dataSources[$dataSourceRecord->type]->allowNew = $dataSourceRecord->allowNew;
             }
@@ -140,6 +161,7 @@ class DataSources extends Component
 
         // Make sure all registered datasources have a record in the database
         foreach ($dataSources as $dataSourceClass => $dataSource) {
+
             if ($dataSource->dataSourceId === null) {
                 $savedDataSources[] = $this->installDataSources([$dataSourceClass]);
             }
@@ -152,8 +174,11 @@ class DataSources extends Component
             }
         }
 
-        // Sort Data Sources alphabetical
         usort($dataSources, function($a, $b) {
+            /**
+             * @var $a BaseDataSource
+             * @var $b BaseDataSource
+             */
             return $a->getName() <=> $b->getName();
         });
 
@@ -170,6 +195,9 @@ class DataSources extends Component
      */
     public function saveDataSource(DataSourceModel $dataSourceModel)
     {
+        /**
+         * @var $dataSourceRecord DataSourceRecord
+         */
         $dataSourceRecord = DataSourceRecord::find()
             ->where(['id' => $dataSourceModel->id])
             ->one();
@@ -214,7 +242,7 @@ class DataSources extends Component
     {
         $query = new Query();
         $result = $query->createCommand()
-            ->delete('sproutreports_report', ['type' => $type])
+            ->delete('sproutreports_reports', ['type' => $type])
             ->execute();
 
         return $result;

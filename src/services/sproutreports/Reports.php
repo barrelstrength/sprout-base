@@ -7,13 +7,9 @@
 
 namespace barrelstrength\sproutbase\services\sproutreports;
 
-use barrelstrength\sproutbase\contracts\sproutreports\BaseReport;
 use barrelstrength\sproutbase\models\sproutreports\Report;
-use barrelstrength\sproutbase\models\sproutreports\ReportGroup as ReportGroupModel;
-use barrelstrength\sproutbase\SproutBase;
 use Craft;
 use craft\db\Query;
-use craft\models\CraftSupport;
 use yii\base\Component;
 use barrelstrength\sproutbase\models\sproutreports\Report as ReportModel;
 use barrelstrength\sproutbase\records\sproutreports\Report as ReportRecord;
@@ -41,49 +37,49 @@ class Reports extends Component
     }
 
     /**
-     * @param ReportModel $model
+     * @param ReportModel $reportModel
      *
      * @throws \Exception
      * @return bool
      */
-    public function saveReport(&$model)
+    public function saveReport(ReportModel $reportModel)
     {
-        if (!$model) {
+        if (!$reportModel) {
 
             Craft::info('Report not saved due to validation error.', __METHOD__);
 
             return false;
         }
 
-        if (empty($model->id)) {
-            $record = new ReportRecord();
+        if (empty($reportModel->id)) {
+            $reportRecord = new ReportRecord();
         } else {
-            $record = ReportRecord::findOne($model->id);
+            $reportRecord = ReportRecord::findOne($reportModel->id);
         }
 
-        if (!$this->validateSettings($model)) {
+        if (!$this->validateSettings($reportModel)) {
             return false;
         }
 
-        $record->id = $model->id;
-        $record->name = $model->name;
-        $record->hasNameFormat = $model->hasNameFormat;
-        $record->nameFormat = $model->nameFormat;
-        $record->handle = $model->handle;
-        $record->description = $model->description;
-        $record->allowHtml = $model->allowHtml;
-        $record->settings = $model->settings;
-        $record->dataSourceId = $model->dataSourceId;
-        $record->enabled = $model->enabled;
-        $record->groupId = $model->groupId;
+        $reportRecord->id = $reportModel->id;
+        $reportRecord->name = $reportModel->name;
+        $reportRecord->hasNameFormat = (bool) $reportModel->hasNameFormat;
+        $reportRecord->nameFormat = $reportModel->nameFormat;
+        $reportRecord->handle = $reportModel->handle;
+        $reportRecord->description = $reportModel->description;
+        $reportRecord->allowHtml = (bool) $reportModel->allowHtml;
+        $reportRecord->settings = $reportModel->settings;
+        $reportRecord->dataSourceId = $reportModel->dataSourceId;
+        $reportRecord->enabled = (bool) $reportModel->enabled;
+        $reportRecord->groupId = $reportModel->groupId;
 
         $db = Craft::$app->getDb();
         $transaction = $db->beginTransaction();
 
         try {
-            $record->save(false);
+            $reportRecord->save(false);
 
-            $model->id = $record->id;
+            $reportModel->id = $reportRecord->id;
 
             $transaction->commit();
         } catch (\Exception $e) {
@@ -96,9 +92,10 @@ class Reports extends Component
     }
 
     /**
-     * @param $report
+     * @param ReportModel $report
      *
      * @return bool
+     * @throws Exception
      */
     protected function validateSettings(ReportModel $report)
     {
@@ -132,13 +129,24 @@ class Reports extends Component
      */
     public function getAllReports()
     {
+        $rows = $this->getReportsQuery()->all();
+
+        return $this->populateReports($rows);
+    }
+
+    private function getReportsQuery()
+    {
         $query = new Query();
         // We only get reports that currently has dataSourceId or existing installed dataSource
-        $rows = $query->select('reports.*')
-            ->from('{{%sproutreports_reports}} as reports')
-            ->innerJoin('{{%sproutreports_datasources}} as datasource', 'datasource.id = reports.dataSourceId')
-            ->all();
+        $query->select('reports.*')
+        ->from('{{%sproutreports_reports}} as reports')
+        ->innerJoin('{{%sproutreports_datasources}} as datasource', 'datasource.id = reports.dataSourceId');
 
+        return $query;
+    }
+
+    private function populateReports($rows)
+    {
         $reports = [];
 
         if ($rows) {
@@ -151,64 +159,6 @@ class Reports extends Component
         }
 
         return $reports;
-    }
-
-    /**
-     * Get only dataSources that are activated by other plugins
-     *
-     * @todo - Is this in use?
-     *
-     * @return array
-     */
-    public function getAvailableReports()
-    {
-        $reports = $this->getAllReports();
-        $dataSources = SproutBase::$app->dataSources->getAllDataSources();
-
-        $dataSourceIds = array_keys($dataSources);
-
-        $availableReports = [];
-
-        if ($reports) {
-            foreach ($reports as $report) {
-                $dataSourceId = $report['dataSourceId'];
-
-                if (in_array($dataSourceId, $dataSourceIds)) {
-                    $availableReports[] = $report;
-                }
-            }
-        }
-
-        return $availableReports;
-    }
-
-    /**
-     * @param                  $reports
-     * @param ReportGroupModel $group
-     */
-    public function registerReports($reports, ReportGroupModel $group)
-    {
-        if (!is_array($reports)) {
-            $reports = [$reports];
-        }
-
-        foreach ($reports as $report) {
-            if ($report instanceof BaseReport) {
-                $record = new ReportRecord();
-
-                $record->name = $report->getName();
-                $record->handle = $report->getHandle();
-                $record->description = $report->getDescription();
-                $record->settings = $report->getSettings();
-                $record->dataSourceSlug = $report->getDataSource()->getDataSourceSlug();
-                $record->enabled = true;
-                $record->groupId = $group->id;
-
-                if (!$record->save()) {
-                    SproutBase::warning($record->getErrors());
-                }
-            }
-        }
     }
 
     /**
@@ -230,14 +180,33 @@ class Reports extends Component
         }
 
         if ($group !== null) {
-            $reportRecords = $group->getReports()->where([
+            $rows = $this->getReportsQuery()->where([
                 'groupId' => $groupId
             ])->all();
 
-            $reports = $this->populateModels($reportRecords);
+            $reports = $this->populateReports($rows);
         }
 
         return $reports;
+    }
+
+    public function getReportsAsSelectFieldOptions()
+    {
+        $options = array();
+
+        $reports = $this->getAllReports();
+
+        if ($reports)
+        {
+            foreach ($reports as $report)
+            {
+                $options[] = array(
+                    'label' => $report->name,
+                    'value' => $report->id,
+                );
+            }
+        }
+        return $options;
     }
 
     /**

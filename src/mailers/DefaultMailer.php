@@ -175,11 +175,13 @@ class DefaultMailer extends BaseMailer implements CampaignEmailSenderInterface
      * @param CampaignType  $campaignType
      *
      * @return Response|mixed
+     * @throws \Twig_Error_Loader
+     * @throws \yii\base\Exception
      */
     public function sendCampaignEmail(CampaignEmail $campaignEmail, CampaignType $campaignType)
     {
-        $lists = [];
         $email = new Message();
+
         try {
             $response = [];
 
@@ -243,7 +245,6 @@ class DefaultMailer extends BaseMailer implements CampaignEmailSenderInterface
                     'email' => $campaignEmail,
                     'campaign' => $campaignType,
                     'emailModel' => $response['emailModel'],
-                    'recipentLists' => $lists,
                     'message' => Craft::t('sprout-email', 'Campaign sent successfully to email.'),
                 ]
             );
@@ -412,7 +413,7 @@ class DefaultMailer extends BaseMailer implements CampaignEmailSenderInterface
         }
 
         // Get recipients for live emails
-        // @todo Craft 3 - improve and standardize how we use entryRecipents and dynamicRecipients
+        // @todo Craft 3 - improve and standardize how we use entryRecipients and dynamicRecipients
         $entryRecipients = $this->getRecipientsFromCampaignEmailModel($email, $object);
 
         $dynamicRecipients = SproutBase::$app->notifications->getDynamicRecipientsFromElement($object);

@@ -61,7 +61,7 @@
 
     {{ forms.text({
         name: name ~ '[address][fullNameShort]',
-        value: value is defined ? value.getFullNameShort() : ''
+        value: value is defined ? value.getFullName() : ''
     }) }}
 
 {% endif %}

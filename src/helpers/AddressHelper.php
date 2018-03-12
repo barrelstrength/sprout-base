@@ -431,8 +431,6 @@ class AddressHelper
 
         $addressObj = $addressFormatRepository->get($countryCode);
 
-        $postalName = $addressObj->getPostalCodeType();
-
         if ($addressObj->getPostalCodePattern() != null) {
             $pattern = $addressObj->getPostalCodePattern();
 

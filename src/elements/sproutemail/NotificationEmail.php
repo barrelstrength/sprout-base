@@ -217,33 +217,38 @@ class NotificationEmail extends Element
      */
     public function afterSave(bool $isNew)
     {
+        /**
+         * @var $notificationEmailRecord NotificationEmail
+         */
+        $notificationEmailRecord = null;
+
         // Get the entry record
         if (!$isNew) {
-            $record = NotificationEmailRecord::findOne($this->id);
+            $notificationEmailRecord = NotificationEmailRecord::findOne($this->id);
 
-            if (!$record) {
+            if (!$notificationEmailRecord) {
                 throw new \InvalidArgumentException('Invalid campaign email ID: '.$this->id);
             }
         } else {
-            $record = new NotificationEmailRecord();
-            $record->id = $this->id;
+            $notificationEmailRecord = new NotificationEmailRecord();
+            $notificationEmailRecord->id = $this->id;
         }
 
-        $record->name = $this->name;
-        $record->template = $this->template;
-        $record->eventId = $this->eventId;
-        $record->options = $this->options;
-        $record->subjectLine = $this->subjectLine;
-        $record->fieldLayoutId = $this->fieldLayoutId;
-        $record->fromName = $this->fromName;
-        $record->fromEmail = $this->fromEmail;
-        $record->replyToEmail = $this->replyToEmail;
-        $record->recipients = $this->recipients;
-        $record->listSettings = $this->listSettings;
-        $record->dateCreated = $this->dateCreated;
-        $record->dateUpdated = $this->dateUpdated;
+        $notificationEmailRecord->name = $this->name;
+        $notificationEmailRecord->template = $this->template;
+        $notificationEmailRecord->eventId = $this->eventId;
+        $notificationEmailRecord->options = $this->options;
+        $notificationEmailRecord->subjectLine = $this->subjectLine;
+        $notificationEmailRecord->fieldLayoutId = $this->fieldLayoutId;
+        $notificationEmailRecord->fromName = $this->fromName;
+        $notificationEmailRecord->fromEmail = $this->fromEmail;
+        $notificationEmailRecord->replyToEmail = $this->replyToEmail;
+        $notificationEmailRecord->recipients = $this->recipients;
+        $notificationEmailRecord->listSettings = $this->listSettings;
+        $notificationEmailRecord->dateCreated = $this->dateCreated;
+        $notificationEmailRecord->dateUpdated = $this->dateUpdated;
 
-        $record->save(false);
+        $notificationEmailRecord->save(false);
 
         // Update the entry's descendants, who may be using this entry's URI in their own URIs
         Craft::$app->getElements()->updateElementSlugAndUri($this, true, true);

@@ -72,7 +72,6 @@ class Name extends Model
      */
     public function getFullName()
     {
-
         $firstName = trim($this->firstName);
         $lastName = trim($this->lastName);
 
