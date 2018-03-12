@@ -66,4 +66,12 @@ abstract class BaseSettingsImporter extends BaseImporter
      * @return mixed
      */
     abstract public function deleteById($id);
+
+    /**
+     * @return string
+     */
+    public function getSettingsHtml()
+    {
+        return '';
+    }
 }
