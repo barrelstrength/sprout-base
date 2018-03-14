@@ -205,7 +205,7 @@ abstract class BaseImporter
                 throw new \InvalidArgumentException(Craft::t('sprout-base', $className.' namespace on getModelName() method not found.'));
             }
 
-            $this->model = new $className;
+            $this->model = new $className();
         }
 
         return $this->model;
