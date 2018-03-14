@@ -201,7 +201,8 @@ class NotificationEmails extends Component
         if ($event && $isSettingPage == false) {
             $options = $event->prepareOptions();
 
-            $notificationEmail->options = $options;
+            $notificationEmail->options  = $options;
+            $notificationEmail->pluginId = $event->getPluginId();
         }
 
         $fieldLayout = $notificationEmail->getFieldLayout();

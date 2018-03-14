@@ -36,6 +36,10 @@ class BaseEvent
      */
     public function getPluginId()
     {
+        if ($this->pluginId == null) {
+           return "sprout-email";
+        }
+
         return $this->pluginId;
     }
 
