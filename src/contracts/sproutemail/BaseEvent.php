@@ -2,6 +2,7 @@
 
 namespace barrelstrength\sproutbase\contracts\sproutemail;
 
+use barrelstrength\sproutbase\base\BaseSproutTrait;
 use yii\base\Event;
 
 /**
@@ -13,35 +14,11 @@ use yii\base\Event;
  */
 class BaseEvent
 {
+    use BaseSproutTrait;
     /**
      * @var array|null
      */
     protected $options;
-
-    /**
-     * @var string
-     */
-    protected $pluginId;
-
-    /**
-     * @param $pluginId
-     */
-    public function setPluginId($pluginId)
-    {
-        $this->pluginId = $pluginId;
-    }
-
-    /**
-     * @return string
-     */
-    public function getPluginId()
-    {
-        if ($this->pluginId == null) {
-           return "sprout-email";
-        }
-
-        return $this->pluginId;
-    }
 
     /**
      * Returns the event title when used in string context

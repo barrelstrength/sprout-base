@@ -20,10 +20,14 @@
 {% endblock %}
 
 {% block initJs %}
+    // Pass segment to the NotificationEmailQuery class to filter notification entries
+    var base = {'base': '{{ craft.request.segment(1) }}'};
+    var criteria = Object.assign(Craft.defaultIndexCriteria, base);
+
     Craft.elementIndex = Craft.createElementIndex('{{ elementType|e("js") }}', $('#main'), {
         context:        '{{ context }}',
         storageKey:     'elementindex.{{ elementType }}',
-        criteria:       Craft.defaultIndexCriteria,
+        criteria:       criteria,
         hideSidebar:    '{{ hideSidebar ?? false }}'
     });
 {% endblock %}

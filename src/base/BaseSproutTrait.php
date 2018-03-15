@@ -11,6 +11,14 @@ use Craft;
 
 trait BaseSproutTrait
 {
+    public function getPlugin()
+    {
+        $pluginClass = get_class($this);
+
+        $pluginHandle = Craft::$app->getPlugins()->getPluginHandleByClass($pluginClass);
+
+        return Craft::$app->getPlugins()->getPlugin($pluginHandle);
+    }
     /**
      * Logs an error message using the pluginId as the category
      *

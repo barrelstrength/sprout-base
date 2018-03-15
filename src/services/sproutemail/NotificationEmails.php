@@ -105,9 +105,9 @@ class NotificationEmails extends Component
 
         if (!empty($availableEvents)) {
             foreach ($availableEvents as $availableEvent) {
-                $pluginId = $availableEvent->getPluginId();
+                $plugin = $availableEvent->getPlugin();
 
-                $events[$pluginId] = $availableEvent;
+                $events[$plugin->id] = $availableEvent;
             }
         }
 
@@ -202,7 +202,8 @@ class NotificationEmails extends Component
             $options = $event->prepareOptions();
 
             $notificationEmail->options  = $options;
-            $notificationEmail->pluginId = $event->getPluginId();
+            $plugin = $event->getPlugin();
+            $notificationEmail->pluginId = $plugin->id;
         }
 
         $fieldLayout = $notificationEmail->getFieldLayout();

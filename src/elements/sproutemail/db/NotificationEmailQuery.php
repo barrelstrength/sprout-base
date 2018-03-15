@@ -2,12 +2,14 @@
 
 namespace barrelstrength\sproutbase\elements\sproutemail\db;
 
+use barrelstrength\sproutbase\base\BaseSproutTrait;
 use craft\elements\db\ElementQuery;
 use craft\base\Element;
 use Craft;
 
 class NotificationEmailQuery extends ElementQuery
 {
+    public $base;
     /**
      * @inheritdoc
      */
@@ -30,6 +32,12 @@ class NotificationEmailQuery extends ElementQuery
             'sproutemail_notificationemails.dateUpdated',
             'sproutemail_notificationemails.fieldLayoutId'
         ]);
+
+        $pluginId = Craft::$app->request->getBodyParam('criteria.base');
+
+        if ($pluginId != null) {
+            $this->query->where(['sproutemail_notificationemails.pluginId' => $pluginId]);
+        }
 
         return parent::beforePrepare();
     }
