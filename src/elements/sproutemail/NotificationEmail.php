@@ -335,8 +335,8 @@ class NotificationEmail extends Element
      */
     public function getUriFormat()
     {
-        $pluginHandle = Craft::$app->request->getBodyParam('criteria.base');
-
+        $pluginHandle = Craft::$app->request->getSegment(1);
+        
         if ($pluginHandle == null) {
             throw new \Exception("Invalid integration. No pluginId specified");
         }
