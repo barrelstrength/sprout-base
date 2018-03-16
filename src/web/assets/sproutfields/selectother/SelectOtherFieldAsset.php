@@ -7,7 +7,6 @@
 
 namespace barrelstrength\sproutbase\web\assets\sproutfields\selectother;
 
-use barrelstrength\sproutseo\web\assets\base\BaseAsset;
 use craft\web\AssetBundle;
 
 class SelectOtherFieldAsset extends AssetBundle
@@ -15,10 +14,6 @@ class SelectOtherFieldAsset extends AssetBundle
     public function init()
     {
         $this->sourcePath = '@sproutbase/web/assets/sproutfields/selectother/dist';
-
-        $this->depends = [
-            BaseAsset::class
-        ];
 
         // @todo - update this file to be named better
         $this->js = [
