@@ -112,14 +112,14 @@ class NotificationEmail extends Element
      */
     public function getCpEditUrl()
     {
-        $pluginId = Craft::$app->request->getBodyParam('criteria.base');
+        $pluginHandle = Craft::$app->request->getBodyParam('criteria.base');
 
-        if ($pluginId == null) {
+        if ($pluginHandle == null) {
             throw new \Exception("Invalid integration. No pluginId specified");
         }
 
         return UrlHelper::cpUrl(
-            $pluginId . '/notifications/edit/'.$this->id
+            $pluginHandle . '/notifications/edit/'.$this->id
         );
     }
 
@@ -335,13 +335,13 @@ class NotificationEmail extends Element
      */
     public function getUriFormat()
     {
-        $pluginId = Craft::$app->request->getBodyParam('criteria.base');
+        $pluginHandle = Craft::$app->request->getBodyParam('criteria.base');
 
-        if ($pluginId == null) {
+        if ($pluginHandle == null) {
             throw new \Exception("Invalid integration. No pluginId specified");
         }
 
-        return $pluginId . '/{slug}';
+        return $pluginHandle . '/{slug}';
     }
 
     /**
