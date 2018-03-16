@@ -8,6 +8,7 @@
 namespace barrelstrength\sproutbase\contracts\sproutimport;
 
 use Craft;
+use craft\base\Plugin;
 
 /**
  * Class BaseTheme
@@ -17,7 +18,7 @@ abstract class BaseTheme
     /**
      * The Plugin class for the plugin where this theme lives
      *
-     * @var null|string
+     * @var null|Plugin
      */
     protected $plugin;
 

@@ -9,6 +9,9 @@ namespace barrelstrength\sproutbase\contracts\sproutimport;
 
 abstract class BaseFieldImporter extends BaseImporter
 {
+    /**
+     * @var int
+     */
     protected $id;
 
     /**
