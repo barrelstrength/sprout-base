@@ -16,7 +16,8 @@ class NotificationAsset extends AssetBundle
         $this->sourcePath = '@sproutbase/web/assets/sproutemail/dist';
 
         $this->js = [
-            'js/notification.js'
+            'js/notification.js',
+            'js/sproutmodal.js'
         ];
 
         parent::init();

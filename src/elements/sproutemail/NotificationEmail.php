@@ -2,10 +2,11 @@
 
 namespace barrelstrength\sproutbase\elements\sproutemail;
 
+use barrelstrength\sproutbase\base\BaseSproutTrait;
+use barrelstrength\sproutbase\elements\sproutemail\actions\DeleteNotification;
 use barrelstrength\sproutbase\mailers\DefaultMailer;
 use barrelstrength\sproutbase\SproutBase;
-use barrelstrength\sproutemail\web\assets\email\EmailAsset;
-use barrelstrength\sproutemail\elements\actions\DeleteEmail;
+use barrelstrength\sproutbase\web\assets\sproutemail\NotificationAsset;
 use barrelstrength\sproutbase\elements\sproutemail\db\NotificationEmailQuery;
 use barrelstrength\sproutbase\records\sproutemail\NotificationEmail as NotificationEmailRecord;
 use barrelstrength\sproutemail\SproutEmail;
@@ -100,9 +101,9 @@ class NotificationEmail extends Element
     public function getStatuses()
     {
         return [
-            self::ENABLED => Craft::t('sprout-email', 'enabled'),
-            self::PENDING => Craft::t('sprout-email', 'pending'),
-            self::DISABLED => Craft::t('sprout-email', 'disabled')
+            self::ENABLED => Craft::t('sprout-base', 'enabled'),
+            self::PENDING => Craft::t('sprout-base', 'pending'),
+            self::DISABLED => Craft::t('sprout-base', 'disabled')
         ];
     }
 
@@ -111,8 +112,14 @@ class NotificationEmail extends Element
      */
     public function getCpEditUrl()
     {
+        $pluginHandle = Craft::$app->request->getBodyParam('criteria.base');
+
+        if ($pluginHandle == null) {
+            throw new \Exception("Invalid integration. No pluginId specified");
+        }
+
         return UrlHelper::cpUrl(
-            'sprout-email/notifications/edit/'.$this->id
+            $pluginHandle . '/notifications/edit/'.$this->id
         );
     }
 
@@ -139,12 +146,12 @@ class NotificationEmail extends Element
     protected static function defineTableAttributes(): array
     {
         $attributes = [
-            'title' => ['label' => Craft::t('sprout-email', 'Subject Line')],
-            'name' => ['label' => Craft::t('sprout-email', 'Notification Name')],
-            'dateCreated' => ['label' => Craft::t('sprout-email', 'Date Created')],
-            'dateUpdated' => ['label' => Craft::t('sprout-email', 'Date Updated')],
-            'send' => ['label' => Craft::t('sprout-email', 'Send')],
-            'preview' => ['label' => Craft::t('sprout-email', 'Preview'), 'icon' => 'view']
+            'title' => ['label' => Craft::t('sprout-base', 'Subject Line')],
+            'name' => ['label' => Craft::t('sprout-base', 'Notification Name')],
+            'dateCreated' => ['label' => Craft::t('sprout-base', 'Date Created')],
+            'dateUpdated' => ['label' => Craft::t('sprout-base', 'Date Updated')],
+            'send' => ['label' => Craft::t('sprout-base', 'Send')],
+            'preview' => ['label' => Craft::t('sprout-base', 'Preview'), 'icon' => 'view']
         ];
 
         return $attributes;
@@ -172,7 +179,7 @@ class NotificationEmail extends Element
     public function getTableAttributeHtml(string $attribute): string
     {
         if ($attribute === 'send') {
-            return Craft::$app->getView()->renderTemplate('sprout-email/_partials/notifications/prepare-link', [
+            return Craft::$app->getView()->renderTemplate('sprout-base/sproutemail/notifications/_prepare-link', [
                 'notification' => $this
             ]);
         }
@@ -181,12 +188,12 @@ class NotificationEmail extends Element
             $shareUrl = null;
 
             if ($this->id && $this->getUrl()) {
-                $shareUrl = UrlHelper::actionUrl('sprout-email/notification-emails/share-notificationEmail', [
+                $shareUrl = UrlHelper::actionUrl('sprout-base/notification-emails/share-notificationEmail', [
                     'notificationId' => $this->id,
                 ]);
             }
 
-            return Craft::$app->getView()->renderTemplate('sprout-email/_partials/notifications/preview-links', [
+            return Craft::$app->getView()->renderTemplate('sprout-base/sproutemail/notifications/_preview-links', [
                 'email' => $this,
                 'shareUrl' => $shareUrl,
                 'type' => $attribute
@@ -275,9 +282,9 @@ class NotificationEmail extends Element
         $html = parent::indexHtml($elementQuery, $disabledElementIds, $viewState, $sourceKey, $context, $includeContainer,
             true);
 
-        Craft::$app->getView()->registerAssetBundle(EmailAsset::class);
+        Craft::$app->getView()->registerAssetBundle(NotificationAsset::class);
         Craft::$app->getView()->registerJs('var sproutModalInstance = new SproutModal(); sproutModalInstance.init();');
-        SproutEmail::$app->mailers->includeMailerModalResources();
+        SproutBase::$app->mailers->includeMailerModalResources();
 
         return $html;
     }
@@ -317,17 +324,24 @@ class NotificationEmail extends Element
     {
         $actions = [];
 
-        $actions[] = DeleteEmail::class;
+        $actions[] = DeleteNotification::class;
 
         return $actions;
     }
 
     /**
      * @return null|string
+     * @throws \Exception
      */
     public function getUriFormat()
     {
-        return 'sprout-email/{slug}';
+        $pluginHandle = Craft::$app->request->getSegment(1);
+        
+        if ($pluginHandle == null) {
+            throw new \Exception("Invalid integration. No pluginId specified");
+        }
+
+        return $pluginHandle . '/{slug}';
     }
 
     /**
@@ -363,7 +377,7 @@ class NotificationEmail extends Element
         if (!Craft::$app->getView()->doesTemplateExist($this->template.$extension)) {
             $templateName = $this->template.$extension;
 
-            SproutEmail::$app->utilities->addError(Craft::t('sprout-email', "The template '{templateName}' could not be found", [
+            SproutEmail::$app->utilities->addError(Craft::t('sprout-base', "The template '{templateName}' could not be found", [
                 'templateName' => $templateName
             ]));
         }

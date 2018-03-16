@@ -8,6 +8,7 @@
 namespace barrelstrength\sproutbase\contracts\sproutimport;
 
 use Craft;
+use craft\base\Plugin;
 
 /**
  * Class BaseTheme
@@ -17,7 +18,7 @@ abstract class BaseTheme
     /**
      * The Plugin class for the plugin where this theme lives
      *
-     * @var null|string
+     * @var null|Plugin
      */
     protected $plugin;
 
@@ -80,7 +81,7 @@ abstract class BaseTheme
      */
     public function getSchemaFolder()
     {
-        return $this->pluginClass->getBasePath().DIRECTORY_SEPARATOR.'schema';
+        return $this->plugin->getBasePath().DIRECTORY_SEPARATOR.'schema';
     }
 
     /**
@@ -92,7 +93,7 @@ abstract class BaseTheme
      */
     public function getSourceTemplateFolder()
     {
-        return $this->pluginClass->getBasePath().DIRECTORY_SEPARATOR.'templates';
+        return $this->plugin->getBasePath().DIRECTORY_SEPARATOR.'templates';
     }
 
     /**

@@ -181,4 +181,20 @@ class Mailers extends Component
 
         $this->trigger(self::ON_SEND_EMAIL_ERROR, $event);
     }
+
+    public function includeMailerModalResources()
+    {
+        Craft::$app->getView()->registerCss('sprout-email/css/modal.css');
+
+        $mailers = SproutBase::$app->mailers->getMailers();
+
+        if (count($mailers)) {
+            /**
+             * @var $mailer BaseMailer
+             */
+            foreach ($mailers as $mailer) {
+                $mailer->includeModalResources();
+            }
+        }
+    }
 }
