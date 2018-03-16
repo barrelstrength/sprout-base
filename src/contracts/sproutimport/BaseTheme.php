@@ -80,7 +80,7 @@ abstract class BaseTheme
      */
     public function getSchemaFolder()
     {
-        return $this->pluginClass->getBasePath().DIRECTORY_SEPARATOR.'schema';
+        return $this->plugin->getBasePath().DIRECTORY_SEPARATOR.'schema';
     }
 
     /**
@@ -92,7 +92,7 @@ abstract class BaseTheme
      */
     public function getSourceTemplateFolder()
     {
-        return $this->pluginClass->getBasePath().DIRECTORY_SEPARATOR.'templates';
+        return $this->plugin->getBasePath().DIRECTORY_SEPARATOR.'templates';
     }
 
     /**
