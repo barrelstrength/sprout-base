@@ -289,7 +289,7 @@ abstract class BaseElementImporter extends BaseImporter
      *
      * @return string
      */
-    public function getSettingsHtml(SeedJob $seedJob)
+    public function getSeedSettingsHtml(SeedJob $seedJob)
     {
         return '';
     }
