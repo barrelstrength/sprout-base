@@ -21,7 +21,7 @@ var SproutEmail = {
         $('.event-options').hide();
         var notificationVal = this.button.val();
 
-        if (notificationVal !== '') {
+        if (notificationVal !== undefined && notificationVal !== '') {
             var eventVal = notificationVal.replace(/\\/g, '-').toLowerCase();
 
             $('.' + eventVal).show();

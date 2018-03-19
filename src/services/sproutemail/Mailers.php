@@ -97,7 +97,7 @@ class Mailers extends Component
 
             return $result;
         } catch (\Exception  $e) {
-            SproutBase::$app->utilities->addError($e->getMessage());
+            SproutBase::$app->common->addError($e->getMessage());
         }
 
         return null;

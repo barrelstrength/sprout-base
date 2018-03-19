@@ -110,7 +110,7 @@ trait TemplateTrait
                 $message = str_replace($template, $template.'.html', $message);
             }
 
-            SproutBase::$app->utilities->addError('template', $message);
+            SproutBase::$app->common->addError('template', $message);
         }
 
         Craft::$app->getView()->setTemplatesPath($oldPath);
@@ -192,7 +192,7 @@ trait TemplateTrait
         try {
             return Craft::$app->getView()->renderObjectTemplate($string, $object);
         } catch (\Exception $e) {
-            SproutBase::$app->utilities->addError('template', Craft::t('sprout-email', 'Cannot render template. Check template file and object variables.'));
+            SproutBase::$app->common->addError('template', Craft::t('sprout-email', 'Cannot render template. Check template file and object variables.'));
         }
 
         return null;

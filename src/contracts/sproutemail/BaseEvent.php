@@ -105,7 +105,7 @@ class BaseEvent
      *
      * @return string
      */
-    public function getOptionsHtml()
+    public function getSettingsHtml()
     {
         return '—';
     }

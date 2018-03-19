@@ -112,11 +112,7 @@ class NotificationEmail extends Element
      */
     public function getCpEditUrl()
     {
-        $pluginHandle = Craft::$app->request->getBodyParam('criteria.base');
-
-        if ($pluginHandle == null) {
-            throw new \Exception("Invalid integration. No pluginId specified");
-        }
+        $pluginHandle = Craft::$app->request->getBodyParam('criteria.base') ?: 'sprout-email';
 
         return UrlHelper::cpUrl(
             $pluginHandle . '/notifications/edit/'.$this->id

@@ -2,13 +2,14 @@
 
 namespace barrelstrength\sproutbase\services\sproutemail;
 
+use barrelstrength\sproutbase\base\TemplateTrait;
 use barrelstrength\sproutbase\contracts\sproutemail\BaseEvent;
 use barrelstrength\sproutbase\elements\sproutemail\NotificationEmail;
 use barrelstrength\sproutbase\mailers\DefaultMailer;
 use barrelstrength\sproutbase\SproutBase;
 use barrelstrength\sproutbase\events\RegisterNotificationEvent;
 use barrelstrength\sproutemail\mail\Message;
-use barrelstrength\sproutemail\models\Response;
+use barrelstrength\sproutbase\models\sproutbase\Response;
 use barrelstrength\sproutbase\records\sproutemail\NotificationEmail as NotificationEmailRecord;
 use barrelstrength\sproutemail\SproutEmail;
 use craft\base\Component;
@@ -25,6 +26,8 @@ use craft\base\ElementInterface;
  */
 class NotificationEmails extends Component
 {
+    use TemplateTrait;
+
     const EVENT_REGISTER_EMAIL_EVENTS = 'defineSproutEmailEvents';
 
     /**
@@ -504,7 +507,7 @@ class NotificationEmails extends Component
             $response->success = false;
 
 //            @todo - move html to response template
-            $response->message = '<p>'.Craft::t('sprout-email', 'No actions available for this notification.').'</p>';
+            $response->message = '<p>'.Craft::t('sprout-base', 'No actions available for this notification.').'</p>';
         }
 
         return $response;
@@ -532,7 +535,7 @@ class NotificationEmails extends Component
         $errors = $this->getNotificationErrors($notificationEmail, $errors);
 
         return Craft::$app->getView()->renderTemplate(
-            'sprout-email/_modals/notifications/prepare-email-snapshot',
+            'sprout-base/sproutemail/_modals/prepare-email-snapshot',
             [
                 'email' => $notificationEmail,
                 'recipients' => $recipients,
@@ -553,17 +556,17 @@ class NotificationEmails extends Component
         try {
             $this->sendMockNotificationEmail($notificationEmail);
 
-            return Response::createModalResponse('sprout-email/_modals/response', [
+            return Response::createModalResponse('sprout-base/sproutemail/_modals/response', [
                     'email' => $notificationEmail,
-                    'message' => Craft::t('sprout-email', 'Notification sent successfully.')
+                    'message' => Craft::t('sprout-base', 'Notification sent successfully.')
                 ]
             );
         } catch (\Exception $e) {
             SproutEmail::$app->utilities->addError('notification-mock-error', $e->getMessage());
 
-            return Response::createErrorModalResponse('sprout-email/_modals/response', [
+            return Response::createErrorModalResponse('sprout-base/sproutemail/_modals/response', [
                 'email' => $notificationEmail,
-                'message' => Craft::t('sprout-email', $e->getMessage())
+                'message' => Craft::t('sprout-base', $e->getMessage())
             ]);
         }
     }
@@ -582,9 +585,11 @@ class NotificationEmails extends Component
             try {
 
                 $mailer = SproutBase::$app->mailers->getMailerByName(DefaultMailer::class);
+                //$options = $notificationEmail->options;
+                $options = json_decode($notificationEmail->options, true);
 
                 // Must pass email options for getMockedParams methods to use $this->options
-                $event->setOptions($notificationEmail->options);
+                $event->setOptions($options);
 
                 $sent = false;
 
@@ -593,15 +598,15 @@ class NotificationEmails extends Component
                 }
 
                 if (!$sent) {
-                    $customErrorMessage = SproutEmail::$app->utilities->getErrors();
+                    $customErrorMessage = SproutBase::$app->common->getErrors();
 
                     if (!empty($customErrorMessage)) {
                         $message = $customErrorMessage;
                     } else {
-                        $message = Craft::t('sprout-email', 'Unable to send mock notification. Check email settings');
+                        $message = Craft::t('sprout-base', 'Unable to send mock notification. Check email settings');
                     }
 
-                    SproutEmail::$app->utilities->addError('sent-fail', $message);
+                    SproutBase::$app->common->addError('sent-fail', $message);
                 }
             } catch (\Exception $e) {
                 throw $e;
@@ -677,17 +682,20 @@ class NotificationEmails extends Component
         }
 
         if (empty($errors)) {
+            $options = json_decode($notificationEmail->options, true);
+            $event->setOptions($options);
+
             $object = $event->getMockedParams();
 
             $emailModel = new Message();
 
-            SproutEmail::$app->renderEmailTemplates($emailModel, $template, $notificationEmail, $object);
+            $this->renderEmailTemplates($emailModel, $template, $notificationEmail, $object);
 
-            $templateErrors = SproutEmail::$app->utilities->getErrors();
+            $templateErrors = SproutBase::$app->utilities->getErrors();
 
             if (!empty($templateErrors['template'])) {
                 foreach ($templateErrors['template'] as $templateError) {
-                    $errors[] = Craft::t('sprout-email', $templateError.' <a href="{url}">Edit Settings</a>.',
+                    $errors[] = Craft::t('sprout-base', $templateError.' <a href="{url}">Edit Settings</a>.',
                         [
                             'url' => $notificationEditSettingsUrl
                         ]);

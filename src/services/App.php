@@ -21,6 +21,7 @@ use barrelstrength\sproutbase\services\sproutfields\Email;
 use barrelstrength\sproutbase\services\sproutfields\EmailDropdown;
 use barrelstrength\sproutbase\services\sproutfields\Address;
 use barrelstrength\sproutbase\services\sproutbase\Settings;
+use barrelstrength\sproutbase\services\sproutbase\Common;
 use craft\base\Component;
 
 class App extends Component
@@ -96,6 +97,11 @@ class App extends Component
     public $mailers;
 
     /**
+     * @var Common
+     */
+    public $common;
+
+    /**
      * @inheritdoc
      */
     public function init()
@@ -115,6 +121,7 @@ class App extends Component
         $this->regularExpression = new RegularExpression();
         $this->url = new Url();
         $this->utilities = new Utilities();
+        $this->common = Common::Instance();
 
         // Sprout Reports
         $this->reports = new Reports();

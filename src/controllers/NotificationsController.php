@@ -2,6 +2,7 @@
 
 namespace barrelstrength\sproutbase\controllers;
 
+use barrelstrength\sproutbase\models\sproutbase\Response;
 use barrelstrength\sproutbase\web\assets\sproutemail\NotificationAsset;
 use barrelstrength\sproutbase\base\TemplateTrait;
 use barrelstrength\sproutbase\elements\sproutemail\NotificationEmail;
@@ -364,5 +365,114 @@ class NotificationsController extends Controller
         ]);
 
         return null;
+    }
+
+    /**
+     * Send a notification email via a Mailer
+     *
+     * @return \yii\web\Response
+     * @throws \Twig_Error_Loader
+     * @throws \yii\base\Exception
+     * @throws \yii\web\BadRequestHttpException
+     */
+    public function actionSendTestNotificationEmail()
+    {
+        $this->requirePostRequest();
+
+        $notificationId = Craft::$app->getRequest()->getBodyParam('notificationId');
+        /**
+         * @var $notificationEmail NotificationEmail
+         */
+        $notificationEmail = Craft::$app->getElements()->getElementById($notificationId);
+
+        $errorMsg = '';
+
+        $recipients = Craft::$app->getRequest()->getBodyParam('recipients');
+
+        if ($recipients == null) {
+            $errorMsg = Craft::t('sprout-email', 'Empty recipients.');
+        }
+
+        $result = $this->getValidAndInvalidRecipients($recipients);
+
+        $invalidRecipients = $result['invalid'];
+
+        if (!empty($invalidRecipients)) {
+            $invalidEmails = implode('<br />', $invalidRecipients);
+
+            $errorMsg = Craft::t('sprout-email', 'Recipient email addresses do not validate: <br /> {invalidEmails}', [
+                'invalidEmails' => $invalidEmails
+            ]);
+        }
+
+        if (!empty($errorMsg)) {
+            return $this->asJson(
+                Response::createErrorModalResponse('sprout-email/_modals/response', [
+                    'email' => $notificationEmail,
+                    'message' => $errorMsg
+                ])
+            );
+        }
+
+        if ($notificationEmail) {
+            $notificationEmail->recipients = $recipients;
+            $notificationEmail->title = $notificationEmail->subjectLine;
+
+            try {
+                $response = SproutBase::$app->notifications->sendTestNotificationEmail($notificationEmail);
+
+                $errors = SproutBase::$app->common->getErrors();
+
+                if ($response instanceof Response AND empty($errors)) {
+                    return $this->asJson($response);
+                }
+
+                $errorMessage = SproutBase::$app->common->formatErrors();
+
+                if (!$response) {
+                    $errorMessage = Craft::t('sprout-base', 'Unable to send email.');
+                }
+
+                return $this->asJson(
+                    Response::createErrorModalResponse('sprout-base/sproutemail/_modals/response', [
+                        'email' => $notificationEmail,
+                        'message' => $errorMessage
+                    ])
+                );
+            } catch (\Exception $e) {
+
+                return $this->asJson(
+                    Response::createErrorModalResponse('sprout-base/sproutemail/_modals/response', [
+                        'email' => $notificationEmail,
+                        'message' => $e->getMessage()
+                    ])
+                );
+            }
+        }
+
+        return $this->asJson(
+            Response::createErrorModalResponse('sprout-base/sproutemail/_modals/response', [
+                'email' => $notificationEmail,
+                'campaign' => null,
+                'message' => Craft::t('sprout-base', 'The notification email you are trying to send is missing.'),
+            ])
+        );
+    }
+
+    /**
+     * Provides a way for mailers to render content to perform actions inside a a modal window
+     *
+     * @return \yii\web\Response
+     * @throws \yii\web\BadRequestHttpException
+     */
+    public function actionGetPrepareModal()
+    {
+        $this->requirePostRequest();
+
+        $notificationId = Craft::$app->getRequest()->getBodyParam('notificationId');
+
+        $response = SproutBase::$app->notifications->getPrepareModal($notificationId);
+
+        return $this->asJson($response->getAttributes());
     }
 }
