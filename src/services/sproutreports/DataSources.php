@@ -174,7 +174,7 @@ class DataSources extends Component
             }
         }
 
-        usort($dataSources, function($a, $b) {
+        uasort($dataSources, function($a, $b) {
             /**
              * @var $a BaseDataSource
              * @var $b BaseDataSource
