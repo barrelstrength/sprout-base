@@ -262,6 +262,16 @@ abstract class BaseElementImporter extends BaseImporter
         }
     }
 
+    /**
+     * @param $quantity
+     * @param $settings
+     *
+     * @return array|null
+     */
+    public function getMockData($quantity, $settings) {
+        return null;
+    }
+
     private function isDateAttribute($handle)
     {
         $dates = ['postDate', 'dateCreated', 'dateUpdated'];
