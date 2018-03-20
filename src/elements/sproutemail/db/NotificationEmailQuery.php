@@ -44,12 +44,12 @@ class NotificationEmailQuery extends ElementQuery
 
     protected function statusCondition(string $status)
     {
-        $currentBase = Craft::$app->getRequest()->getSegment(1);
+        $currentPluginHandle = Craft::$app->getRequest()->getSegment(1);
 
         /**
          * To show disabled notification emails on integrated plugins
          */
-        if ($currentBase != 'sprout-email') {
+        if ($currentPluginHandle != 'sprout-email') {
             return ['elements.enabled' => ['0', '1']];
         }
 

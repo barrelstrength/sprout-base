@@ -69,11 +69,11 @@ class Mailers extends Component
      */
     public function sendEmail(Message $message, $variables = [])
     {
-        $errorMessage = SproutBase::$app->utilities->getErrors();
+        $errorMessage = SproutBase::$app->common->getErrors();
 
         if (!empty($errorMessage)) {
 
-            $errorMessage = SproutBase::$app->utilities->formatErrors();
+            $errorMessage = SproutBase::$app->common->formatErrors();
 
             $this->handleOnSendEmailErrorEvent($errorMessage, $message, $variables);
 

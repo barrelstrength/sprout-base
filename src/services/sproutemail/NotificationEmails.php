@@ -190,7 +190,7 @@ class NotificationEmails extends Component
             $notificationEmailRecord = NotificationEmail::findOne($notificationEmail->id);
 
             if (!$notificationEmailRecord) {
-                throw new \InvalidArgumentException(Craft::t('sprout-email',
+                throw new \InvalidArgumentException(Craft::t('sprout-base',
                     'No entry exists with the ID “{id}”', ['id' => $notificationEmail->id]));
             }
         } else {
@@ -206,6 +206,7 @@ class NotificationEmails extends Component
 
             $notificationEmail->options  = $options;
             $plugin = $event->getPlugin();
+
             $notificationEmail->pluginId = $plugin->id;
         }
 
@@ -636,7 +637,7 @@ class NotificationEmails extends Component
         if (!$event) {
             ob_start();
 
-            echo Craft::t('sprout-email', 'Notification Email cannot display. The Event setting must be set.');
+            echo Craft::t('sprout-base', 'Notification Email cannot display. The Event setting must be set.');
 
             // End the request
             Craft::$app->end();
@@ -660,8 +661,10 @@ class NotificationEmails extends Component
      */
     public function getNotificationErrors($notificationEmail, array $errors = [])
     {
-        $notificationEditUrl = UrlHelper::cpUrl('sprout-email/notifications/edit/'.$notificationEmail->id);
-        $notificationEditSettingsUrl = UrlHelper::cpUrl('sprout-email/settings/notifications/edit/'.
+        $currentPluginHandle = Craft::$app->request->getSegment(1);
+
+        $notificationEditUrl = UrlHelper::cpUrl($currentPluginHandle . '/notifications/edit/'.$notificationEmail->id);
+        $notificationEditSettingsUrl = UrlHelper::cpUrl($currentPluginHandle . '/settings/notifications/edit/'.
             $notificationEmail->id);
 
         $event = $this->getEventById($notificationEmail->eventId);
@@ -669,13 +672,13 @@ class NotificationEmails extends Component
         $template = $notificationEmail->template;
 
         if ($event === null) {
-            $errors[] = Craft::t('sprout-email', 'No Event is selected. <a href="{url}">Edit Notification</a>.', [
+            $errors[] = Craft::t('sprout-base', 'No Event is selected. <a href="{url}">Edit Notification</a>.', [
                 'url' => $notificationEditUrl
             ]);
         }
 
         if (empty($template)) {
-            $errors[] = Craft::t('sprout-email', 'No template added. <a href="{url}">Edit Notification Settings</a>.',
+            $errors[] = Craft::t('sprout-base', 'No template added. <a href="{url}">Edit Notification Settings</a>.',
                 [
                     'url' => $notificationEditSettingsUrl
                 ]);
@@ -691,7 +694,7 @@ class NotificationEmails extends Component
 
             $this->renderEmailTemplates($emailModel, $template, $notificationEmail, $object);
 
-            $templateErrors = SproutBase::$app->utilities->getErrors();
+            $templateErrors = SproutBase::$app->common->getErrors();
 
             if (!empty($templateErrors['template'])) {
                 foreach ($templateErrors['template'] as $templateError) {

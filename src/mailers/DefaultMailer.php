@@ -110,7 +110,7 @@ class DefaultMailer extends BaseMailer implements CampaignEmailSenderInterface
         $body = $renderEmail->body;
         $htmlBody = $renderEmail->htmlBody;
 
-        $templateErrors = SproutBase::$app->utilities->getErrors();
+        $templateErrors = SproutBase::$app->common->getErrors();
 
         if (empty($templateErrors) && (empty($body) || empty($htmlBody))) {
             $message = Craft::t('sprout-base', 'Email Text or HTML template cannot be blank. Check template setting.');
@@ -240,23 +240,23 @@ class DefaultMailer extends BaseMailer implements CampaignEmailSenderInterface
             $response['emailModel'] = $email;
 
             return Response::createModalResponse(
-                'sprout-email/_modals/response',
+                'sprout-base/sproutemail/_modals/response',
                 [
                     'email' => $campaignEmail,
                     'campaign' => $campaignType,
                     'emailModel' => $response['emailModel'],
-                    'message' => Craft::t('sprout-email', 'Campaign sent successfully to email.'),
+                    'message' => Craft::t('sprout-base', 'Campaign sent successfully to email.'),
                 ]
             );
         } catch (\Exception $e) {
             SproutEmail::$app->utilities->addError('fail-campaign-email', $e->getMessage());
 
             return Response::createErrorModalResponse(
-                'sprout-email/_modals/response',
+                'sprout-base/sproutemail/_modals/response',
                 [
                     'email' => $campaignEmail,
                     'campaign' => $campaignType,
-                    'message' => Craft::t('sprout-email', $e->getMessage()),
+                    'message' => Craft::t('sprout-base', $e->getMessage()),
                 ]
             );
         }
@@ -506,8 +506,8 @@ class DefaultMailer extends BaseMailer implements CampaignEmailSenderInterface
      */
     public function getErrors(CampaignEmail $campaignEmail, CampaignType $campaignType, $errors)
     {
-        $currentBase = Craft::$app->getRequest()->getSegment(1);
-        $notificationEditSettingsUrl = UrlHelper::cpUrl($currentBase.'/settings/notifications/edit/'.$campaignType->id);
+        $currentPluginHandle = Craft::$app->getRequest()->getSegment(1);
+        $notificationEditSettingsUrl = UrlHelper::cpUrl($currentPluginHandle.'/settings/notifications/edit/'.$campaignType->id);
 
         if (empty($campaignType->template)) {
             $errors[] = Craft::t('sprout-base', 'Email Template setting is blank. <a href="{url}">Edit Settings</a>.',

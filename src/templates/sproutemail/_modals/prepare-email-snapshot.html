@@ -2,18 +2,18 @@
 
 <div class="body">
 
-    <h1>{{ "Test Notification"|t('sprout-email') }}</h1>
+    <h1>{{ "Test Notification"|t('sprout-base') }}</h1>
 
     <div class="sproutemail-preparemodalbody">
         <table class="data fullwidth">
             <tbody>
             <tr>
-                <td><strong>{{ "Subject"|t('sprout-email') }}</strong></td>
+                <td><strong>{{ "Subject"|t('sprout-base') }}</strong></td>
                 <td class="title">{{ email.title }}</td>
             </tr>
 
             <tr>
-                <td><strong>{{ "Recipients"|t('sprout-email') }}</strong></td>
+                <td><strong>{{ "Recipients"|t('sprout-base') }}</strong></td>
                 <td>
 
                     {% set baseUrl = craft.app.request.serverName %}

@@ -134,6 +134,7 @@ trait TemplateTrait
         $fromName = $this->renderObjectTemplateSafely($notification->fromName, $object);
         $fromEmail = $this->renderObjectTemplateSafely($notification->fromEmail, $object);
         $replyTo = $this->renderObjectTemplateSafely($notification->replyToEmail, $object);
+
         $body = $this->renderSiteTemplateIfExists($template.'.txt', [
             'email' => $notification,
             'object' => $object
@@ -192,7 +193,7 @@ trait TemplateTrait
         try {
             return Craft::$app->getView()->renderObjectTemplate($string, $object);
         } catch (\Exception $e) {
-            SproutBase::$app->common->addError('template', Craft::t('sprout-email', 'Cannot render template. Check template file and object variables.'));
+            SproutBase::$app->common->addError('template', Craft::t('sprout-base', 'Cannot render template. Check template file and object variables.'));
         }
 
         return null;

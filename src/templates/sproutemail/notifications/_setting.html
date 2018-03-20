@@ -3,13 +3,13 @@
 
 {% set title = "Edit Notification"|t('sprout-base') %}
 
-{% set currentBase = craft.app.request.getSegment(1) %}
+{% set currentPluginHandle = craft.app.request.getSegment(1) %}
 {% set crumbs = [
-    { label: "Notifications", url: url(currentBase ~ '/notifications') },
+    { label: "Notifications", url: url(currentPluginHandle ~ '/notifications') },
 ] %}
 
 {% set fullPageForm = true %}
-{% set saveShortcutRedirect = url(currentBase ~ '/settings/notifications/edit/{id}') %}
+{% set saveShortcutRedirect = url(currentPluginHandle ~ '/settings/notifications/edit/{id}') %}
 
 {% if notificationEmail['id'] %}
     {% set notificationEmailId = notificationEmail['id'] %}
@@ -25,7 +25,7 @@
 
         {% if notificationEmail['id'] is defined %}
 
-            {% set dataSaveEditRedirect = cpUrl(currentBase ~ '/notifications/edit/' ~ notificationEmailId) %}
+            {% set dataSaveEditRedirect = cpUrl(currentPluginHandle ~ '/notifications/edit/' ~ notificationEmailId) %}
 
             <div class="btn submit menubtn"></div>
             <div class="menu">
@@ -41,7 +41,7 @@
                            title="{{ 'Save and edit notification email'|t('sprout-base') }}">{{ 'Save and edit notification email'|t('sprout-base') }}</a>
                     </li>
                     <li><a class="formsubmit"
-                           data-redirect="{{ cpUrl(currentBase ~ '/settings/notifications/edit/new')|hash }}">
+                           data-redirect="{{ cpUrl(currentPluginHandle ~ '/settings/notifications/edit/new')|hash }}">
                             {{ 'Save and add another'|t('sprout-base') }}</a></li>
                 </ul>
             </div>
@@ -53,7 +53,7 @@
     <div class="secondary-buttons" style="float:left;">
         {% if notificationEmail is defined and notificationEmail['id'] %}
             <a class="btn icon add submit"
-               href="{{ cpUrl(currentBase ~ '/notifications/edit/' ~ notificationEmailId) }}"
+               href="{{ cpUrl(currentPluginHandle ~ '/notifications/edit/' ~ notificationEmailId) }}"
                title="{{ "Edit Notification Email"|t('sprout-base') }}"
                style="float:none;margin:0;">{{ "Edit Notification Email"|t('sprout-base') }}</a>
         {% endif %}
@@ -65,8 +65,7 @@
 {% set content %}
 <input type="hidden" name="action"
        value="sprout-base/notifications/save-notification-email-settings">
-<input type="hidden" name="redirect"
-       value="{{ currentBase }}/settings/notifications">
+{{ redirectInput(currentPluginHandle ~ '/notifications') }}
 
 <input type="hidden" name="emailId" value="{{ emailId }}">
 <input type="hidden" name="mailer" value="defaultmailer">

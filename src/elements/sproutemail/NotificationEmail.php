@@ -402,6 +402,7 @@ class NotificationEmail extends Element
         $rules = parent::rules();
 
         $rules[] = [['subjectLine', 'name'], 'required'];
+        $rules[] = [['fromName', 'fromEmail', 'replyToEmail'], 'default', 'value' => ''];
 
         return $rules;
     }

@@ -23,15 +23,15 @@ class NotificationsController extends Controller
     use TemplateTrait;
 
     private $notification;
-    private $currentBase;
+    private $currentPluginHandle;
 
     public function init()
     {
         parent::init();
 
-        $currentBase = Craft::$app->request->getSegment(1);
+        $currentPluginHandle = Craft::$app->request->getSegment(1);
 
-        $this->currentBase = $currentBase;
+        $this->currentPluginHandle = $currentPluginHandle;
     }
 
     /**
@@ -47,7 +47,7 @@ class NotificationsController extends Controller
         $currentUser = Craft::$app->getUser()->getIdentity();
 
         if (!$currentUser->can('editSproutEmailSettings')) {
-            return $this->redirect($this->currentBase);
+            return $this->redirect($this->currentPluginHandle);
         }
 
         $isNewNotificationEmail = ($emailId !== null && $emailId === 'new') ? true : false;
@@ -117,9 +117,9 @@ class NotificationsController extends Controller
                 }
             }
 
-            $currentBase = Craft::$app->request->getSegment(1);
+            $currentPluginHandle = Craft::$app->request->getSegment(1);
 
-            $eventObject = SproutBase::$app->notifications->getEventByBase($currentBase);
+            $eventObject = SproutBase::$app->notifications->getEventByBase($currentPluginHandle);
 
             if ($eventObject) {
                 $namespace = get_class($eventObject);
@@ -128,7 +128,7 @@ class NotificationsController extends Controller
             }
 
             // retain options attribute by the second parameter
-            SproutBase::$app->notifications->saveNotification($notificationEmail, true);
+            SproutBase::$app->notifications->saveNotification($notificationEmail);
 
             return $this->redirectToPostedUrl($notificationEmail);
         }
@@ -348,7 +348,7 @@ class NotificationsController extends Controller
 
             $session->setNotice(Craft::t('sprout-base', 'Notification deleted.'));
 
-            return $this->redirect($this->currentBase.'/notifications');
+            return $this->redirect($this->currentPluginHandle.'/notifications');
         }
 
         if (Craft::$app->getRequest()->getIsAjax()) {
@@ -390,7 +390,7 @@ class NotificationsController extends Controller
         $recipients = Craft::$app->getRequest()->getBodyParam('recipients');
 
         if ($recipients == null) {
-            $errorMsg = Craft::t('sprout-email', 'Empty recipients.');
+            $errorMsg = Craft::t('sprout-base', 'Empty recipients.');
         }
 
         $result = $this->getValidAndInvalidRecipients($recipients);
@@ -400,14 +400,14 @@ class NotificationsController extends Controller
         if (!empty($invalidRecipients)) {
             $invalidEmails = implode('<br />', $invalidRecipients);
 
-            $errorMsg = Craft::t('sprout-email', 'Recipient email addresses do not validate: <br /> {invalidEmails}', [
+            $errorMsg = Craft::t('sprout-base', 'Recipient email addresses do not validate: <br /> {invalidEmails}', [
                 'invalidEmails' => $invalidEmails
             ]);
         }
 
         if (!empty($errorMsg)) {
             return $this->asJson(
-                Response::createErrorModalResponse('sprout-email/_modals/response', [
+                Response::createErrorModalResponse('sprout-base/sproutemail/_modals/response', [
                     'email' => $notificationEmail,
                     'message' => $errorMsg
                 ])

@@ -2,11 +2,13 @@
 {% set title = "Notification Email"|t('sprout-base') %}
 {% set elementType = 'barrelstrength\\sproutbase\\elements\\sproutemail\\NotificationEmail' %}
 
+{% set currentPluginHandle = craft.app.request.getSegment(1) %}
+
 {% block actionButton %}
     <div class="buttons">
         <a class="btn submit add icon"
-           href="{{ url('sprout-email/settings/notifications/edit/new') }}">
-            {{ "New Notification"|t('sprout-email') }}
+           href="{{ url(currentPluginHandle ~ '/settings/notifications/edit/new') }}">
+            {{ "New Notification"|t('sprout-base') }}
         </a>
     </div>
 {% endblock %}

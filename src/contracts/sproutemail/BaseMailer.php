@@ -177,9 +177,9 @@ abstract class BaseMailer
      */
     public function getSettings()
     {
-        $currentBase = Craft::$app->request->getSegment(1);
+        $currentPluginHandle = Craft::$app->request->getSegment(1);
 
-        $plugin = Craft::$app->plugins->getPlugin($currentBase);
+        $plugin = Craft::$app->plugins->getPlugin($currentPluginHandle);
 
         $settings = null;
 
