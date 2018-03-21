@@ -241,10 +241,19 @@ class DataSources extends Component
     public function deleteReportsByType($type)
     {
         $query = new Query();
-        $result = $query->createCommand()
-            ->delete('sproutreports_reports', ['type' => $type])
-            ->execute();
 
-        return $result;
+        $source = $query
+            ->select(['id', 'type'])
+            ->from(['{{%sproutreports_datasources}}'])
+            ->where(['type' => $type])
+            ->one();
+
+        if ($source){
+            $query->createCommand()
+                ->delete('{{%sproutreports_reports}}', ['dataSourceId' => $source['id']])
+                ->execute();
+        }
+
+        return true;
     }
 }
