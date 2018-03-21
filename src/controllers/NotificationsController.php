@@ -475,4 +475,59 @@ class NotificationsController extends Controller
 
         return $this->asJson($response->getAttributes());
     }
+
+    /**
+     * Prepares a Notification Email to be shared via token-based URL
+     *
+     * @param null $notificationId
+     *
+     * @return \yii\web\Response
+     * @throws \HttpException
+     */
+    public function actionShareNotificationEmail($notificationId = null)
+    {
+        if ($notificationId) {
+            $notificationEmail = SproutBase::$app->notifications->getNotificationEmailById($notificationId);
+
+            if (!$notificationEmail) {
+                throw new \HttpException(404);
+            }
+
+            $type = Craft::$app->getRequest()->getQueryParam('type');
+
+            $params = [
+                'notificationId' => $notificationId,
+                'type' => $type
+            ];
+        } else {
+            throw new \HttpException(404);
+        }
+
+        // Create the token and redirect to the entry URL with the token in place
+        $token = Craft::$app->getTokens()->createToken([
+                'sprout-base/notifications/view-shared-notification-email',
+                $params
+            ]
+        );
+
+        $url = UrlHelper::urlWithToken($notificationEmail->getUrl(), $token);
+
+        return $this->redirect($url);
+    }
+    /**
+     * Renders a shared Notification Email
+     *
+     * @param null $notificationId
+     * @param null $type
+     *
+     * @throws \yii\base\Exception
+     * @throws \yii\base\ExitException
+     * @throws \yii\web\BadRequestHttpException
+     */
+    public function actionViewSharedNotificationEmail($notificationId = null, $type = null)
+    {
+        $this->requireToken();
+
+        SproutBase::$app->notifications->getPreviewNotificationEmailById($notificationId, $type);
+    }
 }

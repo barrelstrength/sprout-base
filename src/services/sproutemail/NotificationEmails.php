@@ -628,11 +628,11 @@ class NotificationEmails extends Component
      */
     public function getPreviewNotificationEmailById($notificationId, $type = null)
     {
-        $notificationEmail = SproutEmail::$app->notificationEmails->getNotificationEmailById($notificationId);
+        $notificationEmail = $this->getNotificationEmailById($notificationId);
 
         $eventId = $notificationEmail->eventId;
 
-        $event = SproutEmail::$app->notificationEmails->getEventById($eventId);
+        $event = $this->getEventById($eventId);
 
         if (!$event) {
             ob_start();
@@ -647,9 +647,32 @@ class NotificationEmails extends Component
         $template = $notificationEmail->template;
         $fileExtension = ($type != null && $type == 'text') ? 'txt' : 'html';
 
-        $email = SproutEmail::$app->renderEmailTemplates($email, $template, $notificationEmail);
+        $email = $this->renderEmailTemplates($email, $template, $notificationEmail);
 
-        SproutEmail::$app->campaignEmails->showCampaignEmail($email, $fileExtension);
+        $this->showPreviewEmail($email, $fileExtension);
+    }
+
+    /**
+     * @param        $email
+     * @param string $fileExtension
+     *
+     * @throws \yii\base\ExitException
+     */
+    public function showPreviewEmail($email, $fileExtension = 'html')
+    {
+        if ($fileExtension == 'txt') {
+            $output = $email->body;
+        } else {
+            $output = $email->htmlBody;
+        }
+
+        // Output it into a buffer, in case TasksService wants to close the connection prematurely
+        ob_start();
+
+        echo $output;
+
+        // End the request
+        Craft::$app->end();
     }
 
     /**

@@ -184,15 +184,17 @@ class NotificationEmail extends Element
             $shareUrl = null;
 
             if ($this->id && $this->getUrl()) {
-                $shareUrl = UrlHelper::actionUrl('sprout-base/notification-emails/share-notificationEmail', [
+                $shareUrl = UrlHelper::actionUrl('sprout-base/notifications/share-notification-email', [
                     'notificationId' => $this->id,
                 ]);
             }
+            $pluginHandle = Craft::$app->request->getBodyParam('criteria.base') ?: 'sprout-email';
 
             return Craft::$app->getView()->renderTemplate('sprout-base/sproutemail/notifications/_preview-links', [
-                'email' => $this,
-                'shareUrl' => $shareUrl,
-                'type' => $attribute
+                'email'        => $this,
+                'pluginHandle' => $pluginHandle,
+                'shareUrl'     => $shareUrl,
+                'type'         => $attribute
             ]);
         }
         return parent::getTableAttributeHtml($attribute);
@@ -248,6 +250,7 @@ class NotificationEmail extends Element
         $notificationEmailRecord->fromName = $this->fromName;
         $notificationEmailRecord->fromEmail = $this->fromEmail;
         $notificationEmailRecord->replyToEmail = $this->replyToEmail;
+        $notificationEmailRecord->enableFileAttachments = $this->enableFileAttachments;
         $notificationEmailRecord->recipients = $this->recipients;
         $notificationEmailRecord->listSettings = $this->listSettings;
         $notificationEmailRecord->dateCreated = $this->dateCreated;
