@@ -11,6 +11,7 @@ use barrelstrength\sproutbase\SproutBase;
 use libphonenumber\NumberParseException;
 use libphonenumber\PhoneNumberFormat;
 use libphonenumber\PhoneNumberUtil;
+use CommerceGuys\Intl\Country\CountryRepository;
 use yii\base\Component;
 use Craft;
 
@@ -73,4 +74,27 @@ class Phone extends Component
         ]);
     }
 
+    /**
+     * @return array
+     */
+    public function getCountries()
+    {
+        $phoneUtil = PhoneNumberUtil::getInstance();
+        $regions = $phoneUtil->getSupportedRegions();
+        $countries = [];
+
+        foreach ($regions as $countryCode) {
+            $code = $phoneUtil->getCountryCodeForRegion($countryCode);
+            $countryRepository = new CountryRepository;
+            $country = $countryRepository->get($countryCode);
+
+            if ($country){
+                $countries[$countryCode] = $country->getName().' +'.$code;
+            }
+        }
+
+        asort($countries);
+
+        return $countries;
+    }
 }
