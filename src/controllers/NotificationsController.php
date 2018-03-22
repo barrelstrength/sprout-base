@@ -197,13 +197,27 @@ class NotificationsController extends Controller
 
         $tabs = $this->getModelTabs($notificationEmail);
 
+        $currentPluginHandle = Craft::$app->request->getSegment(1);
+
+        $events = SproutBase::$app->notifications->getAvailableEvents();
+
+        if ($currentPluginHandle != 'sprout-email') {
+            $eventObject = SproutBase::$app->notifications->getEventByBase($currentPluginHandle);
+
+            $events = [
+                get_class($eventObject) => $eventObject
+            ];
+
+        }
+
         return $this->renderTemplate('sprout-base/sproutemail/notifications/_edit', [
             'notificationEmail' => $notificationEmail,
             'lists' => $lists,
             'mailer' => $notificationEmail->getMailer(),
             'showPreviewBtn' => $showPreviewBtn,
             'shareUrl' => $shareUrl,
-            'tabs' => $tabs
+            'tabs' => $tabs,
+            'events' => $events
         ]);
     }
 

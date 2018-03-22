@@ -122,6 +122,7 @@ class DefaultMailer extends BaseMailer implements CampaignEmailSenderInterface
 
         foreach ($recipients as $recipient) {
             $toEmail = $this->renderObjectTemplateSafely($recipient->email, $object);
+
             $name = $recipient->firstName.' '.$recipient->lastName;
 
             /**

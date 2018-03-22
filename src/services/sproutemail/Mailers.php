@@ -184,8 +184,6 @@ class Mailers extends Component
 
     public function includeMailerModalResources()
     {
-        Craft::$app->getView()->registerCss('sprout-email/css/modal.css');
-
         $mailers = SproutBase::$app->mailers->getMailers();
 
         if (count($mailers)) {

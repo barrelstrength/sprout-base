@@ -20,6 +20,10 @@ class NotificationAsset extends AssetBundle
             'js/sproutmodal.js'
         ];
 
+        $this->css = [
+            'css/modal.css'
+        ];
+
         parent::init();
     }
 }
