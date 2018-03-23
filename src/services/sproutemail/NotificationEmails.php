@@ -15,6 +15,7 @@ use barrelstrength\sproutemail\SproutEmail;
 use craft\base\Component;
 use Craft;
 use craft\base\Element;
+use craft\helpers\ElementHelper;
 use craft\helpers\UrlHelper;
 use yii\base\Event;
 use craft\base\ElementInterface;
@@ -176,14 +177,11 @@ class NotificationEmails extends Component
      * @param NotificationEmail $notificationEmail
      * @param bool              $isSettingPage
      *
-     * @return NotificationEmail|bool
-     * @throws \InvalidArgumentException
-     * @throws \Throwable
+     * @return NotificationEmail|null
+     * @throws \Exception
      */
     public function saveNotification(NotificationEmail $notificationEmail, $isSettingPage = false)
     {
-        $result = false;
-
         $notificationEmailRecord = new NotificationEmail();
 
         if ($notificationEmail->id !== null) {
@@ -228,7 +226,7 @@ class NotificationEmails extends Component
             }
         }
 
-        return $result;
+        return null;
     }
 
     /**
@@ -730,5 +728,66 @@ class NotificationEmails extends Component
         }
 
         return $errors;
+    }
+
+    /**
+     * @param null $name
+     * @param null $handle
+     *
+     * @return NotificationEmail|null
+     * @throws \Exception
+     */
+    public function createNewNotification($name = null, $handle = null)
+    {
+        $currentPluginHandle = Craft::$app->request->getSegment(1);
+
+        $notification = new NotificationEmail();
+        $name = $name ?? 'Notification';
+        $handle = $handle ?? 'notification';
+
+        $title = $this->getFieldAsNew('name', $name) ;
+        $name  = $this->getFieldAsNew('name', $handle) ;
+
+        $notification->title       = $title;
+        $notification->subjectLine = $title;
+        $notification->pluginId = $currentPluginHandle;
+
+        $notification->name = $name;
+        $notification->slug = ElementHelper::createSlug($name);
+        $notification->template = 'sproutbase/sproutemail/notifications/_special/notification';
+        // Set default tab
+        $field = null;
+
+        if ($this->saveNotification($notification)) {
+
+            return $notification;
+        }
+
+        return null;
+    }
+
+    public function getFieldAsNew($field, $value)
+    {
+        $newField = null;
+        $i = 1;
+        $band = true;
+        do {
+            $newField = $field == 'handle' ? $value.$i : $value.' '.$i;
+            $form = $this->getFieldValue($field, $newField);
+            if ($form === null) {
+                $band = false;
+            }
+
+            $i++;
+        } while ($band);
+
+        return $newField;
+    }
+
+    public function getFieldValue($field, $value)
+    {
+        return NotificationEmailRecord::findOne([
+            $field => $value
+        ]);
     }
 }

@@ -35,6 +35,7 @@ class Install extends Migration
                     'eventId' => $this->string(),
                     'options' => $this->text(),
                     'subjectLine' => $this->string(),
+                    'body' => $this->text(),
                     'recipients' => $this->string(),
                     'listSettings' => $this->text(),
                     'fromName' => $this->string(),

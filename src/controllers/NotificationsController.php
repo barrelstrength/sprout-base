@@ -142,20 +142,32 @@ class NotificationsController extends Controller
         ]);
     }
 
-
     /**
-     * Renders the Edit Notification Email template
-     *
      * @param null                   $emailId
      * @param NotificationEmail|null $notificationEmail
      *
      * @return \yii\web\Response
+     * @throws \Exception
      * @throws \yii\base\Exception
      */
     public function actionEditNotificationEmailTemplate(
         $emailId = null, NotificationEmail $notificationEmail =
     null
     ) {
+        $currentPluginHandle = Craft::$app->request->getSegment(1);
+
+        // Immediately create a new Notification
+        if (Craft::$app->request->getSegment(4) == 'new') {
+            $notification = SproutBase::$app->notifications->createNewNotification();
+
+            if ($notification) {
+                $url = UrlHelper::cpUrl($currentPluginHandle .'/notifications/edit/'.$notification->id);
+                return $this->redirect($url);
+            } else {
+                throw new \Exception(Craft::t('sprout-base', 'Error creating Notification'));
+            }
+        }
+
         Craft::$app->getView()->registerAssetBundle(NotificationAsset::class);
 
         if (!$notificationEmail) {
