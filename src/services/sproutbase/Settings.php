@@ -21,7 +21,7 @@ class Settings extends Component
      * @param $plugin Plugin
      * @param $settings
      *
-     * @return bool
+     * @return \craft\base\Model
      * @throws \yii\db\Exception
      */
     public function saveSettings($plugin, $settings)
@@ -38,22 +38,31 @@ class Settings extends Component
 
         // Have namespace?
         $settings = $settings['settings'] ?? $settings;
+        $scenario = $settings['sprout-scenario'] ?? null;
 
         foreach ($pluginSettings->getAttributes() as $settingHandle => $value) {
             if (isset($settings[$settingHandle])) {
                 $pluginSettings->{$settingHandle} = $settings[$settingHandle] ?? $value;
             }
         }
+        // Set sprout scenario
+        if ($scenario){
+            $pluginSettings->setScenario($scenario);
+        }
+
+        if (!$pluginSettings->validate()){
+            return $pluginSettings;
+        }
 
         $settings = Json::encode($pluginSettings);
 
-        $affectedRows = Craft::$app->db->createCommand()->update('{{%plugins}}', [
+        Craft::$app->db->createCommand()->update('{{%plugins}}', [
             'settings' => $settings
         ], [
             'handle' => strtolower($plugin->handle)
         ])->execute();
 
-        return (bool)$affectedRows;
+        return $pluginSettings;
     }
 
 }

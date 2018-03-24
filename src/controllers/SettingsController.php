@@ -112,9 +112,10 @@ class SettingsController extends BaseController
         $this->requirePostRequest();
 
         // the submitted settings
-        $settings = Craft::$app->getRequest()->getBodyParam('settings');
+        $postSettings = Craft::$app->getRequest()->getBodyParam('settings');
+        $settings = SproutBase::$app->settings->saveSettings($this->plugin, $postSettings);
 
-        if (!SproutBase::$app->settings->saveSettings($this->plugin, $settings)) {
+        if ($settings->hasErrors()) {
             Craft::$app->getSession()->setError(Craft::t('sprout-base', 'Couldn’t save settings.'));
 
             Craft::$app->getUrlManager()->setRouteParams([
