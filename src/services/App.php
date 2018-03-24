@@ -9,6 +9,7 @@ namespace barrelstrength\sproutbase\services;
 
 use barrelstrength\sproutbase\services\sproutemail\Mailers;
 use barrelstrength\sproutbase\services\sproutemail\NotificationEmails;
+use barrelstrength\sproutbase\services\sproutimport\Themes;
 use barrelstrength\sproutbase\services\sproutreports\DataSources;
 use barrelstrength\sproutbase\services\sproutreports\Exports;
 use barrelstrength\sproutbase\services\sproutreports\ReportGroups;
@@ -22,6 +23,7 @@ use barrelstrength\sproutbase\services\sproutfields\EmailDropdown;
 use barrelstrength\sproutbase\services\sproutfields\Address;
 use barrelstrength\sproutbase\services\sproutbase\Settings;
 use barrelstrength\sproutbase\services\sproutbase\Common;
+use barrelstrength\sproutbase\services\sproutimport\Importers;
 use craft\base\Component;
 
 class App extends Component
@@ -97,6 +99,16 @@ class App extends Component
     public $mailers;
 
     /**
+     * @var Importers
+     */
+    public $importers;
+
+    /**
+     * @var Themes
+     */
+    public $themes;
+
+    /**
      * @var Common
      */
     public $common;
@@ -128,5 +140,9 @@ class App extends Component
         $this->reportGroups = new ReportGroups();
         $this->dataSources = new DataSources();
         $this->exports = new Exports();
+
+        // Sprout Import
+        $this->importers = new Importers();
+        $this->themes = new Themes();
     }
 }
