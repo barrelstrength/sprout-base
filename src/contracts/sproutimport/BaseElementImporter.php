@@ -7,6 +7,7 @@
 
 namespace barrelstrength\sproutbase\contracts\sproutimport;
 
+use barrelstrength\sproutbase\SproutBase;
 use barrelstrength\sproutimport\models\jobs\SeedJob;
 use Craft;
 use barrelstrength\sproutimport\SproutImport;
@@ -72,7 +73,10 @@ abstract class BaseElementImporter extends BaseImporter
         /**
          * @var $model Element
          */
-        $model = $this->processUpdateElement($model, $settings);
+        if ($existingElement = $this->getExistingElement($model, $settings))
+        {
+            $model = $existingElement;
+        }
 
         $authorId = null;
 
@@ -205,26 +209,43 @@ abstract class BaseElementImporter extends BaseImporter
     /**
      * Determine if we have any elements we should handle before handling the current Element
      *
-     * @param $model
+     * @param $element Element
      * @param $settings
      *
      * @return bool
      */
-    protected function processUpdateElement($model, $settings)
+    protected function getExistingElement($element, $settings)
     {
         if (!isset($settings['settings']['updateElement'])) {
-            return $model;
+            return null;
         }
 
-        $updateElement = $settings['settings']['updateElement'];
+        $updateElementSettings = $settings['settings']['updateElement'];
 
-        $element = SproutImport::$app->elementImporter->getModelByMatches($model, $updateElement);
+        $utilities = SproutImport::$app->utilities;
 
-        if ($element) {
-            return $element;
+        $matchBy = $utilities->getValueByKey('matchBy', $updateElementSettings);
+        $matchValue = $utilities->getValueByKey('matchValue', $updateElementSettings);
+
+        if ($matchBy && $matchValue) {
+            if (is_array($matchValue)) {
+                $matchValue = $matchValue[0];
+
+                if (count($matchValue) > 0) {
+                    $message = Craft::t('sprout-import', 'The updateElement key can only retrieve a single match. Array with multiple values was provided. Only the first value has been used to find a match: {matchValue}', [
+                        'matchValue' => $matchValue
+                    ]);
+
+                    $utilities->addError('invalid-match', $message);
+                }
+            }
+
+            $elementTypeName = Craft::$app->getElements()->getElementTypeByRefHandle($element::refHandle());
+
+            return SproutImport::$app->elementImporter->getElementFromImportSettings($elementTypeName, $updateElementSettings);
         }
 
-        return $model;
+        return null;
     }
 
     /**
