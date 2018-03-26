@@ -754,7 +754,7 @@ class NotificationEmails extends Component
 
         $notification->name = $name;
         $notification->slug = ElementHelper::createSlug($name);
-        $notification->template = 'sproutbase/sproutemail/notifications/_special/notification';
+        $notification->template = 'sprout-base/sproutemail/notifications/_special/notification';
         // Set default tab
         $field = null;
 

@@ -48,6 +48,8 @@ class Install extends Migration
                     'uid' => $this->uid()
                 ]
             );
+
+            $this->addForeignKey(null, $this->notificationEmailTable, ['id'], '{{%elements}}', ['id'], 'CASCADE', null);
         }
     }
 
