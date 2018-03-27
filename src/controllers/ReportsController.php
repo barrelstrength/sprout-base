@@ -8,8 +8,7 @@
 namespace barrelstrength\sproutbase\controllers;
 
 use barrelstrength\sproutbase\contracts\sproutreports\BaseDataSource;
-use barrelstrength\sproutbase\models\sproutreports\Report as ReportModel;
-use barrelstrength\sproutbase\models\sproutreports\Report;
+use barrelstrength\sproutreports\elements\Report;
 use barrelstrength\sproutbase\models\sproutreports\ReportGroup;
 use barrelstrength\sproutbase\records\sproutreports\Report as ReportRecord;
 use barrelstrength\sproutbase\SproutBase;
@@ -92,26 +91,24 @@ class ReportsController extends Controller
      */
     public function actionResultsIndex(Report $report = null, int $reportId = null)
     {
-        if ($report !== null) {
-            $reportModel = $report;
-        } else {
-            $reportModel = SproutBase::$app->reports->getReport($reportId);
+        if ($report === null) {
+            $report = SproutBase::$app->reports->getReport($reportId);
         }
 
-        if ($reportModel) {
+        if ($report) {
             $dataSource = $reportModel->getDataSource();
 
-            $labels = $dataSource->getDefaultLabels($reportModel);
+            $labels = $dataSource->getDefaultLabels($report);
 
             $variables['reportIndexUrl'] = $dataSource->getUrl();
             $variables['dataSource'] = null;
-            $variables['report'] = $reportModel;
+            $variables['report'] = $report;
             $variables['values'] = [];
             $variables['reportId'] = $reportId;
             $variables['redirectUrl'] = Craft::$app->getRequest()->getSegment(1).'/reports/view/'.$reportId;
 
             if ($dataSource) {
-                $values = $dataSource->getResults($reportModel);
+                $values = $dataSource->getResults($report);
 
                 if (empty($labels) && !empty($values)) {
                     $firstItemInArray = reset($values);
@@ -241,7 +238,8 @@ class ReportsController extends Controller
 
         $report = $this->prepareFromPost();
 
-        if (!SproutBase::$app->reports->saveReport($report)) {
+
+        if (!Craft::$app->getElements()->saveElement($report)) {
             Craft::$app->getSession()->setError(Craft::t('sprout-base', 'Couldn’t save report.'));
 
             // Send the report back to the template
@@ -383,31 +381,31 @@ class ReportsController extends Controller
         $reportId = $request->getBodyParam('id');
 
         if ($reportId && is_numeric($reportId)) {
-            $instance = SproutBase::$app->reports->getReport($reportId);
+            $report = SproutBase::$app->reports->getReport($reportId);
 
-            if (!$instance) {
-                $instance->addError('id', Craft::t('Could not find a report with id {reportId}', compact('reportId')));
+            if (!$report) {
+                $report->addError('id', Craft::t('Could not find a report with id {reportId}', compact('reportId')));
             }
         } else {
-            $instance = new ReportModel();
+            $report = new Report();
         }
 
         $settings = $request->getBodyParam('settings');
 
-        $instance->name = $request->getBodyParam('name');
-        $instance->hasNameFormat = $request->getBodyParam('hasNameFormat');
-        $instance->nameFormat = $request->getBodyParam('nameFormat');
-        $instance->handle = $request->getBodyParam('handle');
-        $instance->description = $request->getBodyParam('description');
-        $instance->settings = is_array($settings) ? $settings : [];
-        $instance->dataSourceId = $request->getBodyParam('dataSourceId');
-        $instance->enabled = $request->getBodyParam('enabled', false);
-        $instance->groupId = $request->getBodyParam('groupId', null);
+        $report->name = $request->getBodyParam('name');
+        $report->hasNameFormat = $request->getBodyParam('hasNameFormat');
+        $report->nameFormat = $request->getBodyParam('nameFormat');
+        $report->handle = $request->getBodyParam('handle');
+        $report->description = $request->getBodyParam('description');
+        $report->settings = is_array($settings) ? $settings : [];
+        $report->dataSourceId = $request->getBodyParam('dataSourceId');
+        $report->enabled = $request->getBodyParam('enabled', false);
+        $report->groupId = $request->getBodyParam('groupId', null);
 
-        $dataSource = $instance->getDataSource();
+        $dataSource = $report->getDataSource();
 
-        $instance->allowHtml = $request->getBodyParam('allowHtml', $dataSource->getDefaultAllowHtml());
+        $report->allowHtml = $request->getBodyParam('allowHtml', $dataSource->getDefaultAllowHtml());
 
-        return $instance;
+        return $report;
     }
 }

@@ -185,6 +185,18 @@ class DataSources extends Component
         return $dataSources;
     }
 
+    public function getDataSourcePlugins()
+    {
+        $query = new Query();
+
+        $dataSourcePlugins = $query->select('pluginId')
+            ->from(['{{%sproutreports_datasources}}'])
+            ->distinct()
+            ->all();
+
+        return $dataSourcePlugins;
+    }
+
     /**
      * Save attributes to datasources record table
      *
