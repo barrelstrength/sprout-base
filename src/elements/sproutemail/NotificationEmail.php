@@ -34,6 +34,7 @@ class NotificationEmail extends Element
     public $fieldLayoutId;
     public $send;
     public $preview;
+    public $body;
 
     const ENABLED = 'enabled';
     const PENDING = 'pending';
@@ -175,7 +176,7 @@ class NotificationEmail extends Element
     public function getTableAttributeHtml(string $attribute): string
     {
         if ($attribute === 'send') {
-            return Craft::$app->getView()->renderTemplate('sprout-base/sproutemail/notifications/_prepare-link', [
+            return Craft::$app->getView()->renderTemplate('sprout-base/sproutemail/notifications/_partials/prepare-link', [
                 'notification' => $this
             ]);
         }
@@ -190,7 +191,7 @@ class NotificationEmail extends Element
             }
             $pluginHandle = Craft::$app->request->getBodyParam('criteria.base') ?: 'sprout-email';
 
-            return Craft::$app->getView()->renderTemplate('sprout-base/sproutemail/notifications/_preview-links', [
+            return Craft::$app->getView()->renderTemplate('sprout-base/sproutemail/notifications/_partials/preview-links', [
                 'email'        => $this,
                 'pluginHandle' => $pluginHandle,
                 'shareUrl'     => $shareUrl,
@@ -246,6 +247,7 @@ class NotificationEmail extends Element
         $notificationEmailRecord->eventId = $this->eventId;
         $notificationEmailRecord->options = $this->options;
         $notificationEmailRecord->subjectLine = $this->subjectLine;
+        $notificationEmailRecord->body = $this->body;
         $notificationEmailRecord->fieldLayoutId = $this->fieldLayoutId;
         $notificationEmailRecord->fromName = $this->fromName;
         $notificationEmailRecord->fromEmail = $this->fromEmail;
@@ -358,14 +360,14 @@ class NotificationEmail extends Element
 
     /**
      * @return array|mixed
-     * @throws \HttpException
+     * @throws \Exception
      */
     public function route()
     {
-        // Only expose notification emails that have tokens and allow Live Preview requests
+         //Only expose notification emails that have tokens and allow Live Preview requests
         if (!Craft::$app->request->getParam(Craft::$app->config->getGeneral()->tokenParam)
             && !Craft::$app->getRequest()->getIsLivePreview()) {
-            throw new \HttpException(404);
+            throw new \Exception(404);
         }
         $extension = null;
 
@@ -373,21 +375,30 @@ class NotificationEmail extends Element
             $extension = in_array(strtolower($type), ['txt', 'text']) ? '.txt' : null;
         }
 
-        if (!Craft::$app->getView()->doesTemplateExist($this->template.$extension)) {
-            $templateName = $this->template.$extension;
+        $templateName = $this->template.$extension;
 
-            SproutEmail::$app->utilities->addError(Craft::t('sprout-base', "The template '{templateName}' could not be found", [
+        if (empty($this->template)) {
+            $templatePath = Craft::getAlias('@sproutbase/templates/');
+
+            Craft::$app->getView()->setTemplatesPath($templatePath);
+
+            $templateName = 'sproutemail/notifications/_special/notification'.$extension;
+        }
+
+        if (!Craft::$app->getView()->doesTemplateExist($templateName)) {
+
+            SproutBase::$app->common->addError(Craft::t('sprout-base', "The template '{templateName}' could not be found", [
                 'templateName' => $templateName
             ]));
         }
 
-        $event = SproutEmail::$app->notificationEmails->getEventById($this->eventId);
+        $event = SproutBase::$app->notifications->getEventById($this->eventId);
 
         $object = $event ? $event->getMockedParams() : null;
 
         return [
             'templates/render', [
-                'template' => $this->template.$extension,
+                'template' => $templateName,
                 'variables' => [
                     'email' => $this,
                     'object' => $object

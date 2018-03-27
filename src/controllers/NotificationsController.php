@@ -59,7 +59,7 @@ class NotificationsController extends Controller
                 $notificationEmail = new NotificationEmail();
             }
         }
-
+        
         return $this->renderTemplate('sprout-base/sproutemail/notifications/_setting', [
             'emailId' => $emailId,
             'notificationEmail' => $notificationEmail,
@@ -183,7 +183,7 @@ class NotificationsController extends Controller
         $siteTemplateExists = $this->doesSiteTemplateExist($notificationEmail->template);
         $isPluginActive = Craft::$app->plugins->getPlugin('sprout-email');
 
-        if (!$isMobileBrowser && $siteTemplateExists && $isPluginActive) {
+        if (!$isMobileBrowser && $isPluginActive) {
             $showPreviewBtn = true;
 
             Craft::$app->getView()->registerJs(
@@ -201,7 +201,7 @@ class NotificationsController extends Controller
             );
 
             if ($notificationEmail->id && $notificationEmail->getUrl()) {
-                $shareUrl = UrlHelper::actionUrl('sprout-email/notification-emails/share-notification-email', [
+                $shareUrl = UrlHelper::actionUrl('sprout-base/notifications/share-notification-email', [
                     'notificationId' => $notificationEmail->id,
                 ]);
             }
@@ -270,8 +270,9 @@ class NotificationsController extends Controller
         $notificationEmail = $this->notification;
 
         $notificationEmail->subjectLine = Craft::$app->getRequest()->getBodyParam('subjectLine');
-        $notificationEmail->slug = Craft::$app->getRequest()->getBodyParam('slug');
-        $notificationEmail->enabled = Craft::$app->getRequest()->getBodyParam('enabled');
+        $notificationEmail->slug        = Craft::$app->getRequest()->getBodyParam('slug');
+        $notificationEmail->enabled     = Craft::$app->getRequest()->getBodyParam('enabled');
+        $notificationEmail->body        = Craft::$app->getRequest()->getBodyParam('body');
 
         $notificationEmail->listSettings = Craft::$app->getRequest()->getBodyParam('lists');
 

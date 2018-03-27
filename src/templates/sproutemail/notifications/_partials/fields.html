@@ -1,4 +1,5 @@
 {% from "_includes/forms" import textField %}
+{% from "_includes/forms" import textareaField %}
 
 {{ textField({
     label: "Subject Line"|t('sprout-base'),
@@ -10,6 +11,17 @@
     autofocus: true,
     required: true,
     maxlength: 255
+}) }}
+
+{{ textareaField({
+    label: "Body"|t('sprout-base'),
+    id: 'body',
+    name: 'body',
+    value: notificationEmail.body,
+    errors:  notificationEmail is defined ? notificationEmail.getErrors('body') : null,
+    autofocus: true,
+    required: true,
+    rows: 8
 }) }}
 
 <div>
