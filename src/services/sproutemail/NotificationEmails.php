@@ -30,6 +30,7 @@ class NotificationEmails extends Component
     use TemplateTrait;
 
     const EVENT_REGISTER_EMAIL_EVENTS = 'defineSproutEmailEvents';
+    const DEFAULT_TEMPLATE = 'sprout-base/sproutemail/notifications/_special/notification';
 
     /**
      * @var BaseEvent[]
@@ -638,11 +639,41 @@ class NotificationEmails extends Component
             echo Craft::t('sprout-base', 'Notification Email cannot display. The Event setting must be set.');
 
             // End the request
+
             Craft::$app->end();
         }
 
+        $event->setOptions($notificationEmail->options);
+
         $email = new Message();
+
         $template = $notificationEmail->template;
+
+        if (empty($notificationEmail->template)) {
+            /**
+             * Get the templates path for the sprout base default notification template
+             */
+            $sproutBase = Craft::getAlias('@sproutbase/templates/');
+
+            $this->setTemplatesPath($sproutBase);
+
+            $template = str_replace('sprout-base', '', NotificationEmails::DEFAULT_TEMPLATE);
+        }
+
+        // The getBodyParam is for livePreviewNotification to update on change
+        $subjectLine = Craft::$app->getRequest()->getBodyParam('subjectLine');
+        if ($subjectLine) {
+            $notificationEmail->subjectLine = $subjectLine;
+        }
+
+        $body = Craft::$app->getRequest()->getBodyParam('body');
+        if ($body) {
+            $notificationEmail->body = $body;
+        }
+
+        $fieldsLocation = Craft::$app->getRequest()->getParam('fieldsLocation', 'fields');
+        $notificationEmail->setFieldValuesFromRequest($fieldsLocation);
+
         $fileExtension = ($type != null && $type == 'text') ? 'txt' : 'html';
 
         $email = $this->renderEmailTemplates($email, $template, $notificationEmail);
@@ -690,7 +721,7 @@ class NotificationEmails extends Component
 
         $event = $this->getEventById($notificationEmail->eventId);
 
-        $template = $notificationEmail->template;
+        $template = $notificationEmail->template ?: static::DEFAULT_TEMPLATE;
 
         if ($event === null) {
             $errors[] = Craft::t('sprout-base', 'No Event is selected. <a href="{url}">Edit Notification</a>.', [
@@ -754,7 +785,7 @@ class NotificationEmails extends Component
 
         $notification->name = $name;
         $notification->slug = ElementHelper::createSlug($name);
-        $notification->template = 'sprout-base/sproutemail/notifications/_special/notification';
+
         // Set default tab
         $field = null;
 

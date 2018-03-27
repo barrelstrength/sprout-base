@@ -5,6 +5,7 @@ namespace barrelstrength\sproutbase\elements\sproutemail;
 use barrelstrength\sproutbase\base\BaseSproutTrait;
 use barrelstrength\sproutbase\elements\sproutemail\actions\DeleteNotification;
 use barrelstrength\sproutbase\mailers\DefaultMailer;
+use barrelstrength\sproutbase\services\sproutemail\NotificationEmails;
 use barrelstrength\sproutbase\SproutBase;
 use barrelstrength\sproutbase\web\assets\sproutemail\NotificationAsset;
 use barrelstrength\sproutbase\elements\sproutemail\db\NotificationEmailQuery;
@@ -381,8 +382,8 @@ class NotificationEmail extends Element
             $templatePath = Craft::getAlias('@sproutbase/templates/');
 
             Craft::$app->getView()->setTemplatesPath($templatePath);
-
-            $templateName = 'sproutemail/notifications/_special/notification'.$extension;
+            $templateName = str_replace('sprout-base', '', NotificationEmails::DEFAULT_TEMPLATE);
+            $templateName = $templateName.$extension;
         }
 
         if (!Craft::$app->getView()->doesTemplateExist($templateName)) {

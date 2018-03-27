@@ -18,6 +18,7 @@ use craft\mail\Message;
 
 trait TemplateTrait
 {
+    protected $templatesPath = null;
     /**
      * Returns whether or not a site template exists
      *
@@ -77,6 +78,11 @@ trait TemplateTrait
         return $tabs;
     }
 
+    public function setTemplatesPath($path)
+    {
+        $this->templatesPath = $path;
+    }
+
     /**
      * @param       $template
      * @param array $variables
@@ -98,7 +104,9 @@ trait TemplateTrait
 
         $oldPath = Craft::$app->getView()->getTemplatesPath();
 
-        Craft::$app->getView()->setTemplatesPath(Craft::$app->getPath()->getSiteTemplatesPath());
+        $templatesPath = $this->templatesPath ?: Craft::$app->getPath()->getSiteTemplatesPath();
+
+        Craft::$app->getView()->setTemplatesPath($templatesPath);
 
         try {
             $renderedTemplate = Craft::$app->getView()->renderTemplate($template, $variables);
@@ -111,6 +119,8 @@ trait TemplateTrait
             }
 
             SproutBase::$app->common->addError('template', $message);
+
+            return $message;
         }
 
         Craft::$app->getView()->setTemplatesPath($oldPath);
