@@ -562,7 +562,7 @@ class NotificationEmails extends Component
                 ]
             );
         } catch (\Exception $e) {
-            SproutEmail::$app->utilities->addError('notification-mock-error', $e->getMessage());
+            SproutBase::$app->common->addError('notification-mock-error', $e->getMessage());
 
             return Response::createErrorModalResponse('sprout-base/sproutemail/_modals/response', [
                 'email' => $notificationEmail,

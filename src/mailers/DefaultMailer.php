@@ -204,7 +204,7 @@ class DefaultMailer extends BaseMailer implements CampaignEmailSenderInterface
                 throw new \InvalidArgumentException(Craft::t('sprout-base', 'Empty recipients.'));
             }
 
-            $result = SproutEmail::$app->getValidAndInvalidRecipients($recipients);
+            $result = $this->getValidAndInvalidRecipients($recipients);
 
             $invalidRecipients = $result['invalid'];
             $validRecipients = $result['valid'];
@@ -223,16 +223,16 @@ class DefaultMailer extends BaseMailer implements CampaignEmailSenderInterface
             foreach ($recipients as $recipient) {
                 try {
                     $params['recipient'] = $recipient;
-                    $body = SproutEmail::$app->renderSiteTemplateIfExists($campaignType->template.'.txt', $params);
+                    $body = $this->renderSiteTemplateIfExists($campaignType->template.'.txt', $params);
 
                     $email->setTextBody($body);
-                    $htmlBody = SproutEmail::$app->renderSiteTemplateIfExists($campaignType->template, $params);
+                    $htmlBody = $this->renderSiteTemplateIfExists($campaignType->template, $params);
 
                     $email->setHtmlBody($htmlBody);
                     $name = $recipient->firstName.' '.$recipient->lastName;
                     $email->setTo([$recipient->email => $name]);
 
-                    SproutEmail::$app->sendEmail($email);
+                    SproutBase::$app->mailers->sendEmail($email);
                 } catch (\Exception $e) {
                     throw $e;
                 }
@@ -250,7 +250,7 @@ class DefaultMailer extends BaseMailer implements CampaignEmailSenderInterface
                 ]
             );
         } catch (\Exception $e) {
-            SproutEmail::$app->utilities->addError('fail-campaign-email', $e->getMessage());
+            SproutBase::$app->common->addError('fail-campaign-email', $e->getMessage());
 
             return Response::createErrorModalResponse(
                 'sprout-base/sproutemail/_modals/response',
@@ -397,7 +397,7 @@ class DefaultMailer extends BaseMailer implements CampaignEmailSenderInterface
 
             $recipients = Craft::$app->getRequest()->getBodyParam('recipients');
 
-            $result = SproutEmail::$app->getValidAndInvalidRecipients($recipients);
+            $result = $this->getValidAndInvalidRecipients($recipients);
 
             $invalidRecipients = $result['invalid'];
             $validRecipients = $result['valid'];
