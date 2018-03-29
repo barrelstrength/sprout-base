@@ -29,6 +29,7 @@ class Reports extends Component
 
         $report = new Report();
 
+        $report->id = $reportRecord->id;
         $report->dataSourceId = $reportRecord->dataSourceId;
         $report->groupId = $reportRecord->groupId;
         $report->name = $reportRecord->name;

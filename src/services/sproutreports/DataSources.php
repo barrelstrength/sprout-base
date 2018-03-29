@@ -11,6 +11,7 @@ use barrelstrength\sproutbase\contracts\sproutreports\BaseDataSource;
 use barrelstrength\sproutbase\models\sproutreports\DataSource as DataSourceModel;
 use barrelstrength\sproutbase\models\sproutreports\DataSource;
 use barrelstrength\sproutbase\records\sproutreports\DataSource as DataSourceRecord;
+use barrelstrength\sproutimport\integrations\sproutimport\fields\Categories;
 use yii\base\Component;
 use craft\events\RegisterComponentTypesEvent;
 use craft\db\Query;
@@ -29,6 +30,7 @@ class DataSources extends Component
      */
     const EVENT_REGISTER_DATA_SOURCES = 'registerSproutReportsDataSources';
 
+    private $dataSources;
     /**
      * @param int $dataSourceId
      *
@@ -100,6 +102,8 @@ class DataSources extends Component
             $dataSourceModel = new DataSourceModel();
             $dataSourceModel->type = $dataSourceClass;
             $dataSourceModel->allowNew = 1;
+            // Set all pre-built class to sprout-reports pluginId
+            $dataSourceModel->pluginId = 'sprout-reports';
 
             $this->saveDataSource($dataSourceModel);
 
@@ -147,15 +151,21 @@ class DataSources extends Component
             $dataSources[$dataSourceType] = new $dataSourceType;
         }
 
+        $this->dataSources = $dataSources;
+
         /**
          * Add the additional data we store in the database to the Data Source classes
          *
          * @var $dataSourceRecord DataSourceRecord
          */
         foreach ($dataSourceRecords as $dataSourceRecord) {
-            if (class_exists($dataSourceRecord->type) && $dataSourceRecord->type === get_class($dataSources[$dataSourceRecord->type])) {
-                $dataSources[$dataSourceRecord->type]->dataSourceId = $dataSourceRecord->id;
-                $dataSources[$dataSourceRecord->type]->allowNew = $dataSourceRecord->allowNew;
+            try {
+                if ($this->isDataSourceExists($dataSourceRecord)) {
+                    $dataSources[$dataSourceRecord->type]->dataSourceId = $dataSourceRecord->id;
+                    $dataSources[$dataSourceRecord->type]->allowNew = $dataSourceRecord->allowNew;
+                }
+            } catch (\Exception $exception) {
+                Craft::dd($exception->getMessage());
             }
         }
 
@@ -183,6 +193,13 @@ class DataSources extends Component
         });
 
         return $dataSources;
+    }
+
+    private function isDataSourceExists($dataSourceRecord)
+    {
+       return class_exists($dataSourceRecord->type)
+           AND isset($this->dataSources[$dataSourceRecord->type])
+           AND $dataSourceRecord->type === get_class($this->dataSources[$dataSourceRecord->type]);
     }
 
     public function getDataSourcePlugins()
@@ -221,6 +238,7 @@ class DataSources extends Component
             $dataSourceRecord->type = $dataSourceModel->type;
         }
 
+        $dataSourceRecord->pluginId = $dataSourceModel->pluginId;
         $dataSourceRecord->allowNew = $dataSourceModel->allowNew;
 
         $transaction = Craft::$app->getDb()->beginTransaction();

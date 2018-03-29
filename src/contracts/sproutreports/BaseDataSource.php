@@ -7,6 +7,7 @@
 
 namespace barrelstrength\sproutbase\contracts\sproutreports;
 
+use barrelstrength\sproutbase\base\BaseSproutTrait;
 use barrelstrength\sproutbase\SproutBase;
 use barrelstrength\sproutreports\elements\Report;
 use Craft;
@@ -20,6 +21,7 @@ use craft\helpers\UrlHelper;
  */
 abstract class BaseDataSource
 {
+    use BaseSproutTrait;
     /**
      * @var int
      */
@@ -74,16 +76,6 @@ abstract class BaseDataSource
         }
 
         $this->report = $report;
-    }
-
-    /**
-     * Returns the Plugin Class of the plugin that provided the Data Source
-     *
-     * @return \craft\base\PluginInterface|null|string
-     */
-    final public function getPlugin()
-    {
-        return $this->plugin;
     }
 
     /**
