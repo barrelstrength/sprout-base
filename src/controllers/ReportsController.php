@@ -8,7 +8,7 @@
 namespace barrelstrength\sproutbase\controllers;
 
 use barrelstrength\sproutbase\contracts\sproutreports\BaseDataSource;
-use barrelstrength\sproutreports\elements\Report;
+use barrelstrength\sproutbase\elements\sproutreports\Report;
 use barrelstrength\sproutbase\models\sproutreports\ReportGroup;
 use barrelstrength\sproutbase\records\sproutreports\Report as ReportRecord;
 use barrelstrength\sproutbase\SproutBase;
@@ -229,7 +229,9 @@ class ReportsController extends Controller
      * Saves a report query to the database
      *
      * @return null|\yii\web\Response
-     * @throws \Exception
+     * @throws \Throwable
+     * @throws \craft\errors\ElementNotFoundException
+     * @throws \yii\base\Exception
      * @throws \yii\web\BadRequestHttpException
      */
     public function actionSaveReport()

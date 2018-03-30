@@ -1,5 +1,5 @@
 {% extends "sprout-base/sproutbase/_layouts/elementindex" %}
-{% set elementType = 'barrelstrength\\sproutreports\\elements\\Report' %}
+{% set elementType = 'barrelstrength\\sproutbase\\elements\\sproutreports\\Report' %}
 
 {#{% import 'sprout-base/sproutbase/_includes/sproutcp' as sprout %}#}
 
@@ -44,7 +44,24 @@
 
 {% endblock %}
 
+{% block initJs %}
+    // Pass segment to the NotificationEmailQuery class to filter notification entries
+    var pluginHandle = {'pluginHandle': '{{ craft.request.segment(1) }}'};
+    var criteria = Craft.defaultIndexCriteria
 
+    var hideSidebar = false;
+    if (pluginHandle.pluginHandle != 'sprout-reports') {
+        hideSidebar = true;
+        criteria = Object.assign(Craft.defaultIndexCriteria, pluginHandle);
+    }
+
+    Craft.elementIndex = Craft.createElementIndex('{{ elementType|e("js") }}', $('#main'), {
+        context:        '{{ context }}',
+        storageKey:     'elementindex.{{ elementType }}',
+        criteria:       criteria,
+        hideSidebar:    hideSidebar
+    });
+{% endblock %}
 
 
 

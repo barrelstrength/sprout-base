@@ -9,7 +9,7 @@ namespace barrelstrength\sproutbase\contracts\sproutreports;
 
 use barrelstrength\sproutbase\base\BaseSproutTrait;
 use barrelstrength\sproutbase\SproutBase;
-use barrelstrength\sproutreports\elements\Report;
+use barrelstrength\sproutbase\elements\sproutreports\Report;
 use Craft;
 use barrelstrength\sproutbase\records\sproutreports\DataSource;
 use craft\helpers\UrlHelper;

@@ -7,7 +7,7 @@
 
 namespace barrelstrength\sproutbase\services\sproutreports;
 
-use barrelstrength\sproutreports\elements\Report;
+use barrelstrength\sproutbase\elements\sproutreports\Report;
 use barrelstrength\sproutreports\SproutReports;
 use Craft;
 use craft\db\Query;
