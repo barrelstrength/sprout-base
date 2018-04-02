@@ -189,10 +189,10 @@ class NotificationsController extends Controller
             Craft::$app->getView()->registerJs(
                 'Craft.LivePreview.init('.Json::encode(
                     [
-                        'fields' => '#subjectLine-field, #title-field, #fields > div > div > .field',
+                        'fields' => '#subjectLine-field, #body-field, #title-field, #fields > div > div > .field',
                         'extraFields' => '#settings',
                         'previewUrl' => $notificationEmail->getUrl(),
-                        'previewAction' => 'sprout-email/notification-emails/live-preview-notification-email',
+                        'previewAction' => 'sprout-base/notifications/live-preview-notification-email',
                         'previewParams' => [
                             'notificationId' => $notificationEmail->id,
                         ]
@@ -556,5 +556,18 @@ class NotificationsController extends Controller
         $this->requireToken();
 
         SproutBase::$app->notifications->getPreviewNotificationEmailById($notificationId, $type);
+    }
+
+    /**
+     * Renders a Notification Email for Live Preview
+     *
+     * @throws \yii\base\Exception
+     * @throws \yii\base\ExitException
+     */
+    public function actionLivePreviewNotificationEmail()
+    {
+        $notificationId = Craft::$app->getRequest()->getBodyParam('notificationId');
+
+        SproutBase::$app->notifications->getPreviewNotificationEmailById($notificationId);
     }
 }
