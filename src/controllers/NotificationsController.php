@@ -60,7 +60,7 @@ class NotificationsController extends Controller
             }
         }
         
-        return $this->renderTemplate('sprout-base/sproutemail/notifications/_setting', [
+        return $this->renderTemplate('sprout-base/sproutemail/notifications/_fieldlayout', [
             'emailId' => $emailId,
             'notificationEmail' => $notificationEmail,
             'isNewNotificationEmail' => $isNewNotificationEmail
@@ -180,7 +180,7 @@ class NotificationsController extends Controller
         $shareUrl = null;
 
         $isMobileBrowser = Craft::$app->getRequest()->isMobileBrowser(true);
-        $siteTemplateExists = $this->doesSiteTemplateExist($notificationEmail->template);
+//        $siteTemplateExists = $this->doesSiteTemplateExist($notificationEmail->template);
         $isPluginActive = Craft::$app->plugins->getPlugin('sprout-email');
 
         if (!$isMobileBrowser && $isPluginActive) {
