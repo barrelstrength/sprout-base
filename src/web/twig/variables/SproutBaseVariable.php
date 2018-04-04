@@ -34,4 +34,16 @@ class SproutBaseVariable
     {
         return SproutBase::$app->notifications->getNotificationEmailById($id);
     }
+
+    /**
+     * Return countries for Phone Field
+     *
+     * @return array
+     */
+    public function getCountries()
+    {
+        $countries = SproutBase::$app->phone->getCountries();
+
+        return $countries;
+    }
 }
