@@ -7,6 +7,7 @@
 
 namespace barrelstrength\sproutbase\services;
 
+use barrelstrength\sproutbase\services\sproutbase\Template;
 use barrelstrength\sproutbase\services\sproutemail\Mailers;
 use barrelstrength\sproutbase\services\sproutemail\NotificationEmails;
 use barrelstrength\sproutbase\services\sproutimport\Themes;
@@ -114,6 +115,11 @@ class App extends Component
     public $common;
 
     /**
+     * @var Template
+     */
+    public $template;
+
+    /**
      * @inheritdoc
      */
     public function init()
@@ -144,5 +150,7 @@ class App extends Component
         // Sprout Import
         $this->importers = new Importers();
         $this->themes = new Themes();
+
+        $this->template = new Template();
     }
 }
