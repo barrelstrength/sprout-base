@@ -31,7 +31,7 @@ class Install extends Migration
                     'id' => $this->primaryKey(),
                     'pluginId' => $this->string(),
                     'name' => $this->string()->notNull(),
-                    'template' => $this->string()->notNull(),
+                    'template' => $this->string(),
                     'eventId' => $this->string(),
                     'options' => $this->text(),
                     'subjectLine' => $this->string(),

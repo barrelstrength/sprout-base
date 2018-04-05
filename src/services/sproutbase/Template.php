@@ -30,7 +30,7 @@ class Template extends Component
     /**
      * @return array
      */
-    public function getTemplateOptions($templates)
+    public function getTemplateOptions($templates, $pluginName = '')
     {
         $templateIds = [];
         $options = [
@@ -48,7 +48,12 @@ class Template extends Component
             $templateIds[] = $template->getTemplateId();
         }
 
-        $templateFolder = $this->templateOverridesFolder;
+        $templateFolder = '';
+        if ($pluginName != '') {
+            $plugin = Craft::$app->getPlugins()->getPlugin($pluginName);
+            $settings = $plugin->getSettings();
+            $templateFolder = $settings->templateFolderOverride;
+        }
 
         $options[] = [
             'optgroup' => Craft::t('sprout-base', 'Custom Template Folder')

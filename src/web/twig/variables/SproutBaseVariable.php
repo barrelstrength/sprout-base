@@ -34,4 +34,9 @@ class SproutBaseVariable
     {
         return SproutBase::$app->notifications->getNotificationEmailById($id);
     }
+
+    public function getEmailTemplateOptions()
+    {
+        return SproutBase::$app->sproutEmail->getTemplateOptions();
+    }
 }

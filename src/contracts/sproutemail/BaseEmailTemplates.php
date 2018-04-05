@@ -1,6 +1,6 @@
 <?php
 
-namespace barrelstrength\sproutbase\sproutemail\contracts;
+namespace barrelstrength\sproutbase\contracts\sproutemail;
 
 use Craft;
 
@@ -33,7 +33,7 @@ abstract class BaseEmailTemplates
         $pluginHandleWithoutSpaces = str_replace('-', '', $pluginHandle);
 
         $captchaClass = (new \ReflectionClass($this))->getShortName();
-
+        $pluginHandleWithoutSpaces = $pluginHandleWithoutSpaces ?: 'sproutemail';
         $templateId = $pluginHandleWithoutSpaces.'-'.$captchaClass;
 
         $this->templateId = strtolower($templateId);
@@ -54,6 +54,13 @@ abstract class BaseEmailTemplates
      * @return string
      */
     abstract public function getPath();
+
+    /**
+     * The base path where your email templates exist
+     *
+     * @return string
+     */
+    abstract public function getBasePath();
 
     /**
      * Adds pre-defined options for css classes.

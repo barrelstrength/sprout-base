@@ -653,11 +653,11 @@ class NotificationEmails extends Component
             /**
              * Get the templates path for the sprout base default notification template
              */
-            $sproutBase = Craft::getAlias('@sproutbase/templates/');
+            $template = SproutBase::$app->sproutEmail->getTemplateOverride();
 
-            $this->setTemplatesPath($sproutBase);
+            $this->setTemplatesPath($template->getBasePath());
 
-            $template = str_replace('sprout-base', '', NotificationEmails::DEFAULT_TEMPLATE);
+            $template = $template->getPath();
         }
 
         // The getBodyParam is for livePreviewNotification to update on change
@@ -721,7 +721,10 @@ class NotificationEmails extends Component
 
         $event = $this->getEventById($notificationEmail->eventId);
 
-        $template = $notificationEmail->template ?: static::DEFAULT_TEMPLATE;
+        $templateObj = SproutBase::$app->sproutEmail->getTemplateOverride();
+        $this->setTemplatesPath($templateObj->getBasePath());
+        // @todo to be fixed
+        $template = $notificationEmail->template ?: $templateObj->getPath();
 
         if ($event === null) {
             $errors[] = Craft::t('sprout-base', 'No Event is selected. <a href="{url}">Edit Notification</a>.', [

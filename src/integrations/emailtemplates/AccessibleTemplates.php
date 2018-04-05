@@ -2,7 +2,7 @@
 
 namespace barrelstrength\sproutbase\integrations\emailtemplates;
 
-use barrelstrength\sproutbase\sproutemail\contracts\BaseEmailTemplates;
+use barrelstrength\sproutbase\contracts\sproutemail\BaseEmailTemplates;
 use Craft;
 
 /**
@@ -16,6 +16,11 @@ class AccessibleTemplates extends BaseEmailTemplates
     public function getName()
     {
         return Craft::t('sprout-base', 'Accessible Templates (Sprout, Default)');
+    }
+
+    public function getBasePath()
+    {
+        return Craft::getAlias('@sproutbase/templates/');
     }
 
     /**

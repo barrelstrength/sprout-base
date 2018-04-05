@@ -180,7 +180,7 @@ class NotificationsController extends Controller
         $shareUrl = null;
 
         $isMobileBrowser = Craft::$app->getRequest()->isMobileBrowser(true);
-        $siteTemplateExists = $this->doesSiteTemplateExist($notificationEmail->template);
+
         $isPluginActive = Craft::$app->plugins->getPlugin('sprout-email');
 
         if (!$isMobileBrowser && $isPluginActive) {

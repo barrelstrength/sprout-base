@@ -9,7 +9,10 @@ namespace barrelstrength\sproutbase;
 
 use barrelstrength\sproutbase\base\BaseSproutTrait;
 use barrelstrength\sproutbase\events\RegisterMailersEvent;
+use barrelstrength\sproutbase\integrations\emailtemplates\AccessibleTemplates;
+use barrelstrength\sproutbase\integrations\emailtemplates\BasicTemplates;
 use barrelstrength\sproutbase\mailers\DefaultMailer;
+use barrelstrength\sproutbase\services\sproutemail\Email;
 use barrelstrength\sproutbase\services\sproutemail\Mailers;
 use barrelstrength\sproutbase\web\twig\variables\SproutBaseVariable;
 use craft\web\Application;
@@ -124,6 +127,11 @@ class SproutBase extends Module
         // Register Sprout Email Mailers
         Event::on(Mailers::class, Mailers::EVENT_REGISTER_MAILERS, function(RegisterMailersEvent $event) {
             $event->mailers[] = new DefaultMailer();
+        });
+
+        Event::on(Email::class, Email::EVENT_REGISTER_EMAIL_TEMPLATES, function(Event $event) {
+            $event->types[] = BasicTemplates::class;
+            $event->types[] = AccessibleTemplates::class;
         });
     }
 }

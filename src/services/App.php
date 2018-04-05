@@ -26,6 +26,7 @@ use barrelstrength\sproutbase\services\sproutbase\Settings;
 use barrelstrength\sproutbase\services\sproutbase\Common;
 use barrelstrength\sproutbase\services\sproutimport\Importers;
 use craft\base\Component;
+use barrelstrength\sproutbase\services\sproutemail\Email as SproutEmail;
 
 class App extends Component
 {
@@ -120,6 +121,11 @@ class App extends Component
     public $template;
 
     /**
+     * @var SproutEmail
+     */
+    public $sproutEmail;
+
+    /**
      * @inheritdoc
      */
     public function init()
@@ -151,6 +157,7 @@ class App extends Component
         $this->importers = new Importers();
         $this->themes = new Themes();
 
-        $this->template = new Template();
+        $this->template    = new Template();
+        $this->sproutEmail = new SproutEmail();
     }
 }
