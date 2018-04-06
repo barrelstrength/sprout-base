@@ -17,6 +17,7 @@ use Craft;
 use craft\base\Element;
 use craft\helpers\ElementHelper;
 use craft\helpers\UrlHelper;
+use craft\web\View;
 use yii\base\Event;
 use craft\base\ElementInterface;
 
@@ -654,10 +655,6 @@ class NotificationEmails extends Component
              * Get the templates path for the sprout base default notification template
              */
             $template = SproutBase::$app->sproutEmail->getTemplateOverride();
-
-            $this->setTemplatesPath($template->getBasePath());
-
-            $template = $template->getPath();
         }
 
         // The getBodyParam is for livePreviewNotification to update on change
@@ -721,10 +718,9 @@ class NotificationEmails extends Component
 
         $event = $this->getEventById($notificationEmail->eventId);
 
-        $templateObj = SproutBase::$app->sproutEmail->getTemplateOverride();
-        $this->setTemplatesPath($templateObj->getBasePath());
-        // @todo to be fixed
-        $template = $notificationEmail->template ?: $templateObj->getPath();
+        $templateOverride = SproutBase::$app->sproutEmail->getTemplateOverride();
+
+        $template = $notificationEmail->template ?: $templateOverride;
 
         if ($event === null) {
             $errors[] = Craft::t('sprout-base', 'No Event is selected. <a href="{url}">Edit Notification</a>.', [
@@ -760,6 +756,8 @@ class NotificationEmails extends Component
                 }
             }
         }
+
+        Craft::$app->getView()->setTemplateMode(View::TEMPLATE_MODE_CP);
 
         return $errors;
     }

@@ -381,11 +381,7 @@ class NotificationEmail extends Element
         if (empty($this->template)) {
             $template = SproutBase::$app->sproutEmail->getTemplateOverride();
 
-            Craft::$app->getView()->setTemplatesPath($template->getBasePath());
-
-            $path = $template->getPath();
-
-            $templateName = $path.$extension;
+            $templateName = $template.$extension;
         }
 
         if (!Craft::$app->getView()->doesTemplateExist($templateName)) {

@@ -78,11 +78,6 @@ trait TemplateTrait
         return $tabs;
     }
 
-    public function setTemplatesPath($path)
-    {
-        $this->templatesPath = $path;
-    }
-
     /**
      * @param       $template
      * @param array $variables
@@ -102,12 +97,6 @@ trait TemplateTrait
             return $renderedTemplate;
         }
 
-        $oldPath = Craft::$app->getView()->getTemplatesPath();
-
-        $templatesPath = $this->templatesPath ?: Craft::$app->getPath()->getSiteTemplatesPath();
-
-        Craft::$app->getView()->setTemplatesPath($templatesPath);
-
         try {
             $renderedTemplate = Craft::$app->getView()->renderTemplate($template, $variables);
         } catch (\Exception $e) {
@@ -122,8 +111,6 @@ trait TemplateTrait
 
             return $message;
         }
-
-        Craft::$app->getView()->setTemplatesPath($oldPath);
 
         return $renderedTemplate;
     }
@@ -145,6 +132,7 @@ trait TemplateTrait
         $fromEmail = $this->renderObjectTemplateSafely($notification->fromEmail, $object);
         $replyTo = $this->renderObjectTemplateSafely($notification->replyToEmail, $object);
 
+        // @todo Refactor by removing this validation and changed it to dynamically generate txt template
         $body = $this->renderSiteTemplateIfExists($template.'.txt', [
             'email' => $notification,
             'object' => $object

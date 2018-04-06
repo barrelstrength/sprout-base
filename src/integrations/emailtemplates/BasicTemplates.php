@@ -28,7 +28,7 @@ class BasicTemplates extends BaseEmailTemplates
      */
     public function getPath()
     {
-        return 'sproutemail/_emailtemplates/basic';
+        return 'sprout-base/sproutemail/_emailtemplates/basic';
     }
 }
 

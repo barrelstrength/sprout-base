@@ -56,13 +56,6 @@ abstract class BaseEmailTemplates
     abstract public function getPath();
 
     /**
-     * The base path where your email templates exist
-     *
-     * @return string
-     */
-    abstract public function getBasePath();
-
-    /**
      * Adds pre-defined options for css classes.
      *
      * These classes will display in the CSS Classes dropdown list on the Field Edit modal

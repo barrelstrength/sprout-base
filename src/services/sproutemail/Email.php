@@ -7,6 +7,7 @@ use barrelstrength\sproutbase\contracts\sproutemail\BaseEmailTemplates;
 use barrelstrength\sproutbase\SproutBase;
 use craft\base\Component;
 use craft\events\RegisterComponentTypesEvent;
+use craft\web\View;
 
 class Email extends Component
 {
@@ -54,13 +55,29 @@ class Email extends Component
         return null;
     }
 
+    /**
+     * @return mixed|string
+     * @throws \yii\base\Exception
+     */
     public function getTemplateOverride()
     {
         $settings = Craft::$app->plugins->getPlugin('sprout-email')->getSettings();
 
         $templateFolderOverride = $settings->templateFolderOverride;
 
-        $template = SproutBase::$app->sproutEmail->getTemplateById($templateFolderOverride);
+        if (!empty($templateFolderOverride)) {
+            $template = $templateFolderOverride;
+
+            Craft::$app->getView()->setTemplateMode(View::TEMPLATE_MODE_SITE);
+        }
+
+        $templateObj = SproutBase::$app->sproutEmail->getTemplateById($templateFolderOverride);
+
+        if ($templateObj) {
+            $template = $templateObj->getPath();
+
+            Craft::$app->getView()->setTemplateMode(View::TEMPLATE_MODE_CP);
+        }
 
         return $template;
     }
