@@ -60,7 +60,7 @@ class NotificationsController extends Controller
             }
         }
         
-        return $this->renderTemplate('sprout-base/sproutemail/notifications/_setting', [
+        return $this->renderTemplate('sprout-base/sproutemail/notifications/_fieldlayout', [
             'emailId' => $emailId,
             'notificationEmail' => $notificationEmail,
             'isNewNotificationEmail' => $isNewNotificationEmail

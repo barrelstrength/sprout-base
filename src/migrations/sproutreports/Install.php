@@ -76,6 +76,7 @@ class Install extends Migration
                 'id' => $this->primaryKey(),
                 'type' => $this->string(),
                 'allowNew' => $this->boolean(),
+                'pluginId' => $this->string(),
                 'dateCreated' => $this->dateTime()->notNull(),
                 'dateUpdated' => $this->dateTime()->notNull(),
                 'uid' => $this->uid()

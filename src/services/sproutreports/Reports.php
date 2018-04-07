@@ -7,11 +7,11 @@
 
 namespace barrelstrength\sproutbase\services\sproutreports;
 
-use barrelstrength\sproutbase\models\sproutreports\Report;
+use barrelstrength\sproutbase\elements\sproutreports\Report;
+use barrelstrength\sproutreports\SproutReports;
 use Craft;
 use craft\db\Query;
 use yii\base\Component;
-use barrelstrength\sproutbase\models\sproutreports\Report as ReportModel;
 use barrelstrength\sproutbase\records\sproutreports\Report as ReportRecord;
 use barrelstrength\sproutbase\records\sproutreports\ReportGroup as ReportGroupRecord;
 use yii\base\Exception;
@@ -21,65 +21,73 @@ class Reports extends Component
     /**
      * @param $reportId
      *
-     * @return ReportModel
+     * @return Report
      */
     public function getReport($reportId)
     {
         $reportRecord = ReportRecord::findOne($reportId);
 
-        $reportModel = new ReportModel();
+        $report = new Report();
 
-        if ($reportRecord != null) {
-            $reportModel->setAttributes($reportRecord->getAttributes());
-        }
+        $report->id = $reportRecord->id;
+        $report->dataSourceId = $reportRecord->dataSourceId;
+        $report->groupId = $reportRecord->groupId;
+        $report->name = $reportRecord->name;
+        $report->hasNameFormat = $reportRecord->hasNameFormat;
+        $report->nameFormat = $reportRecord->nameFormat;
+        $report->handle = $reportRecord->handle;
+        $report->description = $reportRecord->description;
+        $report->allowHtml = $reportRecord->allowHtml;
+        $report->settings = $reportRecord->settings;
+        $report->enabled = $reportRecord->enabled;
 
-        return $reportModel;
+        return $report;
     }
 
     /**
-     * @param ReportModel $reportModel
+     * @param Report $report
      *
      * @throws \Exception
      * @return bool
      */
-    public function saveReport(ReportModel $reportModel)
+    public function saveReport(Report $report)
     {
-        if (!$reportModel) {
+        if (!$report) {
 
             Craft::info('Report not saved due to validation error.', __METHOD__);
 
             return false;
         }
 
-        if (empty($reportModel->id)) {
+        if (empty($report->id)) {
             $reportRecord = new ReportRecord();
         } else {
-            $reportRecord = ReportRecord::findOne($reportModel->id);
+            $reportRecord = ReportRecord::findOne($report->id);
         }
 
-        if (!$this->validateSettings($reportModel)) {
+//        if (!$this->validateSettings($report)) {
+//            return false;
+//        }
+
+        $report->title = $report->name;
+
+        $report->validate();
+
+        if ($report->hasErrors()) {
+
+            SproutReports::error('Unable to save Report.');
+
             return false;
         }
 
-        $reportRecord->id = $reportModel->id;
-        $reportRecord->name = $reportModel->name;
-        $reportRecord->hasNameFormat = (bool) $reportModel->hasNameFormat;
-        $reportRecord->nameFormat = $reportModel->nameFormat;
-        $reportRecord->handle = $reportModel->handle;
-        $reportRecord->description = $reportModel->description;
-        $reportRecord->allowHtml = (bool) $reportModel->allowHtml;
-        $reportRecord->settings = $reportModel->settings;
-        $reportRecord->dataSourceId = $reportModel->dataSourceId;
-        $reportRecord->enabled = (bool) $reportModel->enabled;
-        $reportRecord->groupId = $reportModel->groupId;
-
-        $db = Craft::$app->getDb();
-        $transaction = $db->beginTransaction();
+        $transaction = Craft::$app->db->beginTransaction();
 
         try {
-            $reportRecord->save(false);
+            Craft::$app->getElements()->saveElement($report, false);
 
-            $reportModel->id = $reportRecord->id;
+//            $reportRecord->save(false);
+
+//            $report->id = $reportRecord->id;
 
             $transaction->commit();
         } catch (\Exception $e) {
@@ -92,12 +100,12 @@ class Reports extends Component
     }
 
     /**
-     * @param ReportModel $report
+     * @param Report $report
      *
      * @return bool
      * @throws Exception
      */
-    protected function validateSettings(ReportModel $report)
+    protected function validateSettings(Report $report)
     {
         $errors = [];
 
@@ -125,7 +133,7 @@ class Reports extends Component
     }
 
     /**
-     * @return null|ReportModel[]
+     * @return null|Report[]
      */
     public function getAllReports()
     {
@@ -234,7 +242,7 @@ class Reports extends Component
         if (!empty($records)) {
             foreach ($records as $record) {
                 $recordAttributes = $record->getAttributes();
-                $model = new ReportModel();
+                $model = new Report();
                 $model->setAttributes($recordAttributes);
 
                 $models[] = $model;

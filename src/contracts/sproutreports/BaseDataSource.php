@@ -7,10 +7,11 @@
 
 namespace barrelstrength\sproutbase\contracts\sproutreports;
 
+use barrelstrength\sproutbase\base\BaseSproutTrait;
 use barrelstrength\sproutbase\SproutBase;
+use barrelstrength\sproutbase\elements\sproutreports\Report;
 use Craft;
 use barrelstrength\sproutbase\records\sproutreports\DataSource;
-use barrelstrength\sproutbase\models\sproutreports\Report as ReportModel;
 use craft\helpers\UrlHelper;
 
 /**
@@ -20,6 +21,7 @@ use craft\helpers\UrlHelper;
  */
 abstract class BaseDataSource
 {
+    use BaseSproutTrait;
     /**
      * @var int
      */
@@ -36,7 +38,7 @@ abstract class BaseDataSource
     protected $plugin;
 
     /**
-     * @var ReportModel()
+     * @var Report()
      */
     protected $report;
 
@@ -63,27 +65,17 @@ abstract class BaseDataSource
     }
 
     /**
-     * Set a ReportModel on our data source.
+     * Set a Report on our data source.
      *
-     * @param ReportModel|null $report
+     * @param Report|null $report
      */
-    public function setReport(ReportModel $report = null)
+    public function setReport(Report $report = null)
     {
         if (null === $report) {
-            $report = new ReportModel();
+            $report = new Report();
         }
 
         $this->report = $report;
-    }
-
-    /**
-     * Returns the Plugin Class of the plugin that provided the Data Source
-     *
-     * @return \craft\base\PluginInterface|null|string
-     */
-    final public function getPlugin()
-    {
-        return $this->plugin;
     }
 
     /**
@@ -106,12 +98,12 @@ abstract class BaseDataSource
     /**
      * Should return an array of strings to be used as column headings in display/output
      *
-     * @param ReportModel $report
+     * @param Report $report
      * @param array       $settings
      *
      * @return array
      */
-    public function getDefaultLabels(ReportModel $report, array $settings = [])
+    public function getDefaultLabels(Report $report, array $settings = [])
     {
         return [];
     }
@@ -119,12 +111,12 @@ abstract class BaseDataSource
     /**
      * Should return an array of records to use in the report
      *
-     * @param ReportModel $report
+     * @param Report $report
      * @param array       $settings
      *
      * @return array
      */
-    public function getResults(ReportModel $report, array $settings = [])
+    public function getResults(Report $report, array $settings = [])
     {
         return [];
     }

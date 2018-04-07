@@ -10,7 +10,7 @@
 
 {% set crumbs = [
     { label: "Reports"|t('sprout-base'), url: reportIndexUrl },
-    { label: "Edit "|t('sprout-base') ~ report.name, url: report.getEditUrl() }
+    { label: "Edit "|t('sprout-base') ~ report.name, url: report.getCpEditUrl() }
 ] %}
 
 {% block actionButton %}
