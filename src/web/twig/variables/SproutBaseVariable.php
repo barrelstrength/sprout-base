@@ -37,6 +37,18 @@ class SproutBaseVariable
 
     public function getEmailTemplateOptions()
     {
-        return SproutBase::$app->sproutEmail->getTemplateOptions();
+        return SproutBase::$app->sproutEmail->getTemplateOptions();   
+    }
+
+    /**
+     * Return countries for Phone Field
+     *
+     * @return array
+     */
+    public function getCountries()
+    {
+        $countries = SproutBase::$app->phone->getCountries();
+
+        return $countries;
     }
 }
