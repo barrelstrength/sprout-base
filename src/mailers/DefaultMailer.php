@@ -104,6 +104,10 @@ class DefaultMailer extends BaseMailer implements CampaignEmailSenderInterface
 
         $template = $notificationEmail->template;
 
+        if (empty($template)) {
+            $template = SproutBase::$app->sproutEmail->getTemplateOverride();
+        }
+
         $renderEmail = $this->renderEmailTemplates($email, $template, $notificationEmail, $object);
 
         $email = $renderEmail->model;
