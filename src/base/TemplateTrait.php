@@ -132,16 +132,25 @@ trait TemplateTrait
         $fromEmail = $this->renderObjectTemplateSafely($notification->fromEmail, $object);
         $replyTo = $this->renderObjectTemplateSafely($notification->replyToEmail, $object);
 
-        // @todo Refactor by removing this validation and changed it to dynamically generate txt template
-        $body = $this->renderSiteTemplateIfExists($template.'.txt', [
-            'email' => $notification,
-            'object' => $object
-        ]);
-
         $htmlBody = $this->renderSiteTemplateIfExists($template, [
             'email' => $notification,
             'object' => $object
         ]);
+
+        $isBodyExist = Craft::$app->getView()->doesTemplateExist($template.'.txt');
+
+        // Converts html body to text email if no .txt
+        if (!$isBodyExist) {
+            $html = new \Html2Text\Html2Text($htmlBody);
+
+            $body = $html->getText();
+        } else {
+            // place on the else state to avoid error handling
+            $body = $this->renderSiteTemplateIfExists($template.'.txt', [
+                'email' => $notification,
+                'object' => $object
+            ]);
+        }
 
         $emailModel->setSubject($subject);
 
