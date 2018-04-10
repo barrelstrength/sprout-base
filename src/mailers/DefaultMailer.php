@@ -19,6 +19,7 @@ use craft\helpers\Template;
 use Craft;
 use craft\helpers\UrlHelper;
 use craft\mail\Message;
+use craft\web\View;
 
 class DefaultMailer extends BaseMailer implements CampaignEmailSenderInterface
 {
@@ -103,6 +104,8 @@ class DefaultMailer extends BaseMailer implements CampaignEmailSenderInterface
         }
 
         $template = $notificationEmail->template;
+
+        Craft::$app->getView()->setTemplateMode(View::TEMPLATE_MODE_SITE);
 
         if (empty($template)) {
             $template = SproutBase::$app->sproutEmail->getTemplateOverride();

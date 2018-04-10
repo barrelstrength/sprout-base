@@ -12,6 +12,7 @@ use craft\helpers\Json;
 use craft\helpers\UrlHelper;
 use craft\web\Controller;
 use Craft;
+use craft\web\View;
 
 /**
  * Class NotificationsController
@@ -433,6 +434,7 @@ class NotificationsController extends Controller
         }
 
         if (!empty($errorMsg)) {
+            Craft::$app->getView()->setTemplateMode(View::TEMPLATE_MODE_CP);
             return $this->asJson(
                 Response::createErrorModalResponse('sprout-base/sproutemail/_modals/response', [
                     'email' => $notificationEmail,
