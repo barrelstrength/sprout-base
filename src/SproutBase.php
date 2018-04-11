@@ -131,7 +131,6 @@ class SproutBase extends Module
 
         Event::on(Email::class, Email::EVENT_REGISTER_EMAIL_TEMPLATES, function(Event $event) {
             $event->types[] = BasicTemplates::class;
-            $event->types[] = AccessibleTemplates::class;
         });
     }
 }

@@ -557,6 +557,8 @@ class NotificationEmails extends Component
         try {
             $this->sendMockNotificationEmail($notificationEmail);
 
+            Craft::$app->getView()->setTemplateMode(View::TEMPLATE_MODE_CP);
+
             return Response::createModalResponse('sprout-base/sproutemail/_modals/response', [
                     'email' => $notificationEmail,
                     'message' => Craft::t('sprout-base', 'Notification sent successfully.')
@@ -718,9 +720,13 @@ class NotificationEmails extends Component
 
         $event = $this->getEventById($notificationEmail->eventId);
 
-        $templateOverride = SproutBase::$app->sproutEmail->getTemplateOverride();
+        $template = $notificationEmail->template;
 
-        $template = $notificationEmail->template ?: $templateOverride;
+        Craft::$app->getView()->setTemplateMode(View::TEMPLATE_MODE_SITE);
+
+        if (empty($template)) {
+            $template = SproutBase::$app->sproutEmail->getTemplateOverride();
+        }
 
         if ($event === null) {
             $errors[] = Craft::t('sprout-base', 'No Event is selected. <a href="{url}">Edit Notification</a>.', [

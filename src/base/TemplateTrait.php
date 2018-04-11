@@ -15,6 +15,7 @@ use craft\base\Element;
 use craft\base\Model;
 use craft\helpers\Html;
 use craft\mail\Message;
+use craft\web\View;
 
 trait TemplateTrait
 {
@@ -109,7 +110,7 @@ trait TemplateTrait
 
             SproutBase::$app->common->addError('template', $message);
 
-            return $message;
+            return false;
         }
 
         return $renderedTemplate;
