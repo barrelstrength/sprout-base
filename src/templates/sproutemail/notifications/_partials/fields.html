@@ -13,18 +13,10 @@
     maxlength: 255
 }) }}
 
-{{ textareaField({
-    label: "Body"|t('sprout-base'),
-    id: 'body',
-    name: 'body',
-    value: notificationEmail.body,
-    errors:  notificationEmail is defined ? notificationEmail.getErrors('body') : null,
-    autofocus: true,
-    required: true,
-    rows: 8
-}) }}
+{% set tabs = notificationEmail.getFieldLayout().getTabs() %}
 
-<div>
+{% if tabs|length %}
+
     {% for tab in notificationEmail.getFieldLayout().getTabs() %}
         <div id="tab{{ loop.index }}"{% if not loop.first %} class="hidden"{% endif %}>
             {% include "_includes/fields" with {
@@ -34,4 +26,18 @@
             } only %}
         </div>
     {% endfor %}
-</div>
+
+{% else %}
+
+    {{ textareaField({
+        label: "Body"|t('sprout-base'),
+        id: 'body',
+        name: 'body',
+        value: notificationEmail.body,
+        errors:  notificationEmail is defined ? notificationEmail.getErrors('body') : null,
+        autofocus: true,
+        required: true,
+        rows: 8
+    }) }}
+
+{% endif %}
