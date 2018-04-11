@@ -370,7 +370,7 @@ class DefaultMailer extends BaseMailer implements CampaignEmailSenderInterface
             }
         }
 
-        return Craft::$app->getView()->renderTemplate('sprout-email/_integrations/mailers/defaultmailer/lists', [
+        return Craft::$app->getView()->renderTemplate('sprout-base/sproutemail/_mailers/defaultmailer/lists', [
             'options' => $options,
             'values' => $selected,
         ]);
