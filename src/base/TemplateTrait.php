@@ -110,7 +110,7 @@ trait TemplateTrait
 
             SproutBase::$app->common->addError('template', $message);
 
-            return $message;
+            return false;
         }
 
         return $renderedTemplate;
