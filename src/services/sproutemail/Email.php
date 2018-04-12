@@ -2,6 +2,7 @@
 
 namespace barrelstrength\sproutbase\services\sproutemail;
 
+use barrelstrength\sproutbase\integrations\emailtemplates\BasicTemplates;
 use Craft;
 use barrelstrength\sproutbase\contracts\sproutemail\BaseEmailTemplates;
 use barrelstrength\sproutbase\SproutBase;
@@ -61,31 +62,51 @@ class Email extends Component
      */
     public function getTemplateOverride()
     {
-        $plugin = Craft::$app->plugins->getPlugin('sprout-email');
-        $settings = null;
-        if ($plugin) {
-            $settings = $plugin->getSettings();
+        $defaultEmailTemplates = new BasicTemplates();
+        $templatePath = $defaultEmailTemplates->getPath();
+
+        $sproutEmail = Craft::$app->plugins->getPlugin('sprout-email');
+
+        if ($sproutEmail && $sproutEmail->getSettings()->templateFolderOverride) {
+            $emailTemplate = $this->getTemplateById($settings->templateFolderOverride);
+            if ($emailTemplate) {
+                // custom path by template API
+                $templatePath = $emailTemplate->getPath();
+
+                Craft::$app->getView()->setTemplateMode(View::TEMPLATE_MODE_CP);
+            } else {
+                // custom folder on site path
+                $templatePath = $this->getSitePath($settings->templateFolderOverride);
+
+                Craft::$app->getView()->setTemplateMode(View::TEMPLATE_MODE_SITE);
+            }
         }
 
-        // Return empty if sprout email is disabled or not installed
-       if ($settings == null) return "";
+//        if ($form->templateOverridesFolder) {
+//            $formTemplatePath = $this->getTemplateById($form->templateOverridesFolder);
+//            if ($formTemplatePath) {
+//                // custom path by template API
+//                $templateFolderOverride = $formTemplatePath->getPath();
+//            } else {
+//                // custom folder on site path
+//                $templateFolderOverride = $this->getSitePath($form->templateOverridesFolder);
+//            }
+//        }
 
-        $templateFolderOverride = $settings->templateFolderOverride;
+//        if (!empty($templateFolderOverride)) {
+//            $templatePath = $templateFolderOverride;
+//
+//        }
+//
+//        $emailTemplates = SproutBase::$app->sproutEmail->getTemplateById($templateFolderOverride);
+//
+//        if ($emailTemplates) {
+//
+//            $templatePath = $emailTemplates->getPath();
+//
+//
+//        }
 
-        if (!empty($templateFolderOverride)) {
-            $template = $templateFolderOverride;
-
-            Craft::$app->getView()->setTemplateMode(View::TEMPLATE_MODE_SITE);
-        }
-
-        $templateObj = SproutBase::$app->sproutEmail->getTemplateById($templateFolderOverride);
-
-        if ($templateObj) {
-            $template = $templateObj->getPath();
-
-            Craft::$app->getView()->setTemplateMode(View::TEMPLATE_MODE_CP);
-        }
-
-        return $template;
+        return $templatePath;
     }
 }
