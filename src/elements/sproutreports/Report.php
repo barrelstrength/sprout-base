@@ -147,7 +147,7 @@ class Report extends Element
 
         $dataSource = SproutBase::$app->dataSources->getDataSourceById($this->dataSourceId);
 
-        return UrlHelper::cpurl($pluginHandle . '/reports/'.$this->dataSourceId.'-'.$dataSource->getDataSourceSlug().'/edit/'.$this->id);
+        return UrlHelper::cpUrl($pluginHandle.'/reports/'.$this->dataSourceId.'-'.$dataSource->getDataSourceSlug().'/edit/'.$this->id);
     }
 
     /**
@@ -171,9 +171,9 @@ class Report extends Element
     {
         return [
             'name' => Craft::t('sprout-base', 'Name'),
-            'dataSourceId' => Craft::t('sprout-base', 'Data Source'),
-            'download' => '',
-            'results' => '',
+            'results' => Craft::t('sprout-base', 'View Report'),
+            'download' => Craft::t('sprout-base', 'Export'),
+            'dataSourceId' => Craft::t('sprout-base', 'Data Source')
         ];
     }
 
@@ -195,19 +195,13 @@ class Report extends Element
         }
 
         if ($attribute === 'download') {
-            return '<a href="'.UrlHelper::actionUrl('sprout-base/reports/export-report', ['reportId' => $this->id]).'" class="btn small">'.Craft::t('sprout-base', 'Download').'</a>';
+            return '<a href="'.UrlHelper::actionUrl('sprout-base/reports/export-report', ['reportId' => $this->id]).'" class="btn small">'.Craft::t('sprout-base', 'Download CSV').'</a>';
         }
 
         if ($attribute === 'results') {
             $resultsUrl = UrlHelper::cpUrl($pluginHandle.'/reports/view/'.$this->id);
 
-            $reportsIconHtml = file_get_contents(Craft::getAlias('@sproutbase/web/assets/sproutreports/dist/images/icon-mask.svg'));
-
-//              a tag svg styles
-//              width: 12px;
-//              fill: #aaa;
-//              vertical-align: baseline;
-            return '<a href="'.$resultsUrl.'" class="btn small">' . $reportsIconHtml . Craft::t('sprout-base', 'Run Report') .'</a>';
+            return '<a href="'.$resultsUrl.'" class="btn small">'.Craft::t('sprout-base', 'Run Report').'</a>';
         }
 
         return parent::getTableAttributeHtml($attribute);
