@@ -275,11 +275,17 @@ class NotificationsController extends Controller
 
         $notificationEmail->setFieldValuesFromRequest($fieldsLocation);
 
+        $notificationEmail->title = $notificationEmail->subjectLine;
+
+        if ($notificationEmail->titleFormat)
+        {
+            $notificationEmail->title = Craft::$app->getView()->renderObjectTemplate($notificationEmail->titleFormat, $notificationEmail);
+        }
+
         $session = Craft::$app->getSession();
 
         // Do not clear errors to add additional validation
         if ($session AND $notificationEmail->validate(null, false) && $notificationEmail->hasErrors() == false) {
-            $notificationEmail->title = $notificationEmail->subjectLine;
 
             if (SproutBase::$app->notifications->saveNotification($notificationEmail)) {
                 $session->setNotice(Craft::t('sprout-base', 'Notification saved.'));

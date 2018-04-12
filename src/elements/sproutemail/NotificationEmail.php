@@ -18,7 +18,7 @@ class NotificationEmail extends Element
 {
     public $subjectLine;
     public $pluginId;
-    public $name;
+    public $titleFormat;
     public $template;
     public $eventId;
     public $options;
@@ -142,10 +142,9 @@ class NotificationEmail extends Element
     protected static function defineTableAttributes(): array
     {
         $attributes = [
-            'title' => ['label' => Craft::t('sprout-base', 'Subject Line')],
-            'name' => ['label' => Craft::t('sprout-base', 'Notification Name')],
+            'title' => ['label' => Craft::t('sprout-base', 'Title')],
+            'subjectLine' => ['label' => Craft::t('sprout-base', 'Subject Line')],
             'dateCreated' => ['label' => Craft::t('sprout-base', 'Date Created')],
-            'dateUpdated' => ['label' => Craft::t('sprout-base', 'Date Updated')],
             'send' => ['label' => Craft::t('sprout-base', 'Send')],
             'preview' => ['label' => Craft::t('sprout-base', 'Preview'), 'icon' => 'view']
         ];
@@ -159,7 +158,8 @@ class NotificationEmail extends Element
     protected static function defineSortOptions(): array
     {
         return [
-            'title' => Craft::t('sprout-base', 'Subject Line'),
+            'title' => Craft::t('sprout-base', 'Title'),
+            'subjectLine' => Craft::t('sprout-base', 'Subject Line'),
             'elements.dateCreated' => Craft::t('sprout-base', 'Date Created'),
             'elements.dateUpdated' => Craft::t('sprout-base', 'Date Updated'),
         ];
@@ -244,7 +244,7 @@ class NotificationEmail extends Element
         }
 
         $notificationEmailRecord->pluginId = $this->pluginId;
-        $notificationEmailRecord->name = $this->name;
+        $notificationEmailRecord->titleFormat = $this->titleFormat;
         $notificationEmailRecord->template = $this->template;
         $notificationEmailRecord->eventId = $this->eventId;
         $notificationEmailRecord->options = $this->options;
@@ -415,7 +415,7 @@ class NotificationEmail extends Element
     {
         $rules = parent::rules();
 
-        $rules[] = [['subjectLine', 'name'], 'required'];
+        $rules[] = [['subjectLine'], 'required'];
         $rules[] = [['fromName', 'fromEmail', 'replyToEmail'], 'default', 'value' => ''];
 
         return $rules;

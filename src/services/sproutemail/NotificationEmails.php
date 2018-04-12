@@ -206,7 +206,7 @@ class NotificationEmails extends Component
         if ($event && $isSettingPage == false) {
             $options = $event->prepareOptions();
 
-            $notificationEmail->options  = $options;
+            $notificationEmail->options = $options;
             /**
              * @var $plugin Plugin
              */
@@ -724,8 +724,8 @@ class NotificationEmails extends Component
     {
         $currentPluginHandle = Craft::$app->request->getSegment(1);
 
-        $notificationEditUrl = UrlHelper::cpUrl($currentPluginHandle . '/notifications/edit/'.$notificationEmail->id);
-        $notificationEditSettingsUrl = UrlHelper::cpUrl($currentPluginHandle . '/settings/notifications/edit/'.
+        $notificationEditUrl = UrlHelper::cpUrl($currentPluginHandle.'/notifications/edit/'.$notificationEmail->id);
+        $notificationEditSettingsUrl = UrlHelper::cpUrl($currentPluginHandle.'/settings/notifications/edit/'.
             $notificationEmail->id);
 
         $event = $this->getEventById($notificationEmail->eventId);
@@ -787,23 +787,20 @@ class NotificationEmails extends Component
      * @throws \Throwable
      * @throws \yii\base\Exception
      */
-    public function createNewNotification($name = null, $handle = null)
+    public function createNewNotification($subjectLine = null, $handle = null)
     {
         $currentPluginHandle = Craft::$app->request->getSegment(1);
 
         $notification = new NotificationEmail();
-        $name = $name ?? 'Notification';
-        $handle = $handle ?? 'notification';
+        $subjectLine = $subjectLine ?? Craft::t('sprout-base', 'Notification');
+        $handle = $handle ?? ElementHelper::createSlug($subjectLine);
 
-        $title = $this->getFieldAsNew('name', $name) ;
-        $name  = $this->getFieldAsNew('name', $handle) ;
+        $subjectLine = $this->getFieldAsNew('subjectLine', $subjectLine);
 
-        $notification->title       = $title;
-        $notification->subjectLine = $title;
+        $notification->title = $subjectLine;
+        $notification->subjectLine = $subjectLine;
         $notification->pluginId = $currentPluginHandle;
-
-        $notification->name = $name;
-        $notification->slug = ElementHelper::createSlug($name);
+        $notification->slug = $handle;
 
         // Set default tab
         $field = null;

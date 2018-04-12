@@ -13,7 +13,7 @@
     { label: "Settings"|t('sprout-base'), url: url(currentPluginHandle ~ '/settings/notifications/edit/' ~ notificationId) },
 ] %}
 
-{% set title  = notificationEmail is defined and notificationEmail.title is not empty ? notificationEmail.name : 'Create a new Notification Email'|t('sprout-base') %}
+{% set title  = notificationEmail is defined ? notificationEmail.title : 'Create a new Notification Email'|t('sprout-base') %}
 
 {% set fullPageForm = true %}
 {% set saveShortcutRedirect = url(currentPluginHandle ~ '/notifications/edit/' ~ notificationId) %}
@@ -231,15 +231,13 @@
     <div class="meta">
 
         {{ forms.textField({
-            label: "Notification Name <span class='info'>Human readable notification name (only visible in Control Panel)</span>"|t('sprout-base'),
-            id: 'name',
-            name: 'sproutEmail[name]',
-            fieldClass: 'field-border-top',
-            value: notificationEmail is defined ? notificationEmail.name : null,
+            label: "Title Format <span class='info'>Update the Notification Email Title in the Control Panel to follow a pattern.</span>"|t('sprout-base'),
+            id: 'titleFormat',
+            name: 'sproutEmail[titleFormat]',
+            value: notificationEmail is defined ? notificationEmail.titleFormat : null,
             autofocus: true,
-            required: true,
             first: true,
-            errors: notificationEmail is defined ? notificationEmail.getErrors('name') : null
+            errors: notificationEmail is defined ? notificationEmail.getErrors('titleFormat') : null
         }) }}
 
         {{ forms.textField({

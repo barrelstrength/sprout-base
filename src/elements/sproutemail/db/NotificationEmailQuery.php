@@ -18,7 +18,7 @@ class NotificationEmailQuery extends ElementQuery
         $this->joinElementTable('sproutemail_notificationemails');
         $this->query->select([
             'sproutemail_notificationemails.pluginId',
-            'sproutemail_notificationemails.name',
+            'sproutemail_notificationemails.titleFormat',
             'sproutemail_notificationemails.template',
             'sproutemail_notificationemails.eventId',
             'sproutemail_notificationemails.options',
