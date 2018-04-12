@@ -23,7 +23,7 @@ class BasicTemplates extends BaseEmailTemplates
      */
     public function getPath()
     {
-        return 'sprout-base/sproutemail/_emailtemplates/basic';
+        return Craft::getAlias('@sproutbase/templates/sproutemail/_emailtemplates/basic');
     }
 }
 
