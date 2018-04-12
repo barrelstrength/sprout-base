@@ -44,8 +44,6 @@ class Report extends Element
 
     public $settings;
 
-    public $pluginId;
-
     public $dataSourceId;
 
     public $dataSourceSlug;
@@ -61,6 +59,11 @@ class Report extends Element
     public $results;
 
     /**
+     * @var string Plugin ID as defined in the Data Sources table
+     */
+    public $pluginId;
+
+    /**
      * @return string
      * @throws \yii\base\Exception
      */
@@ -68,13 +71,13 @@ class Report extends Element
     {
         if ($this->hasNameFormat && $this->nameFormat) {
             try {
-                return (string) $this->processNameFormat();
+                return (string)$this->processNameFormat();
             } catch (\Exception $exception) {
-                return Craft::t('sprout-base', 'Invalid name format for report: ' . $this->name);
+                return Craft::t('sprout-base', 'Invalid name format for report: '.$this->name);
             }
         }
 
-        return (string) $this->name;
+        return (string)$this->name;
     }
 
     /**

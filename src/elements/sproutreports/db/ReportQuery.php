@@ -30,8 +30,6 @@ class ReportQuery extends ElementQuery
 
     public $settings;
 
-    public $pluginId;
-
     public $dataSourceId;
 
     public $dataSourceSlug;
@@ -47,6 +45,8 @@ class ReportQuery extends ElementQuery
     public $results;
 
     public $pluginHandle;
+
+    public $pluginId;
 
     /**
      * @inheritdoc
@@ -81,7 +81,7 @@ class ReportQuery extends ElementQuery
         if ($this->pluginId) {
             $pluginId = $this->pluginId;
         }
-        
+
         if ($pluginId != null) {
             $this->query->andWhere(Db::parseParam(
                 'sproutreports_datasources.pluginId', $pluginId)
