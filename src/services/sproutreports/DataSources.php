@@ -11,6 +11,7 @@ use barrelstrength\sproutbase\contracts\sproutreports\BaseDataSource;
 use barrelstrength\sproutbase\models\sproutreports\DataSource as DataSourceModel;
 use barrelstrength\sproutbase\models\sproutreports\DataSource;
 use barrelstrength\sproutbase\records\sproutreports\DataSource as DataSourceRecord;
+use barrelstrength\sproutbase\SproutBase;
 use barrelstrength\sproutimport\integrations\sproutimport\fields\Categories;
 use yii\base\Component;
 use craft\events\RegisterComponentTypesEvent;
@@ -165,7 +166,7 @@ class DataSources extends Component
                     $dataSources[$dataSourceRecord->type]->allowNew = $dataSourceRecord->allowNew;
                 }
             } catch (\Exception $exception) {
-                Craft::dd($exception->getMessage());
+                SproutBase::error($exception->getMessage());
             }
         }
 
