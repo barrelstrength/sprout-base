@@ -84,7 +84,7 @@ class NotificationEmail extends Element
      */
     public static function isLocalized(): bool
     {
-        return true;
+        return false;
     }
 
     /**
