@@ -2,17 +2,15 @@
 
 namespace barrelstrength\sproutbase\elements\sproutemail;
 
-use barrelstrength\sproutbase\base\BaseSproutTrait;
 use barrelstrength\sproutbase\elements\sproutemail\actions\DeleteNotification;
 use barrelstrength\sproutbase\mailers\DefaultMailer;
-use barrelstrength\sproutbase\services\sproutemail\NotificationEmails;
 use barrelstrength\sproutbase\SproutBase;
 use barrelstrength\sproutbase\web\assets\sproutemail\NotificationAsset;
 use barrelstrength\sproutbase\elements\sproutemail\db\NotificationEmailQuery;
 use barrelstrength\sproutbase\records\sproutemail\NotificationEmail as NotificationEmailRecord;
-use barrelstrength\sproutemail\SproutEmail;
 use craft\base\Element;
 use Craft;
+use craft\behaviors\FieldLayoutBehavior;
 use craft\elements\db\ElementQueryInterface;
 use craft\helpers\UrlHelper;
 
@@ -211,11 +209,14 @@ class NotificationEmail extends Element
     }
 
     /**
-     * @return \craft\models\FieldLayout|null
+     * @inheritdoc
      */
     public function getFieldLayout()
     {
-        return Craft::$app->getFields()->getLayoutByType(static::class);
+        $behaviors = $this->getBehaviors();
+        $fieldLayout = $behaviors['fieldLayout'];
+
+        return $fieldLayout->getFieldLayout();
     }
 
     /**
@@ -418,5 +419,15 @@ class NotificationEmail extends Element
         $rules[] = [['fromName', 'fromEmail', 'replyToEmail'], 'default', 'value' => ''];
 
         return $rules;
+    }
+
+    public function behaviors()
+    {
+        return array_merge(parent::behaviors(), [
+            'fieldLayout' => [
+                'class' => FieldLayoutBehavior::class,
+                'elementType' => self::class
+            ],
+        ]);
     }
 }

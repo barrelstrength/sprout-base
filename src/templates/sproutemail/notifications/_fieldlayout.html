@@ -48,7 +48,7 @@
 
     <input type="hidden" name="action"
        value="sprout-base/notifications/save-notification-email-settings">
-    {{ redirectInput(currentPluginHandle ~ '/notifications/edit' ~ notificationEmailId) }}
+    {{ redirectInput(currentPluginHandle ~ '/notifications/edit/' ~ notificationEmailId) }}
 
     <input type="hidden" name="emailId" value="{{ emailId }}">
     <input type="hidden" name="mailer" value="defaultmailer">

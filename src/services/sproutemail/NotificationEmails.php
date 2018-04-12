@@ -11,10 +11,10 @@ use barrelstrength\sproutbase\events\RegisterNotificationEvent;
 use barrelstrength\sproutemail\mail\Message;
 use barrelstrength\sproutbase\models\sproutbase\Response;
 use barrelstrength\sproutbase\records\sproutemail\NotificationEmail as NotificationEmailRecord;
-use barrelstrength\sproutemail\SproutEmail;
 use craft\base\Component;
 use Craft;
 use craft\base\Element;
+use craft\base\Plugin;
 use craft\helpers\ElementHelper;
 use craft\helpers\UrlHelper;
 use craft\web\View;
@@ -181,10 +181,12 @@ class NotificationEmails extends Component
      *
      * @return NotificationEmail|null
      * @throws \Exception
+     * @throws \Throwable
+     * @throws \yii\base\Exception
      */
     public function saveNotification(NotificationEmail $notificationEmail, $isSettingPage = false)
     {
-        $notificationEmailRecord = new NotificationEmail();
+        $notificationEmailRecord = new NotificationEmailRecord();
 
         if ($notificationEmail->id !== null) {
             $notificationEmailRecord = NotificationEmail::findOne($notificationEmail->id);
@@ -205,6 +207,9 @@ class NotificationEmails extends Component
             $options = $event->prepareOptions();
 
             $notificationEmail->options  = $options;
+            /**
+             * @var $plugin Plugin
+             */
             $plugin = $event->getPlugin();
 
             $notificationEmail->pluginId = $plugin->id;
@@ -212,7 +217,8 @@ class NotificationEmails extends Component
 
         $fieldLayout = $notificationEmail->getFieldLayout();
 
-        // Assign our new layout id info to our form model and records
+        Craft::$app->getFields()->saveLayout($fieldLayout);
+
         $notificationEmail->fieldLayoutId = $fieldLayout->id;
         $notificationEmailRecord->fieldLayoutId = $fieldLayout->id;
 
@@ -454,7 +460,7 @@ class NotificationEmails extends Component
      * @param ElementInterface $notificationEmail
      * @param                  $object - will be an element model most of the time
      *
-     * @return bool
+     * @return bool|null
      * @throws \Exception
      */
     protected function relayNotificationThroughAssignedMailer(ElementInterface $notificationEmail, $object)
@@ -477,6 +483,8 @@ class NotificationEmails extends Component
         } catch (\Exception $e) {
             throw $e;
         }
+
+        return null;
     }
 
     /**
@@ -507,8 +515,7 @@ class NotificationEmails extends Component
         } else {
             $response->success = false;
 
-//            @todo - move html to response template
-            $response->message = '<p>'.Craft::t('sprout-base', 'No actions available for this notification.').'</p>';
+            $response->message = Craft::t('sprout-base', 'No actions available for this notification.');
         }
 
         return $response;
@@ -630,6 +637,9 @@ class NotificationEmails extends Component
      */
     public function getPreviewNotificationEmailById($notificationId, $type = null)
     {
+        /**
+         * @var $notificationEmail NotificationEmail
+         */
         $notificationEmail = $this->getNotificationEmailById($notificationId);
 
         $eventId = $notificationEmail->eventId;
@@ -774,6 +784,8 @@ class NotificationEmails extends Component
      *
      * @return NotificationEmail|null
      * @throws \Exception
+     * @throws \Throwable
+     * @throws \yii\base\Exception
      */
     public function createNewNotification($name = null, $handle = null)
     {

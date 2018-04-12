@@ -100,23 +100,11 @@ class NotificationsController extends Controller
         $session = Craft::$app->getSession();
 
         if ($session AND $notificationEmail->validate()) {
-            if (Craft::$app->getRequest()->getBodyParam('fieldLayout')) {
-                // Set the field layout
-                $fieldLayout = Craft::$app->getFields()->assembleLayoutFromPost();
-
-                $fieldLayout->type = NotificationEmail::class;
-
-                if (!Craft::$app->getFields()->saveLayout($fieldLayout)) {
-                    $session->setError(Craft::t('sprout-base', 'Couldn’t save notification fields.'));
-
-                    return null;
-                }
-
-                if ($notificationEmail->fieldLayoutId != null) {
-                    // Remove previous field layout
-                    Craft::$app->getFields()->deleteLayoutById($notificationEmail->fieldLayoutId);
-                }
-            }
+            // Set the field layout
+            $fieldLayout = Craft::$app->getFields()->assembleLayoutFromPost();
+            $fieldLayout->type = NotificationEmail::class;
+            
+            $notificationEmail->setFieldLayout($fieldLayout);
 
             $currentPluginHandle = Craft::$app->request->getSegment(1);
 
@@ -149,7 +137,9 @@ class NotificationsController extends Controller
      *
      * @return \yii\web\Response
      * @throws \Exception
+     * @throws \Throwable
      * @throws \yii\base\Exception
+     * @throws \yii\base\InvalidConfigException
      */
     public function actionEditNotificationEmailTemplate(
         $emailId = null, NotificationEmail $notificationEmail =

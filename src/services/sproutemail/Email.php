@@ -61,7 +61,14 @@ class Email extends Component
      */
     public function getTemplateOverride()
     {
-        $settings = Craft::$app->plugins->getPlugin('sprout-email')->getSettings();
+        $plugin = Craft::$app->plugins->getPlugin('sprout-email');
+        $settings = null;
+        if ($plugin) {
+            $settings = $plugin->getSettings();
+        }
+
+        // Return empty if sprout email is disabled or not installed
+       if ($settings == null) return "";
 
         $templateFolderOverride = $settings->templateFolderOverride;
 

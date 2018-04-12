@@ -18,11 +18,6 @@ class BasicTemplates extends BaseEmailTemplates
         return Craft::t('sprout-base', 'Basic Templates (Sprout, Legacy)');
     }
 
-    public function getBasePath()
-    {
-        return Craft::getAlias('@sproutbase/templates/');
-    }
-
     /**
      * @return string
      */
