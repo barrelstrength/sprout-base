@@ -54,17 +54,4 @@ abstract class BaseEmailTemplates
      * @return string
      */
     abstract public function getPath();
-
-    /**
-     * Adds pre-defined options for css classes.
-     *
-     * These classes will display in the CSS Classes dropdown list on the Field Edit modal
-     * for Field Types that support the $cssClasses property.
-     *
-     * @return array
-     */
-    public function getCssClassDefaults()
-    {
-        return [];
-    }
 }
