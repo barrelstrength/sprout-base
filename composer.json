@@ -1,7 +1,7 @@
 {
   "name": "barrelstrength/sprout-base",
   "description": "Common libraries for Sprout Plugins for Craft CMS",
-  "version": "1.1.01",
+  "version": "1.1.0",
   "type": "yii-module",
   "license": "proprietary",
   "authors": [
@@ -20,10 +20,10 @@
   "require": {
     "craftcms/cms": "^3.0.0-RC1",
     "league/csv": "^7.2",
+    "league/html-to-markdown": "v4.6.2",
     "commerceguys/addressing": "^0.8.4",
     "commerceguys/intl": "^0.7.5",
-    "giggsey/libphonenumber-for-php": "^8.8.11",
-    "html2text/html2text": "^4.1.0"
+    "giggsey/libphonenumber-for-php": "^8.8.11"
   },
   "autoload": {
     "psr-4": {

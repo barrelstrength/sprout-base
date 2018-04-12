@@ -16,6 +16,7 @@ use craft\base\Model;
 use craft\helpers\Html;
 use craft\mail\Message;
 use craft\web\View;
+use League\HTMLToMarkdown\HtmlConverter;
 
 trait TemplateTrait
 {
@@ -142,9 +143,15 @@ trait TemplateTrait
 
         // Converts html body to text email if no .txt
         if (!$isBodyExist) {
-            $html = new \Html2Text\Html2Text($htmlBody);
 
-            $body = $html->getText();
+            $converter = new HtmlConverter(array('strip_tags' => true));
+
+            // For more advanced html templates, conversion may be tougher. Minifying the HTML
+            // can help and ensuring that content is wrapped in proper tags that adds spaces between
+            // things in Markdown, like <p> tags or <h1> tags and not just <td> or <div>, etc.
+            $markdown = $converter->convert($htmlBody);
+
+            $body = trim($markdown);
         } else {
             // place on the else state to avoid error handling
             $body = $this->renderSiteTemplateIfExists($template.'.txt', [
