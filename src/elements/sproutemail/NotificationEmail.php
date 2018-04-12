@@ -341,7 +341,7 @@ class NotificationEmail extends Element
         $pluginHandle = Craft::$app->request->getSegment(1);
         
         if ($pluginHandle == null) {
-            throw new \Exception("Invalid integration. No pluginId specified");
+            throw new \Exception('Invalid integration. No pluginId specified');
         }
 
         return $pluginHandle . '/{slug}';
@@ -380,7 +380,7 @@ class NotificationEmail extends Element
         $templateName = $this->template.$extension;
 
         if (empty($this->template)) {
-            $template = SproutBase::$app->sproutEmail->getTemplateOverride();
+            $template = SproutBase::$app->sproutEmail->getEmailTemplates();
 
             $templateName = $template.$extension;
         }

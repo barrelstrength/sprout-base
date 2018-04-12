@@ -21,6 +21,7 @@ use League\HTMLToMarkdown\HtmlConverter;
 trait TemplateTrait
 {
     protected $templatesPath = null;
+
     /**
      * Returns whether or not a site template exists
      *
@@ -134,17 +135,26 @@ trait TemplateTrait
         $fromEmail = $this->renderObjectTemplateSafely($notification->fromEmail, $object);
         $replyTo = $this->renderObjectTemplateSafely($notification->replyToEmail, $object);
 
-        $htmlBody = $this->renderSiteTemplateIfExists($template, [
+        $htmlEmailTemplate = $template.'/email.html';
+        $textEmailTemplate = $template.'/email.txt';
+
+        $htmlBody = $this->renderSiteTemplateIfExists($htmlEmailTemplate, [
             'email' => $notification,
             'object' => $object
         ]);
 
-        $isBodyExist = Craft::$app->getView()->doesTemplateExist($template.'.txt');
+        $textEmailTemplateExists = Craft::$app->getView()->doesTemplateExist($textEmailTemplate);
 
         // Converts html body to text email if no .txt
-        if (!$isBodyExist) {
-
-            $converter = new HtmlConverter(array('strip_tags' => true));
+        if ($textEmailTemplateExists) {
+            $body = $this->renderSiteTemplateIfExists($textEmailTemplate, [
+                'email' => $notification,
+                'object' => $object
+            ]);
+        } else {
+            $converter = new HtmlConverter([
+                'strip_tags' => true
+            ]);
 
             // For more advanced html templates, conversion may be tougher. Minifying the HTML
             // can help and ensuring that content is wrapped in proper tags that adds spaces between
@@ -152,22 +162,12 @@ trait TemplateTrait
             $markdown = $converter->convert($htmlBody);
 
             $body = trim($markdown);
-        } else {
-            // place on the else state to avoid error handling
-            $body = $this->renderSiteTemplateIfExists($template.'.txt', [
-                'email' => $notification,
-                'object' => $object
-            ]);
         }
 
         $emailModel->setSubject($subject);
-
         $emailModel->setFrom([$fromEmail => $fromName]);
-
         $emailModel->setReplyTo($replyTo);
-
         $emailModel->setTextBody($body);
-
         $emailModel->setHtmlBody($htmlBody);
 
         $styleTags = [];
