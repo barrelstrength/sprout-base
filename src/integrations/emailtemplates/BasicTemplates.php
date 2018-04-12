@@ -15,7 +15,7 @@ class BasicTemplates extends BaseEmailTemplates
      */
     public function getName()
     {
-        return Craft::t('sprout-base', 'Basic Templates (Sprout, Legacy)');
+        return Craft::t('sprout-base', 'Basic Templates (Sprout)');
     }
 
     /**
