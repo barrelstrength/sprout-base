@@ -31,10 +31,10 @@
 
     {{ textareaField({
         label: "Body"|t('sprout-base'),
-        id: 'body',
-        name: 'body',
-        value: notificationEmail.body,
-        errors:  notificationEmail is defined ? notificationEmail.getErrors('body') : null,
+        id: 'defaultBody',
+        name: 'defaultBody',
+        value: notificationEmail.defaultBody,
+        errors:  notificationEmail is defined ? notificationEmail.getErrors('defaultBody') : null,
         autofocus: true,
         rows: 15
     }) }}

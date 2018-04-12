@@ -60,7 +60,7 @@ class NotificationsController extends Controller
                 $notificationEmail = new NotificationEmail();
             }
         }
-        
+
         return $this->renderTemplate('sprout-base/sproutemail/notifications/_fieldlayout', [
             'emailId' => $emailId,
             'notificationEmail' => $notificationEmail,
@@ -103,7 +103,7 @@ class NotificationsController extends Controller
             // Set the field layout
             $fieldLayout = Craft::$app->getFields()->assembleLayoutFromPost();
             $fieldLayout->type = NotificationEmail::class;
-            
+
             $notificationEmail->setFieldLayout($fieldLayout);
 
             $currentPluginHandle = Craft::$app->request->getSegment(1);
@@ -152,7 +152,7 @@ class NotificationsController extends Controller
             $notification = SproutBase::$app->notifications->createNewNotification();
 
             if ($notification) {
-                $url = UrlHelper::cpUrl($currentPluginHandle .'/notifications/edit/'.$notification->id);
+                $url = UrlHelper::cpUrl($currentPluginHandle.'/notifications/edit/'.$notification->id);
                 return $this->redirect($url);
             } else {
                 throw new \Exception(Craft::t('sprout-base', 'Error creating Notification'));
@@ -210,7 +210,6 @@ class NotificationsController extends Controller
             $events = [
                 get_class($eventObject) => $eventObject
             ];
-
         }
 
         return $this->renderTemplate('sprout-base/sproutemail/notifications/_edit', [
@@ -261,9 +260,9 @@ class NotificationsController extends Controller
         $notificationEmail = $this->notification;
 
         $notificationEmail->subjectLine = Craft::$app->getRequest()->getBodyParam('subjectLine');
-        $notificationEmail->slug        = Craft::$app->getRequest()->getBodyParam('slug');
-        $notificationEmail->enabled     = Craft::$app->getRequest()->getBodyParam('enabled');
-        $notificationEmail->body        = Craft::$app->getRequest()->getBodyParam('body');
+        $notificationEmail->slug = Craft::$app->getRequest()->getBodyParam('slug');
+        $notificationEmail->enabled = Craft::$app->getRequest()->getBodyParam('enabled');
+        $notificationEmail->defaultBody = Craft::$app->getRequest()->getBodyParam('defaultBody');
 
         $notificationEmail->listSettings = Craft::$app->getRequest()->getBodyParam('lists');
 
@@ -277,8 +276,7 @@ class NotificationsController extends Controller
 
         $notificationEmail->title = $notificationEmail->subjectLine;
 
-        if ($notificationEmail->titleFormat)
-        {
+        if ($notificationEmail->titleFormat) {
             $notificationEmail->title = Craft::$app->getView()->renderObjectTemplate($notificationEmail->titleFormat, $notificationEmail);
         }
 
@@ -539,6 +537,7 @@ class NotificationsController extends Controller
 
         return $this->redirect($url);
     }
+
     /**
      * Renders a shared Notification Email
      *

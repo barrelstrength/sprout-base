@@ -33,7 +33,7 @@ class NotificationEmail extends Element
     public $fieldLayoutId;
     public $send;
     public $preview;
-    public $body;
+    public $defaultBody;
 
     const ENABLED = 'enabled';
     const PENDING = 'pending';
@@ -249,7 +249,7 @@ class NotificationEmail extends Element
         $notificationEmailRecord->eventId = $this->eventId;
         $notificationEmailRecord->options = $this->options;
         $notificationEmailRecord->subjectLine = $this->subjectLine;
-        $notificationEmailRecord->body = $this->body;
+        $notificationEmailRecord->defaultBody = $this->defaultBody;
         $notificationEmailRecord->fieldLayoutId = $this->fieldLayoutId;
         $notificationEmailRecord->fromName = $this->fromName;
         $notificationEmailRecord->fromEmail = $this->fromEmail;
