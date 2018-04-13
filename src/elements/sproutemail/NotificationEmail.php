@@ -453,7 +453,7 @@ class NotificationEmail extends Element
             $templateIds[] = $template->getTemplateId();
         }
 
-        $templateFolder = '';
+        $templateFolder = $this->template;
         $plugin = Craft::$app->getPlugins()->getPlugin('sprout-email');
 
         if ($plugin){

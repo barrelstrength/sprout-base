@@ -5,7 +5,7 @@ namespace barrelstrength\sproutbase\services\sproutemail;
 use barrelstrength\sproutbase\contracts\sproutemail\BaseMailer;
 use barrelstrength\sproutbase\events\RegisterMailersEvent;
 use barrelstrength\sproutbase\SproutBase;
-use barrelstrength\sproutemail\events\RegisterSendEmailEvent;
+use barrelstrength\sproutbase\events\RegisterSendEmailEvent;
 use craft\base\Component;
 use craft\helpers\ArrayHelper;
 use craft\helpers\Json;

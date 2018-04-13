@@ -118,14 +118,13 @@ trait TemplateTrait
 
     /**
      * @param Message $emailModel
-     * @param         $template
      * @param         $notification
      * @param null    $object
      *
      * @return EmailMessage
      * @throws \yii\base\Exception
      */
-    public function renderEmailTemplates(Message $emailModel, $template, $notification, $object = null)
+    public function renderEmailTemplates(Message $emailModel, $notification, $object = null)
     {
         // Render Email Entry fields that have dynamic values
         $subject = $this->renderObjectTemplateSafely($notification->subjectLine, $object);
@@ -133,8 +132,8 @@ trait TemplateTrait
         $fromEmail = $this->renderObjectTemplateSafely($notification->fromEmail, $object);
         $replyTo = $this->renderObjectTemplateSafely($notification->replyToEmail, $object);
 
-        $htmlEmailTemplate = $template.'/email.html';
-        $textEmailTemplate = $template.'/email.txt';
+        $htmlEmailTemplate = 'email';
+        $textEmailTemplate = 'email.txt';
 
         $htmlBody = $this->renderSiteTemplateIfExists($htmlEmailTemplate, [
             'email' => $notification,

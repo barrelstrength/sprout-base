@@ -51,7 +51,7 @@ class Email extends Component
 //                Craft::$app->getView()->setTemplateMode(View::TEMPLATE_MODE_CP);
             } else {
                 // custom folder on site path
-                $templatePath = $this->getSitePath($settings->template);
+                $templatePath = $this->getSitePath($notificationEmail->template);
 
 //                Craft::$app->getView()->setTemplateMode(View::TEMPLATE_MODE_SITE);
             }
