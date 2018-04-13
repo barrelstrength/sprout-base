@@ -685,7 +685,7 @@ class NotificationEmails extends Component
 
         $fileExtension = ($type != null && $type == 'text') ? 'txt' : 'html';
 
-        $email = $this->renderEmailTemplates($email, $template, $notificationEmail);
+        $email = $this->renderEmailTemplates($email, $notificationEmail);
 
         $this->showPreviewEmail($email, $fileExtension);
     }
@@ -759,7 +759,7 @@ class NotificationEmails extends Component
 
             $emailModel = new Message();
 
-            $this->renderEmailTemplates($emailModel, $template, $notificationEmail, $object);
+            $this->renderEmailTemplates($emailModel, $notificationEmail, $object);
 
             $templateErrors = SproutBase::$app->common->getErrors();
 
