@@ -12,6 +12,7 @@ use barrelstrength\sproutbase\events\RegisterMailersEvent;
 use barrelstrength\sproutbase\integrations\emailtemplates\AccessibleTemplates;
 use barrelstrength\sproutbase\integrations\emailtemplates\BasicTemplates;
 use barrelstrength\sproutbase\mailers\DefaultMailer;
+use barrelstrength\sproutbase\services\sproutbase\Template;
 use barrelstrength\sproutbase\services\sproutemail\Email;
 use barrelstrength\sproutbase\services\sproutemail\Mailers;
 use barrelstrength\sproutbase\web\twig\variables\SproutBaseVariable;
@@ -129,7 +130,7 @@ class SproutBase extends Module
             $event->mailers[] = new DefaultMailer();
         });
 
-        Event::on(Email::class, Email::EVENT_REGISTER_EMAIL_TEMPLATES, function(Event $event) {
+        Event::on(Template::class, Template::EVENT_REGISTER_EMAIL_TEMPLATES, function(Event $event) {
             $event->types[] = BasicTemplates::class;
         });
     }

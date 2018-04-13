@@ -666,7 +666,7 @@ class NotificationEmails extends Component
             /**
              * Get the templates path for the sprout base default notification template
              */
-            $template = SproutBase::$app->sproutEmail->getEmailTemplates($notificationEmail);
+            $template = SproutBase::$app->sproutEmail->getEmailTemplate($notificationEmail);
         }
 
         // The getBodyParam is for livePreviewNotification to update on change
@@ -735,7 +735,7 @@ class NotificationEmails extends Component
         Craft::$app->getView()->setTemplateMode(View::TEMPLATE_MODE_SITE);
 
         if (empty($template)) {
-            $template = SproutBase::$app->sproutEmail->getEmailTemplates($notificationEmail);
+            $template = SproutBase::$app->sproutEmail->getEmailTemplate($notificationEmail);
         }
 
         if ($event === null) {

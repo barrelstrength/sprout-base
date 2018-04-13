@@ -380,7 +380,7 @@ class NotificationEmail extends Element
         $templateName = $this->template.$extension;
 
         if (empty($this->template)) {
-            $template = SproutBase::$app->sproutEmail->getEmailTemplates();
+            $template = SproutBase::$app->sproutEmail->getEmailTemplate();
 
             $templateName = $template.$extension;
         }
@@ -429,5 +429,54 @@ class NotificationEmail extends Element
                 'elementType' => self::class
             ],
         ]);
+    }
+
+    /**
+     * @return array
+     */
+    public function getTemplateOptions()
+    {
+        $templates = SproutBase::$app->template->getAllGlobalTemplates();
+        $templateIds = [];
+        $options = [
+            [
+                'label' => \Craft::t('sprout-base', 'Select...'),
+                'value' => ''
+            ]
+        ];
+
+        foreach ($templates as $template) {
+            $options[] = [
+                'label' => $template->getName(),
+                'value' => $template->getTemplateId()
+            ];
+            $templateIds[] = $template->getTemplateId();
+        }
+
+        $templateFolder = '';
+        $plugin = Craft::$app->getPlugins()->getPlugin('sprout-email');
+
+        if ($plugin){
+            $settings = $plugin->getSettings();
+            $templateFolder = $settings->templateFolderOverride;
+        }
+
+        $options[] = [
+            'optgroup' => Craft::t('sprout-base', 'Custom Template Folder')
+        ];
+
+        if (!in_array($templateFolder, $templateIds) && $templateFolder != '') {
+            $options[] = [
+                'label' => $templateFolder,
+                'value' => $templateFolder
+            ];
+        }
+
+        $options[] = [
+            'label' => Craft::t('sprout-base', 'Add Custom'),
+            'value' => 'custom'
+        ];
+
+        return $options;
     }
 }

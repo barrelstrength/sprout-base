@@ -2,18 +2,34 @@
 
 namespace barrelstrength\sproutbase\services\sproutbase;
 
+use barrelstrength\sproutbase\contracts\sproutemail\BaseEmailTemplates;
 use craft\base\Component;
 use Craft;
+use craft\events\RegisterComponentTypesEvent;
 
 class Template extends Component
 {
+    const EVENT_REGISTER_EMAIL_TEMPLATES = 'registerEmailTemplatesEvent';
+
+    public function getAllGlobalTemplateTypes()
+    {
+        $event = new RegisterComponentTypesEvent([
+            'types' => []
+        ]);
+
+        $this->trigger(self::EVENT_REGISTER_EMAIL_TEMPLATES, $event);
+
+        return $event->types;
+    }
+
     /**
      * Returns all available Global Form Templates
      *
      * @return string[]
      */
-    public function getAllGlobalTemplates($templateTypes)
+    public function getAllGlobalTemplates()
     {
+        $templateTypes = $this->getAllGlobalTemplateTypes();
         $templates = [];
 
         foreach ($templateTypes as $templateType) {
@@ -28,49 +44,20 @@ class Template extends Component
     }
 
     /**
-     * @return array
+     * @param $templateId
+     *
+     * @return null|BaseEmailTemplates
      */
-    public function getTemplateOptions($templates, $pluginName = '')
+    public function getTemplateById($templateId)
     {
-        $templateIds = [];
-        $options = [
-            [
-                'label' => \Craft::t('sprout-base', 'Select...'),
-                'value' => ''
-            ]
-        ];
+        $templates = $this->getAllGlobalTemplates();
 
         foreach ($templates as $template) {
-            $options[] = [
-                'label' => $template->getName(),
-                'value' => $template->getTemplateId()
-            ];
-            $templateIds[] = $template->getTemplateId();
+            if ($template->getTemplateId() == $templateId) {
+                return $template;
+            }
         }
 
-        $templateFolder = '';
-        if ($pluginName != '') {
-            $plugin = Craft::$app->getPlugins()->getPlugin($pluginName);
-            $settings = $plugin->getSettings();
-            $templateFolder = $settings->templateFolderOverride;
-        }
-
-        $options[] = [
-            'optgroup' => Craft::t('sprout-base', 'Custom Template Folder')
-        ];
-
-        if (!in_array($templateFolder, $templateIds) && $templateFolder != '') {
-            $options[] = [
-                'label' => $templateFolder,
-                'value' => $templateFolder
-            ];
-        }
-
-        $options[] = [
-            'label' => Craft::t('sprout-base', 'Add Custom'),
-            'value' => 'custom'
-        ];
-
-        return $options;
+        return null;
     }
 }

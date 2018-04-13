@@ -12,10 +12,8 @@ use barrelstrength\sproutbase\models\sproutemail\SimpleRecipient;
 use barrelstrength\sproutbase\SproutBase;
 use Craft;
 use craft\base\Element;
-use craft\base\Model;
 use craft\helpers\Html;
 use craft\mail\Message;
-use craft\web\View;
 use League\HTMLToMarkdown\HtmlConverter;
 
 trait TemplateTrait
