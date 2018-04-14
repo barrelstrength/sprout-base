@@ -126,16 +126,13 @@ if (typeof Craft.SproutBase === typeof undefined) {
             }
         },
 
-        toggleGroupSettingsSelector: function()
-        {
+        toggleGroupSettingsSelector: function() {
             this.$selectedGroup = this.$groups.find('a.sel:first');
 
-            if (this.$selectedGroup.data('key') === '*')
-            {
+            if (this.$selectedGroup.data('key') === '*') {
                 $(this.$groupSettingsBtn).addClass('hidden');
             }
-            else
-            {
+            else {
                 $(this.$groupSettingsBtn).removeClass('hidden');
             }
         },
