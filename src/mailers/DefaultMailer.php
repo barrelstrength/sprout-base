@@ -13,13 +13,14 @@ use barrelstrength\sproutbase\models\sproutbase\Response;
 use barrelstrength\sproutbase\models\sproutemail\SimpleRecipient;
 use barrelstrength\sproutemail\SproutEmail;
 use barrelstrength\sproutlists\integrations\sproutlists\SubscriberListType;
+use barrelstrength\sproutlists\records\Lists;
 use barrelstrength\sproutlists\SproutLists;
 use craft\helpers\Json;
 use craft\helpers\Template;
 use Craft;
 use craft\helpers\UrlHelper;
 use craft\mail\Message;
-use craft\web\View;
+
 
 class DefaultMailer extends BaseMailer implements CampaignEmailSenderInterface
 {
@@ -324,7 +325,7 @@ class DefaultMailer extends BaseMailer implements CampaignEmailSenderInterface
     /**
      * Get the HTML for our List Settings on the Notification Email edit page
      *
-     * @param array $values
+     * @param array|string $values
      *
      * @return null|string
      * @throws \Exception
@@ -337,27 +338,27 @@ class DefaultMailer extends BaseMailer implements CampaignEmailSenderInterface
         $options = [];
         $lists = $this->getLists();
 
-        if (count($lists)) {
-            foreach ($lists as $list) {
-                $listName = $list->name;
-
-                if (count($list->totalSubscribers)) {
-                    $listName .= ' ('.$list->totalSubscribers.')';
-                } else {
-                    $listName .= ' (0)';
-                }
-
-                $options[] = [
-                    'label' => $listName,
-                    'value' => $list->id
-                ];
-            }
-        } else {
-            // Do not display lists if sprout plugin is disabled
+        if (!count($lists)) {
             return '';
         }
 
+        foreach ($lists as $list) {
+            $listName = $list->name;
+
+            if (count($list->totalSubscribers)) {
+                $listName .= ' ('.$list->totalSubscribers.')';
+            } else {
+                $listName .= ' (0)';
+            }
+
+            $options[] = [
+                'label' => $listName,
+                'value' => $list->id
+            ];
+        }
+
         $listIds = [];
+
         // Convert json format to array
         if ($values != null AND is_string($values)) {
             $listIds = Json::decode($values);
@@ -443,7 +444,7 @@ class DefaultMailer extends BaseMailer implements CampaignEmailSenderInterface
             }
 
             // Get all subscribers by list IDs from the SproutLists_SubscriberListType
-            $listRecords = \barrelstrength\sproutlists\records\Lists::find()
+            $listRecords = Lists::find()
                 ->where(['id' => $listIds])->all();
 
             $sproutListsRecipientsInfo = [];

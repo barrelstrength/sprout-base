@@ -775,8 +775,8 @@ class NotificationEmails extends Component
     }
 
     /**
-     * @param null $name
-     * @param null $handle
+     * @param string $subjectLine
+     * @param string $handle
      *
      * @return NotificationEmail|null
      * @throws \Exception

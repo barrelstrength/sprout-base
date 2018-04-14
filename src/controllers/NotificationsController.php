@@ -13,6 +13,7 @@ use craft\helpers\UrlHelper;
 use craft\web\Controller;
 use Craft;
 use craft\web\View;
+use yii\base\Exception;
 
 /**
  * Class NotificationsController
@@ -155,7 +156,7 @@ class NotificationsController extends Controller
                 $url = UrlHelper::cpUrl($currentPluginHandle.'/notifications/edit/'.$notification->id);
                 return $this->redirect($url);
             } else {
-                throw new \Exception(Craft::t('sprout-base', 'Error creating Notification'));
+                throw new Exception(Craft::t('sprout-base', 'Error creating Notification'));
             }
         }
 

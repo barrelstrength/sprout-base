@@ -65,7 +65,6 @@ class Report extends Element
 
     /**
      * @return string
-     * @throws \yii\base\Exception
      */
     public function __toString()
     {
@@ -91,26 +90,6 @@ class Report extends Element
     }
 
     /**
-     * Returns whether this element type has titles.
-     *
-     * @return bool
-     */
-    public static function hasTitles(): bool
-    {
-        return false;
-    }
-
-    /**
-     * Returns whether this element type has content.
-     *
-     * @return bool
-     */
-    public static function hasContent(): bool
-    {
-        return false;
-    }
-
-    /**
      * @inheritDoc IElementType::hasStatuses()
      *
      * @return bool
@@ -118,14 +97,6 @@ class Report extends Element
     public static function hasStatuses(): bool
     {
         return true;
-    }
-
-    /**
-     * @return bool
-     */
-    public static function isLocalized(): bool
-    {
-        return false;
     }
 
     /**
@@ -208,21 +179,6 @@ class Report extends Element
         }
 
         return parent::getTableAttributeHtml($attribute);
-    }
-
-    /**
-     * Returns the attributes that can be sorted by in table views.
-     *
-     * @param string|null $source
-     *
-     * @return array
-     */
-    public function defineSortableAttributes($source = null)
-    {
-        return [
-            'name' => Craft::t('sprout-base', 'Name'),
-            'dataSourceId' => Craft::t('sprout-base', 'Data Source')
-        ];
     }
 
     /**

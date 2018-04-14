@@ -2,7 +2,7 @@
 
 namespace barrelstrength\sproutbase\elements\sproutemail\db;
 
-use barrelstrength\sproutbase\base\BaseSproutTrait;
+
 use craft\elements\db\ElementQuery;
 use craft\base\Element;
 use Craft;

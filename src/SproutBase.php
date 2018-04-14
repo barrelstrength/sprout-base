@@ -9,11 +9,10 @@ namespace barrelstrength\sproutbase;
 
 use barrelstrength\sproutbase\base\BaseSproutTrait;
 use barrelstrength\sproutbase\events\RegisterMailersEvent;
-use barrelstrength\sproutbase\integrations\emailtemplates\AccessibleTemplates;
 use barrelstrength\sproutbase\integrations\emailtemplates\BasicTemplates;
 use barrelstrength\sproutbase\mailers\DefaultMailer;
 use barrelstrength\sproutbase\services\sproutbase\Template;
-use barrelstrength\sproutbase\services\sproutemail\Email;
+
 use barrelstrength\sproutbase\services\sproutemail\Mailers;
 use barrelstrength\sproutbase\web\twig\variables\SproutBaseVariable;
 use craft\web\Application;

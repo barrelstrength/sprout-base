@@ -47,8 +47,10 @@ class Reports extends Component
     /**
      * @param Report $report
      *
-     * @throws \Exception
      * @return bool
+     * @throws \Exception
+     * @throws \Throwable
+     * @throws \yii\db\Exception
      */
     public function saveReport(Report $report)
     {
@@ -59,15 +61,11 @@ class Reports extends Component
             return false;
         }
 
-        if (empty($report->id)) {
-            $reportRecord = new ReportRecord();
-        } else {
+        $reportRecord = new ReportRecord();
+
+        if ($report->id) {
             $reportRecord = ReportRecord::findOne($report->id);
         }
-
-//        if (!$this->validateSettings($report)) {
-//            return false;
-//        }
 
         $report->title = $report->name;
 
@@ -84,10 +82,6 @@ class Reports extends Component
 
         try {
             Craft::$app->getElements()->saveElement($report, false);
-
-//            $reportRecord->save(false);
-
-//            $report->id = $reportRecord->id;
 
             $transaction->commit();
         } catch (\Exception $e) {

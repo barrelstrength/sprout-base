@@ -81,10 +81,7 @@ class Utilities extends Component
 
     /**
      * @param $field
-     * @param $element Element
-     *
-     * @return string
-     * @throws \yii\db\Exception
+     * @param $element
      */
     public function processPredefinedField($field, $element)
     {
@@ -92,20 +89,20 @@ class Utilities extends Component
 
         try {
             $value = Craft::$app->view->renderObjectTemplate($field->fieldFormat, $element);
+
+            $fieldColumnPrefix = $element->getFieldColumnPrefix();
+            $column = $fieldColumnPrefix.$field->handle;
+
+            Craft::$app->db->createCommand()->update($element->contentTable, [
+                $column => $value,
+            ], 'elementId=:elementId AND siteId=:siteId', [
+                ':elementId' => $element->id,
+                ':siteId' => $element->siteId
+            ])
+                ->execute();
         } catch (\Exception $e) {
             SproutBase::error($e->getMessage());
         }
-
-        $fieldColumnPrefix = $element->getFieldColumnPrefix();
-        $column = $fieldColumnPrefix.$field->handle;
-
-        Craft::$app->db->createCommand()->update($element->contentTable, [
-            $column => $value,
-        ], 'elementId=:elementId AND siteId=:siteId', [
-            ':elementId' => $element->id,
-            ':siteId' => $element->siteId
-        ])
-            ->execute();
     }
 }
 

@@ -14,6 +14,7 @@ use Craft;
 use craft\behaviors\FieldLayoutBehavior;
 use craft\elements\db\ElementQueryInterface;
 use craft\helpers\UrlHelper;
+use yii\base\Exception;
 
 class NotificationEmail extends Element
 {
@@ -342,7 +343,7 @@ class NotificationEmail extends Element
         $pluginHandle = Craft::$app->request->getSegment(1);
 
         if ($pluginHandle == null) {
-            throw new \Exception('Invalid integration. No pluginId specified');
+            throw new Exception('Invalid integration. No pluginId specified');
         }
 
         return $pluginHandle.'/{slug}';
@@ -370,7 +371,7 @@ class NotificationEmail extends Element
         //Only expose notification emails that have tokens and allow Live Preview requests
         if (!Craft::$app->request->getParam(Craft::$app->config->getGeneral()->tokenParam)
             && !Craft::$app->getRequest()->getIsLivePreview()) {
-            throw new \Exception(404);
+            throw new Exception(404);
         }
         $extension = null;
 

@@ -42,8 +42,6 @@ class SproutBaseVariable
      */
     public function getCountries()
     {
-        $countries = SproutBase::$app->phone->getCountries();
-
-        return $countries;
+        return SproutBase::$app->phone->getCountries();
     }
 }

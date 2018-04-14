@@ -18,7 +18,7 @@ use League\HTMLToMarkdown\HtmlConverter;
 
 trait TemplateTrait
 {
-    protected $templatesPath = null;
+    protected $templatesPath;
 
     /**
      * Returns whether or not a site template exists
@@ -83,8 +83,7 @@ trait TemplateTrait
      * @param       $template
      * @param array $variables
      *
-     * @return null|string
-     * @throws \yii\base\Exception
+     * @return bool|null|string
      */
     public function renderSiteTemplateIfExists($template, array $variables = [])
     {
@@ -99,9 +98,6 @@ trait TemplateTrait
         }
 
         try {
-
-            $test = Craft::$app->getView()->getTemplatesPath();
-
             $renderedTemplate = Craft::$app->getView()->renderTemplate($template, $variables);
         } catch (\Exception $e) {
             // Specify template .html if no .txt

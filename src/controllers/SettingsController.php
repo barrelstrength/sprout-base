@@ -12,7 +12,6 @@ use Craft;
 use craft\base\Plugin;
 use craft\errors\InvalidPluginException;
 use craft\web\Controller as BaseController;
-use yii\base\InvalidParamException;
 use yii\web\BadRequestHttpException;
 
 /**
@@ -75,7 +74,6 @@ class SettingsController extends BaseController
      *
      * @return \yii\web\Response
      * @throws InvalidPluginException
-     * @throws InvalidParamException
      */
     public function actionEditSettings()
     {

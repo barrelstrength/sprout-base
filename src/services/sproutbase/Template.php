@@ -4,7 +4,7 @@ namespace barrelstrength\sproutbase\services\sproutbase;
 
 use barrelstrength\sproutbase\contracts\sproutemail\BaseEmailTemplates;
 use craft\base\Component;
-use Craft;
+
 use craft\events\RegisterComponentTypesEvent;
 
 class Template extends Component

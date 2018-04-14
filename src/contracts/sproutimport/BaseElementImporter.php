@@ -7,7 +7,7 @@
 
 namespace barrelstrength\sproutbase\contracts\sproutimport;
 
-use barrelstrength\sproutbase\SproutBase;
+
 use barrelstrength\sproutimport\models\jobs\SeedJob;
 use Craft;
 use barrelstrength\sproutimport\SproutImport;

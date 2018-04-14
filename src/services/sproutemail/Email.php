@@ -5,16 +5,17 @@ namespace barrelstrength\sproutbase\services\sproutemail;
 use barrelstrength\sproutbase\elements\sproutemail\NotificationEmail;
 use barrelstrength\sproutbase\integrations\emailtemplates\BasicTemplates;
 use Craft;
-use barrelstrength\sproutbase\contracts\sproutemail\BaseEmailTemplates;
+
 use barrelstrength\sproutbase\SproutBase;
 use craft\base\Component;
-use craft\events\RegisterComponentTypesEvent;
-use craft\web\View;
+
 
 class Email extends Component
 {
     /**
-     * @return mixed|string
+     * @param NotificationEmail|null $notificationEmail
+     *
+     * @return string
      * @throws \yii\base\Exception
      */
     public function getEmailTemplate(NotificationEmail $notificationEmail = null)

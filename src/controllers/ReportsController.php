@@ -183,6 +183,8 @@ class ReportsController extends Controller
      *
      * @return null|\yii\web\Response
      * @throws \Exception
+     * @throws \Throwable
+     * @throws \yii\db\Exception
      * @throws \yii\web\BadRequestHttpException
      */
     public function actionUpdateReport()

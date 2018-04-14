@@ -68,7 +68,7 @@ class ReportQuery extends ElementQuery
             'sproutreports_datasources.pluginId'
         ]);
 
-        $this->query->innerJoin('{{%sproutreports_datasources}} sproutreports_datasources', "[[sproutreports_datasources.id]] = [[sproutreports_reports.dataSourceId]]");
+        $this->query->innerJoin('{{%sproutreports_datasources}} sproutreports_datasources', '[[sproutreports_datasources.id]] = [[sproutreports_reports.dataSourceId]]');
 
         $pluginIdRequest = Craft::$app->request->getBodyParam('criteria.pluginHandle');
 
