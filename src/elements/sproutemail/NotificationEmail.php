@@ -116,7 +116,7 @@ class NotificationEmail extends Element
         $pluginHandle = Craft::$app->request->getBodyParam('criteria.base') ?: 'sprout-email';
 
         return UrlHelper::cpUrl(
-            $pluginHandle . '/notifications/edit/'.$this->id
+            $pluginHandle.'/notifications/edit/'.$this->id
         );
     }
 
@@ -192,10 +192,10 @@ class NotificationEmail extends Element
             $pluginHandle = Craft::$app->request->getBodyParam('criteria.base') ?: 'sprout-email';
 
             return Craft::$app->getView()->renderTemplate('sprout-base/sproutemail/notifications/_partials/preview-links', [
-                'email'        => $this,
+                'email' => $this,
                 'pluginHandle' => $pluginHandle,
-                'shareUrl'     => $shareUrl,
-                'type'         => $attribute
+                'shareUrl' => $shareUrl,
+                'type' => $attribute
             ]);
         }
         return parent::getTableAttributeHtml($attribute);
@@ -340,12 +340,12 @@ class NotificationEmail extends Element
     public function getUriFormat()
     {
         $pluginHandle = Craft::$app->request->getSegment(1);
-        
+
         if ($pluginHandle == null) {
             throw new \Exception('Invalid integration. No pluginId specified');
         }
 
-        return $pluginHandle . '/{slug}';
+        return $pluginHandle.'/{slug}';
     }
 
     /**
@@ -367,7 +367,7 @@ class NotificationEmail extends Element
      */
     public function route()
     {
-         //Only expose notification emails that have tokens and allow Live Preview requests
+        //Only expose notification emails that have tokens and allow Live Preview requests
         if (!Craft::$app->request->getParam(Craft::$app->config->getGeneral()->tokenParam)
             && !Craft::$app->getRequest()->getIsLivePreview()) {
             throw new \Exception(404);
@@ -459,7 +459,7 @@ class NotificationEmail extends Element
         $templateFolder = null;
         $plugin = Craft::$app->getPlugins()->getPlugin('sprout-email');
 
-        if ($plugin){
+        if ($plugin) {
             $settings = $plugin->getSettings();
         }
 

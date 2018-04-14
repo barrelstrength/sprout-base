@@ -88,7 +88,7 @@ class Phone extends Component
             $countryRepository = new CountryRepository;
             $country = $countryRepository->get($countryCode);
 
-            if ($country){
+            if ($country) {
                 $countries[$countryCode] = $country->getName().' +'.$code;
             }
         }

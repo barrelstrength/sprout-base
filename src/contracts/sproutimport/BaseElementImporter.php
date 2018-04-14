@@ -73,8 +73,7 @@ abstract class BaseElementImporter extends BaseImporter
         /**
          * @var $model Element
          */
-        if ($existingElement = $this->getExistingElement($model, $settings))
-        {
+        if ($existingElement = $this->getExistingElement($model, $settings)) {
             $model = $existingElement;
         }
 
@@ -289,7 +288,8 @@ abstract class BaseElementImporter extends BaseImporter
      *
      * @return array|null
      */
-    public function getMockData($quantity, $settings) {
+    public function getMockData($quantity, $settings)
+    {
         return null;
     }
 

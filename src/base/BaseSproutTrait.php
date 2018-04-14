@@ -19,6 +19,7 @@ trait BaseSproutTrait
 
         return Craft::$app->getPlugins()->getPlugin($pluginHandle);
     }
+
     /**
      * Logs an error message using the pluginId as the category
      *

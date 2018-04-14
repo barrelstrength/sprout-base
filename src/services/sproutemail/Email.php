@@ -26,7 +26,7 @@ class Email extends Component
         $sproutEmail = Craft::$app->plugins->getPlugin('sprout-email');
 
         // Allow our settings to override our default
-        if ($sproutEmail){
+        if ($sproutEmail) {
             $settings = $sproutEmail->getSettings();
             if ($settings->templateFolderOverride) {
                 $emailTemplate = SproutBase::$app->template->getTemplateById($settings->templateFolderOverride);

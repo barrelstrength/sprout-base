@@ -46,11 +46,11 @@ class Settings extends Component
             }
         }
         // Set sprout scenario
-        if ($scenario){
+        if ($scenario) {
             $pluginSettings->setScenario($scenario);
         }
 
-        if (!$pluginSettings->validate()){
+        if (!$pluginSettings->validate()) {
             return $pluginSettings;
         }
 
