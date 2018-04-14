@@ -87,8 +87,7 @@
            value="sprout-base/notifications/save-notification-email">
     {{ redirectInput(currentPluginHandle ~ '/notifications') }}
     {% if notificationEmail.id is not null %}
-        <input type="hidden" name="sproutEmail[id]"
-               value="{{ notificationEmail.id }}">
+        <input type="hidden" name="emailId" value="{{ notificationEmail.id }}">
     {% endif %}
 
     {% if namespace is not defined %}{% set namespace = 'fields' %}{% endif %}
@@ -109,7 +108,7 @@
 
         {{ forms.textField({
             label: "From Name <span class='info'>The person or business sending the email</span>"|t('sprout-base'),
-            name: 'sproutEmail[fromName]',
+            name: 'fromName',
             placeholder: siteName,
             value: notificationEmail.fromName is not empty ? notificationEmail.fromName : '',
             errors: notificationEmail is defined ? notificationEmail.getErrors('fromName') : null,
@@ -117,7 +116,7 @@
         }) }}
 
         {{ forms.textField({
-            name: 'sproutEmail[fromEmail]',
+            name: 'fromEmail',
             label: "From Email <span class='info'>The email address of the person or business sending the email</span>"|t('sprout-base'),
             placeholder: currentUser.email,
             value: notificationEmail.fromEmail is not empty ? notificationEmail.fromEmail : '',
@@ -126,12 +125,11 @@
         }) }}
 
         {{ forms.textField({
-            name: 'sproutEmail[replyToEmail]',
-            label: "Reply To <span class='info'>The email address which will be used if any recipients reply to your email</span>"|t('sprout-base'),
+            name: 'replyToEmail',
+            label: "Reply To <span class='info'>The email address which will be used if any recipients reply to your email. Defaults to use From Email.</span>"|t('sprout-base'),
             placeholder: currentUser.email,
             value: notificationEmail.replyToEmail is not empty ? notificationEmail.replyToEmail : '',
-            errors: notificationEmail is defined ? notificationEmail.getErrors('replyToEmail') : null,
-            required: true
+            errors: notificationEmail is defined ? notificationEmail.getErrors('replyToEmail') : null
         }) }}
 
     </div>
@@ -147,7 +145,7 @@
         {{ forms.textField({
             label: "Recipients <span class='info'>A comma separated list of email addresses.</span>"|t('sprout-base'),
             placeholder: "user@domain.com, other@domain.com"|t('sprout-base'),
-            name: "sproutEmail[recipients]",
+            name: "recipients",
             fieldClass: 'field-border-top',
             class: "code",
             value: notificationEmail is defined ? notificationEmail.recipients : "",
@@ -187,7 +185,7 @@
 
             {{ forms.selectField({
                 id: "notificationEvent",
-                name: "sproutEmail[eventId]",
+                name: "eventId",
                 label: "Event <span class='info'>The event that will trigger your notification.</span>"|t('sprout-base'),
                 fieldClass: 'field-border-top',
                 options: eventOptions,
@@ -216,8 +214,8 @@
             {{ forms.lightswitchField({
                 first: true,
                 label: "Attach Files <span class='info'>All files submitted with your entries will be attached to the notification email</span>"|t('sprout-base'),
-                id: 'sproutEmail[enableFileAttachments]',
-                name: 'sproutEmail[enableFileAttachments]',
+                id: 'enableFileAttachments',
+                name: 'enableFileAttachments',
                 on: notificationEmail.enableFileAttachments,
                 onLabel: "Enable"|t('sprout-base'),
                 offLabel: "Disable"|t('sprout-base')
@@ -238,7 +236,7 @@
         {{ forms.textField({
             label: "Title Format <span class='info'>Update the Notification Email Title in the Control Panel to follow a pattern.</span>"|t('sprout-base'),
             id: 'titleFormat',
-            name: 'sproutEmail[titleFormat]',
+            name: 'titleFormat',
             value: notificationEmail is defined ? notificationEmail.titleFormat : null,
             autofocus: true,
             first: true,
@@ -257,7 +255,7 @@
             label: "Templates <span class='info'>The Email Templates to display your email.</span>"|t('sprout-base'),
             errors: notificationEmail is defined ? notificationEmail.getErrors('template') : null,
         }, sproutFields.selectOther({
-            name: 'sproutEmail[template]',
+            name: 'template',
             options: notificationEmail.getTemplateOptions(),
             value: notificationEmail is defined ? notificationEmail.template : null,
             otherPlaceholderText: '_email/emailtemplate'|t('sprout-email')

@@ -10,11 +10,11 @@ use Craft;
 abstract class BaseEmailTemplates
 {
     /**
-     * The Template ID of the email Templates in the emailat {pluginhandle}-{emailtemplateclassname}
+     * The Template ID of the email Templates in the email: {pluginhandle}-{emailtemplateclassname}
      *
      * @example
-     * sproutemails-accessibletemplates
-     * sproutemails-basictemplates
+     * sproutemail-basictemplates
+     * sproutforms-basictemplates
      *
      * @var string
      */
@@ -22,6 +22,7 @@ abstract class BaseEmailTemplates
 
     /**
      * Generates the Template ID
+     *
      * @return string
      * @throws \ReflectionException
      */
@@ -42,7 +43,7 @@ abstract class BaseEmailTemplates
     }
 
     /**
-     * The name of your email Templates
+     * The name of your Email Templates.
      *
      * @return string
      */
@@ -50,6 +51,8 @@ abstract class BaseEmailTemplates
 
     /**
      * The folder path where your email templates exist
+     *
+     * This value should be a folder. Sprout Email will look for a required email.html file and an optional email.txt file within this folder.
      * 
      * @return string
      */

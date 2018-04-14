@@ -4,7 +4,7 @@ namespace barrelstrength\sproutbase\mailers;
 
 use barrelstrength\sproutbase\base\TemplateTrait;
 use barrelstrength\sproutbase\contracts\sproutemail\BaseMailer;
-use barrelstrength\sproutbase\contracts\sproutemail\CampaignEmailSenderInterface;
+use barrelstrength\sproutbase\contracts\sproutemail\NotificationEmailSenderInterface;
 use barrelstrength\sproutbase\SproutBase;
 use barrelstrength\sproutemail\elements\CampaignEmail;
 use barrelstrength\sproutbase\elements\sproutemail\NotificationEmail;
@@ -20,34 +20,29 @@ use craft\helpers\Template;
 use Craft;
 use craft\helpers\UrlHelper;
 use craft\mail\Message;
+use yii\base\Exception;
+use yii\base\InvalidArgumentException;
 
 
-class DefaultMailer extends BaseMailer implements CampaignEmailSenderInterface
+class DefaultMailer extends BaseMailer implements NotificationEmailSenderInterface
 {
     use TemplateTrait;
+
     /**
      * @var
      */
     protected $lists;
 
     /**
-     * @return string
+     * @inheritdoc
      */
     public function getName()
-    {
-        return 'defaultmailer';
-    }
-
-    /**
-     * @return string
-     */
-    public function getTitle()
     {
         return 'Sprout Email';
     }
 
     /**
-     * @return null|string
+     * @inheritdoc
      */
     public function getDescription()
     {
@@ -55,7 +50,7 @@ class DefaultMailer extends BaseMailer implements CampaignEmailSenderInterface
     }
 
     /**
-     * @return bool
+     * @inheritdoc
      */
     public function hasCpSection()
     {
@@ -63,11 +58,7 @@ class DefaultMailer extends BaseMailer implements CampaignEmailSenderInterface
     }
 
     /**
-     * @param array $settings
-     *
-     * @return string|\Twig_Markup
-     * @throws \Twig_Error_Loader
-     * @throws \yii\base\Exception
+     * @inheritdoc
      */
     public function getSettingsHtml(array $settings = [])
     {
@@ -82,12 +73,94 @@ class DefaultMailer extends BaseMailer implements CampaignEmailSenderInterface
     }
 
     /**
-     * @param NotificationEmail $notificationEmail
-     * @param null              $object
-     * @param bool              $useMockData
-     *
-     * @return bool
-     * @throws \Exception
+     * @inheritdoc
+     */
+    public function sendCampaignEmail(CampaignEmail $campaignEmail, CampaignType $campaignType)
+    {
+        $email = new Message();
+
+        try {
+            $response = [];
+
+            $params = [
+                'email' => $campaignEmail,
+                'campaignType' => $campaignType,
+            ];
+
+            $email->setFrom([$campaignEmail->fromEmail => $campaignEmail->fromName]);
+            $email->setSubject($campaignEmail->subjectLine);
+
+            if ($campaignEmail->replyToEmail && filter_var($campaignEmail->replyToEmail, FILTER_VALIDATE_EMAIL)) {
+                $email->setReplyTo($campaignEmail->replyToEmail);
+            }
+
+            $recipients = Craft::$app->getRequest()->getBodyParam('recipients');
+
+            if ($recipients === null) {
+                throw new InvalidArgumentException(Craft::t('sprout-base', 'Empty recipients.'));
+            }
+
+            $result = $this->getValidAndInvalidRecipients($recipients);
+
+            $invalidRecipients = $result['invalid'];
+            $validRecipients = $result['valid'];
+
+            if (!empty($invalidRecipients)) {
+                $invalidEmails = implode('<br/>', $invalidRecipients);
+
+                throw new InvalidArgumentException(Craft::t('sprout-base', 'The following recipient email addresses do not validate: {invalidEmails}',
+                    [
+                        'invalidEmails' => $invalidEmails
+                    ]));
+            }
+
+            $recipients = $validRecipients;
+
+            foreach ($recipients as $recipient) {
+                try {
+                    $params['recipient'] = $recipient;
+                    $body = $this->renderSiteTemplateIfExists($campaignType->template.'.txt', $params);
+
+                    $email->setTextBody($body);
+                    $htmlBody = $this->renderSiteTemplateIfExists($campaignType->template, $params);
+
+                    $email->setHtmlBody($htmlBody);
+                    $name = $recipient->firstName.' '.$recipient->lastName;
+                    $email->setTo([$recipient->email => $name]);
+
+                    SproutBase::$app->mailers->sendEmail($email);
+                } catch (\Exception $e) {
+                    throw $e;
+                }
+            }
+
+            $response['emailModel'] = $email;
+
+            return Response::createModalResponse(
+                'sprout-base/sproutemail/_modals/response',
+                [
+                    'email' => $campaignEmail,
+                    'campaign' => $campaignType,
+                    'emailModel' => $response['emailModel'],
+                    'message' => Craft::t('sprout-base', 'Campaign sent successfully to email.'),
+                ]
+            );
+        } catch (Exception $e) {
+            SproutBase::$app->common->addError('fail-campaign-email', $e->getMessage());
+
+            return Response::createErrorModalResponse(
+                'sprout-base/sproutemail/_modals/response',
+                [
+                    'email' => $campaignEmail,
+                    'campaign' => $campaignType,
+                    'message' => Craft::t('sprout-base', $e->getMessage()),
+                ]
+            );
+        }
+    }
+
+    /**
+     * @inheritdoc
      */
     public function sendNotificationEmail(NotificationEmail $notificationEmail, $object = null, $useMockData = false)
     {
@@ -180,104 +253,7 @@ class DefaultMailer extends BaseMailer implements CampaignEmailSenderInterface
     }
 
     /**
-     * @param CampaignEmail $campaignEmail
-     * @param CampaignType  $campaignType
-     *
-     * @return Response|mixed
-     * @throws \Twig_Error_Loader
-     * @throws \yii\base\Exception
-     */
-    public function sendCampaignEmail(CampaignEmail $campaignEmail, CampaignType $campaignType)
-    {
-        $email = new Message();
-
-        try {
-            $response = [];
-
-            $params = [
-                'email' => $campaignEmail,
-                'campaignType' => $campaignType,
-            ];
-
-            $email->setFrom([$campaignEmail->fromEmail => $campaignEmail->fromName]);
-            $email->setSubject($campaignEmail->subjectLine);
-
-            if ($campaignEmail->replyToEmail && filter_var($campaignEmail->replyToEmail, FILTER_VALIDATE_EMAIL)) {
-                $email->setReplyTo($campaignEmail->replyToEmail);
-            }
-
-            $recipients = Craft::$app->getRequest()->getBodyParam('recipients');
-
-            if ($recipients === null) {
-                throw new \InvalidArgumentException(Craft::t('sprout-base', 'Empty recipients.'));
-            }
-
-            $result = $this->getValidAndInvalidRecipients($recipients);
-
-            $invalidRecipients = $result['invalid'];
-            $validRecipients = $result['valid'];
-
-            if (!empty($invalidRecipients)) {
-                $invalidEmails = implode('<br/>', $invalidRecipients);
-
-                throw new \InvalidArgumentException(Craft::t('sprout-base', 'The following recipient email addresses do not validate: {invalidEmails}',
-                    [
-                        'invalidEmails' => $invalidEmails
-                    ]));
-            }
-
-            $recipients = $validRecipients;
-
-            foreach ($recipients as $recipient) {
-                try {
-                    $params['recipient'] = $recipient;
-                    $body = $this->renderSiteTemplateIfExists($campaignType->template.'.txt', $params);
-
-                    $email->setTextBody($body);
-                    $htmlBody = $this->renderSiteTemplateIfExists($campaignType->template, $params);
-
-                    $email->setHtmlBody($htmlBody);
-                    $name = $recipient->firstName.' '.$recipient->lastName;
-                    $email->setTo([$recipient->email => $name]);
-
-                    SproutBase::$app->mailers->sendEmail($email);
-                } catch (\Exception $e) {
-                    throw $e;
-                }
-            }
-
-            $response['emailModel'] = $email;
-
-            return Response::createModalResponse(
-                'sprout-base/sproutemail/_modals/response',
-                [
-                    'email' => $campaignEmail,
-                    'campaign' => $campaignType,
-                    'emailModel' => $response['emailModel'],
-                    'message' => Craft::t('sprout-base', 'Campaign sent successfully to email.'),
-                ]
-            );
-        } catch (\Exception $e) {
-            SproutBase::$app->common->addError('fail-campaign-email', $e->getMessage());
-
-            return Response::createErrorModalResponse(
-                'sprout-base/sproutemail/_modals/response',
-                [
-                    'email' => $campaignEmail,
-                    'campaign' => $campaignType,
-                    'message' => Craft::t('sprout-base', $e->getMessage()),
-                ]
-            );
-        }
-    }
-
-    /**
-     * @param CampaignEmail $campaignEmail
-     * @param CampaignType  $campaignType
-     *
-     * @return mixed|string
-     * @throws \Twig_Error_Loader
-     * @throws \yii\base\Exception
+     * @inheritdoc
      */
     public function getPrepareModalHtml(CampaignEmail $campaignEmail, CampaignType $campaignType)
     {
@@ -302,13 +278,15 @@ class DefaultMailer extends BaseMailer implements CampaignEmailSenderInterface
     }
 
     /**
-     * Get all supported Lists. Requires Sprout Lists.
-     *
-     * @return array|void
+     * @inheritdoc
      */
+    public function hasInlineRecipients()
+    {
+        return true;
+    }
+
     /**
-     * @return array|null
-     * @throws \Exception
+     * @inheritdoc
      */
     public function getLists()
     {
@@ -323,14 +301,7 @@ class DefaultMailer extends BaseMailer implements CampaignEmailSenderInterface
     }
 
     /**
-     * Get the HTML for our List Settings on the Notification Email edit page
-     *
-     * @param array|string $values
-     *
-     * @return null|string
-     * @throws \Exception
-     * @throws \Twig_Error_Loader
-     * @throws \yii\base\Exception
+     * @inheritdoc
      */
     public function getListsHtml($values = [])
     {
@@ -378,14 +349,6 @@ class DefaultMailer extends BaseMailer implements CampaignEmailSenderInterface
     }
 
     /**
-     * @return bool
-     */
-    public function hasInlineRecipients()
-    {
-        return true;
-    }
-
-    /**
      * @param $email
      * @param $object
      * @param $useMockData
@@ -413,7 +376,7 @@ class DefaultMailer extends BaseMailer implements CampaignEmailSenderInterface
             if (!empty($invalidRecipients)) {
                 $invalidEmails = implode('<br>', $invalidRecipients);
 
-                throw new \InvalidArgumentException(Craft::t('sprout-base', 'Recipient email addresses do not validate: <br /> {invalidEmails}', [
+                throw new InvalidArgumentException(Craft::t('sprout-base', 'Recipient email addresses do not validate: <br /> {invalidEmails}', [
                     'invalidEmails' => $invalidEmails
                 ]));
             }

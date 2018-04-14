@@ -20,6 +20,9 @@ use craft\helpers\UrlHelper;
 use craft\web\View;
 use yii\base\Event;
 use craft\base\ElementInterface;
+use yii\base\Exception;
+use yii\base\InvalidArgumentException;
+use yii\web\NotFoundHttpException;
 
 /**
  * Class NotificationEmails
@@ -66,7 +69,7 @@ class NotificationEmails extends Component
     /**
      * @param $emailId
      *
-     * @return ElementInterface
+     * @return NotificationEmail
      */
     public function getNotificationEmailById($emailId)
     {
@@ -177,64 +180,64 @@ class NotificationEmails extends Component
 
     /**
      * @param NotificationEmail $notificationEmail
-     * @param bool              $isSettingPage
      *
-     * @return NotificationEmail|null
-     * @throws \Exception
+     * @return bool
+     * @throws NotFoundHttpException
      * @throws \Throwable
-     * @throws \yii\base\Exception
+     * @throws \yii\db\Exception
      */
-    public function saveNotification(NotificationEmail $notificationEmail, $isSettingPage = false)
+    public function saveNotification(NotificationEmail $notificationEmail)
     {
-        $notificationEmailRecord = new NotificationEmailRecord();
+        $isNewNotificationEmail = !$notificationEmail->id;
 
-        if ($notificationEmail->id !== null) {
+        if (!$notificationEmail->validate()) {
+            SproutBase::info(Craft::t('sprout-base', 'Notification Email not saved due to validation error.'));
+            return false;
+        }
+
+        if (!$isNewNotificationEmail) {
             $notificationEmailRecord = NotificationEmail::findOne($notificationEmail->id);
 
             if (!$notificationEmailRecord) {
-                throw new \InvalidArgumentException(Craft::t('sprout-base',
-                    'No entry exists with the ID “{id}”', ['id' => $notificationEmail->id]));
+                throw new NotFoundHttpException(Craft::t('sprout-base', 'No entry exists with the ID “{id}”', ['id' => $notificationEmail->id]));
             }
         } else {
-            $notificationEmailRecord->subjectLine = $notificationEmail->subjectLine;
+            $notificationEmailRecord = new NotificationEmailRecord();
         }
 
-        $eventId = $notificationEmail->eventId;
+        $transaction = Craft::$app->getDb()->beginTransaction();
 
-        $event = SproutBase::$app->notifications->getEventById($eventId);
+        try {
 
-        if ($event && $isSettingPage == false) {
-            $options = $event->prepareOptions();
+            // Save the Field Layout
+            $fieldLayout = $notificationEmail->getFieldLayout();
+            Craft::$app->getFields()->saveLayout($fieldLayout);
+            $notificationEmail->fieldLayoutId = $fieldLayout->id;
+            $notificationEmailRecord->fieldLayoutId = $fieldLayout->id;
 
-            $notificationEmail->options = $options;
-            /**
-             * @var $plugin Plugin
-             */
-            $plugin = $event->getPlugin();
-
-            $notificationEmail->pluginId = $plugin->id;
-        }
-
-        $fieldLayout = $notificationEmail->getFieldLayout();
-
-        Craft::$app->getFields()->saveLayout($fieldLayout);
-
-        $notificationEmail->fieldLayoutId = $fieldLayout->id;
-        $notificationEmailRecord->fieldLayoutId = $fieldLayout->id;
-
-        $notificationEmail->addErrors($notificationEmailRecord->getErrors());
-
-        if (!$notificationEmail->hasErrors()) {
-            try {
-                if (Craft::$app->getElements()->saveElement($notificationEmail)) {
-                    return $notificationEmail;
-                }
-            } catch (\Exception $e) {
-                throw $e;
+            // Save the global set
+            if (!Craft::$app->getElements()->saveElement($notificationEmail, false)) {
+                return false;
             }
+
+            // Now that we have an element ID, save the record
+            if ($isNewNotificationEmail) {
+                $notificationEmailRecord->id = $notificationEmail->id;
+            }
+
+//            $notificationEmailRecord->save(false);
+
+            $transaction->commit();
+
+            return true;
+
+        } catch (\Throwable $e) {
+            $transaction->rollBack();
+
+            throw $e;
         }
 
-        return null;
+
     }
 
     /**
@@ -787,23 +790,29 @@ class NotificationEmails extends Component
     {
         $currentPluginHandle = Craft::$app->request->getSegment(1);
 
-        $notification = new NotificationEmail();
+        $notificationEmail = new NotificationEmail();
         $subjectLine = $subjectLine ?? Craft::t('sprout-base', 'Notification');
         $handle = $handle ?? ElementHelper::createSlug($subjectLine);
 
         $subjectLine = $this->getFieldAsNew('subjectLine', $subjectLine);
 
-        $notification->title = $subjectLine;
-        $notification->subjectLine = $subjectLine;
-        $notification->pluginId = $currentPluginHandle;
-        $notification->slug = $handle;
+        $notificationEmail->title = $subjectLine;
+        $notificationEmail->subjectLine = $subjectLine;
+        $notificationEmail->pluginId = $currentPluginHandle;
+        $notificationEmail->slug = $handle;
+
+        $systemEmailSettings = Craft::$app->getSystemSettings()->getEmailSettings();
+
+        // @todo - add override settings to Sprout Email
+        $notificationEmail->fromName = $systemEmailSettings->fromName;
+        $notificationEmail->fromEmail = $systemEmailSettings->fromEmail;
 
         // Set default tab
         $field = null;
 
-        if ($this->saveNotification($notification)) {
+        if ($this->saveNotification($notificationEmail)) {
 
-            return $notification;
+            return $notificationEmail;
         }
 
         return null;

@@ -23,89 +23,36 @@ use Craft;
 abstract class BaseMailer
 {
     /**
-     * The settings for this mailer stored in the sproutemail_mailers table
+     * The settings for this mailer
      *
      * @var Model
      */
     protected $settings;
 
     /**
-     * Whether this mailer has been initialized
-     *
-     * @var bool
-     */
-    protected $initialized = false;
-
-    /**
-     * Whether this mailer has been installed
-     *
-     * @var bool
-     */
-    protected $installed = false;
-
-    /**
-     * Initializes the mailer by fetching its settings and loading necessary configs
-     */
-    public function init()
-    {
-        if (!$this->initialized) {
-            $this->initialized = true;
-        }
-    }
-
-    /**
-     * Returns the mailer title when used in string context
+     * Returns the Mailer Title when used in string context
      *
      * @return string
      */
     public function __toString()
     {
-        return $this->getTitle();
+        return $this->getName();
     }
 
     /**
-     * Returns whether or not the mailer has been properly initialized by Sprout Email
+     * The Mailer Name
      *
-     * @return bool
-     */
-    public function isInitialized()
-    {
-        return $this->initialized;
-    }
-
-    /**
-     * Returns the mailer id to use as the formal identifier
-     *
-     * @example sproutemail
+     * @example Sprout Email
+     * @example AWS
      *
      * @return string
      */
-    final public function getId()
-    {
-        return get_class($this);
-    }
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->getId();
-    }
-
-    /**
-     * Returns the mailer title to use when displaying a label or similar use case
-     *
-     * @example Sprout Email Service
-     *
-     * @return string
-     */
-    abstract public function getTitle();
+    abstract public function getName();
 
     /**
      * Returns a short description of this mailer
      *
-     * @example The Sprout Email Core Mailer uses the Craft API to send emails
+     * @example The Sprout Email Mailer uses the Craft API to send emails
      *
      * @return string
      */
@@ -144,6 +91,7 @@ abstract class BaseMailer
             return null;
         }
 
+        // @todo - getId no longer exists, review
         return UrlHelper::cpUrl('sprout-email/settings/mailers/'.$this->getId());
     }
 
@@ -167,6 +115,7 @@ abstract class BaseMailer
      */
     public function prepSettings()
     {
+        // @todo - getId no longer exists, review
         return \Craft::$app->getRequest()->getParam($this->getId());
     }
 
@@ -195,11 +144,25 @@ abstract class BaseMailer
      *
      * @param array $settings
      *
-     * @return string
+     * @return string|Model
      */
     public function getSettingsHtml(array $settings = [])
     {
         return '';
+    }
+
+    /**
+     * Gives a mailer the responsibility to send Campaign Emails
+     * if they implement SproutEmailCampaignEmailSenderInterface
+     *
+     * @param CampaignEmail $campaignEmail
+     * @param CampaignType  $campaignType
+     *
+     * @return mixed
+     */
+    public function sendCampaignEmail(CampaignEmail $campaignEmail, CampaignType $campaignType)
+    {
+        return true;
     }
 
     /**
@@ -217,18 +180,16 @@ abstract class BaseMailer
     }
 
     /**
-     * Gives a mailer the responsibility to send Campaign Emails
-     * if they implement SproutEmailCampaignEmailSenderInterface
-     *
      * @param CampaignEmail $campaignEmail
      * @param CampaignType  $campaignType
+     * @param array         $emails
      *
-     * @return mixed
+     * @return null
      */
-    abstract public function sendCampaignEmail(
-        CampaignEmail $campaignEmail,
-        CampaignType $campaignType
-    );
+    public function sendTestEmail(CampaignEmail $campaignEmail, CampaignType $campaignType, array $emails = [])
+    {
+        return null;
+    }
 
     /**
      * Gives mailers the ability to include their own modal resources and register their dynamic action handlers
@@ -263,10 +224,17 @@ abstract class BaseMailer
      *
      * @return mixed
      */
-    abstract public function getPrepareModalHtml(
-        CampaignEmail $campaignEmail,
-        CampaignType $campaignType
-    );
+    abstract public function getPrepareModalHtml(CampaignEmail $campaignEmail, CampaignType $campaignType);
+
+    /**
+     * Return true to allow and show mailer dynamic recipients
+     *
+     * @return bool
+     */
+    public function hasInlineRecipients()
+    {
+        return false;
+    }
 
     /**
      * Returns whether this Mailer supports mailing lists
@@ -299,16 +267,6 @@ abstract class BaseMailer
     }
 
     /**
-     * Return true to allow and show mailer dynamic recipients
-     *
-     * @return bool
-     */
-    public function hasInlineRecipients()
-    {
-        return false;
-    }
-
-    /**
      * Prepare the list data before we save it in the database
      *
      * @param $lists
@@ -330,17 +288,5 @@ abstract class BaseMailer
     public function prepareSave(CampaignType $model)
     {
         return $model;
-    }
-
-    /**
-     * @param CampaignEmail $campaignEmail
-     * @param CampaignType  $campaignType
-     * @param array         $emails
-     *
-     * @return null
-     */
-    public function sendTestEmail(CampaignEmail $campaignEmail, CampaignType $campaignType, array $emails = [])
-    {
-        return null;
     }
 }

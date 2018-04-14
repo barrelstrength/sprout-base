@@ -10,6 +10,7 @@ use Craft;
 class NotificationEmailQuery extends ElementQuery
 {
     public $base;
+
     /**
      * @inheritdoc
      */
@@ -44,6 +45,9 @@ class NotificationEmailQuery extends ElementQuery
         return parent::beforePrepare();
     }
 
+    /**
+     * @inheritdoc
+     */
     protected function statusCondition(string $status)
     {
         $currentPluginHandle = Craft::$app->getRequest()->getSegment(1);

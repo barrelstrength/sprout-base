@@ -2,6 +2,7 @@
 
 namespace barrelstrength\sproutbase\elements\sproutemail;
 
+use barrelstrength\sproutbase\contracts\sproutemail\BaseMailer;
 use barrelstrength\sproutbase\elements\sproutemail\actions\DeleteNotification;
 use barrelstrength\sproutbase\integrations\emailtemplates\BasicTemplates;
 use barrelstrength\sproutbase\mailers\DefaultMailer;
@@ -18,31 +19,126 @@ use yii\base\Exception;
 
 class NotificationEmail extends Element
 {
-    public $subjectLine;
-    public $pluginId;
-    public $titleFormat;
-    public $template;
-    public $eventId;
-    public $options;
-    public $recipients;
-    public $listSettings;
-    public $fromName;
-    public $fromEmail;
-    public $replyToEmail;
-    public $enableFileAttachments;
-    public $dateCreated;
-    public $dateUpdated;
-    public $fieldLayoutId;
-    public $send;
-    public $preview;
-    public $defaultBody;
-
+    // Email Status Constants
     const ENABLED = 'enabled';
     const PENDING = 'pending';
     const DISABLED = 'disabled';
 
     /**
-     * @return string
+     * The Subject Line of your email. Your title will also default to the Subject Line unless you set a Title Format.
+     *
+     * @var string
+     */
+    public $subjectLine;
+
+    /**
+     * The Title Format of your Title.
+     *
+     * @var string
+     */
+    public $titleFormat;
+
+    /**
+     * The handle of the plugin where a notification event exists
+     *
+     * @var string
+     */
+    public $pluginId;
+
+    /**
+     * The Email Template integration handle or folder path of the email templates that should be used when rendering this Notification Email.
+     * @var string
+     */
+    public $template;
+
+    /**
+     * The qualified namespace of the Email Notification Event
+     *
+     * @var string
+     */
+    public $eventId;
+
+    /**
+     * Any options that have been set for your Event. Stored as JSON.
+     *
+     * @var string
+     */
+    public $options;
+
+    /**
+     * A comma, delimited list of recipients
+     *
+     * @var string
+     */
+    public $recipients;
+
+    /**
+     * List settings.
+     *
+     * List settings HTML is provided by a List integration. Values will be saved in JSON format and will be processed by the active mailer and list integration.
+     *
+     * @var string
+     */
+    public $listSettings;
+
+    /**
+     * The sender name
+     *
+     * @var string
+     */
+    public $fromName;
+
+    /**
+     * The sender email
+     *
+     * @var string
+     */
+    public $fromEmail;
+
+    /**
+     * The sender replyTo email, if different than the sender email
+     *
+     * @var string
+     */
+    public $replyToEmail;
+
+    /**
+     * Enable or disable file attachments when notification emails are sent.
+     *
+     * If disabled, files will still be stored in Craft after form submission. This only determines if they should also be sent via email.
+     *
+     * @var bool
+     */
+    public $enableFileAttachments;
+
+    /**
+     * The Email Notification Field Layout ID
+     *
+     * @var int
+     */
+    public $fieldLayoutId;
+
+    /**
+     * The default email message.
+     *
+     * This field is only visible when no Email Notification Field Layout exists. Once a Field Layout exists, this field will no longer appear in the interface.
+     *
+     * @var string
+     */
+    public $defaultBody;
+
+    /**
+     * @var \DateTime
+     */
+    public $dateCreated;
+
+    /**
+     * @var \DateTime
+     */
+    public $dateUpdated;
+
+    /**
+     * @inheritdoc
      */
     public static function displayName(): string
     {
@@ -50,7 +146,7 @@ class NotificationEmail extends Element
     }
 
     /**
-     * @return null|string
+     * @inheritdoc
      */
     public static function refHandle()
     {
@@ -98,7 +194,7 @@ class NotificationEmail extends Element
     }
 
     /**
-     * @return array
+     * @inheritdoc
      */
     public function getStatuses()
     {
@@ -122,9 +218,7 @@ class NotificationEmail extends Element
     }
 
     /**
-     * @param string|null $context
-     *
-     * @return array
+     * @inheritdoc
      */
     protected static function defineSources(string $context = null): array
     {
@@ -168,11 +262,7 @@ class NotificationEmail extends Element
     }
 
     /**
-     * @param string $attribute
-     *
-     * @return string
-     * @throws \Twig_Error_Loader
-     * @throws \yii\base\Exception
+     * @inheritdoc
      */
     public function getTableAttributeHtml(string $attribute): string
     {
@@ -203,7 +293,7 @@ class NotificationEmail extends Element
     }
 
     /**
-     * @return ElementQueryInterface
+     * @inheritdoc
      */
     public static function find(): ElementQueryInterface
     {
@@ -222,9 +312,7 @@ class NotificationEmail extends Element
     }
 
     /**
-     * @param bool $isNew
-     *
-     * @throws \InvalidArgumentException
+     * @inheritdoc
      */
     public function afterSave(bool $isNew)
     {
@@ -271,16 +359,7 @@ class NotificationEmail extends Element
     }
 
     /**
-     * @param ElementQueryInterface $elementQuery
-     * @param array|null            $disabledElementIds
-     * @param array                 $viewState
-     * @param string|null           $sourceKey
-     * @param string|null           $context
-     * @param bool                  $includeContainer
-     * @param bool                  $showCheckboxes
-     *
-     * @return string
-     * @throws \yii\base\InvalidConfigException
+     * @inheritdoc
      */
     public static function indexHtml(ElementQueryInterface $elementQuery, array $disabledElementIds = null, array $viewState, string $sourceKey = null, string $context = null, bool $includeContainer, bool $showCheckboxes): string
     {
@@ -292,34 +371,6 @@ class NotificationEmail extends Element
         SproutBase::$app->mailers->includeMailerModalResources();
 
         return $html;
-    }
-
-    /**
-     * @return \barrelstrength\sproutbase\contracts\sproutemail\BaseMailer|null
-     */
-    public function getMailer()
-    {
-        // All Notification Emails use the Default Mailer
-        return SproutBase::$app->mailers->getMailerByName(DefaultMailer::class);
-    }
-
-    /**
-     * @return bool
-     */
-    public function isReady()
-    {
-        return (bool)($this->getStatus() == static::ENABLED);
-    }
-
-    /**
-     * @param mixed|null $element
-     *
-     * @throws \Exception
-     * @return array|string
-     */
-    public function getRecipients($element = null)
-    {
-        return SproutBase::$app->mailers->getRecipients($element, $this);
     }
 
     /**
@@ -335,8 +386,7 @@ class NotificationEmail extends Element
     }
 
     /**
-     * @return null|string
-     * @throws \Exception
+     * @inheritdoc
      */
     public function getUriFormat()
     {
@@ -350,8 +400,7 @@ class NotificationEmail extends Element
     }
 
     /**
-     * @return null|string
-     * @throws \yii\base\Exception
+     * @inheritdoc
      */
     public function getUrl()
     {
@@ -363,8 +412,7 @@ class NotificationEmail extends Element
     }
 
     /**
-     * @return array|mixed
-     * @throws \Exception
+     * @inheritdoc
      */
     public function route()
     {
@@ -410,19 +458,22 @@ class NotificationEmail extends Element
     }
 
     /**
-     * @return array
-     * @throws \yii\base\InvalidConfigException
+     * @inheritdoc
      */
     public function rules()
     {
         $rules = parent::rules();
 
-        $rules[] = [['subjectLine'], 'required'];
+        $rules[] = [['subjectLine', 'fromName', 'fromEmail'], 'required'];
         $rules[] = [['fromName', 'fromEmail', 'replyToEmail'], 'default', 'value' => ''];
+        $rules[] = [['fromEmail', 'replyToEmail'], 'email'];
 
         return $rules;
     }
 
+    /**
+     * @inheritdoc
+     */
     public function behaviors()
     {
         return array_merge(parent::behaviors(), [
@@ -434,6 +485,30 @@ class NotificationEmail extends Element
     }
 
     /**
+     * All Notification Emails use the Default Mailer.
+     *
+     * The Email Service provide can be update via Craft's Email Settings
+     *
+     * @return BaseMailer
+     */
+    public function getMailer()
+    {
+        return SproutBase::$app->mailers->getMailerByName(DefaultMailer::class);
+    }
+
+    /**
+     * Confirm that an email is enabled.
+     *
+     * @return bool
+     */
+    public function isReady()
+    {
+        return (bool)($this->getStatus() == static::ENABLED);
+    }
+
+    /**
+     * Get the available Email Template Options
+     *
      * @return array
      */
     public function getTemplateOptions()
@@ -443,7 +518,7 @@ class NotificationEmail extends Element
         $templateIds = [];
         $options = [
             [
-                'label' => \Craft::t('sprout-base', 'Select...'),
+                'label' => Craft::t('sprout-base', 'Select...'),
                 'value' => ''
             ]
         ];
@@ -470,7 +545,7 @@ class NotificationEmail extends Element
             'optgroup' => Craft::t('sprout-base', 'Custom Template Folder')
         ];
 
-        if (!in_array($templateFolder, $templateIds) && $templateFolder != '') {
+        if (!in_array($templateFolder, $templateIds, false) && $templateFolder != '') {
             $options[] = [
                 'label' => $templateFolder,
                 'value' => $templateFolder
@@ -483,5 +558,16 @@ class NotificationEmail extends Element
         ];
 
         return $options;
+    }
+
+    /**
+     * @param mixed|null $element
+     *
+     * @throws \Exception
+     * @return array|string
+     */
+    public function getRecipients($element = null)
+    {
+        return SproutBase::$app->mailers->getRecipients($element, $this);
     }
 }
