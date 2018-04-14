@@ -8,20 +8,17 @@ use barrelstrength\sproutbase\elements\sproutemail\NotificationEmail;
 use barrelstrength\sproutbase\mailers\DefaultMailer;
 use barrelstrength\sproutbase\SproutBase;
 use barrelstrength\sproutbase\events\RegisterNotificationEvent;
-use barrelstrength\sproutemail\mail\Message;
+use barrelstrength\sproutbase\models\sproutemail\Message;
 use barrelstrength\sproutbase\models\sproutbase\Response;
 use barrelstrength\sproutbase\records\sproutemail\NotificationEmail as NotificationEmailRecord;
 use craft\base\Component;
 use Craft;
 use craft\base\Element;
-use craft\base\Plugin;
 use craft\helpers\ElementHelper;
 use craft\helpers\UrlHelper;
 use craft\web\View;
 use yii\base\Event;
 use craft\base\ElementInterface;
-use yii\base\Exception;
-use yii\base\InvalidArgumentException;
 use yii\web\NotFoundHttpException;
 
 /**
@@ -661,8 +658,6 @@ class NotificationEmails extends Component
 
         $event->setOptions($notificationEmail->options);
 
-        $email = new Message();
-
         $template = $notificationEmail->template;
 
         if (empty($notificationEmail->template)) {
@@ -678,9 +673,10 @@ class NotificationEmails extends Component
             $notificationEmail->subjectLine = $subjectLine;
         }
 
-        $body = Craft::$app->getRequest()->getBodyParam('body');
-        if ($body) {
-            $notificationEmail->body = $body;
+        $defaultBody = Craft::$app->getRequest()->getBodyParam('defaultBody');
+
+        if ($defaultBody) {
+            $notificationEmail->defaultBody = $defaultBody;
         }
 
         $fieldsLocation = Craft::$app->getRequest()->getParam('fieldsLocation', 'fields');
@@ -688,23 +684,23 @@ class NotificationEmails extends Component
 
         $fileExtension = ($type != null && $type == 'text') ? 'txt' : 'html';
 
-        $email = $this->renderEmailTemplates($email, $notificationEmail);
+        $message = $this->renderEmailTemplates($notificationEmail);
 
-        $this->showPreviewEmail($email, $fileExtension);
+        $this->showPreviewEmail($message, $fileExtension);
     }
 
     /**
-     * @param        $email
+     * @param        $message
      * @param string $fileExtension
      *
      * @throws \yii\base\ExitException
      */
-    public function showPreviewEmail($email, $fileExtension = 'html')
+    public function showPreviewEmail($message, $fileExtension = 'html')
     {
         if ($fileExtension == 'txt') {
-            $output = $email->body;
+            $output = $message->renderedBody;
         } else {
-            $output = $email->htmlBody;
+            $output = $message->renderedHtmlBody;
         }
 
         // Output it into a buffer, in case TasksService wants to close the connection prematurely
@@ -758,9 +754,7 @@ class NotificationEmails extends Component
 
         $mockObject = $event->getMockedParams();
 
-        $emailModel = new Message();
-
-        $this->renderEmailTemplates($emailModel, $notificationEmail, $mockObject);
+        $this->renderEmailTemplates($notificationEmail, $mockObject);
 
         $templateErrors = SproutBase::$app->common->getErrors();
 

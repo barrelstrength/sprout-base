@@ -7,13 +7,12 @@
 
 namespace barrelstrength\sproutbase\base;
 
-use barrelstrength\sproutbase\models\sproutemail\EmailMessage;
-use barrelstrength\sproutbase\models\sproutemail\SimpleRecipient;
+use barrelstrength\sproutbase\models\sproutemail\Message;
+use barrelstrength\sproutbase\models\sproutemail\Recipient;
 use barrelstrength\sproutbase\SproutBase;
 use Craft;
 use craft\base\Element;
 use craft\helpers\Html;
-use craft\mail\Message;
 use League\HTMLToMarkdown\HtmlConverter;
 
 trait TemplateTrait
@@ -116,14 +115,13 @@ trait TemplateTrait
     }
 
     /**
-     * @param Message $emailModel
      * @param         $notificationEmail
      * @param null    $object
      *
-     * @return EmailMessage
+     * @return Message
      * @throws \yii\base\Exception
      */
-    public function renderEmailTemplates(Message $emailModel, $notificationEmail, $object = null)
+    public function renderEmailTemplates($notificationEmail, $object = null)
     {
         // Render Email Entry fields that have dynamic values
         $subject = $this->renderObjectTemplateSafely($notificationEmail->subjectLine, $object);
@@ -136,12 +134,10 @@ trait TemplateTrait
         $htmlEmailTemplate = 'email.html';
         $textEmailTemplate = 'email.txt';
 
-
         $view = Craft::$app->getView();
         $oldTemplatePath = $view->getTemplatesPath();
 
         $view->setTemplatesPath($emailTemplatePath);
-
 
         $htmlBody = $this->renderSiteTemplateIfExists($htmlEmailTemplate, [
             'email' => $notificationEmail,
@@ -169,14 +165,20 @@ trait TemplateTrait
             $body = trim($markdown);
         }
 
-
         $view->setTemplatesPath($oldTemplatePath);
 
-        $emailModel->setSubject($subject);
-        $emailModel->setFrom([$fromEmail => $fromName]);
-        $emailModel->setReplyTo($replyTo);
-        $emailModel->setTextBody($body);
-        $emailModel->setHtmlBody($htmlBody);
+        $message = new Message();
+
+        $message->setSubject($subject);
+        $message->setFrom([$fromEmail => $fromName]);
+        $message->setReplyTo($replyTo);
+        $message->setTextBody($body);
+        $message->setHtmlBody($htmlBody);
+
+        // Store our rendered email for later. We save this as separate variables as the Message Class
+        // we extend doesn't have a way to access these items once we set them.
+        $message->renderedBody = $body;
+        $message->renderedHtmlBody = $htmlBody;
 
         $styleTags = [];
 
@@ -191,24 +193,21 @@ trait TemplateTrait
 
         // Process the results of the template s once more, to render any dynamic objects used in fields
         $body = $this->renderObjectTemplateSafely($body, $object);
-        $emailModel->setTextBody($body);
+        $message->setTextBody($body);
 
         $htmlBody = $this->renderObjectTemplateSafely($htmlBody, $object);
 
         $htmlBody = $this->removePlaceholderStyleTags($htmlBody, $styleTags);
-        $emailModel->setHtmlBody($htmlBody);
+        $message->setHtmlBody($htmlBody);
 
-        $attributes = [
-            'model' => $emailModel,
-            'body' => $body,
-            'htmlBody' => $htmlBody
-        ];
+        // @todo - do we need all of these variables? Do they change once we assign them to the Message model?
+//        $attributes = [
+//            'model' => $message,
+//            'body' => $body,
+//            'htmlBody' => $htmlBody
+//        ];
 
-        $emailMessage = new EmailMessage();
-
-        $emailMessage->setAttributes($attributes, false);
-
-        return $emailMessage;
+        return $message;
     }
 
     public function renderObjectTemplateSafely($string, $object)
@@ -276,7 +275,7 @@ trait TemplateTrait
                 if (filter_var($email, FILTER_VALIDATE_EMAIL) === false) {
                     $invalidRecipients[] = $email;
                 } else {
-                    $recipientEmail = SimpleRecipient::create([
+                    $recipientEmail = Recipient::create([
                         'email' => $email
                     ]);
 

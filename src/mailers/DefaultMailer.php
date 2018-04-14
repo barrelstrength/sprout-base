@@ -5,12 +5,13 @@ namespace barrelstrength\sproutbase\mailers;
 use barrelstrength\sproutbase\base\TemplateTrait;
 use barrelstrength\sproutbase\contracts\sproutemail\BaseMailer;
 use barrelstrength\sproutbase\contracts\sproutemail\NotificationEmailSenderInterface;
+use barrelstrength\sproutbase\models\sproutemail\Message;
 use barrelstrength\sproutbase\SproutBase;
 use barrelstrength\sproutemail\elements\CampaignEmail;
 use barrelstrength\sproutbase\elements\sproutemail\NotificationEmail;
 use barrelstrength\sproutemail\models\CampaignType;
 use barrelstrength\sproutbase\models\sproutbase\Response;
-use barrelstrength\sproutbase\models\sproutemail\SimpleRecipient;
+use barrelstrength\sproutbase\models\sproutemail\Recipient;
 use barrelstrength\sproutemail\SproutEmail;
 use barrelstrength\sproutlists\integrations\sproutlists\SubscriberListType;
 use barrelstrength\sproutlists\records\Lists;
@@ -19,7 +20,6 @@ use craft\helpers\Json;
 use craft\helpers\Template;
 use Craft;
 use craft\helpers\UrlHelper;
-use craft\mail\Message;
 use yii\base\Exception;
 use yii\base\InvalidArgumentException;
 
@@ -164,8 +164,6 @@ class DefaultMailer extends BaseMailer implements NotificationEmailSenderInterfa
      */
     public function sendNotificationEmail(NotificationEmail $notificationEmail, $object = null, $useMockData = false)
     {
-        $email = new Message();
-
         // Allow disabled emails to be tested
         if (!$notificationEmail->isReady() && !$useMockData) {
             return false;
@@ -184,12 +182,13 @@ class DefaultMailer extends BaseMailer implements NotificationEmailSenderInterfa
 
         $view->setTemplatesPath($template);
 
-        $renderEmail = $this->renderEmailTemplates($email, $notificationEmail, $object);
+        /** @var Message $message */
+        $message = $this->renderEmailTemplates($notificationEmail, $object);
 
         $view->setTemplatesPath($oldTemplatePath);
-        $email = $renderEmail->model;
-        $body = $renderEmail->body;
-        $htmlBody = $renderEmail->htmlBody;
+
+        $body = $message->renderedBody;
+        $htmlBody = $message->renderedHtmlBody;
 
         $templateErrors = SproutBase::$app->common->getErrors();
 
@@ -207,9 +206,9 @@ class DefaultMailer extends BaseMailer implements NotificationEmailSenderInterfa
             $name = $recipient->firstName.' '.$recipient->lastName;
 
             /**
-             * @var $email Message
+             * @var $message Message
              */
-            $email->setTo([$toEmail => $name]);
+            $message->setTo([$toEmail => $name]);
 
             if (array_key_exists($toEmail, $processedRecipients)) {
                 continue;
@@ -220,13 +219,13 @@ class DefaultMailer extends BaseMailer implements NotificationEmailSenderInterfa
 
                 if (Craft::$app->plugins->getPlugin('sprout-email')) {
                     $infoTable = SproutEmail::$app->sentEmails->createInfoTableModel('sprout-email', [
-                        'emailType' => 'Notification',
-                        'deliveryType' => $useMockData ? 'Test' : 'Live'
+                        'emailType' => Craft::t('sprout-base', 'Notification'),
+                        'deliveryType' => $useMockData ? Craft::t('sprout-base', 'Test') : Craft::t('sprout-base', 'Live')
                     ]);
 
                     $variables = [
                         'email' => $notificationEmail,
-                        'renderedEmail' => $renderEmail,
+                        'renderedEmail' => $message,
                         'object' => $object,
                         'recipients' => $recipients,
                         'processedRecipients' => null,
@@ -234,7 +233,7 @@ class DefaultMailer extends BaseMailer implements NotificationEmailSenderInterfa
                     ];
                 }
 
-                if (SproutBase::$app->mailers->sendEmail($email, $variables)) {
+                if (SproutBase::$app->mailers->sendEmail($message, $variables)) {
                     $processedRecipients[] = $toEmail;
                 } else {
                     return false;
@@ -425,10 +424,10 @@ class DefaultMailer extends BaseMailer implements NotificationEmailSenderInterfa
             $listRecipients = [];
             if ($sproutListsRecipientsInfo) {
                 foreach ($sproutListsRecipientsInfo as $listRecipient) {
-                    $simpleRecipientModel = new SimpleRecipient();
-                    $simpleRecipientModel->setAttributes($listRecipient, false);
+                    $recipientModel = new Recipient();
+                    $recipientModel->setAttributes($listRecipient, false);
 
-                    $listRecipients[] = $simpleRecipientModel;
+                    $listRecipients[] = $recipientModel;
                 }
             }
 
@@ -456,7 +455,7 @@ class DefaultMailer extends BaseMailer implements NotificationEmailSenderInterfa
 
         if (count($onTheFlyRecipients)) {
             foreach ($onTheFlyRecipients as $index => $recipient) {
-                $recipients[$index] = SimpleRecipient::create(
+                $recipients[$index] = Recipient::create(
                     [
                         'firstName' => '',
                         'lastName' => '',

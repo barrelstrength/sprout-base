@@ -5,7 +5,7 @@ namespace barrelstrength\sproutbase\models\sproutemail;
 use craft\base\Model;
 
 /**
- * Class SproutEmail_SimpleRecipientModel
+ * Recipient
  *
  * @package Craft
  *
@@ -13,7 +13,7 @@ use craft\base\Model;
  * @property string $lastName
  * @property string $email
  */
-class SimpleRecipient extends Model
+class Recipient extends Model
 {
     public $firstName;
     public $lastName;
@@ -22,7 +22,7 @@ class SimpleRecipient extends Model
     /**
      * @param array $attributes
      *
-     * @return SimpleRecipient
+     * @return Recipient
      */
     public static function create(array $attributes = [])
     {
