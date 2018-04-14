@@ -15,6 +15,7 @@ use craft\base\Component;
 use Craft;
 use craft\base\Element;
 use craft\helpers\ElementHelper;
+use craft\helpers\Html;
 use craft\helpers\UrlHelper;
 use craft\web\View;
 use League\HTMLToMarkdown\HtmlConverter;
