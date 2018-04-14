@@ -7,7 +7,6 @@ use barrelstrength\sproutbase\web\assets\sproutemail\NotificationAsset;
 use barrelstrength\sproutbase\base\TemplateTrait;
 use barrelstrength\sproutbase\elements\sproutemail\NotificationEmail;
 use barrelstrength\sproutbase\SproutBase;
-use craft\base\ElementInterface;
 use craft\helpers\ElementHelper;
 use craft\helpers\Json;
 use craft\helpers\UrlHelper;

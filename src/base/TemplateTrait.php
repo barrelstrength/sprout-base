@@ -7,13 +7,10 @@
 
 namespace barrelstrength\sproutbase\base;
 
-use barrelstrength\sproutbase\models\sproutemail\Message;
 use barrelstrength\sproutbase\models\sproutemail\Recipient;
 use barrelstrength\sproutbase\SproutBase;
 use Craft;
 use craft\base\Element;
-use craft\helpers\Html;
-use League\HTMLToMarkdown\HtmlConverter;
 
 trait TemplateTrait
 {
@@ -112,102 +109,6 @@ trait TemplateTrait
         }
 
         return $renderedTemplate;
-    }
-
-    /**
-     * @param         $notificationEmail
-     * @param null    $object
-     *
-     * @return Message
-     * @throws \yii\base\Exception
-     */
-    public function renderEmailTemplates($notificationEmail, $object = null)
-    {
-        // Render Email Entry fields that have dynamic values
-        $subject = $this->renderObjectTemplateSafely($notificationEmail->subjectLine, $object);
-        $fromName = $this->renderObjectTemplateSafely($notificationEmail->fromName, $object);
-        $fromEmail = $this->renderObjectTemplateSafely($notificationEmail->fromEmail, $object);
-        $replyTo = $this->renderObjectTemplateSafely($notificationEmail->replyToEmail, $object);
-
-        $emailTemplatePath = SproutBase::$app->sproutEmail->getEmailTemplate($notificationEmail);
-
-        $htmlEmailTemplate = 'email.html';
-        $textEmailTemplate = 'email.txt';
-
-        $view = Craft::$app->getView();
-        $oldTemplatePath = $view->getTemplatesPath();
-
-        $view->setTemplatesPath($emailTemplatePath);
-
-        $htmlBody = $this->renderSiteTemplateIfExists($htmlEmailTemplate, [
-            'email' => $notificationEmail,
-            'object' => $object
-        ]);
-
-        $textEmailTemplateExists = Craft::$app->getView()->doesTemplateExist($textEmailTemplate);
-
-        // Converts html body to text email if no .txt
-        if ($textEmailTemplateExists) {
-            $body = $this->renderSiteTemplateIfExists($textEmailTemplate, [
-                'email' => $notificationEmail,
-                'object' => $object
-            ]);
-        } else {
-            $converter = new HtmlConverter([
-                'strip_tags' => true
-            ]);
-
-            // For more advanced html templates, conversion may be tougher. Minifying the HTML
-            // can help and ensuring that content is wrapped in proper tags that adds spaces between
-            // things in Markdown, like <p> tags or <h1> tags and not just <td> or <div>, etc.
-            $markdown = $converter->convert($htmlBody);
-
-            $body = trim($markdown);
-        }
-
-        $view->setTemplatesPath($oldTemplatePath);
-
-        $message = new Message();
-
-        $message->setSubject($subject);
-        $message->setFrom([$fromEmail => $fromName]);
-        $message->setReplyTo($replyTo);
-        $message->setTextBody($body);
-        $message->setHtmlBody($htmlBody);
-
-        // Store our rendered email for later. We save this as separate variables as the Message Class
-        // we extend doesn't have a way to access these items once we set them.
-        $message->renderedBody = $body;
-        $message->renderedHtmlBody = $htmlBody;
-
-        $styleTags = [];
-
-        $htmlBody = $this->addPlaceholderStyleTags($htmlBody, $styleTags);
-
-        // Some Twig code in our email fields may need us to decode
-        // entities so our email doesn't throw errors when we try to
-        // render the field objects. Example: {variable|date("Y/m/d")}
-
-        $body = Html::decode($body);
-        $htmlBody = Html::decode($htmlBody);
-
-        // Process the results of the template s once more, to render any dynamic objects used in fields
-        $body = $this->renderObjectTemplateSafely($body, $object);
-        $message->setTextBody($body);
-
-        $htmlBody = $this->renderObjectTemplateSafely($htmlBody, $object);
-
-        $htmlBody = $this->removePlaceholderStyleTags($htmlBody, $styleTags);
-        $message->setHtmlBody($htmlBody);
-
-        // @todo - do we need all of these variables? Do they change once we assign them to the Message model?
-//        $attributes = [
-//            'model' => $message,
-//            'body' => $body,
-//            'htmlBody' => $htmlBody
-//        ];
-
-        return $message;
     }
 
     public function renderObjectTemplateSafely($string, $object)

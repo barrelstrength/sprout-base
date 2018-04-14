@@ -183,7 +183,7 @@ class DefaultMailer extends BaseMailer implements NotificationEmailSenderInterfa
         $view->setTemplatesPath($template);
 
         /** @var Message $message */
-        $message = $this->renderEmailTemplates($notificationEmail, $object);
+        $message = $this->getNotificationEmailMessage($notificationEmail, $object);
 
         $view->setTemplatesPath($oldTemplatePath);
 
