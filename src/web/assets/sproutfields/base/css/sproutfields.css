@@ -68,6 +68,7 @@
     flex-direction: row;
     justify-content: space-between;
 }
+
 .sprout-phone-field .compoundSelectText-text {
     flex-grow: 1;
     margin-left: 10px;
@@ -77,10 +78,12 @@
     .sprout-phone-field.compoundSelectText-wrapper {
         flex-direction: column;
     }
+
     .sprout-phone-field .compoundSelectText-dropdown .select,
     .sprout-phone-field .compoundSelectText-dropdown select {
         width: 100%;
     }
+
     .sprout-phone-field .compoundSelectText-text {
         flex-grow: 1;
         margin-left: 0;
