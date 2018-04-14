@@ -201,7 +201,7 @@
                             Settings
                         </div>
                         <div class="input">
-                            {% set options = craft.sproutbase.getEventSelectedOptions(event, notificationEmail) %}
+                            {% set options = craft.sproutBase.getEventSelectedOptions(event, notificationEmail) %}
 
                             {{ event.getSettingsHtml({
                                 options: options
@@ -251,7 +251,7 @@
             errors: notificationEmail ? notificationEmail.getErrors('slug')|merge(notificationEmail.getErrors('uri')),
         }) }}
 
-        {% set templateOptions = craft.sproutbase.getEmailTemplateOptions(notificationEmail) %}
+        {% set templateOptions = craft.sproutBase.getEmailTemplateOptions(notificationEmail) %}
 
         {{ forms.field({
             label: "Templates <span class='info'>The Email Templates to display your email.</span>"|t('sprout-base'),

@@ -4,7 +4,7 @@
     <input type="hidden" name="{{ name }}[country]" value="{{ country }}">
 {% endif %}
 
-{% set countries = countries is defined and countries ? countries : craft.sproutbase.getCountries() %}
+{% set countries = countries is defined and countries ? countries : craft.sproutBase.getCountries() %}
 
 <div class="sprout-phone-field compoundSelectText-wrapper">
     <div class="compoundSelectText-dropdown">
