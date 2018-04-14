@@ -49,7 +49,7 @@ class NotificationEmail extends Element
      * The Email Template integration handle or folder path of the email templates that should be used when rendering this Notification Email.
      * @var string
      */
-    public $template;
+    public $emailTemplateId;
 
     /**
      * The qualified namespace of the Email Notification Event
@@ -335,7 +335,7 @@ class NotificationEmail extends Element
 
         $notificationEmailRecord->pluginId = $this->pluginId;
         $notificationEmailRecord->titleFormat = $this->titleFormat;
-        $notificationEmailRecord->template = $this->template;
+        $notificationEmailRecord->emailTemplateId = $this->emailTemplateId;
         $notificationEmailRecord->eventId = $this->eventId;
         $notificationEmailRecord->options = $this->options;
         $notificationEmailRecord->subjectLine = $this->subjectLine;

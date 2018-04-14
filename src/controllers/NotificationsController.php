@@ -190,7 +190,7 @@ class NotificationsController extends Controller
         $notificationEmail->eventId = Craft::$app->getRequest()->getBodyParam('eventId');
         $notificationEmail->recipients = Craft::$app->getRequest()->getBodyParam('recipients');
         $notificationEmail->listSettings = Craft::$app->getRequest()->getBodyParam('lists');
-        $notificationEmail->template = Craft::$app->getRequest()->getBodyParam('template');
+        $notificationEmail->emailTemplateId = Craft::$app->getRequest()->getBodyParam('emailTemplateId');
 
         if (!$notificationEmail->replyToEmail) {
             $notificationEmail->replyToEmail = $notificationEmail->fromEmail;

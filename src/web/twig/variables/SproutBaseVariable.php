@@ -7,6 +7,7 @@
 
 namespace barrelstrength\sproutbase\web\twig\variables;
 
+use barrelstrength\sproutbase\elements\sproutemail\NotificationEmail;
 use barrelstrength\sproutbase\integrations\emailtemplates\BasicTemplates;
 use barrelstrength\sproutbase\SproutBase;
 use Craft;
@@ -50,9 +51,11 @@ class SproutBaseVariable
     /**
      * Get the available Email Template Options
      *
+     * @param NotificationEmail|null $notificationEmail
+     *
      * @return array
      */
-    public function getEmailTemplateOptions()
+    public function getEmailTemplateOptions($notificationEmail = null)
     {
         $defaultEmailTemplates = new BasicTemplates();
         $templates = SproutBase::$app->template->getAllGlobalTemplates();
@@ -80,7 +83,7 @@ class SproutBaseVariable
             $settings = $plugin->getSettings();
         }
 
-        $templateFolder = $this->template ?? $settings->templateFolderOverride ?? $defaultEmailTemplates->getPath();
+        $templateFolder = $notificationEmail->emailTemplateId ?? $settings->emailTemplateId ?? $defaultEmailTemplates->getPath();
 
         $options[] = [
             'optgroup' => Craft::t('sprout-base', 'Custom Template Folder')

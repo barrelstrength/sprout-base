@@ -251,16 +251,16 @@
             errors: notificationEmail ? notificationEmail.getErrors('slug')|merge(notificationEmail.getErrors('uri')),
         }) }}
 
-        {% set templateOptions = craft.sproutbase.getEmailTemplateOptions() %}
+        {% set templateOptions = craft.sproutbase.getEmailTemplateOptions(notificationEmail) %}
 
         {{ forms.field({
             label: "Templates <span class='info'>The Email Templates to display your email.</span>"|t('sprout-base'),
-            errors: notificationEmail is defined ? notificationEmail.getErrors('template') : null,
+            errors: notificationEmail is defined ? notificationEmail.getErrors('emailTemplateId') : null,
         }, sproutFields.selectOther({
-            name: 'template',
+            name: 'emailTemplateId',
             options: templateOptions,
-            value: notificationEmail is defined ? notificationEmail.template : null,
-            otherPlaceholderText: '_email/emailtemplate'|t('sprout-email')
+            value: notificationEmail is defined ? notificationEmail.emailTemplateId : null,
+            otherPlaceholderText: '_emailtemplates/folder'|t('sprout-email')
         })) }}
 
         {{ forms.lightswitchField({

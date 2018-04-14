@@ -42,15 +42,15 @@ class Email extends Component
         }
 
         // Allow our email Element to override our settings
-        if ($notificationEmail->template) {
-            $emailTemplate = SproutBase::$app->template->getTemplateById($notificationEmail->template);
+        if ($notificationEmail->emailTemplateId) {
+            $emailTemplate = SproutBase::$app->template->getTemplateById($notificationEmail->emailTemplateId);
 
             if ($emailTemplate) {
                 // custom path by template API
                 $templatePath = $emailTemplate->getPath();
             } else {
                 // custom folder on site path
-                $templatePath = $this->getSitePath($notificationEmail->template);
+                $templatePath = $this->getSitePath($notificationEmail->emailTemplateId);
             }
         }
 

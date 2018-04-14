@@ -658,9 +658,9 @@ class NotificationEmails extends Component
 
         $event->setOptions($notificationEmail->options);
 
-        $template = $notificationEmail->template;
+        $template = $notificationEmail->emailTemplateId;
 
-        if (empty($notificationEmail->template)) {
+        if (empty($notificationEmail->emailTemplateId)) {
             /**
              * Get the templates path for the sprout base default notification template
              */

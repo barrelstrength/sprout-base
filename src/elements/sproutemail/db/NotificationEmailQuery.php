@@ -20,7 +20,7 @@ class NotificationEmailQuery extends ElementQuery
         $this->query->select([
             'sproutemail_notificationemails.pluginId',
             'sproutemail_notificationemails.titleFormat',
-            'sproutemail_notificationemails.template',
+            'sproutemail_notificationemails.emailTemplateId',
             'sproutemail_notificationemails.eventId',
             'sproutemail_notificationemails.options',
             'sproutemail_notificationemails.subjectLine',
