@@ -121,7 +121,7 @@ class SproutBase extends Module
         });
 
         // Register Sprout Email Mailers
-        Event::on(Mailers::class, Mailers::EVENT_REGISTER_MAILERS, function(RegisterMailersEvent $event) {
+        Event::on(Mailers::class, Mailers::EVENT_REGISTER_MAILER_TYPES, function(RegisterMailersEvent $event) {
             $event->mailers[] = new DefaultMailer();
         });
 
