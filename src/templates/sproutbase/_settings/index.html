@@ -2,25 +2,25 @@
 
 {% block content %}
 
-{% if settingsForm %}
-<input type="hidden" name="action" value="{{ actionUrl }}">
-<input type="hidden" name="redirect" value="{{ redirectUrl|hash }}">
+    {% if settingsForm %}
+        <input type="hidden" name="action" value="{{ actionUrl }}">
+        <input type="hidden" name="redirect" value="{{ redirectUrl|hash }}">
 
-<div id="settings-cp">
+        <div id="settings-cp">
 
-{% endif %}
+    {% endif %}
 
-{% namespace (settingsForm ? 'settings' : '') %}
+    {% namespace (settingsForm ? 'settings' : '') %}
 
-{# Display the selected settings template #}
-{% include [
-    selectedSettingsInfo.template
-] %}
+        {# Display the selected settings template #}
+        {% include [
+            selectedSettingsInfo.template
+            ] %}
 
-{% endnamespace %}
+    {% endnamespace %}
 
-{% if settingsForm %}
-</div>
-{% endif %}
+    {% if settingsForm %}
+        </div>
+    {% endif %}
 
 {% endblock %}

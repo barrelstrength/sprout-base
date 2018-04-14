@@ -5,7 +5,7 @@
         id: id,
         name: name,
         disabled: not field.allowEdits,
-    value: value is defined ? value : ''
+        value: value is defined ? value : ''
     }) }}
 {% else %}
     {{ forms.textField({

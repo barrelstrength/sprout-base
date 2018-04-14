@@ -26,14 +26,14 @@
 
     {#<div class="flex-grow"></div>#}
     {#{% if showPreviewBtn or shareUrl is not null %}#}
-        {#{% if showPreviewBtn %}#}
-            {#<div class="btn livepreviewbtn">{{ "Live Preview"|t('app') }}</div>#}
-        {#{% endif %}#}
-        {#{% if shareUrl is defined %}#}
-            {#<a href="{{ shareUrl }}" class="btn sharebtn"#}
-               {#target="_blank">{{ 'Share'|t('app') }}</a>#}
-        {#{% endif %}#}
-        {#<div class="flex-grow"></div>#}
+    {#{% if showPreviewBtn %}#}
+    {#<div class="btn livepreviewbtn">{{ "Live Preview"|t('app') }}</div>#}
+    {#{% endif %}#}
+    {#{% if shareUrl is defined %}#}
+    {#<a href="{{ shareUrl }}" class="btn sharebtn"#}
+    {#target="_blank">{{ 'Share'|t('app') }}</a>#}
+    {#{% endif %}#}
+    {#<div class="flex-grow"></div>#}
     {#{% endif %}#}
 
     {{ block('actionButton') }}
@@ -288,9 +288,9 @@
 
 {% js %}
     $(document).ready(function() {
-        // add support for select other field
-        if (Craft.SproutFields != null) {
-            Craft.SproutFields.initFields($("#details"));
-        }
+    // add support for select other field
+    if (Craft.SproutFields != null) {
+    Craft.SproutFields.initFields($("#details"));
+    }
     });
 {% endjs %}

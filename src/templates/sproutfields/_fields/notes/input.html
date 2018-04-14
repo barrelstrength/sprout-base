@@ -16,9 +16,9 @@
     {{ selectedStyleCss }}
 
     .sproutnotes-togglebtn {
-        position: absolute;
-        right:0;
-        color: rgba(0, 0, 0, 0.25);
+    position: absolute;
+    right:0;
+    color: rgba(0, 0, 0, 0.25);
     }
 
 {% endcss %}
@@ -28,26 +28,27 @@
     var notesToggleStatus = localStorage.getItem('{{ id }}-field');
 
     if (notesToggleStatus == 'hidden') {
-        $('#' + '{{ id }}-field' + ' .input').css('display', 'none');
+    $('#' + '{{ id }}-field' + ' .input').css('display', 'none');
     }
 
     var headingDiv = $('#' + '{{ id }}-field' + ' .heading label');
 
-    $(headingDiv).append('<a href="#" class="sproutnotes-togglebtn icon menubtn"></a>');
+    $(headingDiv).append('<a href="#"
+                             class="sproutnotes-togglebtn icon menubtn"></a>');
 
     $('#' + '{{ id }}-field' + ' label').on('click', function() {
 
-        $('#' + '{{ id }}-field' + ' .input').slideToggle('fast', function(test) {
+    $('#' + '{{ id }}-field' + ' .input').slideToggle('fast', function(test) {
 
-            var visibility = $('#' + '{{ id }}-field' + ' .input:hidden');
+    var visibility = $('#' + '{{ id }}-field' + ' .input:hidden');
 
-            if (visibility.length == 0) {
-                localStorage.setItem('{{ id }}-field', 'visible');
-            }
-            else {
-                localStorage.setItem('{{ id }}-field', 'hidden');
-            }
-        });
+    if (visibility.length == 0) {
+    localStorage.setItem('{{ id }}-field', 'visible');
+    }
+    else {
+    localStorage.setItem('{{ id }}-field', 'hidden');
+    }
+    });
     });
 
     {% if (field.hideLabel) %}

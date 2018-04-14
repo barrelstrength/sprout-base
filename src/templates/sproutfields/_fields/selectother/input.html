@@ -1,7 +1,7 @@
 {%- set class = [
     'select sprout-selectotherdropdown',
     class is defined ? class : null
-    ]|filter|join(' ') %}
+]|filter|join(' ') %}
 
     {%- set options = (options is defined ? options : []) %}
     {%- set value = (value is defined ? value : null) %}

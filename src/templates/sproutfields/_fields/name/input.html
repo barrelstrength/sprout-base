@@ -8,13 +8,13 @@
         <div class="sproutaddressfield-input-wrapper">
 
             {% if field.displayPrefix %}
-            <div class="sproutaddressfield-input sproutaddressfield-input-prefix">
-                {{ forms.textField({
-                    label: 'Prefix'|t('sprout-fields'),
-                    name: name ~ '[address][prefix]',
-                    value: value is defined ? value.prefix : ''
-                }) }}
-            </div>
+                <div class="sproutaddressfield-input sproutaddressfield-input-prefix">
+                    {{ forms.textField({
+                        label: 'Prefix'|t('sprout-fields'),
+                        name: name ~ '[address][prefix]',
+                        value: value is defined ? value.prefix : ''
+                    }) }}
+                </div>
             {% endif %}
 
             <div class="sproutaddressfield-input sproutaddressfield-input-firstname">
@@ -26,13 +26,13 @@
             </div>
 
             {% if field.displayMiddleName %}
-            <div class="sproutaddressfield-input sproutaddressfield-input-middlename">
-                {{ forms.textField({
-                    label: 'Middle'|t('sprout-fields'),
-                    name: name ~ '[address][middleName]',
-                    value: value is defined ? value.middleName : ''
-                }) }}
-            </div>
+                <div class="sproutaddressfield-input sproutaddressfield-input-middlename">
+                    {{ forms.textField({
+                        label: 'Middle'|t('sprout-fields'),
+                        name: name ~ '[address][middleName]',
+                        value: value is defined ? value.middleName : ''
+                    }) }}
+                </div>
             {% endif %}
 
             <div class="sproutaddressfield-input sproutaddressfield-input-lastname">
@@ -44,13 +44,13 @@
             </div>
 
             {% if field.displaySuffix %}
-            <div class="sproutaddressfield-input sproutaddressfield-input-suffix">
-                {{ forms.textField({
-                    label: 'Suffix'|t('sprout-fields'),
-                    name: name ~ '[address][suffix]',
-                    value: value is defined ? value.suffix : ''
-                }) }}
-            </div>
+                <div class="sproutaddressfield-input sproutaddressfield-input-suffix">
+                    {{ forms.textField({
+                        label: 'Suffix'|t('sprout-fields'),
+                        name: name ~ '[address][suffix]',
+                        value: value is defined ? value.suffix : ''
+                    }) }}
+                </div>
             {% endif %}
         </div>
     {% endset %}
@@ -73,20 +73,25 @@
         flex-direction: row;
         justify-content: space-between;
     }
+
     .sproutaddressfield-input {
         flex-grow: 1;
         margin-right: 10px;
         width: 26%;
     }
+
     #fields-{{ id }}-field .field {
         margin-bottom: 0;
     }
+
     .sproutaddressfield-input .heading > label {
         font-weight: normal;
     }
+
     .sproutaddressfield-input:last-of-type {
         margin-right: 0;
     }
+
     .sproutaddressfield-input-prefix,
     .sproutaddressfield-input-suffix {
         width: 11%;
@@ -96,22 +101,26 @@
         .sproutaddressfield-input-wrapper {
             flex-direction: column;
         }
+
         .sproutaddressfield-input {
             flex-grow: 1;
             margin-left: 0;
             margin-top: 10px;
             width: 100%;
         }
+
         .sproutaddressfield-input .heading,
         .sproutaddressfield-input .input {
             float: left;
         }
+
         .sproutaddressfield-input .heading {
             padding-top: 6px;
             padding-right: 2%;
             text-align: right;
             width: 20%;
         }
+
         .sproutaddressfield-input .input {
             width: 78%;
         }
