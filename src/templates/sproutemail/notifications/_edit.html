@@ -251,12 +251,14 @@
             errors: notificationEmail ? notificationEmail.getErrors('slug')|merge(notificationEmail.getErrors('uri')),
         }) }}
 
+        {% set templateOptions = craft.sproutbase.getEmailTemplateOptions() %}
+
         {{ forms.field({
             label: "Templates <span class='info'>The Email Templates to display your email.</span>"|t('sprout-base'),
             errors: notificationEmail is defined ? notificationEmail.getErrors('template') : null,
         }, sproutFields.selectOther({
             name: 'template',
-            options: notificationEmail.getTemplateOptions(),
+            options: templateOptions,
             value: notificationEmail is defined ? notificationEmail.template : null,
             otherPlaceholderText: '_email/emailtemplate'|t('sprout-email')
         })) }}
