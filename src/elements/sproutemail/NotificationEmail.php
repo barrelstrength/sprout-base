@@ -3,6 +3,7 @@
 namespace barrelstrength\sproutbase\elements\sproutemail;
 
 use barrelstrength\sproutbase\elements\sproutemail\actions\DeleteNotification;
+use barrelstrength\sproutbase\integrations\emailtemplates\BasicTemplates;
 use barrelstrength\sproutbase\mailers\DefaultMailer;
 use barrelstrength\sproutbase\SproutBase;
 use barrelstrength\sproutbase\web\assets\sproutemail\NotificationAsset;
@@ -436,6 +437,7 @@ class NotificationEmail extends Element
      */
     public function getTemplateOptions()
     {
+        $defaultEmailTemplates = new BasicTemplates();
         $templates = SproutBase::$app->template->getAllGlobalTemplates();
         $templateIds = [];
         $options = [
@@ -445,6 +447,7 @@ class NotificationEmail extends Element
             ]
         ];
 
+        // Build our options
         foreach ($templates as $template) {
             $options[] = [
                 'label' => $template->getName(),
@@ -453,13 +456,14 @@ class NotificationEmail extends Element
             $templateIds[] = $template->getTemplateId();
         }
 
-        $templateFolder = $this->template;
+        $templateFolder = null;
         $plugin = Craft::$app->getPlugins()->getPlugin('sprout-email');
 
         if ($plugin){
             $settings = $plugin->getSettings();
-            $templateFolder = $settings->templateFolderOverride;
         }
+
+        $templateFolder = $this->template ?? $settings->templateFolderOverride ?? $defaultEmailTemplates->getPath();
 
         $options[] = [
             'optgroup' => Craft::t('sprout-base', 'Custom Template Folder')

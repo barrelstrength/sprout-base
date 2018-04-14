@@ -105,8 +105,6 @@ class DefaultMailer extends BaseMailer implements CampaignEmailSenderInterface
 
         $template = SproutBase::$app->sproutEmail->getEmailTemplate($notificationEmail);
 
-//        Craft::$app->getView()->setTemplateMode(View::TEMPLATE_MODE_SITE);
-
         $view = Craft::$app->getView();
         $oldTemplatePath = $view->getTemplatesPath();
 

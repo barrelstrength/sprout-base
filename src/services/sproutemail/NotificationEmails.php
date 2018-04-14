@@ -730,13 +730,7 @@ class NotificationEmails extends Component
 
         $event = $this->getEventById($notificationEmail->eventId);
 
-        $template = $notificationEmail->template;
-
-        Craft::$app->getView()->setTemplateMode(View::TEMPLATE_MODE_SITE);
-
-        if (empty($template)) {
-            $template = SproutBase::$app->sproutEmail->getEmailTemplate($notificationEmail);
-        }
+        $template = SproutBase::$app->sproutEmail->getEmailTemplate($notificationEmail);
 
         if ($event === null) {
             $errors[] = Craft::t('sprout-base', 'No Event is selected. <a href="{url}">Edit Notification</a>.', [
@@ -751,29 +745,31 @@ class NotificationEmails extends Component
                 ]);
         }
 
-        if (empty($errors)) {
-            $options = json_decode($notificationEmail->options, true);
-            $event->setOptions($options);
-
-            $object = $event->getMockedParams();
-
-            $emailModel = new Message();
-
-            $this->renderEmailTemplates($emailModel, $notificationEmail, $object);
-
-            $templateErrors = SproutBase::$app->common->getErrors();
-
-            if (!empty($templateErrors['template'])) {
-                foreach ($templateErrors['template'] as $templateError) {
-                    $errors[] = Craft::t('sprout-base', $templateError.' <a href="{url}">Edit Settings</a>.',
-                        [
-                            'url' => $notificationEditSettingsUrl
-                        ]);
-                }
-            }
+        if (count($errors)) {
+            return $errors;
         }
 
-        Craft::$app->getView()->setTemplateMode(View::TEMPLATE_MODE_CP);
+        $options = json_decode($notificationEmail->options, true);
+
+        $event->setOptions($options);
+
+        $mockObject = $event->getMockedParams();
+
+        $emailModel = new Message();
+
+        $this->renderEmailTemplates($emailModel, $notificationEmail, $mockObject);
+
+        $templateErrors = SproutBase::$app->common->getErrors();
+
+        if (!empty($templateErrors['template'])) {
+
+            foreach ($templateErrors['template'] as $templateError) {
+                $errors[] = Craft::t('sprout-base', $templateError.' <a href="{url}">Edit Settings</a>.',
+                    [
+                        'url' => $notificationEditSettingsUrl
+                    ]);
+            }
+        }
 
         return $errors;
     }

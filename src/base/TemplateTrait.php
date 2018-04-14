@@ -99,6 +99,9 @@ trait TemplateTrait
         }
 
         try {
+
+            $test = Craft::$app->getView()->getTemplatesPath();
+
             $renderedTemplate = Craft::$app->getView()->renderTemplate($template, $variables);
         } catch (\Exception $e) {
             // Specify template .html if no .txt
@@ -118,25 +121,34 @@ trait TemplateTrait
 
     /**
      * @param Message $emailModel
-     * @param         $notification
+     * @param         $notificationEmail
      * @param null    $object
      *
      * @return EmailMessage
      * @throws \yii\base\Exception
      */
-    public function renderEmailTemplates(Message $emailModel, $notification, $object = null)
+    public function renderEmailTemplates(Message $emailModel, $notificationEmail, $object = null)
     {
         // Render Email Entry fields that have dynamic values
-        $subject = $this->renderObjectTemplateSafely($notification->subjectLine, $object);
-        $fromName = $this->renderObjectTemplateSafely($notification->fromName, $object);
-        $fromEmail = $this->renderObjectTemplateSafely($notification->fromEmail, $object);
-        $replyTo = $this->renderObjectTemplateSafely($notification->replyToEmail, $object);
+        $subject = $this->renderObjectTemplateSafely($notificationEmail->subjectLine, $object);
+        $fromName = $this->renderObjectTemplateSafely($notificationEmail->fromName, $object);
+        $fromEmail = $this->renderObjectTemplateSafely($notificationEmail->fromEmail, $object);
+        $replyTo = $this->renderObjectTemplateSafely($notificationEmail->replyToEmail, $object);
 
-        $htmlEmailTemplate = 'email';
+        $emailTemplatePath = SproutBase::$app->sproutEmail->getEmailTemplate($notificationEmail);
+
+        $htmlEmailTemplate = 'email.html';
         $textEmailTemplate = 'email.txt';
 
+
+        $view = Craft::$app->getView();
+        $oldTemplatePath = $view->getTemplatesPath();
+
+        $view->setTemplatesPath($emailTemplatePath);
+
+
         $htmlBody = $this->renderSiteTemplateIfExists($htmlEmailTemplate, [
-            'email' => $notification,
+            'email' => $notificationEmail,
             'object' => $object
         ]);
 
@@ -145,7 +157,7 @@ trait TemplateTrait
         // Converts html body to text email if no .txt
         if ($textEmailTemplateExists) {
             $body = $this->renderSiteTemplateIfExists($textEmailTemplate, [
-                'email' => $notification,
+                'email' => $notificationEmail,
                 'object' => $object
             ]);
         } else {
@@ -160,6 +172,9 @@ trait TemplateTrait
 
             $body = trim($markdown);
         }
+
+
+        $view->setTemplatesPath($oldTemplatePath);
 
         $emailModel->setSubject($subject);
         $emailModel->setFrom([$fromEmail => $fromName]);

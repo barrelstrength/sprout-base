@@ -47,13 +47,9 @@ class Email extends Component
             if ($emailTemplate) {
                 // custom path by template API
                 $templatePath = $emailTemplate->getPath();
-
-//                Craft::$app->getView()->setTemplateMode(View::TEMPLATE_MODE_CP);
             } else {
                 // custom folder on site path
                 $templatePath = $this->getSitePath($notificationEmail->template);
-
-//                Craft::$app->getView()->setTemplateMode(View::TEMPLATE_MODE_SITE);
             }
         }
 
