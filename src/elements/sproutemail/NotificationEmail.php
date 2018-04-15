@@ -442,7 +442,7 @@ class NotificationEmail extends Element
             ]));
         }
 
-        $event = SproutBase::$app->notifications->getEventById($this->eventId);
+        $event = SproutBase::$app->notificationEvents->getEventById($this->eventId);
 
         $object = $event ? $event->getMockedParams() : null;
 

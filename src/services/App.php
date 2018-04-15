@@ -9,6 +9,7 @@ namespace barrelstrength\sproutbase\services;
 
 use barrelstrength\sproutbase\services\sproutbase\Template;
 use barrelstrength\sproutbase\services\sproutemail\Mailers;
+use barrelstrength\sproutbase\services\sproutemail\NotificationEmailEvents;
 use barrelstrength\sproutbase\services\sproutemail\NotificationEmails;
 use barrelstrength\sproutbase\services\sproutimport\Themes;
 use barrelstrength\sproutbase\services\sproutreports\DataSources;
@@ -81,6 +82,11 @@ class App extends Component
     public $notifications;
 
     /**
+     * @var NotificationEmailEvents
+     */
+    public $notificationEvents;
+
+    /**
      * @var DataSources
      */
     public $dataSources;
@@ -135,6 +141,7 @@ class App extends Component
 
         // Sprout Email
         $this->notifications = new NotificationEmails();
+        $this->notificationEvents = new NotificationEmailEvents();
         $this->mailers = new Mailers();
 
         // Sprout Fields

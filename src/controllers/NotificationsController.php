@@ -136,10 +136,10 @@ class NotificationsController extends Controller
 
         $currentPluginHandle = Craft::$app->request->getSegment(1);
 
-        $events = SproutBase::$app->notifications->getNotificationEmailEventTypes();
+        $events = SproutBase::$app->notificationEvents->getEventDropdownOptions();
 
-        if ($currentPluginHandle != 'sprout-email') {
-            $eventObject = SproutBase::$app->notifications->getEventByBase($currentPluginHandle);
+        if ($currentPluginHandle !== 'sprout-email') {
+            $eventObject = SproutBase::$app->notificationEvents->getEventsByPluginId($currentPluginHandle);
 
             $events = [
                 get_class($eventObject) => $eventObject
