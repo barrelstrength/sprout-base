@@ -28,13 +28,11 @@ abstract class BaseEvent
      */
     public function __toString()
     {
-        return $this->getTitle();
+        return $this->getName();
     }
 
     /**
-     * @todo - do we need this any longer? Update.
-     *
-     * Returns the string with namespace that is for html attribute class compatibility
+     * Returns the namespace as a string with dashes so it can be used in html as a css class
      *
      * @return string
      */
@@ -44,34 +42,40 @@ abstract class BaseEvent
     }
 
     /**
-     * @todo - do we still need this?
-     * @return mixed
+     * Returns the fully qualified class name to which the event handler needs to attach.
+     *
+     * This value is used for the Event::on $class parameter
+     *
+     * @see \yii\base\Event
+     * @example Event::on($class, $name, function($handler) { ... });
+     *
+     * @return string
      */
-    public function getBaseName()
-    {
-        $namespaceArray = explode('\\', get_class($this));
-
-        return $namespaceArray[1];
-    }
+    abstract public function getEventClassName();
 
     /**
-     * @todo - update this to be specific methods for each value needed or a model that validates itself.
+     * Returns the event name.
      *
-     * Returns the parameters necessary to dynamically register the event.
+     * This value is used for the Event::on $name parameter
      *
-     * Required parameters include:
-     * - class: the fully qualified class name where the event is re
+     * @see \yii\base\Event
+     * @example Event::on($class, $name, function($handler) { ... });
      *
-     * @example
-     * return [
-     *    'class' => Elements::class,
-     *    'name' => Elements::EVENT_AFTER_DELETE_ELEMENT,
-     *    'event' => ElementEvent::class
-     * ];
-     *
-     * @return array
+     * @return string
      */
-    abstract public function getEventParams();
+    abstract public function getEventName();
+
+    /**
+     * Returns the callable event handler.
+     *
+     * This value is used for the Event::on $handler parameter
+     *
+     * @see \yii\base\Event
+     * @example Event::on($class, $name, function($handler) { ... });
+     *
+     * @return string
+     */
+    abstract public function getEventHandlerClassName();
 
     /**
      * @param $options
@@ -88,10 +92,7 @@ abstract class BaseEvent
      *
      * @return string
      */
-    public function getName()
-    {
-        return $this->getEventId();
-    }
+    abstract public function getName();
 
     /**
      * Returns the event title to use when displaying a label or similar use case
