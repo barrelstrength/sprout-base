@@ -485,6 +485,16 @@ class NotificationEmail extends Element
     }
 
     /**
+     * Returns a json-decoded array of options
+     *
+     * @return mixed
+     */
+    public function getOptions()
+    {
+        return json_decode($this->options, true);
+    }
+
+    /**
      * All Notification Emails use the Default Mailer.
      *
      * The Email Service provide can be update via Craft's Email Settings
