@@ -96,6 +96,8 @@ abstract class BaseMailer
     }
 
     /**
+     * @todo - do we need to define settings any longer? Or can we just use variables on the specific Mailer Class?
+     *
      * Enables mailers to define their own settings and validation for them
      *
      * @return array
@@ -116,7 +118,7 @@ abstract class BaseMailer
     public function prepSettings()
     {
         // @todo - getId no longer exists, review
-        return \Craft::$app->getRequest()->getParam($this->getId());
+        return Craft::$app->getRequest()->getParam($this->getId());
     }
 
     /**
@@ -152,17 +154,15 @@ abstract class BaseMailer
     }
 
     /**
-     * Gives a mailer the responsibility to send Campaign Emails
-     * if they implement SproutEmailCampaignEmailSenderInterface
+     * Allow modification of campaignType model before it is saved.
      *
-     * @param CampaignEmail $campaignEmail
-     * @param CampaignType  $campaignType
+     * @param CampaignType $model
      *
-     * @return mixed
+     * @return CampaignType
      */
-    public function sendCampaignEmail(CampaignEmail $campaignEmail, CampaignType $campaignType)
+    public function prepareSave(CampaignType $model)
     {
-        return true;
+        return $model;
     }
 
     /**
@@ -180,13 +180,27 @@ abstract class BaseMailer
     }
 
     /**
+     * Gives a mailer the responsibility to send Campaign Emails
+     * if they implement SproutEmailCampaignEmailSenderInterface
+     *
+     * @param CampaignEmail $campaignEmail
+     * @param CampaignType  $campaignType
+     *
+     * @return mixed
+     */
+    public function sendCampaignEmail(CampaignEmail $campaignEmail, CampaignType $campaignType)
+    {
+        return true;
+    }
+
+    /**
      * @param CampaignEmail $campaignEmail
      * @param CampaignType  $campaignType
      * @param array         $emails
      *
      * @return null
      */
-    public function sendTestEmail(CampaignEmail $campaignEmail, CampaignType $campaignType, array $emails = [])
+    public function sendTestCampaignEmail(CampaignEmail $campaignEmail, CampaignType $campaignType, array $emails = [])
     {
         return null;
     }
@@ -276,17 +290,5 @@ abstract class BaseMailer
     public function prepListSettings($lists)
     {
         return $lists;
-    }
-
-    /**
-     * Allow modification of campaignType model before it is saved.
-     *
-     * @param CampaignType $model
-     *
-     * @return CampaignType
-     */
-    public function prepareSave(CampaignType $model)
-    {
-        return $model;
     }
 }

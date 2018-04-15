@@ -243,17 +243,23 @@ class NotificationEmailEvents extends Component
     /**
      * Returns a single notification event
      *
-     * @param string $id The return value of the event getId()
+     * @param string $type    The return value of the event getId()
      * @param mixed  $default
      *
      * @return BaseEvent
      */
-    public function getEventById($id, $default = null)
+    public function getEventById($type, $default = null)
     {
-        $events = $this->getNotificationEmailEventTypes();
+        $notificationEmailEventTypes = $this->getNotificationEmailEventTypes();
 
-        /** @noinspection NullCoalescingOperatorCanBeUsedInspection */
-        return isset($events[$id]) ? $events[$id] : $default;
+        foreach ($notificationEmailEventTypes as $notificationEmailEventClass) {
+            if ($type = $notificationEmailEventClass)
+            {
+                return new $notificationEmailEventClass();
+            }
+        }
+
+        return $default;
     }
 
     /**

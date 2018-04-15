@@ -348,14 +348,13 @@ class DefaultMailer extends BaseMailer implements NotificationEmailSenderInterfa
     }
 
     /**
-     * @param $email
-     * @param $object
-     * @param $useMockData
+     * @param NotificationEmail $notificationEmail
+     * @param                   $object
+     * @param                   $useMockData
      *
      * @return array
-     * @throws \Exception
      */
-    protected function prepareRecipients($email, $object, $useMockData)
+    protected function prepareRecipients(NotificationEmail $notificationEmail, $object, $useMockData)
     {
         // Get recipients for test notifications
         if ($useMockData) {
@@ -384,20 +383,13 @@ class DefaultMailer extends BaseMailer implements NotificationEmailSenderInterfa
         }
 
         // Get recipients for live emails
-        // @todo Craft 3 - improve and standardize how we use entryRecipients and dynamicRecipients
-        $entryRecipients = $this->getRecipientsFromCampaignEmailModel($email, $object);
-
-        $dynamicRecipients = SproutBase::$app->notifications->getDynamicRecipientsFromElement($object);
-
-        $recipients = array_merge(
-            $entryRecipients,
-            $dynamicRecipients
-        );
+        // @todo Craft 3 - improve and standardize how we use entryRecipients
+        $recipients = $this->getRecipientsFromEmailElement($notificationEmail, $object);
 
         // @todo implement this when we develop sprout lists plugin
         if (Craft::$app->getPlugins()->getPlugin('sprout-lists') != null) {
 
-            $listSettings = $email->listSettings;
+            $listSettings = $notificationEmail->listSettings;
             $listIds = [];
             // Convert json format to array
             if ($listSettings != null AND is_string($listSettings)) {
@@ -438,16 +430,16 @@ class DefaultMailer extends BaseMailer implements NotificationEmailSenderInterfa
     }
 
     /**
-     * @param $campaignEmail
-     * @param $element
+     * @param $email   The Notification Email or Campaign Email Element
+     * @param $object  The $object defined by the custom event
      *
      * @return array
      */
-    public function getRecipientsFromCampaignEmailModel($campaignEmail, $element)
+    public function getRecipientsFromEmailElement($email, $object)
     {
         $recipients = [];
 
-        $onTheFlyRecipients = $campaignEmail->getRecipients($element);
+        $onTheFlyRecipients = $email->getRecipients($object);
 
         if (is_string($onTheFlyRecipients)) {
             $onTheFlyRecipients = explode(',', $onTheFlyRecipients);
