@@ -105,10 +105,10 @@ class NotificationEmailEvents extends Component
                 }
 
                 $eventClassName = $notificationEmailEvent->getEventClassName();
-                $eventName = $notificationEmailEvent->getEventName();
+                $event = $notificationEmailEvent->getEvent();
                 $eventHandlerClassName = $notificationEmailEvent->getEventHandlerClassName();
 
-                Event::on($eventClassName, $eventName, function($eventHandlerClassName)
+                Event::on($eventClassName, $event, function($eventHandlerClassName)
                     use ($self, $notificationEmailEventClassName, $notificationEmailEvent) {
 
                     return call_user_func($self->getRegisteredEvent($notificationEmailEventClassName),
@@ -141,8 +141,8 @@ class NotificationEmailEvents extends Component
     {
         $self = $this;
 
-        return function($notificationEmailEventClassName, Event $eventClassName, BaseEvent $eventHandlerClassName) use ($self) {
-            return $self->handleDynamicEvent($notificationEmailEventClassName, $eventClassName, $eventHandlerClassName);
+        return function($notificationEmailEventClassName, Event $event, BaseEvent $eventHandlerClassName) use ($self) {
+            return $self->handleDynamicEvent($notificationEmailEventClassName, $event, $eventHandlerClassName);
         };
     }
 
@@ -150,15 +150,15 @@ class NotificationEmailEvents extends Component
      * This method hands things off to Sprout Email when a Notification Event we registered gets triggered.
      *
      * @param           $notificationEmailEventClassName
-     * @param Event     $eventClassName
+     * @param Event     $event
      * @param BaseEvent $eventHandlerClassName
      *
      * @return bool
      * @throws \Exception
      */
-    public function handleDynamicEvent($notificationEmailEventClassName, Event $eventClassName, BaseEvent $eventHandlerClassName)
+    public function handleDynamicEvent($notificationEmailEventClassName, Event $event, BaseEvent $eventHandlerClassName)
     {
-        $params = $eventHandlerClassName->prepareParams($eventClassName);
+        $params = $eventHandlerClassName->prepareParams($event);
 
         if ($params == false) {
             return false;
@@ -186,6 +186,14 @@ class NotificationEmailEvents extends Component
     }
 
     /**
+     * Returns an array of our registered Notification Email Event Types using the plugin handle as the key
+     *
+     * @example
+     * [
+     *   'sprout-email' => new $eventClassName(),
+     *   'sprout-forms' => new $eventClassName()
+     * ]
+     *
      * @return array
      */
     public function getEventsIndexedByPluginId()
@@ -209,6 +217,8 @@ class NotificationEmailEvents extends Component
 
     /**
      * Returns events with a given plugin ID
+     *
+     * @todo - update method to allow for plugins with multiple events
      *
      * @example pluginId is the unique plugin handle
      *
@@ -247,7 +257,7 @@ class NotificationEmailEvents extends Component
     }
 
     /**
-     * @todo - consider refactoring
+     * Returns list of events for an Event dropdown
      *
      * @return array
      */
@@ -258,9 +268,8 @@ class NotificationEmailEvents extends Component
         $events = [];
 
         if (!empty($notificationEmailEventTypes)) {
-            foreach ($notificationEmailEventTypes as $availableEvent) {
-                $namespace = $availableEvent;
-                $events[$namespace] = new $availableEvent();
+            foreach ($notificationEmailEventTypes as $notificationEmailEventClass) {
+                $events[$notificationEmailEventClass] = new $notificationEmailEventClass();
             }
         }
 
@@ -268,12 +277,14 @@ class NotificationEmailEvents extends Component
     }
 
     /**
+     * Returns JSON-decoded options for a given Notification Email and it's selected Event
+     *
      * @param $event
-     * @param $notification
+     * @param $notificationEmail
      *
      * @return mixed
      */
-    public function getEventSelectedOptions(BaseEvent $event, $notification)
+    public function prepareEventOptionsForHtml(BaseEvent $event, $notificationEmail)
     {
         $options = [];
 
@@ -281,8 +292,8 @@ class NotificationEmailEvents extends Component
             $options = $event->prepareOptions();
         }
 
-        if ($notification) {
-            $options = $event->prepareValue($notification->options);
+        if ($notificationEmail) {
+            $options = $event->prepareValue($notificationEmail->options);
         }
 
         $options = json_decode($options, true);

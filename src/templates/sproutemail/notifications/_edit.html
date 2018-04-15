@@ -193,7 +193,7 @@
             }) }}
 
             {% for id, event in events %}
-                {% if event.getSettingsHtml is defined %}
+                {% if event.getSettingsHtml|length %}
 
                     {# Avoid jquery get object error. #}
                     <div class="field event-options {{ event.getEventId() }}">
@@ -201,7 +201,7 @@
                             Settings
                         </div>
                         <div class="input">
-                            {% set options = craft.sproutBase.getEventSelectedOptions(event, notificationEmail) %}
+                            {% set options = craft.sproutBase.prepareEventOptionsForHtml(event, notificationEmail) %}
 
                             {{ event.getSettingsHtml({
                                 options: options

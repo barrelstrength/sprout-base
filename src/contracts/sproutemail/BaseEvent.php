@@ -6,9 +6,9 @@ use barrelstrength\sproutbase\base\BaseSproutTrait;
 use yii\base\Event;
 
 /**
- * The official API for dynamic event registration and handling
+ * The Notification Email Event API
  *
- * Class SproutEmailBaseEvent
+ * Class BaseEvent
  *
  * @package Craft
  */
@@ -36,9 +36,17 @@ abstract class BaseEvent
      *
      * @return string
      */
-    public function getEventId()
+    final public function getEventId()
     {
         return strtolower(str_replace('\\', '-', get_class($this)));
+    }
+
+    /**
+     * @param $options
+     */
+    final public function setOptions($options)
+    {
+        $this->options = $options;
     }
 
     /**
@@ -63,7 +71,7 @@ abstract class BaseEvent
      *
      * @return string
      */
-    abstract public function getEventName();
+    abstract public function getEvent();
 
     /**
      * Returns the callable event handler.
@@ -78,33 +86,17 @@ abstract class BaseEvent
     abstract public function getEventHandlerClassName();
 
     /**
-     * @param $options
-     */
-    final public function setOptions($options)
-    {
-        $this->options = $options;
-    }
-
-    /**
-     * Returns the qualified event name to use when registering with craft()->on
+     * Returns the name of the event
      *
-     * @example entries.saveEntry
+     * @example
+     *
+     * - When an Entry is saved
+     * - When a User is activated
+     * - When a Sprout Forms Entry is saved
      *
      * @return string
      */
     abstract public function getName();
-
-    /**
-     * Returns the event title to use when displaying a label or similar use case
-     *
-     * @example Craft Save Entry
-     *
-     * @return string
-     */
-    public function getTitle()
-    {
-        return null;
-    }
 
     /**
      * Returns a short description of this event
@@ -123,7 +115,7 @@ abstract class BaseEvent
      *
      * @example
      * <h3>Select Sections</h3>
-     * <p>Please select what sections you want the save entry event to trigger on</p>
+     * <p>Please select what Sections should trigger the save entry event</p>
      * <input type="checkbox" id="sectionIds[]" value="1">
      * <input type="checkbox" id="sectionsIds[]" value="2">
      *
@@ -131,14 +123,15 @@ abstract class BaseEvent
      */
     public function getSettingsHtml()
     {
-        return '—';
+        return '';
     }
 
     /**
-     * Returns the value that should be saved to options for the notification (registered event)
+     * Returns the value that should be saved to the sproutemail_notificationemails.options column
+     * for the Notification Email's selected Event
      *
      * @example
-     * return craft()->request->getPost('sectionIds');
+     * return Craft::$app->getRequest()->getBodyParm('sectionIds');
      *
      * @return mixed
      */
@@ -148,37 +141,13 @@ abstract class BaseEvent
     }
 
     /**
-     * Returns whether the campaign entry options are valid for this model
+     * Prepare the event parameters to be used in the dynamic event
+     *
+     * $event->params provides the value that can be used in the validateOptions method.
+     * $event->params['value'] should be the value of the $element object for the specific event
      *
      * @example
-     * Let $options be an array containing section ids (1,3)
-     * Let $model be an EntryModel with section id (1)
-     * Let $params be the entry.saveEntry event params
-     * Result is true
-     *
-     * @note
-     * This is used when determining whether a campaign should be sent
-     *
-     * @param mixed $options
-     * @param mixed $eventData Usually whatever prepareParams() returns in its value key
-     * @param array $params
-     *
-     * @note
-     * $eventData will be an element model most of the time but...
-     * it could also be a string as is the case for user session login
-     *
-     * @return bool
-     */
-    public function validateOptions($options, $eventData, array $params = [])
-    {
-        return true;
-    }
-
-    /**
-     * Returns the data passed in by the triggered event
-     *
-     * @example
-     * return $event->params['entry'];
+     * return $event->params['value'] = $element;
      *
      * @param Event $event
      *
@@ -190,7 +159,20 @@ abstract class BaseEvent
     }
 
     /**
-     * Gives the event a chance to attach the value to the right field id before outputting it
+     * Returns mock data for $event->params that will be used when sending test Notification Emails.
+     *
+     * Real data can be dynamically retrieved from your database or a static fallback can be provided.
+     *
+     * @return array
+     */
+    public function getMockedParams()
+    {
+        return [];
+    }
+
+    /**
+     * Gives the event a chance to modify the value stored in the sproutemail_notificationemails.options
+     * column before displaying it as settings to the user
      *
      * @param $value
      *
@@ -202,12 +184,31 @@ abstract class BaseEvent
     }
 
     /**
-     * Gives the event the ability to let a mailer test sending notifications with mocked params
+     * Determines if an event matches the conditions defined in it's settings for a Notification Email.
      *
-     * @return array
+     * If the Notification Email Event options validate, the Notification Email will be triggered
+     * If the Notification Email Event options don't validate, no message will be triggered
+     *
+     * @example
+     * Let $options be an array containing section ids (1,3)
+     * Let $model be an EntryModel with section id (1)
+     * Let $params be the EVENT_AFTER_SAVE_ELEMENT event params
+     * Result is true
+     *
+     * @todo - revisit if we need both $eventData and $params as separate variables or can just pass $params
+     *
+     * @param mixed $options
+     * @param mixed $eventData $event->params['value']
+     * @param array $params    $event->params
+     *
+     * @note
+     * $eventData will be an element model most of the time but...
+     * it could also be a string as is the case for user session login
+     *
+     * @return bool
      */
-    public function getMockedParams()
+    public function validateOptions($options, $eventData, array $params = [])
     {
-        return [];
+        return true;
     }
 }
