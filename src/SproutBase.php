@@ -117,7 +117,7 @@ class SproutBase extends Module
 
         // Register Sprout Email Events
         Event::on(Application::class, Application::EVENT_INIT, function() {
-            SproutBase::$app->notifications->registerDynamicEventHandler();
+            SproutBase::$app->notifications->registerNotificationEmailEventHandlers();
         });
 
         // Register Sprout Email Mailers

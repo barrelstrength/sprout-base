@@ -5,9 +5,9 @@ namespace barrelstrength\sproutbase\services\sproutemail;
 use barrelstrength\sproutbase\base\TemplateTrait;
 use barrelstrength\sproutbase\contracts\sproutemail\BaseEvent;
 use barrelstrength\sproutbase\elements\sproutemail\NotificationEmail;
+use barrelstrength\sproutbase\events\NotificationEmailEvent;
 use barrelstrength\sproutbase\mailers\DefaultMailer;
 use barrelstrength\sproutbase\SproutBase;
-use barrelstrength\sproutbase\events\RegisterNotificationEvent;
 use barrelstrength\sproutbase\models\sproutemail\Message;
 use barrelstrength\sproutbase\models\sproutbase\Response;
 use barrelstrength\sproutbase\records\sproutemail\NotificationEmail as NotificationEmailRecord;
@@ -32,13 +32,12 @@ class NotificationEmails extends Component
 {
     use TemplateTrait;
 
-    const EVENT_REGISTER_EMAIL_EVENTS = 'defineSproutEmailEvents';
-    const DEFAULT_TEMPLATE = 'sprout-base/sproutemail/notifications/_special/notification';
-
     /**
-     * @var BaseEvent[]
+     * Register a Custom Email Event for Sprout Email
      */
-    protected $availableEvents;
+    const EVENT_REGISTER_EMAIL_EVENT_TYPES = 'registerSproutNotificationEmailEvents';
+
+    const DEFAULT_TEMPLATE = 'sprout-base/sproutemail/notifications/_special/notification';
 
     /**
      * @var \Callable[] Events that notifications have subscribed to
@@ -46,60 +45,163 @@ class NotificationEmails extends Component
     protected $registeredEvents = [];
 
     /**
-     * Returns all campaign notifications based on the passed in event id
+     * Registers an event listener to be trigger dynamically
+     *
+     * @param string    $eventId
+     * @param \Callable $callback
+     */
+    public function registerEvent($eventId, $callback)
+    {
+        $this->registeredEvents[$eventId] = $callback;
+    }
+
+    /**
+     * Returns a callable for the given event
      *
      * @param string $eventId
      *
-     * @return ElementInterface[]|null
+     * @return \Callable
      */
-    public function getAllNotificationEmails($eventId = null)
+    public function getRegisteredEvent($eventId)
     {
-        if ($eventId) {
-            $attributes = ['eventId' => $eventId];
-
-            $notifications = NotificationEmail::find()->where($attributes)->all();
-        } else {
-            $notifications = NotificationEmail::find()->all();
+        if (isset($this->registeredEvents[$eventId])) {
+            return $this->registeredEvents[$eventId];
         }
 
-        return $notifications;
+        return function() {};
     }
 
-    /**
-     * @param $emailId
-     *
-     * @return NotificationEmail
-     */
-    public function getNotificationEmailById($emailId)
-    {
-        return Craft::$app->getElements()->getElementById($emailId);
-    }
 
     /**
      * Returns all the available events that notifications can subscribe to
+     * getAllNotificationEmailEvents()
      *
      * @return array
      */
-    public function getAvailableEvents()
+    public function getNotificationEmailEventTypes()
     {
-        $event = new RegisterNotificationEvent([
-            'availableEvents' => []
+        $event = new NotificationEmailEvent([
+            'events' => []
         ]);
 
-        $this->trigger(self::EVENT_REGISTER_EMAIL_EVENTS, $event);
+        $this->trigger(self::EVENT_REGISTER_EMAIL_EVENT_TYPES, $event);
 
-        $availableEvents = $event->availableEvents;
+        return $event->events;
+    }
 
-        $events = [];
+    /**
+     * Registers a closure for each event we should be listening for via craft()->on()
+     *
+     * @note
+     * 1. Get all events that we need to listen for
+     * 2. Register an anonymous function for each event using craft()->on()
+     * 3. That function will be called with an event id and the event itself when triggered
+     *
+     * @return false
+     */
+    public function registerNotificationEmailEventHandlers()
+    {
+        $self = $this;
+        $events = $this->getNotificationEmailEventTypes();
 
-        if (!empty($availableEvents)) {
-            foreach ($availableEvents as $availableEvent) {
-                $namespace = get_class($availableEvent);
-                $events[$namespace] = $availableEvent;
+        if (!count($events)) {
+            return false;
+        }
+
+        foreach ($events as $notificationEmailEventClassName) {
+
+            // Create an instance of this event
+            $notificationEmailEvent = new $notificationEmailEventClassName();
+
+            if ($notificationEmailEvent instanceof BaseEvent) {
+
+                $self->registerEvent($notificationEmailEventClassName, $self->getDynamicEventHandler());
+
+                if (Craft::$app->getRequest()->getIsConsoleRequest() == true) {
+                    continue;
+                }
+
+                $params = $notificationEmailEvent->getEventParams();
+
+                $eventClassName = $params['class'];
+                $eventName = $params['name'];
+                $eventHandlerClassName = $params['event'];
+
+                Event::on($eventClassName, $eventName, function($eventHandlerClassName)
+                    use ($self, $notificationEmailEventClassName, $notificationEmailEvent) {
+
+                    return call_user_func($self->getRegisteredEvent($notificationEmailEventClassName),
+                        $notificationEmailEventClassName, $eventHandlerClassName, $notificationEmailEvent);
+                });
             }
         }
 
-        return $events;
+        return true;
+    }
+
+    /**
+     * Returns the callable/closure that handle dynamic event delegation for craft()->raiseEvent()
+     *
+     * This closure is necessary to avoid creating a method for every possible event (entries.saveEntry)
+     * This closure allows us to avoid having to register for every possible event via craft()->on()
+     * This closure allows us to know the current event being triggered dynamically
+     *
+     * @example
+     * When the sproutemail is initialized...
+     * 1. We check what events we need to register for via craft()->on()
+     * 2. We register an anonymous function as the handler
+     * 3. This closure gets called with the name of the event and the event itself
+     * 4. This closure executes as real event handler for the triggered event
+     *
+     * @return \Callable
+     */
+    public function getDynamicEventHandler()
+    {
+        $self = $this;
+
+        return function($notificationEmailEventClassName, Event $eventClassName, BaseEvent $eventHandlerClassName) use ($self) {
+            return $self->handleDynamicEvent($notificationEmailEventClassName, $eventClassName, $eventHandlerClassName);
+        };
+    }
+
+    /**
+     * @param           $notificationEmailEventClassName
+     * @param Event     $eventEventClass
+     * @param BaseEvent $eventHandlerClassName
+     *
+     * @return bool
+     * @throws \Exception
+     */
+    public function handleDynamicEvent($notificationEmailEventClassName, Event $eventEventClass, BaseEvent $eventHandlerClassName)
+    {
+        $params = $eventHandlerClassName->prepareParams($eventEventClass);
+
+        if ($params == false) {
+            return false;
+        }
+        $element = ($params['value'] != null) ? $params['value'] : null;
+
+        if ($notificationEmails = $this->getAllNotificationEmails($notificationEmailEventClassName)) {
+
+            /**
+             * @var $notificationEmail NotificationEmail
+             */
+            foreach ($notificationEmails as $notificationEmail) {
+                $options = $notificationEmail['options'];
+
+                $options = json_decode($options, true);
+
+                if ($eventHandlerClassName->validateOptions($options, $element, $params)) {
+                    $notificationEmailElement = Craft::$app->getElements()->getElementById($notificationEmail->id);
+
+                    if ($notificationEmailElement) {
+                        $this->relayNotificationThroughAssignedMailer($notificationEmailElement, $element);
+                    }
+                }
+            }
+        }
+
+        return true;
     }
 
     /**
@@ -107,15 +209,17 @@ class NotificationEmails extends Component
      */
     public function getEventsWithBase()
     {
-        $availableEvents = $this->getAvailableEvents();
+        $eventTypes = $this->getNotificationEmailEventTypes();
 
         $events = [];
 
-        if (!empty($availableEvents)) {
-            foreach ($availableEvents as $availableEvent) {
-                $plugin = $availableEvent->getPlugin();
+        if (!empty($eventTypes)) {
+            foreach ($eventTypes as $className) {
 
-                $events[$plugin->id] = $availableEvent;
+                $event = new $className();
+                $plugin = $event->getPlugin();
+
+                $events[$plugin->id] = $event;
             }
         }
 
@@ -148,7 +252,7 @@ class NotificationEmails extends Component
      */
     public function getEventById($id, $default = null)
     {
-        $events = $this->getAvailableEvents();
+        $events = $this->getNotificationEmailEventTypes();
 
         /** @noinspection NullCoalescingOperatorCanBeUsedInspection */
         return isset($events[$id]) ? $events[$id] : $default;
@@ -175,6 +279,36 @@ class NotificationEmails extends Component
         $options = json_decode($options, true);
 
         return $options;
+    }
+
+    /**
+     * Returns all campaign notifications based on the passed in event id
+     *
+     * @param string $eventId
+     *
+     * @return ElementInterface[]|null
+     */
+    public function getAllNotificationEmails($eventId = null)
+    {
+        if ($eventId) {
+            $attributes = ['eventId' => $eventId];
+
+            $notifications = NotificationEmail::find()->where($attributes)->all();
+        } else {
+            $notifications = NotificationEmail::find()->all();
+        }
+
+        return $notifications;
+    }
+
+    /**
+     * @param $emailId
+     *
+     * @return NotificationEmail
+     */
+    public function getNotificationEmailById($emailId)
+    {
+        return Craft::$app->getElements()->getElementById($emailId);
     }
 
     /**
@@ -250,144 +384,6 @@ class NotificationEmails extends Component
     public function deleteNotificationEmailById($id)
     {
         return Craft::$app->getElements()->deleteElementById($id);
-    }
-
-    /**
-     * Registers a closure for each event we should be listening for via craft()->on()
-     *
-     * @note
-     * 1. Get all events that we need to listen for
-     * 2. Register an anonymous function for each event using craft()->on()
-     * 3. That function will be called with an event id and the event itself when triggered
-     *
-     * @return mixed
-     */
-    public function registerDynamicEventHandler()
-    {
-        $self = $this;
-        $events = $this->getAvailableEvents();
-
-        if (count($events)) {
-            foreach ($events as $eventId => $listener) {
-                if ($listener instanceof BaseEvent) {
-                    $self->registerEvent($eventId, $self->getDynamicEventHandler());
-
-                    if (Craft::$app->getRequest()->getIsConsoleRequest() == true) {
-                        continue;
-                    }
-                    $params = $listener->getEventParams();
-
-                    $class = $params['class'];
-                    $name = $params['name'];
-                    $event = $params['event'];
-
-                    Event::on($class, $name, function($event) use ($self, $eventId, $listener) {
-                        return call_user_func_array(
-                            $self->getRegisteredEvent($eventId), [
-                                $eventId,
-                                $event,
-                                $listener
-                            ]
-                        );
-                    });
-                }
-            }
-        }
-
-        return true;
-    }
-
-    /**
-     * Registers an event listener to be trigger dynamically
-     *
-     * @param string    $eventId
-     * @param \Callable $callback
-     */
-    public function registerEvent($eventId, $callback)
-    {
-        $this->registeredEvents[$eventId] = $callback;
-    }
-
-    /**
-     * Returns a callable for the given event
-     *
-     * @param string $eventId
-     *
-     * @return \Callable
-     */
-    public function getRegisteredEvent($eventId)
-    {
-        if (isset($this->registeredEvents[$eventId])) {
-            return $this->registeredEvents[$eventId];
-        }
-
-        return function() {
-        };
-    }
-
-    /**
-     * Returns the callable/closure that handle dynamic event delegation for craft()->raiseEvent()
-     *
-     * This closure is necessary to avoid creating a method for every possible event (entries.saveEntry)
-     * This closure allows us to avoid having to register for every possible event via craft()->on()
-     * This closure allows us to know the current event being triggered dynamically
-     *
-     * @example
-     * When the sproutemail is initialized...
-     * 1. We check what events we need to register for via craft()->on()
-     * 2. We register an anonymous function as the handler
-     * 3. This closure gets called with the name of the event and the event itself
-     * 4. This closure executes as real event handler for the triggered event
-     *
-     * @return \Callable
-     */
-    public function getDynamicEventHandler()
-    {
-        $self = $this;
-
-        return function($eventId, Event $event, BaseEvent $listener) use ($self) {
-            return $self->handleDynamicEvent($eventId, $event, $listener);
-        };
-    }
-
-    /**
-     * @param           $eventId
-     * @param Event     $event
-     * @param BaseEvent $listener
-     *
-     * @return bool
-     * @throws \Exception
-     */
-    public function handleDynamicEvent($eventId, Event $event, BaseEvent $listener)
-    {
-        $params = $listener->prepareParams($event);
-
-        if ($params == false) {
-            return false;
-        }
-        $element = ($params['value'] != null) ? $params['value'] : null;
-
-        if ($notificationEmails = $this->getAllNotificationEmails($eventId)) {
-
-            /**
-             * @var $notificationEmail NotificationEmail
-             */
-            foreach ($notificationEmails as $notificationEmail) {
-                $options = $notificationEmail['options'];
-
-                $options = json_decode($options, true);
-
-                if ($listener->validateOptions($options, $element, $params)) {
-                    $notificationEmailElement = Craft::$app->getElements()->getElementById($notificationEmail->id);
-
-                    if ($notificationEmailElement) {
-                        $this->relayNotificationThroughAssignedMailer($notificationEmailElement, $element);
-                    }
-                }
-            }
-        }
-
-        return true;
     }
 
     /**

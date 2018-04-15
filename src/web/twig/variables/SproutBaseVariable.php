@@ -19,7 +19,7 @@ class SproutBaseVariable
      */
     public function getAvailableEvents()
     {
-        return SproutBase::$app->notifications->getAvailableEvents();
+        return SproutBase::$app->notifications->getNotificationEmailEventTypes();
     }
 
     /**

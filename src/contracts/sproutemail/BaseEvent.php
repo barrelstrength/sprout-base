@@ -12,9 +12,10 @@ use yii\base\Event;
  *
  * @package Craft
  */
-class BaseEvent
+abstract class BaseEvent
 {
     use BaseSproutTrait;
+
     /**
      * @var array|null
      */
@@ -31,6 +32,8 @@ class BaseEvent
     }
 
     /**
+     * @todo - do we need this any longer? Update.
+     *
      * Returns the string with namespace that is for html attribute class compatibility
      *
      * @return string
@@ -41,6 +44,7 @@ class BaseEvent
     }
 
     /**
+     * @todo - do we still need this?
      * @return mixed
      */
     public function getBaseName()
@@ -49,6 +53,25 @@ class BaseEvent
 
         return $namespaceArray[1];
     }
+
+    /**
+     * @todo - update this to be specific methods for each value needed or a model that validates itself.
+     *
+     * Returns the parameters necessary to dynamically register the event.
+     *
+     * Required parameters include:
+     * - class: the fully qualified class name where the event is re
+     *
+     * @example
+     * return [
+     *    'class' => Elements::class,
+     *    'name' => Elements::EVENT_AFTER_DELETE_ELEMENT,
+     *    'event' => ElementEvent::class
+     * ];
+     *
+     * @return array
+     */
+    abstract public function getEventParams();
 
     /**
      * @param $options
