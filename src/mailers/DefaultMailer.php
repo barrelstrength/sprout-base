@@ -183,7 +183,7 @@ class DefaultMailer extends BaseMailer implements NotificationEmailSenderInterfa
         $view->setTemplatesPath($template);
 
         /** @var Message $message */
-        $message = $this->getNotificationEmailMessage($notificationEmail, $object);
+        $message = SproutBase::$app->notifications->getNotificationEmailMessage($notificationEmail, $object);
 
         $view->setTemplatesPath($oldTemplatePath);
 
