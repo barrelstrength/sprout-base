@@ -29,6 +29,7 @@ class Email extends Component
         // Allow our settings to override our default
         if ($sproutEmail) {
             $settings = $sproutEmail->getSettings();
+
             if ($settings->templateFolderOverride) {
                 $emailTemplate = SproutBase::$app->template->getTemplateById($settings->templateFolderOverride);
                 if ($emailTemplate) {

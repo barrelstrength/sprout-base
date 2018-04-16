@@ -83,7 +83,7 @@ class SproutBaseVariable
             $settings = $plugin->getSettings();
         }
 
-        $templateFolder = $notificationEmail->emailTemplateId ?? $settings->emailTemplateId ?? $defaultEmailTemplates->getPath();
+        $templateFolder = $notificationEmail->templateFolderOverride ?? $settings->templateFolderOverride ?? $defaultEmailTemplates->getPath();
 
         $options[] = [
             'optgroup' => Craft::t('sprout-base', 'Custom Template Folder')

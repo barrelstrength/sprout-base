@@ -31,7 +31,7 @@ class Install extends Migration
                     'id' => $this->primaryKey(),
                     'pluginId' => $this->string(),
                     'titleFormat' => $this->string(),
-                    'template' => $this->string(),
+                    'emailTemplateId' => $this->string(),
                     'eventId' => $this->string(),
                     'options' => $this->text(),
                     'subjectLine' => $this->string()->notNull(),

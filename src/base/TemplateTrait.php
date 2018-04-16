@@ -15,7 +15,7 @@ use craft\base\Element;
 trait TemplateTrait
 {
     protected $templatesPath;
-
+    private $folderPath = null;
     /**
      * Returns whether or not a site template exists
      *
@@ -76,6 +76,16 @@ trait TemplateTrait
     }
 
     /**
+     * Use to show folder path in error modal if invalid template folder is specified.
+     *
+     * @param $path
+     */
+    private function setFolderPath($path)
+    {
+        $this->folderPath = $path;
+    }
+
+    /**
      * @param       $template
      * @param array $variables
      *
@@ -99,8 +109,8 @@ trait TemplateTrait
             // Specify template .html if no .txt
             $message = $e->getMessage();
 
-            if (strpos($template, '.txt') === false) {
-                $message = str_replace($template, $template.'.html', $message);
+            if ($this->folderPath) {
+                $message.= Craft::t('sprout-base', '<br />Folder Path: ' . $this->folderPath);
             }
 
             SproutBase::error($message);

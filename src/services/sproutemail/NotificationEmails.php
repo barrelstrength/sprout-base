@@ -11,11 +11,9 @@ use barrelstrength\sproutbase\models\sproutbase\Response;
 use barrelstrength\sproutbase\records\sproutemail\NotificationEmail as NotificationEmailRecord;
 use craft\base\Component;
 use Craft;
-use craft\base\Element;
 use craft\helpers\ElementHelper;
 use craft\helpers\Html;
 use craft\helpers\UrlHelper;
-use craft\web\View;
 use League\HTMLToMarkdown\HtmlConverter;
 use craft\base\ElementInterface;
 use yii\web\NotFoundHttpException;
@@ -145,13 +143,15 @@ class NotificationEmails extends Component
         $fromEmail = $this->renderObjectTemplateSafely($notificationEmail->fromEmail, $object);
         $replyTo = $this->renderObjectTemplateSafely($notificationEmail->replyToEmail, $object);
 
+        $view = Craft::$app->getView();
+        $oldTemplatePath = $view->getTemplatesPath();
+
         $emailTemplatePath = SproutBase::$app->sproutEmail->getEmailTemplate($notificationEmail);
+
+        $this->setFolderPath($emailTemplatePath);
 
         $htmlEmailTemplate = 'email.html';
         $textEmailTemplate = 'email.txt';
-
-        $view = Craft::$app->getView();
-        $oldTemplatePath = $view->getTemplatesPath();
 
         $view->setTemplatesPath($emailTemplatePath);
 
