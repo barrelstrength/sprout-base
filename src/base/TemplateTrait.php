@@ -103,6 +103,8 @@ trait TemplateTrait
                 $message = str_replace($template, $template.'.html', $message);
             }
 
+            SproutBase::error($message);
+
             SproutBase::$app->common->addError('template', $message);
 
             return false;

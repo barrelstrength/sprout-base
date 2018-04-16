@@ -125,6 +125,7 @@ class SproutBase extends Module
             $event->mailers[] = new DefaultMailer();
         });
 
+        // Register Sprout Email Templates
         Event::on(Template::class, Template::EVENT_REGISTER_EMAIL_TEMPLATES, function(Event $event) {
             $event->types[] = BasicTemplates::class;
         });

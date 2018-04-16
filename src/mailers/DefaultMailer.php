@@ -192,6 +192,8 @@ class DefaultMailer extends BaseMailer implements NotificationEmailSenderInterfa
 
         $templateErrors = SproutBase::$app->common->getErrors();
 
+        SproutBase::error($templateErrors);
+
         if (empty($templateErrors) && (empty($body) || empty($htmlBody))) {
             $message = Craft::t('sprout-base', 'Email Text or HTML template cannot be blank. Check template setting.');
 
