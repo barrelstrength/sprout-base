@@ -209,7 +209,7 @@ class NotificationsController extends Controller
             $notificationEmail->title = Craft::$app->getView()->renderObjectTemplate($notificationEmail->titleFormat, $notificationEmail);
         }
 
-        $event = SproutBase::$app->notifications->getEventById($notificationEmail->eventId);
+        $event = SproutBase::$app->notificationEvents->getEventById($notificationEmail->eventId);
 
         if ($event) {
             $options = $event->prepareOptions();
