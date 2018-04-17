@@ -242,7 +242,7 @@ class NotificationEmail extends Element
             'subjectLine' => ['label' => Craft::t('sprout-base', 'Subject Line')],
             'dateCreated' => ['label' => Craft::t('sprout-base', 'Date Created')],
             'send' => ['label' => Craft::t('sprout-base', 'Send')],
-            'preview' => ['label' => Craft::t('sprout-base', 'Preview'), 'icon' => 'view']
+//            'preview' => ['label' => Craft::t('sprout-base', 'Preview'), 'icon' => 'view']
         ];
 
         return $attributes;
