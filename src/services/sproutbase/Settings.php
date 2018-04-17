@@ -38,14 +38,15 @@ class Settings extends Component
 
         // Have namespace?
         $settings = $settings['settings'] ?? $settings;
-        $scenario = $settings['sprout-scenario'] ?? null;
+        // Set sprout scenario validation on the settings model
+        $scenario = $settings['validationScenario'] ?? null;
 
         foreach ($pluginSettings->getAttributes() as $settingHandle => $value) {
             if (isset($settings[$settingHandle])) {
                 $pluginSettings->{$settingHandle} = $settings[$settingHandle] ?? $value;
             }
         }
-        // Set sprout scenario
+
         if ($scenario) {
             $pluginSettings->setScenario($scenario);
         }
