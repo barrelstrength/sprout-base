@@ -383,17 +383,7 @@ class NotificationsController extends Controller
 
         if (!SproutBase::$app->notifications->sendTestNotificationEmail($notificationEmail))
         {
-            $errors = SproutBase::$app->common->getErrors();
-
-            if ($response instanceof Response AND empty($errors)) {
-                return $this->asJson($response);
-            }
-
             $errorMessage = SproutBase::$app->common->formatErrors();
-
-            if (!$response) {
-                $errorMessage = Craft::t('sprout-base', 'Unable to send email.');
-            }
 
             return $this->asJson(
                 Response::createErrorModalResponse('sprout-base/sproutemail/_modals/response', [

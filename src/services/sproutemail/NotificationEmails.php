@@ -281,6 +281,8 @@ class NotificationEmails extends Component
                     $message = Craft::t('sprout-base', 'Unable to send Test Notification Email.');
                 }
 
+                SproutBase::$app->common->addError('notification-mock-error', $message);
+
                 SproutBase::error($message);
 
                 return false;
