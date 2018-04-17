@@ -191,11 +191,6 @@ class NotificationEmails extends Component
         $message->setTextBody($body);
         $message->setHtmlBody($htmlBody);
 
-        // Store our rendered email for later. We save this as separate variables as the Message Class
-        // we extend doesn't have a way to access these items once we set them.
-        $message->renderedBody = $body;
-        $message->renderedHtmlBody = $htmlBody;
-
         $styleTags = [];
 
         $htmlBody = $this->addPlaceholderStyleTags($htmlBody, $styleTags);
@@ -215,6 +210,11 @@ class NotificationEmails extends Component
 
         $htmlBody = $this->removePlaceholderStyleTags($htmlBody, $styleTags);
         $message->setHtmlBody($htmlBody);
+
+        // Store our rendered email for later. We save this as separate variables as the Message Class
+        // we extend doesn't have a way to access these items once we set them.
+        $message->renderedBody = $body;
+        $message->renderedHtmlBody = $htmlBody;
 
         return $message;
     }
