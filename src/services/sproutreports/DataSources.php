@@ -100,11 +100,13 @@ class DataSources extends Component
 
         foreach ($dataSourceClasses as $dataSourceClass) {
 
+            $dataSource = new $dataSourceClass();
+
             $dataSourceModel = new DataSourceModel();
             $dataSourceModel->type = $dataSourceClass;
             $dataSourceModel->allowNew = 1;
             // Set all pre-built class to sprout-reports pluginId
-            $dataSourceModel->pluginId = 'sprout-reports';
+            $dataSourceModel->pluginId = $dataSource->getPlugin()->handle;
 
             $this->saveDataSource($dataSourceModel);
 

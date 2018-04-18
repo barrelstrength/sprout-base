@@ -65,6 +65,34 @@ abstract class BaseDataSource
     }
 
     /**
+     * Returns an instance of the plugin that created this Data Source
+     *
+     * @return \craft\base\PluginInterface|null|string
+     */
+    final public function getPlugin()
+    {
+        return $this->plugin;
+    }
+
+    /**
+     * Returns a fully qualified string that uniquely identifies the given data source
+     *
+     * @format {plugin}-{source}
+     * 1. {plugin} should be the lower case version of the plugin handle
+     * 3. {source} should be the lower case version of your data source without prefixes or suffixes
+     *
+     * @example
+     * - SproutFormsSubmissionsDataSource   > sproutforms-submissions
+     * - CustomQuery > sproutreports-customquery
+     *
+     * @return string
+     */
+    final public function getDataSourceSlug()
+    {
+        return $this->dataSourceSlug;
+    }
+
+    /**
      * Set a Report on our data source.
      *
      * @param Report|null $report
@@ -208,24 +236,6 @@ abstract class BaseDataSource
         }
 
         return true;
-    }
-
-    /**
-     * Returns a fully qualified string that uniquely identifies the given data source
-     *
-     * @format {plugin}-{source}
-     * 1. {plugin} should be the lower case version of the plugin handle
-     * 3. {source} should be the lower case version of your data source without prefixes or suffixes
-     *
-     * @example
-     * - SproutFormsSubmissionsDataSource   > sproutforms-submissions
-     * - CustomQuery > sproutreports-customquery
-     *
-     * @return string
-     */
-    final public function getDataSourceSlug()
-    {
-        return $this->dataSourceSlug;
     }
 
     /**
