@@ -209,10 +209,19 @@ class Report extends Element
         $dataSources = SproutBase::$app->dataSources->getDataSourcePlugins();
 
         foreach ($dataSources as $dataSource) {
+
+            // @todo - temporary fix.
+            // We should remove this and write a migration that ensures that all data source columns have a non-null pluginId setting.
+            $pluginId = $dataSource['pluginId'] ?? null;
+
+            if (!$pluginId) {
+                continue;
+            }
+
             /**
              * @var $plugin Plugin
              */
-            $plugin = Craft::$app->plugins->getPlugin($dataSource['pluginId']);
+            $plugin = Craft::$app->plugins->getPlugin($pluginId);
 
             if ($plugin) {
                 $key = 'pluginId:'.$plugin->getHandle();
