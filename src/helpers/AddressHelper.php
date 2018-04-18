@@ -364,15 +364,15 @@ class AddressHelper
         $formatter = new DefaultFormatter($addressFormatRepository, $countryRepository, $subdivisionRepository);
 
         $address = $address
-            ->setCountryCode($model->countryCode)
-            ->setAdministrativeArea($model->administrativeArea)
-            ->setLocality($model->locality)
-            ->setPostalCode($model->postalCode)
-            ->setAddressLine1($model->address1)
-            ->setAddressLine2($model->address2);
+            ->withCountryCode($model->countryCode)
+            ->withAdministrativeArea($model->administrativeArea)
+            ->withLocality($model->locality)
+            ->withPostalCode($model->postalCode)
+            ->withAddressLine1($model->address1)
+            ->withAddressLine2($model->address2);
 
         if ($model->dependentLocality != null) {
-            $address->setDependentLocality($model->dependentLocality);
+            $address->withDependentLocality($model->dependentLocality);
         }
 
         return $formatter->format($address);
