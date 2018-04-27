@@ -30,14 +30,14 @@ class Email extends Component
         if ($sproutEmail) {
             $settings = $sproutEmail->getSettings();
 
-            if ($settings->templateFolderOverride) {
-                $emailTemplate = SproutBase::$app->template->getTemplateById($settings->templateFolderOverride);
+            if ($settings->emailTemplateId) {
+                $emailTemplate = SproutBase::$app->template->getTemplateById($settings->emailTemplateId);
                 if ($emailTemplate) {
                     // custom path by template API
                     $templatePath = $emailTemplate->getPath();
                 } else {
                     // custom folder on site path
-                    $templatePath = $this->getSitePath($settings->templateFolderOverride);
+                    $templatePath = $this->getSitePath($settings->emailTemplateId);
                 }
             }
         }
