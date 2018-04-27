@@ -83,9 +83,9 @@ class NotificationsController extends Controller
 
         // Immediately create a new Notification
         if (Craft::$app->request->getSegment(4) == 'new') {
-            $notification = SproutBase::$app->notifications->createNewNotification();
+            $notificationEmail = SproutBase::$app->notifications->createNewNotification();
 
-            if ($notification) {
+            if ($notificationEmail) {
                 $url = UrlHelper::cpUrl($currentPluginHandle.'/notifications/edit/'.$notification->id);
                 return $this->redirect($url);
             } else {
