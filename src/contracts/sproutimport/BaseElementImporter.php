@@ -75,6 +75,7 @@ abstract class BaseElementImporter extends BaseImporter
          */
         if ($existingElement = $this->getExistingElement($model, $settings)) {
             $model = $existingElement;
+            $this->isUpdated = true;
         }
 
         $authorId = null;

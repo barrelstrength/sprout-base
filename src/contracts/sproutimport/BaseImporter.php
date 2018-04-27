@@ -68,7 +68,7 @@ abstract class BaseImporter
      * @var $fakerService Generator
      */
     protected $fakerService;
-
+    public $isUpdated = false;
     /**
      * BaseImporter constructor.
      *
