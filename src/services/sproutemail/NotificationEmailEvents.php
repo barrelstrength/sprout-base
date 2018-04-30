@@ -180,17 +180,11 @@ class NotificationEmailEvents extends Component
                 $eventHandlerClass->notificationEmail = $notificationEmail;
                 $eventHandlerClass->event = $event;
 
-                $eventHandlerClass->validate();
-                Craft::dd($eventHandlerClass->getErrors());
-
                 if ($eventHandlerClass->validate()) {
 
                     $object = $eventHandlerClass->getEventObject();
 
                     SproutBase::$app->notifications->sendNotificationViaMailer($notificationEmail, $object);
-
-                    Craft::dd('VALIDATED');
-
                 }
             }
         }
