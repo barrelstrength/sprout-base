@@ -19,6 +19,8 @@
 {% set fullPageForm = true %}
 {% set saveShortcutRedirect = url(currentPluginHandle ~ '/notifications/edit/' ~ notificationId) %}
 
+{% set mailer = notificationEmail.getMailer() %}
+
 {% block header %}
 
     {{ block('pageTitle') }}
@@ -83,6 +85,7 @@
 {% endblock %}
 
 {% block content %}
+
     <input type="hidden" name="action"
            value="sprout-base/notifications/save-notification-email">
     {{ redirectInput(currentPluginHandle ~ '/notifications') }}
@@ -177,11 +180,17 @@
 
         {% if events|length %}
 
-            {% set eventOptions =  [{label: "Select event..."|t('sprout-base'), value: null}]|merge(events) %}
+            {% set eventOptions = [{
+                'label': 'Select event...'|t('sprout-base'),
+                'value': null
+            }] %}
 
-            {% if (events|length == 1) %}
-                {% set eventOptions = events %}
-            {% endif %}
+            {% for eventClass, event in events %}
+                {% set eventOptions = eventOptions|merge([{
+                    'label': event.getName(),
+                    'value': eventClass
+                }]) %}
+            {% endfor %}
 
             {{ forms.selectField({
                 id: "notificationEvent",
@@ -192,23 +201,22 @@
                 value: notificationEmail.eventId is defined ? notificationEmail.eventId : null,
             }) }}
 
-            {% for id, event in events %}
-                {% if event.getSettingsHtml|length %}
+            {% for type, event in events %}
 
-                    {# Avoid jquery get object error. #}
-                    <div class="field event-options {{ event.getEventId() }}">
-                        <div class="heading">
-                            Settings
-                        </div>
-                        <div class="input">
-                            {% set options = craft.sproutBase.prepareEventOptionsForHtml(event, notificationEmail) %}
-
-                            {{ event.getSettingsHtml({
-                                options: options
-                            })|raw }}
-                        </div>
+                <div class="field event-options {{ event.getEventId() }}">
+                    <div class="heading">
+                        Settings
                     </div>
-                {% endif %}
+                    <div class="input">
+                        {% if event.settings|length %}
+                            {% namespace 'eventSettings[' ~ type ~ ']' %}
+                                {{ event.getSettingsHtml()|raw }}
+                            {% endnamespace %}
+                        {% else %}
+                            <span class="light">&mdash;</span>
+                        {% endif %}
+                    </div>
+                </div>
             {% endfor %}
 
             {{ forms.lightswitchField({
@@ -275,6 +283,7 @@
 {% endblock %}
 
 {% do view.registerAssetBundle("craft\\web\\assets\\fields\\FieldsAsset") %}
+{% do view.registerAssetBundle("barrelstrength\\sproutbase\\web\\assets\\sproutemail\\NotificationAsset") %}
 
 {% css %}
     .sprout-meta-heading h6 {

@@ -432,8 +432,8 @@ class DefaultMailer extends BaseMailer implements NotificationEmailSenderInterfa
     }
 
     /**
-     * @param $email   The Notification Email or Campaign Email Element
-     * @param $object  The $object defined by the custom event
+     * @param $email  Notification Email or Campaign Email Element
+     * @param $object $object defined by the custom event
      *
      * @return array
      */

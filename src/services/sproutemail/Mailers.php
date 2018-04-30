@@ -3,6 +3,8 @@
 namespace barrelstrength\sproutbase\services\sproutemail;
 
 use barrelstrength\sproutbase\contracts\sproutemail\BaseMailer;
+use barrelstrength\sproutbase\contracts\sproutemail\CampaignEmailSenderInterface;
+use barrelstrength\sproutbase\contracts\sproutemail\NotificationEmailSenderInterface;
 use barrelstrength\sproutbase\events\RegisterMailersEvent;
 use barrelstrength\sproutbase\SproutBase;
 use barrelstrength\sproutbase\events\RegisterSendEmailEvent;
@@ -50,7 +52,7 @@ class Mailers extends Component
     /**
      * @param string $name
      *
-     * @return BaseMailer|null
+     * @return BaseMailer|NotificationEmailSenderInterface|CampaignEmailSenderInterface|null
      * @internal param bool $includeMailersNotYetLoaded
      *
      */

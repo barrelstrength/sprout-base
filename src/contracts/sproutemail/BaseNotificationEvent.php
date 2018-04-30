@@ -3,23 +3,32 @@
 namespace barrelstrength\sproutbase\contracts\sproutemail;
 
 use barrelstrength\sproutbase\base\BaseSproutTrait;
+use barrelstrength\sproutbase\elements\sproutemail\NotificationEmail;
+use craft\base\SavableComponent;
+
+
 use yii\base\Event;
 
 /**
  * The Notification Email Event API
  *
- * Class BaseEvent
+ * Class BaseNotificationEvent
  *
  * @package Craft
  */
-abstract class BaseEvent
+abstract class BaseNotificationEvent extends SavableComponent
 {
     use BaseSproutTrait;
 
     /**
-     * @var array|null
+     * @var NotificationEmail $notificationEmail
      */
-    protected $options;
+    public $notificationEmail;
+
+    /**
+     * @var Event $event
+     */
+    public $event;
 
     /**
      * Returns the event title when used in string context
@@ -42,14 +51,6 @@ abstract class BaseEvent
     }
 
     /**
-     * @param $options
-     */
-    final public function setOptions($options)
-    {
-        $this->options = $options;
-    }
-
-    /**
      * Returns the fully qualified class name to which the event handler needs to attach.
      *
      * This value is used for the Event::on $class parameter
@@ -66,12 +67,12 @@ abstract class BaseEvent
      *
      * This value is used for the Event::on $name parameter
      *
-     * @see \yii\base\Event
+     * @see     \yii\base\Event
      * @example Event::on($class, $name, function($handler) { ... });
      *
      * @return string
      */
-    abstract public function getEvent();
+    abstract public function getEventName();
 
     /**
      * Returns the callable event handler.
@@ -127,67 +128,38 @@ abstract class BaseEvent
     }
 
     /**
-     * Returns the value that should be saved to the sproutemail_notificationemails.options column
-     * for the Notification Email's selected Event
+     * Returns the object that represents the event. The object returned will be passed to renderObjectTemplate
+     * and be available to output in the Notification Email templates via Craft Object Syntax:
      *
-     * @example
-     * return Craft::$app->getRequest()->getBodyParm('sectionIds');
+     * @example - Usage in Notification Email Templates
+     *            If getEventObject returns a craft\elements\Entry model, the Notification Email Templates
+     *            can output data from that model such as {title} OR {{ object.title }}
      *
      * @return mixed
      */
-    public function prepareOptions()
+    public function getEventObject()
     {
-        return [];
+        return null;
     }
 
-    /**
-     * Prepare the event parameters to be used in the dynamic event
-     *
-     * $event->params provides the value that can be used in the validateOptions method.
-     * $event->params['value'] should be the value of the $element object for the specific event
-     *
-     * @example
-     * return $event->params['value'] = $element;
-     *
-     * @param Event $event
-     *
-     * @return mixed
-     */
-    public function prepareParams(Event $event)
-    {
-        return $event->params;
-    }
 
     /**
      * Returns mock data for $event->params that will be used when sending test Notification Emails.
      *
      * Real data can be dynamically retrieved from your database or a static fallback can be provided.
      *
-     * @return array
-     */
-    public function getMockedParams()
-    {
-        return [];
-    }
-
-    /**
-     * Gives the event a chance to modify the value stored in the sproutemail_notificationemails.options
-     * column before displaying it as settings to the user
-     *
-     * @param $value
-     *
      * @return mixed
      */
-    public function prepareValue($value)
+    public function getMockEventObject()
     {
-        return $value;
+        return null;
     }
 
     /**
      * Determines if an event matches the conditions defined in it's settings for a Notification Email.
      *
-     * If the Notification Email Event options validate, the Notification Email will be triggered
-     * If the Notification Email Event options don't validate, no message will be triggered
+     * If the Notification Email Event settings validate, the Notification Email will be triggered
+     * If the Notification Email Event settings don't validate, no message will be triggered
      *
      * @example
      * Let $options be an array containing section ids (1,3)
@@ -197,9 +169,8 @@ abstract class BaseEvent
      *
      * @todo - revisit if we need both $eventData and $params as separate variables or can just pass $params
      *
-     * @param mixed $options
-     * @param mixed $eventData $event->params['value']
-     * @param array $params    $event->params
+     * @param NotificationEmail $notificationEmail
+     * @param Event             $event
      *
      * @note
      * $eventData will be an element model most of the time but...
@@ -207,8 +178,8 @@ abstract class BaseEvent
      *
      * @return bool
      */
-    public function validateOptions($options, $eventData, array $params = [])
-    {
-        return true;
-    }
+//    public function validateSettings(NotificationEmail $notificationEmail, Event $event)
+//    {
+//        return true;
+//    }
 }

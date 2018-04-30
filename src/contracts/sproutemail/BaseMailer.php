@@ -9,7 +9,7 @@ namespace barrelstrength\sproutbase\contracts\sproutemail;
 
 
 use barrelstrength\sproutemail\elements\CampaignEmail;
-use barrelstrength\sproutbase\elements\sproutemail\NotificationEmail;
+
 use barrelstrength\sproutemail\models\CampaignType;
 use yii\base\Model;
 use craft\helpers\UrlHelper;
@@ -163,46 +163,6 @@ abstract class BaseMailer
     public function prepareSave(CampaignType $model)
     {
         return $model;
-    }
-
-    /**
-     * Gives a mailer the responsibility to send Notification Emails
-     * if they implement SproutEmailNotificationEmailSenderInterface
-     *
-     * @param NotificationEmail $notificationEmail
-     * @param                   $object
-     *
-     * @return bool
-     */
-    public function sendNotificationEmail(NotificationEmail $notificationEmail, $object)
-    {
-        return true;
-    }
-
-    /**
-     * Gives a mailer the responsibility to send Campaign Emails
-     * if they implement SproutEmailCampaignEmailSenderInterface
-     *
-     * @param CampaignEmail $campaignEmail
-     * @param CampaignType  $campaignType
-     *
-     * @return mixed
-     */
-    public function sendCampaignEmail(CampaignEmail $campaignEmail, CampaignType $campaignType)
-    {
-        return true;
-    }
-
-    /**
-     * @param CampaignEmail $campaignEmail
-     * @param CampaignType  $campaignType
-     * @param array         $emails
-     *
-     * @return null
-     */
-    public function sendTestCampaignEmail(CampaignEmail $campaignEmail, CampaignType $campaignType, array $emails = [])
-    {
-        return null;
     }
 
     /**

@@ -28,9 +28,9 @@ class SproutBaseVariable
      *
      * @return mixed
      */
-    public function prepareEventOptionsForHtml($event, $notificationEmail)
+    public function prepareEventSettingsForHtml($event, $notificationEmail)
     {
-        return SproutBase::$app->notificationEvents->prepareEventOptionsForHtml($event, $notificationEmail);
+        return SproutBase::$app->notificationEvents->prepareEventSettingsForHtml($event, $notificationEmail);
     }
 
     public function getNotificationEmailById($id)

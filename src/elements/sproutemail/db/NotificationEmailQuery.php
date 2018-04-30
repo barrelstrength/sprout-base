@@ -22,7 +22,7 @@ class NotificationEmailQuery extends ElementQuery
             'sproutemail_notificationemails.titleFormat',
             'sproutemail_notificationemails.emailTemplateId',
             'sproutemail_notificationemails.eventId',
-            'sproutemail_notificationemails.options',
+            'sproutemail_notificationemails.settings',
             'sproutemail_notificationemails.subjectLine',
             'sproutemail_notificationemails.defaultBody',
             'sproutemail_notificationemails.recipients',
