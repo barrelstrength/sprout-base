@@ -322,8 +322,9 @@ class Importers extends Component
                     $seedModel = new SeedModel();
 
                     $seedModel->setAttributes($seedAttributes, false);
-
-                    SproutImport::$app->seed->trackSeed($seedModel);
+                    if (!$importerClass->isUpdated) {
+                        SproutImport::$app->seed->trackSeed($seedModel);
+                    }
                 }
             }
         }
