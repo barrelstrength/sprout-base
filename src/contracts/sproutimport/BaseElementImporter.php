@@ -54,9 +54,7 @@ abstract class BaseElementImporter extends BaseImporter
      */
     public function getElement()
     {
-        $name = $this->getModelName();
-
-        $elementName = Craft::$app->getElements()->getElementTypeByRefHandle($name);
+        $elementName = get_class($this->getModel());
 
         return new $elementName;
     }
@@ -142,6 +140,21 @@ abstract class BaseElementImporter extends BaseImporter
             if (!empty($settings['content']['title'])) {
                 $model->title = $settings['content']['title'];
             }
+            $relatedFields = [];
+            if (isset($settings['content']['related']) && count($settings['content']['related'])) {
+                $related = $settings['content']['related'];
+                $relatedFields = SproutImport::$app->elementImporter->resolveRelationships($related, $relatedFields);
+
+                $message = [];
+                if (!$relatedFields) {
+                    $message['error'] = Craft::t('sprout-import', 'Unable to resolve related relationships.');
+                    $message['fields'] = $relatedFields;
+
+                    SproutImport::error($message);
+                }
+            }
+
+            $fields = [];
 
             if (!empty($settings['content']['fields'])) {
                 $fields = $settings['content']['fields'];
@@ -157,32 +170,21 @@ abstract class BaseElementImporter extends BaseImporter
                         SproutImport::error($message);
                     }
                 }
+            }
 
-                if (isset($settings['content']['related']) && count($settings['content']['related'])) {
-                    $related = $settings['content']['related'];
-                    $fields = SproutImport::$app->elementImporter->resolveRelationships($related, $fields);
+            $fields = array_merge($relatedFields, $fields);
 
-                    $message = [];
-                    if (!$fields) {
-                        $message['error'] = Craft::t('sprout-import', 'Unable to resolve related relationships.');
-                        $message['fields'] = $fields;
+            $fields = ['fields' => $fields];
 
-                        SproutImport::error($message);
-                    }
-                }
+            // Required to associate fields on the element
+            $model->fieldLayoutId = $this->getFieldLayoutId($model);
 
-                $fields = ['fields' => $fields];
+            Craft::$app->getRequest()->setBodyParams($fields);
 
-                // Required to associate fields on the element
-                $model->fieldLayoutId = $this->getFieldLayoutId($model);
+            $model->setFieldValuesFromRequest('fields');
 
-                Craft::$app->getRequest()->setBodyParams($fields);
-
-                $model->setFieldValuesFromRequest('fields');
-
-                if (isset($settings['content']['title'])) {
-                    $model->title = $settings['content']['title'];
-                }
+            if (isset($settings['content']['title'])) {
+                $model->title = $settings['content']['title'];
             }
         }
 
@@ -240,7 +242,7 @@ abstract class BaseElementImporter extends BaseImporter
                 }
             }
 
-            $elementTypeName = Craft::$app->getElements()->getElementTypeByRefHandle($element::refHandle());
+            $elementTypeName = get_class($element);
 
             return SproutImport::$app->elementImporter->getElementFromImportSettings($elementTypeName, $updateElementSettings);
         }
