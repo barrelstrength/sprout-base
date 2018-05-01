@@ -20,7 +20,7 @@
   "require": {
     "craftcms/cms": "^3.0.0",
     "league/csv": "^8.2.0",
-    "league/html-to-markdown": "v4.6.2",
+    "league/html-to-markdown": "^4.6.2",
     "commerceguys/addressing": "^0.8.4",
     "commerceguys/intl": "^0.7.5",
     "giggsey/libphonenumber-for-php": "^8.8.11"
