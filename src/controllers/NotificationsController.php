@@ -2,19 +2,17 @@
 
 namespace barrelstrength\sproutbase\controllers;
 
-
 use barrelstrength\sproutbase\models\sproutbase\Response;
-
+use barrelstrength\sproutbase\sproutemail\web\assets\base\NotificationAsset;
 use barrelstrength\sproutbase\base\TemplateTrait;
 use barrelstrength\sproutbase\elements\sproutemail\NotificationEmail;
 use barrelstrength\sproutbase\SproutBase;
-use craft\base\Plugin;
 use craft\helpers\ElementHelper;
 use craft\helpers\Json;
 use craft\helpers\UrlHelper;
 use craft\web\Controller;
 use Craft;
-
+use craft\web\View;
 use yii\base\Exception;
 use yii\web\HttpException;
 
@@ -77,38 +75,40 @@ class NotificationsController extends Controller
      * @throws \Exception
      * @throws \Throwable
      * @throws \yii\base\Exception
+     * @throws \yii\base\InvalidConfigException
      */
     public function actionEditNotificationEmailTemplate($emailId = null, NotificationEmail $notificationEmail = null)
     {
-        // Our currentPluginHandle helps us allow notifications to be managed in other plugins
         $currentPluginHandle = Craft::$app->request->getSegment(1);
 
         // Immediately create a new Notification
         if (Craft::$app->request->getSegment(4) == 'new') {
-            $notificationEmail = SproutBase::$app->notifications->createNewNotification();
+            $notification = SproutBase::$app->notifications->createNewNotification();
 
-            if ($notificationEmail) {
-                $url = UrlHelper::cpUrl($currentPluginHandle.'/notifications/edit/'.$notificationEmail->id);
+            if ($notification) {
+                $url = UrlHelper::cpUrl($currentPluginHandle.'/notifications/edit/'.$notification->id);
                 return $this->redirect($url);
             } else {
-                throw new Exception(Craft::t('sprout-base', 'Unable to create Notification Email'));
+                throw new Exception(Craft::t('sprout-base', 'Error creating Notification'));
             }
         }
+
+        Craft::$app->getView()->registerAssetBundle(NotificationAsset::class);
 
         if (!$notificationEmail) {
             $notificationEmail = SproutBase::$app->notifications->getNotificationEmailById($emailId);
         }
 
-        // Sort out Live Preview and Share button behaviors
+        $lists = [];
 
         $showPreviewBtn = false;
         $shareUrl = null;
 
         $isMobileBrowser = Craft::$app->getRequest()->isMobileBrowser(true);
 
-        $isSproutEmailInstalled = Craft::$app->plugins->getPlugin('sprout-email');
+        $isPluginActive = Craft::$app->plugins->getPlugin('sprout-email');
 
-        if (!$isMobileBrowser && $isSproutEmailInstalled) {
+        if (!$isMobileBrowser && $isPluginActive) {
             $showPreviewBtn = true;
 
             Craft::$app->getView()->registerJs(
@@ -132,23 +132,28 @@ class NotificationsController extends Controller
             }
         }
 
-        $tabs = $this->getFieldLayoutTabs($notificationEmail);
+        $tabs = $this->getModelTabs($notificationEmail);
 
-        $events = SproutBase::$app->notificationEvents->getNotificationEmailEvents($notificationEmail);
+        $currentPluginHandle = Craft::$app->request->getSegment(1);
+
+        $events = SproutBase::$app->notificationEvents->getEventDropdownOptions();
 
         if ($currentPluginHandle !== 'sprout-email') {
-            $events = SproutBase::$app->notificationEvents->getNotificationEmailEventsByPluginId($notificationEmail, $currentPluginHandle);
-        }
+            $eventObject = SproutBase::$app->notificationEvents->getEventsByPluginId($currentPluginHandle);
 
-        $lists = [];
+            $events = [
+                get_class($eventObject) => $eventObject
+            ];
+        }
 
         return $this->renderTemplate('sprout-base/sproutemail/notifications/_edit', [
             'notificationEmail' => $notificationEmail,
-            'events' => $events,
             'lists' => $lists,
-            'tabs' => $tabs,
+            'mailer' => $notificationEmail->getMailer(),
             'showPreviewBtn' => $showPreviewBtn,
             'shareUrl' => $shareUrl,
+            'tabs' => $tabs,
+            'events' => $events
         ]);
     }
 
@@ -195,6 +200,7 @@ class NotificationsController extends Controller
         }
 
         $fieldsLocation = Craft::$app->getRequest()->getBodyParam('fieldsLocation', 'fields');
+
         $notificationEmail->setFieldValuesFromRequest($fieldsLocation);
 
         $notificationEmail->title = $notificationEmail->subjectLine;
@@ -206,14 +212,12 @@ class NotificationsController extends Controller
         $event = SproutBase::$app->notificationEvents->getEventById($notificationEmail->eventId);
 
         if ($event) {
+            $options = $event->prepareOptions();
 
-            $eventSettings = Craft::$app->getRequest()->getBodyParam('eventSettings');
-            $eventSettings = $eventSettings[$notificationEmail->eventId];
-
-            $notificationEmail->settings = Json::encode($eventSettings);
+            $notificationEmail->options = $options;
 
             /**
-             * @var Plugin $plugin
+             * @var $plugin Plugin
              */
             $plugin = $event->getPlugin();
 

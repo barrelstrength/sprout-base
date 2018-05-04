@@ -29,7 +29,7 @@
     </div>
 </div>
 
-{% do view.registerAssetBundle("barrelstrength\\sproutbase\\web\\assets\\sproutfields\\phone\\PhoneFieldAsset") %}
+{% do view.registerAssetBundle("barrelstrength\\sproutbase\\sproutfields\\web\\assets\\phone\\PhoneFieldAsset") %}
 
 {% js %}
     new Craft.PhoneField("{{ namespaceInputId }}","{{ namespaceCountryId }}");

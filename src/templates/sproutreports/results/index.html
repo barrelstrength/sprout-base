@@ -103,14 +103,13 @@
                 resourcePath: '@sproutbase/web/assets/sproutreports/dist/images/icon.svg'
             }) }}
 
-
         {% endif %}
     </div>
 
 {% endblock %}
 
-{% do view.registerAssetBundle("barrelstrength\\sproutbase\\web\\assets\\sproutbase\\cp\\CpAsset") %}
-{% do view.registerAssetBundle("barrelstrength\\sproutbase\\web\\assets\\sproutreports\\SproutReportsAsset") %}
+{% do view.registerAssetBundle("barrelstrength\\sproutbase\\sproutbase\\web\\assets\\cp\\CpAsset") %}
+{% do view.registerAssetBundle("barrelstrength\\sproutbase\\sproutreports\\web\\assets\\base\\SproutReportsAsset") %}
 
 {% js %}
 

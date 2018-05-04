@@ -102,7 +102,7 @@ class SproutBase extends Module
 
         Craft::setAlias('@sproutbase', $this->getBasePath());
         Craft::setAlias('@sproutbaselib', dirname(__DIR__, 2).'/sprout-base/lib');
-        Craft::setAlias('@sproutbaseicons', $this->getBasePath().'/web/assets/sproutbase/icons');
+        Craft::setAlias('@sproutbaseicons', $this->getBasePath().'/sproutbase/web/assets/icons');
 
         // Register our base template path
         Event::on(View::class, View::EVENT_REGISTER_CP_TEMPLATE_ROOTS, function(RegisterTemplateRootsEvent $e) {
