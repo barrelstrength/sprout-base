@@ -3,8 +3,9 @@
 namespace barrelstrength\sproutbase\elements\sproutemail;
 
 use barrelstrength\sproutbase\contracts\sproutemail\BaseMailer;
+use barrelstrength\sproutbase\contracts\sproutemail\BaseNotificationEvent;
 use barrelstrength\sproutbase\elements\sproutemail\actions\DeleteNotification;
-use barrelstrength\sproutbase\integrations\emailtemplates\BasicTemplates;
+
 use barrelstrength\sproutbase\mailers\DefaultMailer;
 use barrelstrength\sproutbase\SproutBase;
 use barrelstrength\sproutbase\web\assets\sproutemail\NotificationAsset;
@@ -15,6 +16,7 @@ use Craft;
 use craft\behaviors\FieldLayoutBehavior;
 use craft\elements\db\ElementQueryInterface;
 use craft\helpers\UrlHelper;
+
 use yii\base\Exception;
 
 class NotificationEmail extends Element
@@ -63,7 +65,7 @@ class NotificationEmail extends Element
      *
      * @var string
      */
-    public $options;
+    public $settings;
 
     /**
      * A comma, delimited list of recipients
@@ -138,6 +140,11 @@ class NotificationEmail extends Element
     public $dateUpdated;
 
     /**
+     * @var BaseNotificationEvent
+     */
+    protected $event;
+
+    /**
      * @inheritdoc
      */
     public static function displayName(): string
@@ -175,14 +182,6 @@ class NotificationEmail extends Element
     public static function hasUris(): bool
     {
         return true;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public static function isLocalized(): bool
-    {
-        return false;
     }
 
     /**
@@ -337,7 +336,7 @@ class NotificationEmail extends Element
         $notificationEmailRecord->titleFormat = $this->titleFormat;
         $notificationEmailRecord->emailTemplateId = $this->emailTemplateId;
         $notificationEmailRecord->eventId = $this->eventId;
-        $notificationEmailRecord->options = $this->options;
+        $notificationEmailRecord->settings = $this->settings;
         $notificationEmailRecord->subjectLine = $this->subjectLine;
         $notificationEmailRecord->defaultBody = $this->defaultBody;
         $notificationEmailRecord->fieldLayoutId = $this->fieldLayoutId;
@@ -424,7 +423,7 @@ class NotificationEmail extends Element
         $extension = null;
 
         if ($type = Craft::$app->request->get('type')) {
-            $extension = in_array(strtolower($type), ['txt', 'text']) ? '.txt' : null;
+            $extension = in_array(strtolower($type), ['txt', 'text'], false) ? '.txt' : null;
         }
 
         $templateName = $this->template.$extension;
@@ -444,7 +443,7 @@ class NotificationEmail extends Element
 
         $event = SproutBase::$app->notificationEvents->getEventById($this->eventId);
 
-        $object = $event ? $event->getMockedParams() : null;
+        $object = $event ? $event->getMockEventObject() : null;
 
         return [
             'templates/render', [
@@ -485,13 +484,19 @@ class NotificationEmail extends Element
     }
 
     /**
-     * Returns a json-decoded array of options
+     * Get the Notification Event assigned to this Notification Email and apply it's settings
      *
-     * @return mixed
+     * @return BaseNotificationEvent
      */
-    public function getOptions()
+    public function getEvent()
     {
-        return json_decode($this->options, true);
+        $event = SproutBase::$app->notificationEvents->getEventById($this->eventId);
+
+        $settings = json_decode($this->settings, true);
+
+        $event->setAttributes($settings, false);
+
+        return $event;
     }
 
     /**

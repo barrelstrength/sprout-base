@@ -42,15 +42,15 @@ trait TemplateTrait
      *
      * @return array
      */
-    public function getModelTabs(Element $element)
+    public function getFieldLayoutTabs(Element $element)
     {
         $tabs = [];
 
-        if (count($element->getFieldLayout()) === 0) {
-            $modelTabs = $element->getFieldLayout()->getTabs();
+        if (count($element->getFieldLayout()) !== 0) {
+            $fieldLayoutTabs = $element->getFieldLayout()->getTabs();
 
-            if (!empty($modelTabs)) {
-                foreach ($modelTabs as $index => $tab) {
+            if (!empty($fieldLayoutTabs)) {
+                foreach ($fieldLayoutTabs as $index => $tab) {
                     // Do any of the fields on this tab have errors?
                     $hasErrors = false;
 

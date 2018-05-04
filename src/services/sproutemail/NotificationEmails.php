@@ -3,6 +3,7 @@
 namespace barrelstrength\sproutbase\services\sproutemail;
 
 use barrelstrength\sproutbase\base\TemplateTrait;
+
 use barrelstrength\sproutbase\elements\sproutemail\NotificationEmail;
 use barrelstrength\sproutbase\mailers\DefaultMailer;
 use barrelstrength\sproutbase\SproutBase;
@@ -264,14 +265,13 @@ class NotificationEmails extends Component
             return false;
         }
 
-        $options = json_decode($notificationEmail->options, true);
-
-        // Must pass email options for getMockedParams methods to use $this->options
-        $event->setOptions($options);
+        // @todo - move this to getEventById and refactor getEventById to pass necessary variables
+        $settings = json_decode($notificationEmail->settings, true);
+        $event = new $event($settings);
 
         try {
 
-            if (!$mailer->sendNotificationEmail($notificationEmail, $event->getMockedParams()))
+            if (!$mailer->sendNotificationEmail($notificationEmail, $event->getMockEventObject()))
             {
                 $customErrorMessage = SproutBase::$app->common->getErrors();
 
@@ -435,17 +435,6 @@ class NotificationEmails extends Component
             Craft::$app->end();
         }
 
-        $event->setOptions($notificationEmail->options);
-
-        $template = $notificationEmail->emailTemplateId;
-
-        if (empty($notificationEmail->emailTemplateId)) {
-            /**
-             * Get the templates path for the sprout base default notification template
-             */
-            $template = SproutBase::$app->sproutEmail->getEmailTemplate($notificationEmail);
-        }
-
         // The getBodyParam is for livePreviewNotification to update on change
         $subjectLine = Craft::$app->getRequest()->getBodyParam('subjectLine');
         if ($subjectLine) {
@@ -527,11 +516,7 @@ class NotificationEmails extends Component
             return $errors;
         }
 
-        $options = json_decode($notificationEmail->options, true);
-
-        $event->setOptions($options);
-
-        $mockObject = $event->getMockedParams();
+        $mockObject = $event->getMockEventObject();
 
         $this->getNotificationEmailMessage($notificationEmail, $mockObject);
 
@@ -579,9 +564,6 @@ class NotificationEmails extends Component
         // @todo - add override settings to Sprout Email
         $notificationEmail->fromName = $systemEmailSettings->fromName;
         $notificationEmail->fromEmail = $systemEmailSettings->fromEmail;
-
-        // Set default tab
-        $field = null;
 
         if ($this->saveNotification($notificationEmail)) {
 

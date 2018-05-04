@@ -12,22 +12,13 @@ use barrelstrength\sproutbase\elements\sproutemail\NotificationEmail;
 interface NotificationEmailSenderInterface
 {
     /**
-     * @todo - update these comments
+     * Gives a mailer the responsibility to send Notification Emails
+     * if they implement NotificationEmailSenderInterface
      *
      * @param NotificationEmail $notificationEmail
-     * @param null                          $object
+     * @param                   $object
      *
-     * @return mixed
-     * @internal param mixed|null $element The element/object involved when triggering the event
-     *
-     * @example
-     * 1. entries.saveEntry > $object = EntryModel
-     * 2. users.saveUser    > $object = UserModel
-     * 3. userSession.login > $object = 'username'
-     *
-     * @note
-     * In case 3 above, we actually get a string (username) back but we fetch a user model based on that
-     *
+     * @return bool
      */
     public function sendNotificationEmail(NotificationEmail $notificationEmail, $object = null);
 }

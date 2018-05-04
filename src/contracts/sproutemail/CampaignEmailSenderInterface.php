@@ -13,7 +13,8 @@ use barrelstrength\sproutemail\models\CampaignType;
 interface CampaignEmailSenderInterface
 {
     /**
-     * Sends a Campaign Email.
+     * Gives a mailer the responsibility to send Campaign Emails
+     * if they implement CampaignEmailSenderInterface
      *
      * @param CampaignEmail $campaignEmail
      * @param CampaignType  $campaignType
@@ -21,4 +22,13 @@ interface CampaignEmailSenderInterface
      * @return mixed
      */
     public function sendCampaignEmail(CampaignEmail $campaignEmail, CampaignType $campaignType);
+
+    /**
+     * @param CampaignEmail $campaignEmail
+     * @param CampaignType  $campaignType
+     * @param array         $emails
+     *
+     * @return null
+     */
+    public function sendTestCampaignEmail(CampaignEmail $campaignEmail, CampaignType $campaignType, array $emails = []);
 }
