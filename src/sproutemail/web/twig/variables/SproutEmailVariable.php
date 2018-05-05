@@ -1,51 +1,71 @@
 <?php
-/**
- * @link      https://sprout.barrelstrengthdesign.com/
- * @copyright Copyright (c) Barrel Strength Design LLC
- * @license   http://sprout.barrelstrengthdesign.com/license
- */
 
-namespace barrelstrength\sproutbase\sproutbase\web\twig\variables;
+namespace barrelstrength\sproutbase\sproutemail\web\twig\variables;
 
+use barrelstrength\sproutbase\SproutBase;
 use barrelstrength\sproutbase\sproutemail\elements\NotificationEmail;
 use barrelstrength\sproutbase\sproutemail\integrations\sproutemail\emailtemplates\BasicTemplates;
-use barrelstrength\sproutbase\SproutBase;
+use barrelstrength\sproutemail\SproutEmail;
 use Craft;
+use craft\helpers\UrlHelper;
 
-class SproutBaseVariable
+class SproutEmailVariable
 {
-    /**
-     * @return array
-     */
-    public function getAvailableEvents()
+    public function getCampaignMailers()
     {
-        return SproutBase::$app->notificationEvents->getNotificationEmailEventTypes();
+        return SproutBase::$app->mailers->getMailers();
+    }
+
+    public function getCampaignTypes()
+    {
+        return SproutEmail::$app->campaignTypes->getCampaignTypes();
+    }
+
+    public function getMailer($mailer)
+    {
+        return SproutBase::$app->mailers->getMailerByName($mailer);
     }
 
     /**
-     * @param $event
-     * @param $notificationEmail
+     * Returns the value of the displayDateScheduled general config setting
      *
-     * @return mixed
+     * @return mixed|null
+     * @throws \yii\base\InvalidConfigException
      */
-    public function prepareEventSettingsForHtml($event, $notificationEmail)
+    public function getDisplayDateScheduled()
     {
-        return SproutBase::$app->notificationEvents->prepareEventSettingsForHtml($event, $notificationEmail);
+        return SproutEmail::$app->getConfig('displayDateScheduled', false);
+    }
+
+    public function getCampaignEmailById($id)
+    {
+        return SproutEmail::$app->campaignEmails->getCampaignEmailById($id);
+    }
+
+    public function getSentEmailById($sentEmailId)
+    {
+        return Craft::$app->getElements()->getElementById($sentEmailId);
+    }
+
+    /**
+     * Returns a Campaign Email Share URL and Token
+     *
+     * @param $emailId
+     * @param $campaignTypeId
+     *
+     * @return array|string
+     */
+    public function getCampaignEmailShareUrl($emailId, $campaignTypeId)
+    {
+        return UrlHelper::actionUrl('sprout-email/campaign-email/share-campaign-email', [
+            'emailId' => $emailId,
+            'campaignTypeId' => $campaignTypeId
+        ]);
     }
 
     public function getNotificationEmailById($id)
     {
         return SproutBase::$app->notifications->getNotificationEmailById($id);
-    }
-
-    /**
-     * Return countries for Phone Field
-     *
-     * @return array
-     */
-    public function getCountries()
-    {
-        return SproutBase::$app->phone->getCountries();
     }
 
     /**

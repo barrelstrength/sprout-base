@@ -14,7 +14,8 @@ use barrelstrength\sproutbase\sproutemail\mailers\DefaultMailer;
 use barrelstrength\sproutbase\sproutbase\services\Template;
 
 use barrelstrength\sproutbase\sproutemail\services\Mailers;
-use barrelstrength\sproutbase\sproutbase\web\twig\variables\SproutBaseVariable;
+use barrelstrength\sproutbase\sproutfields\web\twig\variables\SproutFieldsVariable;
+use barrelstrength\sproutbase\sproutemail\web\twig\variables\SproutEmailVariable;
 use craft\web\Application;
 use craft\web\twig\variables\CraftVariable;
 use yii\base\Event;
@@ -120,7 +121,8 @@ class SproutBase extends Module
         // Register our Variables
         Event::on(CraftVariable::class, CraftVariable::EVENT_INIT, function(Event $event) {
             $variable = $event->sender;
-            $variable->set('sproutBase', SproutBaseVariable::class);
+            $variable->set('sproutEmail', SproutEmailVariable::class);
+            $variable->set('sproutFields', SproutFieldsVariable::class);
         });
 
         // Register Sprout Email Events
