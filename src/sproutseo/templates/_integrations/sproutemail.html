@@ -1,5 +1,5 @@
 {% import "_includes/forms" as forms %}
-{% import 'sprout-base/sproutbase/_includes/sproutcp' as sprout %}
+{% import 'sprout-base/_includes/sproutcp' as sprout %}
 {% do view.registerAssetBundle("barrelstrength\\sproutbase\\sproutbase\\web\\assets\\cp\\CpAsset") %}
 
 {% set boxBody %}
@@ -11,7 +11,7 @@
 {{ sprout.mediaBox({
     heading: "SEO-friendly Email Marketing"|t('sprout-base'),
     body: boxBody,
-    resourcePath: '@sproutbase/web/assets/sproutemail/dist/images/sproutemail-icon.svg'
+    resourcePath: '@sproutbase/sproutemail/web/assets/dist/images/sproutemail-icon.svg'
 }) }}
 
 

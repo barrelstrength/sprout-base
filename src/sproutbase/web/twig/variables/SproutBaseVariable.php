@@ -5,7 +5,7 @@
  * @license   http://sprout.barrelstrengthdesign.com/license
  */
 
-namespace barrelstrength\sproutbase\web\twig\variables;
+namespace barrelstrength\sproutbase\sproutbase\web\twig\variables;
 
 use barrelstrength\sproutbase\elements\sproutemail\NotificationEmail;
 use barrelstrength\sproutbase\integrations\emailtemplates\BasicTemplates;

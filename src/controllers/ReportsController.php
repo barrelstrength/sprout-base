@@ -71,7 +71,7 @@ class ReportsController extends Controller
             }
         }
 
-        return $this->renderTemplate('sprout-base/sproutreports/reports/index', [
+        return $this->renderTemplate('sprout-base-reports/reports/index', [
             'dataSources' => $dataSources,
             'groupId' => $groupId,
             'reports' => $reports,
@@ -123,7 +123,7 @@ class ReportsController extends Controller
             $this->getView()->registerAssetBundle(CpAsset::class);
 
             // @todo Hand off to the export service when a blank page and 404 issues are sorted out
-            return $this->renderTemplate('sprout-base/sproutreports/results/index', $variables);
+            return $this->renderTemplate('sprout-base-reports/results/index', $variables);
         }
 
         throw new \HttpException(404, Craft::t('sprout-base', 'Report not found.'));
@@ -169,7 +169,7 @@ class ReportsController extends Controller
             $groups = SproutBase::$app->reportGroups->getAllReportGroups();
         }
 
-        return $this->renderTemplate('sprout-base/sproutreports/reports/_edit', [
+        return $this->renderTemplate('sprout-base-reports/reports/_edit', [
             'report' => $reportElement,
             'dataSource' => $dataSource,
             'reportIndexUrl' => $reportIndexUrl,

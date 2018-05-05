@@ -396,7 +396,7 @@ class NotificationEmails extends Component
         $errors = $this->getNotificationErrors($notificationEmail, $errors);
 
         return Craft::$app->getView()->renderTemplate(
-            'sprout-base/sproutemail/_modals/prepare-email-snapshot',
+            'sprout-base-email/_modals/prepare-email-snapshot',
             [
                 'email' => $notificationEmail,
                 'recipients' => $recipients,

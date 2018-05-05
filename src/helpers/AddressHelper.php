@@ -765,7 +765,7 @@ class AddressHelper
 
         #Craft::$app->getView()->setTemplatesPath($addressPath);
 
-        $html = Craft::$app->view->renderTemplate('sprout-base/sproutfields/_fields/address/'.$template, $params);
+        $html = Craft::$app->view->renderTemplate('sprout-base-fields/_fields/address/'.$template, $params);
 
         #Craft::$app->getView()->setTemplatesPath($originalTemplatesPath);
 

@@ -14,7 +14,7 @@ use barrelstrength\sproutbase\mailers\DefaultMailer;
 use barrelstrength\sproutbase\services\sproutbase\Template;
 
 use barrelstrength\sproutbase\services\sproutemail\Mailers;
-use barrelstrength\sproutbase\web\twig\variables\SproutBaseVariable;
+use barrelstrength\sproutbase\sproutbase\web\twig\variables\SproutBaseVariable;
 use craft\web\Application;
 use craft\web\twig\variables\CraftVariable;
 use yii\base\Event;
@@ -83,7 +83,7 @@ class SproutBase extends Module
             $i18n->translations[$this->t9nCategory] = [
                 'class' => PhpMessageSource::class,
                 'sourceLanguage' => $this->sourceLanguage,
-                'basePath' => $this->getBasePath().DIRECTORY_SEPARATOR.'translations',
+                'basePath' => $this->getBasePath().DIRECTORY_SEPARATOR.'sproutbase/translations',
                 'allowOverrides' => true,
             ];
         }
@@ -106,7 +106,15 @@ class SproutBase extends Module
 
         // Register our base template path
         Event::on(View::class, View::EVENT_REGISTER_CP_TEMPLATE_ROOTS, function(RegisterTemplateRootsEvent $e) {
-            $e->roots['sprout-base'] = $this->getBasePath().DIRECTORY_SEPARATOR.'templates';
+            $e->roots['sprout-base'] = $this->getBasePath().DIRECTORY_SEPARATOR.'sproutbase/templates';
+            $e->roots['sprout-base-email'] = $this->getBasePath().DIRECTORY_SEPARATOR.'sproutemail/templates';
+            $e->roots['sprout-base-fields'] = $this->getBasePath().DIRECTORY_SEPARATOR.'sproutfields/templates';
+            $e->roots['sprout-base-forms'] = $this->getBasePath().DIRECTORY_SEPARATOR.'sproutforms/templates';
+            $e->roots['sprout-base-import'] = $this->getBasePath().DIRECTORY_SEPARATOR.'sproutimport/templates';
+            $e->roots['sprout-base-lists'] = $this->getBasePath().DIRECTORY_SEPARATOR.'sproutlists/templates';
+            $e->roots['sprout-base-notes'] = $this->getBasePath().DIRECTORY_SEPARATOR.'sproutnotes/templates';
+            $e->roots['sprout-base-reports'] = $this->getBasePath().DIRECTORY_SEPARATOR.'sproutreports/templates';
+            $e->roots['sprout-base-seo'] = $this->getBasePath().DIRECTORY_SEPARATOR.'sproutseo/templates';
         });
 
         // Register our Variables

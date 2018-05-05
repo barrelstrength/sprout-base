@@ -1,4 +1,4 @@
-{% extends "sprout-base/sproutemail/_layouts/elementindex" %}
+{% extends "sprout-base-email/_layouts/elementindex" %}
 {% set title = "Notification Email"|t('sprout-base') %}
 {% set elementType = 'barrelstrength\\sproutbase\\elements\\sproutemail\\NotificationEmail' %}
 
@@ -17,7 +17,7 @@
 
     {{ parent() }}
 
-    {% include "sprout-base/sproutemail/_modals/base" %}
+    {% include "sprout-base-email/_modals/base" %}
 
 {% endblock %}
 

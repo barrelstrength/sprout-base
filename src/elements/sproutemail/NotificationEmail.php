@@ -63,7 +63,7 @@ class NotificationEmail extends Element
      *
      * @var string
      */
-    public $options;
+    public $settings;
 
     /**
      * A comma, delimited list of recipients
@@ -267,7 +267,7 @@ class NotificationEmail extends Element
     public function getTableAttributeHtml(string $attribute): string
     {
         if ($attribute === 'send') {
-            return Craft::$app->getView()->renderTemplate('sprout-base/sproutemail/notifications/_partials/prepare-link', [
+            return Craft::$app->getView()->renderTemplate('sprout-base-email/notifications/_partials/prepare-link', [
                 'notification' => $this
             ]);
         }
@@ -282,7 +282,7 @@ class NotificationEmail extends Element
             }
             $pluginHandle = Craft::$app->request->getBodyParam('criteria.base') ?: 'sprout-email';
 
-            return Craft::$app->getView()->renderTemplate('sprout-base/sproutemail/notifications/_partials/preview-links', [
+            return Craft::$app->getView()->renderTemplate('sprout-base-email/notifications/_partials/preview-links', [
                 'email' => $this,
                 'pluginHandle' => $pluginHandle,
                 'shareUrl' => $shareUrl,
@@ -337,7 +337,7 @@ class NotificationEmail extends Element
         $notificationEmailRecord->titleFormat = $this->titleFormat;
         $notificationEmailRecord->emailTemplateId = $this->emailTemplateId;
         $notificationEmailRecord->eventId = $this->eventId;
-        $notificationEmailRecord->options = $this->options;
+        $notificationEmailRecord->settings = $this->settings;
         $notificationEmailRecord->subjectLine = $this->subjectLine;
         $notificationEmailRecord->defaultBody = $this->defaultBody;
         $notificationEmailRecord->fieldLayoutId = $this->fieldLayoutId;
@@ -491,7 +491,7 @@ class NotificationEmail extends Element
      */
     public function getOptions()
     {
-        return json_decode($this->options, true);
+        return json_decode($this->settings, true);
     }
 
     /**

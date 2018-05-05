@@ -137,7 +137,7 @@ class DefaultMailer extends BaseMailer implements NotificationEmailSenderInterfa
             $response['emailModel'] = $email;
 
             return Response::createModalResponse(
-                'sprout-base/sproutemail/_modals/response',
+                'sprout-base-email/_modals/response',
                 [
                     'email' => $campaignEmail,
                     'campaign' => $campaignType,
@@ -149,7 +149,7 @@ class DefaultMailer extends BaseMailer implements NotificationEmailSenderInterfa
             SproutBase::$app->common->addError('fail-campaign-email', $e->getMessage());
 
             return Response::createErrorModalResponse(
-                'sprout-base/sproutemail/_modals/response',
+                'sprout-base-email/_modals/response',
                 [
                     'email' => $campaignEmail,
                     'campaign' => $campaignType,
@@ -343,7 +343,7 @@ class DefaultMailer extends BaseMailer implements NotificationEmailSenderInterfa
             }
         }
 
-        return Craft::$app->getView()->renderTemplate('sprout-base/sproutemail/_mailers/defaultmailer/lists', [
+        return Craft::$app->getView()->renderTemplate('sprout-base-email/_mailers/defaultmailer/lists', [
             'options' => $options,
             'values' => $selected,
         ]);
@@ -432,8 +432,8 @@ class DefaultMailer extends BaseMailer implements NotificationEmailSenderInterfa
     }
 
     /**
-     * @param $email  Notification Email or Campaign Email Element
-     * @param $object $object defined by the custom event
+     * @param $email   The Notification Email or Campaign Email Element
+     * @param $object  The $object defined by the custom event
      *
      * @return array
      */

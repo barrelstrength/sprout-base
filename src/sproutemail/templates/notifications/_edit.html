@@ -1,6 +1,6 @@
-{% extends "sprout-base/sproutbase/_layouts/base" %}
+{% extends "sprout-base/_layouts/base" %}
 {% import "_includes/forms" as forms %}
-{% import "sprout-base/sproutfields/forms" as sproutFields %}
+{% import "sprout-base-fields/forms" as sproutFields %}
 
 {% if notificationEmail.id is null %}
     {% set notificationId = 'new' %}
@@ -96,7 +96,7 @@
     {% if namespace is not defined %}{% set namespace = 'fields' %}{% endif %}
 
     <div id="fields">
-        {% include "sprout-base/sproutemail/notifications/_partials/fields" %}
+        {% include "sprout-base-email/notifications/_partials/fields" %}
     </div>
 
 {% endblock %}
@@ -283,7 +283,7 @@
 {% endblock %}
 
 {% do view.registerAssetBundle("craft\\web\\assets\\fields\\FieldsAsset") %}
-{% do view.registerAssetBundle("barrelstrength\\sproutbase\\web\\assets\\sproutemail\\NotificationAsset") %}
+{% do view.registerAssetBundle("barrelstrength\\sproutbase\\sproutemail\\web\\assets\\base\\NotificationAsset") %}
 
 {% css %}
     .sprout-meta-heading h6 {
