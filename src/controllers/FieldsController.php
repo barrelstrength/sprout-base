@@ -8,6 +8,7 @@
 namespace barrelstrength\sproutbase\controllers;
 
 use Craft;
+use craft\base\Field;
 use craft\web\Controller as BaseController;
 
 use barrelstrength\sproutbase\SproutBase;
@@ -33,6 +34,8 @@ class FieldsController extends BaseController
 
         // Retrieve an Email Field, wherever it may be
         Craft::$app->content->fieldContext = $fieldContext;
+
+        /** @var Field $field */
         $field = Craft::$app->fields->getFieldByHandle($fieldHandle);
         Craft::$app->content->fieldContext = $oldFieldContext;
 
@@ -65,6 +68,8 @@ class FieldsController extends BaseController
 
         // Retrieve a URL Field, wherever it may be
         Craft::$app->content->fieldContext = $fieldContext;
+
+        /** @var Field $field */
         $field = Craft::$app->fields->getFieldByHandle($fieldHandle);
         Craft::$app->content->fieldContext = $oldFieldContext;
 
@@ -114,6 +119,8 @@ class FieldsController extends BaseController
         $fieldHandle = Craft::$app->getRequest()->getParam('fieldHandle');
 
         Craft::$app->content->fieldContext = $fieldContext;
+
+        /** @var Field $field */
         $field = Craft::$app->fields->getFieldByHandle($fieldHandle);
         Craft::$app->content->fieldContext = $oldFieldContext;
 

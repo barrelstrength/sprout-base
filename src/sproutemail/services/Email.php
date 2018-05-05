@@ -16,6 +16,7 @@ class Email extends Component
      * @param NotificationEmail|null $notificationEmail
      *
      * @return string
+     * @throws \ReflectionException
      * @throws \yii\base\Exception
      */
     public function getEmailTemplate(NotificationEmail $notificationEmail = null)

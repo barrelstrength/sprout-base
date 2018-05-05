@@ -3,6 +3,7 @@
 namespace barrelstrength\sproutbase\sproutemail\elements;
 
 use barrelstrength\sproutbase\sproutemail\contracts\BaseMailer;
+
 use barrelstrength\sproutbase\sproutemail\elements\actions\DeleteNotification;
 use barrelstrength\sproutbase\sproutemail\mailers\DefaultMailer;
 use barrelstrength\sproutbase\SproutBase;
@@ -16,6 +17,11 @@ use craft\elements\db\ElementQueryInterface;
 use craft\helpers\UrlHelper;
 use yii\base\Exception;
 
+/**
+ * Class NotificationEmail
+ *
+ * * @mixin FieldLayoutBehavior
+ */
 class NotificationEmail extends Element
 {
     // Email Status Constants
@@ -179,14 +185,6 @@ class NotificationEmail extends Element
     /**
      * @inheritdoc
      */
-    public static function isLocalized(): bool
-    {
-        return false;
-    }
-
-    /**
-     * @inheritdoc
-     */
     public static function hasStatuses(): bool
     {
         return true;
@@ -262,6 +260,9 @@ class NotificationEmail extends Element
 
     /**
      * @inheritdoc
+     *
+     * @throws Exception
+     * @throws \Twig_Error_Loader
      */
     public function getTableAttributeHtml(string $attribute): string
     {
@@ -358,7 +359,9 @@ class NotificationEmail extends Element
     }
 
     /**
-     * @inheritdoc
+     * @@inheritdoc
+     *
+     * @throws \yii\base\InvalidConfigException
      */
     public static function indexHtml(ElementQueryInterface $elementQuery, array $disabledElementIds = null, array $viewState, string $sourceKey = null, string $context = null, bool $includeContainer, bool $showCheckboxes): string
     {
@@ -385,7 +388,9 @@ class NotificationEmail extends Element
     }
 
     /**
-     * @inheritdoc
+     * @@inheritdoc
+     *
+     * @throws Exception
      */
     public function getUriFormat()
     {
@@ -400,6 +405,8 @@ class NotificationEmail extends Element
 
     /**
      * @inheritdoc
+     *
+     * @throws Exception
      */
     public function getUrl()
     {
@@ -412,6 +419,10 @@ class NotificationEmail extends Element
 
     /**
      * @inheritdoc
+     *
+     * @return array|mixed
+     * @throws Exception
+     * @throws \ReflectionException
      */
     public function route()
     {
@@ -423,7 +434,7 @@ class NotificationEmail extends Element
         $extension = null;
 
         if ($type = Craft::$app->request->get('type')) {
-            $extension = in_array(strtolower($type), ['txt', 'text']) ? '.txt' : null;
+            $extension = in_array(strtolower($type), ['txt', 'text'], false) ? '.txt' : null;
         }
 
         $templateName = $this->template.$extension;
@@ -443,7 +454,7 @@ class NotificationEmail extends Element
 
         $event = SproutBase::$app->notificationEvents->getEventById($this->eventId);
 
-        $object = $event ? $event->getMockedParams() : null;
+        $object = $event->getMockEventObject() ?? null;
 
         return [
             'templates/render', [
@@ -458,6 +469,8 @@ class NotificationEmail extends Element
 
     /**
      * @inheritdoc
+     *
+     * @throws \yii\base\InvalidConfigException
      */
     public function rules()
     {

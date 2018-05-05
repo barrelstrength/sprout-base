@@ -4,6 +4,7 @@ namespace barrelstrength\sproutbase\sproutemail\services;
 
 use barrelstrength\sproutbase\sproutbase\base\TemplateTrait;
 
+use barrelstrength\sproutbase\sproutemail\contracts\BaseNotificationEvent;
 use barrelstrength\sproutbase\sproutemail\elements\NotificationEmail;
 use barrelstrength\sproutbase\sproutemail\mailers\DefaultMailer;
 use barrelstrength\sproutbase\SproutBase;
@@ -118,22 +119,26 @@ class NotificationEmails extends Component
     }
 
     /**
-     * @param $emailId
+     * @param int $emailId
      *
-     * @return NotificationEmail|ElementInterface
+     * @return NotificationEmail|null
      */
-    public function getNotificationEmailById($emailId)
+    public function getNotificationEmailById(int $emailId)
     {
-        return Craft::$app->getElements()->getElementById($emailId);
+        /** @var NotificationEmail|null $notificationEmail */
+        $notificationEmail = Craft::$app->getElements()->getElementById($emailId);
+
+        return $notificationEmail;
     }
 
     /**
      * Prepares the NotificationEmail Element and returns a Message model.
      *
-     * @param         $notificationEmail
-     * @param null    $object
+     * @param NotificationEmail $notificationEmail
+     * @param null              $object
      *
      * @return Message
+     * @throws \ReflectionException
      * @throws \yii\base\Exception
      */
     public function getNotificationEmailMessage(NotificationEmail $notificationEmail, $object = null)
@@ -258,6 +263,7 @@ class NotificationEmails extends Component
      */
     public function sendTestNotificationEmail(NotificationEmail $notificationEmail)
     {
+        /** @var BaseNotificationEvent $event */
         $event = SproutBase::$app->notificationEvents->getEventById($notificationEmail->eventId);
         $mailer = SproutBase::$app->mailers->getMailerByName(DefaultMailer::class);
 
@@ -378,6 +384,7 @@ class NotificationEmails extends Component
      * @param NotificationEmail $notificationEmail
      *
      * @return string
+     * @throws \ReflectionException
      * @throws \Twig_Error_Loader
      * @throws \yii\base\Exception
      */
@@ -411,6 +418,7 @@ class NotificationEmails extends Component
      * @param      $notificationId
      * @param null $type
      *
+     * @throws \ReflectionException
      * @throws \yii\base\Exception
      * @throws \yii\base\ExitException
      */
@@ -485,6 +493,7 @@ class NotificationEmails extends Component
      * @param array $errors
      *
      * @return array
+     * @throws \ReflectionException
      * @throws \yii\base\Exception
      */
     public function getNotificationErrors($notificationEmail, array $errors = [])

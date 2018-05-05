@@ -8,6 +8,8 @@
 namespace barrelstrength\sproutbase\sproutfields\helpers;
 
 use barrelstrength\sproutbase\sproutfields\models\Address as AddressModel;
+use CommerceGuys\Addressing\Model\AddressFormat;
+use CommerceGuys\Addressing\Model\Subdivision;
 use Craft;
 use CommerceGuys\Addressing\Repository\AddressFormatRepository;
 use CommerceGuys\Addressing\Repository\SubdivisionRepository;
@@ -20,12 +22,12 @@ use craft\helpers\UrlHelper;
 class AddressHelper
 {
     /**
-     * @var
+     * @var AddressFormat
      */
     protected $addressObj;
 
     /**
-     * @var
+     * @var SubdivisionRepository
      */
     protected $subdivisonObj;
 
@@ -148,7 +150,7 @@ class AddressHelper
         $html = $this->renderTemplates('form', [
             'countryInput' => Template::raw($countryInput),
             'form' => Template::raw($form),
-            'actionUrl' => UrlHelper::getActionUrl('sprout-base/address/change-form')
+            'actionUrl' => UrlHelper::actionUrl('sprout-base/address/change-form')
         ]);
 
         return Template::raw($html);
@@ -294,6 +296,7 @@ class AddressHelper
 
             if (!empty($states)) {
 
+                /** @var Subdivision $state */
                 foreach ($states as $state) {
                     $stateName = $state->getName();
                     $options[$stateName] = $stateName;
@@ -759,15 +762,7 @@ class AddressHelper
      */
     public function renderTemplates($template, $params)
     {
-        $addressPath = Craft::getAlias('@sproutbase/templates/sproutfields/_fields/address/');
-
-        $originalTemplatesPath = Craft::$app->getView()->getTemplatesPath();
-
-        #Craft::$app->getView()->setTemplatesPath($addressPath);
-
         $html = Craft::$app->view->renderTemplate('sprout-base-fields/_fields/address/'.$template, $params);
-
-        #Craft::$app->getView()->setTemplatesPath($originalTemplatesPath);
 
         return $html;
     }

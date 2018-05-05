@@ -12,7 +12,7 @@ use craft\helpers\UrlHelper;
 use craft\web\Controller;
 use Craft;
 use craft\base\Plugin;
-use craft\web\View;
+
 use yii\base\Exception;
 use yii\web\HttpException;
 
@@ -261,6 +261,7 @@ class NotificationsController extends Controller
         // Set the field layout
         $fieldLayout = Craft::$app->getFields()->assembleLayoutFromPost();
         $fieldLayout->type = NotificationEmail::class;
+        
         $notificationEmail->setFieldLayout($fieldLayout);
 
         if (!SproutBase::$app->notifications->saveNotification($notificationEmail)) {
@@ -459,7 +460,8 @@ class NotificationsController extends Controller
      * @param null $notificationId
      * @param null $type
      *
-     * @throws \yii\base\Exception
+     * @throws Exception
+     * @throws \ReflectionException
      * @throws \yii\base\ExitException
      * @throws \yii\web\BadRequestHttpException
      */
@@ -473,7 +475,8 @@ class NotificationsController extends Controller
     /**
      * Renders a Notification Email for Live Preview
      *
-     * @throws \yii\base\Exception
+     * @throws Exception
+     * @throws \ReflectionException
      * @throws \yii\base\ExitException
      */
     public function actionLivePreviewNotificationEmail()

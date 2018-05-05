@@ -8,9 +8,11 @@
 namespace barrelstrength\sproutbase\sproutfields\services;
 
 use barrelstrength\sproutbase\SproutBase;
+use barrelstrength\sproutfields\fields\Predefined;
 use craft\base\Component;
 use craft\base\Element;
 use Craft;
+
 
 class Utilities extends Component
 {
@@ -80,13 +82,11 @@ class Utilities extends Component
     }
 
     /**
-     * @param $field
-     * @param $element
+     * @param Predefined $field
+     * @param Element $element
      */
     public function processPredefinedField($field, $element)
     {
-        $value = '';
-
         try {
             $value = Craft::$app->view->renderObjectTemplate($field->fieldFormat, $element);
 

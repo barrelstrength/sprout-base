@@ -13,6 +13,7 @@ use barrelstrength\sproutemail\models\CampaignType;
 use barrelstrength\sproutbase\sproutbase\models\Response;
 use barrelstrength\sproutbase\sproutemail\models\Recipient;
 use barrelstrength\sproutemail\SproutEmail;
+use barrelstrength\sproutlists\elements\Subscribers;
 use barrelstrength\sproutlists\integrations\sproutlists\SubscriberListType;
 use barrelstrength\sproutlists\records\Lists;
 use barrelstrength\sproutlists\SproutLists;
@@ -59,6 +60,9 @@ class DefaultMailer extends BaseMailer implements NotificationEmailSenderInterfa
 
     /**
      * @inheritdoc
+     *
+     * @throws Exception
+     * @throws \Twig_Error_Loader
      */
     public function getSettingsHtml(array $settings = [])
     {
@@ -74,6 +78,9 @@ class DefaultMailer extends BaseMailer implements NotificationEmailSenderInterfa
 
     /**
      * @inheritdoc
+     *
+     * @throws \Exception
+     * @throws \Twig_Error_Loader
      */
     public function sendCampaignEmail(CampaignEmail $campaignEmail, CampaignType $campaignType)
     {
@@ -161,6 +168,9 @@ class DefaultMailer extends BaseMailer implements NotificationEmailSenderInterfa
 
     /**
      * @inheritdoc
+     *
+     * @throws \Exception
+     * @throws \ReflectionException
      */
     public function sendNotificationEmail(NotificationEmail $notificationEmail, $object = null, $useMockData = false)
     {
@@ -255,6 +265,9 @@ class DefaultMailer extends BaseMailer implements NotificationEmailSenderInterfa
 
     /**
      * @inheritdoc
+     *
+     * @throws Exception
+     * @throws \Twig_Error_Loader
      */
     public function getPrepareModalHtml(CampaignEmail $campaignEmail, CampaignType $campaignType)
     {
@@ -288,6 +301,8 @@ class DefaultMailer extends BaseMailer implements NotificationEmailSenderInterfa
 
     /**
      * @inheritdoc
+     *
+     * @throws Exception
      */
     public function getLists()
     {
@@ -303,8 +318,11 @@ class DefaultMailer extends BaseMailer implements NotificationEmailSenderInterfa
 
     /**
      * @inheritdoc
+     *
+     * @throws Exception
+     * @throws \Twig_Error_Loader
      */
-    public function getListsHtml($values = [])
+    public function getListsHtml(array $values = [])
     {
         $selected = [];
         $options = [];
@@ -354,7 +372,8 @@ class DefaultMailer extends BaseMailer implements NotificationEmailSenderInterfa
      * @param                   $object
      * @param                   $useMockData
      *
-     * @return array
+     * @return array|mixed
+     * @throws \Exception
      */
     protected function prepareRecipients(NotificationEmail $notificationEmail, $object, $useMockData)
     {
@@ -407,6 +426,8 @@ class DefaultMailer extends BaseMailer implements NotificationEmailSenderInterfa
             if ($listRecords != null) {
                 foreach ($listRecords as $listRecord) {
                     if (!empty($listRecord->subscribers)) {
+
+                        /** @var Subscribers $subscriber */
                         foreach ($listRecord->subscribers as $subscriber) {
                             // Assign email as key to not repeat subscriber
                             $sproutListsRecipientsInfo[$subscriber->email] = $subscriber->getAttributes();
@@ -432,10 +453,14 @@ class DefaultMailer extends BaseMailer implements NotificationEmailSenderInterfa
     }
 
     /**
-     * @param $email   The Notification Email or Campaign Email Element
-     * @param $object  The $object defined by the custom event
+     * The $email is the Notification Email or Campaign Email Element
+     * The $object defined by the custom event
+     *
+     * @param NotificationEmail|CampaignEmail $email
+     * @param mixed $object
      *
      * @return array
+     * @throws \Exception
      */
     public function getRecipientsFromEmailElement($email, $object)
     {

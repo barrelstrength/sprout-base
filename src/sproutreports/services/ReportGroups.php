@@ -3,7 +3,7 @@
 namespace barrelstrength\sproutbase\sproutreports\services;
 
 use yii\base\Component;
-use barrelstrength\sproutbase\models\sproutreports\ReportGroup as ReportGroupModel;
+use barrelstrength\sproutbase\sproutreports\models\ReportGroup as ReportGroupModel;
 use barrelstrength\sproutbase\sproutreports\records\ReportGroup as ReportGroupRecord;
 use Craft;
 
@@ -15,7 +15,7 @@ use Craft;
 class ReportGroups extends Component
 {
     /**
-     * @param $group ReportGroupModel
+     * @param ReportGroupModel $group
      *
      * @return bool
      * @throws \Exception

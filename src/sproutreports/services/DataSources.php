@@ -9,7 +9,6 @@ namespace barrelstrength\sproutbase\sproutreports\services;
 
 use barrelstrength\sproutbase\sproutreports\contracts\BaseDataSource;
 use barrelstrength\sproutbase\sproutreports\models\DataSource as DataSourceModel;
-use barrelstrength\sproutbase\sproutreports\models\DataSource;
 use barrelstrength\sproutbase\sproutreports\records\DataSource as DataSourceRecord;
 use barrelstrength\sproutbase\SproutBase;
 
@@ -41,7 +40,7 @@ class DataSources extends Component
     public function getDataSourceById($dataSourceId)
     {
         /**
-         * @var $dataSourceRecord DataSource
+         * @var DataSourceRecord $dataSourceRecord
          */
         $dataSourceRecord = DataSourceRecord::find()->where([
             'id' => $dataSourceId
@@ -100,11 +99,13 @@ class DataSources extends Component
 
         foreach ($dataSourceClasses as $dataSourceClass) {
 
+            /** @var BaseDataSource $dataSource */
             $dataSource = new $dataSourceClass();
             
             $dataSourceModel = new DataSourceModel();
             $dataSourceModel->type = $dataSourceClass;
             $dataSourceModel->allowNew = 1;
+
             // Set all pre-built class to sprout-reports pluginId
             $dataSourceModel->pluginId = $dataSource->getPlugin()->handle ?? 'sprout-reports';
 

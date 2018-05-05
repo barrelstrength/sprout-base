@@ -69,7 +69,7 @@ class Mailers extends Component
      *
      * @return bool|null
      */
-    public function sendEmail(Message $message, $variables = [])
+    public function sendEmail(Message $message, array $variables = [])
     {
         $errorMessage = SproutBase::$app->common->getErrors();
 
@@ -158,7 +158,7 @@ class Mailers extends Component
      * @param Message $emailModel
      * @param array   $variables
      */
-    public function handleOnSendEmailErrorEvent($message, Message $emailModel, $variables = [])
+    public function handleOnSendEmailErrorEvent($message, Message $emailModel, array $variables = [])
     {
         $user = Craft::$app->getUsers()->getUserByUsernameOrEmail($emailModel->toEmail);
 

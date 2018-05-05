@@ -10,6 +10,7 @@ namespace barrelstrength\sproutbase\sproutimport\contracts;
 use barrelstrength\sproutimport\SproutImport;
 use Craft;
 use Faker\Generator;
+use yii\base\Model;
 
 /**
  * Class BaseImporter
@@ -177,7 +178,7 @@ abstract class BaseImporter
     }
 
     /**
-     * @param       $model
+     * @param Model $model
      * @param array $settings
      *
      * @return mixed

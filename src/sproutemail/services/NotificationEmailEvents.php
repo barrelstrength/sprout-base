@@ -8,7 +8,7 @@ use barrelstrength\sproutbase\sproutemail\events\NotificationEmailEvent;
 use barrelstrength\sproutbase\SproutBase;
 use craft\base\Component;
 use Craft;
-use craft\base\Plugin;
+
 use yii\base\Event;
 
 /**
@@ -156,7 +156,7 @@ class NotificationEmailEvents extends Component
      * @param BaseNotificationEvent $eventHandlerClass
      *
      * @return bool
-     * @throws \yii\base\ExitException
+     * @throws \Exception
      */
     public function handleDynamicEvent($notificationEmailEventClassName, Event $event, BaseNotificationEvent $eventHandlerClass)
     {
@@ -168,13 +168,14 @@ class NotificationEmailEvents extends Component
         $notificationEmails = SproutBase::$app->notifications->getAllNotificationEmails($notificationEmailEventClassName);
 
         if ($notificationEmails) {
-            /**
-             * @var NotificationEmail $notificationEmail
-             */
+
+            /** @var NotificationEmail $notificationEmail */
             foreach ($notificationEmails as $notificationEmail) {
 
                 // Add the Notification Event settings to the $eventHandlerClass
                 $settings = json_decode($notificationEmail->settings, true);
+
+                /** @var BaseNotificationEvent $eventHandlerClass */
                 $eventHandlerClass = new $eventHandlerClass($settings);
 
                 $eventHandlerClass->notificationEmail = $notificationEmail;

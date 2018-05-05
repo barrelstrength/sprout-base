@@ -14,8 +14,16 @@ use craft\base\Element;
 
 trait TemplateTrait
 {
+    /**
+     * @var string
+     */
     protected $templatesPath;
-    private $folderPath = null;
+
+    /**
+     * @var string
+     */
+    private $folderPath;
+
     /**
      * Returns whether or not a site template exists
      *
@@ -46,7 +54,7 @@ trait TemplateTrait
     {
         $tabs = [];
 
-        if (count($element->getFieldLayout()) !== 0) {
+        if ($element->getFieldLayout() !== null) {
             $fieldLayoutTabs = $element->getFieldLayout()->getTabs();
 
             if (!empty($fieldLayoutTabs)) {

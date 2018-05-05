@@ -12,6 +12,8 @@ class m180307_042132_craft3_schema_changes extends Migration
 {
     /**
      * @inheritdoc
+     *            
+     * @throws \yii\base\NotSupportedException
      */
     public function safeUp()
     {

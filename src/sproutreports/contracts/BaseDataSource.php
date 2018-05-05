@@ -12,6 +12,7 @@ use barrelstrength\sproutbase\SproutBase;
 use barrelstrength\sproutbase\sproutreports\elements\Report;
 use Craft;
 use barrelstrength\sproutbase\sproutreports\records\DataSource;
+use craft\base\Plugin;
 use craft\helpers\UrlHelper;
 
 /**
@@ -33,7 +34,7 @@ abstract class BaseDataSource
     protected $dataSourceSlug;
 
     /**
-     * @var string
+     * @var Plugin
      */
     protected $plugin;
 
@@ -67,7 +68,7 @@ abstract class BaseDataSource
     /**
      * Returns an instance of the plugin that created this Data Source
      *
-     * @return \craft\base\PluginInterface|null|string
+     * @return Plugin|null
      */
     final public function getPlugin()
     {

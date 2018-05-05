@@ -37,6 +37,10 @@ class Template extends Component
         }
 
         uasort($templates, function($a, $b) {
+            /**
+             * @var BaseEmailTemplates $a
+             * @var BaseEmailTemplates $b
+             */
             return $a->getName() <=> $b->getName();
         });
 
@@ -46,12 +50,16 @@ class Template extends Component
     /**
      * @param $templateId
      *
-     * @return null|BaseEmailTemplates
+     * @return BaseEmailTemplates|null
+     * @throws \ReflectionException
      */
     public function getTemplateById($templateId)
     {
         $templates = $this->getAllGlobalTemplates();
 
+        /**
+         * @var BaseEmailTemplates $template
+         */
         foreach ($templates as $template) {
             if ($template->getTemplateId() == $templateId) {
                 return $template;

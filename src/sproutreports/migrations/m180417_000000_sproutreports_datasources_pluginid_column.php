@@ -11,6 +11,8 @@ class m180417_000000_sproutreports_datasources_pluginid_column extends Migration
 {
     /**
      * @inheritdoc
+     *
+     * @throws \yii\base\NotSupportedException
      */
     public function safeUp()
     {

@@ -300,7 +300,7 @@ abstract class BaseElementImporter extends BaseImporter
     {
         $dates = ['postDate', 'dateCreated', 'dateUpdated'];
 
-        return in_array($handle, $dates);
+        return in_array($handle, $dates, false);
     }
 
     /**

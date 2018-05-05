@@ -391,7 +391,9 @@ class ReportsController extends Controller
             $report = SproutBase::$app->reports->getReport($reportId);
 
             if (!$report) {
-                $report->addError('id', Craft::t('Could not find a report with id {reportId}', compact('reportId')));
+                $report->addError('id', Craft::t('sprout-base', 'Could not find a report with id {reportId}', [
+                    'reportId' => $reportId
+                ]));
             }
         } else {
             $report = new Report();

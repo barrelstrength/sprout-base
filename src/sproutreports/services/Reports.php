@@ -61,12 +61,6 @@ class Reports extends Component
             return false;
         }
 
-        $reportRecord = new ReportRecord();
-
-        if ($report->id) {
-            $reportRecord = ReportRecord::findOne($report->id);
-        }
-
         $report->title = $report->name;
 
         $report->validate();
