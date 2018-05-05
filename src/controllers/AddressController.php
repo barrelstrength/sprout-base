@@ -7,9 +7,9 @@
 
 namespace barrelstrength\sproutbase\controllers;
 
-use barrelstrength\sproutbase\helpers\AddressHelper;
-use barrelstrength\sproutbase\models\sproutfields\Address as AddressModel;
-use barrelstrength\sproutbase\records\sproutfields\Address as AddressRecord;
+use barrelstrength\sproutbase\sproutfields\helpers\AddressHelper;
+use barrelstrength\sproutbase\sproutfields\models\Address as AddressModel;
+use barrelstrength\sproutbase\sproutfields\records\Address as AddressRecord;
 use barrelstrength\sproutbase\SproutBase;
 use craft\db\Query;
 use craft\web\Controller;

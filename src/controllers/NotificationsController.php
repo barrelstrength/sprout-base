@@ -2,9 +2,9 @@
 
 namespace barrelstrength\sproutbase\controllers;
 
-use barrelstrength\sproutbase\models\sproutbase\Response;
-use barrelstrength\sproutbase\base\TemplateTrait;
-use barrelstrength\sproutbase\elements\sproutemail\NotificationEmail;
+use barrelstrength\sproutbase\sproutbase\models\Response;
+use barrelstrength\sproutbase\sproutbase\base\TemplateTrait;
+use barrelstrength\sproutbase\sproutemail\elements\NotificationEmail;
 use barrelstrength\sproutbase\SproutBase;
 use craft\helpers\ElementHelper;
 use craft\helpers\Json;

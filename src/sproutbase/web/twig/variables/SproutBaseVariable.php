@@ -7,8 +7,8 @@
 
 namespace barrelstrength\sproutbase\sproutbase\web\twig\variables;
 
-use barrelstrength\sproutbase\elements\sproutemail\NotificationEmail;
-use barrelstrength\sproutbase\integrations\emailtemplates\BasicTemplates;
+use barrelstrength\sproutbase\sproutemail\elements\NotificationEmail;
+use barrelstrength\sproutbase\sproutemail\integrations\sproutemail\emailtemplates\BasicTemplates;
 use barrelstrength\sproutbase\SproutBase;
 use Craft;
 

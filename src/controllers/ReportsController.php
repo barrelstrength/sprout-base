@@ -7,10 +7,10 @@
 
 namespace barrelstrength\sproutbase\controllers;
 
-use barrelstrength\sproutbase\contracts\sproutreports\BaseDataSource;
-use barrelstrength\sproutbase\elements\sproutreports\Report;
-use barrelstrength\sproutbase\models\sproutreports\ReportGroup;
-use barrelstrength\sproutbase\records\sproutreports\Report as ReportRecord;
+use barrelstrength\sproutbase\sproutreports\contracts\BaseDataSource;
+use barrelstrength\sproutbase\sproutreports\elements\Report;
+use barrelstrength\sproutbase\sproutreports\models\ReportGroup;
+use barrelstrength\sproutbase\sproutreports\records\Report as ReportRecord;
 use barrelstrength\sproutbase\SproutBase;
 use Craft;
 

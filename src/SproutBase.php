@@ -7,13 +7,13 @@
 
 namespace barrelstrength\sproutbase;
 
-use barrelstrength\sproutbase\base\BaseSproutTrait;
-use barrelstrength\sproutbase\events\RegisterMailersEvent;
-use barrelstrength\sproutbase\integrations\emailtemplates\BasicTemplates;
-use barrelstrength\sproutbase\mailers\DefaultMailer;
-use barrelstrength\sproutbase\services\sproutbase\Template;
+use barrelstrength\sproutbase\sproutbase\base\BaseSproutTrait;
+use barrelstrength\sproutbase\sproutemail\events\RegisterMailersEvent;
+use barrelstrength\sproutbase\sproutemail\integrations\sproutemail\emailtemplates\BasicTemplates;
+use barrelstrength\sproutbase\sproutemail\mailers\DefaultMailer;
+use barrelstrength\sproutbase\sproutbase\services\Template;
 
-use barrelstrength\sproutbase\services\sproutemail\Mailers;
+use barrelstrength\sproutbase\sproutemail\services\Mailers;
 use barrelstrength\sproutbase\sproutbase\web\twig\variables\SproutBaseVariable;
 use craft\web\Application;
 use craft\web\twig\variables\CraftVariable;
@@ -25,7 +25,7 @@ use craft\helpers\ArrayHelper;
 use craft\i18n\PhpMessageSource;
 use Craft;
 
-use barrelstrength\sproutbase\services\App;
+use barrelstrength\sproutbase\sproutbase\services\App;
 
 class SproutBase extends Module
 {
