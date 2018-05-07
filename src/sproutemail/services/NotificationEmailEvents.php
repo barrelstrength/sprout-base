@@ -181,7 +181,7 @@ class NotificationEmailEvents extends Component
                 $eventHandlerClass->notificationEmail = $notificationEmail;
                 $eventHandlerClass->event = $event;
 
-                if ($eventHandlerClass->validate()) {
+                if ($eventHandlerClass->validateEvent()) {
 
                     $object = $eventHandlerClass->getEventObject();
 

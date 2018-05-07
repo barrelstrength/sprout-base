@@ -33,7 +33,7 @@ class Install extends Migration
                     'titleFormat' => $this->string(),
                     'emailTemplateId' => $this->string(),
                     'eventId' => $this->string(),
-                    'options' => $this->text(),
+                    'settings' => $this->text(),
                     'subjectLine' => $this->string()->notNull(),
                     'defaultBody' => $this->text(),
                     'recipients' => $this->string(),

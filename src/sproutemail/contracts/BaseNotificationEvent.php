@@ -156,6 +156,16 @@ abstract class BaseNotificationEvent extends SavableComponent
     }
 
     /**
+     * Additional validation for triggering events.
+     *
+     * @return bool
+     */
+    public function validateEvent()
+    {
+        return true;
+    }
+
+    /**
      * Determines if an event matches the conditions defined in it's settings for a Notification Email.
      *
      * If the Notification Email Event settings validate, the Notification Email will be triggered
