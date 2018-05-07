@@ -5,7 +5,7 @@
  * @license   http://sprout.barrelstrengthdesign.com/license
  */
 
-namespace barrelstrength\sproutbase\controllers;
+namespace barrelstrength\sproutbase\sproutreports\controllers;
 
 use barrelstrength\sproutbase\sproutreports\contracts\BaseDataSource;
 use barrelstrength\sproutbase\sproutreports\elements\Report;

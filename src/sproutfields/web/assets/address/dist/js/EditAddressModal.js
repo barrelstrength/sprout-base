@@ -59,7 +59,7 @@ Craft.SproutBase.EditAddressModal = Garnish.Modal.extend(
             var $parents = $target.parents('.sproutaddress-body');
 
             var self = this;
-            Craft.postActionRequest('sprout-base/address/change-form', {
+            Craft.postActionRequest('sprout-base/sprout-fields-address/change-form', {
                 countryCode: countryCode,
                 namespace: this.settings.namespace
             }, $.proxy(function(response) {

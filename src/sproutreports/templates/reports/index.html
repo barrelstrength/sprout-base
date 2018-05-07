@@ -106,7 +106,7 @@
                             {#</td>#}
 
                             {#<td class="sproutreports-reportactions">#}
-                                {#<a href="{{ actionUrl('sprout-base/reports/export-report', {reportId: report.id}) }}"#}
+                                {#<a href="{{ actionUrl('sprout-base/sprout-reports/export-report', {reportId: report.id}) }}"#}
                                    {#class="btn small">{{ "Download"|t('sprout-base') }}</a>#}
                             {#</td>#}
 
@@ -200,17 +200,17 @@
         {#newGroupButtonSelector: '#newgroupbtn',#}
         {#groupSettingsSelector: '#groupsettingsbtn',#}
 
-        {#newGroupAction: 'sprout-base/reports/save-group',#}
+        {#newGroupAction: 'sprout-base/sprout-reports/save-group',#}
         {#newGroupOnSuccessUrlBase: 'sprout-reports/reports',#}
         {#newGroupOnErrorMessage: Craft.t('sprout-base', 'Could not create the group:'),#}
 
-        {#renameGroupAction: 'sprout-base/reports/save-group',#}
+        {#renameGroupAction: 'sprout-base/sprout-reports/save-group',#}
         {#renameGroupOnSuccessMessage: Craft.t('sprout-base', 'Group renamed.'),#}
         {#renameGroupOnErrorMessage: Craft.t('sprout-base', 'Could not rename the group:'),#}
 
         {#promptForGroupNameMessage: Craft.t('sprout-base', 'What do you want to name your group?'),#}
 
-        {#deleteGroupAction: 'sprout-base/reports/delete-group',#}
+        {#deleteGroupAction: 'sprout-base/sprout-reports/delete-group',#}
         {#deleteGroupOnSuccessUrl: 'sprout-reports/reports',#}
         {#deleteGroupConfirmMessage: Craft.t('sprout-base', 'Are you sure you want to delete this group and all its reports?'),#}
         {#deleteGroupOnErrorMessage: Craft.t('sprout-base', 'Could not delete the group.'),#}

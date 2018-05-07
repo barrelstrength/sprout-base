@@ -8,14 +8,19 @@
 namespace barrelstrength\sproutbase;
 
 use barrelstrength\sproutbase\sproutbase\base\BaseSproutTrait;
+use barrelstrength\sproutbase\sproutbase\controllers\SettingsController;
+use barrelstrength\sproutbase\sproutemail\controllers\NotificationsController;
 use barrelstrength\sproutbase\sproutemail\events\RegisterMailersEvent;
 use barrelstrength\sproutbase\sproutemail\integrations\sproutemail\emailtemplates\BasicTemplates;
 use barrelstrength\sproutbase\sproutemail\mailers\DefaultMailer;
 use barrelstrength\sproutbase\sproutbase\services\Template;
 
 use barrelstrength\sproutbase\sproutemail\services\Mailers;
+use barrelstrength\sproutbase\sproutfields\controllers\AddressController;
+use barrelstrength\sproutbase\sproutfields\controllers\FieldsController;
 use barrelstrength\sproutbase\sproutfields\web\twig\variables\SproutFieldsVariable;
 use barrelstrength\sproutbase\sproutemail\web\twig\variables\SproutEmailVariable;
+use barrelstrength\sproutbase\sproutreports\controllers\ReportsController;
 use craft\web\Application;
 use craft\web\twig\variables\CraftVariable;
 use yii\base\Event;
@@ -58,6 +63,14 @@ class SproutBase extends Module
      * @var string The language that the module messages were written in
      */
     public $sourceLanguage = 'en-US';
+
+    public $controllerMap = [
+        'sprout-base-settings'=> SettingsController::class,
+        'sprout-email-notifications' => NotificationsController::class,
+        'sprout-fields' => FieldsController::class,
+        'sprout-fields-address' => AddressController::class,
+        'sprout-reports' => ReportsController::class
+    ];
 
     /**
      * @todo - Copied from craft/base/plugin. Ask P&T if this is the best approach

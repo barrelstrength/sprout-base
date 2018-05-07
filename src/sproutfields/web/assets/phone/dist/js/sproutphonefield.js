@@ -42,7 +42,7 @@
 
                 function validatePhoneNumber(currentPhoneField, phoneNumber, data) {
 
-                    Craft.postActionRequest('sprout-base/fields/phone-validate', data, function(response) {
+                    Craft.postActionRequest('sprout-base/sprout-fields/phone-validate', data, function(response) {
 
 
                         if (response) {

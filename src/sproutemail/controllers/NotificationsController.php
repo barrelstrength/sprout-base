@@ -1,6 +1,6 @@
 <?php
 
-namespace barrelstrength\sproutbase\controllers;
+namespace barrelstrength\sproutbase\sproutemail\controllers;
 
 use barrelstrength\sproutbase\sproutbase\models\Response;
 use barrelstrength\sproutbase\sproutbase\base\TemplateTrait;
@@ -115,7 +115,7 @@ class NotificationsController extends Controller
                         'fields' => '#subjectLine-field, #body-field, #title-field, #fields > div > div > .field',
                         'extraFields' => '#settings',
                         'previewUrl' => $notificationEmail->getUrl(),
-                        'previewAction' => 'sprout-base/notifications/live-preview-notification-email',
+                        'previewAction' => 'sprout-base/sprout-email-notifications/live-preview-notification-email',
                         'previewParams' => [
                             'notificationId' => $notificationEmail->id,
                         ]
@@ -124,7 +124,7 @@ class NotificationsController extends Controller
             );
 
             if ($notificationEmail->id && $notificationEmail->getUrl()) {
-                $shareUrl = UrlHelper::actionUrl('sprout-base/notifications/share-notification-email', [
+                $shareUrl = UrlHelper::actionUrl('sprout-base/sprout-email-notifications/share-notification-email', [
                     'notificationId' => $notificationEmail->id,
                 ]);
             }
@@ -444,7 +444,7 @@ class NotificationsController extends Controller
 
         // Create the token and redirect to the entry URL with the token in place
         $token = Craft::$app->getTokens()->createToken([
-                'sprout-base/notifications/view-shared-notification-email',
+                'sprout-base/sprout-email-notifications/view-shared-notification-email',
                 $params
             ]
         );

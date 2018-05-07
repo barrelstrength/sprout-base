@@ -52,7 +52,7 @@
         <button
                 {% if errors is defined and errors is not empty %} disabled style="opacity: 0.25;" {% endif %}
                 data-mailer="defaultmailer"
-                data-action="sprout-base/notifications/send-test-notification-email"
+                data-action="sprout-base/sprout-email-notifications/send-test-notification-email"
                 data-notification-id="{{ email.id }}"
                 class="btn submit actions">
             {{- "Send Test"|t('sprout-base') -}}
