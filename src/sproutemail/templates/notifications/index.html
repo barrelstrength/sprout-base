@@ -1,0 +1,40 @@
+{% extends "sprout-base-email/_layouts/elementindex" %}
+{% set title = "Notification Email"|t('sprout-base') %}
+{% set elementType = 'barrelstrength\\sproutbase\\sproutemail\\elements\\NotificationEmail' %}
+
+{% set currentPluginHandle = craft.app.request.getSegment(1) %}
+
+{% block actionButton %}
+    <div class="buttons">
+        <a class="btn submit add icon"
+           href="{{ url(currentPluginHandle ~ '/notifications/edit/new') }}">
+            {{ "New Notification"|t('sprout-base') }}
+        </a>
+    </div>
+{% endblock %}
+
+{% block content %}
+
+    {{ parent() }}
+
+    {% include "sprout-base-email/_modals/base" %}
+
+{% endblock %}
+
+{% block initJs %}
+    // Pass segment to the NotificationEmailQuery class to filter notification entries
+    var pluginHandle = {'base': '{{ craft.request.segment(1) }}'};
+    var criteria = Object.assign(Craft.defaultIndexCriteria, pluginHandle);
+
+    Craft.elementIndex = Craft.createElementIndex('{{ elementType|e("js") }}', $('#main'), {
+    context:        '{{ context }}',
+    storageKey:     'elementindex.{{ elementType }}',
+    criteria:       criteria,
+    hideSidebar:    '{{ hideSidebar ?? false }}'
+    });
+{% endblock %}
+
+
+
+
+

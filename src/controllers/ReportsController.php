@@ -7,10 +7,10 @@
 
 namespace barrelstrength\sproutbase\controllers;
 
-use barrelstrength\sproutbase\contracts\sproutreports\BaseDataSource;
-use barrelstrength\sproutbase\elements\sproutreports\Report;
-use barrelstrength\sproutbase\models\sproutreports\ReportGroup;
-use barrelstrength\sproutbase\records\sproutreports\Report as ReportRecord;
+use barrelstrength\sproutbase\sproutreports\contracts\BaseDataSource;
+use barrelstrength\sproutbase\sproutreports\elements\Report;
+use barrelstrength\sproutbase\sproutreports\models\ReportGroup;
+use barrelstrength\sproutbase\sproutreports\records\Report as ReportRecord;
 use barrelstrength\sproutbase\SproutBase;
 use Craft;
 
@@ -71,7 +71,7 @@ class ReportsController extends Controller
             }
         }
 
-        return $this->renderTemplate('sprout-base/sproutreports/reports/index', [
+        return $this->renderTemplate('sprout-base-reports/reports/index', [
             'dataSources' => $dataSources,
             'groupId' => $groupId,
             'reports' => $reports,
@@ -123,7 +123,7 @@ class ReportsController extends Controller
             $this->getView()->registerAssetBundle(CpAsset::class);
 
             // @todo Hand off to the export service when a blank page and 404 issues are sorted out
-            return $this->renderTemplate('sprout-base/sproutreports/results/index', $variables);
+            return $this->renderTemplate('sprout-base-reports/results/index', $variables);
         }
 
         throw new \HttpException(404, Craft::t('sprout-base', 'Report not found.'));
@@ -169,7 +169,7 @@ class ReportsController extends Controller
             $groups = SproutBase::$app->reportGroups->getAllReportGroups();
         }
 
-        return $this->renderTemplate('sprout-base/sproutreports/reports/_edit', [
+        return $this->renderTemplate('sprout-base-reports/reports/_edit', [
             'report' => $reportElement,
             'dataSource' => $dataSource,
             'reportIndexUrl' => $reportIndexUrl,
@@ -391,7 +391,9 @@ class ReportsController extends Controller
             $report = SproutBase::$app->reports->getReport($reportId);
 
             if (!$report) {
-                $report->addError('id', Craft::t('Could not find a report with id {reportId}', compact('reportId')));
+                $report->addError('id', Craft::t('sprout-base', 'Could not find a report with id {reportId}', [
+                    'reportId' => $reportId
+                ]));
             }
         } else {
             $report = new Report();

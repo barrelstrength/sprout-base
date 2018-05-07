@@ -1,0 +1,27 @@
+{% import "_includes/forms" as forms %}
+
+{{ forms.text({
+    id: id,
+    name: name,
+    value: value is defined ? value : '',
+    placeholder: placeholder ?? null,
+}) }}
+
+<span class="sprout-link-button {{ id }}">
+    <a href=""
+       target="_blank">{{ svg('@sproutbaseicons/arrow-circle-right.svg') }}</a>
+</span>
+
+{% do view.registerAssetBundle("barrelstrength\\sproutbase\\sproutfields\\web\\assets\\url\\UrlFieldAsset") %}
+
+{% js %}
+
+    (function() {
+    checkSproutUrlField("{{ namespaceInputId }}", "{{ id }}", "{{ name }}", "{{ fieldContext }}");
+    })();
+
+    $('input#{{ namespaceInputId }}').on('input', function () {
+    checkSproutUrlField("{{ namespaceInputId }}", "{{ id }}", "{{ name }}", "{{ fieldContext }}");
+    });
+
+{% endjs %}

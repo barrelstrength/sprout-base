@@ -95,7 +95,7 @@ class SettingsController extends BaseController
 
         $variables = array_merge($variables, Craft::$app->getUrlManager()->getRouteParams());
 
-        return $this->renderTemplate('sprout-base/sproutbase/_settings/index', $variables);
+        return $this->renderTemplate('sprout-base/_settings/index', $variables);
     }
 
     /**

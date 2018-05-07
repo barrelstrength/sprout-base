@@ -7,14 +7,15 @@
 
 namespace barrelstrength\sproutbase;
 
-use barrelstrength\sproutbase\base\BaseSproutTrait;
-use barrelstrength\sproutbase\events\RegisterMailersEvent;
-use barrelstrength\sproutbase\integrations\emailtemplates\BasicTemplates;
-use barrelstrength\sproutbase\mailers\DefaultMailer;
-use barrelstrength\sproutbase\services\sproutbase\Template;
+use barrelstrength\sproutbase\sproutbase\base\BaseSproutTrait;
+use barrelstrength\sproutbase\sproutemail\events\RegisterMailersEvent;
+use barrelstrength\sproutbase\sproutemail\integrations\sproutemail\emailtemplates\BasicTemplates;
+use barrelstrength\sproutbase\sproutemail\mailers\DefaultMailer;
+use barrelstrength\sproutbase\sproutbase\services\Template;
 
-use barrelstrength\sproutbase\services\sproutemail\Mailers;
-use barrelstrength\sproutbase\web\twig\variables\SproutBaseVariable;
+use barrelstrength\sproutbase\sproutemail\services\Mailers;
+use barrelstrength\sproutbase\sproutfields\web\twig\variables\SproutFieldsVariable;
+use barrelstrength\sproutbase\sproutemail\web\twig\variables\SproutEmailVariable;
 use craft\web\Application;
 use craft\web\twig\variables\CraftVariable;
 use yii\base\Event;
@@ -25,7 +26,7 @@ use craft\helpers\ArrayHelper;
 use craft\i18n\PhpMessageSource;
 use Craft;
 
-use barrelstrength\sproutbase\services\App;
+use barrelstrength\sproutbase\sproutbase\services\App;
 
 class SproutBase extends Module
 {
@@ -83,7 +84,7 @@ class SproutBase extends Module
             $i18n->translations[$this->t9nCategory] = [
                 'class' => PhpMessageSource::class,
                 'sourceLanguage' => $this->sourceLanguage,
-                'basePath' => $this->getBasePath().DIRECTORY_SEPARATOR.'translations',
+                'basePath' => $this->getBasePath().DIRECTORY_SEPARATOR.'sproutbase/translations',
                 'allowOverrides' => true,
             ];
         }
@@ -102,17 +103,26 @@ class SproutBase extends Module
 
         Craft::setAlias('@sproutbase', $this->getBasePath());
         Craft::setAlias('@sproutbaselib', dirname(__DIR__, 2).'/sprout-base/lib');
-        Craft::setAlias('@sproutbaseicons', $this->getBasePath().'/web/assets/sproutbase/icons');
+        Craft::setAlias('@sproutbaseicons', $this->getBasePath().'/sproutbase/web/assets/icons');
 
         // Register our base template path
         Event::on(View::class, View::EVENT_REGISTER_CP_TEMPLATE_ROOTS, function(RegisterTemplateRootsEvent $e) {
-            $e->roots['sprout-base'] = $this->getBasePath().DIRECTORY_SEPARATOR.'templates';
+            $e->roots['sprout-base'] = $this->getBasePath().DIRECTORY_SEPARATOR.'sproutbase/templates';
+            $e->roots['sprout-base-email'] = $this->getBasePath().DIRECTORY_SEPARATOR.'sproutemail/templates';
+            $e->roots['sprout-base-fields'] = $this->getBasePath().DIRECTORY_SEPARATOR.'sproutfields/templates';
+            $e->roots['sprout-base-forms'] = $this->getBasePath().DIRECTORY_SEPARATOR.'sproutforms/templates';
+            $e->roots['sprout-base-import'] = $this->getBasePath().DIRECTORY_SEPARATOR.'sproutimport/templates';
+            $e->roots['sprout-base-lists'] = $this->getBasePath().DIRECTORY_SEPARATOR.'sproutlists/templates';
+            $e->roots['sprout-base-notes'] = $this->getBasePath().DIRECTORY_SEPARATOR.'sproutnotes/templates';
+            $e->roots['sprout-base-reports'] = $this->getBasePath().DIRECTORY_SEPARATOR.'sproutreports/templates';
+            $e->roots['sprout-base-seo'] = $this->getBasePath().DIRECTORY_SEPARATOR.'sproutseo/templates';
         });
 
         // Register our Variables
         Event::on(CraftVariable::class, CraftVariable::EVENT_INIT, function(Event $event) {
             $variable = $event->sender;
-            $variable->set('sproutBase', SproutBaseVariable::class);
+            $variable->set('sproutEmail', SproutEmailVariable::class);
+            $variable->set('sproutFields', SproutFieldsVariable::class);
         });
 
         // Register Sprout Email Events

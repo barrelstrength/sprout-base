@@ -1,0 +1,8 @@
+{% import "sprout-base-fields/forms" as sproutFields %}
+
+{{ sproutFields.selectOther({
+    name: name,
+    options: genderOptions ,
+    value: value,
+    otherPlaceholderText: 'Custom Gender'|t('sprout-fields')
+}) }}
