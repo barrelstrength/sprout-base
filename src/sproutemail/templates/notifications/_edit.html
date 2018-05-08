@@ -72,7 +72,7 @@
                     <hr>
                     <ul>
                         <li><a class="formsubmit error"
-                               data-action="sprout-base/notifications/delete-notification-email"
+                               data-action="sprout-base/sprout-email-notifications/delete-notification-email"
                                data-confirm="{{ 'Are you sure you want to delete this notification email?'|t('sprout-base') }}"
                                data-redirect="{{ currentPluginHandle ~ "/notifications"|hash }}">{{ "Delete"|t('sprout-base') }}</a>
                         </li>
@@ -87,7 +87,7 @@
 {% block content %}
 
     <input type="hidden" name="action"
-           value="sprout-base/notifications/save-notification-email">
+           value="sprout-base/sprout-email-notifications/save-notification-email">
     {{ redirectInput(currentPluginHandle ~ '/notifications') }}
     {% if notificationEmail.id is not null %}
         <input type="hidden" name="emailId" value="{{ notificationEmail.id }}">

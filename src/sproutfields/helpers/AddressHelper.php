@@ -150,7 +150,7 @@ class AddressHelper
         $html = $this->renderTemplates('form', [
             'countryInput' => Template::raw($countryInput),
             'form' => Template::raw($form),
-            'actionUrl' => UrlHelper::actionUrl('sprout-base/address/change-form')
+            'actionUrl' => UrlHelper::actionUrl('sprout-base/sprout-fields-address/change-form')
         ]);
 
         return Template::raw($html);

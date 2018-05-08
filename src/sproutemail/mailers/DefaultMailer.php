@@ -322,7 +322,7 @@ class DefaultMailer extends BaseMailer implements NotificationEmailSenderInterfa
      * @throws Exception
      * @throws \Twig_Error_Loader
      */
-    public function getListsHtml(array $values = [])
+    public function getListsHtml($values = [])
     {
         $selected = [];
         $options = [];

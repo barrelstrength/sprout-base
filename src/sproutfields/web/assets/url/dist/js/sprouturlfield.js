@@ -19,7 +19,7 @@ function checkSproutUrlField(namespaceInputId, id, fieldHandle, fieldContext) {
         };
 
         // Query the controller so the regex validation is all done through PHP.
-        Craft.postActionRequest('sprout-base/fields/url-validate', data, function(response) {
+        Craft.postActionRequest('sprout-base/sprout-fields/url-validate', data, function(response) {
             if (response) {
                 $(sproutUrlButtonClass).addClass('fade');
                 $(sproutUrlButtonClass + ' a').attr("href", data.value);

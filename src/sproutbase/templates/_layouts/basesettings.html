@@ -6,7 +6,7 @@
 {% set settings = plugin.getSettings() %}
 {% set navItems = settings.getSettingsNavItems() %}
 {% set redirectUrl = navItems[selectedSidebarItem]['url'] ?? craft.request.url %}
-{% set actionUrl = navItems[selectedSidebarItem]['actionUrl'] ?? 'sprout-base/settings/save-settings' %}
+{% set actionUrl = navItems[selectedSidebarItem]['actionUrl'] ?? 'sprout-base/sprout-base-settings/save-settings' %}
 {% set settingsForm = navItems[selectedSidebarItem]['settingsForm'] ?? true %}
 {% set selectedSettingsInfo = attribute(navItems, selectedSidebarItem) %}
 {% set fullPageForm = true %}

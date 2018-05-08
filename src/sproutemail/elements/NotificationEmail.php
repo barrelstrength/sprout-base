@@ -276,7 +276,7 @@ class NotificationEmail extends Element
             $shareUrl = null;
 
             if ($this->id && $this->getUrl()) {
-                $shareUrl = UrlHelper::actionUrl('sprout-base/notifications/share-notification-email', [
+                $shareUrl = UrlHelper::actionUrl('sprout-base/sprout-email-notifications/share-notification-email', [
                     'notificationId' => $this->id,
                 ]);
             }
