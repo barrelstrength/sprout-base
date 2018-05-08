@@ -207,9 +207,13 @@ class NotificationsController extends Controller
         if ($event) {
 
             $eventSettings = Craft::$app->getRequest()->getBodyParam('eventSettings');
-            $eventSettings = $eventSettings[$notificationEmail->eventId];
 
-            $notificationEmail->settings = Json::encode($eventSettings);
+            if (isset($eventSettings[$notificationEmail->eventId])) {
+                $eventSettings = $eventSettings[$notificationEmail->eventId];
+
+                $notificationEmail->settings = Json::encode($eventSettings);
+            }
+
 
             /**
              * @var $plugin Plugin
