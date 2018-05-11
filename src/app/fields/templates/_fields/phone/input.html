@@ -1,0 +1,36 @@
+{% import "_includes/forms" as forms %}
+
+{% if limitToSingleCountry %}
+    <input type="hidden" name="{{ name }}[country]" value="{{ country }}">
+{% endif %}
+
+{% set countries = countries is defined and countries ? countries : craft.sproutFields.getCountries() %}
+
+<div class="sprout-phone-field compoundSelectText-wrapper">
+    <div class="compoundSelectText-dropdown">
+        {{ forms.select({
+            id: countryId,
+            name: name~'[country]',
+            options: countries,
+            value: country,
+            disabled: limitToSingleCountry == 1 ? true : false
+        }) }}
+    </div>
+    <div class="compoundSelectText-text">
+        {{ forms.text({
+            id: id,
+            name: name~'[phone]',
+            value: value is defined ? value : '',
+            placeholder: placeholder ?? null
+        }) }}
+        <span class="sprout-phone-button {{ id }}">
+            <a href="" target="_blank">{{ svg('@sproutbaseicons/phone.svg') }}</a>
+        </span>
+    </div>
+</div>
+
+{% do view.registerAssetBundle("barrelstrength\\sproutbase\\app\\fields\\web\\assets\\phone\\PhoneFieldAsset") %}
+
+{% js %}
+    new Craft.PhoneField("{{ namespaceInputId }}","{{ namespaceCountryId }}");
+{% endjs %}
