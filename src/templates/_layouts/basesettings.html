@@ -6,7 +6,7 @@
 {% set settings = plugin.getSettings() %}
 {% set navItems = settings.getSettingsNavItems() %}
 {% set redirectUrl = navItems[selectedSidebarItem]['url'] ?? craft.request.url %}
-{% set actionUrl = navItems[selectedSidebarItem]['actionUrl'] ?? 'sprout-base/sprout-base-settings/save-settings' %}
+{% set actionUrl = navItems[selectedSidebarItem]['actionUrl'] ?? 'sprout-base/settings/save-settings' %}
 {% set settingsForm = navItems[selectedSidebarItem]['settingsForm'] ?? true %}
 {% set selectedSettingsInfo = attribute(navItems, selectedSidebarItem) %}
 {% set fullPageForm = true %}
@@ -35,10 +35,16 @@
 {% block actionButton %}
     {% set fullForm = selectedSettingsInfo.fullPageForm ?? true %}
 
-    {% if fullForm and settingsForm == true %}
+    {% if fullForm and settingsForm == true and selectedSettingsInfo.actionTemplate %}
 
-        {% set actionTemplate = selectedSettingsInfo.actionTemplate ?? 'sprout-base/_includes/actionButton' %}
-        {% include actionTemplate %}
+        {% include selectedSettingsInfo.actionTemplate %}
+
+    {% else %}
+
+        <div class="buttons">
+            <input class="btn submit" type="submit"
+                   value="{{ 'Save'|t('sprout-base') }}">
+        </div>
 
     {% endif %}
 {% endblock %}

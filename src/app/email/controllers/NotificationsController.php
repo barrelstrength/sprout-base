@@ -2,8 +2,8 @@
 
 namespace barrelstrength\sproutbase\app\email\controllers;
 
-use barrelstrength\sproutbase\models\Response;
-use barrelstrength\sproutbase\base\TemplateTrait;
+use barrelstrength\sproutbase\app\email\models\Response;
+use barrelstrength\sproutbase\app\email\base\EmailTemplateTrait;
 use barrelstrength\sproutbase\app\email\elements\NotificationEmail;
 use barrelstrength\sproutbase\SproutBase;
 use craft\helpers\ElementHelper;
@@ -23,7 +23,7 @@ use yii\web\HttpException;
  */
 class NotificationsController extends Controller
 {
-    use TemplateTrait;
+    use EmailTemplateTrait;
 
     private $currentPluginHandle;
 
@@ -60,7 +60,7 @@ class NotificationsController extends Controller
             }
         }
 
-        return $this->renderTemplate('sprout-base-email/notifications/_fieldlayout', [
+        return $this->renderTemplate('sprout-base-email/notifications/_editFieldLayout', [
             'emailId' => $emailId,
             'notificationEmail' => $notificationEmail,
             'isNewNotificationEmail' => $isNewNotificationEmail
@@ -115,7 +115,7 @@ class NotificationsController extends Controller
                         'fields' => '#subjectLine-field, #body-field, #title-field, #fields > div > div > .field',
                         'extraFields' => '#settings',
                         'previewUrl' => $notificationEmail->getUrl(),
-                        'previewAction' => 'sprout-email-notifications/live-preview-notification-email',
+                        'previewAction' => 'sprout-base/notifications/live-preview-notification-email',
                         'previewParams' => [
                             'notificationId' => $notificationEmail->id,
                         ]
@@ -124,7 +124,7 @@ class NotificationsController extends Controller
             );
 
             if ($notificationEmail->id && $notificationEmail->getUrl()) {
-                $shareUrl = UrlHelper::actionUrl('sprout-email-notifications/share-notification-email', [
+                $shareUrl = UrlHelper::actionUrl('sprout-base/notifications/share-notification-email', [
                     'notificationId' => $notificationEmail->id,
                 ]);
             }
@@ -383,7 +383,7 @@ class NotificationsController extends Controller
 
         if (!SproutBase::$app->notifications->sendTestNotificationEmail($notificationEmail))
         {
-            $errorMessage = SproutBase::$app->common->formatErrors();
+            $errorMessage = SproutBase::$app->emailErrorHelper->formatErrors();
 
             return $this->asJson(
                 Response::createErrorModalResponse('sprout-base-email/_modals/response', [
@@ -448,7 +448,7 @@ class NotificationsController extends Controller
 
         // Create the token and redirect to the entry URL with the token in place
         $token = Craft::$app->getTokens()->createToken([
-                'sprout-base/sprout-email-notifications/view-shared-notification-email',
+                'sprout-base/notifications/view-shared-notification-email',
                 $params
             ]
         );

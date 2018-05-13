@@ -2,35 +2,35 @@
 
 namespace barrelstrength\sproutbase\app\import\services;
 
-use barrelstrength\sproutimport\integrations\sproutimport\elements\Asset;
-use barrelstrength\sproutimport\integrations\sproutimport\elements\Category;
-use barrelstrength\sproutimport\integrations\sproutimport\elements\Entry;
-use barrelstrength\sproutimport\integrations\sproutimport\elements\Tag;
-use barrelstrength\sproutimport\integrations\sproutimport\elements\User;
-use barrelstrength\sproutimport\integrations\sproutimport\fields\Assets;
-use barrelstrength\sproutimport\integrations\sproutimport\fields\Categories;
-use barrelstrength\sproutimport\integrations\sproutimport\fields\Checkboxes;
-use barrelstrength\sproutimport\integrations\sproutimport\fields\Color;
-use barrelstrength\sproutimport\integrations\sproutimport\fields\Date;
-use barrelstrength\sproutimport\integrations\sproutimport\fields\Dropdown;
-use barrelstrength\sproutimport\integrations\sproutimport\fields\Entries;
-use barrelstrength\sproutimport\integrations\sproutimport\fields\Lightswitch;
-use barrelstrength\sproutimport\integrations\sproutimport\fields\Matrix;
-use barrelstrength\sproutimport\integrations\sproutimport\fields\MultiSelect;
-use barrelstrength\sproutimport\integrations\sproutimport\fields\Number;
-use barrelstrength\sproutimport\integrations\sproutimport\fields\Email;
-use barrelstrength\sproutimport\integrations\sproutimport\fields\PlainText;
-use barrelstrength\sproutimport\integrations\sproutimport\fields\RadioButtons;
-use barrelstrength\sproutimport\integrations\sproutimport\fields\Redactor;
-use barrelstrength\sproutimport\integrations\sproutimport\fields\Table;
-use barrelstrength\sproutimport\integrations\sproutimport\fields\Tags;
-use barrelstrength\sproutimport\integrations\sproutimport\fields\Url;
-use barrelstrength\sproutimport\integrations\sproutimport\fields\Users;
-use barrelstrength\sproutimport\integrations\sproutimport\settings\Field;
-use barrelstrength\sproutimport\integrations\sproutimport\settings\Section;
-use barrelstrength\sproutimport\integrations\sproutimport\settings\Widget;
-use barrelstrength\sproutbase\app\import\contracts\BaseFieldImporter;
-use barrelstrength\sproutbase\app\import\contracts\BaseImporter;
+use barrelstrength\sproutimport\importers\elements\Asset;
+use barrelstrength\sproutimport\importers\elements\Category;
+use barrelstrength\sproutimport\importers\elements\Entry;
+use barrelstrength\sproutimport\importers\elements\Tag;
+use barrelstrength\sproutimport\importers\elements\User;
+use barrelstrength\sproutimport\importers\fields\Assets;
+use barrelstrength\sproutimport\importers\fields\Categories;
+use barrelstrength\sproutimport\importers\fields\Checkboxes;
+use barrelstrength\sproutimport\importers\fields\Color;
+use barrelstrength\sproutimport\importers\fields\Date;
+use barrelstrength\sproutimport\importers\fields\Dropdown;
+use barrelstrength\sproutimport\importers\fields\Entries;
+use barrelstrength\sproutimport\importers\fields\Lightswitch;
+use barrelstrength\sproutimport\importers\fields\Matrix;
+use barrelstrength\sproutimport\importers\fields\MultiSelect;
+use barrelstrength\sproutimport\importers\fields\Number;
+use barrelstrength\sproutimport\importers\fields\Email;
+use barrelstrength\sproutimport\importers\fields\PlainText;
+use barrelstrength\sproutimport\importers\fields\RadioButtons;
+use barrelstrength\sproutimport\importers\fields\Redactor;
+use barrelstrength\sproutimport\importers\fields\Table;
+use barrelstrength\sproutimport\importers\fields\Tags;
+use barrelstrength\sproutimport\importers\fields\Url;
+use barrelstrength\sproutimport\importers\fields\Users;
+use barrelstrength\sproutimport\importers\settings\Field;
+use barrelstrength\sproutimport\importers\settings\Section;
+use barrelstrength\sproutimport\importers\settings\Widget;
+use barrelstrength\sproutbase\app\import\base\FieldImporter;
+use barrelstrength\sproutbase\app\import\base\Importer;
 use barrelstrength\sproutimport\models\Seed as SeedModel;
 use barrelstrength\sproutimport\models\Weed;
 use barrelstrength\sproutimport\SproutImport;
@@ -117,12 +117,12 @@ class Importers extends Component
                 $importer = new $importerNamespace;
 
                 // Pluck any Field Importers for their own list
-                if ($importer && $importer instanceof BaseFieldImporter) {
+                if ($importer && $importer instanceof FieldImporter) {
                     $this->fieldImporters[$importerNamespace] = $importer;
                     continue;
                 }
 
-                if ($importer && $importer instanceof BaseImporter) {
+                if ($importer && $importer instanceof Importer) {
                     $this->importers[$importerNamespace] = $importer;
 
                     if ($importer->hasSeedGenerator()) {
@@ -134,24 +134,24 @@ class Importers extends Component
 
         uasort($this->importers, function($a, $b) {
             /**
-             * @var $a BaseImporter
-             * @var $b BaseImporter
+             * @var $a Importer
+             * @var $b Importer
              */
             return $a->getName() <=> $b->getName();
         });
 
         uasort($this->fieldImporters, function($a, $b) {
             /**
-             * @var $a BaseImporter
-             * @var $b BaseImporter
+             * @var $a Importer
+             * @var $b Importer
              */
             return $a->getName() <=> $b->getName();
         });
 
         uasort($this->seedImporters, function($a, $b) {
             /**
-             * @var $a BaseImporter
-             * @var $b BaseImporter
+             * @var $a Importer
+             * @var $b Importer
              */
             return $a->getName() <=> $b->getName();
         });
@@ -290,7 +290,7 @@ class Importers extends Component
 
         foreach ($rows as $row) {
             /**
-             * @var $importerClass BaseImporter
+             * @var $importerClass Importer
              */
             $importerClass = $this->getImporter($row);
 

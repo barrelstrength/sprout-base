@@ -7,7 +7,7 @@
 
 namespace barrelstrength\sproutbase\app\reports\services;
 
-use barrelstrength\sproutbase\app\reports\contracts\BaseDataSource;
+use barrelstrength\sproutbase\app\reports\base\DataSource;
 use barrelstrength\sproutbase\app\reports\models\DataSource as DataSourceModel;
 use barrelstrength\sproutbase\app\reports\records\DataSource as DataSourceRecord;
 use barrelstrength\sproutbase\SproutBase;
@@ -34,7 +34,7 @@ class DataSources extends Component
     /**
      * @param int $dataSourceId
      *
-     * @return BaseDataSource|null
+     * @return DataSource|null
      * @throws Exception
      */
     public function getDataSourceById($dataSourceId)
@@ -99,7 +99,7 @@ class DataSources extends Component
 
         foreach ($dataSourceClasses as $dataSourceClass) {
 
-            /** @var BaseDataSource $dataSource */
+            /** @var DataSource $dataSource */
             $dataSource = new $dataSourceClass();
             
             $dataSourceModel = new DataSourceModel();
@@ -190,8 +190,8 @@ class DataSources extends Component
 
         uasort($dataSources, function($a, $b) {
             /**
-             * @var $a BaseDataSource
-             * @var $b BaseDataSource
+             * @var $a DataSource
+             * @var $b DataSource
              */
             return $a->getName() <=> $b->getName();
         });

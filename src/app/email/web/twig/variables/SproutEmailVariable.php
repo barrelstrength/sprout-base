@@ -3,9 +3,9 @@
 namespace barrelstrength\sproutbase\app\email\web\twig\variables;
 
 use barrelstrength\sproutbase\SproutBase;
-use barrelstrength\sproutbase\app\email\contracts\BaseEmailTemplates;
+use barrelstrength\sproutbase\app\email\base\EmailTemplates;
 
-use barrelstrength\sproutbase\app\email\integrations\sproutemail\emailtemplates\BasicTemplates;
+use barrelstrength\sproutbase\app\email\emailtemplates\BasicTemplates;
 use barrelstrength\sproutemail\SproutEmail;
 use Craft;
 use craft\helpers\UrlHelper;
@@ -80,7 +80,7 @@ class SproutEmailVariable
     public function getEmailTemplateOptions($notificationEmail = null)
     {
         $defaultEmailTemplates = new BasicTemplates();
-        $templates = SproutBase::$app->template->getAllGlobalTemplates();
+        $templates = SproutBase::$app->sproutEmail->getAllEmailTemplates();
         $templateIds = [];
         $options = [
             [
@@ -92,7 +92,7 @@ class SproutEmailVariable
         /**
          * Build our options
          *
-         * @var BaseEmailTemplates $template
+         * @var EmailTemplates $template
          */
         foreach ($templates as $template) {
             $options[] = [

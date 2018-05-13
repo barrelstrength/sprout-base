@@ -1,0 +1,30 @@
+{% import "_includes/forms" as forms %}
+
+{{ forms.checkboxField({
+    label: "When user is created?"|t('sprout-email'),
+    name: "whenNew",
+    checked: event.whenNew
+}) }}
+
+{{ forms.checkboxField({
+    label: "When user is updated?"|t('sprout-email'),
+    name: "whenUpdated",
+    checked: event.whenUpdated
+}) }}
+
+{% if event.groups|length %}
+
+    {{ forms.checkboxSelectField({
+        label: "User Groups <span class='info'>Select which user groups will trigger the notification.</span>"|t('sprout-email'),
+        name: "userGroupIds",
+        options: event.groups,
+        values: event.userGroupIds,
+        errors: event is defined ? event.getErrors('userGroupIds') : null,
+        showAllOption: true
+    }) }}
+
+{% else %}
+
+    <p><em>{{ "Add a User Group to limit this event by User Group."|t('sprout-email') }}</em></p>
+
+{% endif %}

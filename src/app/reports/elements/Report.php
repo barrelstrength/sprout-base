@@ -8,7 +8,7 @@
 namespace barrelstrength\sproutbase\app\reports\elements;
 
 use barrelstrength\sproutbase\base\BaseSproutTrait;
-use barrelstrength\sproutbase\app\reports\contracts\BaseDataSource;
+use barrelstrength\sproutbase\app\reports\base\DataSource;
 use barrelstrength\sproutbase\SproutBase;
 use barrelstrength\sproutbase\app\reports\elements\db\ReportQuery;
 use barrelstrength\sproutbase\app\reports\records\Report as ReportRecord;
@@ -169,7 +169,7 @@ class Report extends Element
         }
 
         if ($attribute === 'download') {
-            return '<a href="'.UrlHelper::actionUrl('sprout-base/sprout-reports/export-report', ['reportId' => $this->id]).'" class="btn small">'.Craft::t('sprout-base', 'Download CSV').'</a>';
+            return '<a href="'.UrlHelper::actionUrl('sprout-base/reports/export-report', ['reportId' => $this->id]).'" class="btn small">'.Craft::t('sprout-base', 'Download CSV').'</a>';
         }
 
         if ($attribute === 'results') {
@@ -243,7 +243,7 @@ class Report extends Element
     }
 
     /**
-     * @return BaseDataSource
+     * @return DataSource
      * @throws \yii\base\Exception
      */
     public function getDataSource()

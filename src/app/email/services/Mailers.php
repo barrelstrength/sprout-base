@@ -2,9 +2,9 @@
 
 namespace barrelstrength\sproutbase\app\email\services;
 
-use barrelstrength\sproutbase\app\email\contracts\BaseMailer;
-use barrelstrength\sproutbase\app\email\contracts\CampaignEmailSenderInterface;
-use barrelstrength\sproutbase\app\email\contracts\NotificationEmailSenderInterface;
+use barrelstrength\sproutbase\app\email\base\Mailer;
+use barrelstrength\sproutbase\app\email\base\CampaignEmailSenderInterface;
+use barrelstrength\sproutbase\app\email\base\NotificationEmailSenderInterface;
 use barrelstrength\sproutbase\app\email\events\RegisterMailersEvent;
 use barrelstrength\sproutbase\SproutBase;
 use barrelstrength\sproutbase\app\email\events\RegisterSendEmailEvent;
@@ -52,7 +52,7 @@ class Mailers extends Component
     /**
      * @param string $name
      *
-     * @return BaseMailer|NotificationEmailSenderInterface|CampaignEmailSenderInterface|null
+     * @return Mailer|NotificationEmailSenderInterface|CampaignEmailSenderInterface|null
      * @internal param bool $includeMailersNotYetLoaded
      *
      */
@@ -71,11 +71,11 @@ class Mailers extends Component
      */
     public function sendEmail(Message $message, array $variables = [])
     {
-        $errorMessage = SproutBase::$app->common->getErrors();
+        $errorMessage = SproutBase::$app->emailErrorHelper->getErrors();
 
         if (!empty($errorMessage)) {
 
-            $errorMessage = SproutBase::$app->common->formatErrors();
+            $errorMessage = SproutBase::$app->emailErrorHelper->formatErrors();
 
             $this->handleOnSendEmailErrorEvent($errorMessage, $message, $variables);
 
@@ -99,7 +99,7 @@ class Mailers extends Component
 
             return $result;
         } catch (\Exception  $e) {
-            SproutBase::$app->common->addError($e->getMessage());
+            SproutBase::$app->emailErrorHelper->addError($e->getMessage());
         }
 
         return null;
@@ -190,7 +190,7 @@ class Mailers extends Component
 
         if (count($mailers)) {
             /**
-             * @var $mailer BaseMailer
+             * @var $mailer Mailer
              */
             foreach ($mailers as $mailer) {
                 $mailer->includeModalResources();

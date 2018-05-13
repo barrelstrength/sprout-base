@@ -7,6 +7,7 @@
 
 namespace barrelstrength\sproutbase\services;
 
+use barrelstrength\sproutbase\app\email\services\ErrorHelper;
 use barrelstrength\sproutbase\app\email\services\Mailers;
 use barrelstrength\sproutbase\app\email\services\NotificationEmailEvents;
 use barrelstrength\sproutbase\app\email\services\NotificationEmails;
@@ -20,7 +21,7 @@ use barrelstrength\sproutbase\app\fields\services\Url;
 use barrelstrength\sproutbase\app\fields\services\Phone;
 use barrelstrength\sproutbase\app\fields\services\RegularExpression;
 use barrelstrength\sproutbase\app\fields\services\Email;
-use barrelstrength\sproutbase\app\fields\services\EmailDropdown;
+
 use barrelstrength\sproutbase\app\fields\services\Address;
 use barrelstrength\sproutbase\app\import\services\Importers;
 use craft\base\Component;
@@ -31,12 +32,12 @@ class App extends Component
     /**
      * @var Address
      */
-    public $address;
+    public $addressField;
 
     /**
      * @var Phone
      */
-    public $phone;
+    public $phoneField;
 
     /**
      * @var Utilities
@@ -46,22 +47,17 @@ class App extends Component
     /**
      * @var Url
      */
-    public $url;
+    public $urlField;
 
     /**
      * @var Email
      */
-    public $email;
-
-    /**
-     * @var EmailDropdown
-     */
-    public $emailDropdown;
+    public $emailField;
 
     /**
      * @var RegularExpression
      */
-    public $regularExpression;
+    public $regularExpressionField;
 
     /**
      * @var Reports
@@ -114,14 +110,9 @@ class App extends Component
     public $themes;
 
     /**
-     * @var Common
+     * @var ErrorHelper
      */
-    public $common;
-
-    /**
-     * @var Template
-     */
-    public $template;
+    public $emailErrorHelper;
 
     /**
      * @var SproutEmail
@@ -140,16 +131,16 @@ class App extends Component
         $this->notifications = new NotificationEmails();
         $this->notificationEvents = new NotificationEmailEvents();
         $this->mailers = new Mailers();
+        $this->sproutEmail = new SproutEmail();
+        $this->emailErrorHelper = ErrorHelper::Instance();
 
         // Sprout Fields
-        $this->address = new Address();
-        $this->email = new Email();
-        $this->emailDropdown = new EmailDropdown();
-        $this->phone = new Phone();
-        $this->regularExpression = new RegularExpression();
-        $this->url = new Url();
+        $this->addressField = new Address();
+        $this->emailField = new Email();
+        $this->phoneField = new Phone();
+        $this->regularExpressionField = new RegularExpression();
+        $this->urlField = new Url();
         $this->utilities = new Utilities();
-        $this->common = Common::Instance();
 
         // Sprout Reports
         $this->reports = new Reports();
@@ -160,8 +151,5 @@ class App extends Component
         // Sprout Import
         $this->importers = new Importers();
         $this->themes = new Themes();
-
-        $this->template = new Template();
-        $this->sproutEmail = new SproutEmail();
     }
 }

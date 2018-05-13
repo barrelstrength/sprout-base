@@ -24,7 +24,7 @@
 
 {% block actionButton %}
 
-    <input type="hidden" name="action" value="sprout-base/sprout-reports/save-report">
+    <input type="hidden" name="action" value="sprout-base/reports/save-report">
 
     {{ redirectInput(reportIndexUrl) }}
 
@@ -48,7 +48,7 @@
                 {% if report.id is not null %}
                 <hr>
                 <ul>
-                    <li><a class="formsubmit error" data-action="sprout-base/sprout-reports/delete-report" data-confirm="{{ 'Are you sure you want to delete this report?'|t('sprout-base') }}" data-redirect="{{ reportIndexUrl|hash }}">{{ "Delete"|t('sprout-base') }}</a></li>
+                    <li><a class="formsubmit error" data-action="sprout-base/reports/delete-report" data-confirm="{{ 'Are you sure you want to delete this report?'|t('sprout-base') }}" data-redirect="{{ reportIndexUrl|hash }}">{{ "Delete"|t('sprout-base') }}</a></li>
                 </ul>
                 {% endif %}
             </div>

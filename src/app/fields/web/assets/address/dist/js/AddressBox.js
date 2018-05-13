@@ -99,7 +99,7 @@ if (typeof Craft.SproutBase === typeof undefined) {
 
             this._getAddressFormFields();
 
-            this.actionUrl = Craft.getActionUrl('sprout-base/sprout-fields-address/change-form');
+            this.actionUrl = Craft.getActionUrl('sprout-base/address/change-form');
         },
 
         editAddressBox: function(ev) {
@@ -160,7 +160,7 @@ if (typeof Craft.SproutBase === typeof undefined) {
             if (!$('.address-format').is(':hidden')) {
                 var data = {addressInfo: self.addressInfo};
 
-                Craft.postActionRequest('sprout-base/sprout-fields-address/query-address', data, $.proxy(function(response) {
+                Craft.postActionRequest('sprout-base/fields-address/query-address', data, $.proxy(function(response) {
                     if (response.result == true) {
                         var latitude = response.geo.latitude;
                         var longitude = response.geo.longitude;
@@ -188,7 +188,7 @@ if (typeof Craft.SproutBase === typeof undefined) {
             var defaultCountryCode = this.$addressBox.data('defaultcountrycode');
             var hideCountry = this.$addressBox.data('hidecountrydropdown');
 
-            Craft.postActionRequest('sprout-base/sprout-fields-address/get-address-form-fields', {
+            Craft.postActionRequest('sprout-base/fields-address/get-address-form-fields', {
                 addressInfoId: this.addressInfoId,
                 defaultCountryCode: defaultCountryCode,
                 hideCountry: hideCountry,
@@ -209,7 +209,7 @@ if (typeof Craft.SproutBase === typeof undefined) {
 
             var self = this;
 
-            Craft.postActionRequest('sprout-base/sprout-fields-address/get-address', data, $.proxy(function(response) {
+            Craft.postActionRequest('sprout-base/fields-address/get-address', data, $.proxy(function(response) {
                 if (response.result == true) {
 
                     this.$addressBox.find('.address-format').html(response.html);

@@ -7,13 +7,13 @@
 
 namespace barrelstrength\sproutbase;
 
+use barrelstrength\sproutbase\app\email\services\Email;
 use barrelstrength\sproutbase\base\BaseSproutTrait;
 use barrelstrength\sproutbase\controllers\SettingsController;
 use barrelstrength\sproutbase\app\email\controllers\NotificationsController;
 use barrelstrength\sproutbase\app\email\events\RegisterMailersEvent;
-use barrelstrength\sproutbase\app\email\integrations\sproutemail\emailtemplates\BasicTemplates;
+use barrelstrength\sproutbase\app\email\emailtemplates\BasicTemplates;
 use barrelstrength\sproutbase\app\email\mailers\DefaultMailer;
-use barrelstrength\sproutbase\services\Template;
 
 use barrelstrength\sproutbase\app\email\services\Mailers;
 use barrelstrength\sproutbase\app\fields\controllers\AddressController;
@@ -21,6 +21,8 @@ use barrelstrength\sproutbase\app\fields\controllers\FieldsController;
 use barrelstrength\sproutbase\app\fields\web\twig\variables\SproutFieldsVariable;
 use barrelstrength\sproutbase\app\email\web\twig\variables\SproutEmailVariable;
 use barrelstrength\sproutbase\app\reports\controllers\ReportsController;
+use barrelstrength\sproutbase\app\import\web\twig\variables\SproutImportVariable;
+use craft\events\RegisterComponentTypesEvent;
 use craft\web\Application;
 use craft\web\twig\variables\CraftVariable;
 use yii\base\Event;
@@ -64,12 +66,15 @@ class SproutBase extends Module
      */
     public $sourceLanguage = 'en-US';
 
+    /**
+     * @var array
+     */
     public $controllerMap = [
-        'sprout-base-settings'=> SettingsController::class,
-        'sprout-email-notifications' => NotificationsController::class,
-        'sprout-fields' => FieldsController::class,
-        'sprout-fields-address' => AddressController::class,
-        'sprout-reports' => ReportsController::class
+        'settings'=> SettingsController::class,
+        'notifications' => NotificationsController::class,
+        'fields' => FieldsController::class,
+        'fields-address' => AddressController::class,
+        'reports' => ReportsController::class
     ];
 
     /**
@@ -136,6 +141,7 @@ class SproutBase extends Module
             $variable = $event->sender;
             $variable->set('sproutEmail', SproutEmailVariable::class);
             $variable->set('sproutFields', SproutFieldsVariable::class);
+            $variable->set('sproutImport', SproutImportVariable::class);
         });
 
         // Register Sprout Email Events
@@ -149,7 +155,7 @@ class SproutBase extends Module
         });
 
         // Register Sprout Email Templates
-        Event::on(Template::class, Template::EVENT_REGISTER_EMAIL_TEMPLATES, function(Event $event) {
+        Event::on(Email::class, Email::EVENT_REGISTER_EMAIL_TEMPLATES, function(RegisterComponentTypesEvent $event) {
             $event->types[] = BasicTemplates::class;
         });
     }

@@ -45,7 +45,7 @@ class FieldsController extends BaseController
             return $this->asJson(false);
         }
 
-        if (!SproutBase::$app->email->validate($value, $field, $elementId)) {
+        if (!SproutBase::$app->emailField->validate($value, $field, $elementId)) {
             return $this->asJson(false);
         }
 
@@ -78,7 +78,7 @@ class FieldsController extends BaseController
             return $this->asJson(false);
         }
 
-        if (!SproutBase::$app->url->validate($value, $field)) {
+        if (!SproutBase::$app->urlField->validate($value, $field)) {
             return $this->asJson(false);
         }
 
@@ -97,7 +97,7 @@ class FieldsController extends BaseController
         $phone = Craft::$app->getRequest()->getParam('phone');
         $country = Craft::$app->getRequest()->getParam('country');
 
-        if (!SproutBase::$app->phone->validate($phone, $country)) {
+        if (!SproutBase::$app->phoneField->validate($phone, $country)) {
             return $this->asJson(false);
         }
 
@@ -124,7 +124,7 @@ class FieldsController extends BaseController
         $field = Craft::$app->fields->getFieldByHandle($fieldHandle);
         Craft::$app->content->fieldContext = $oldFieldContext;
 
-        if (!SproutBase::$app->regularExpression->validate($value, $field)) {
+        if (!SproutBase::$app->regularExpressionField->validate($value, $field)) {
             return $this->asJson(false);
         }
 

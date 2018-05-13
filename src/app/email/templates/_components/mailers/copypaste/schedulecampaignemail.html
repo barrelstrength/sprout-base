@@ -1,0 +1,82 @@
+{% import "_includes/forms" as forms %}
+
+<div class="body">
+
+    <h1>{{ "Copy & Paste"|t('sprout-email') }}</h1>
+
+    {% set dateScheduled = craft.sproutEmail.getDisplayDateScheduled(email) %}
+
+    {% if dateScheduled is not empty %}
+        <div style="float:left; margin-bottom: 20px;">
+            <strong>{{ "Date Scheduled"|t('sprout-email') }}
+                :</strong> {{ dateScheduled|date("F jS Y \\a\\t g:ia") }}
+        </div>
+        <div style="clear: both"></div>
+    {% endif %}
+
+    <div style="position:relative;">
+        <div style="float:left;">
+            <strong>{{ "HTML Content"|t('sprout-email') }}</strong></div>
+
+        <div style="float:right;margin:-2px 0 5px;">
+            <a href="#" class="btnSelectAll btn small formsubmit"
+               data-clipboard-target-id="html-content"
+               data-success-message="{{ 'HTML content copied to your clipboard.'|t('sprout-email') }}"
+               title="{{ 'Select HTML Content'|t('sprout-email') }}">
+                {{ "Select HTML"|t('sprout-email') }}
+            </a>
+        </div>
+    </div>
+
+    <div>
+        {{ forms.textarea({
+            id: "html-content",
+            name: "html",
+            value: html,
+            rows: 5,
+            class: "code textfield",
+            autofocus: true,
+        }) }}
+    </div>
+
+    <div style="position:relative;margin-top:30px;">
+        <div style="float:left;">
+            <strong>{{ "Text Content"|t('sprout-email') }}</strong></div>
+
+        <div style="float:right;margin:-2px 0 5px;">
+            <a href="#" class="btnSelectAll btn small formsubmit"
+               data-clipboard-target-id="text-content"
+               data-success-message="{{ 'Text content copied to your clipboard.'|t('sprout-email') }}"
+               title="{{ 'Select Text Content'|t('sprout-email') }}">
+                {{ "Select Text"|t('sprout-email') }}
+            </a>
+        </div>
+    </div>
+
+    <div>
+        {{ forms.textarea({
+            id: "text-content",
+            name: "text",
+            value: text,
+            rows: 5,
+            class: "code textfield",
+        }) }}
+    </div>
+
+</div>
+
+<div class="footer">
+
+    <div class="buttons left">
+        <button id="close" class="btn">{{ "Cancel"|t('sprout-email') }}</button>
+    </div>
+    <div class="buttons right actions">
+        <button
+                data-action="sprout-email/copy-paste/mark-sent"
+                data-email-id="{{ email.id }}"
+                class="btn submit">
+            {{ "Mark as Sent"|t('sprout-email') }}
+        </button>
+    </div>
+
+</div>

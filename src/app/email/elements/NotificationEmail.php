@@ -2,7 +2,7 @@
 
 namespace barrelstrength\sproutbase\app\email\elements;
 
-use barrelstrength\sproutbase\app\email\contracts\BaseMailer;
+use barrelstrength\sproutbase\app\email\base\Mailer;
 
 use barrelstrength\sproutbase\app\email\elements\actions\DeleteNotification;
 use barrelstrength\sproutbase\app\email\mailers\DefaultMailer;
@@ -267,7 +267,7 @@ class NotificationEmail extends Element
     public function getTableAttributeHtml(string $attribute): string
     {
         if ($attribute === 'send') {
-            return Craft::$app->getView()->renderTemplate('sprout-base-email/notifications/_partials/prepare-link', [
+            return Craft::$app->getView()->renderTemplate('sprout-base-email/_components/elementindex/NotificationEmail/prepare-link', [
                 'notification' => $this
             ]);
         }
@@ -276,13 +276,13 @@ class NotificationEmail extends Element
             $shareUrl = null;
 
             if ($this->id && $this->getUrl()) {
-                $shareUrl = UrlHelper::actionUrl('sprout-base/sprout-email-notifications/share-notification-email', [
+                $shareUrl = UrlHelper::actionUrl('sprout-base/notifications/share-notification-email', [
                     'notificationId' => $this->id,
                 ]);
             }
             $pluginHandle = Craft::$app->request->getBodyParam('criteria.base') ?: 'sprout-email';
 
-            return Craft::$app->getView()->renderTemplate('sprout-base-email/notifications/_partials/preview-links', [
+            return Craft::$app->getView()->renderTemplate('sprout-base-email/_components/elementindex/NotificationEmail/preview-links', [
                 'email' => $this,
                 'pluginHandle' => $pluginHandle,
                 'shareUrl' => $shareUrl,
@@ -447,7 +447,7 @@ class NotificationEmail extends Element
 
         if (!Craft::$app->getView()->doesTemplateExist($templateName)) {
 
-            SproutBase::$app->common->addError(Craft::t('sprout-base', "The template '{templateName}' could not be found", [
+            SproutBase::$app->emailErrorHelper->addError(Craft::t('sprout-base', "The template '{templateName}' could not be found", [
                 'templateName' => $templateName
             ]));
         }
@@ -511,7 +511,7 @@ class NotificationEmail extends Element
      *
      * The Email Service provide can be update via Craft's Email Settings
      *
-     * @return BaseMailer
+     * @return Mailer
      */
     public function getMailer()
     {

@@ -1,0 +1,43 @@
+{% import "_includes/forms" as forms %}
+
+{% set title = 'Mailers' %}
+
+{% set mailers = craft.sproutEmail.getCampaignMailers() %}
+
+{% set mailerTableHtml %}
+
+    {% for mailer in mailers %}
+
+        {% if loop.first %}
+            <table id="mailers" class="data fullwidth">
+            <thead>
+            <th>{{ "Mailer"|t('sprout-email') }}</th>
+            <th>{{ "Settings"|t('sprout-email') }}</th>
+            <th>{{ "Description"|t('sprout-email') }}</th>
+            </thead>
+        {% endif %}
+
+        <tr>
+            <td>
+                {{ mailer.getName() }}
+            </td>
+            <td>
+                {% if mailer.getCpSettingsUrl() != null %}
+                    <a href="{{ mailer.getCpSettingsUrl() }}"
+                       title="{{ mailer.getName() }}">{{ "Settings"|t('sprout-email') }}</a>
+                {% endif %}
+            </td>
+            <td>{{ mailer.getDescription()|md }}</td>
+        </tr>
+
+        {% if loop.last %}
+            </table>
+        {% endif %}
+
+    {% endfor %}
+
+{% endset %}
+
+{% if mailerTableHtml is defined %}
+    {{ mailerTableHtml }}
+{% endif %}

@@ -2,8 +2,8 @@
 
 namespace barrelstrength\sproutbase\app\import\services;
 
-use barrelstrength\sproutimport\integrations\sproutimport\themes\SimpleTheme;
-use barrelstrength\sproutbase\app\import\contracts\BaseTheme;
+use barrelstrength\sproutimport\themes\SimpleTheme;
+use barrelstrength\sproutbase\app\import\base\Theme;
 use craft\base\Component;
 use craft\events\RegisterComponentTypesEvent;
 
@@ -42,8 +42,8 @@ class Themes extends Component
 
         uasort($this->themes, function($a, $b) {
             /**
-             * @var $a BaseTheme
-             * @var $b BaseTheme
+             * @var $a Theme
+             * @var $b Theme
              */
             return $a->getName() <=> $b->getName();
         });

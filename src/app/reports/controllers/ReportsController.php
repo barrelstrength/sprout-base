@@ -7,7 +7,7 @@
 
 namespace barrelstrength\sproutbase\app\reports\controllers;
 
-use barrelstrength\sproutbase\app\reports\contracts\BaseDataSource;
+use barrelstrength\sproutbase\app\reports\base\DataSource;
 use barrelstrength\sproutbase\app\reports\elements\Report;
 use barrelstrength\sproutbase\app\reports\models\ReportGroup;
 use barrelstrength\sproutbase\app\reports\records\Report as ReportRecord;
@@ -60,7 +60,7 @@ class ReportsController extends Controller
 
         foreach ($dataSources as $dataSource) {
             /**
-             * @var $dataSource BaseDataSource
+             * @var $dataSource DataSource
              */
             // Make sure we ignore the allowNew setting if we're displaying a Reports integration
             if ($dataSource AND (bool)$dataSource->allowNew() OR $reportContext === 'sprout-integration') {

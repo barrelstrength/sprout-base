@@ -1,60 +1,42 @@
-{% extends "sprout-base/_layouts/base" %}
-{% import "_includes/forms" as forms %}
+{% from "_includes/forms" import textField %}
+{% from "_includes/forms" import textareaField %}
 
-{% set title = "Edit Notification"|t('sprout-base') %}
+{{ textField({
+    label: "Subject Line"|t('sprout-base'),
+    id: 'subjectLine',
+    name: 'subjectLine',
+    value: notificationEmail.subjectLine,
+    errors:  notificationEmail is defined ? notificationEmail.getErrors('subjectLine') : null,
+    first: true,
+    autofocus: true,
+    required: true,
+    maxlength: 255
+}) }}
 
-{% set currentPluginHandle = craft.app.request.getSegment(1) %}
-{% set crumbs = [
-    { label: "Notifications", url: url(currentPluginHandle ~ '/notifications') },
-] %}
+{% set tabs = notificationEmail.getFieldLayout().getTabs() %}
 
-{% set fullPageForm = true %}
-{% set saveShortcutRedirect = url(currentPluginHandle ~ '/settings/notifications/edit/{id}') %}
+{% if tabs|length %}
 
-{% if notificationEmail['id'] %}
-    {% set notificationEmailId = notificationEmail['id'] %}
+    {% for tab in notificationEmail.getFieldLayout().getTabs() %}
+        <div id="tab{{ loop.index }}"{% if not loop.first %} class="hidden"{% endif %}>
+            {% include "_includes/fields" with {
+                fields:  tab.getFields(),
+                element: notificationEmail,
+                static:  static is defined ? static : false
+            } only %}
+        </div>
+    {% endfor %}
+
 {% else %}
-    {% set notificationEmailId = '{id}' %}
+
+    {{ textareaField({
+        label: "Body"|t('sprout-base'),
+        id: 'defaultBody',
+        name: 'defaultBody',
+        value: notificationEmail.defaultBody,
+        errors:  notificationEmail is defined ? notificationEmail.getErrors('defaultBody') : null,
+        autofocus: true,
+        rows: 15
+    }) }}
+
 {% endif %}
-
-{% block actionButton %}
-
-<div class="buttons">
-    <div class="btngroup">
-        <input class="btn submit" type="submit" value="{{ 'Save'|t('sprout-base') }}">
-
-        {% if notificationEmail['id'] is defined %}
-
-            {% set dataSaveEditRedirect = cpUrl(currentPluginHandle ~ '/notifications/edit/' ~ notificationEmailId) %}
-
-            <div class="btn submit menubtn"></div>
-            <div class="menu">
-                <ul>
-                    <li><a class="formsubmit"
-                           data-redirect="{{ craft.request.url|hash }}"
-                           title="{{ 'Save and continue editing'|t('sprout-base') }}">{{ 'Save and continue editing'|t('sprout-base') }} <span
-                                    class="shortcut">⌘S</span></a>
-                    </li>
-                </ul>
-            </div>
-
-        {% endif %}
-    </div>
-</div>
-
-{% endblock %}
-
-{% set content %}
-
-    <input type="hidden" name="action"
-       value="sprout-base/sprout-email-notifications/save-notification-email-settings">
-    {{ redirectInput(currentPluginHandle ~ '/notifications/edit/' ~ notificationEmailId) }}
-
-    <input type="hidden" name="emailId" value="{{ emailId }}">
-    <input type="hidden" name="mailer" value="defaultmailer">
-
-    {% include "_includes/fieldlayoutdesigner" with {
-        fieldLayout: notificationEmail.getFieldLayout()
-    } only %}
-
-{% endset %}

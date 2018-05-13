@@ -52,8 +52,6 @@ class UninstallHelper
      * others that may or may not be installed, we need to make sure we don't
      * uninstall anything that another plugin may depend on.
      *
-     * @todo - refactor, verbose
-     *
      * @return null
      */
     public function buildUninstallChecklist()
@@ -104,5 +102,7 @@ class UninstallHelper
 //
 //             Run the uninstall method of that class
 //        }
+
+        return true;
     }
 }

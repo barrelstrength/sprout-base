@@ -2,19 +2,19 @@
 
 namespace barrelstrength\sproutbase\app\email\mailers;
 
-use barrelstrength\sproutbase\base\TemplateTrait;
-use barrelstrength\sproutbase\app\email\contracts\BaseMailer;
-use barrelstrength\sproutbase\app\email\contracts\NotificationEmailSenderInterface;
+use barrelstrength\sproutbase\app\email\base\EmailTemplateTrait;
+use barrelstrength\sproutbase\app\email\base\Mailer;
+use barrelstrength\sproutbase\app\email\base\NotificationEmailSenderInterface;
 use barrelstrength\sproutbase\app\email\models\Message;
 use barrelstrength\sproutbase\SproutBase;
 use barrelstrength\sproutemail\elements\CampaignEmail;
 use barrelstrength\sproutbase\app\email\elements\NotificationEmail;
 use barrelstrength\sproutemail\models\CampaignType;
-use barrelstrength\sproutbase\models\Response;
+use barrelstrength\sproutbase\app\email\models\Response;
 use barrelstrength\sproutbase\app\email\models\Recipient;
 use barrelstrength\sproutemail\SproutEmail;
 use barrelstrength\sproutlists\elements\Subscribers;
-use barrelstrength\sproutlists\integrations\sproutlists\SubscriberListType;
+use barrelstrength\sproutlists\listtypes\SubscriberListType;
 use barrelstrength\sproutlists\records\Lists;
 use barrelstrength\sproutlists\SproutLists;
 use craft\helpers\Json;
@@ -25,9 +25,9 @@ use yii\base\Exception;
 use yii\base\InvalidArgumentException;
 
 
-class DefaultMailer extends BaseMailer implements NotificationEmailSenderInterface
+class DefaultMailer extends Mailer implements NotificationEmailSenderInterface
 {
-    use TemplateTrait;
+    use EmailTemplateTrait;
 
     /**
      * @var
@@ -69,7 +69,7 @@ class DefaultMailer extends BaseMailer implements NotificationEmailSenderInterfa
         /** @noinspection NullCoalescingOperatorCanBeUsedInspection */
         $settings = isset($settings['settings']) ? $settings['settings'] : $this->getSettings();
 
-        $html = Craft::$app->getView()->renderTemplate('sprout-base/_integrations/mailers/defaultmailer/settings', [
+        $html = Craft::$app->getView()->renderTemplate('sprout-base/_integrations/sproutemail/mailers/defaultmailer/settings', [
             'settings' => $settings
         ]);
 
@@ -153,7 +153,7 @@ class DefaultMailer extends BaseMailer implements NotificationEmailSenderInterfa
                 ]
             );
         } catch (Exception $e) {
-            SproutBase::$app->common->addError('fail-campaign-email', $e->getMessage());
+            SproutBase::$app->emailErrorHelper->addError('fail-campaign-email', $e->getMessage());
 
             return Response::createErrorModalResponse(
                 'sprout-base-email/_modals/response',
@@ -182,7 +182,7 @@ class DefaultMailer extends BaseMailer implements NotificationEmailSenderInterfa
         $recipients = $this->prepareRecipients($notificationEmail, $object, $useMockData);
 
         if (empty($recipients)) {
-            SproutBase::$app->common->addError('no-recipients', Craft::t('sprout-base', 'No recipients found.'));
+            SproutBase::$app->emailErrorHelper->addError('no-recipients', Craft::t('sprout-base', 'No recipients found.'));
         }
 
         $template = SproutBase::$app->sproutEmail->getEmailTemplate($notificationEmail);
@@ -200,14 +200,14 @@ class DefaultMailer extends BaseMailer implements NotificationEmailSenderInterfa
         $body = $message->renderedBody;
         $htmlBody = $message->renderedHtmlBody;
 
-        $templateErrors = SproutBase::$app->common->getErrors();
+        $templateErrors = SproutBase::$app->emailErrorHelper->getErrors();
 
         SproutBase::error($templateErrors);
 
         if (empty($templateErrors) && (empty($body) || empty($htmlBody))) {
             $message = Craft::t('sprout-base', 'Email Text or HTML template cannot be blank. Check template setting.');
 
-            SproutBase::$app->common->addError('blank-template', $message);
+            SproutBase::$app->emailErrorHelper->addError('blank-template', $message);
         }
 
         $processedRecipients = [];
@@ -251,7 +251,7 @@ class DefaultMailer extends BaseMailer implements NotificationEmailSenderInterfa
                     return false;
                 }
             } catch (\Exception $e) {
-                SproutBase::$app->common->addError('fail-send-email', $e->getMessage());
+                SproutBase::$app->emailErrorHelper->addError('fail-send-email', $e->getMessage());
             }
         }
 
@@ -283,7 +283,7 @@ class DefaultMailer extends BaseMailer implements NotificationEmailSenderInterfa
 
         $errors = $this->getErrors($campaignEmail, $campaignType, $errors);
 
-        return Craft::$app->getView()->renderTemplate('sprout-email/_modals/campaigns/prepareEmailSnapshot', [
+        return Craft::$app->getView()->renderTemplate('sprout-base-email/_modals/campaigns/prepareEmailSnapshot', [
             'campaignEmail' => $campaignEmail,
             'campaignType' => $campaignType,
             'recipients' => $recipients,
@@ -361,7 +361,7 @@ class DefaultMailer extends BaseMailer implements NotificationEmailSenderInterfa
             }
         }
 
-        return Craft::$app->getView()->renderTemplate('sprout-base-email/_mailers/defaultmailer/lists', [
+        return Craft::$app->getView()->renderTemplate('sprout-base-email/_components/mailers/defaultmailer/lists', [
             'options' => $options,
             'values' => $selected,
         ]);

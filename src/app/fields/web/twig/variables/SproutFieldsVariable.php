@@ -18,6 +18,6 @@ class SproutFieldsVariable
      */
     public function getCountries()
     {
-        return SproutBase::$app->phone->getCountries();
+        return SproutBase::$app->phoneField->getCountries();
     }
 }

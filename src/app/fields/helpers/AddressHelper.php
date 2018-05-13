@@ -150,7 +150,7 @@ class AddressHelper
         $html = $this->renderTemplates('form', [
             'countryInput' => Template::raw($countryInput),
             'form' => Template::raw($form),
-            'actionUrl' => UrlHelper::actionUrl('sprout-base/sprout-fields-address/change-form')
+            'actionUrl' => UrlHelper::actionUrl('sprout-base/fields-address/change-form')
         ]);
 
         return Template::raw($html);
@@ -762,7 +762,7 @@ class AddressHelper
      */
     public function renderTemplates($template, $params)
     {
-        $html = Craft::$app->view->renderTemplate('sprout-base-fields/_fields/address/'.$template, $params);
+        $html = Craft::$app->view->renderTemplate('sprout-base-fields/_components/fields/formfields/address/'.$template, $params);
 
         return $html;
     }

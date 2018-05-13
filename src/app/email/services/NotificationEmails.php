@@ -2,14 +2,14 @@
 
 namespace barrelstrength\sproutbase\app\email\services;
 
-use barrelstrength\sproutbase\base\TemplateTrait;
+use barrelstrength\sproutbase\app\email\base\EmailTemplateTrait;
 
-use barrelstrength\sproutbase\app\email\contracts\BaseNotificationEvent;
+use barrelstrength\sproutbase\app\email\base\NotificationEvent;
 use barrelstrength\sproutbase\app\email\elements\NotificationEmail;
 use barrelstrength\sproutbase\app\email\mailers\DefaultMailer;
 use barrelstrength\sproutbase\SproutBase;
 use barrelstrength\sproutbase\app\email\models\Message;
-use barrelstrength\sproutbase\models\Response;
+use barrelstrength\sproutbase\app\email\models\Response;
 use barrelstrength\sproutbase\app\email\records\NotificationEmail as NotificationEmailRecord;
 use craft\base\Component;
 use Craft;
@@ -27,7 +27,7 @@ use yii\web\NotFoundHttpException;
  */
 class NotificationEmails extends Component
 {
-    use TemplateTrait;
+    use EmailTemplateTrait;
 
     /**
      * @param NotificationEmail $notificationEmail
@@ -263,7 +263,7 @@ class NotificationEmails extends Component
      */
     public function sendTestNotificationEmail(NotificationEmail $notificationEmail)
     {
-        /** @var BaseNotificationEvent $event */
+        /** @var NotificationEvent $event */
         $event = SproutBase::$app->notificationEvents->getEventById($notificationEmail->eventId);
         $mailer = SproutBase::$app->mailers->getMailerByName(DefaultMailer::class);
 
@@ -279,7 +279,7 @@ class NotificationEmails extends Component
 
             if (!$mailer->sendNotificationEmail($notificationEmail, $event->getMockEventObject()))
             {
-                $customErrorMessage = SproutBase::$app->common->getErrors();
+                $customErrorMessage = SproutBase::$app->emailErrorHelper->getErrors();
 
                 if (!empty($customErrorMessage)) {
                     $message = $customErrorMessage;
@@ -287,7 +287,7 @@ class NotificationEmails extends Component
                     $message = Craft::t('sprout-base', 'Unable to send Test Notification Email.');
                 }
 
-                SproutBase::$app->common->addError('notification-mock-error', $message);
+                SproutBase::$app->emailErrorHelper->addError('notification-mock-error', $message);
 
                 SproutBase::error($message);
 
@@ -297,7 +297,7 @@ class NotificationEmails extends Component
             return true;
 
         } catch (\Exception $e) {
-            SproutBase::$app->common->addError('notification-mock-error', $e->getMessage());
+            SproutBase::$app->emailErrorHelper->addError('notification-mock-error', $e->getMessage());
 
             return false;
         }
@@ -529,7 +529,7 @@ class NotificationEmails extends Component
 
         $this->getNotificationEmailMessage($notificationEmail, $mockObject);
 
-        $templateErrors = SproutBase::$app->common->getErrors();
+        $templateErrors = SproutBase::$app->emailErrorHelper->getErrors();
 
         if (!empty($templateErrors['template'])) {
 

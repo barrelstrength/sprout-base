@@ -51,7 +51,7 @@ class AddressController extends Controller
     {
         $addressInfoId = Craft::$app->getRequest()->getBodyParam('addressInfoId');
 
-        $addressInfoModel = SproutBase::$app->address->getAddressById($addressInfoId);
+        $addressInfoModel = SproutBase::$app->addressField->getAddressById($addressInfoId);
 
         $countryCode = $addressInfoModel->countryCode;
 
@@ -105,7 +105,7 @@ class AddressController extends Controller
         if (Craft::$app->getRequest()->getBodyParam('addressInfoId') != null) {
             $addressInfoId = Craft::$app->getRequest()->getBodyParam('addressInfoId');
 
-            $addressInfoModel = SproutBase::$app->address->getAddressById($addressInfoId);
+            $addressInfoModel = SproutBase::$app->addressField->getAddressById($addressInfoId);
         } elseif (Craft::$app->getRequest()->getBodyParam('defaultCountryCode') != null) {
             $defaultCountryCode = Craft::$app->getRequest()->getBodyParam('defaultCountryCode');
 
@@ -199,7 +199,7 @@ class AddressController extends Controller
 
         if (Craft::$app->getRequest()->getBodyParam('addressInfoId') != null) {
             $addressId = Craft::$app->getRequest()->getBodyParam('addressInfoId');
-            $addressInfoModel = SproutBase::$app->address->getAddressById($addressId);
+            $addressInfoModel = SproutBase::$app->addressField->getAddressById($addressId);
         }
 
         $result = [

@@ -2,7 +2,7 @@
 
 namespace barrelstrength\sproutbase\app\email\services;
 
-use barrelstrength\sproutbase\app\email\contracts\BaseNotificationEvent;
+use barrelstrength\sproutbase\app\email\base\NotificationEvent;
 use barrelstrength\sproutbase\app\email\elements\NotificationEmail;
 use barrelstrength\sproutbase\app\email\events\NotificationEmailEvent;
 use barrelstrength\sproutbase\SproutBase;
@@ -97,7 +97,7 @@ class NotificationEmailEvents extends Component
             // Create an instance of this event
             $notificationEmailEvent = new $notificationEmailEventClassName();
 
-            if ($notificationEmailEvent instanceof BaseNotificationEvent) {
+            if ($notificationEmailEvent instanceof NotificationEvent) {
 
                 // Register our event
                 $self->registerEvent($notificationEmailEventClassName, $self->getDynamicEventHandler());
@@ -143,7 +143,7 @@ class NotificationEmailEvents extends Component
     {
         $self = $this;
 
-        return function($notificationEmailEventClassName, Event $event, BaseNotificationEvent $eventHandlerClass) use ($self) {
+        return function($notificationEmailEventClassName, Event $event, NotificationEvent $eventHandlerClass) use ($self) {
             return $self->handleDynamicEvent($notificationEmailEventClassName, $event, $eventHandlerClass);
         };
     }
@@ -153,12 +153,12 @@ class NotificationEmailEvents extends Component
      *
      * @param                       $notificationEmailEventClassName
      * @param Event                 $event
-     * @param BaseNotificationEvent $eventHandlerClass
+     * @param NotificationEvent     $eventHandlerClass
      *
      * @return bool
      * @throws \Exception
      */
-    public function handleDynamicEvent($notificationEmailEventClassName, Event $event, BaseNotificationEvent $eventHandlerClass)
+    public function handleDynamicEvent($notificationEmailEventClassName, Event $event, NotificationEvent $eventHandlerClass)
     {
         Craft::info(Craft::t('sprout-base', 'A Notification Event has been triggered: {eventName}', [
             'eventName' => $eventHandlerClass->getName()
@@ -175,7 +175,7 @@ class NotificationEmailEvents extends Component
                 // Add the Notification Event settings to the $eventHandlerClass
                 $settings = json_decode($notificationEmail->settings, true);
 
-                /** @var BaseNotificationEvent $eventHandlerClass */
+                /** @var NotificationEvent $eventHandlerClass */
                 $eventHandlerClass = new $eventHandlerClass($settings);
 
                 $eventHandlerClass->notificationEmail = $notificationEmail;
@@ -199,7 +199,7 @@ class NotificationEmailEvents extends Component
      * @param string $type The return value of the event getId()
      * @param mixed  $default
      *
-     * @return BaseNotificationEvent
+     * @return NotificationEvent
      */
     public function getEventById($type, $default = null)
     {
@@ -233,7 +233,7 @@ class NotificationEmailEvents extends Component
                 $settings = json_decode($notificationEmail->settings, true);
 
                 if ($notificationEmailEventClass === $notificationEmail->eventId) {
-                    // If the Event matches are current selected event, initialize the BaseNotificationEvent class with the Event settings
+                    // If the Event matches are current selected event, initialize the NotificationEvent class with the Event settings
                     $event = new $notificationEmailEventClass($settings);
                 } else {
                     $event = new $notificationEmailEventClass();
@@ -245,8 +245,8 @@ class NotificationEmailEvents extends Component
 
         uasort($events, function($a, $b) {
             /**
-             * @var $a BaseNotificationEvent
-             * @var $b BaseNotificationEvent
+             * @var $a NotificationEvent
+             * @var $b NotificationEvent
              */
             return $a->getName() <=> $b->getName();
         });
