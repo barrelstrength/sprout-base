@@ -35,7 +35,15 @@ class SproutEmailVariable
      */
     public function getDisplayDateScheduled()
     {
-        return SproutEmail::$app->getConfig('displayDateScheduled', false);
+        $config = Craft::$app->getConfig()->getConfigSettings('general');
+
+        if (!is_array($config)) {
+            return false;
+        }
+
+        $dateScheduled = isset($config->displayDateScheduled) ? $config->displayDateScheduled : false;
+
+        return $dateScheduled;
     }
 
     public function getCampaignEmailById($id)
