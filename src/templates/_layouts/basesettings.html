@@ -1,0 +1,51 @@
+{% extends "_layouts/cp" %}
+
+{% set selectedSubnavItem = 'settings' %}
+
+{% set title = "Settings"|t('sprout-base') %}
+{% set settings = plugin.getSettings() %}
+{% set navItems = settings.getSettingsNavItems() %}
+{% set redirectUrl = navItems[selectedSidebarItem]['url'] ?? craft.request.url %}
+{% set actionUrl = navItems[selectedSidebarItem]['actionUrl'] ?? 'sprout-base/settings/save-settings' %}
+{% set settingsForm = navItems[selectedSidebarItem]['settingsForm'] ?? true %}
+{% set selectedSettingsInfo = attribute(navItems, selectedSidebarItem) %}
+{% set fullPageForm = true %}
+
+{% set sidebar %}
+    <nav>
+        <ul>
+            {% if navItems|length %}
+                {% for item in navItems %}
+                    {% if item.heading is defined and item.heading is not empty %}
+                        <li class="heading"><span>{{ item.heading }}</span></li>
+                    {% else %}
+                        <li>
+                            <a href="{{ url(item.url) }}"
+                               {% if selectedSidebarItem == item.selected %}class="sel"{% endif %}>
+                                {{ item.label }}
+                            </a>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+        </ul>
+    </nav>
+{% endset %}
+
+{% block actionButton %}
+    {% set fullForm = selectedSettingsInfo.fullPageForm ?? true %}
+
+    {% if fullForm and settingsForm == true and selectedSettingsInfo.actionTemplate %}
+
+        {% include selectedSettingsInfo.actionTemplate %}
+
+    {% else %}
+
+        <div class="buttons">
+            <input class="btn submit" type="submit"
+                   value="{{ 'Save'|t('sprout-base') }}">
+        </div>
+
+    {% endif %}
+{% endblock %}
+

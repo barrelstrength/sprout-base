@@ -1,0 +1,61 @@
+{% import "_includes/forms" as forms %}
+
+<div class="body">
+
+    <h1>{{ "Test Notification"|t('sprout-base') }}</h1>
+
+    <div class="sproutemail-preparemodalbody">
+        <table class="data fullwidth">
+            <tbody>
+            <tr>
+                <td><strong>{{ "Subject"|t('sprout-base') }}</strong></td>
+                <td class="title">{{ email.title }}</td>
+            </tr>
+
+            <tr>
+                <td><strong>{{ "Recipients"|t('sprout-base') }}</strong></td>
+                <td>
+
+                    {% set baseUrl = craft.app.request.serverName %}
+                    {% set placeholderEmails = 'email@' ~ baseUrl ~ ', email2@' ~ baseUrl %}
+
+                    {{ forms.textarea({
+                        id:   "recipients",
+                        name: "recipients",
+                        class: "code",
+                        placeholder: placeholderEmails,
+                        value: recipients
+                    }) }}
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+        {% if errors is defined and errors is not empty %}
+            <ul class="error bullets">
+                {% for error in errors %}
+                    <li>{{ error | raw }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+    </div>
+</div>
+
+<div class="footer">
+    <div class="spinner send-spinner hidden"></div>
+    <div class="clearfix"></div>
+    <div class="buttons left">
+        <button id="close" class="btn">{{ "Cancel"|t('sprout-base') }}</button>
+    </div>
+    <div class="buttons right">
+        <button
+                {% if errors is defined and errors is not empty %} disabled style="opacity: 0.25;" {% endif %}
+                data-mailer="defaultmailer"
+                data-action="sprout-base/notifications/send-test-notification-email"
+                data-notification-id="{{ email.id }}"
+                class="btn submit actions">
+            {{- "Send Test"|t('sprout-base') -}}
+        </button>
+    </div>
+</div>

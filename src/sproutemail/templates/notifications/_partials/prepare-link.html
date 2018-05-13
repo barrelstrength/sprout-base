@@ -1,8 +1,0 @@
-{% if notification.isReady() %}
-    <a href="#"
-       data-action="sprout-base/sprout-email-notifications/get-prepare-modal"
-       data-notification-id="{{ notification.id }}"
-       class="prepare btn small formsubmit">{{ "Send Test"|t('sprout-base') }}</a>
-{% else %}
-    <span class="light">{{ "Prepare"|t('sprout-base') }}</span>
-{% endif %}
