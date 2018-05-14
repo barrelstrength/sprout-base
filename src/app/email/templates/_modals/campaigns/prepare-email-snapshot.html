@@ -1,0 +1,113 @@
+{% import "_includes/forms" as forms %}
+
+<div class="body">
+
+    <h1>{{ 'Campaign Snapshot'|t('sprout-email') }}</h1>
+
+    <table class="data fullwidth">
+        <tbody>
+        <tr style="background-color:#eee;font-size:14px;">
+            <th colspan="2">{{ 'Overview'|t('sprout-email') }}</th>
+        </tr>
+        <tr>
+            <td><strong>{{ "Subject"|t('sprout-email') }}</strong></td>
+            <td>{{ email.title }}</td>
+        </tr>
+        <tr>
+            <td><strong>{{ "From Name"|t('sprout-email') }}</strong></td>
+            <td>{{ email.fromName }}</td>
+        </tr>
+        <tr>
+            <td><strong>{{ "From Email"|t('sprout-email') }}</strong></td>
+            <td>{{ email.fromEmail }}</td>
+        </tr>
+        <tr>
+            <td><strong>{{ "Reply To"|t('sprout-email') }}</strong></td>
+            <td>{{ email.replyToEmail }}</td>
+        </tr>
+        </tbody>
+    </table>
+    <br>
+
+    {% set emailUrl = cpUrl('sprout-email/preview/campaign/' ~ email.id) %}
+
+    <table class="data fullwidth">
+        <tbody>
+        <tr style="background-color:#eee;font-size:14px;">
+            <th colspan="2">{{ 'Content'|t('sprout-email') }}</th>
+        </tr>
+        <tr>
+            <td>
+                <strong>{{ "HTML"|t('sprout-email') }}</strong>
+            </td>
+            <td>
+                <a href="{{ cpUrl('sprout-email/campaigns/edit/' ~ email.id) }}">{{ "Edit"|t('sprout-email') }}</a>
+                or
+                <a href="{{ emailUrl }}" title="{{ email.title }}"
+                   data-preview-url="{{ emailUrl }}"
+                   class="email-preview">{{ "Preview"|t('sprout-email') }}</a>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <strong>{{ "Text"|t('sprout-email') }}</strong>
+            </td>
+            <td>
+                <a href="{{ emailUrl ~ '?type=text' }}"
+                   title="{{ email.title }}"
+                   data-preview-url="{{ emailUrl ~ '?type=text' }}"
+                   class="email-preview">{{ "Preview"|t('sprout-email') }}</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <br>
+
+    <table class="data fullwidth">
+        <tbody>
+        <tr style="background-color:#eee;font-size:14px;">
+            <th colspan="2">{{ 'Recipients'|t('sprout-email') }}</th>
+        </tr>
+        <tr class="snapshot-recipients">
+            {% if lists|length %}
+                {% for list in lists %}
+                    <td colspan="2">
+                        {{ list.name }} <span
+                                class="light"><i>(</i>{{ list.members_count }}
+                            <i>)</i></span>
+                    </td>
+                {% endfor %}
+            {% else %}
+                <td colspan="2">
+                    {{ "No recipients defined."|t('sprout-email') }} <a
+                            href="{{ cpUrl('sprout-email/campaigns/edit/' ~ email.id) }}">{{ "Add Recipients"|t('sprout-email') }}</a>
+                </td>
+            {% endif %}
+        </tr>
+        </tbody>
+    </table>
+
+</div>
+
+<div class="footer">
+
+    <div class="buttons right">
+        <button {% if not email.isReadyToTest() %}disabled{% endif %}
+                data-action="sprout-email/campaign-email/prepare-test-campaign-email-modal"
+                data-email-id="{{ email.id }}"
+                class="btn actions {% if not email.isReadyToTest() %}disabled{% endif %}">
+            {{ "Send Test"|t('sprout-email') }}
+        </button>
+        <button {% if not email.isReadyToSend() %}disabled{% endif %}
+                data-action="sprout-email/campaign-email/prepare-schedule-campaign-email"
+                data-email-id="{{ email.id }}"
+                class="btn submit actions {% if not email.isReadyToSend() %}disabled{% endif %}">
+            {{ "Schedule Campaign"|t('sprout-email') }}
+        </button>
+    </div>
+    <div class="buttons left">
+        <button id="cancel" class="btn">{{ "Cancel"|t('sprout-email') }}
+        </button>
+    </div>
+
+</div>

@@ -1,0 +1,21 @@
+{% import "_includes/forms" as forms %}
+
+{{ forms.textField({
+    label: "Plugin Name"|t('sprout-lists'),
+    instructions: "Intuitive, human-readable plugin name for the end user."|t('sprout-lists'),
+    id: 'pluginNameOverride',
+    name: 'pluginNameOverride',
+    value: settings.pluginNameOverride,
+    placeholder: settings.pluginNameOverride ?: 'Sprout Lists',
+    autofocus: true,
+    first: true,
+    errors: ''
+}) }}
+
+{{ forms.lightswitchField({
+    first: true,
+    label: "Enable User Sync"|t('sprout-lists'),
+    instructions: "When you enable this setting Sprout Lists will create a relationship between Sprout Lists Subscribers and Craft Users, based on the email address. When Craft User emails are updated, they will also be updated in Sprout Lists Subscriber Lists. When emails are updated in Sprout Lists Subscriber Lists, they will also be updated in the matching Craft User Profiles. When Users are deleted the relationship in the Sprout Lists Subscriber List will be removed."|t('sprout-lists'),
+    name: 'enableUserSync',
+    on: settings.enableUserSync
+}) }}

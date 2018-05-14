@@ -1,0 +1,131 @@
+{% extends "_layouts/cp" %}
+{% import 'sprout-base/_includes/sproutcp' as sprout %}
+
+{% set title  = 'Sprout Reports'|t('sprout-base') %}
+
+{% set selectedSubnavItem = craft.app.request.segment(2) %}
+{% if dataSource is defined %}
+    {% set settingsHtml = dataSource.getSettingsHtml() %}
+{% endif %}
+
+{% set crumbs = [
+    { label: "Reports"|t('sprout-base'), url: reportIndexUrl },
+    { label: "Edit "|t('sprout-base') ~ report.name, url: report.getCpEditUrl() }
+] %}
+
+{% block actionButton %}
+    <form method="post" accept-charset="UTF-8">
+        {{ csrfInput() }}
+        <input type="hidden" name="action"
+               value="sprout-base/reports/export-report">
+        <input type="hidden" name="reportId" value="{{ reportId }}">
+
+        <a id="btn-download-csv" class="btn">
+            {{ "Download"|t('sprout-reports') }}
+        </a>
+
+        <a id="modify-settings-icon" class="btn" data-icon="settings"></a>
+    </form>
+{% endblock %}
+
+{% block content %}
+
+    {% if settingsHtml %}
+
+        <div id="modify-settings-panel" style="display:none;">
+
+            <form id="report-settings" method="post" accept-charset="UTF-8">
+                {{ csrfInput() }}
+                {{ redirectInput(redirectUrl) }}
+                <input type="hidden" name="action"
+                       value="sprout-base/reports/update-report">
+                <input type="hidden" name="reportId" value="{{ reportId }}">
+
+                {{ settingsHtml | raw }}
+
+                <div class="button">
+                    <div class="btngroup">
+                        <input type="submit" class="btn submit"
+                               value="{{ 'Submit Report'|t('sprout-base') }}">
+                    </div>
+                </div>
+
+            </form>
+
+            <hr>
+
+        </div>
+
+    {% endif %}
+
+    <div class="tableview sproutreports">
+        {% if values is defined and values is iterable and values|length %}
+            <div class="tablecontent">
+                <table class="data fullwidth">
+                    <thead>
+                    <tr>
+                        {% for label in labels %}
+                            <th>
+                                <div {% if loop.index == "1" %}class="first"{% endif %}>
+                                    <h3>{{ label }}</h3></div>
+                            </th>
+                        {% endfor %}
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for value in values %}
+                        <tr class="table_row">
+                            {% for property in value %}
+                                <td>
+                                    <div class="item_content">
+                                        {% if report.allowHtml %}
+                                            {{ property|raw }}
+                                        {% else %}
+                                            {{ property }}
+                                        {% endif %}
+                                    </div>
+                                </td>
+                            {% endfor %}
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% else %}
+
+            {% set boxBody %}
+                <p>{{ "This report currently has no results. Check your report settings and ensure you have content for the report you are trying to run. To quickly edit the Report Settings, click on the gear icon in the upper right."|t('sprout-base')|raw }}</p>
+            {% endset %}
+
+            {{ sprout.mediaBox({
+                heading: "No results found"|t('sprout-base'),
+                body: boxBody,
+                resourcePath: '@sproutbase/web/assets/sproutreports/dist/images/icon.svg'
+            }) }}
+
+        {% endif %}
+    </div>
+
+{% endblock %}
+
+{% do view.registerAssetBundle("barrelstrength\\sproutbase\\web\\assets\\cp\\CpAsset") %}
+{% do view.registerAssetBundle("barrelstrength\\sproutbase\\app\\reports\\web\\assets\\base\\SproutReportsAsset") %}
+
+{% js %}
+
+    (function(){
+
+        $('#btn-download-csv').on('click', function(event) {
+            event.preventDefault();
+
+            $form = $(this).parents('form');
+            $form.submit();
+        });
+
+        $('#modify-settings-icon').on('click', function() {
+            $('#modify-settings-panel').slideToggle('slow');
+        });
+
+    })();
+
+{% endjs %}
