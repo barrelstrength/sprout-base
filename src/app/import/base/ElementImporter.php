@@ -274,8 +274,13 @@ abstract class ElementImporter extends Importer
     {
         $utilities = SproutImport::$app->utilities;
 
+
         try {
-            return Craft::$app->getElements()->saveElement($this->model);
+            $element = Craft::$app->getElements()->saveElement($this->model);
+
+            $this->afterSaveElement();
+
+            return $element;
         } catch (\Exception $e) {
             SproutImport::error($e->getMessage());
 
@@ -283,6 +288,11 @@ abstract class ElementImporter extends Importer
 
             return false;
         }
+    }
+
+    protected function afterSaveElement()
+    {
+
     }
 
     /**
