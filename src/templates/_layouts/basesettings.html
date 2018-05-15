@@ -34,10 +34,11 @@
 
 {% block actionButton %}
     {% set fullForm = selectedSettingsInfo.fullPageForm ?? true %}
+    {% set actionTemplate = selectedSettingsInfo.actionTemplate ?? null %}
 
-    {% if fullForm and settingsForm == true and selectedSettingsInfo.actionTemplate %}
+    {% if fullForm and settingsForm == true and actionTemplate %}
 
-        {% include selectedSettingsInfo.actionTemplate %}
+        {% include actionTemplate %}
 
     {% else %}
 
@@ -48,4 +49,3 @@
 
     {% endif %}
 {% endblock %}
-
