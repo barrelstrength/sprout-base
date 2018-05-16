@@ -21,7 +21,7 @@ trait BaseSproutTrait
     }
 
     /**
-     * Logs an error message using the pluginId as the category
+     * Logs an error message using the pluginHandle as the category
      *
      * @param string|array $message
      */
@@ -32,11 +32,11 @@ trait BaseSproutTrait
             $message = print_r($message, true);
         }
 
-        Craft::error($message, static::$pluginId);
+        Craft::error($message, static::$pluginHandle);
     }
 
     /**
-     * Logs an warning message using the pluginId as the category
+     * Logs an warning message using the pluginHandle as the category
      *
      * @param string|array $message
      */
@@ -47,11 +47,11 @@ trait BaseSproutTrait
             $message = print_r($message, true);
         }
 
-        Craft::warning($message, static::$pluginId);
+        Craft::warning($message, static::$pluginHandle);
     }
 
     /**
-     * Logs an info message using the pluginId as the category
+     * Logs an info message using the pluginHandle as the category
      *
      * @param string|array $message
      */
@@ -62,6 +62,6 @@ trait BaseSproutTrait
             $message = print_r($message, true);
         }
 
-        Craft::info($message, static::$pluginId);
+        Craft::info($message, static::$pluginHandle);
     }
 }

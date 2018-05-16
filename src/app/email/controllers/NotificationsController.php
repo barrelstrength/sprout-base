@@ -135,7 +135,7 @@ class NotificationsController extends Controller
         $events = SproutBase::$app->notificationEvents->getNotificationEmailEvents($notificationEmail);
 
         if ($currentPluginHandle !== 'sprout-email') {
-            $events = SproutBase::$app->notificationEvents->getNotificationEmailEventsByPluginId($notificationEmail, $currentPluginHandle);
+            $events = SproutBase::$app->notificationEvents->getNotificationEmailEventsByPluginHandle($notificationEmail, $currentPluginHandle);
         }
 
         $lists = [];
@@ -220,7 +220,7 @@ class NotificationsController extends Controller
              */
             $plugin = $event->getPlugin();
 
-            $notificationEmail->pluginId = $plugin->id;
+            $notificationEmail->pluginHandle = $plugin->id;
         }
 
         if (!SproutBase::$app->notifications->saveNotification($notificationEmail)) {

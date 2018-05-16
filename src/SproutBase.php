@@ -54,7 +54,7 @@ class SproutBase extends Module
      *
      * @var string
      */
-    public static $pluginId = 'sprout-base';
+    public static $pluginHandle = 'sprout-base';
 
     /**
      * @var string|null The translation category that this module translation messages should use. Defaults to the lowercase plugin handle.
