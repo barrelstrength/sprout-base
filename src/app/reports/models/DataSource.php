@@ -13,7 +13,7 @@ class DataSource extends Model
 {
     public $id;
 
-    public $pluginId;
+    public $pluginHandle;
 
     public $type;
 
@@ -26,6 +26,6 @@ class DataSource extends Model
      */
     public function safeAttributes()
     {
-        return ['id', 'pluginId', 'type', 'settings', 'allowNew'];
+        return ['id', 'pluginHandle', 'type', 'settings', 'allowNew'];
     }
 }

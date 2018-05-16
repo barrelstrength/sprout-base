@@ -74,9 +74,9 @@ class Install extends Migration
         if ($dataSourcesTable == false) {
             $this->createTable($this->dataSourcesTable, [
                 'id' => $this->primaryKey(),
+                'pluginHandle' => $this->string(),
                 'type' => $this->string(),
                 'allowNew' => $this->boolean(),
-                'pluginId' => $this->string(),
                 'dateCreated' => $this->dateTime()->notNull(),
                 'dateUpdated' => $this->dateTime()->notNull(),
                 'uid' => $this->uid()

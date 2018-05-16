@@ -565,7 +565,7 @@ class NotificationEmails extends Component
 
         $notificationEmail->title = $subjectLine;
         $notificationEmail->subjectLine = $subjectLine;
-        $notificationEmail->pluginId = $currentPluginHandle;
+        $notificationEmail->pluginHandle = $currentPluginHandle;
         $notificationEmail->slug = $handle;
 
         $systemEmailSettings = Craft::$app->getSystemSettings()->getEmailSettings();

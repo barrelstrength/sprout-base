@@ -46,8 +46,6 @@ class ReportQuery extends ElementQuery
 
     public $pluginHandle;
 
-    public $pluginId;
-
     /**
      * @inheritdoc
      */
@@ -65,26 +63,26 @@ class ReportQuery extends ElementQuery
             'sproutreports_reports.settings',
             'sproutreports_reports.groupId',
             'sproutreports_reports.enabled',
-            'sproutreports_datasources.pluginId'
+            'sproutreports_datasources.pluginHandle'
         ]);
 
         $this->query->innerJoin('{{%sproutreports_datasources}} sproutreports_datasources', '[[sproutreports_datasources.id]] = [[sproutreports_reports.dataSourceId]]');
 
-        $pluginIdRequest = Craft::$app->request->getBodyParam('criteria.pluginHandle');
+        $pluginHandleRequest = Craft::$app->request->getBodyParam('criteria.pluginHandle');
 
-        $pluginId = null;
+        $pluginHandle = null;
 
-        if ($pluginIdRequest) {
-            $pluginId = $pluginIdRequest;
+        if ($pluginHandleRequest) {
+            $pluginHandle = $pluginHandleRequest;
         }
 
-        if ($this->pluginId) {
-            $pluginId = $this->pluginId;
+        if ($this->pluginHandle) {
+            $pluginHandle = $this->pluginHandle;
         }
 
-        if ($pluginId != null) {
+        if ($pluginHandle != null) {
             $this->query->andWhere(Db::parseParam(
-                'sproutreports_datasources.pluginId', $pluginId)
+                'sproutreports_datasources.pluginHandle', $pluginHandle)
             );
         }
 

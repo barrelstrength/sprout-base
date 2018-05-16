@@ -59,9 +59,9 @@ class Report extends Element
     public $results;
 
     /**
-     * @var string Plugin ID as defined in the Data Sources table
+     * @var string Plugin Handle as defined in the Data Sources table
      */
-    public $pluginId;
+    public $pluginHandle;
 
     /**
      * @return string
@@ -212,24 +212,24 @@ class Report extends Element
 
             // @todo - temporary fix.
             // We should remove this and write a migration that ensures that all data source columns have a non-null pluginId setting.
-            $pluginId = $dataSource['pluginId'] ?? null;
+            $pluginHandle = $dataSource['pluginHandle'] ?? null;
 
-            if (!$pluginId) {
+            if (!$pluginHandle) {
                 continue;
             }
 
             /**
              * @var $plugin Plugin
              */
-            $plugin = Craft::$app->plugins->getPlugin($pluginId);
+            $plugin = Craft::$app->plugins->getPlugin($pluginHandle);
 
             if ($plugin) {
-                $key = 'pluginId:'.$plugin->getHandle();
+                $key = 'pluginHandle:'.$plugin->getHandle();
 
                 $sources[] = [
                     'key' => $key,
                     'label' => $plugin->name,
-                    'criteria' => ['pluginId' => $plugin->getHandle()],
+                    'criteria' => ['pluginHandle' => $plugin->getHandle()],
                 ];
             }
         }

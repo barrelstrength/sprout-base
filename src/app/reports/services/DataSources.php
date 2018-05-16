@@ -106,8 +106,8 @@ class DataSources extends Component
             $dataSourceModel->type = $dataSourceClass;
             $dataSourceModel->allowNew = 1;
 
-            // Set all pre-built class to sprout-reports pluginId
-            $dataSourceModel->pluginId = $dataSource->getPlugin()->handle ?? 'sprout-reports';
+            // Set all pre-built class to sprout-reports pluginHandle
+            $dataSourceModel->pluginHandle = $dataSource->getPlugin()->handle ?? 'sprout-reports';
 
             $this->saveDataSource($dataSourceModel);
 
@@ -210,7 +210,7 @@ class DataSources extends Component
     {
         $query = new Query();
 
-        $dataSourcePlugins = $query->select('pluginId')
+        $dataSourcePlugins = $query->select('pluginHandle')
             ->from(['{{%sproutreports_datasources}}'])
             ->distinct()
             ->all();
@@ -242,7 +242,7 @@ class DataSources extends Component
             $dataSourceRecord->type = $dataSourceModel->type;
         }
 
-        $dataSourceRecord->pluginId = $dataSourceModel->pluginId;
+        $dataSourceRecord->pluginHandle = $dataSourceModel->pluginHandle;
         $dataSourceRecord->allowNew = $dataSourceModel->allowNew;
 
         $transaction = Craft::$app->getDb()->beginTransaction();

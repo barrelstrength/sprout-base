@@ -18,7 +18,7 @@ class NotificationEmailQuery extends ElementQuery
     {
         $this->joinElementTable('sproutemail_notificationemails');
         $this->query->select([
-            'sproutemail_notificationemails.pluginId',
+            'sproutemail_notificationemails.pluginHandle',
             'sproutemail_notificationemails.titleFormat',
             'sproutemail_notificationemails.emailTemplateId',
             'sproutemail_notificationemails.eventId',
@@ -36,10 +36,10 @@ class NotificationEmailQuery extends ElementQuery
             'sproutemail_notificationemails.fieldLayoutId'
         ]);
 
-        $pluginId = Craft::$app->request->getBodyParam('criteria.base');
+        $pluginHandle = Craft::$app->request->getBodyParam('criteria.base');
 
-        if ($pluginId != null) {
-            $this->query->where(['sproutemail_notificationemails.pluginId' => $pluginId]);
+        if ($pluginHandle != null) {
+            $this->query->where(['sproutemail_notificationemails.pluginHandle' => $pluginHandle]);
         }
 
         return parent::beforePrepare();

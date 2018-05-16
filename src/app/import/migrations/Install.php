@@ -27,8 +27,8 @@ class Install extends Migration
                 [
                     'id' => $this->primaryKey(),
                     'itemId' => $this->integer()->notNull(),
-                    'importerClass' => $this->string()->notNull(),
-                    'type' => $this->string(),
+                    'type' => $this->string()->notNull(),
+                    'seedType' => $this->string(),
                     'details' => $this->string(),
                     'dateCreated' => $this->dateTime()->notNull(),
                     'dateUpdated' => $this->dateTime()->notNull(),

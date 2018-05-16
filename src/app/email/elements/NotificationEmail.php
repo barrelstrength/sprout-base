@@ -48,7 +48,7 @@ class NotificationEmail extends Element
      *
      * @var string
      */
-    public $pluginId;
+    public $pluginHandle;
 
     /**
      * The Email Template integration handle or folder path of the email templates that should be used when rendering this Notification Email.
@@ -333,7 +333,7 @@ class NotificationEmail extends Element
             $notificationEmailRecord->id = $this->id;
         }
 
-        $notificationEmailRecord->pluginId = $this->pluginId;
+        $notificationEmailRecord->pluginHandle = $this->pluginHandle;
         $notificationEmailRecord->titleFormat = $this->titleFormat;
         $notificationEmailRecord->emailTemplateId = $this->emailTemplateId;
         $notificationEmailRecord->eventId = $this->eventId;
@@ -397,7 +397,7 @@ class NotificationEmail extends Element
         $pluginHandle = Craft::$app->request->getSegment(1);
 
         if ($pluginHandle == null) {
-            throw new Exception('Invalid integration. No pluginId specified');
+            throw new Exception('Invalid integration. No pluginHandle specified');
         }
 
         return $pluginHandle.'/{slug}';
