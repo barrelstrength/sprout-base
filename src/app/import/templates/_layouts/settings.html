@@ -21,8 +21,8 @@
     }
 } %}
 
-{% set selectedSubnavItem = craft.request.segment(2) %}
-{% set selectedSidebarItem = craft.request.segment(3) %}
+{% set selectedSubnavItem = craft.app.request.getSegment(2) %}
+{% set selectedSidebarItem = craft.app.request.getSegment(3) %}
 
 {% set sidebar %}
 
