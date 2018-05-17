@@ -65,7 +65,7 @@ class ReportsController extends Controller
             if ($dataSource AND (bool)$dataSource->allowNew() OR $currentPluginHandle !== 'sprout-reports') {
                 $newReportOptions[] = [
                     'name' => $dataSource->getName(),
-                    'url' => $dataSource->getUrl('/new')
+                    'url' => $dataSource->getUrl($dataSource->dataSourceId.'/new')
                 ];
             }
         }
