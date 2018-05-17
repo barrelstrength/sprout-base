@@ -5,7 +5,7 @@
 
 {% set title  = "Reports"|t('sprout-base') %}
 
-{% if reportContext == 'sprout-reports' %}
+{% if currentPluginHandle == 'sprout-reports' %}
     {% set selectedTab = 'reports' %}
 {% endif %}
 
@@ -143,7 +143,7 @@
 
 {#{% block sidebar %}#}
 
-    {#{% if reportContext == 'sprout-reports' %}#}
+    {#{% if currentPluginHandle == 'sprout-reports' %}#}
 
         {#{% set groups = craft.sproutReports.getReportGroups() %}#}
 
