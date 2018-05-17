@@ -5,7 +5,7 @@
  * @license   http://sprout.barrelstrengthdesign.com/license
  */
 
-namespace barrelstrength\sproutfields\web\assets\regularexpression;
+namespace barrelstrength\sproutbase\app\fields\web\assets\regularexpression;
 
 use craft\web\AssetBundle;
 use craft\web\assets\cp\CpAsset;
