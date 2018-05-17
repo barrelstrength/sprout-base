@@ -103,11 +103,12 @@ class SproutEmailVariable
          * @var EmailTemplates $template
          */
         foreach ($templates as $template) {
+            $type = get_class($template);
             $options[] = [
                 'label' => $template->getName(),
-                'value' => $template->getTemplateId()
+                'value' => $type
             ];
-            $templateIds[] = $template->getTemplateId();
+            $templateIds[] = $type;
         }
 
         $templateFolder = null;
