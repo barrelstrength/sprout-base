@@ -534,10 +534,7 @@ class NotificationEmails extends Component
         if (!empty($templateErrors['template'])) {
 
             foreach ($templateErrors['template'] as $templateError) {
-                $errors[] = Craft::t('sprout-base', $templateError.' <a href="{url}">Edit Settings</a>.',
-                    [
-                        'url' => $notificationEditSettingsUrl
-                    ]);
+                $errors[] = Craft::t('sprout-base', $templateError);
             }
         }
 

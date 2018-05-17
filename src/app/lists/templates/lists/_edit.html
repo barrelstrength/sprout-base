@@ -3,7 +3,7 @@
 
 {% set title = "Edit List"|t('sprout-lists') %}
 
-{% if craft.request.getSegment(3) == 'new' %}
+{% if craft.app.request.getSegment(3) == 'new' %}
     {% set title = "New List"|t('sprout-lists') %}
 {% endif %}
 

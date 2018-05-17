@@ -2,6 +2,8 @@
 
 namespace barrelstrength\sproutbase\app\email\controllers;
 
+use barrelstrength\sproutbase\app\email\base\EmailTemplates;
+use barrelstrength\sproutbase\app\email\emailtemplates\BasicTemplates;
 use barrelstrength\sproutbase\app\email\models\Response;
 use barrelstrength\sproutbase\app\email\base\EmailTemplateTrait;
 use barrelstrength\sproutbase\app\email\elements\NotificationEmail;
@@ -78,6 +80,8 @@ class NotificationsController extends Controller
      */
     public function actionEditNotificationEmailTemplate($emailId = null, NotificationEmail $notificationEmail = null)
     {
+        $routeParams = Craft::$app->getUrlManager()->getRouteParams();
+
         // Our currentPluginHandle helps us allow notifications to be managed in other plugins
         $currentPluginHandle = Craft::$app->request->getSegment(1);
 
@@ -134,8 +138,21 @@ class NotificationsController extends Controller
 
         $events = SproutBase::$app->notificationEvents->getNotificationEmailEvents($notificationEmail);
 
+        $defaultEmailTemplate = BasicTemplates::class;
+
         if ($currentPluginHandle !== 'sprout-email') {
             $events = SproutBase::$app->notificationEvents->getNotificationEmailEventsByPluginHandle($notificationEmail, $currentPluginHandle);
+
+            if (new $routeParams['defaultEmailTemplate'] instanceof EmailTemplates)
+            {
+                $defaultEmailTemplate = $routeParams['defaultEmailTemplate'];
+            }
+        }
+
+        // Set a default template if we don't have one set
+        if (!$notificationEmail->emailTemplateId)
+        {
+            $notificationEmail->emailTemplateId = $defaultEmailTemplate;
         }
 
         $lists = [];

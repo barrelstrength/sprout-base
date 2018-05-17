@@ -51,28 +51,6 @@ class Email extends Component
     }
 
     /**
-     * @param $templateId
-     *
-     * @return EmailTemplates|null
-     * @throws \ReflectionException
-     */
-    public function getEmailTemplateById($templateId)
-    {
-        $templates = $this->getAllEmailTemplates();
-
-        /**
-         * @var EmailTemplates $template
-         */
-        foreach ($templates as $template) {
-            if ($template->getTemplateId() == $templateId) {
-                return $template;
-            }
-        }
-
-        return null;
-    }
-
-    /**
      * @param NotificationEmail|null $notificationEmail
      *
      * @return string
@@ -92,7 +70,7 @@ class Email extends Component
             $settings = $sproutEmail->getSettings();
 
             if ($settings->emailTemplateId) {
-                $emailTemplate = SproutBase::$app->sproutEmail->getEmailTemplateById($settings->emailTemplateId);
+                $emailTemplate = new BasicTemplates();
                 if ($emailTemplate) {
                     // custom path by template API
                     $templatePath = $emailTemplate->getPath();
@@ -105,7 +83,7 @@ class Email extends Component
 
         // Allow our email Element to override our settings
         if ($notificationEmail->emailTemplateId) {
-            $emailTemplate = SproutBase::$app->sproutEmail->getEmailTemplateById($notificationEmail->emailTemplateId);
+            $emailTemplate = new $notificationEmail->emailTemplateId();
 
             if ($emailTemplate) {
                 // custom path by template API

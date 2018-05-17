@@ -46,7 +46,7 @@
 
 {% block initJs %}
     // Pass segment to the NotificationEmailQuery class to filter notification entries
-    var pluginHandle = {'pluginHandle': '{{ craft.request.segment(1) }}'};
+    var pluginHandle = {'pluginHandle': '{{ craft.app.request.getSegment(1) }}'};
     var criteria = Craft.defaultIndexCriteria
 
     var hideSidebar = false;

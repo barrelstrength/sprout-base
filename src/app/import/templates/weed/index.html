@@ -25,7 +25,7 @@
                     <td>{{ seed['dateCreated']|date('M d, Y h:i A') }}</td>
                     <td>{{ seed['total'] }}</td>
                     <td>
-                        {{ seed['type'] }}
+                        {{ seed['seedType'] }}
                         <span class="info sprout-info">
                             {{ seed['details'] }}
                         </span>
@@ -66,7 +66,7 @@
     {% else %}
 
         {{ sproutCore.mediaBox({
-            resourcePath: '@sproutbase/web/assets/sproutbase/cp/dist/images/sprout-icon.svg',
+            resourcePath: '@sproutbase/web/assets/cp/dist/images/sprout-icon.svg',
             heading: "The garden is weeded"|t('sprout-import'),
             body: "Currently, no content or settings in your database are marked as seed content. Get started and <a href='{importLink}'>import content and settings</a> or <a href='{seedLink}'>generate seed content</a>."|t({
                 importLink: cpUrl('sprout-import/index'),

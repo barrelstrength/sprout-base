@@ -5,9 +5,9 @@ namespace barrelstrength\sproutbase\app\email\migrations;
 use craft\db\Migration;
 
 /**
- * m180515_000000_rename_notification_pluginId_column migration.
+ * m180515_000002_rename_notification_options_column migration.
  */
-class m180515_000000_rename_notification_pluginId_column extends Migration
+class m180515_000002_rename_notification_options_column extends Migration
 {
     /**
      * @inheritdoc
@@ -16,8 +16,8 @@ class m180515_000000_rename_notification_pluginId_column extends Migration
     {
         $table = '{{%sproutemail_notificationemails}}';
 
-        if ($this->db->columnExists($table, 'pluginId')) {
-            $this->renameColumn($table, 'pluginId', 'pluginHandle');
+        if ($this->db->columnExists($table, 'options')) {
+            $this->renameColumn($table, 'options', 'settings');
         }
 
         return true;
@@ -28,7 +28,7 @@ class m180515_000000_rename_notification_pluginId_column extends Migration
      */
     public function safeDown()
     {
-        echo "m180515_000000_rename_notification_pluginId_column cannot be reverted.\n";
+        echo "m180515_000002_rename_notification_options_column cannot be reverted.\n";
         return false;
     }
 }
