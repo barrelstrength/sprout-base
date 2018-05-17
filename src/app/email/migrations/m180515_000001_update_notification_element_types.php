@@ -16,7 +16,7 @@ class m180515_000001_update_notification_element_types extends Migration
     {
         $seedClasses = [
             0 => [
-                'oldType' => 'barrelstrength\sproutbase\sproutemail\elements\NotificationEmail',
+                'oldType' => 'barrelstrength\sproutbase\elements\sproutemail\NotificationEmail',
                 'newType' => 'barrelstrength\sproutbase\app\email\elements\NotificationEmail'
             ]
         ];
