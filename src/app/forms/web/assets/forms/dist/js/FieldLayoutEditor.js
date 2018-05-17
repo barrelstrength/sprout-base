@@ -32,6 +32,7 @@ if (typeof Craft.SproutForms === typeof undefined) {
         // The dragula instance for tabs
         drakeTabs: null,
         tabsLayout: null,
+        $saveFormButton: null,
 
         /**
          * The constructor.
@@ -39,6 +40,9 @@ if (typeof Craft.SproutForms === typeof undefined) {
          */
         init: function(currentTabs, continueEditing) {
             var that = this;
+
+            this.$saveFormButton = $("#save-form-button");
+
             this.continueEditing = continueEditing;
 
             this.initButtons();
@@ -172,6 +176,17 @@ if (typeof Craft.SproutForms === typeof undefined) {
             for (var i = 0; i < currentTabs.length; i++) {
                 this.drake.containers.push(this.getId('sproutforms-tab-container-' + currentTabs[i].id));
             }
+            // Prevent save with Ctrl+S when the the field is dropped
+            $(document).bind('keydown', function(e) {
+                if(e.ctrlKey && (e.which == 83)) {
+                    if (!that.$saveFormButton.removeClass('disabled').siblings('.spinner').hasClass("hidden")){
+                        e.preventDefault();
+                        e.stopPropagation();
+                        // Not working
+                        return false;
+                    }
+                }
+            });
         },
 
         clickHandler: function(e) {
@@ -187,6 +202,9 @@ if (typeof Craft.SproutForms === typeof undefined) {
         },
 
         createDefaultField: function(type, tabId, tabName, el) {
+            var that = this;
+            this.$saveFormButton.addClass('disabled').siblings('.spinner').removeClass('hidden');
+
             $(el).removeClass('source-field');
             $(el).addClass('target-field');
             $(el).find('.source-field-header').remove();
@@ -222,6 +240,7 @@ if (typeof Craft.SproutForms === typeof undefined) {
             Craft.postActionRequest('sprout-forms/fields/create-field', data, $.proxy(function(response, textStatus) {
                 if (textStatus === 'success') {
                     this.initFieldOnDrop(response.field, tabName, el);
+                    that.$saveFormButton.removeClass('disabled').siblings('.spinner').addClass('hidden');
                 }
             }, this));
         },
