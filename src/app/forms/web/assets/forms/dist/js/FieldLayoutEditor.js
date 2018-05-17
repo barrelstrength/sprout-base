@@ -177,7 +177,7 @@ if (typeof Craft.SproutForms === typeof undefined) {
                 this.drake.containers.push(this.getId('sproutforms-tab-container-' + currentTabs[i].id));
             }
             // Prevent save with Ctrl+S when the the field is dropped
-            $(document).bind('keydown', function(e) {
+            /*$(document).bind('keydown', function(e) {
                 if(e.ctrlKey && (e.which == 83)) {
                     if (!that.$saveFormButton.removeClass('disabled').siblings('.spinner').hasClass("hidden")){
                         e.preventDefault();
@@ -186,7 +186,7 @@ if (typeof Craft.SproutForms === typeof undefined) {
                         return false;
                     }
                 }
-            });
+            });*/
         },
 
         clickHandler: function(e) {
@@ -203,7 +203,7 @@ if (typeof Craft.SproutForms === typeof undefined) {
 
         createDefaultField: function(type, tabId, tabName, el) {
             var that = this;
-            this.$saveFormButton.addClass('disabled').siblings('.spinner').removeClass('hidden');
+            //this.$saveFormButton.addClass('disabled').siblings('.spinner').removeClass('hidden');
 
             $(el).removeClass('source-field');
             $(el).addClass('target-field');
@@ -240,7 +240,7 @@ if (typeof Craft.SproutForms === typeof undefined) {
             Craft.postActionRequest('sprout-forms/fields/create-field', data, $.proxy(function(response, textStatus) {
                 if (textStatus === 'success') {
                     this.initFieldOnDrop(response.field, tabName, el);
-                    that.$saveFormButton.removeClass('disabled').siblings('.spinner').addClass('hidden');
+                    //that.$saveFormButton.removeClass('disabled').siblings('.spinner').addClass('hidden');
                 }
             }, this));
         },
