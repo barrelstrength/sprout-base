@@ -147,7 +147,7 @@ class SproutBase extends Module
         });
 
 
-        if ((Craft::$app->getRequest()->getIsConsoleRequest()) {
+        if (Craft::$app->getRequest()->getIsConsoleRequest()) {
             $this->controllerNamespace = 'sproutbase\\console\\controllers';
         } else {
             $this->controllerNamespace = 'sproutbase\\controllers';
