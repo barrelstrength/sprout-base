@@ -67,17 +67,6 @@ class SproutBase extends Module
     public $sourceLanguage = 'en-US';
 
     /**
-     * @var array
-     */
-    public $controllerMap = [
-        'settings'=> SettingsController::class,
-        'notifications' => NotificationsController::class,
-        'fields' => FieldsController::class,
-        'fields-address' => AddressController::class,
-        'reports' => ReportsController::class
-    ];
-
-    /**
      * @todo - Copied from craft/base/plugin. Ask P&T if this is the best approach
      *
      * @inheritdoc
@@ -115,8 +104,6 @@ class SproutBase extends Module
 
     public function init()
     {
-        parent::init();
-
         self::$app = new App();
 
         Craft::setAlias('@sproutbase', $this->getBasePath());
@@ -158,5 +145,22 @@ class SproutBase extends Module
         Event::on(Email::class, Email::EVENT_REGISTER_EMAIL_TEMPLATES, function(RegisterComponentTypesEvent $event) {
             $event->types[] = BasicTemplates::class;
         });
+
+
+        if ((Craft::$app->getRequest()->getIsConsoleRequest()) {
+            $this->controllerNamespace = 'sproutbase\\console\\controllers';
+        } else {
+            $this->controllerNamespace = 'sproutbase\\controllers';
+
+            $this->controllerMap = [
+                'settings'=> SettingsController::class,
+                'notifications' => NotificationsController::class,
+                'fields' => FieldsController::class,
+                'fields-address' => AddressController::class,
+                'reports' => ReportsController::class
+            ];
+        }
+
+        parent::init();
     }
 }
