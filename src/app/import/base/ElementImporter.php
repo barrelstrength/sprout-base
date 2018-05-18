@@ -174,14 +174,10 @@ abstract class ElementImporter extends Importer
 
             $fields = array_merge($relatedFields, $fields);
 
-            $fields = ['fields' => $fields];
-
             // Required to associate fields on the element
             $model->fieldLayoutId = $this->getFieldLayoutId($model);
 
-            Craft::$app->getRequest()->setBodyParams($fields);
-
-            $model->setFieldValuesFromRequest('fields');
+            $model->setFieldValues($fields);
 
             if (isset($settings['content']['title'])) {
                 $model->title = $settings['content']['title'];
