@@ -11,6 +11,7 @@ use barrelstrength\sproutbase\app\email\services\ErrorHelper;
 use barrelstrength\sproutbase\app\email\services\Mailers;
 use barrelstrength\sproutbase\app\email\services\NotificationEmailEvents;
 use barrelstrength\sproutbase\app\email\services\NotificationEmails;
+use barrelstrength\sproutbase\app\fields\services\EmailDropdown;
 use barrelstrength\sproutbase\app\import\services\Themes;
 use barrelstrength\sproutbase\app\reports\services\DataSources;
 use barrelstrength\sproutbase\app\reports\services\Exports;
@@ -53,6 +54,11 @@ class App extends Component
      * @var Email
      */
     public $emailField;
+
+    /**
+     * @var Email
+     */
+    public $emailDropdownField;
 
     /**
      * @var RegularExpression
@@ -137,6 +143,7 @@ class App extends Component
         // Sprout Fields
         $this->addressField = new Address();
         $this->emailField = new Email();
+        $this->emailDropdownField = new EmailDropdown();
         $this->phoneField = new Phone();
         $this->regularExpressionField = new RegularExpression();
         $this->urlField = new Url();
