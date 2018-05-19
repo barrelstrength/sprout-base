@@ -57,26 +57,26 @@
         }) %}
     {% endfor %}
     <div id="siteWrapper" {% if settings.enableMultilingualSitemaps %} class="hidden" {% endif %}>
-    {{ forms.editableTableField({
-        label: "Enable Sitemaps"|t('sprout-seo'),
-        instructions: "Enable each section you wish to include in your XML sitemaps."|t('sprout-seo'),
-        id: 'sites',
-        name: 'sites',
-        cols: {
-            heading: {
-                type: 'heading',
-                heading: "Site"|t('app'),
-                class: 'thin'
+        {{ forms.editableTableField({
+            label: "Enable Sitemaps"|t('sprout-seo'),
+            instructions: "Enable each section you wish to include in your XML sitemaps."|t('sprout-seo'),
+            id: 'sites',
+            name: 'sites',
+            cols: {
+                heading: {
+                    type: 'heading',
+                    heading: "Site"|t('app'),
+                    class: 'thin'
+                },
+                enabled: {
+                    type: 'heading',
+                    class: 'thin'~(not craft.app.getIsMultiSite() ? ' hidden')
+                }
             },
-            enabled: {
-                type: 'heading',
-                class: 'thin'~(not craft.app.getIsMultiSite() ? ' hidden')
-            }
-        },
-        rows: siteRows,
-        staticRows: true,
-        errors: siteErrors|unique
-    }) }}
+            rows: siteRows,
+            staticRows: true,
+            errors: siteErrors|unique
+        }) }}
     </div>
 
     <div id="groupWrapper" {% if not settings.enableMultilingualSitemaps %} class="hidden" {% endif %}>

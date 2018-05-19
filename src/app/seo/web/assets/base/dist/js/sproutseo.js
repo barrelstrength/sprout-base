@@ -34,18 +34,18 @@ if (typeof Craft.SproutSeo === typeof undefined) {
                     $row = $($target).closest('tr');
                     var handle = $($row).data('handle');
 
-				data = {
-					"redirect":  'sprout-seo/sections/{id}',
-					"enabledForSite": true,
-					"sproutseo": {
-						"metadata": {
-							"name":                $($row).data('name'),
-							"handle":              handle,
-							"urlEnabledSectionId": $($row).data('urlEnabledSectionId'),
-							"type":                $($row).data('type')
-						}
-					}
-				};
+                    data = {
+                        "redirect": 'sprout-seo/sections/{id}',
+                        "enabledForSite": true,
+                        "sproutseo": {
+                            "metadata": {
+                                "name": $($row).data('name'),
+                                "handle": handle,
+                                "urlEnabledSectionId": $($row).data('urlEnabledSectionId'),
+                                "type": $($row).data('type')
+                            }
+                        }
+                    };
 
                     Craft.postActionRequest('sprout-seo/section-metadata/save-section-metadata', data, $.proxy(function(response, textStatus) {
                         if (textStatus == 'success') {

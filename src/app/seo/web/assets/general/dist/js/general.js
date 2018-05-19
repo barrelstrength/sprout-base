@@ -14,10 +14,10 @@ $(document).ready(function() {
         var $siteWrapper = $("#settings-siteWrapper");
         var $groupWrapper = $("#settings-groupWrapper");
 
-        if (value == 1){
+        if (value == 1) {
             $groupWrapper.removeClass("hidden");
             $siteWrapper.addClass("hidden");
-        }else{
+        } else {
             $groupWrapper.addClass("hidden");
             $siteWrapper.removeClass("hidden");
         }
