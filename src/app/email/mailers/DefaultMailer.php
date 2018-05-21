@@ -17,10 +17,17 @@ use barrelstrength\sproutlists\elements\Subscribers;
 use barrelstrength\sproutlists\listtypes\SubscriberListType;
 use barrelstrength\sproutlists\records\Lists;
 use barrelstrength\sproutlists\SproutLists;
+use craft\base\Element;
+use craft\base\Volume;
+use craft\db\Query;
+use craft\elements\Asset;
+use craft\elements\db\AssetQuery;
+use craft\fields\Assets;
 use craft\helpers\Json;
 use craft\helpers\Template;
 use Craft;
 use craft\helpers\UrlHelper;
+use craft\volumes\Local;
 use yii\base\Exception;
 use yii\base\InvalidArgumentException;
 
@@ -210,6 +217,26 @@ class DefaultMailer extends Mailer implements NotificationEmailSenderInterface
             SproutBase::$app->emailErrorHelper->addError('blank-template', $message);
         }
 
+        // Adds support for attachments
+        if ($notificationEmail->enableFileAttachments) {
+            if ($object instanceof Element && method_exists($object, 'getFields')) {
+                $externalPaths = [];
+                foreach ($object->getFields() as $field) {
+                    if (get_class($field) === 'barrelstrength\\sproutforms\\fields\\formfields\\FileUpload' OR get_class($field) === Assets::class) {
+                        $query = $object->{$field->handle};
+
+                        if ($query instanceof AssetQuery) {
+                            $assets = $query->all();
+
+                            $this->attachAssetFilesToEmailModel($message, $assets, $externalPaths);
+                        }
+                    }
+                }
+
+                $this->deleteExternalPaths($externalPaths);
+            }
+        }
+
         $processedRecipients = [];
 
         foreach ($recipients as $recipient) {
@@ -261,6 +288,57 @@ class DefaultMailer extends Mailer implements NotificationEmailSenderInterface
         }
 
         return true;
+    }
+
+    /**
+     * @param $externalPaths
+     */
+    protected function deleteExternalPaths($externalPaths)
+    {
+        foreach ($externalPaths as $path)
+        {
+            if (file_exists($path)){
+                unlink($path);
+            }
+        }
+    }
+
+    /**
+     * @param Message $message
+     * @param Asset[] $assets
+     * @param array $externalPaths
+     * @throws \yii\base\InvalidConfigException
+     */
+    protected function attachAssetFilesToEmailModel(Message $message, array $assets, &$externalPaths = [])
+    {
+        foreach ($assets as $asset) {
+            $name = $asset->filename;
+            $volume = $asset->getVolume();
+            $path = null;
+
+            if (get_class($volume) === Local::class) {
+                $path = $this->getAssetFilePath($asset);
+            } else {
+                // External Asset sources
+                $path = $asset->getCopyOfFile();
+                // let's save the path to delete it after sent
+                array_push($externalPaths, $path);
+            }
+            if ($path){
+                $message->attach($path, ['fileName' => $name]);
+            }
+        }
+    }
+
+    /**
+     * @param Asset $asset
+     *
+     * @return string
+     * @throws \yii\base\InvalidConfigException
+     */
+    protected function getAssetFilePath(Asset $asset)
+    {
+        return $asset->getVolume()->getRootPath() . $asset->getFolder()->path . DIRECTORY_SEPARATOR . $asset->filename;
     }
 
     /**
@@ -488,8 +566,8 @@ class DefaultMailer extends Mailer implements NotificationEmailSenderInterface
     }
 
     /**
-     * @param CampaignEmail     $campaignEmail
-     * @param CampaignType      $campaignType
+     * @param CampaignEmail $campaignEmail
+     * @param CampaignType $campaignType
      * @param                   $errors
      *
      * @return array
