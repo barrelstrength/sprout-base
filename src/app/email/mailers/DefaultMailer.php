@@ -217,10 +217,11 @@ class DefaultMailer extends Mailer implements NotificationEmailSenderInterface
             SproutBase::$app->emailErrorHelper->addError('blank-template', $message);
         }
 
+        $externalPaths = [];
+
         // Adds support for attachments
         if ($notificationEmail->enableFileAttachments) {
             if ($object instanceof Element && method_exists($object, 'getFields')) {
-                $externalPaths = [];
                 foreach ($object->getFields() as $field) {
                     if (get_class($field) === 'barrelstrength\\sproutforms\\fields\\formfields\\FileUpload' OR get_class($field) === Assets::class) {
                         $query = $object->{$field->handle};
@@ -232,8 +233,6 @@ class DefaultMailer extends Mailer implements NotificationEmailSenderInterface
                         }
                     }
                 }
-
-                $this->deleteExternalPaths($externalPaths);
             }
         }
 
@@ -286,6 +285,8 @@ class DefaultMailer extends Mailer implements NotificationEmailSenderInterface
         if (!empty($processedRecipients)) {
             $variables['processedRecipients'] = $processedRecipients;
         }
+
+        $this->deleteExternalPaths($externalPaths);
 
         return true;
     }
