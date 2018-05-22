@@ -172,6 +172,22 @@ if (typeof Craft.SproutForms === typeof undefined) {
                 }
             );
 
+            // Adds auto-scroll to main container when dragging
+            var tabScroll = autoScroll(
+                [
+                    document.querySelector('#sprout-forms-tabs')
+                ],
+                {
+                    margin: 20,
+                    maxSpeed: 10,
+                    scrollWhenOutside: true,
+                    autoScroll: function() {
+                        //Only scroll when the pointer is down, and there is a child being dragged.
+                        return this.down && that.drakeTabs.dragging;
+                    }
+                }
+            );
+
             // Add the drop containers for each tab
             for (var i = 0; i < currentTabs.length; i++) {
                 this.drake.containers.push(this.getId('sproutforms-tab-container-' + currentTabs[i].id));
