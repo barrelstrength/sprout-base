@@ -458,3 +458,14 @@ body.rtl #form-settings-tabs ul li {
     //display: none;
 }
 */
+#tabs {
+    width: 100%;
+}
+ul.sproutTabs {
+    width:100% !important;
+    display: flex;
+    overflow-x: auto;
+}
+ul.sproutTabs li {
+    display: inline-table;
+}

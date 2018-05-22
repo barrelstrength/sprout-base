@@ -13,18 +13,18 @@ if (typeof Craft.SproutSeo === typeof undefined) {
     /**
      * Manages the creation of new Section Metadata Sections if they do not exist
      */
-    Craft.SproutSeo.SectionMetadata = Garnish.Base.extend(
+    Craft.SproutSeo.Sitemaps = Garnish.Base.extend(
         {
-            $newSectionMetadataLinks: null,
+            $newSitemapSectionLinks: null,
             submitStatus: false,
 
             init: function() {
-                this.$newSectionMetadataLinks = $('.sectionmetadata-isnew .sproutseo-sectiontitle');
+                this.$newSitemapSectionLinks = $('.sitemapsection-isnew .sproutseo-sectiontitle');
 
-                this.addListener(this.$newSectionMetadataLinks, 'click', 'createAndEditSectionMetadata');
+                this.addListener(this.$newSitemapSectionLinks, 'click', 'createAndEditSitemapSection');
             },
 
-            createAndEditSectionMetadata: function(event) {
+            createAndEditSitemapSection: function(event) {
 
                 event.preventDefault();
 
@@ -47,10 +47,10 @@ if (typeof Craft.SproutSeo === typeof undefined) {
                         }
                     };
 
-                    Craft.postActionRequest('sprout-seo/section-metadata/save-section-metadata', data, $.proxy(function(response, textStatus) {
+                    Craft.postActionRequest('sprout-seo/sitemaps/save-sitemap-section', data, $.proxy(function(response, textStatus) {
                         if (textStatus == 'success') {
                             if (response.success) {
-                                Craft.redirectTo('sprout-seo/sections/' + response.sectionMetadata.id);
+                                Craft.redirectTo('sprout-seo/sections/' + response.sitemapSection.id);
                             }
                         }
                     }, this));
@@ -91,48 +91,44 @@ if (typeof Craft.SproutSeo === typeof undefined) {
                 this.isNew = $row.data('isNew');
                 this.enabled = $('input[name="sproutseo[sections][' + rowId + '][enabled]"]').val();
                 var siteId = $('input[name="siteId"]').val();
-
+                var uri = $('input[name="sproutseo[sections][' + rowId + '][uri]"]').val();
+console.log(siteId);
                 this.status = $('tr[data-rowid="' + rowId + '"] td span.status');
 
                 data = {
-                    "sproutseo": {
-                        "metadata": {
-                            "id": $row.data('id'),
-                            "name": $row.data('name'),
-                            "handle": $row.data('handle'),
-                            "type": $row.data('type'),
-                            "urlEnabledSectionId": $row.data('urlEnabledSectionId'),
-                            "priority": $('select[name="sproutseo[sections][' + rowId + '][priority]"]').val(),
-                            "changeFrequency": $('select[name="sproutseo[sections][' + rowId + '][changeFrequency]"]').val(),
-                            "enabled": this.enabled,
-                            "siteId": siteId
-                        }
-                    }
+                    "id": $row.data('id'),
+                    "type": $row.data('type'),
+                    "urlEnabledSectionId": $row.data('urlEnabledSectionId'),
+                    "uri": uri,
+                    "priority": $('select[name="sproutseo[sections][' + rowId + '][priority]"]').val(),
+                    "changeFrequency": $('select[name="sproutseo[sections][' + rowId + '][changeFrequency]"]').val(),
+                    "enabled": this.enabled,
+                    "siteId": siteId
                 };
 
-                Craft.postActionRequest('sprout-seo/section-metadata/save-section-metadata-via-sitemap-section', data, $.proxy(function(response, textStatus) {
-                    if (textStatus == 'success') {
+                Craft.postActionRequest('sprout-seo/sitemaps/save-sitemap-section', data, $.proxy(function(response, textStatus) {
+                    if (textStatus === 'success') {
                         if (response.success) {
 
                             var keys = rowId.split('-');
                             var type = keys[0];
                             var newRowId = null;
 
-                            if (response.sectionMetadata.urlEnabledSectionId) {
-                                newRowId = type + '-' + response.sectionMetadata.urlEnabledSectionId;
+                            if (response.sitemapSection.urlEnabledSectionId) {
+                                newRowId = type + '-' + response.sitemapSection.urlEnabledSectionId;
                             }
                             else {
-                                newRowId = type + '-' + response.sectionMetadata.id;
+                                newRowId = type + '-' + response.sitemapSection.id;
                             }
 
                             $changedElementRow = $(changedElement).closest('tr');
                             $changedElementTitleLink = $changedElementRow.find('a.sproutseo-sectiontitle');
 
                             if ($changedElementRow.data('isNew')) {
-                                $changedElementTitleLink.attr('href', 'sections/' + response.sectionMetadata.id);
-                                $changedElementRow.removeClass('sectionmetadata-isnew');
+                                $changedElementTitleLink.attr('href', 'sections/' + response.sitemapSection.id);
+                                $changedElementRow.removeClass('sitemapsection-isnew');
                                 $changedElementRow.data('isNew', 0);
-                                $changedElementRow.data('id', response.sectionMetadata.id);
+                                $changedElementRow.data('id', response.sitemapSection.id);
 
                                 $changedElementTitleLink.unbind('click');
                             }

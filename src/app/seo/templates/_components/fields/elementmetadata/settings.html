@@ -3,8 +3,8 @@
 
 {% do view.registerAssetBundle("barrelstrength\\sproutbase\\app\\fields\\web\\assets\\selectother\\SelectOtherFieldAsset") %}
 
-{% set pluginSettings = craft.sproutseo.getSettings() %}
-{% set optimizedTitleOptions = craft.sproutseo.getOptimizedTitleOptions(settings) %}
+{% set pluginSettings = craft.sproutSeo.getSettings() %}
+{% set optimizedTitleOptions = craft.sproutSeo.getOptimizedTitleOptions(settings) %}
 
 <div class="field">
     <div class="heading">
@@ -27,7 +27,7 @@
     </div>
 </div>
 
-{% set optimizedDescriptionOptions = craft.sproutseo.getOptimizedDescriptionOptions(settings) %}
+{% set optimizedDescriptionOptions = craft.sproutSeo.getOptimizedDescriptionOptions(settings) %}
 
 <div class="field">
     <div class="heading">
@@ -49,7 +49,7 @@
     </div>
 </div>
 
-{% set optimizedImageOptions = craft.sproutseo.getOptimizedAssetsOptions(settings) %}
+{% set optimizedImageOptions = craft.sproutSeo.getOptimizedAssetsOptions(settings) %}
 
 <div class="field">
     <div class="heading">
@@ -71,7 +71,7 @@
     </div>
 </div>
 
-{% set optimizedKeywordOptions = craft.sproutseo.getKeywordsOptions() %}
+{% set optimizedKeywordOptions = craft.sproutSeo.getKeywordsOptions() %}
 
 {{ forms.selectField({
     label: "Meta Keywords"|t,

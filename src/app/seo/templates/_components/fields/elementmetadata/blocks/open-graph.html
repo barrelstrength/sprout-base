@@ -1,6 +1,6 @@
 {% import "_includes/forms" as forms %}
 {% import "sprout-base-seo/_includes/sproutseo" as sprout %}
-{% set transformOptions = craft.sproutseo.getTransforms() %}
+{% set transformOptions = craft.sproutSeo.getTransforms() %}
 <div class="sproutseo-box-opengraph">
 
     <div class="sproutseo-fields" id="open-graph">
@@ -39,8 +39,7 @@
             label: 'Image'|t ~ sprout.infoIcon({
                 label: 'Image'|t,
                 openGraph: true,
-                twitterCard: true,
-                priority: (fieldContext == 'sectionMetadata') ? 'sections' : 'elements'
+                twitterCard: true
             }),
             instructions: 'An image that represents your content that will display in Open Graph metadata.'|t,
         }, forms.elementSelect({

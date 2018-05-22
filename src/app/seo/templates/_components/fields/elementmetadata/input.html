@@ -4,13 +4,13 @@
 {% do view.registerAssetBundle("barrelstrength\\sproutbase\\app\\seo\\web\\assets\\elementmetadata\\ElementMetadataAsset") %}
 
 {% set nameContext      = elementHandle is defined ? elementHandle : 'sproutseo' %}
-{% set pluginSettings   = craft.sproutseo.getSettings() %}
-{% set schemas          = craft.sproutseo.getSchemaOptions() %}
-{% set schemaSubtypes   = craft.sproutseo.getSchemaSubtypes(schemas) %}
+{% set pluginSettings   = craft.sproutSeo.getSettings() %}
+{% set schemas          = craft.sproutSeo.getSchemaOptions() %}
+{% set schemaSubtypes   = craft.sproutSeo.getSchemaSubtypes(schemas) %}
 {% set mainEntityValues = {'schemaTypeId': values.schemaTypeId, 'schemaOverrideTypeId': values.schemaOverrideTypeId} %}
 
 {% set displayMetadataField = false %}
-{% set maxDescriptionLength = craft.sproutseo.getDescriptionLength() %}
+{% set maxDescriptionLength = craft.sproutSeo.getDescriptionLength() %}
 
 {% set livePreviewSources= {} %}
 
@@ -71,17 +71,14 @@
 
             {% set displayMetadataField = true %}
 
-            {% set appendTitleValueInstructions = " <a href='#' class='fieldtoggle instructionstoggle' data-target='toggle-appendtitlevalue'>Append dynamic value to Meta Titles</a>."|t %}
-
             {{ forms.textField({
                 label: 'Meta Title'|t ~ sprout.infoIcon({
                     label: "Meta Title"|t,
                     search: true,
                     openGraph: true,
-                    twitterCard: true,
-                    priority: (fieldContext == 'sectionMetadata') ? 'sections' : 'elements'
+                    twitterCard: true
                 }),
-                instructions: "The Title of your content which will appear in search results and social sharing."|t ~ (fieldContext == 'sectionMetadata' ? appendTitleValueInstructions : ""),
+                instructions: "The Title of your content which will appear in search results and social sharing."|t,
                 name: nameContext~'[metadata][optimizedTitle]',
                 id: 'sproutseo-optimizedtitle',
                 maxlength: 60,
@@ -95,25 +92,6 @@
 
         {% endif %}
 
-        {% if fieldContext == 'sectionMetadata' %}
-            <div id="toggle-appendtitlevalue"
-                 class="{{ (values['appendTitleValue'] is defined and values.appendTitleValue ?:
-                 'hidden' ) }}">
-                {{ forms.textField({
-                    label: "Append Meta Title"|t ~ sprout.infoIcon({
-                        label: "Append Meta Title"|t,
-                        search: true,
-                        priority: 'elements'
-                    }),
-                    instructions: "Append a custom value at the end of all Meta Titles in this Section Metadata, i.e. <i>Article Title - " ~ siteName ~ "</i>. This setting overrides the <a href='" ~ cpUrl('sprout-seo/globals/customization') ~ "'>default setting</a> and will apply to all titles within this Section Metadata."|t,
-                    name: nameContext~'[metadata][appendTitleValue]',
-                    value: values.appendTitleValue ?? null,
-                    placeholder: 'Key Phrase {divider} {siteName}'|t,
-                    class: 'nicetext'
-                }) }}
-            </div>
-        {% endif %}
-
         {% if settings.optimizedDescriptionField == 'manually' %}
 
             {% set displayMetadataField = true %}
@@ -123,8 +101,7 @@
                     label: "Meta Description"|t,
                     search: true,
                     openGraph: true,
-                    twitterCard: true,
-                    priority: (fieldContext == 'sectionMetadata') ? 'sections' : 'elements'
+                    twitterCard: true
                 }),
                 instructions: "A description of your content which will appear in search results and social sharing."|t,
                 name: nameContext~'[metadata][optimizedDescription]',
@@ -144,8 +121,7 @@
                 label: 'Meta Image'|t ~ sprout.infoIcon({
                     label: "Meta Image"|t,
                     openGraph: true,
-                    twitterCard: true,
-                    priority: (fieldContext == 'sectionMetadata') ? 'sections' : 'elements'
+                    twitterCard: true
                 }),
                 instructions: 'A featured image that represents your content that will display in social sharing.'|t,
                 id: 'sproutseo-optimizedimage',
@@ -172,8 +148,7 @@
                     search: true,
                     structured: true,
                     openGraph: true,
-                    twitterCard: true,
-                    priority: (fieldContext == 'sectionMetadata') ? 'sections' : 'elements'
+                    twitterCard: true
                 }),
                 instructions: "The URL of your webpage"|t,
                 id: 'sproutseo-canonical',
@@ -192,8 +167,7 @@
             {{ forms.textField({
                 label: "Meta Keywords"|t ~ sprout.infoIcon({
                     label: "Meta Keywords"|t,
-                    search: true,
-                    priority: (fieldContext == 'sectionMetadata') ? 'sections' : 'elements'
+                    search: true
                 }),
                 instructions: "The primary keywords or phrases that describe your website."|t,
                 id: 'sproutseo-optimizedkeywords',
@@ -203,7 +177,7 @@
         {% endif %}
 
 
-        {% if fieldContext == 'sectionMetadata' or (fieldContext == 'field' and pluginSettings.enableMetaDetailsFields and settings.showMainEntity) %}
+        {% if pluginSettings.enableMetaDetailsFields and settings.showMainEntity %}
 
             {% set displayMetadataField = true %}
 
@@ -213,8 +187,7 @@
                         label: 'Main Entity'|t ~ sprout.infoIcon({
                             label: "Meta Image"|t,
                             search: true,
-                            structured: true,
-                            priority: (fieldContext == 'sectionMetadata') ? 'sections' : 'elements'
+                            structured: true
                         }),
                         instructions: 'Select the Structured Data schema type that best represents your content. Test your metadata using the <a href="https://search.google.com/structured-data/testing-tool" target="_blank">Structured Data Testing Tool</a>. Advanced integrations may be necessary for more specialized data types.'|t,
                         class: 'mainentity-firstdropdown',
@@ -313,8 +286,7 @@
                                 {{ svg('@sproutbaseicons/search.svg') }}
                             </i> {{ "Search Meta"|t }} {{ sprout.infoIcon({
                                 label: "Search Meta"|t,
-                                search: true,
-                                priority: (fieldContext == 'sectionMetadata') ? 'sections' : 'elements',
+                                search: true
                                 message: 'All fields in this block take priority for the Search metadata at this priority level.'|t
                             }) }}</div>
                     </div>
@@ -334,7 +306,6 @@
                             </i> {{ "Open Graph"|t }} {{ sprout.infoIcon({
                                 label: "Open Graph"|t,
                                 openGraph: true,
-                                priority: (fieldContext == 'sectionMetadata') ? 'sections' : 'elements',
                                 message: 'All fields in this block take priority for the Open Graph metadata at this priority level.'|t
                             }) }}
                         </div>
@@ -355,7 +326,6 @@
                             </i> {{ "Twitter Card"|t }} {{ sprout.infoIcon({
                                 label: "Twitter Card"|t,
                                 twitterCard: true,
-                                priority: (fieldContext == 'sectionMetadata') ? 'sections' : 'elements',
                                 message: 'All fields in this block take priority for the Twitter Card metadata at this priority level.'|t
                             }) }}</div>
                     </div>
@@ -374,7 +344,6 @@
                             </i> {{ "Geo"|t }} {{ sprout.infoIcon({
                                 label: "Geo"|t,
                                 geo: true,
-                                priority: (fieldContext == 'sectionMetadata') ? 'sections' : 'elements',
                                 message: 'All fields in this block take priority for the Geographic metadata at this priority level.'|t
                             }) }}</div>
                         <div class="preview"></div>
@@ -395,7 +364,6 @@
                             </i> {{ "Robots"|t }} {{ sprout.infoIcon({
                                 label: "Robots"|t,
                                 robots: true,
-                                priority: (fieldContext == 'sectionMetadata') ? 'sections' : 'elements',
                                 message: 'All fields in this block take priority for the Robots metadata at this priority level.'|t
                             }) }}</div>
                     </div>
@@ -466,7 +434,7 @@ feel like they are part of the natural flow of fields #}
 
 {% js %}
 
-    {% if fieldContext != 'sectionMetadata' and settings.displayPreview %}
+    {% if settings.displayPreview %}
         // Existing Entries have a wrapper around the live preview and share buttons
         var $previewButtonsElement = $('.previewbtns');
 
@@ -570,7 +538,7 @@ feel like they are part of the natural flow of fields #}
     var divId = $(this).attr("data-type");
     $(".fields-"+divId).toggle();
 
-    // Section Metadata Settings
+    // Sitemap Settings
     var btn = $("#btn-"+divId);
     if (btn.length)
     {
@@ -653,7 +621,7 @@ feel like they are part of the natural flow of fields #}
         {% endif %}
     {% endif %}
 
-    {% set optimizedTitleFieldHandles = craft.sproutseo.getCustomSettingFieldHandles(settings.optimizedTitleField) %}
+    {% set optimizedTitleFieldHandles = craft.sproutSeo.getCustomSettingFieldHandles(settings.optimizedTitleField) %}
 
     {% if optimizedTitleFieldHandles %}
         var metaTitleSeoButton = $('div.sproutseo-metatitle-info').html();
@@ -712,7 +680,7 @@ feel like they are part of the natural flow of fields #}
         {% endif %}
     {% endif %}
 
-    {% set optimizedDescriptionFieldHandles = craft.sproutseo.getCustomSettingFieldHandles(settings.optimizedDescriptionField) %}
+    {% set optimizedDescriptionFieldHandles = craft.sproutSeo.getCustomSettingFieldHandles(settings.optimizedDescriptionField) %}
 
     {% if optimizedDescriptionFieldHandles %}
         {% for descriptionFieldHandle in optimizedDescriptionFieldHandles %}
@@ -751,7 +719,7 @@ feel like they are part of the natural flow of fields #}
         {% endfor %}
     {% endif %}
 
-    {% set optimizedImageFieldHandles = craft.sproutseo.getCustomSettingFieldHandles(settings.optimizedImageField) %}
+    {% set optimizedImageFieldHandles = craft.sproutSeo.getCustomSettingFieldHandles(settings.optimizedImageField) %}
 
     {% if optimizedImageFieldHandles %}
         {% for imageFieldHandle in optimizedImageFieldHandles %}

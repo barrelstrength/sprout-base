@@ -3,7 +3,7 @@
 {% do view.registerAssetBundle("barrelstrength\\sproutbase\\app\\seo\\web\\assets\\base\\BaseAsset") %}
 
 {% if title is not defined %}
-    {% set title = craft.SproutSeo.name %}
+    {% set title = craft.sproutSeo.name %}
 {% endif %}
 
 {% set subnav = {
@@ -13,7 +13,7 @@
     },
     sections: {
         label: "Sections"|t,
-        url: cpUrl('sprout-seo/sections')
+        url: cpUrl('sprout-seo/sitemaps')
     },
     sitemap: {
         label: "Sitemap"|t,

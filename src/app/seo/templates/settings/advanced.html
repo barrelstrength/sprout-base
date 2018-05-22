@@ -1,7 +1,7 @@
 {% import "_includes/forms" as forms %}
 
-{% set settings = craft.sproutseo.getSettings() %}
-{% set localeOptions = craft.sproutseo.getLocaleOptions() %}
+{% set settings = craft.sproutSeo.getSettings() %}
+{% set localeOptions = craft.sproutSeo.getLocaleOptions() %}
 
 {{ forms.field({
     label: "Advanced Settings"|t|upper,
@@ -19,8 +19,8 @@
 }) }}
 
 {{ forms.lightswitchField({
-    label: "Enable Custom Sections"|t,
-    instructions: "Enable this setting to manage metadata for Sections with Custom URL requirements. Custom Sections require an additional step within your templates to output your metadata."|t,
+    label: "Enable Custom Sitemap Pages"|t,
+    instructions: "Enable this setting to add Pages to your Sitemaps with Custom URL requirements."|t,
     name: 'enableCustomSections',
     on: (settings.enableCustomSections is empty ? false : true),
     onLabel: "Enable"|t
