@@ -452,7 +452,7 @@ if (typeof Craft.SproutForms === typeof undefined) {
 
                         // Insert the new tab before the Add Tab button
                         var href = '#sproutforms-tab-' + tab.id;
-                        $("#sprout-forms-tabs").append('<li><a id="tab-' + tab.id + '" class="tab" href="' + href + '" tabindex="0"><span class="tab-label">' + tab.name + '</span>&nbsp;' + this.wheelHtml + '</a></li>');
+                        $("#sprout-forms-tabs").append('<li class="drag-tab"><a id="tab-' + tab.id + '" class="tab" href="' + href + '" tabindex="0"><span class="tab-label">' + tab.name + '</span>&nbsp;' + this.wheelHtml + '</a></li>');
                         var $editBtn = $("#tab-" + tab.id).find('.settings');
                         // add listener to the wheel
                         that.initializeWheel($editBtn, 'tab-' + tab.id);
