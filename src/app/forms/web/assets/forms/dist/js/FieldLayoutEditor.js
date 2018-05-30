@@ -32,6 +32,7 @@ if (typeof Craft.SproutForms === typeof undefined) {
         // The dragula instance for tabs
         drakeTabs: null,
         tabsLayout: null,
+        $saveFormButton: null,
 
         /**
          * The constructor.
@@ -39,6 +40,9 @@ if (typeof Craft.SproutForms === typeof undefined) {
          */
         init: function(currentTabs, continueEditing) {
             var that = this;
+
+            this.$saveFormButton = $("#save-form-button");
+
             this.continueEditing = continueEditing;
 
             this.initButtons();
@@ -168,10 +172,37 @@ if (typeof Craft.SproutForms === typeof undefined) {
                 }
             );
 
+            // Adds auto-scroll to main container when dragging
+            var tabScroll = autoScroll(
+                [
+                    document.querySelector('#sprout-forms-tabs')
+                ],
+                {
+                    margin: 20,
+                    maxSpeed: 10,
+                    scrollWhenOutside: true,
+                    autoScroll: function() {
+                        //Only scroll when the pointer is down, and there is a child being dragged.
+                        return this.down && that.drakeTabs.dragging;
+                    }
+                }
+            );
+
             // Add the drop containers for each tab
             for (var i = 0; i < currentTabs.length; i++) {
                 this.drake.containers.push(this.getId('sproutforms-tab-container-' + currentTabs[i].id));
             }
+            // Prevent save with Ctrl+S when the the field is dropped
+            /*$(document).bind('keydown', function(e) {
+                if(e.ctrlKey && (e.which == 83)) {
+                    if (!that.$saveFormButton.removeClass('disabled').siblings('.spinner').hasClass("hidden")){
+                        e.preventDefault();
+                        e.stopPropagation();
+                        // Not working
+                        return false;
+                    }
+                }
+            });*/
         },
 
         clickHandler: function(e) {
@@ -187,6 +218,9 @@ if (typeof Craft.SproutForms === typeof undefined) {
         },
 
         createDefaultField: function(type, tabId, tabName, el) {
+            var that = this;
+            //this.$saveFormButton.addClass('disabled').siblings('.spinner').removeClass('hidden');
+
             $(el).removeClass('source-field');
             $(el).addClass('target-field');
             $(el).find('.source-field-header').remove();
@@ -222,6 +256,7 @@ if (typeof Craft.SproutForms === typeof undefined) {
             Craft.postActionRequest('sprout-forms/fields/create-field', data, $.proxy(function(response, textStatus) {
                 if (textStatus === 'success') {
                     this.initFieldOnDrop(response.field, tabName, el);
+                    //that.$saveFormButton.removeClass('disabled').siblings('.spinner').addClass('hidden');
                 }
             }, this));
         },
@@ -433,7 +468,7 @@ if (typeof Craft.SproutForms === typeof undefined) {
 
                         // Insert the new tab before the Add Tab button
                         var href = '#sproutforms-tab-' + tab.id;
-                        $("#sprout-forms-tabs").append('<li><a id="tab-' + tab.id + '" class="tab" href="' + href + '" tabindex="0"><span class="tab-label">' + tab.name + '</span>&nbsp;' + this.wheelHtml + '</a></li>');
+                        $("#sprout-forms-tabs").append('<li class="drag-tab"><a id="tab-' + tab.id + '" class="tab" href="' + href + '" tabindex="0"><span class="tab-label">' + tab.name + '</span>&nbsp;' + this.wheelHtml + '</a></li>');
                         var $editBtn = $("#tab-" + tab.id).find('.settings');
                         // add listener to the wheel
                         that.initializeWheel($editBtn, 'tab-' + tab.id);

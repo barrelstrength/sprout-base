@@ -76,24 +76,6 @@ abstract class DataSource
     }
 
     /**
-     * Returns a fully qualified string that uniquely identifies the given data source
-     *
-     * @format {plugin}-{source}
-     * 1. {plugin} should be the lower case version of the plugin handle
-     * 3. {source} should be the lower case version of your data source without prefixes or suffixes
-     *
-     * @example
-     * - SproutFormsSubmissionsDataSource   > sproutforms-submissions
-     * - CustomQuery > sproutreports-customquery
-     *
-     * @return string
-     */
-    final public function getDataSourceSlug()
-    {
-        return $this->dataSourceSlug;
-    }
-
-    /**
      * Set a Report on our data source.
      *
      * @param Report|null $report
@@ -176,18 +158,7 @@ abstract class DataSource
     }
 
     /**
-     * Returns the CP URL for the given data source with the option to append to it once composed
-     *
-     * @legend
-     * Breaks apart the data source id and transforms its components into a URL friendly string
-     *
-     * @example
-     * sproutReports.customQuery > sproutreports/customquery
-     * sproutreports.customquery > sproutreports/customquery
-     *
-     * @see getDataSourceSlug()
-     *
-     * @param string $append
+     * Returns the CP URL for the given data source
      *
      * @return string
      */
@@ -195,7 +166,7 @@ abstract class DataSource
     {
         $pluginHandle = Craft::$app->getRequest()->getSegment(1);
 
-        $baseUrl = $pluginHandle.'/reports/'.$this->dataSourceId.'-'.$this->getDataSourceSlug().'/';
+        $baseUrl = $pluginHandle.'/reports/';
 
         $appendedUrl = ltrim($append, '/');
 

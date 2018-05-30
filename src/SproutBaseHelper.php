@@ -19,14 +19,8 @@ abstract class SproutBaseHelper
     public static function registerModule()
     {
         if (!Craft::$app->hasModule('sprout-base')) {
-            $module = SproutBase::class;
 
-            if (Craft::$app->getRequest()->isConsoleRequest){
-                // @todo - research why this is causing problems when using the craft console.
-                $module = null;
-            }
-
-            Craft::$app->setModule('sprout-base', $module);
+            Craft::$app->setModule('sprout-base', SproutBase::class);
 
             // Have Craft load this module right away (so we can create templates)
             Craft::$app->getModule('sprout-base');

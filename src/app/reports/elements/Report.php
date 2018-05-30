@@ -117,11 +117,22 @@ class Report extends Element
      */
     public function getCpEditUrl()
     {
-        $pluginHandle = Craft::$app->request->getBodyParam('criteria.pluginHandle') ?: 'sprout-reports';
+        $pluginHandle = null;
+
+        if (Craft::$app->getRequest()->getIsActionRequest())
+        {
+            // criteria.pluginHandle is used on the Report Element index page
+            $pluginHandle = Craft::$app->request->getBodyParam('criteria.pluginHandle') ?? 'sprout-reports';
+        }
+        else
+        {
+            // Used on Results page
+            $pluginHandle = Craft::$app->getRequest()->getSegment(1) ?? 'sprout-reports';
+        }
 
         $dataSource = SproutBase::$app->dataSources->getDataSourceById($this->dataSourceId);
 
-        return UrlHelper::cpUrl($pluginHandle.'/reports/'.$this->dataSourceId.'-'.$dataSource->getDataSourceSlug().'/edit/'.$this->id);
+        return UrlHelper::cpUrl($pluginHandle.'/reports/'.$this->dataSourceId.'/edit/'.$this->id);
     }
 
     /**

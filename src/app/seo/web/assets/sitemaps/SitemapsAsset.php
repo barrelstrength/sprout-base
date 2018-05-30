@@ -5,19 +5,19 @@
  * @license   http://sprout.barrelstrengthdesign.com/license
  */
 
-namespace barrelstrength\sproutbase\app\seo\web\assets\sectionmetadata;
+namespace barrelstrength\sproutbase\app\seo\web\assets\sitemaps;
 
 use barrelstrength\sproutbase\app\seo\web\assets\base\BaseAsset;
 use craft\web\AssetBundle;
 
-class SectionMetadataAsset extends AssetBundle
+class SitemapsAsset extends AssetBundle
 {
     /**
      * @inheritdoc
      */
     public function init()
     {
-        $this->sourcePath = '@sproutbase/app/seo/web/assets/sectionmetadata/dist';
+        $this->sourcePath = '@sproutbase/app/seo/web/assets/sitemaps/dist';
 
         $this->depends = [
             BaseAsset::class

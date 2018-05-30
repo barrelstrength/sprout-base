@@ -1,0 +1,31 @@
+{% extends "sprout-base-seo/_layouts/elementindex" %}
+{% set elementType = 'barrelstrength\\sproutseo\\elements\\Redirect' %}
+
+{% set title = "Redirects" %}
+
+{% block contextMenu %}
+    {% if craft.app.getIsMultiSite() %}
+        {% include "_elements/sitemenu" with {
+            selectedSiteId: currentSite.id,
+            siteIds: enabledSiteIds,
+            urlFormat: "sprout-seo/redirects/{handle}"
+        } %}
+
+        <div style="margin-left:20px;"><code>{{ baseUrl }}</code></div>
+    {% endif %}
+{% endblock %}
+
+{% block actionButton %}
+    <div class="buttons">
+        <a class="btn submit add icon"
+           href="{{ url('sprout-seo/redirects/' ~ currentSite.handle ~ '/new') }}">{{ "New Redirect"|t }}</a>
+    </div>
+{% endblock %}
+
+{% css %}
+    .element.small.hasstatus
+    {
+    word-break: break-all;
+    hyphens: auto;
+    }
+{% endcss %}

@@ -83,7 +83,8 @@ class Email extends Component
 
         // Allow our email Element to override our settings
         if ($notificationEmail->emailTemplateId) {
-            $emailTemplate = new $notificationEmail->emailTemplateId();
+
+            $emailTemplate = $this->getEmailTemplateById($notificationEmail->emailTemplateId);
 
             if ($emailTemplate) {
                 // custom path by template API
@@ -95,6 +96,27 @@ class Email extends Component
         }
 
         return $templatePath;
+    }
+
+    /**
+     * Gets the EmailTemplate class or returns null if we have no match.
+     * If no match is found we have a custom override path
+     *
+     * @param $templateId
+     *
+     * @return null|EmailTemplates
+     */
+    public function getEmailTemplateById($templateId)
+    {
+        $templates = $this->getAllEmailTemplates();
+
+        foreach ($templates as $type => $template) {
+            if ($type == $templateId) {
+                return new $templateId();
+            }
+        }
+
+        return null;
     }
 
     /**

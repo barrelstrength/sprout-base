@@ -67,17 +67,6 @@ class SproutBase extends Module
     public $sourceLanguage = 'en-US';
 
     /**
-     * @var array
-     */
-    public $controllerMap = [
-        'settings'=> SettingsController::class,
-        'notifications' => NotificationsController::class,
-        'fields' => FieldsController::class,
-        'fields-address' => AddressController::class,
-        'reports' => ReportsController::class
-    ];
-
-    /**
      * @todo - Copied from craft/base/plugin. Ask P&T if this is the best approach
      *
      * @inheritdoc
@@ -115,13 +104,11 @@ class SproutBase extends Module
 
     public function init()
     {
-        parent::init();
-
         self::$app = new App();
 
         Craft::setAlias('@sproutbase', $this->getBasePath());
         Craft::setAlias('@sproutbaselib', dirname(__DIR__, 2).'/sprout-base/lib');
-        Craft::setAlias('@sproutbaseicons', $this->getBasePath().'/sproutbase/web/assets/icons');
+        Craft::setAlias('@sproutbaseicons', $this->getBasePath().'/web/assets/icons');
 
         // Register our base template path
         Event::on(View::class, View::EVENT_REGISTER_CP_TEMPLATE_ROOTS, function(RegisterTemplateRootsEvent $e) {
@@ -158,5 +145,22 @@ class SproutBase extends Module
         Event::on(Email::class, Email::EVENT_REGISTER_EMAIL_TEMPLATES, function(RegisterComponentTypesEvent $event) {
             $event->types[] = BasicTemplates::class;
         });
+
+
+        if (Craft::$app->getRequest()->getIsConsoleRequest()) {
+            $this->controllerNamespace = 'sproutbase\\console\\controllers';
+        } else {
+            $this->controllerNamespace = 'sproutbase\\controllers';
+
+            $this->controllerMap = [
+                'settings'=> SettingsController::class,
+                'notifications' => NotificationsController::class,
+                'fields' => FieldsController::class,
+                'fields-address' => AddressController::class,
+                'reports' => ReportsController::class
+            ];
+        }
+
+        parent::init();
     }
 }

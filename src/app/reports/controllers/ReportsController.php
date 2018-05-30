@@ -30,18 +30,17 @@ class ReportsController extends Controller
      */
     public function actionIndex($dataSourceId = null, $groupId = null)
     {
-        $reportContext = 'sprout-reports';
+        $currentPluginHandle = Craft::$app->request->getSegment(1);
+
         $dataSources = [];
 
-        // If a type is provided we have an integration
-        if ($dataSourceId !== null) {
-            $reportContext = 'sprout-integration';
+        if ($currentPluginHandle !== 'sprout-reports') {
 
             $dataSource = SproutBase::$app->dataSources->getDataSourceById($dataSourceId);
 
             // Update to match the multi-datasource syntax
             if ($dataSource) {
-                $dataSources[$dataSource->getDataSourceSlug()] = $dataSource;
+                $dataSources[get_class($dataSource)] = $dataSource;
             }
 
             $reports = SproutBase::$app->reports->getReportsBySourceId($dataSourceId);
@@ -62,11 +61,11 @@ class ReportsController extends Controller
             /**
              * @var $dataSource DataSource
              */
-            // Make sure we ignore the allowNew setting if we're displaying a Reports integration
-            if ($dataSource AND (bool)$dataSource->allowNew() OR $reportContext === 'sprout-integration') {
+            // Ignore the allowNew setting if we're displaying a Reports integration
+            if ($dataSource AND (bool)$dataSource->allowNew() OR $currentPluginHandle !== 'sprout-reports') {
                 $newReportOptions[] = [
                     'name' => $dataSource->getName(),
-                    'url' => $dataSource->getUrl('/new')
+                    'url' => $dataSource->getUrl($dataSource->dataSourceId.'/new')
                 ];
             }
         }
@@ -76,7 +75,7 @@ class ReportsController extends Controller
             'groupId' => $groupId,
             'reports' => $reports,
             'newReportOptions' => $newReportOptions,
-            'reportContext' => $reportContext
+            'currentPluginHandle' => $currentPluginHandle
         ]);
     }
 
@@ -91,6 +90,8 @@ class ReportsController extends Controller
      */
     public function actionResultsIndex(Report $report = null, int $reportId = null)
     {
+        $currentPluginHandle = Craft::$app->request->getSegment(1);
+
         if ($report === null) {
             $report = SproutBase::$app->reports->getReport($reportId);
         }
@@ -100,7 +101,12 @@ class ReportsController extends Controller
 
             $labels = $dataSource->getDefaultLabels($report);
 
-            $variables['reportIndexUrl'] = $dataSource->getUrl();
+            $variables['reportIndexUrl'] = $dataSource->getUrl($report->groupId);
+
+            if ($currentPluginHandle !== 'sprout-reports') {
+                $variables['reportIndexUrl'] = $dataSource->getUrl($dataSource->dataSourceId);
+            }
+
             $variables['dataSource'] = null;
             $variables['report'] = $report;
             $variables['values'] = [];
@@ -138,8 +144,10 @@ class ReportsController extends Controller
      * @return \yii\web\Response
      * @throws \yii\base\Exception
      */
-    public function actionEditReport(string $dataSourceId, string $dataSourceSlug, Report $report = null, int $reportId = null)
+    public function actionEditReport(string $dataSourceId, Report $report = null, int $reportId = null)
     {
+        $currentPluginHandle = Craft::$app->request->getSegment(1);
+
         $reportElement = new Report();
         $reportElement->enabled = 1;
 
@@ -156,7 +164,11 @@ class ReportsController extends Controller
 
         $dataSource = $reportElement->getDataSource();
 
-        $reportIndexUrl = $dataSource->getUrl();
+        $reportIndexUrl = $dataSource->getUrl($reportElement->groupId);
+
+        if ($currentPluginHandle !== 'sprout-reports') {
+            $reportIndexUrl = $dataSource->getUrl($dataSource->dataSourceId);
+        }
 
         // Make sure you navigate to the right plugin page after saving and breadcrumb
         if (Craft::$app->request->getSegment(1) == 'sprout-reports') {
