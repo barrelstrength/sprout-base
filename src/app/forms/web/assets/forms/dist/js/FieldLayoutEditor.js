@@ -570,7 +570,7 @@ if (typeof Craft.SproutForms === typeof undefined) {
             var tab = $($fieldDiv).closest(".sproutforms-tab-fields");
             var tabName = tab.data('tabname');
             var tabId = tab.data('tabid');
-
+            
             if (tabName !== group.name) {
                 // let's remove the hidden field just if the user change the tab
                 $($fieldDiv).find('.id-input').remove();
@@ -578,7 +578,7 @@ if (typeof Craft.SproutForms === typeof undefined) {
                 // create the new hidden field and add it to the field div
                 var $field = $([
                     '<input class="id-input" type="hidden" name="fieldLayout[', group.name, '][]" value="', field.id, '">'
-                ].join('')).appendTo($(el));
+                ].join('')).appendTo($($fieldDiv));
 
                 // move the field to another tab
                 var newTab = $("#sproutforms-tab-container-" + group.id);

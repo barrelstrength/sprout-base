@@ -16,7 +16,7 @@ class m180515_000001_rename_datasources_pluginId_column extends Migration
     {
         $table = '{{%sproutreports_datasources}}';
 
-        if ($this->db->columnExists($table, 'pluginId')) {
+        if ($this->db->columnExists($table, 'pluginId') && !$this->db->columnExists($table, 'pluginHandle')) {
             $this->renameColumn($table, 'pluginId', 'pluginHandle');
         }
 

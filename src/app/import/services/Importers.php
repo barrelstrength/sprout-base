@@ -20,6 +20,7 @@ use barrelstrength\sproutimport\importers\fields\MultiSelect;
 use barrelstrength\sproutimport\importers\fields\Number;
 use barrelstrength\sproutimport\importers\fields\Email;
 use barrelstrength\sproutimport\importers\fields\PlainText;
+use barrelstrength\sproutimport\importers\fields\Products;
 use barrelstrength\sproutimport\importers\fields\RadioButtons;
 use barrelstrength\sproutimport\importers\fields\Redactor;
 use barrelstrength\sproutimport\importers\fields\Table;
@@ -100,6 +101,10 @@ class Importers extends Component
 
         if (Craft::$app->getPlugins()->getPlugin('redactor')) {
             $importerTypes[] = Redactor::class;
+        }
+
+        if (Craft::$app->getPlugins()->getPlugin('commerce')) {
+            $importerTypes[] = Products::class;
         }
 
         $event = new RegisterComponentTypesEvent([
