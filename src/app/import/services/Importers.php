@@ -315,7 +315,7 @@ class Importers extends Component
             }
 
             if ($weedModel != null) {
-                if ($weedModel->seedType == true && isset($result->id)) {
+                if ($weedModel->seed == true && $weedModel->seedType == true && isset($result->id)) {
                     $seedAttributes = [
                         'itemId' => $result->id,
                         'type' => get_class($importerClass),
