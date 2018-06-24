@@ -141,10 +141,10 @@ abstract class Importer
      * The primary model that the Importer supports
      *
      * Examples:
-     * - UserModel => User
-     * - FieldModel => Field
-     * - PlainTextFieldType => PlainText
-     * - SproutForms_FormModel => SproutForms_Form
+     * - \craft\elements\Entry::class
+     * - \craft\elements\Category::class
+     * - \craft\models\Section::class
+     * - \barrelstrength\sproutimport\models\importers\Field::class
      *
      * @return mixed
      */

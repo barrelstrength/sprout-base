@@ -305,13 +305,9 @@ class Importers extends Component
             }
 
             if ($importerClass->model instanceof Element) {
-                $importer = SproutImport::$app->elementImporter;
-
-                $newModel = $importer->saveElement($row, $importerClass);
+                $newModel = SproutImport::$app->elementImporter->saveElement($row, $importerClass);
             } else {
-                $importer = SproutImport::$app->settingsImporter;
-
-                $newModel = $importer->saveSetting($row, $importerClass);
+                $newModel = SproutImport::$app->settingsImporter->saveSetting($row, $importerClass);
             }
 
             if (!$this->isWeedable($weedModel, $newModel)) {
@@ -335,7 +331,7 @@ class Importers extends Component
         }
 
         // Assign importer errors to utilities error for easy debugging and call of errors.
-        if ($newModel == false && ($importer != null AND $importer->hasErrors())) {
+        if ($newModel === false && ($importer !== null AND $importer->hasErrors())) {
             $this->addErrors($importer->getErrors());
         }
 
@@ -354,7 +350,7 @@ class Importers extends Component
             return false;
         }
 
-        if ($newModel->id !== null)
+        if (!isset($newModel->id))
         {
             return false;
         }
