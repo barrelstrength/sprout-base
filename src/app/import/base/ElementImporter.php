@@ -76,8 +76,6 @@ abstract class ElementImporter extends Importer
             $this->isUpdated = true;
         }
 
-        $authorId = null;
-
         if (isset($settings['attributes'])) {
             $attributes = $settings['attributes'];
 
