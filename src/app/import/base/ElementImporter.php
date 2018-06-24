@@ -253,6 +253,11 @@ abstract class ElementImporter extends Importer
         }
     }
 
+    protected function beforeValidateElement()
+    {
+
+    }
+
     protected function afterSaveElement()
     {
 
