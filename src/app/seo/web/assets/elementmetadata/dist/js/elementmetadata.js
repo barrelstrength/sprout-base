@@ -74,10 +74,10 @@ $(document).ready(function() {
         firstSelection = firstDropDown.val();
 
         // Clear all dropdowns down to the hierarchy
-        clearDropDown($("#organization :input"), 1);
+        clearDropDown($(".organization-info :input"), 1);
 
         // Disable all dropdowns down to the hierarchy
-        disableDropDown($("#organization :input"), 1);
+        disableDropDown($(".organization-info :input"), 1);
 
         // Check current selection
         if (typeof items[firstSelection] === 'undefined' || firstSelection === '' || items[firstSelection].length <= 0) {

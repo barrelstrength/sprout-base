@@ -37,7 +37,11 @@ class Url extends Component
                 return true;
             }
         } else {
-            if (!filter_var($value, FILTER_VALIDATE_URL) === false) {
+            $path = parse_url($value, PHP_URL_PATH);
+            $encodedPath = array_map('urlencode', explode('/', $path));
+            $url = str_replace($path, implode('/', $encodedPath), $value);
+
+            if (!filter_var($url, FILTER_VALIDATE_URL) === false) {
                 return true;
             }
         }

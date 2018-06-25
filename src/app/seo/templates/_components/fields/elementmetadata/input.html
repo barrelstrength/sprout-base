@@ -5,9 +5,7 @@
 
 {% set nameContext      = elementHandle is defined ? elementHandle : 'sproutseo' %}
 {% set pluginSettings   = craft.sproutSeo.getSettings() %}
-{% set schemas          = craft.sproutSeo.getSchemaOptions() %}
-{% set schemaSubtypes   = craft.sproutSeo.getSchemaSubtypes(schemas) %}
-{% set mainEntityValues = {'schemaTypeId': values.schemaTypeId, 'schemaOverrideTypeId': values.schemaOverrideTypeId} %}
+
 
 {% set displayMetadataField = false %}
 {% set maxDescriptionLength = craft.sproutSeo.getDescriptionLength() %}
@@ -176,40 +174,6 @@
             }) }}
         {% endif %}
 
-
-        {% if pluginSettings.enableMetaDetailsFields and settings.showMainEntity %}
-
-            {% set displayMetadataField = true %}
-
-            <div id="organization" class="organization-info">
-                <div class="identitytype-dropdown organizationinfo-dropdown">
-                    {{ forms.selectField({
-                        label: 'Main Entity'|t ~ sprout.infoIcon({
-                            label: "Meta Image"|t,
-                            search: true,
-                            structured: true
-                        }),
-                        instructions: 'Select the Structured Data schema type that best represents your content. Test your metadata using the <a href="https://search.google.com/structured-data/testing-tool" target="_blank">Structured Data Testing Tool</a>. Advanced integrations may be necessary for more specialized data types.'|t,
-                        class: 'mainentity-firstdropdown',
-                        name: nameContext~'[metadata][schemaTypeId]',
-                        options: schemas,
-                        value: '',
-                        required: false
-                    }) }}
-                </div>
-                <div class="identitytype-dropdown organizationinfo-dropdown hidden">
-                    {{ forms.selectField({
-                        class: 'mainentity-seconddropdown',
-                        role: 'listbox',
-                        name: nameContext~'[metadata][schemaOverrideTypeId]',
-                        options: {'':''},
-                        value: '',
-                        required: false,
-                    }) }}
-                </div>
-            </div>
-        {% endif %}
-
     </div>
 
     {% if pluginSettings.enableMetaDetailsFields %}
@@ -286,7 +250,7 @@
                                 {{ svg('@sproutbaseicons/search.svg') }}
                             </i> {{ "Search Meta"|t }} {{ sprout.infoIcon({
                                 label: "Search Meta"|t,
-                                search: true
+                                search: true,
                                 message: 'All fields in this block take priority for the Search metadata at this priority level.'|t
                             }) }}</div>
                     </div>
@@ -465,37 +429,10 @@ feel like they are part of the natural flow of fields #}
 
     {% endif %}
 
-    var items = {{ schemaSubtypes|json_encode|raw }};
-    var entryValues = {{ mainEntityValues|json_encode|raw }};
-
     $( document ).ready(function() {
 
     var nameContext = '{{ nameContext|raw }}';
     var livepreviewClass = 'sproutseo-livepreview-field-custom';
-
-    //Main entity dropdowns
-    $('.mainentity-firstdropdown select').change(function() {
-    if(this.value === 'craft-sproutseo-personschema')
-    {
-    $('.mainentity-seconddropdown select').addClass('hidden');
-    }
-    else
-    {
-    $('.mainentity-seconddropdown select').removeClass('hidden');
-    }
-    });
-    // check if we need load depending dropdowns
-    if (entryValues)
-    {
-    if (entryValues.hasOwnProperty('schemaTypeId') && entryValues.schemaTypeId)
-    {
-    $('.mainentity-firstdropdown select').val(entryValues.schemaTypeId).change();
-    }
-    if (entryValues.hasOwnProperty('schemaOverrideTypeId') && entryValues.schemaOverrideTypeId)
-    {
-    $('.mainentity-seconddropdown select').val(entryValues.schemaOverrideTypeId).change();
-    }
-    }
 
     function getScenario(customKey)
     {
