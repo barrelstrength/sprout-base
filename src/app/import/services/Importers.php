@@ -338,7 +338,7 @@ class Importers extends Component
         return $newModel;
     }
 
-    protected function isWeedable(Weed $weedModel, $newModel)
+    protected function isWeedable(Weed $weedModel = null, $newModel)
     {
         if ($weedModel === null)
         {
