@@ -204,10 +204,26 @@ abstract class ElementImporter extends Importer
 
         $utilities = SproutImport::$app->utilities;
 
+        $params = $utilities->getValueByKey('params', $updateElementSettings);
+
+        /**
+         * @deprecated - The matchBy, matchValue, and matchCriteria keys will be removed in Sprout Import v2.0.0
+         *
+         * If the new 'params' syntax isn't used, use deprecated matchCriteria values if provided
+         */
         $matchBy = $utilities->getValueByKey('matchBy', $updateElementSettings);
         $matchValue = $utilities->getValueByKey('matchValue', $updateElementSettings);
 
-        if ($matchBy && $matchValue) {
+        if ($params === null && ($matchBy && $matchValue)) {
+
+            if ($matchBy !== null) {
+                Craft::$app->getDeprecator()->log('ElementImporter matchBy key', 'The “matchBy” key has been deprecated. Use “params” in place of “matchBy”, “matchValue”, and “matchCriteria”.');
+            }
+
+            if ($matchValue !== null) {
+                Craft::$app->getDeprecator()->log('ElementImporter matchValue key', 'The “matchValue” key has been deprecated. Use “params” in place of “matchBy”, “matchValue”, and “matchCriteria”.');
+            }
+
             if (is_array($matchValue)) {
                 $matchValue = $matchValue[0];
 
@@ -219,13 +235,18 @@ abstract class ElementImporter extends Importer
                     $utilities->addError('invalid-match', $message);
                 }
             }
-
-            $elementTypeName = get_class($element);
-
-            return SproutImport::$app->elementImporter->getElementFromImportSettings($elementTypeName, $updateElementSettings);
         }
 
-        return null;
+        $elementTypeName = get_class($element);
+
+        $existingElement = SproutImport::$app->elementImporter->getElementFromImportSettings($elementTypeName, $updateElementSettings);
+
+        if (!$existingElement)
+        {
+            return null;
+        }
+
+        return $existingElement;
     }
 
     /**
