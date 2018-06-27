@@ -215,6 +215,25 @@ class NotificationEmailEvents extends Component
     }
 
     /**
+     * @param NotificationEmail $notificationEmail
+     *
+     * @return NotificationEvent
+     */
+    public function getEvent(NotificationEmail $notificationEmail)
+    {
+        $notificationEmailEventTypes = $this->getNotificationEmailEventTypes();
+
+        foreach ($notificationEmailEventTypes as $notificationEmailEventClass) {
+            if ($notificationEmail->eventId === $notificationEmailEventClass) {
+                $settings = json_decode($notificationEmail->settings, true);
+                return new $notificationEmailEventClass($settings);
+            }
+        }
+
+        return null;
+    }
+
+    /**
      * Returns list of events for an Event dropdown and initializes the current selected event with any existing settings
      *
      * @param NotificationEmail $notificationEmail

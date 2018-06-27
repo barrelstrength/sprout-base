@@ -264,16 +264,12 @@ class NotificationEmails extends Component
     public function sendTestNotificationEmail(NotificationEmail $notificationEmail)
     {
         /** @var NotificationEvent $event */
-        $event = SproutBase::$app->notificationEvents->getEventById($notificationEmail->eventId);
+        $event = SproutBase::$app->notificationEvents->getEvent($notificationEmail);
         $mailer = SproutBase::$app->mailers->getMailerByName(DefaultMailer::class);
 
         if (!$event or !$mailer) {
             return false;
         }
-
-        // @todo - move this to getEventById and refactor getEventById to pass necessary variables
-        $settings = json_decode($notificationEmail->settings, true);
-        $event = new $event($settings);
 
         try {
 
@@ -429,9 +425,7 @@ class NotificationEmails extends Component
          */
         $notificationEmail = $this->getNotificationEmailById($notificationId);
 
-        $eventId = $notificationEmail->eventId;
-
-        $event = SproutBase::$app->notificationEvents->getEventById($eventId);
+        $event = SproutBase::$app->notificationEvents->getEvent($notificationEmail);
 
         if (!$event) {
             ob_start();
@@ -460,7 +454,7 @@ class NotificationEmails extends Component
 
         $fileExtension = ($type != null && $type == 'text') ? 'txt' : 'html';
 
-        $message = $this->getNotificationEmailMessage($notificationEmail);
+        $message = $this->getNotificationEmailMessage($notificationEmail, $event->getMockEventObject());
 
         $this->showPreviewEmail($message, $fileExtension);
     }
