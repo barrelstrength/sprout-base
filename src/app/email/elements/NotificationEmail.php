@@ -239,7 +239,7 @@ class NotificationEmail extends Element
             'subjectLine' => ['label' => Craft::t('sprout-base', 'Subject Line')],
             'dateCreated' => ['label' => Craft::t('sprout-base', 'Date Created')],
             'send' => ['label' => Craft::t('sprout-base', 'Send')],
-//            'preview' => ['label' => Craft::t('sprout-base', 'Preview'), 'icon' => 'view']
+            'preview' => ['label' => Craft::t('sprout-base', 'Preview'), 'icon' => 'view']
         ];
 
         return $attributes;
@@ -415,56 +415,6 @@ class NotificationEmail extends Element
         }
 
         return null;
-    }
-
-    /**
-     * @inheritdoc
-     *
-     * @return array|mixed
-     * @throws Exception
-     * @throws \ReflectionException
-     */
-    public function route()
-    {
-        //Only expose notification emails that have tokens and allow Live Preview requests
-        if (!Craft::$app->request->getParam(Craft::$app->config->getGeneral()->tokenParam)
-            && !Craft::$app->getRequest()->getIsLivePreview()) {
-            throw new Exception(404);
-        }
-        $extension = null;
-
-        if ($type = Craft::$app->request->get('type')) {
-            $extension = in_array(strtolower($type), ['txt', 'text'], false) ? '.txt' : null;
-        }
-
-        $templateName = $this->template.$extension;
-
-        if (empty($this->template)) {
-            $template = SproutBase::$app->sproutEmail->getEmailTemplate();
-
-            $templateName = $template.$extension;
-        }
-
-        if (!Craft::$app->getView()->doesTemplateExist($templateName)) {
-
-            SproutBase::$app->emailErrorHelper->addError(Craft::t('sprout-base', "The template '{templateName}' could not be found", [
-                'templateName' => $templateName
-            ]));
-        }
-
-        $event = SproutBase::$app->notificationEvents->getEventById($this->eventId);
-
-        $object = $event->getMockEventObject() ?? null;
-
-        return [
-            'templates/render', [
-                'template' => $templateName,
-                'variables' => [
-                    'email' => $this,
-                    'object' => $object
-                ]
-            ]
-        ];
     }
 
     /**
