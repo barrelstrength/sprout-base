@@ -76,10 +76,16 @@ abstract class ElementImporter extends Importer
             $this->isUpdated = true;
         }
 
-        $authorId = null;
-
         if (isset($settings['attributes'])) {
             $attributes = $settings['attributes'];
+
+            $relatedAttributes = [];
+            if (isset($attributes['related']) && count($attributes['related'])) {
+                $relatedAttributes = SproutImport::$app->elementImporter->resolveRelationships($attributes['related'], $relatedAttributes);
+                unset($attributes['related']);
+            }
+
+            $attributes = array_merge($relatedAttributes, $attributes);
 
             foreach ($attributes as $handle => $attribute) {
                 // Convert date time object to fix error when storing date attributes
@@ -90,11 +96,6 @@ abstract class ElementImporter extends Importer
                 }
 
                 $model->{$handle} = $value;
-            }
-
-            // Check for email and username values if authorId attribute
-            if (isset($attributes['authorId']) && $authorId = $this->getAuthorId($attributes['authorId'])) {
-                $model->authorId = $authorId;
             }
 
             // Check if we have defaults for any unset attributes
@@ -109,30 +110,11 @@ abstract class ElementImporter extends Importer
 
                 foreach ($criteriaAttributes as $attribute) {
                     if (property_exists($model, $attribute) && !empty($model->{$attribute})) {
-                        // Check for email and username values if authorId attribute
-                        if ($attribute == 'authorId' && isset($defaults['authorId'])) {
-                            if ($authorId = $this->getAuthorId($defaults['authorId'])) {
-                                $model->authorId = $authorId;
-                            }
-
-                            continue;
-                        }
-
                         if (isset($defaults[$attribute])) {
                             $model->{$attribute} = $defaults[$attribute];
                         }
                     }
                 }
-            }
-
-            // Check only for models that has authorId attribute.
-            if ($authorId == null && in_array('authorId', $model->attributes(), false)) {
-                $message = Craft::t('sprout-import', 'Could not find Author by ID, Email, or Username.');
-
-                Craft::error($message);
-
-                SproutImport::$app->utilities->addError('invalid-author', $message);
-                SproutImport::$app->utilities->addError('invalid-author', $settings);
             }
         }
 
@@ -222,10 +204,26 @@ abstract class ElementImporter extends Importer
 
         $utilities = SproutImport::$app->utilities;
 
+        $params = $utilities->getValueByKey('params', $updateElementSettings);
+
+        /**
+         * @deprecated - The matchBy, matchValue, and matchCriteria keys will be removed in Sprout Import v2.0.0
+         *
+         * If the new 'params' syntax isn't used, use deprecated matchCriteria values if provided
+         */
         $matchBy = $utilities->getValueByKey('matchBy', $updateElementSettings);
         $matchValue = $utilities->getValueByKey('matchValue', $updateElementSettings);
 
-        if ($matchBy && $matchValue) {
+        if ($params === null && ($matchBy && $matchValue)) {
+
+            if ($matchBy !== null) {
+                Craft::$app->getDeprecator()->log('ElementImporter matchBy key', 'The “matchBy” key has been deprecated. Use “params” in place of “matchBy”, “matchValue”, and “matchCriteria”.');
+            }
+
+            if ($matchValue !== null) {
+                Craft::$app->getDeprecator()->log('ElementImporter matchValue key', 'The “matchValue” key has been deprecated. Use “params” in place of “matchBy”, “matchValue”, and “matchCriteria”.');
+            }
+
             if (is_array($matchValue)) {
                 $matchValue = $matchValue[0];
 
@@ -237,29 +235,18 @@ abstract class ElementImporter extends Importer
                     $utilities->addError('invalid-match', $message);
                 }
             }
-
-            $elementTypeName = get_class($element);
-
-            return SproutImport::$app->elementImporter->getElementFromImportSettings($elementTypeName, $updateElementSettings);
         }
 
-        return null;
-    }
+        $elementTypeName = get_class($element);
 
-    /**
-     * @param $authorId
-     *
-     * @return mixed|null
-     */
-    protected function getAuthorId($authorId)
-    {
-        if (is_int($authorId)) {
-            $userModel = Craft::$app->getUsers()->getUserById($authorId);
-        } else {
-            $userModel = Craft::$app->getUsers()->getUserByUsernameOrEmail($authorId);
+        $existingElement = SproutImport::$app->elementImporter->getElementFromImportSettings($elementTypeName, $updateElementSettings);
+
+        if (!$existingElement)
+        {
+            return null;
         }
 
-        return isset($userModel) ? $userModel->id : null;
+        return $existingElement;
     }
 
     /**
@@ -269,7 +256,6 @@ abstract class ElementImporter extends Importer
     public function save()
     {
         $utilities = SproutImport::$app->utilities;
-
 
         try {
             $element = Craft::$app->getElements()->saveElement($this->model);
@@ -286,7 +272,12 @@ abstract class ElementImporter extends Importer
         }
     }
 
-    protected function afterSaveElement()
+    public function beforeValidateElement()
+    {
+
+    }
+
+    public function afterSaveElement()
     {
 
     }

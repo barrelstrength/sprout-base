@@ -38,7 +38,8 @@ class NotificationEmailQuery extends ElementQuery
 
         $pluginHandle = Craft::$app->request->getBodyParam('criteria.base');
 
-        if ($pluginHandle != null) {
+        // Displays all notification event on sprout-email plugin and filters on plugin integration
+        if ($pluginHandle != null && $pluginHandle != 'sprout-email') {
             $this->query->where(['sproutemail_notificationemails.pluginHandle' => $pluginHandle]);
         }
 

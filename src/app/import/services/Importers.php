@@ -278,7 +278,7 @@ class Importers extends Component
      */
     public function save($importData, Weed $weedModel = null)
     {
-        $result = false;
+        $newModel = false;
         $importer = null;
 
         if ($importData === null) {
@@ -305,40 +305,56 @@ class Importers extends Component
             }
 
             if ($importerClass->model instanceof Element) {
-                $importer = SproutImport::$app->elementImporter;
-
-                $result = $importer->saveElement($row, $importerClass);
+                $newModel = SproutImport::$app->elementImporter->saveElement($row, $importerClass);
             } else {
-                $importer = SproutImport::$app->settingsImporter;
-
-                $result = $importer->saveSetting($row, $importerClass);
+                $newModel = SproutImport::$app->settingsImporter->saveSetting($row, $importerClass);
             }
 
-            if ($weedModel != null) {
-                if ($weedModel->seedType == true && isset($result->id)) {
-                    $seedAttributes = [
-                        'itemId' => $result->id,
-                        'type' => get_class($importerClass),
-                        'seedType' => $weedModel->seedType,
-                        'details' => $weedModel->details,
-                        'dateCreated' => $weedModel->dateSubmitted
-                    ];
+            if (!$this->isWeedable($weedModel, $newModel)) {
+                continue;
+            }
 
-                    $seedModel = new SeedModel();
+            $seedAttributes = [
+                'itemId' => $newModel->id,
+                'type' => get_class($importerClass),
+                'seedType' => $weedModel->seedType,
+                'details' => $weedModel->details,
+                'dateCreated' => $weedModel->dateSubmitted
+            ];
 
-                    $seedModel->setAttributes($seedAttributes, false);
-                    if (!$importerClass->isUpdated) {
-                        SproutImport::$app->seed->trackSeed($seedModel);
-                    }
-                }
+            $seedModel = new SeedModel();
+
+            $seedModel->setAttributes($seedAttributes, false);
+            if (!$importerClass->isUpdated) {
+                SproutImport::$app->seed->trackSeed($seedModel);
             }
         }
 
         // Assign importer errors to utilities error for easy debugging and call of errors.
-        if ($result == false && ($importer != null AND $importer->hasErrors())) {
+        if ($newModel === false && ($importer !== null AND $importer->hasErrors())) {
             $this->addErrors($importer->getErrors());
         }
 
-        return $result;
+        return $newModel;
+    }
+
+    protected function isWeedable(Weed $weedModel = null, $newModel)
+    {
+        if ($weedModel === null)
+        {
+            return false;
+        }
+
+        if ($weedModel->seed !== true)
+        {
+            return false;
+        }
+
+        if (!isset($newModel->id))
+        {
+            return false;
+        }
+
+        return true;
     }
 }

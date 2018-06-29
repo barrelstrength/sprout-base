@@ -23,7 +23,7 @@
                 <ul>
                     {% if emailId %}
                         <li><a class="formsubmit"
-                               data-redirect="{{ " sprout-email/campaigns/edit/{id}"|hash }}">
+                               data-redirect="{{ "sprout-email/campaigns/edit/{id}"|hash }}">
                                 {{ "Save and continue editing"|t('sprout-email') }}
                                 <span
                                         class="shortcut">⌘S</span></a></li>
@@ -121,76 +121,33 @@
         }, statusInput) }}
 
 
-        {% if mailer.getId() != 'copypaste' %}
+        {{ mailer.getRecipientsHtml(campaignEmail)|raw }}
 
-            {% set defaultFromName = "" %}
-            {% set defaultFromEmail = "" %}
-            {% set defaultReplyTo = "" %}
-
-            {% if mailer.getId() == 'defaultmailer' %}
-                {% set defaultFromName = mailer.settings.fromName is defined ?
-                    mailer.settings.fromName : "" %}
-                {% set defaultFromEmail = mailer.settings.fromEmail is defined ?
-                    mailer.settings.fromEmail : "" %}
-                {% set defaultReplyTo = mailer.settings.replyToEmail is defined ?
-                    mailer.settings.replyToEmail : "" %}
-            {% endif %}
-
+        {% if mailer.hasInlineRecipients() %}
             {{ forms.textField({
-                label: "From Name <span class='info'>The person or business sending the email</span>"|t('sprout-email'),
-                name: 'sproutEmail[fromName]',
-                value: (campaignEmail.fromName is not empty ? campaignEmail.fromName :
-                defaultFromName ),
-                errors: (campaignEmail is defined ? campaignEmail.getErrors('fromName') :
-                null),
-                required: true
+                label: "Recipients <span class='info'>A comma separated list of email addresses.</span>"|t('sprout-email'),
+                placeholder: "user@domain.com, other@domain.com"|t('sprout-email'),
+                name: "sproutEmail[recipients]",
+                class: "code",
+                value: campaignEmail is defined ? campaignEmail.recipients : "",
+                errors: campaignEmail is defined ? campaignEmail.getErrors('recipients')
             }) }}
-
-            {{ forms.textField({
-                name: 'sproutEmail[fromEmail]',
-                value: (campaignEmail.fromEmail is not empty ? campaignEmail.fromEmail :
-                defaultFromEmail),
-                label: "From Email <span class='info'>The email address of the person or business sending the email</span>"|t('sprout-email'),
-                errors: (campaignEmail is defined ? campaignEmail.getErrors('fromEmail') :
-                null),
-                required: true
-            }) }}
-
-            {{ forms.textField({
-                name: 'sproutEmail[replyToEmail]',
-                value: (campaignEmail.replyToEmail is not empty ? campaignEmail.replyToEmail
-                : defaultReplyTo),
-                label: "Reply To <span class='info'>The email address which will be used if any recipients reply to your email</span>"|t('sprout-email'),
-                errors: (campaignEmail is defined ? campaignEmail.getErrors('replyToEmail')
-                : null),
-                required: true
-            }) }}
-
-            {% if mailer.hasInlineRecipients() %}
-                {{ forms.textField({
-                    label: "Recipients <span class='info'>A comma separated list of email addresses.</span>"|t('sprout-email'),
-                    placeholder: "user@domain.com, other@domain.com"|t('sprout-email'),
-                    name: "sproutEmail[recipients]",
-                    class: "code",
-                    value: campaignEmail is defined ? campaignEmail.recipients : "",
-                    errors: campaignEmail is defined ? campaignEmail.getErrors('recipients')
-                }) }}
-            {% endif %}
-            {% if mailer.getListsHtml()|length %}
-                <div class="field mailing-lists">
-                    <div class="heading">
-                        Lists
-                    </div>
-                    <div class="input">
-                        {% namespace 'lists' %}
-                            {{ mailer.getListsHtml(campaignEmail.listSettings)|raw }}
-                        {% endnamespace %}
-                    </div>
-                </div>
-            {% endif %}
-
         {% endif %}
+        {% if mailer.getListsHtml()|length %}
+            <div class="field mailing-lists">
+                <div class="heading">
+                    Lists
+                </div>
+                <div class="input">
+                    {% namespace 'lists' %}
+                        {{ mailer.getListsHtml(campaignEmail.listSettings)|raw }}
+                    {% endnamespace %}
+                </div>
+            </div>
+        {% endif %}
+
     </div>
+
 {% endblock %}
 
 {% if not campaignEmail.slug %}

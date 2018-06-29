@@ -102,7 +102,6 @@ class NotificationsController extends Controller
         }
 
         // Sort out Live Preview and Share button behaviors
-
         $showPreviewBtn = false;
         $shareUrl = null;
 
@@ -116,7 +115,7 @@ class NotificationsController extends Controller
             Craft::$app->getView()->registerJs(
                 'Craft.LivePreview.init('.Json::encode(
                     [
-                        'fields' => '#subjectLine-field, #body-field, #title-field, #fields > div > div > .field',
+                        'fields' => '#subjectLine-field, #body-field, #title-field, #fields > div > .field',
                         'extraFields' => '#settings',
                         'previewUrl' => $notificationEmail->getUrl(),
                         'previewAction' => 'sprout-base/notifications/live-preview-notification-email',

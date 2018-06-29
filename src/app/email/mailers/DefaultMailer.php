@@ -587,4 +587,25 @@ class DefaultMailer extends Mailer implements NotificationEmailSenderInterface
 
         return $errors;
     }
+
+    /**
+     * @param $campaignEmail
+     *
+     * @return string
+     * @throws Exception
+     * @throws \Twig_Error_Loader
+     */
+    public function getRecipientsHtml($campaignEmail)
+    {
+        $defaultFromName = $this->settings->fromName ?? null;
+        $defaultFromEmail = $this->settings->fromEmail ?? null;
+        $defaultReplyTo = $this->settings->replyTo ?? null;
+
+        return Craft::$app->getView()->renderTemplate('sprout-base-email/_components/mailers/recipients-html',[
+            'campaignEmail' => $campaignEmail,
+            'defaultFromName' => $defaultFromName,
+            'defaultFromEmail' => $defaultFromEmail,
+            'defaultReplyTo' => $defaultReplyTo,
+        ]);
+    }
 }

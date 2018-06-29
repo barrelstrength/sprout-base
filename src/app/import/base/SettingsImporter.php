@@ -61,6 +61,20 @@ abstract class SettingsImporter extends Importer
     }
 
     /**
+     * The record used to query this importer's data
+     *
+     * Examples:
+     * - \craft\records\Section::class
+     * - \craft\records\Field::class
+     *
+     * @return mixed
+     */
+    public function getRecordName()
+    {
+        return null;
+    }
+
+    /**
      * @param $id
      *
      * @return mixed

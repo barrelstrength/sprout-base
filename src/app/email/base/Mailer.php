@@ -251,4 +251,25 @@ abstract class Mailer
     {
         return $lists;
     }
+
+    /**
+     * @param $campaignEmail
+     *
+     * @return string
+     * @throws \Twig_Error_Loader
+     * @throws \yii\base\Exception
+     */
+    public function getRecipientsHtml($campaignEmail)
+    {
+        $defaultFromName = "";
+        $defaultFromEmail = "";
+        $defaultReplyTo = "";
+
+        return Craft::$app->getView()->renderTemplate('sprout-base-email/_components/mailers/recipients-html',[
+            'campaignEmail' => $campaignEmail,
+            'defaultFromName' => $defaultFromName,
+            'defaultFromEmail' => $defaultFromEmail,
+            'defaultReplyTo' => $defaultReplyTo,
+        ]);
+    }
 }
