@@ -110,9 +110,18 @@
     options: optimizedKeywordOptions,
     value: settings.optimizedKeywordsField is defined ? settings.optimizedKeywordsField : 'manually',
 }) }}
+<hr>
+{{ forms.lightswitchField({
+    label: "Enable Meta Details fields"|t,
+    instructions: "Meta Details fields add one more level of fine-tuning over your metadata. With Meta Details fields enabled, content editors will have the option to refine Open Graph, Twitter Card, Geo, and Robots metadata within Sections and the Element Metadata Field will display additional settings to allow customization of Structured Data, Search, Open Graph, Twitter Card, Geo, and Robots metadata on any Element that supports the Element Metadata field."|t,
+    name: 'enableMetaDetailsFields',
+    toggle: 'settings-enablemetadadetails',
+    on: settings.enableMetaDetailsFields,
+    onLabel: "Enable"|t
+}) }}
 
-{% if pluginSettings.enableMetaDetailsFields %}
-
+    <div id="settings-enablemetadadetails"
+         class="{% if not settings.enableMetaDetailsFields %} hidden {% endif %}">
     <hr>
 
     {% set advancedInput %}
@@ -124,20 +133,6 @@
             </tr>
             </thead>
             <tbody>
-            <tr>
-                <td>
-                    <label for="showMainEntity">{{ "Allow Main Entity to be edited?"|t }}</label>
-                </td>
-                <td class="centeralign">
-                    <div>
-                        {{ forms.lightswitch({
-                            name: 'showMainEntity',
-                            on:   settings.showMainEntity,
-                            small: true
-                        }) }}
-                    </div>
-                </td>
-            </tr>
             <tr>
                 <td>
                     <label for="showSearchMeta">{{ "Allow Search Meta fields to be edited?"|t }}</label>
@@ -219,7 +214,7 @@
         errors: ''
     }, advancedInput) }}
 
-{% endif %}
+ </div> {# End meta details div #}
 
  {# @todo - Upcoming Feature - SEO Preview #}
 
