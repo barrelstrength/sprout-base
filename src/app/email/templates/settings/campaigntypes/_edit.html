@@ -49,9 +49,7 @@
 
         {{ forms.selectField({
             label: "How you would like to send this email"|t('sprout-email'),
-            instructions: 'Select the Mailer you will use to send Email Campaigns. <a
-        href="' ~ url('sproutemail/settings/mailers') ~ '">Edit Mailer
-    settings</a>.'|t('sprout-email'),
+            instructions: '',
             id: 'mailer',
             name: 'sproutEmail[mailer]',
             required: true,
@@ -59,7 +57,8 @@
             value: (campaignType is defined ? campaignType.mailer : null),
             errors: (campaignType is defined ? campaignType.getErrors('mailer') : null)
         }) }}
-
+Select the Mailer you will use to send Email Campaigns.
+<a href="{{ url('sprout-email/settings/mailers') }}">{{ "Edit Mailer settings"|t('sprout-base') }}</a>
         {{ forms.textField({
             label: "Email Template"|t('sprout-email'),
             id: 'template',

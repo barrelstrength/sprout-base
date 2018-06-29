@@ -113,6 +113,7 @@ trait EmailTemplateTrait
 
         try {
             $renderedTemplate = Craft::$app->getView()->renderTemplate($template, $variables);
+
         } catch (\Exception $e) {
             // Specify template .html if no .txt
             $message = $e->getMessage();

@@ -102,7 +102,6 @@ class NotificationsController extends Controller
         }
 
         // Sort out Live Preview and Share button behaviors
-
         $showPreviewBtn = false;
         $shareUrl = null;
 
