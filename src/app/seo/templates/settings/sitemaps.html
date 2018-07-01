@@ -10,6 +10,8 @@
     errors: ''
 }) }}
 
+<hr>
+
 {% if craft.app.isMultiSite %}
     {{ forms.lightswitchField({
         label: "Enable multi-lingual sitemap"|t('sprout-seo'),
@@ -56,6 +58,7 @@
             }
         }) %}
     {% endfor %}
+
     <div id="siteWrapper" {% if settings.enableMultilingualSitemaps %} class="hidden" {% endif %}>
         {{ forms.editableTableField({
             label: "Enable Sitemaps"|t('sprout-seo'),
@@ -102,5 +105,16 @@
         }) }}
     </div>
 {% endif %}
+
+<hr>
+
+{{ forms.lightswitchField({
+    label: "Enable Custom Sitemap Pages"|t,
+    instructions: "Enable this setting to add Pages to your Sitemaps with Custom URL requirements."|t,
+    name: 'enableCustomSections',
+    on: (settings.enableCustomSections is empty ? false : true),
+    onLabel: "Enable"|t
+}) }}
+
 
 {% do view.registerAssetBundle("barrelstrength\\sproutbase\\app\\seo\\web\\assets\\general\\GeneralAsset") %}
