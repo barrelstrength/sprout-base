@@ -3,18 +3,6 @@
 
 {% set title = "Redirects" %}
 
-{% block contextMenu %}
-    {% if craft.app.getIsMultiSite() %}
-        {% include "_elements/sitemenu" with {
-            selectedSiteId: currentSite.id,
-            siteIds: enabledSiteIds,
-            urlFormat: "sprout-seo/redirects/{handle}"
-        } %}
-
-        <div style="margin-left:20px;"><code>{{ baseUrl }}</code></div>
-    {% endif %}
-{% endblock %}
-
 {% block actionButton %}
     <div class="buttons">
         <a class="btn submit add icon"

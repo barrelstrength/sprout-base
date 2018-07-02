@@ -1,32 +1,6 @@
 {% import "_includes/forms" as forms %}
 
 {% set settings = craft.sproutSeo.getSettings() %}
-{% set localeOptions = craft.sproutSeo.getLocaleOptions() %}
-
-{{ forms.field({
-    label: "Advanced Settings"|t|upper,
-    instructions: "Sprout SEO provides you with powerful, comprehensive management of all types of metadata from your Control Panel and the ability to setup sensible, reusable defaults with existing fields in your content worklow. The default setup makes preparing metadata for search and social sharing more predictable, generates extensive SEO metadata, and an easy to manage content experience.<br><br> Some folks, however, want to have the ability to fine-tune each type of metadata. This requires a more complicated UI, more complicated codebase, and more time necessary to curate, prepare, post, and maintain content. If you'd like to go down that path and have the necessary budget, team, or training processes to do it well, go ahead and enable these settings."|t,
-}, null) }}
-
-<hr>
-
-{{ forms.lightswitchField({
-    label: "Enable Meta Details fields"|t,
-    instructions: "Meta Details fields add one more level of fine-tuning over your metadata. With Meta Details fields enabled, content editors will have the option to refine Open Graph, Twitter Card, Geo, and Robots metadata within Sections and the Element Metadata Field will display additional settings to allow customization of Structured Data, Search, Open Graph, Twitter Card, Geo, and Robots metadata on any Element that supports the Element Metadata field."|t,
-    name: 'enableMetaDetailsFields',
-    on: settings.enableMetaDetailsFields,
-    onLabel: "Enable"|t
-}) }}
-
-{{ forms.lightswitchField({
-    label: "Enable Custom Sitemap Pages"|t,
-    instructions: "Enable this setting to add Pages to your Sitemaps with Custom URL requirements."|t,
-    name: 'enableCustomSections',
-    on: (settings.enableCustomSections is empty ? false : true),
-    onLabel: "Enable"|t
-}) }}
-
-<hr>
 
 {{ forms.lightswitchField({
     label: "Automatically render metadata"|t,
@@ -58,13 +32,3 @@
     }) }}
 
 </div>
-
-<hr>
-
-{{ forms.lightswitchField({
-    label: "Display Field Handles"|t,
-    instructions: "Enable this setting to display field handle next to the field name in your Element Metadata field settings."|t,
-    name: 'displayFieldHandles',
-    on: settings.displayFieldHandles ? true : false,
-    onLabel: "Enable"|t
-}) }}
