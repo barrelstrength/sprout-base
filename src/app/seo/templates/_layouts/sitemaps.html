@@ -151,6 +151,9 @@
 
 {% endblock %}
 
+{% do view.registerAssetBundle("barrelstrength\\sproutbase\\web\\assets\\cp\\CpAsset") %}
+{% do view.registerAssetBundle("barrelstrength\\sproutbase\\app\\seo\\web\\assets\\sitemaps\\SitemapsAsset") %}
+
 {% js %}
     new Craft.SproutSeo.Sitemaps();
 

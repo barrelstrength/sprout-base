@@ -6,7 +6,6 @@
 {% set nameContext      = elementHandle is defined ? elementHandle : 'sproutseo' %}
 {% set pluginSettings   = craft.sproutSeo.getSettings() %}
 
-
 {% set displayMetadataField = false %}
 {% set maxDescriptionLength = craft.sproutSeo.getDescriptionLength() %}
 
@@ -42,6 +41,7 @@
         priority: 'elements'
     }) -}}
 </div>
+
 <div id="sproutseo-livepreview-fields">
     <div class="sproutseo-box-optimized">
         <input type="hidden"

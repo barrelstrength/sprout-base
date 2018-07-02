@@ -1,9 +1,3 @@
-/*
- * @link      https://sprout.barrelstrengthdesign.com/
- * @copyright Copyright (c) Barrel Strength Design LLC
- * @license   http://sprout.barrelstrengthdesign.com/license
- */
-
 if (typeof Craft.SproutSeo === typeof undefined) {
     Craft.SproutSeo = {};
 }
@@ -92,7 +86,7 @@ if (typeof Craft.SproutSeo === typeof undefined) {
                 this.enabled = $('input[name="sproutseo[sections][' + rowId + '][enabled]"]').val();
                 var siteId = $('input[name="siteId"]').val();
                 var uri = $('input[name="sproutseo[sections][' + rowId + '][uri]"]').val();
-console.log(siteId);
+                console.log(siteId);
                 this.status = $('tr[data-rowid="' + rowId + '"] td span.status');
 
                 data = {
