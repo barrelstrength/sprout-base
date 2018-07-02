@@ -9,6 +9,16 @@
 
 {% set fullPageForm = true %}
 {% set saveShortcutRedirect = continueEditingUrl %}
+{% set selectedItem = siteHandle %}
+
+{% block contextMenu %}
+    {#% if craft.app.getIsMultiSite() %}
+        {% include "_elements/sitemenu" with {
+            selectedSiteId: redirect.siteId,
+            urlFormat: "sprout-seo/redirects/edit/{handle}/"~red
+        } %}
+    {% endif %#}
+{% endblock %}
 
 {% block actionButton %}
     <div class="btngroup submit first">
