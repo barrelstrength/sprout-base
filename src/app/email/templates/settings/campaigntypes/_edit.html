@@ -1,5 +1,6 @@
 {% extends "sprout-base-email/_layouts/base" %}
 {% import "_includes/forms" as forms %}
+{% import "sprout-base-fields/_includes/forms" as sproutFields %}
 
 {% set selectedSubnavItem = 'settings' %}
 
@@ -59,15 +60,18 @@
         }) }}
 Select the Mailer you will use to send Email Campaigns.
 <a href="{{ url('sprout-email/settings/mailers') }}">{{ "Edit Mailer settings"|t('sprout-base') }}</a>
-        {{ forms.textField({
-            label: "Email Template"|t('sprout-email'),
-            id: 'template',
-            name: 'sproutEmail[template]',
-            instructions: "The template to use when a Campaign Email's URL is requested.  The text version of the Campaign Email will use the same template name and append .txt"|t('sprout-email'),
-            placeholder: '_emails/emailtemplate',
-            value: (campaignType is defined ? campaignType.template : null),
-            errors: (campaignType is defined ? campaignType.getErrors('template') : null)
-        }) }}
+
+        {% set templateOptions = craft.sproutEmail.getEmailTemplateOptions(campaignType) %}
+
+        {{ forms.field({
+            label: "Templates <span class='info'>The Email Templates to display your email.</span>"|t('sprout-base'),
+            errors: campaignType is defined ? campaignType.getErrors('emailTemplateId') : null,
+            }, sproutFields.selectOther({
+            name: 'sproutEmail[emailTemplateId]',
+            options: templateOptions,
+            value: campaignType is defined ? campaignType.emailTemplateId : null,
+            otherPlaceholderText: '_emailtemplates/folder'|t('sprout-email')
+        })) }}
 
         {{ forms.textField({
             label: "Email Copy/Paste Template"|t('sprout-email'),
@@ -94,9 +98,7 @@ Select the Mailer you will use to send Email Campaigns.
 
             {{ forms.textField({
                 label: "Email URL Format"|t('sprout-email'),
-                instructions: 'What the online version of the Campaign Email URLs should
-    look like. You can include tags that output email properties, such as {slug}
-    or {postDate|date("Y")}.'|t('sprout-email'),
+                instructions: 'What the online version of the Campaign Email URLs should look like. You can include tags that output email properties, such as {slug} or {postDate|date("Y")}.'|t('sprout-email'),
                 placeholder: 'email/{slug}',
                 name: 'sproutEmail[urlFormat]',
                 value: (campaignType is defined ? campaignType.urlFormat : null),
@@ -156,7 +158,6 @@ Select the Mailer you will use to send Email Campaigns.
 {% if campaignType is not defined or not campaignType.handle %}
     {% includeJs "window.slugGenerator = new Craft.SlugGenerator('#name', '#handle');" %}
 {% endif %}
-
 
 {% js %}
 

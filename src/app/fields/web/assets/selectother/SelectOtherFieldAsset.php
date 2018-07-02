@@ -8,6 +8,7 @@
 namespace barrelstrength\sproutbase\app\fields\web\assets\selectother;
 
 use craft\web\AssetBundle;
+use craft\web\assets\cp\CpAsset;
 
 class SelectOtherFieldAsset extends AssetBundle
 {
@@ -20,6 +21,10 @@ class SelectOtherFieldAsset extends AssetBundle
             'js/sproutfields.js',
             'js/EditableTable.js',
             'js/initialize.js'
+        ];
+
+        $this->depends = [
+            CpAsset::class
         ];
 
         parent::init();
