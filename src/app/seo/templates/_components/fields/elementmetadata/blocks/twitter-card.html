@@ -1,6 +1,8 @@
 {% import "_includes/forms" as forms %}
 {% import "sprout-base-seo/_includes/sproutseo" as sprout %}
+
 {% set transformOptions = craft.sproutSeo.getTransforms() %}
+
 <div class="sproutseo-box-twitter">
     <div class="sproutseo-fields" id="twitter-card">
 
@@ -13,7 +15,7 @@
         {{ forms.selectField({
             label: 'Twitter Card Type'|t,
             instructions: 'First, select your Twitter Card Type. Learn more about <a href="https://dev.twitter.com/docs/cards" target="_blank">How Twitter Cards work</a>.'|t,
-            name: nameContext~'[metadata][twitterCard]',
+            name: field.handle~'[metadata][twitterCard]',
             options: twitterCardOptions,
             value: values.twitterCard ?? 'summary',
             errors: "",
@@ -22,14 +24,14 @@
 
         {{ forms.textField({
             label: "Title"|t,
-            name: nameContext~"[metadata][twitterTitle]",
+            name: field.handle~"[metadata][twitterTitle]",
             instructions: 'The Title of your content which will appear in Twitter Card metadata.'|t,
             value: values.twitterTitle
         }) }}
 
         {{ forms.textareaField({
             label: "Description"|t,
-            name: nameContext~"[metadata][twitterDescription]",
+            name: field.handle~"[metadata][twitterDescription]",
             instructions: 'A description of your content which will appear in Twitter Card metadata.'|t,
             value: values.twitterDescription
         }) }}
@@ -44,10 +46,10 @@
         }, forms.elementSelect({
             elements: twitterImageElements,
             sourceElementId: [values.twitterImage],
-            elementType: elementType,
+            elementType: assetElementClassName,
             sources: '*',
             id: 'metaDetailsTwitterImage',
-            name: nameContext~'[metadata][twitterImage]',
+            name: field.handle~'[metadata][twitterImage]',
             jsClass: 'Craft.AssetSelectInput',
             addButtonLabel: 'Select Image'|t,
             limit: 1,
@@ -57,7 +59,7 @@
         {{ forms.selectField({
             label: 'Image Transform'|t,
             instructions: 'Select the Twitter Card Image Transform'|t,
-            name: nameContext~'[metadata][twitterTransform]',
+            name: field.handle~'[metadata][twitterTransform]',
             options: transformOptions,
             value: values.twitterTransform,
             errors: "",
@@ -67,7 +69,7 @@
         {{ forms.textField({
             label: "Creator"|t,
             instructions: "If the content of this card was authored by someone, include their Twitter username here."|t,
-            name: nameContext~'[metadata][twitterCreator]',
+            name: field.handle~'[metadata][twitterCreator]',
             value: values.twitterCreator,
             errors: "",
             required: false,

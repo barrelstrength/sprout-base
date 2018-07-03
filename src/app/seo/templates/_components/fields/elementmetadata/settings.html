@@ -120,8 +120,8 @@
     onLabel: "Enable"|t
 }) }}
 
-    <div id="settings-enablemetadadetails"
-         class="{% if not settings.enableMetaDetailsFields %} hidden {% endif %}">
+<div id="settings-enablemetadadetails"
+     class="{% if not settings.enableMetaDetailsFields %} hidden {% endif %}">
     <hr>
 
     {% set advancedInput %}
@@ -214,20 +214,7 @@
         errors: ''
     }, advancedInput) }}
 
- </div> {# End meta details div #}
-
- {# @todo - Upcoming Feature - SEO Preview #}
-
-<hr>
-
-{{ forms.lightswitchField({
-    label: "Display Preview?"|t,
-    instructions: "Display an SEO Preview button to review an example of your metadata as it could appear in Search or Social Sharing. The SEO Preview button will display below the Live Preview button."|t,
-    warning: '',
-    id: 'displayPreview',
-    name: 'displayPreview',
-    on: settings.displayPreview,
-}) }}
+</div> {# End meta details div #}
 
 <hr>
 

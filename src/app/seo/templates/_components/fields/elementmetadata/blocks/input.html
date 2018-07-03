@@ -1,15 +1,12 @@
 {% import "_includes/forms" as forms %}
 {% import "sprout-base-seo/_includes/sproutseo" as sprout %}
 
-{# @todo - is this necessary or can we be more specific with another bundle? #}
-{% do view.registerAssetBundle("barrelstrength\\sproutbase\\app\\seo\\web\\assets\\base\\BaseAsset") %}
-
 <div class="sproutseo-box">
 
     {{ forms.textField({
         label: "Title"|t,
         instructions: "The Title of your content which will appear in search results"|t,
-        name: nameContext~'[metadata][title]',
+        name: field.handle~'[metadata][title]',
         showCharsLeft: true,
         value: values.title,
         errors: "",
@@ -19,7 +16,7 @@
     {{ forms.textField({
         label: "Description"|t,
         instructions: "A description of your content which will appear in search results."|t,
-        name: nameContext~'[metadata][description]',
+        name: field.handle~'[metadata][description]',
         showCharsLeft: true,
         value: values.description,
         errors: "",
@@ -30,7 +27,7 @@
         label: "Keywords"|t,
         id: 'sproutseo-searchKeywords',
         instructions: "A list of keywords that describe your content"|t,
-        name: nameContext~'[metadata][keywords]',
+        name: field.handle~'[metadata][keywords]',
         value: values.keywords,
         errors: "",
         required: false
