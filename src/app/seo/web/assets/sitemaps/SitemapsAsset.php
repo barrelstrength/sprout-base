@@ -25,6 +25,7 @@ class SitemapsAsset extends AssetBundle
 
         // @todo - update this file to be named better
         $this->js = [
+            'js/sitemaps.js',
             'js/MetaTags.js'
         ];
 

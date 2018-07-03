@@ -1,8 +1,6 @@
 {% extends "sprout-base-seo/_layouts/base" %}
 {% import "_includes/forms" as forms %}
 
-{% do view.registerAssetBundle("barrelstrength\\sproutbase\\app\\seo\\web\\assets\\sitemaps\\SitemapsAsset") %}
-
 {% set title = sitemapSection.name ?? "Create a new custom page"|t %}
 
 {% set crumbs = [
@@ -136,6 +134,8 @@
 
     </div>
 {% endblock %}
+
+{% do view.registerAssetBundle("barrelstrength\\sproutbase\\app\\seo\\web\\assets\\sitemaps\\SitemapsAsset") %}
 
 {% if sitemapSection.name is not defined or not sitemapSection.handle %}
     {% includeJs "new Craft.HandleGenerator('#name', '#handle');" %}
