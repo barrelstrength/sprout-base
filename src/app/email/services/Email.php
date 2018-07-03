@@ -7,6 +7,7 @@ use barrelstrength\sproutbase\app\email\elements\NotificationEmail;
 use barrelstrength\sproutbase\app\email\base\EmailTemplates;
 use barrelstrength\sproutbase\app\email\emailtemplates\BasicTemplates;
 use Craft;
+use craft\base\Element;
 use craft\events\RegisterComponentTypesEvent;
 use craft\base\Component;
 
@@ -51,13 +52,12 @@ class Email extends Component
     }
 
     /**
-     * @param NotificationEmail|null $notificationEmail
+     * @param null $model
      *
      * @return string
-     * @throws \ReflectionException
      * @throws \yii\base\Exception
      */
-    public function getEmailTemplate(NotificationEmail $notificationEmail = null)
+    public function getEmailTemplate($model = null)
     {
         // Set our default
         $defaultEmailTemplates = new BasicTemplates();
@@ -82,16 +82,16 @@ class Email extends Component
         }
 
         // Allow our email Element to override our settings
-        if ($notificationEmail->emailTemplateId) {
+        if ($model->emailTemplateId) {
 
-            $emailTemplate = $this->getEmailTemplateById($notificationEmail->emailTemplateId);
+            $emailTemplate = $this->getEmailTemplateById($model->emailTemplateId);
 
             if ($emailTemplate) {
                 // custom path by template API
                 $templatePath = $emailTemplate->getPath();
             } else {
                 // custom folder on site path
-                $templatePath = $this->getSitePath($notificationEmail->emailTemplateId);
+                $templatePath = $this->getSitePath($model->emailTemplateId);
             }
         }
 

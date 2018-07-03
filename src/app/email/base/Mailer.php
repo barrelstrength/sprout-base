@@ -11,6 +11,7 @@ namespace barrelstrength\sproutbase\app\email\base;
 use barrelstrength\sproutemail\elements\CampaignEmail;
 
 use barrelstrength\sproutemail\models\CampaignType;
+use craft\base\Element;
 use yii\base\Model;
 use craft\helpers\UrlHelper;
 use Craft;
@@ -250,6 +251,11 @@ abstract class Mailer
     public function prepListSettings($lists)
     {
         return $lists;
+    }
+
+    public function beforeValidate(Element $email)
+    {
+        return $email;
     }
 
     /**

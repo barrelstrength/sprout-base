@@ -1,4 +1,5 @@
 {% from "_includes/forms" import textField %}
+{% from "_includes/forms" import textareaField %}
 
 {% if campaignEmail.getErrors('subjectLine') %}
 
@@ -37,16 +38,15 @@
 
 {% else %}
 
-    {# Make sure we display something if all content is handled in the template and all fields are disabled. #}
-    {% if not campaignType.hasAdvancedTitles %}
-
-        <p class="light">{{ 'Add a custom field to your <a href="{editCampaignUrl}">Campaign
-    Type</a> to manage your
-    email content in Craft.'|t({ editCampaignUrl:
-                cpUrl('sprout-email/settings/campaigntypes/edit') ~ '/' ~ campaignType.id
-            })|raw }}</p>
-
-    {% endif %}
+    {{ textareaField({
+        label: "Body"|t('sprout-base'),
+        id: 'defaultBody',
+        name: 'defaultBody',
+        value: campaignType.defaultBody,
+        errors:  campaignType is defined ? campaignType.getErrors('defaultBody') : null,
+        autofocus: true,
+        rows: 15
+    }) }}
 
 {% endif %}
 

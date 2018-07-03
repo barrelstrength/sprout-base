@@ -165,21 +165,20 @@ Select the Mailer you will use to send Email Campaigns.
 
     function toggleCopyPasteField(selectedOption)
     {
-    if (selectedOption == 'barrelstrength\\sproutemail\\integrations\\sproutemail\\mailers\\CopyPasteMailer')
-    {
-
-    $('#templateCopyPaste-field').show();
-    }
-    else
-    {
-    $('#templateCopyPaste-field input').val('');
-    $('#templateCopyPaste-field').hide();
-    }
+        if (selectedOption == 'barrelstrength\\sproutemail\\mailers\\CopyPasteMailer')
+        {
+            $('#templateCopyPaste-field').show();
+        }
+        else
+        {
+            $('#templateCopyPaste-field input').val('');
+            $('#templateCopyPaste-field').hide();
+        }
     }
 
     // Setup listener for copy/paste field
     $('#mailer').change(function() {
-    toggleCopyPasteField($('#mailer').val());
+        toggleCopyPasteField($('#mailer').val());
     });
 
     // Show/hide copy/paste field on page load
