@@ -11,6 +11,7 @@ use barrelstrength\sproutbase\app\email\models\Recipient;
 use barrelstrength\sproutbase\SproutBase;
 use Craft;
 use craft\base\Element;
+use League\HTMLToMarkdown\HtmlConverter;
 
 trait EmailTemplateTrait
 {
@@ -113,7 +114,6 @@ trait EmailTemplateTrait
 
         try {
             $renderedTemplate = Craft::$app->getView()->renderTemplate($template, $variables);
-
         } catch (\Exception $e) {
             // Specify template .html if no .txt
             $message = $e->getMessage();
@@ -211,5 +211,60 @@ trait EmailTemplateTrait
             'invalid' => $invalidRecipients,
             'emails' => $emails
         ];
+    }
+
+    /**
+     * @param       $model
+     * @param array $object
+     * @param array $modelTemplate
+     *
+     * @return array
+     * @throws \yii\base\Exception
+     */
+    public function getHtmlBody($model, $object = [], $modelTemplate = null)
+    {
+        $view = Craft::$app->getView();
+        $oldTemplatePath = $view->getTemplatesPath();
+
+        // Gets the emailTemplateId from a model
+        $modelTemplate = $modelTemplate ?? $model;
+        $emailTemplatePath = SproutBase::$app->sproutEmail->getEmailTemplate($modelTemplate);
+
+        $this->setFolderPath($emailTemplatePath);
+
+        $htmlEmailTemplate = 'email.html';
+        $textEmailTemplate = 'email.txt';
+
+        $view->setTemplatesPath($emailTemplatePath);
+
+        $htmlBody = $this->renderSiteTemplateIfExists($htmlEmailTemplate, [
+            'email' => $model,
+            'object' => $object
+        ]);
+
+        $textEmailTemplateExists = Craft::$app->getView()->doesTemplateExist($textEmailTemplate);
+
+        // Converts html body to text email if no .txt
+        if ($textEmailTemplateExists) {
+            $body = $this->renderSiteTemplateIfExists($textEmailTemplate, [
+                'email' => $model,
+                'object' => $object
+            ]);
+        } else {
+            $converter = new HtmlConverter([
+                'strip_tags' => true
+            ]);
+
+            // For more advanced html templates, conversion may be tougher. Minifying the HTML
+            // can help and ensuring that content is wrapped in proper tags that adds spaces between
+            // things in Markdown, like <p> tags or <h1> tags and not just <td> or <div>, etc.
+            $markdown = $converter->convert($htmlBody);
+
+            $body = trim($markdown);
+        }
+
+        $view->setTemplatesPath($oldTemplatePath);
+
+        return ['html' => $htmlBody, 'body' => $body];
     }
 }

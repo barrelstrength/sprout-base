@@ -42,8 +42,8 @@
         label: "Body"|t('sprout-base'),
         id: 'defaultBody',
         name: 'defaultBody',
-        value: campaignType.defaultBody,
-        errors:  campaignType is defined ? campaignType.getErrors('defaultBody') : null,
+        value: campaignEmail.defaultBody,
+        errors:  campaignEmail is defined ? campaignEmail.getErrors('defaultBody') : null,
         autofocus: true,
         rows: 15
     }) }}

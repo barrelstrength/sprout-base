@@ -149,45 +149,10 @@ class NotificationEmails extends Component
         $fromEmail = $this->renderObjectTemplateSafely($notificationEmail->fromEmail, $object);
         $replyTo = $this->renderObjectTemplateSafely($notificationEmail->replyToEmail, $object);
 
-        $view = Craft::$app->getView();
-        $oldTemplatePath = $view->getTemplatesPath();
+        $content = $this->getHtmlBody($notificationEmail, $object);
 
-        $emailTemplatePath = SproutBase::$app->sproutEmail->getEmailTemplate($notificationEmail);
-
-        $this->setFolderPath($emailTemplatePath);
-
-        $htmlEmailTemplate = 'email.html';
-        $textEmailTemplate = 'email.txt';
-
-        $view->setTemplatesPath($emailTemplatePath);
-
-        $htmlBody = $this->renderSiteTemplateIfExists($htmlEmailTemplate, [
-            'email' => $notificationEmail,
-            'object' => $object
-        ]);
-
-        $textEmailTemplateExists = Craft::$app->getView()->doesTemplateExist($textEmailTemplate);
-
-        // Converts html body to text email if no .txt
-        if ($textEmailTemplateExists) {
-            $body = $this->renderSiteTemplateIfExists($textEmailTemplate, [
-                'email' => $notificationEmail,
-                'object' => $object
-            ]);
-        } else {
-            $converter = new HtmlConverter([
-                'strip_tags' => true
-            ]);
-
-            // For more advanced html templates, conversion may be tougher. Minifying the HTML
-            // can help and ensuring that content is wrapped in proper tags that adds spaces between
-            // things in Markdown, like <p> tags or <h1> tags and not just <td> or <div>, etc.
-            $markdown = $converter->convert($htmlBody);
-
-            $body = trim($markdown);
-        }
-
-        $view->setTemplatesPath($oldTemplatePath);
+        $body     = $content['body'];
+        $htmlBody = $content['html'];
 
         $message = new Message();
 
