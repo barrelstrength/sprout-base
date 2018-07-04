@@ -1,9 +1,9 @@
-{% if sitemapIndexItems|length %}
+{% if sitemapIndexUrls|length %}
 {% set urls %}
 
-{% for sitemapIndex in sitemapIndexItems %}
+{% for sitemapUrl in sitemapIndexUrls %}
   <sitemap>
-    <loc>{{ sitemapIndex }}</loc>
+    <loc>{{ sitemapUrl }}</loc>
     <lastmod>{{ now|date('Y-m-d') }}</lastmod>
   </sitemap>
 {% endfor %}

@@ -202,7 +202,7 @@ if (typeof Craft.SproutBase === typeof undefined) {
                 self.$addressForm.append(response.countryCodeHtml);
                 self.$addressForm.append(response.formInputHtml);
 
-            }, this))
+            }, this));
         },
 
         _getAddress: function(data, onError) {
