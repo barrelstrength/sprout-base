@@ -7,15 +7,15 @@
 {% block contextMenu %}
     {% if craft.app.getIsMultiSite() %}
         {% if enableMultilingualSitemaps %}
-            {% include "sprout-base-seo/sitemaps/_groupmenu" with {
+            {% include "sprout-base-seo/sitemaps/_sitegroupmenu" with {
                 selectedSiteId: currentSite.id,
-                siteIds: enabledSiteIds,
+                siteIds: editableSiteIds,
                 urlFormat: "sprout-seo/sitemaps/{handle}"
             } %}
         {% else %}
             {% include "_elements/sitemenu" with {
                 selectedSiteId: currentSite.id,
-                siteIds: enabledSiteIds,
+                siteIds: editableSiteIds,
                 urlFormat: "sprout-seo/sitemaps/{handle}"
             } %}
         {% endif %}
