@@ -360,49 +360,49 @@ feel like they are part of the natural flow of fields #}
 
     function getCustomizationSettings(customKey)
     {
-    var name = '{{ field.handle|raw }}';
-    return $("input[name='fields["+name+"][metadata]["+customKey+"]']");
+        var name = '{{ field.handle|raw }}';
+        return $("input[name='fields["+name+"][metadata]["+customKey+"]']");
     }
 
     function toggleActive(div, divId)
     {
-    //enableMetaDetailsSearch
-    var customKey = "enableMetaDetails"+divId;
+        //enableMetaDetailsSearch
+        var customKey = "enableMetaDetails"+divId;
 
-    var customizationSettings = getCustomizationSettings(customKey);
+        var customizationSettings = getCustomizationSettings(customKey);
 
-    if (div.hasClass("active"))
-    {
-    div.removeClass("active");
-    customizationSettings.val(0);
-    }
-    else
-    {
-    div.addClass("active");
-    customizationSettings.val(1);
-    }
+        if (div.hasClass("active"))
+        {
+            div.removeClass("active");
+            customizationSettings.val(0);
+        }
+        else
+        {
+            div.addClass("active");
+            customizationSettings.val(1);
+        }
     }
 
     $(".sproutseo-advancedoption-btns div").click(function()
     {
-    var divId = $(this).attr("data-type");
-    $(".fields-"+divId).toggle();
+        var divId = $(this).attr("data-type");
+        $(".fields-"+divId).toggle();
 
-    // Sitemap Settings
-    var btn = $("#btn-"+divId);
-    if (btn.length)
-    {
-    toggleActive(btn, divId);
-    }
+        // Sitemap Settings
+        var btn = $("#btn-"+divId);
+        if (btn.length)
+        {
+            toggleActive(btn, divId);
+        }
 
-    // Optimize Field Settings
-    var fieldsBtn = $("#fields-btn-"+divId);
-    if (fieldsBtn.length)
-    {
-    toggleActive(fieldsBtn, divId);
-    }
+        // Optimize Field Settings
+        var fieldsBtn = $("#fields-btn-"+divId);
+        if (fieldsBtn.length)
+        {
+            toggleActive(fieldsBtn, divId);
+        }
 
-    return false; // avoid parents divs if you have nested divs
+        return false; // avoid parents divs if you have nested divs
     });
 
     // Checking active class
@@ -410,30 +410,30 @@ feel like they are part of the natural flow of fields #}
 
     for (var i = 0; i < fields.length; i++)
     {
-    var customKey = "enableMetaDetails"+fields[i];
-    var customizationSettings = getCustomizationSettings(customKey);
-    if(customizationSettings.val()==1)
-    {
-    $("#btn-"+fields[i]).addClass("active");
-    // Optimize Field Settings
-    $("#fields-btn-"+fields[i]).addClass("active");
-    }
+        var customKey = "enableMetaDetails"+fields[i];
+        var customizationSettings = getCustomizationSettings(customKey);
+        if(customizationSettings.val()==1)
+        {
+            $("#btn-"+fields[i]).addClass("active");
+            // Optimize Field Settings
+            $("#fields-btn-"+fields[i]).addClass("active");
+        }
     }
 
     function appendSeoBadge(fieldId)
     {
-    var labelId = '#fields-' + fieldId + '-label';
-    $(labelId).append(metaTitleSeoButton);
+        var labelId = '#fields-' + fieldId + '-label';
+        $(labelId).append(metaTitleSeoButton);
     }
 
     {% if settings.optimizedKeywordsField == 'manually' %}
         $('#fields-sproutseo-optimizedkeywords-field input').tagEditor({
-        animateDelete: 20
+            animateDelete: 20
         });
     {% endif %}
 
     $('#fields-sproutseo-searchKeywords-field input').tagEditor({
-    animateDelete: 20
+        animateDelete: 20
     });
 
     {% if settings.optimizedTitleField == 'elementTitle' %}
