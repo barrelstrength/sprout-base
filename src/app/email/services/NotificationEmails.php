@@ -16,7 +16,6 @@ use Craft;
 use craft\helpers\ElementHelper;
 use craft\helpers\Html;
 use craft\helpers\UrlHelper;
-use League\HTMLToMarkdown\HtmlConverter;
 use craft\base\ElementInterface;
 use yii\web\NotFoundHttpException;
 
