@@ -39,7 +39,7 @@
                     <li class="heading"><span>{{ item.heading }}</span></li>
                 {% else %}
                     {% set selected = tabHandle == selectedTabHandle ? 'sel' : null %}
-                    {% set tabUrl = url('sprout-seo/globals/'~tabHandle~(siteHandle is not null ? '/' ~ siteHandle)) %}
+                    {% set tabUrl = url('sprout-seo/globals/'~tabHandle~(currentSite.handle is not null ? '/' ~ currentSite.handle)) %}
                     <li>
                         <a href="{{ tabUrl }}" class="{{ selected }}">{{ item.title }}</a>
                     </li>
