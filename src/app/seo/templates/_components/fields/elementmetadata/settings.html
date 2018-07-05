@@ -48,6 +48,18 @@
     </div>
 </div>
 
+
+{% set optimizedKeywordOptions = craft.sproutSeo.getKeywordsOptions() %}
+
+{{ forms.selectField({
+    label: "Meta Keywords"|t,
+    instructions: "Generate keywords and key phrases dynamically based on an algorithm or add them manually."|t,
+    id: 'optimizedKeywordsField',
+    name: 'optimizedKeywordsField',
+    options: optimizedKeywordOptions,
+    value: settings.optimizedKeywordsField is defined ? settings.optimizedKeywordsField : 'manually',
+}) }}
+
 {% set optimizedImageOptions = craft.sproutSeo.getOptimizedAssetsOptions(settings) %}
 
 <div class="field">
@@ -94,20 +106,21 @@
     </div>
 </div>
 
-{% set optimizedKeywordOptions = craft.sproutSeo.getKeywordsOptions() %}
-
-{{ forms.selectField({
-    label: "Meta Keywords"|t,
-    instructions: "Generate keywords and key phrases dynamically based on an algorithm or add them manually."|t,
-    id: 'optimizedKeywordsField',
-    name: 'optimizedKeywordsField',
-    options: optimizedKeywordOptions,
-    value: settings.optimizedKeywordsField is defined ? settings.optimizedKeywordsField : 'manually',
-}) }}
 <hr>
+
+{{ forms.lightswitchField({
+    label: "Enable Canonical URL field"|t,
+    instructions: "Allow users to override the Canonical URL at Element Metadata field level"|t,
+    id: 'editCanonical',
+    name: 'editCanonical',
+    on: settings.editCanonical,
+}) }}
+
+<hr>
+
 {{ forms.lightswitchField({
     label: "Enable Meta Details fields"|t,
-    instructions: "Meta Details fields add one more level of fine-tuning over your metadata. With Meta Details fields enabled, content editors will have the option to refine Open Graph, Twitter Card, Geo, and Robots metadata within Sections and the Element Metadata Field will display additional settings to allow customization of Structured Data, Search, Open Graph, Twitter Card, Geo, and Robots metadata on any Element that supports the Element Metadata field."|t,
+    instructions: "Meta Details fields add one more level of fine-tuning over your metadata. With Meta Details fields enabled, content editors will have additional control to customize Search, Open Graph, Twitter Card, Geo, and Robots metadata. Note: enabling Meta Details fields may require additional time for content planning and monitoring in your SEO strategy."|t,
     name: 'enableMetaDetailsFields',
     toggle: 'settings-enablemetadadetails',
     on: settings.enableMetaDetailsFields,
@@ -116,7 +129,6 @@
 
 <div id="settings-enablemetadadetails"
      class="{% if not settings.enableMetaDetailsFields %} hidden {% endif %}">
-    <hr>
 
     {% set advancedInput %}
         <table class="data" style="width: auto;">
@@ -135,8 +147,7 @@
                     <div>
                         {{ forms.lightswitch({
                             name: 'showSearchMeta',
-                            on:   settings.showSearchMeta,
-                            small: true
+                            on:   settings.showSearchMeta
                         }) }}
                     </div>
                 </td>
@@ -149,8 +160,7 @@
                     <div>
                         {{ forms.lightswitch({
                             name: 'showOpenGraph',
-                            on:   settings.showOpenGraph,
-                            small: true
+                            on:   settings.showOpenGraph
                         }) }}
                     </div>
                 </td>
@@ -163,8 +173,7 @@
                     <div>
                         {{ forms.lightswitch({
                             name: 'showTwitter',
-                            on:   settings.showTwitter,
-                            small: true
+                            on:   settings.showTwitter
                         }) }}
                     </div>
                 </td>
@@ -177,8 +186,7 @@
                     <div>
                         {{ forms.lightswitch({
                             name: 'showGeo',
-                            on:   settings.showGeo,
-                            small: true
+                            on:   settings.showGeo
                         }) }}
                     </div>
                 </td>
@@ -191,8 +199,7 @@
                     <div>
                         {{ forms.lightswitch({
                             name: 'showRobots',
-                            on:   settings.showRobots,
-                            small: true
+                            on:   settings.showRobots
                         }) }}
                     </div>
                 </td>
@@ -203,23 +210,10 @@
     {% endset %}
 
     {{ forms.field({
-        label: "Meta Details"|t,
-        instructions: "Enable one more level of control to fine-tune your metadata to your specific SEO needs. Note: enabling Meta Details fields may require additional time to content planning and monitoring in your SEO strategy."|t,
         errors: ''
     }, advancedInput) }}
 
 </div> {# End meta details div #}
-
-<hr>
-
-{{ forms.lightswitchField({
-    label: "Edit Canonical?"|t,
-    instructions: "Override Canonical URL at Element Metadata field level"|t,
-    warning: '',
-    id: 'editCanonical',
-    name: 'editCanonical',
-    on: settings.editCanonical,
-}) }}
 
 {% do view.registerAssetBundle("barrelstrength\\sproutbase\\app\\fields\\web\\assets\\selectother\\SelectOtherFieldAsset") %}
 {% do view.registerAssetBundle("barrelstrength\\sproutbase\\app\\seo\\web\\assets\\elementmetadata\\ElementMetadataAsset") %}

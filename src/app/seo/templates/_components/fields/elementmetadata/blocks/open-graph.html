@@ -38,11 +38,7 @@
         }) }}
 
         {{ forms.field({
-            label: 'Image'|t ~ sprout.infoIcon({
-                label: 'Image'|t,
-                openGraph: true,
-                twitterCard: true
-            }),
+            label: 'Image'|t,
             instructions: 'An image that represents your content that will display in Open Graph metadata.'|t,
         }, forms.elementSelect({
             elements: ogImageElements,
@@ -65,20 +61,6 @@
             value: values.ogTransform,
             errors: "",
             required: false
-        }) }}
-
-        {{ forms.textField({
-            label: "Audio URL"|t,
-            instructions: "A URL to an audio file to accompany this content."|t,
-            name: field.handle~"[metadata][ogAudio]",
-            value: values.ogAudio
-        }) }}
-
-        {{ forms.textField({
-            label: "Video URL"|t,
-            instructions: "A URL to a video file that complements this content."|t,
-            name: field.handle~"[metadata][ogVideo]",
-            value: values.ogVideo
         }) }}
 
     </div>

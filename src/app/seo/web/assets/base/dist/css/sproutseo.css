@@ -17,7 +17,8 @@
 
 .sproutseo-icon svg {
     height: 14px;
-    width: 14px
+    width: 14px;
+    margin-bottom: -2px;
 }
 
 .sprout-metadata-status svg path {
@@ -55,29 +56,26 @@
 ------------------------------------------------------------ */
 
 .sproutseo-info {
+    background: #ebedef;
     border-radius: 3px;
+    color: #8f98a3;
     margin-left: 5px;
     margin-right: -3px;
     padding: 0 5px;
-    background: #ebedef;
-    color: #8f98a3;
-    vertical-align: text-bottom;
     width: auto;
-    height: 80%;
     line-height: 18px;
 }
 
 .sproutseo-info:before {
     background: #ebedef;
     color: #8f98a3;
-    speak: none;
-    font-weight: bold;
-
-    align-content: center;
+    content: "seo";
     font-family: HelveticaNeue, sans-serif;
     font-size: 11px;
-    content: "seo";
-
+    font-weight: bold;
+    height: 100%;
+    vertical-align: middle;
+    speak: none;
     -webkit-font-smoothing: auto;
     -webkit-user-select: text;
 }
@@ -88,6 +86,7 @@
     color: #fff;
 }
 
+.matrixblock .sproutseo-info,
 .matrixblock .sproutseo-info:before {
     background-color: #dcdcdc;
 }
