@@ -3,8 +3,6 @@
 {% import "sprout-base-fields/_includes/forms" as sproutFields %}
 {% import "sprout-base-seo/_includes/sproutseo" as sprout %}
 
-{% do view.registerAssetBundle("barrelstrength\\sproutbase\\app\\seo\\web\\assets\\globals\\GlobalsAsset") %}
-
 {% set imageElement      = null %}
 {% set elementType       = craft.sproutSeo.getAssetElementType %}
 {% set organizationItems = craft.sproutSeo.getOrganizationOptions() %}
@@ -454,82 +452,84 @@
 
     </form>
 
-    {% js %}
-        var items = {{ organizationItems|json_encode|raw }};
-        var websiteIdentity = {{ websiteIdentity|json_encode|raw }};
-
-        $(document).ready(function() {
-        Craft.SproutFields.initFields($("#content"));
-
-        $('#keywords-field input').tagEditor({
-        animateDelete: 20
-        });
-
-        // check if we need load depending dropdowns
-        if (websiteIdentity)
-        {
-        if (websiteIdentity.hasOwnProperty('organizationSubTypes') && websiteIdentity.organizationSubTypes[0])
-        {
-        $('#first').val(websiteIdentity.organizationSubTypes[0]).change();
-        }
-        if (websiteIdentity.hasOwnProperty('organizationSubTypes') && websiteIdentity.organizationSubTypes[1])
-        {
-        $('#second').val(websiteIdentity.organizationSubTypes[1]).change();
-        }
-        if (websiteIdentity.hasOwnProperty('organizationSubTypes') && websiteIdentity.organizationSubTypes[2])
-        {
-        $('#third').val(websiteIdentity.organizationSubTypes[2]).change();
-        }
-        }
-
-        $( "#identityType" ).change(function() {
-        if(this.value === 'Person')
-        {
-        $( ".person-info" ).removeClass('hidden');
-        $( ".organization-info" ).addClass('hidden');
-        }
-        else
-        {
-        $( ".person-info" ).addClass('hidden');
-        $( ".organization-info" ).removeClass('hidden');
-        }
-
-        if(this.value === 'Organization')
-        {
-        $( ".organization-info" ).removeClass('hidden');
-        $( ".person-info" ).addClass('hidden');
-
-        if ($( "#first" ).val() == 'LocalBusiness')
-        {
-        $( "#localbusiness" ).removeClass('hidden');
-        }
-        }
-        else
-        {
-        $( ".organization-info" ).addClass('hidden');
-        $( ".person-info" ).removeClass('hidden');
-        }
-        });
-
-        $( "#first" ).change(function() {
-        console.log(this.value);
-        if(this.value === 'LocalBusiness')
-        {
-        $( "#localbusiness" ).removeClass('hidden');
-        }
-        else
-        {
-        $( "#localbusiness" ).addClass('hidden');
-        }
-        });
-
-        new Craft.SproutBase.AddressBox($('.sproutaddressinfo-box'), {
-        source: 'websiteIdentity'
-        })
-        });
-
-    {% endjs %}
-
 {% endblock %}
 
+{% do view.registerAssetBundle("barrelstrength\\sproutbase\\app\\seo\\web\\assets\\globals\\GlobalsAsset") %}
+
+{% js %}
+
+    var items = {{ organizationItems|json_encode|raw }};
+    var websiteIdentity = {{ websiteIdentity|json_encode|raw }};
+
+    $(document).ready(function() {
+    Craft.SproutFields.initFields($("#content"));
+
+    $('#keywords-field input').tagEditor({
+    animateDelete: 20
+    });
+
+    // check if we need load depending dropdowns
+    if (websiteIdentity)
+    {
+    if (websiteIdentity.hasOwnProperty('organizationSubTypes') && websiteIdentity.organizationSubTypes[0])
+    {
+    $('#first').val(websiteIdentity.organizationSubTypes[0]).change();
+    }
+    if (websiteIdentity.hasOwnProperty('organizationSubTypes') && websiteIdentity.organizationSubTypes[1])
+    {
+    $('#second').val(websiteIdentity.organizationSubTypes[1]).change();
+    }
+    if (websiteIdentity.hasOwnProperty('organizationSubTypes') && websiteIdentity.organizationSubTypes[2])
+    {
+    $('#third').val(websiteIdentity.organizationSubTypes[2]).change();
+    }
+    }
+
+    $( "#identityType" ).change(function() {
+    if(this.value === 'Person')
+    {
+    $( ".person-info" ).removeClass('hidden');
+    $( ".organization-info" ).addClass('hidden');
+    }
+    else
+    {
+    $( ".person-info" ).addClass('hidden');
+    $( ".organization-info" ).removeClass('hidden');
+    }
+
+    if(this.value === 'Organization')
+    {
+    $( ".organization-info" ).removeClass('hidden');
+    $( ".person-info" ).addClass('hidden');
+
+    if ($( "#first" ).val() == 'LocalBusiness')
+    {
+    $( "#localbusiness" ).removeClass('hidden');
+    }
+    }
+    else
+    {
+    $( ".organization-info" ).addClass('hidden');
+    $( ".person-info" ).removeClass('hidden');
+    }
+    });
+
+    $( "#first" ).change(function() {
+    console.log(this.value);
+    if(this.value === 'LocalBusiness')
+    {
+    $( "#localbusiness" ).removeClass('hidden');
+    }
+    else
+    {
+    $( "#localbusiness" ).addClass('hidden');
+    }
+    });
+
+    new Craft.SproutBase.AddressBox($('.sproutaddressinfo-box'), {
+    source: 'websiteIdentity'
+    })
+    });
+
+{% endjs %}
 

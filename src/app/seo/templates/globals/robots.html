@@ -14,6 +14,7 @@
         <input type="hidden" name="globalKeys" value="meta,robots">
         <input type="hidden" name="siteId" value="{{ globals.siteId }}">
 
+        {% set robotsContext = 'globals' %}
         {% set robotsNamespace = 'sproutseo[globals][robots]' %}
         {% include "sprout-base-seo/_components/fields/elementmetadata/blocks/robots" %}
 

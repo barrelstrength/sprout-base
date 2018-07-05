@@ -38,11 +38,7 @@
         }) }}
 
         {{ forms.field({
-            label: 'Image'|t ~ sprout.infoIcon({
-                label: 'Image'|t,
-                openGraph: true,
-                twitterCard: true
-            }),
+            label: 'Image'|t,
             instructions: 'An image that represents your content that will display in Open Graph metadata.'|t,
         }, forms.elementSelect({
             elements: ogImageElements,
