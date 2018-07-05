@@ -215,9 +215,6 @@
 
 </div> {# End meta details div #}
 
-{% do view.registerAssetBundle("barrelstrength\\sproutbase\\app\\fields\\web\\assets\\selectother\\SelectOtherFieldAsset") %}
-{% do view.registerAssetBundle("barrelstrength\\sproutbase\\app\\seo\\web\\assets\\elementmetadata\\ElementMetadataAsset") %}
-
 {% js %}
     var items = {{ schemaSubtypes|json_encode|raw }};
     var entryValues = {{ mainEntityValues|json_encode|raw }};

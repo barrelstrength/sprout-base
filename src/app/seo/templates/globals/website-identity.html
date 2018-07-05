@@ -138,25 +138,6 @@
             errors: ''
         }) }}
 
-        {{ sproutFields.urlField({
-            label: "URL"|t('sprout-seo') ~ sprout.infoIcon({
-                label: "URL"|t('sprout-seo'),
-                search: true,
-                structured: true,
-                openGraph: true,
-                twitterCard: true,
-                priority: 'globals'
-            }),
-            instructions: "The URL of your official website. Defaults to the same value as Site URL in Settings->General."|t('sprout-seo'),
-            namespaceInputId: 'sproutseo-websiteidentity-url',
-            id: 'sproutseo-websiteidentity-url',
-            fieldContext: 'sproutseo',
-            name: 'sproutseo[globals][identity][url]',
-            value: websiteIdentity['url'] is defined and websiteIdentity['url'] != "" ? websiteIdentity.url : siteUrl,
-            errors: '',
-            required: true
-        }) }}
-
         {{ sproutFields.emailField({
             label: "Email"|t('sprout-seo') ~ sprout.infoIcon({
                 label: "Email"|t('sprout-seo'),
