@@ -17,7 +17,13 @@ trait BaseSproutTrait
 
         $pluginHandle = Craft::$app->getPlugins()->getPluginHandleByClass($pluginClass);
 
-        return Craft::$app->getPlugins()->getPlugin($pluginHandle);
+        $plugin = null;
+
+        if ($pluginHandle) {
+            $plugin = Craft::$app->getPlugins()->getPlugin($pluginHandle);
+        }
+
+        return $plugin;
     }
 
     /**
