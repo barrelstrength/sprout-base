@@ -70,7 +70,7 @@ Select the Mailer you will use to send Email Campaigns.
             name: 'sproutEmail[emailTemplateId]',
             options: templateOptions,
             value: campaignType is defined ? campaignType.emailTemplateId : null,
-            otherPlaceholderText: '_emailtemplates/folder'|t('sprout-email')
+            otherPlaceholderText: '_email/email-template-folder'|t('sprout-email')
         })) }}
 
         {{ forms.textField({

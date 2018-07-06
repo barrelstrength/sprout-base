@@ -7,8 +7,7 @@
 
     {{ forms.textField({
         label: "Plugin Name"|t('sprout-email'),
-        instructions: "Intuitive, human-readable plugin name for the end
-    user."|t('sprout-email'),
+        instructions: "Intuitive, human-readable plugin name for the end user."|t('sprout-email'),
         id: 'pluginNameOverride',
         name: 'pluginNameOverride',
         value: settings.pluginNameOverride,
@@ -28,8 +27,7 @@
             <tbody>
             <tr>
                 <td>
-                    <label for="enableNotificationEmails">{{ "Enable
-                    Notifications?"|t('sprout-email') }}</label>
+                    <label for="enableNotificationEmails">{{ "Enable Notifications?"|t('sprout-email') }}</label>
                 </td>
                 <td class="centeralign">
                     <div>
@@ -78,8 +76,7 @@
 
     {{ forms.field({
         label: "Choose which features to enable"|t('sprout-email'),
-        instructions: "Disabled items will be removed from the sidebar navigation
-    and no longer accessible in the Control Panel."|t('sprout-email')
+        instructions: "Disabled items will be removed from the sidebar navigation and no longer accessible in the Control Panel."|t('sprout-email')
     }, advancedInput) }}
 
     {% set templateOptions = craft.sproutEmail.getEmailTemplateOptions() %}
@@ -89,22 +86,18 @@
         required: true,
         errors: (settings is defined ? settings.getErrors('emailTemplateId') :
         null),
-        instructions: "The templates that will be used to output your email. Add
-    additional form templates via the Email Templates API or providing a custom
-    path to your email template folder."|t('sprout-email'),
+        instructions: "The templates that will be used to output your email. Add additional form templates via the Email Templates API or providing a custom path to your email template folder."|t('sprout-email'),
     }, sproutFields.selectOther({
         name: 'emailTemplateId',
         options: templateOptions,
         value: settings.emailTemplateId ?? null,
-        otherPlaceholderText: '_forms/mycustomtemplates'|t('sprout-email')
+        otherPlaceholderText: '_email/email-templates-folder'|t('sprout-email')
     })) }}
 
     {{ forms.lightswitchField({
         label: "Enable custom Email Templates on a per-email
     basis"|t('sprout-forms'),
-        instructions: "Allow admins to (optionally) add custom email templates for
-    each email created. Enabling this setting will display the Email Template
-    dropdown field for every Notification Email Element."|t('sprout-email'),
+        instructions: "Allow admins to (optionally) add custom email templates for each email created. Enabling this setting will display the Email Template dropdown field for every Notification Email Element."|t('sprout-email'),
         id: 'enablePerEmailEmailTemplateIdOverride',
         name: 'enablePerEmailEmailTemplateIdOverride',
         on: settings.enablePerEmailEmailTemplateIdOverride,

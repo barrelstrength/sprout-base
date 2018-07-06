@@ -16,11 +16,6 @@ use yii\base\Model;
 use craft\helpers\UrlHelper;
 use Craft;
 
-/**
- * Class Mailer
- *
- * @package barrelstrength\sproutbase\app\email\base
- */
 abstract class Mailer
 {
     /**
@@ -253,6 +248,11 @@ abstract class Mailer
         return $lists;
     }
 
+    /**
+     * @param Element $email
+     *
+     * @return Element
+     */
     public function beforeValidate(Element $email)
     {
         return $email;
