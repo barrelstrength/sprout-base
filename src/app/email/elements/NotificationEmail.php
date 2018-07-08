@@ -477,15 +477,4 @@ class NotificationEmail extends Element
     {
         return (bool)($this->getStatus() == static::ENABLED);
     }
-
-    /**
-     * @param mixed|null $element
-     *
-     * @throws \Exception
-     * @return array|string
-     */
-    public function getRecipients($element = null)
-    {
-        return SproutBase::$app->mailers->getRecipients($element, $this);
-    }
 }

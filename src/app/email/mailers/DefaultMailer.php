@@ -6,12 +6,13 @@ use barrelstrength\sproutbase\app\email\base\EmailTemplateTrait;
 use barrelstrength\sproutbase\app\email\base\Mailer;
 use barrelstrength\sproutbase\app\email\base\NotificationEmailSenderInterface;
 use barrelstrength\sproutbase\app\email\models\Message;
+use barrelstrength\sproutbase\app\email\models\SimpleRecipientList;
 use barrelstrength\sproutbase\SproutBase;
 use barrelstrength\sproutemail\elements\CampaignEmail;
 use barrelstrength\sproutbase\app\email\elements\NotificationEmail;
 use barrelstrength\sproutemail\models\CampaignType;
 use barrelstrength\sproutbase\app\email\models\Response;
-use barrelstrength\sproutbase\app\email\models\Recipient;
+use barrelstrength\sproutbase\app\email\models\SimpleRecipient;
 use barrelstrength\sproutemail\SproutEmail;
 use barrelstrength\sproutlists\elements\Subscribers;
 use barrelstrength\sproutlists\listtypes\SubscriberListType;
@@ -28,6 +29,10 @@ use craft\helpers\Template;
 use Craft;
 use craft\helpers\UrlHelper;
 use craft\volumes\Local;
+use Egulias\EmailValidator\EmailValidator;
+use Egulias\EmailValidator\Validation\DNSCheckValidation;
+use Egulias\EmailValidator\Validation\MultipleValidationWithAnd;
+use Egulias\EmailValidator\Validation\RFCValidation;
 use yii\base\Exception;
 use yii\base\InvalidArgumentException;
 
@@ -139,8 +144,12 @@ class DefaultMailer extends Mailer implements NotificationEmailSenderInterface
                     $htmlBody = $this->renderSiteTemplateIfExists($campaignType->template, $params);
 
                     $email->setHtmlBody($htmlBody);
-                    $name = $recipient->firstName.' '.$recipient->lastName;
-                    $email->setTo([$recipient->email => $name]);
+
+                    if ($recipient->name) {
+                        $email->setTo([$recipient->email => $recipient->name]);
+                    } else {
+                        $email->setTo($recipient->email);
+                    }
 
                     SproutBase::$app->mailers->sendEmail($email);
                 } catch (\Exception $e) {
@@ -174,6 +183,9 @@ class DefaultMailer extends Mailer implements NotificationEmailSenderInterface
     }
 
     /**
+     * @todo - the $useMockData parameter is not in the parent method signature and likely not in use.
+     * Perhaps update this to be a boolean on the sproutemail_notificationemail model
+     *
      * @inheritdoc
      *
      * @throws \Exception
@@ -189,6 +201,7 @@ class DefaultMailer extends Mailer implements NotificationEmailSenderInterface
         $recipients = $this->prepareRecipients($notificationEmail, $object, $useMockData);
 
         if (empty($recipients)) {
+            // @todo can we remove this in favor of adding errors to the NotificationEmail model?
             SproutBase::$app->emailErrorHelper->addError('no-recipients', Craft::t('sprout-base', 'No recipients found.'));
         }
 
@@ -207,13 +220,15 @@ class DefaultMailer extends Mailer implements NotificationEmailSenderInterface
         $body = $message->renderedBody;
         $htmlBody = $message->renderedHtmlBody;
 
+        // @todo can we remove this in favor of adding errors to the NotificationEmail model?
+        // Where do these template errors get added?
         $templateErrors = SproutBase::$app->emailErrorHelper->getErrors();
-
         SproutBase::error($templateErrors);
 
         if (empty($templateErrors) && (empty($body) || empty($htmlBody))) {
             $message = Craft::t('sprout-base', 'Email Text or HTML template cannot be blank. Check template setting.');
 
+            // @todo can we remove this in favor of adding errors to the NotificationEmail model?
             SproutBase::$app->emailErrorHelper->addError('blank-template', $message);
         }
 
@@ -239,16 +254,19 @@ class DefaultMailer extends Mailer implements NotificationEmailSenderInterface
         $processedRecipients = [];
 
         foreach ($recipients as $recipient) {
-            $toEmail = $this->renderObjectTemplateSafely($recipient->email, $object);
 
-            $name = $recipient->firstName.' '.$recipient->lastName;
+            // @todo - is this happening a second time? This should have been handled in prepareRecipients() above.
+//            $toEmail = $this->renderObjectTemplateSafely($recipient->email, $object);
 
-            /**
-             * @var $message Message
-             */
-            $message->setTo([$toEmail => $name]);
+//            $name = $recipient->name;
 
-            if (array_key_exists($toEmail, $processedRecipients)) {
+            if ($recipient->name) {
+                $message->setTo([$recipient->email => $recipient->name]);
+            } else {
+                $message->setTo($recipient->email);
+            }
+
+            if (array_key_exists($recipient->email, $processedRecipients)) {
                 continue;
             }
 
@@ -272,7 +290,7 @@ class DefaultMailer extends Mailer implements NotificationEmailSenderInterface
                 }
 
                 if (SproutBase::$app->mailers->sendEmail($message, $variables)) {
-                    $processedRecipients[] = $toEmail;
+                    $processedRecipients[] = $recipient->email;
                 } else {
                     return false;
                 }
@@ -296,9 +314,8 @@ class DefaultMailer extends Mailer implements NotificationEmailSenderInterface
      */
     protected function deleteExternalPaths($externalPaths)
     {
-        foreach ($externalPaths as $path)
-        {
-            if (file_exists($path)){
+        foreach ($externalPaths as $path) {
+            if (file_exists($path)) {
                 unlink($path);
             }
         }
@@ -307,7 +324,8 @@ class DefaultMailer extends Mailer implements NotificationEmailSenderInterface
     /**
      * @param Message $message
      * @param Asset[] $assets
-     * @param array $externalPaths
+     * @param array   $externalPaths
+     *
      * @throws \yii\base\InvalidConfigException
      */
     protected function attachAssetFilesToEmailModel(Message $message, array $assets, &$externalPaths = [])
@@ -325,7 +343,7 @@ class DefaultMailer extends Mailer implements NotificationEmailSenderInterface
                 // let's save the path to delete it after sent
                 array_push($externalPaths, $path);
             }
-            if ($path){
+            if ($path) {
                 $message->attach($path, ['fileName' => $name]);
             }
         }
@@ -339,7 +357,7 @@ class DefaultMailer extends Mailer implements NotificationEmailSenderInterface
      */
     protected function getAssetFilePath(Asset $asset)
     {
-        return $asset->getVolume()->getRootPath() . $asset->getFolder()->path . DIRECTORY_SEPARATOR . $asset->filename;
+        return $asset->getVolume()->getRootPath().$asset->getFolder()->path.DIRECTORY_SEPARATOR.$asset->filename;
     }
 
     /**
@@ -447,128 +465,140 @@ class DefaultMailer extends Mailer implements NotificationEmailSenderInterface
     }
 
     /**
+     * 0. Process an on the fly modal recipients field for a test email
+     * 1. Process plain text emails in recipients field
+     * 2. Process object syntax code in recipients field
+     * 3. Process lists
+     *
+     * Add errors to a model that helps us display them later
+     *
+     * Check a setting that helps us decide if we
+     * loop through emails individually or send all emails in the TO field together.
+     *
      * @param NotificationEmail $notificationEmail
      * @param                   $object
      * @param                   $useMockData
      *
-     * @return array|mixed
+     * @return SimpleRecipient[]
      * @throws \Exception
      */
     protected function prepareRecipients(NotificationEmail $notificationEmail, $object, $useMockData)
     {
-        // Get recipients for test notifications
         if ($useMockData) {
-            $recipients = Craft::$app->getRequest()->getBodyParam('recipients');
-
-            if (empty($recipients)) {
-                return [];
-            }
-
-            $recipients = Craft::$app->getRequest()->getBodyParam('recipients');
-
-            $result = $this->getValidAndInvalidRecipients($recipients);
-
-            $invalidRecipients = $result['invalid'];
-            $validRecipients = $result['valid'];
-
-            if (!empty($invalidRecipients)) {
-                $invalidEmails = implode('<br>', $invalidRecipients);
-
-                throw new InvalidArgumentException(Craft::t('sprout-base', 'Recipient email addresses do not validate: <br /> {invalidEmails}', [
-                    'invalidEmails' => $invalidEmails
-                ]));
-            }
-
-            return $validRecipients;
+            return $this->getRecipientsFromSendTestModal();
         }
 
-        // Get recipients for live emails
-        // @todo Craft 3 - improve and standardize how we use entryRecipients
-        $recipients = $this->getRecipientsFromEmailElement($notificationEmail, $object);
+        $recipients = [];
+        $listRecipients = [];
 
-        // @todo implement this when we develop sprout lists plugin
-        if (Craft::$app->getPlugins()->getPlugin('sprout-lists') != null) {
+        if ($notificationEmail->recipients) {
+            $recipients = $this->getRecipientsFromNotificationEmail($notificationEmail->recipients, $object);
+        }
 
-            $listSettings = $notificationEmail->listSettings;
-            $listIds = [];
-            // Convert json format to array
-            if ($listSettings != null AND is_string($listSettings)) {
-                $listIds = Json::decode($listSettings);
-                $listIds = $listIds['listIds'];
-            }
+        // @todo - doesn't return SimpleRecipient List array like above elements
+        if (Craft::$app->getPlugins()->getPlugin('sprout-lists')) {
+            $listRecipients = $this->getRecipientsFromSelectedLists($notificationEmail->listSettings);
+        }
 
-            // Get all subscribers by list IDs from the SproutLists_SubscriberListType
-            $listRecords = Lists::find()
-                ->where(['id' => $listIds])->all();
+        $recipients = array_merge($recipients, $listRecipients);
 
-            $sproutListsRecipientsInfo = [];
-            if ($listRecords != null) {
-                foreach ($listRecords as $listRecord) {
-                    if (!empty($listRecord->subscribers)) {
+        // @todo inconsistent return types above. Test that models are being standardized and returned properly for use.
+        return $recipients;
+    }
 
-                        /** @var Subscribers $subscriber */
-                        foreach ($listRecord->subscribers as $subscriber) {
-                            // Assign email as key to not repeat subscriber
-                            $sproutListsRecipientsInfo[$subscriber->email] = $subscriber->getAttributes();
-                        }
+    /**
+     * The Send Test modal allows a user to send a test to an
+     * email address they add on the fly. It supports a comma-delimited
+     * list of plain text emails.
+     *
+     * @return array|SimpleRecipient[]
+     */
+    public function getRecipientsFromSendTestModal()
+    {
+        $onTheFlyRecipients = Craft::$app->getRequest()->getBodyParam('recipients');
+
+        if (empty($onTheFlyRecipients)) {
+            return [];
+        }
+
+        $recipientList = $this->buildRecipientList($onTheFlyRecipients);
+
+        if ($recipientList->getInvalidRecipients()) {
+            throw new InvalidArgumentException(Craft::t('sprout-base', 'An Email Address provided does not validate.'));
+        }
+
+        return $recipientList->getRecipients();
+    }
+
+    /**
+     * @param string      $unprocessedRecipients
+     * @param object|null $object
+     *
+     * @return array|SimpleRecipient[]
+     * @throws Exception
+     */
+    public function getRecipientsFromNotificationEmail($unprocessedRecipients, $object)
+    {
+        $recipients = Craft::$app->getView()->renderObjectTemplate($unprocessedRecipients, $object);
+
+        if (empty($recipients)) {
+            return [];
+        }
+
+        $recipientList = $this->buildRecipientList($recipients);
+
+        if ($recipientList->getInvalidRecipients()) {
+            throw new InvalidArgumentException(Craft::t('sprout-base', 'An Email Address provided does not validate.'));
+        }
+
+        return $recipientList->getRecipients();
+    }
+
+    public function getRecipientsFromSelectedLists($listSettings)
+    {
+        $listIds = [];
+        // Convert json format to array
+        if ($listSettings != null AND is_string($listSettings)) {
+            $listIds = Json::decode($listSettings);
+            $listIds = $listIds['listIds'];
+        }
+
+        // Get all subscribers by list IDs from the SproutLists_SubscriberListType
+        $listRecords = Lists::find()
+            ->where(['id' => $listIds])->all();
+
+        $sproutListsRecipientsInfo = [];
+        if ($listRecords != null) {
+            foreach ($listRecords as $listRecord) {
+                if (!empty($listRecord->subscribers)) {
+
+                    /** @var Subscribers $subscriber */
+                    foreach ($listRecord->subscribers as $subscriber) {
+                        // Assign email as key to not repeat subscriber
+                        $sproutListsRecipientsInfo[$subscriber->email] = $subscriber->getAttributes();
                     }
                 }
             }
-
-            $listRecipients = [];
-            if ($sproutListsRecipientsInfo) {
-                foreach ($sproutListsRecipientsInfo as $listRecipient) {
-                    $recipientModel = new Recipient();
-                    $recipientModel->setAttributes($listRecipient, false);
-
-                    $listRecipients[] = $recipientModel;
-                }
-            }
-
-            $recipients = array_merge($recipients, $listRecipients);
         }
 
-        return $recipients;
-    }
+        // @todo - review what attributes are passed for recipients.
+        $listRecipients = [];
+        if ($sproutListsRecipientsInfo) {
+            foreach ($sproutListsRecipientsInfo as $listRecipient) {
+                $recipientModel = new SimpleRecipient();
+                $recipientModel->name = $listRecipient['name'] ?? null;
+                $recipientModel->email = $listRecipient['email'] ?? null;
 
-    /**
-     * The $email is the Notification Email or Campaign Email Element
-     * The $object defined by the custom event
-     *
-     * @param NotificationEmail|CampaignEmail $email
-     * @param mixed $object
-     *
-     * @return array
-     * @throws \Exception
-     */
-    public function getRecipientsFromEmailElement($email, $object)
-    {
-        $recipients = [];
-
-        $onTheFlyRecipients = $email->getRecipients($object);
-
-        if (is_string($onTheFlyRecipients)) {
-            $onTheFlyRecipients = explode(',', $onTheFlyRecipients);
-        }
-
-        if (count($onTheFlyRecipients)) {
-            foreach ($onTheFlyRecipients as $index => $recipient) {
-                $recipients[$index] = Recipient::create(
-                    [
-                        'firstName' => '',
-                        'lastName' => '',
-                        'email' => $recipient
-                    ]
-                );
+                $listRecipients[] = $recipientModel;
             }
         }
 
-        return $recipients;
+        return $listRecipients;
     }
 
     /**
-     * @param CampaignEmail $campaignEmail
-     * @param CampaignType $campaignType
+     * @param CampaignEmail     $campaignEmail
+     * @param CampaignType      $campaignType
      * @param                   $errors
      *
      * @return array
@@ -579,10 +609,9 @@ class DefaultMailer extends Mailer implements NotificationEmailSenderInterface
         $notificationEditSettingsUrl = UrlHelper::cpUrl($currentPluginHandle.'/settings/notifications/edit/'.$campaignType->id);
 
         if (empty($campaignType->template)) {
-            $errors[] = Craft::t('sprout-base', 'Email Template setting is blank. <a href="{url}">Edit Settings</a>.',
-                [
-                    'url' => $notificationEditSettingsUrl
-                ]);
+            $errors[] = Craft::t('sprout-base', 'Email Template setting is blank. <a href="{url}">Edit Settings</a>.', [
+                'url' => $notificationEditSettingsUrl
+            ]);
         }
 
         return $errors;
@@ -601,7 +630,7 @@ class DefaultMailer extends Mailer implements NotificationEmailSenderInterface
         $defaultFromEmail = $this->settings->fromEmail ?? null;
         $defaultReplyTo = $this->settings->replyTo ?? null;
 
-        return Craft::$app->getView()->renderTemplate('sprout-base-email/_components/mailers/recipients-html',[
+        return Craft::$app->getView()->renderTemplate('sprout-base-email/_components/mailers/recipients-html', [
             'campaignEmail' => $campaignEmail,
             'defaultFromName' => $defaultFromName,
             'defaultFromEmail' => $defaultFromEmail,

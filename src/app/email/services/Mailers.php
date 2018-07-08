@@ -3,6 +3,7 @@
 namespace barrelstrength\sproutbase\app\email\services;
 
 use barrelstrength\sproutbase\app\email\base\Mailer;
+use barrelstrength\sproutbase\app\email\elements\NotificationEmail;
 use barrelstrength\sproutbase\app\email\events\RegisterMailersEvent;
 use barrelstrength\sproutbase\SproutBase;
 use barrelstrength\sproutbase\app\email\events\RegisterSendEmailEvent;
@@ -104,54 +105,6 @@ class Mailers extends Component
     }
 
     /**
-     * @param null $element
-     * @param      $model
-     *
-     * @return array|mixed
-     * @throws \Exception
-     */
-    public function getRecipients($element = null, $model)
-    {
-        $recipientsString = $model->recipients;
-
-        // Possibly called from entry edit screen
-        if (null === $element) {
-            return $recipientsString;
-        }
-
-        // Previously converted to array somehow?
-        if (is_array($recipientsString)) {
-            return $recipientsString;
-        }
-
-        // Previously stored as JSON string?
-        if (stripos($recipientsString, '[') === 0) {
-            return Json::decode($recipientsString);
-        }
-
-        // Still a string with possible twig generator code?
-        if (stripos($recipientsString, '{') !== false) {
-            try {
-                $recipients = Craft::$app->getView()->renderObjectTemplate(
-                    $recipientsString,
-                    $element
-                );
-
-                return array_unique(ArrayHelper::filterEmptyStringsFromArray(ArrayHelper::toArray($recipients)));
-            } catch (\Exception $e) {
-                throw $e;
-            }
-        }
-
-        // Just a regular CSV list
-        if (!empty($recipientsString)) {
-            return ArrayHelper::filterEmptyStringsFromArray(ArrayHelper::toArray($recipientsString));
-        }
-
-        return [];
-    }
-
-    /**
      * @param         $message
      * @param Message $emailModel
      * @param array   $variables
@@ -160,6 +113,7 @@ class Mailers extends Component
     {
         $user = Craft::$app->getUsers()->getUserByUsernameOrEmail($emailModel->toEmail);
 
+        // @todo - clean up toFirstName/toLastName logic. Message should only have name if it has anything.
         if (!$user) {
             $user = new User();
             $user->email = $emailModel->toEmail;

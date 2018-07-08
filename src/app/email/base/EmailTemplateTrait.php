@@ -7,10 +7,15 @@
 
 namespace barrelstrength\sproutbase\app\email\base;
 
-use barrelstrength\sproutbase\app\email\models\Recipient;
+use barrelstrength\sproutbase\app\email\models\SimpleRecipient;
+use barrelstrength\sproutbase\app\email\models\SimpleRecipientList;
 use barrelstrength\sproutbase\SproutBase;
 use Craft;
 use craft\base\Element;
+use Egulias\EmailValidator\EmailValidator;
+use Egulias\EmailValidator\Validation\DNSCheckValidation;
+use Egulias\EmailValidator\Validation\MultipleValidationWithAnd;
+use Egulias\EmailValidator\Validation\RFCValidation;
 use League\HTMLToMarkdown\HtmlConverter;
 
 trait EmailTemplateTrait
@@ -180,6 +185,38 @@ trait EmailTemplateTrait
         return $htmlBody;
     }
 
+    /**
+     * @param string $recipients
+     *
+     * @return SimpleRecipientList
+     */
+    public function buildRecipientList($recipients)
+    {
+        $recipientList = new SimpleRecipientList();
+
+        $recipientArray = explode(',', $recipients);
+
+        $validator = new EmailValidator();
+        $multipleValidations = new MultipleValidationWithAnd([
+            new RFCValidation(),
+            new DNSCheckValidation()
+        ]);
+
+        foreach ($recipientArray as $recipient) {
+            $recipientModel = new SimpleRecipient();
+            $recipientModel->email = trim($recipient);
+
+            if ($validator->isValid($recipientModel->email, $multipleValidations))
+            {
+                $recipientList->addRecipient($recipientModel);
+            }
+
+            $recipientList->addInvalidRecipient($recipientModel);
+        }
+
+        return $recipientList;
+    }
+
 
     public function getValidAndInvalidRecipients($recipients)
     {
@@ -197,9 +234,8 @@ trait EmailTemplateTrait
                 if (filter_var($email, FILTER_VALIDATE_EMAIL) === false) {
                     $invalidRecipients[] = $email;
                 } else {
-                    $recipientEmail = Recipient::create([
-                        'email' => $email
-                    ]);
+                    $recipientEmail = new SimpleRecipient();
+                    $recipientEmail->email = $email;
 
                     $validRecipients[] = $recipientEmail;
                 }
