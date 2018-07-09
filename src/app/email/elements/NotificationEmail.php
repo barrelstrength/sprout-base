@@ -399,18 +399,6 @@ class NotificationEmail extends EmailElement
     }
 
     /**
-     * All Notification Emails use the Default Mailer.
-     *
-     * The Email Service provide can be update via Craft's Email Settings
-     *
-     * @return DefaultMailer
-     */
-    public function getMailer()
-    {
-        return new DefaultMailer();
-    }
-
-    /**
      * Confirm that an email is enabled.
      *
      * @return bool

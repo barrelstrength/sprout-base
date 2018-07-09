@@ -2,6 +2,7 @@
 
 namespace barrelstrength\sproutbase\app\email\base;
 
+use barrelstrength\sproutbase\app\email\mailers\DefaultMailer;
 use craft\base\Element;
 use Craft;
 
@@ -151,5 +152,15 @@ abstract class EmailElement extends Element
         }
 
         return $tabs;
+    }
+
+    /**
+     * The Email Service provide can be update via Craft's Email Settings
+     *
+     * @return DefaultMailer
+     */
+    public function getMailer()
+    {
+        return new DefaultMailer();
     }
 }

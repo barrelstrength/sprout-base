@@ -105,8 +105,8 @@ class DefaultMailer extends Mailer implements NotificationEmailSenderInterface
 
         $view->setTemplatesPath($oldTemplatePath);
 
-        $body = $message->renderedBody;
-        $htmlBody = $message->renderedHtmlBody;
+        $body = $message->textBody;
+        $htmlBody = $message->htmlBody;
 
         if (empty($templateErrors) && (empty($body) || empty($htmlBody))) {
             $message = Craft::t('sprout-base', 'Email Text or HTML template cannot be blank. Check Email Templates setting.');
@@ -132,7 +132,7 @@ class DefaultMailer extends Mailer implements NotificationEmailSenderInterface
             }
         }
 
-        $recipientList = $notificationEmail->getRecipientList();
+        $recipientList = $mailer->getRecipientList($notificationEmail);
 
         if (empty($recipientList)) {
             $notificationEmail->addError('recipients', Craft::t('sprout-base', 'No recipients found.'));
@@ -170,7 +170,7 @@ class DefaultMailer extends Mailer implements NotificationEmailSenderInterface
                         'info' => $infoTable
                     ];
                 }
-
+                ;
                 if (SproutBase::$app->mailers->sendEmail($message, $variables)) {
                     $processedRecipients[] = $recipient->email;
                 } else {

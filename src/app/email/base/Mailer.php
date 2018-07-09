@@ -8,7 +8,7 @@
 namespace barrelstrength\sproutbase\app\email\base;
 
 
-use barrelstrength\sproutbase\app\email\models\Message;
+use barrelstrength\sproutbase\app\email\models\EmailTemplate;
 use barrelstrength\sproutbase\app\email\models\SimpleRecipient;
 use barrelstrength\sproutbase\app\email\models\SimpleRecipientList;
 use barrelstrength\sproutemail\elements\CampaignEmail;
@@ -20,6 +20,7 @@ use craft\helpers\Html;
 use craft\helpers\Json;
 use craft\helpers\UrlHelper;
 use Craft;
+use craft\mail\Message;
 use Egulias\EmailValidator\EmailValidator;
 use Egulias\EmailValidator\Validation\DNSCheckValidation;
 use Egulias\EmailValidator\Validation\MultipleValidationWithAnd;
@@ -333,6 +334,8 @@ abstract class Mailer
     }
 
     /**
+     * @param EmailElement $email
+     *
      * @return SimpleRecipientList
      * @throws \yii\base\Exception
      */
@@ -342,8 +345,7 @@ abstract class Mailer
 
         $validator = new EmailValidator();
         $multipleValidations = new MultipleValidationWithAnd([
-            new RFCValidation(),
-            new DNSCheckValidation()
+            new RFCValidation()
         ]);
 
         // Add any On The Fly Recipients to our List
@@ -452,24 +454,30 @@ abstract class Mailer
 
     /**
      * Prepares the NotificationEmail Element and returns a Message model.
-     *
      * @param EmailElement $email
      *
-     * @return Message
+     * @return EmailTemplate
+     * @throws \Twig_Error_Loader
      * @throws \yii\base\Exception
      */
     public function getMessage(EmailElement $email)
     {
-        $object = $this->getEventObject();
+        $object = $email->getEventObject();
 
-        // Render Email Entry fields that have dynamic values
-        $subject = $this->renderObjectTemplateSafely($email->subjectLine, $object);
-        $fromName = $this->renderObjectTemplateSafely($email->fromName, $object);
-        $fromEmail = $this->renderObjectTemplateSafely($email->fromEmail, $object);
-        $replyTo = $this->renderObjectTemplateSafely($email->replyToEmail, $object);
+        try {
+            // Render Email Entry fields that have dynamic values
+            $subject = $this->renderObjectTemplateSafely($email->subjectLine, $object);
+            $fromName = $this->renderObjectTemplateSafely($email->fromName, $object);
+            $fromEmail = $this->renderObjectTemplateSafely($email->fromEmail, $object);
+            $replyTo = $this->renderObjectTemplateSafely($email->replyToEmail, $object);
+        } catch (\Exception $exception) {
+            $email->addError('template', $exception->getMessage());
+        }
 
-        $htmlBody = $this->getEmailTemplateHtmlBody($email, $object);
-        $body     = $this->getEmailTemplateTextBody($email, $object);
+        $emailTemplate = $this->getEmailTemplate($email, $object);
+
+        $htmlBody = $emailTemplate->htmlBody;
+        $body     = $emailTemplate->textBody;
 
         $message = new Message();
 
@@ -490,20 +498,23 @@ abstract class Mailer
         $body = Html::decode($body);
         $htmlBody = Html::decode($htmlBody);
 
-        // Process the results of the template s once more, to render any dynamic objects used in fields
-        $body = $this->renderObjectTemplateSafely($body, $object);
-        $message->setTextBody($body);
+        try {
+            // Process the results of the template s once more, to render any dynamic objects used in fields
+            $body = $this->renderObjectTemplateSafely($body, $object);
+            $htmlBody = $this->renderObjectTemplateSafely($htmlBody, $object);
+        } catch (\Exception $exception) {
+            $email->addError('template', $exception->getMessage());
+        }
 
-        $htmlBody = $this->renderObjectTemplateSafely($htmlBody, $object);
+        $message->setTextBody($body);
 
         $htmlBody = $this->removePlaceholderStyleTags($htmlBody, $styleTags);
         $message->setHtmlBody($htmlBody);
 
-        // Store our rendered email for later. We save this as separate variables as the Message Class
-        // we extend doesn't have a way to access these items once we set them.
-        $message->renderedBody = $body;
-        $message->renderedHtmlBody = $htmlBody;
+        $emailTemplate = new EmailTemplate();
+        $emailTemplate->htmlBody = $htmlBody;
+        $emailTemplate->textBody = $body;
 
-        return $message;
+        return $emailTemplate;
     }
 }

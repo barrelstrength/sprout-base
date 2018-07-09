@@ -392,7 +392,7 @@ class NotificationsController extends Controller
 
         $notificationEmail->setEventObject($event->getMockEventObject());
 
-        $recipientList = $notificationEmail->getRecipientList();
+        $recipientList = $mailer->getRecipientList($notificationEmail);
 
         if ($recipientList->getInvalidRecipients()) {
             $invalidEmails = [];
@@ -487,12 +487,11 @@ class NotificationsController extends Controller
 
     /**
      * Renders a shared Notification Email
-     *
      * @param null $notificationId
      * @param null $type
      *
      * @throws Exception
-     * @throws \ReflectionException
+     * @throws \Twig_Error_Loader
      * @throws \yii\base\ExitException
      * @throws \yii\web\BadRequestHttpException
      */
@@ -503,11 +502,11 @@ class NotificationsController extends Controller
         SproutBase::$app->notifications->getPreviewNotificationEmailById($notificationId, $type);
     }
 
+
     /**
      * Renders a Notification Email for Live Preview
-     *
      * @throws Exception
-     * @throws \ReflectionException
+     * @throws \Twig_Error_Loader
      * @throws \yii\base\ExitException
      */
     public function actionLivePreviewNotificationEmail()

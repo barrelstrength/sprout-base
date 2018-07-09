@@ -2,8 +2,11 @@
 
 namespace barrelstrength\sproutbase\app\email\services;
 
+use barrelstrength\sproutbase\app\email\base\EmailElement;
+use barrelstrength\sproutbase\app\email\base\Mailer;
 use barrelstrength\sproutbase\app\email\elements\NotificationEmail;
 use barrelstrength\sproutbase\app\email\mailers\DefaultMailer;
+use barrelstrength\sproutbase\app\email\models\EmailTemplate;
 use barrelstrength\sproutbase\SproutBase;
 use barrelstrength\sproutbase\app\email\models\Message;
 use barrelstrength\sproutbase\app\email\models\Response;
@@ -215,11 +218,10 @@ class NotificationEmails extends Component
 
     /**
      * Retrieves a rendered Notification Email to be shared or for Live Preview
-     *
      * @param      $notificationId
      * @param null $type
      *
-     * @throws \ReflectionException
+     * @throws \Twig_Error_Loader
      * @throws \yii\base\Exception
      * @throws \yii\base\ExitException
      */
@@ -262,23 +264,24 @@ class NotificationEmails extends Component
         $notificationEmail->setEventObject($event->getMockEventObject());
 
         $mailer = $notificationEmail->getMailer();
+
         $message = $mailer->getMessage($notificationEmail);
 
         $this->showPreviewEmail($message, $fileExtension);
     }
 
     /**
-     * @param        $message
-     * @param string $fileExtension
+     * @param EmailTemplate $emailTemplate
+     * @param string        $fileExtension
      *
      * @throws \yii\base\ExitException
      */
-    public function showPreviewEmail($message, $fileExtension = 'html')
+    public function showPreviewEmail(EmailTemplate $emailTemplate, $fileExtension = 'html')
     {
         if ($fileExtension == 'txt') {
-            $output = $message->renderedBody;
+            $output = $emailTemplate->textBody;
         } else {
-            $output = $message->renderedHtmlBody;
+            $output = $emailTemplate->htmlBody;
         }
 
         // Output it into a buffer, in case TasksService wants to close the connection prematurely
@@ -291,13 +294,14 @@ class NotificationEmails extends Component
     }
 
     /**
-     * @param       $notificationEmail
-     * @param array $errors
+     * @param EmailElement $notificationEmail
+     * @param array        $errors
      *
      * @return array
+     * @throws \Twig_Error_Loader
      * @throws \yii\base\Exception
      */
-    public function getNotificationErrors($notificationEmail, array $errors = [])
+    public function getNotificationErrors(EmailElement $notificationEmail, array $errors = [])
     {
         $currentPluginHandle = Craft::$app->request->getSegment(1);
 
@@ -328,20 +332,21 @@ class NotificationEmails extends Component
 
         $notificationEmail->setEventObject($event->getMockEventObject());
 
+        /**
+         * @var $mailer Mailer
+         */
         $mailer = $notificationEmail->getMailer();
-        $message = $mailer->getMessage($notificationEmail);
 
-        // @todo - update to check for errors on Notification Email model
-        // $notificationEmail->getErrors();
+        $mailer->getMessage($notificationEmail);
 
-//        $templateErrors = SproutBase::$app->emailErrorHelper->getErrors();
+        $templateErrors = $notificationEmail->getErrors();
 
-//        if (!empty($templateErrors['template'])) {
-//
-//            foreach ($templateErrors['template'] as $templateError) {
-//                $errors[] = Craft::t('sprout-base', $templateError);
-//            }
-//        }
+        if (!empty($templateErrors['template'])) {
+
+            foreach ($templateErrors['template'] as $templateError) {
+                $errors[] = Craft::t('sprout-base', $templateError);
+            }
+        }
 
         return $errors;
     }

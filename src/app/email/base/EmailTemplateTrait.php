@@ -7,6 +7,8 @@
 
 namespace barrelstrength\sproutbase\app\email\base;
 
+use barrelstrength\sproutbase\app\email\models\EmailTemplate;
+use barrelstrength\sproutbase\app\email\models\Message;
 use barrelstrength\sproutbase\SproutBase;
 use Craft;
 use League\HTMLToMarkdown\HtmlConverter;
@@ -37,7 +39,9 @@ trait EmailTemplateTrait
      * @param       $template
      * @param array $variables
      *
-     * @return string|null
+     * @return null|string
+     * @throws \Twig_Error_Loader
+     * @throws \yii\base\Exception
      */
     public function renderTemplateSafely($template, array $variables = [])
     {
@@ -51,35 +55,19 @@ trait EmailTemplateTrait
             return $renderedTemplate;
         }
 
-        try {
-            $renderedTemplate = Craft::$app->getView()->renderTemplate($template, $variables);
-        } catch (\Exception $e) {
-            // Specify template .html if no .txt
-            $message = $e->getMessage();
-
-            if ($this->folderPath) {
-                $message.= Craft::t('sprout-base', '<br />Folder Path: ' . $this->folderPath);
-            }
-
-            SproutBase::error($message);
-
-            return null;
-        }
-
-        return $renderedTemplate;
+        return Craft::$app->getView()->renderTemplate($template, $variables);
     }
 
+    /**
+     * @param $string
+     * @param $object
+     *
+     * @return string
+     * @throws \yii\base\Exception
+     */
     public function renderObjectTemplateSafely($string, $object)
     {
-        try {
-            return Craft::$app->getView()->renderObjectTemplate($string, $object);
-        } catch (\Exception $e) {
-            $message = Craft::t('sprout-base', 'Cannot render template. Check template file and object variables.');
-
-            SproutBase::error($message);
-        }
-
-        return null;
+        return Craft::$app->getView()->renderObjectTemplate($string, $object);
     }
 
     public function addPlaceholderStyleTags($htmlBody, &$styleTags)
@@ -123,52 +111,23 @@ trait EmailTemplateTrait
      * @param EmailElement $email
      * @param array        $object
      *
-     * @return null|string
+     * @return EmailTemplate
+     * @throws \Twig_Error_Loader
      * @throws \yii\base\Exception
      */
-    public function getEmailTemplateHtmlBody(EmailElement $email, $object = [])
+    public function getEmailTemplate(EmailElement $email, $object = [])
     {
-        $oldTemplatePath = Craft::$app->getView()->getTemplatesPath();
+        $view = Craft::$app->getView();
+        $oldTemplatePath = $view->getTemplatesPath();
+
         $emailTemplatePath = SproutBase::$app->sproutEmail->getEmailTemplatePath($email);
-        $this->setFolderPath($emailTemplatePath);
 
-        // @todo - fix hard coded extension
-        $htmlEmailTemplate = 'email.html';
-
-        Craft::$app->getView()->setTemplatesPath($emailTemplatePath);
-
-        $htmlBody = $this->renderTemplateSafely($htmlEmailTemplate, [
-            'email' => $email,
-            'object' => $object
-        ]);
-
-        Craft::$app->getView()->setTemplatesPath($oldTemplatePath);
-
-        return trim($htmlBody);
-    }
-
-    /**
-     * @todo - The getEmailTemplateHtmlBody and getEmailTemplateTextBody methods
-     *       are a bit redundant right now. Refactor combine both into a single
-     *       call where the rendered values are set on a Message or Sent Email model
-     *       vs. the previous ['html', 'text'] array
-     *
-     * @param EmailElement $email
-     * @param array        $object
-     *
-     * @return null|string
-     * @throws \yii\base\Exception
-     */
-    public function getEmailTemplateTextBody(EmailElement $email, $object = [])
-    {
-        $oldTemplatePath = Craft::$app->getView()->getTemplatesPath();
-        $emailTemplatePath = SproutBase::$app->sproutEmail->getEmailTemplatePath($email);
         $this->setFolderPath($emailTemplatePath);
 
         $htmlEmailTemplate = 'email.html';
         $textEmailTemplate = 'email.txt';
 
-        Craft::$app->getView()->setTemplatesPath($emailTemplatePath);
+        $view->setTemplatesPath($emailTemplatePath);
 
         $htmlBody = $this->renderTemplateSafely($htmlEmailTemplate, [
             'email' => $email,
@@ -196,8 +155,12 @@ trait EmailTemplateTrait
             $body = trim($markdown);
         }
 
-        Craft::$app->getView()->setTemplatesPath($oldTemplatePath);
+        $view->setTemplatesPath($oldTemplatePath);
 
-        return trim($body);
+        $template = new EmailTemplate();
+        $template->htmlBody = $htmlBody;
+        $template->textBody = $body;
+
+        return $template;
     }
 }
