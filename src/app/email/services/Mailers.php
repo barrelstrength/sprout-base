@@ -50,17 +50,24 @@ class Mailers extends Component
     }
 
     /**
-     * @param string $name
+     * @param null $name
      *
-     * @return Mailer|null
-     * @internal param bool $includeMailersNotYetLoaded
-     *
+     * @return Mailer
+     * @throws Exception
      */
-    public function getMailerByName($name)
+    public function getMailerByName($name = null)
     {
         $this->mailers = $this->getMailers();
 
-        return ($this->mailers[$name] ?? null) ? $this->mailers[$name] : null;
+        $mailer = $this->mailers[$name] ?? null;
+
+        if (!$mailer) {
+            throw new Exception(Craft::t('sprout-base', 'Mailer not found: {mailer}', [
+                'mailer' => $name
+            ]));
+        }
+
+        return $mailer;
     }
 
     /**
@@ -71,16 +78,16 @@ class Mailers extends Component
      */
     public function sendEmail(Message $message, array $variables = [])
     {
-        $errorMessage = SproutBase::$app->emailErrorHelper->getErrors();
-
-        if (!empty($errorMessage)) {
-
-            $errorMessage = SproutBase::$app->emailErrorHelper->formatErrors();
-
-            $this->handleOnSendEmailErrorEvent($errorMessage, $message, $variables);
-
-            return false;
-        }
+//        $errorMessage = SproutBase::$app->emailErrorHelper->getErrors();
+//
+//        if (!empty($errorMessage)) {
+//
+//            $errorMessage = SproutBase::$app->emailErrorHelper->formatErrors();
+//
+//            $this->handleOnSendEmailErrorEvent($errorMessage, $message, $variables);
+//
+//            return false;
+//        }
 
         $mailer = Craft::$app->getMailer();
 
@@ -99,7 +106,7 @@ class Mailers extends Component
 
             return $result;
         } catch (\Exception  $e) {
-            SproutBase::$app->emailErrorHelper->addError($e->getMessage());
+//            SproutBase::$app->emailErrorHelper->addError($e->getMessage());
         }
 
         return null;
