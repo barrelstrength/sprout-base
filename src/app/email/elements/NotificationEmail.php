@@ -2,8 +2,10 @@
 
 namespace barrelstrength\sproutbase\app\email\elements;
 
+use barrelstrength\sproutbase\app\email\base\EmailElement;
 use barrelstrength\sproutbase\app\email\base\Mailer;
 
+use barrelstrength\sproutbase\app\email\base\NotificationEvent;
 use barrelstrength\sproutbase\app\email\elements\actions\DeleteNotification;
 use barrelstrength\sproutbase\app\email\mailers\DefaultMailer;
 use barrelstrength\sproutbase\SproutBase;
@@ -22,19 +24,21 @@ use yii\base\Exception;
  *
  * * @mixin FieldLayoutBehavior
  */
-class NotificationEmail extends Element
+class NotificationEmail extends EmailElement
 {
-    // Email Status Constants
+    // Constants
+    // =========================================================================
+
     const ENABLED = 'enabled';
     const PENDING = 'pending';
     const DISABLED = 'disabled';
 
     /**
-     * The Subject Line of your email. Your title will also default to the Subject Line unless you set a Title Format.
+     * The Email Notification Field Layout ID
      *
-     * @var string
+     * @var int
      */
-    public $subjectLine;
+    public $fieldLayoutId;
 
     /**
      * The Title Format of your Title.
@@ -52,7 +56,8 @@ class NotificationEmail extends Element
 
     /**
      * The Email Template integration handle or folder path of the email templates that should be used when rendering this Notification Email.
-     * @var string
+     *
+     * @var int
      */
     public $emailTemplateId;
 
@@ -71,59 +76,6 @@ class NotificationEmail extends Element
     public $settings;
 
     /**
-     * A comma, delimited list of recipients
-     *
-     * @var string
-     */
-    public $recipients;
-
-    /**
-     * List settings.
-     *
-     * List settings HTML is provided by a List integration. Values will be saved in JSON format and will be processed by the active mailer and list integration.
-     *
-     * @var string
-     */
-    public $listSettings;
-
-    /**
-     * The sender name
-     *
-     * @var string
-     */
-    public $fromName;
-
-    /**
-     * The sender email
-     *
-     * @var string
-     */
-    public $fromEmail;
-
-    /**
-     * The sender replyTo email, if different than the sender email
-     *
-     * @var string
-     */
-    public $replyToEmail;
-
-    /**
-     * Enable or disable file attachments when notification emails are sent.
-     *
-     * If disabled, files will still be stored in Craft after form submission. This only determines if they should also be sent via email.
-     *
-     * @var bool
-     */
-    public $enableFileAttachments;
-
-    /**
-     * The Email Notification Field Layout ID
-     *
-     * @var int
-     */
-    public $fieldLayoutId;
-
-    /**
      * The default email message.
      *
      * This field is only visible when no Email Notification Field Layout exists. Once a Field Layout exists, this field will no longer appear in the interface.
@@ -131,16 +83,6 @@ class NotificationEmail extends Element
      * @var string
      */
     public $defaultBody;
-
-    /**
-     * @var \DateTime
-     */
-    public $dateCreated;
-
-    /**
-     * @var \DateTime
-     */
-    public $dateUpdated;
 
     /**
      * @inheritdoc
@@ -461,11 +403,11 @@ class NotificationEmail extends Element
      *
      * The Email Service provide can be update via Craft's Email Settings
      *
-     * @return Mailer
+     * @return DefaultMailer
      */
     public function getMailer()
     {
-        return SproutBase::$app->mailers->getMailerByName(DefaultMailer::class);
+        return new DefaultMailer();
     }
 
     /**
@@ -476,5 +418,18 @@ class NotificationEmail extends Element
     public function isReady()
     {
         return (bool)($this->getStatus() == static::ENABLED);
+    }
+
+    public function isTest()
+    {
+        return (bool)($this->getStatus() == static::ENABLED);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getEmailTemplateId()
+    {
+        return $this->emailTemplateId;
     }
 }
