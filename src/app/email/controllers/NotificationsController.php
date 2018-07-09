@@ -4,8 +4,8 @@ namespace barrelstrength\sproutbase\app\email\controllers;
 
 use barrelstrength\sproutbase\app\email\base\EmailTemplates;
 use barrelstrength\sproutbase\app\email\emailtemplates\BasicTemplates;
+use barrelstrength\sproutbase\app\email\mailers\DefaultMailer;
 use barrelstrength\sproutbase\app\email\models\Response;
-use barrelstrength\sproutbase\app\email\base\EmailTemplateTrait;
 use barrelstrength\sproutbase\app\email\elements\NotificationEmail;
 use barrelstrength\sproutbase\SproutBase;
 use craft\helpers\ElementHelper;
@@ -25,8 +25,6 @@ use yii\web\HttpException;
  */
 class NotificationsController extends Controller
 {
-    use EmailTemplateTrait;
-
     private $currentPluginHandle;
 
     public function init()
@@ -133,8 +131,6 @@ class NotificationsController extends Controller
             }
         }
 
-        $tabs = $this->getFieldLayoutTabs($notificationEmail);
-
         $events = SproutBase::$app->notificationEvents->getNotificationEmailEvents($notificationEmail);
 
         $defaultEmailTemplate = BasicTemplates::class;
@@ -160,7 +156,7 @@ class NotificationsController extends Controller
             'notificationEmail' => $notificationEmail,
             'events' => $events,
             'lists' => $lists,
-            'tabs' => $tabs,
+            'tabs' => $notificationEmail->getFieldLayoutTabs(),
             'showPreviewBtn' => $showPreviewBtn,
             'shareUrl' => $shareUrl
         ]);
@@ -368,8 +364,9 @@ class NotificationsController extends Controller
 
         /** @var NotificationEmail $notificationEmail */
         $notificationEmail = Craft::$app->getElements()->getElementById($notificationId);
+        $notificationEmail->setIsTest(true);
 
-        if ($recipients == null) {
+        if (empty(trim($recipients))) {
             return $this->asJson(
                 Response::createErrorModalResponse('sprout-base-email/_modals/response', [
                     'email' => $notificationEmail,
@@ -378,33 +375,47 @@ class NotificationsController extends Controller
             );
         }
 
-        $validAndInvalidRecipients = $this->getValidAndInvalidRecipients($recipients);
-        $invalidRecipients = $validAndInvalidRecipients['invalid'];
+        $notificationEmail->recipients = $recipients;
+        $notificationEmail->title = $notificationEmail->subjectLine;
 
-        if (!empty($invalidRecipients)) {
-            $invalidEmails = implode('<br />', $invalidRecipients);
+        $event = SproutBase::$app->notificationEvents->getEvent($notificationEmail);
+        $mailer = SproutBase::$app->mailers->getMailerByName(DefaultMailer::class);
+
+        if (!$event) {
+            return $this->asJson(
+                Response::createErrorModalResponse('sprout-base-email/_modals/response', [
+                    'email' => $notificationEmail,
+                    'message' => Craft::t('sprout-base', 'Unable to find Notification Email event.')
+                ])
+            );
+        }
+
+        $notificationEmail->setEventObject($event->getMockEventObject());
+
+        $recipientList = $notificationEmail->getRecipientList();
+
+        if ($recipientList->getInvalidRecipients()) {
+            $invalidEmails = [];
+            foreach ($recipientList->getInvalidRecipients() as $invalidRecipient) {
+                $invalidEmails[] = $invalidRecipient->email;
+            }
 
             return $this->asJson(
                 Response::createErrorModalResponse('sprout-base-email/_modals/response', [
                     'email' => $notificationEmail,
-                    'message' => Craft::t('sprout-base', 'Recipient email addresses do not validate: <br /> {invalidEmails}', [
-                        'invalidEmails' => $invalidEmails
+                    'message' => Craft::t('sprout-base', 'Recipient email addresses do not validate: {invalidEmails}', [
+                        'invalidEmails' => implode(', ', $invalidEmails)
                     ])
                 ])
             );
         }
 
-        $notificationEmail->recipients = $recipients;
-        $notificationEmail->title = $notificationEmail->subjectLine;
-
-        if (!SproutBase::$app->notifications->sendTestNotificationEmail($notificationEmail))
+        if (!$mailer->sendNotificationEmail($notificationEmail))
         {
-            $errorMessage = SproutBase::$app->emailErrorHelper->formatErrors();
-
             return $this->asJson(
                 Response::createErrorModalResponse('sprout-base-email/_modals/response', [
                     'email' => $notificationEmail,
-                    'message' => $errorMessage
+                    'message' => Craft::t('sprout-base', 'Unable to send Test Notification Email')
                 ])
             );
         }
@@ -412,7 +423,7 @@ class NotificationsController extends Controller
         return $this->asJson(
             Response::createModalResponse('sprout-base-email/_modals/response', [
                 'email' => $notificationEmail,
-                'message' => Craft::t('sprout-base', 'Notification sent successfully.')
+                'message' => Craft::t('sprout-base', 'Test Notification Email sent.')
             ])
         );
     }

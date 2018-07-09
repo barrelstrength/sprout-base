@@ -2,10 +2,12 @@
 
 namespace barrelstrength\sproutbase\app\email\services;
 
+use barrelstrength\sproutbase\app\email\base\EmailElement;
 use barrelstrength\sproutbase\SproutBase;
 use barrelstrength\sproutbase\app\email\elements\NotificationEmail;
 use barrelstrength\sproutbase\app\email\base\EmailTemplates;
 use barrelstrength\sproutbase\app\email\emailtemplates\BasicTemplates;
+use barrelstrength\sproutemail\models\Settings;
 use Craft;
 use craft\base\Element;
 use craft\events\RegisterComponentTypesEvent;
@@ -52,12 +54,12 @@ class Email extends Component
     }
 
     /**
-     * @param null $model
+     * @param EmailElement $email
      *
      * @return string
      * @throws \yii\base\Exception
      */
-    public function getEmailTemplate($model = null)
+    public function getEmailTemplatePath(EmailElement $email = null)
     {
         // Set our default
         $defaultEmailTemplates = new BasicTemplates();
@@ -67,6 +69,10 @@ class Email extends Component
 
         // Allow our settings to override our default
         if ($sproutEmail) {
+
+            /**
+             * @var Settings $settings
+             */
             $settings = $sproutEmail->getSettings();
 
             if ($settings->emailTemplateId) {
@@ -82,16 +88,16 @@ class Email extends Component
         }
 
         // Allow our email Element to override our settings
-        if ($model->emailTemplateId) {
+        if ($email->getEmailTemplateId()) {
 
-            $emailTemplate = $this->getEmailTemplateById($model->emailTemplateId);
+            $emailTemplate = $this->getEmailTemplateById($email->getEmailTemplateId());
 
             if ($emailTemplate) {
                 // custom path by template API
                 $templatePath = $emailTemplate->getPath();
             } else {
                 // custom folder on site path
-                $templatePath = $this->getSitePath($model->emailTemplateId);
+                $templatePath = $this->getSitePath($email->getEmailTemplateId());
             }
         }
 

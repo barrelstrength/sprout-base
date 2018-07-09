@@ -8,22 +8,75 @@
 namespace barrelstrength\sproutbase\app\email\base;
 
 
+use barrelstrength\sproutbase\app\email\models\Message;
+use barrelstrength\sproutbase\app\email\models\SimpleRecipient;
+use barrelstrength\sproutbase\app\email\models\SimpleRecipientList;
 use barrelstrength\sproutemail\elements\CampaignEmail;
-
 use barrelstrength\sproutemail\models\CampaignType;
+use barrelstrength\sproutlists\elements\Lists;
+use barrelstrength\sproutlists\elements\Subscribers;
 use craft\base\Element;
-use yii\base\Model;
+use craft\helpers\Html;
+use craft\helpers\Json;
 use craft\helpers\UrlHelper;
 use Craft;
+use Egulias\EmailValidator\EmailValidator;
+use Egulias\EmailValidator\Validation\DNSCheckValidation;
+use Egulias\EmailValidator\Validation\MultipleValidationWithAnd;
+use Egulias\EmailValidator\Validation\RFCValidation;
+use yii\base\Model;
 
+/**
+ * @mixin NotificationEmailSenderInterface
+ */
 abstract class Mailer
 {
+    use EmailTemplateTrait;
+
     /**
      * The settings for this mailer
      *
      * @var Model
      */
     protected $settings;
+
+    /**
+     * @var SimpleRecipient[]
+     */
+    private $_onTheFlyRecipients = [];
+
+    /**
+     * Returns a list of On The Fly Recipients
+     *
+     * @return SimpleRecipient[]
+     */
+    public function getOnTheFlyRecipients()
+    {
+        return $this->_onTheFlyRecipients;
+    }
+
+    /**
+     * Sets a list of On The Fly Recipients
+     *
+     * @param array $onTheFlyRecipients Array of Email Addresses
+     */
+    public function setOnTheFlyRecipients($onTheFlyRecipients = [])
+    {
+        $recipients = [];
+
+        if (count($onTheFlyRecipients))
+        {
+            foreach ($onTheFlyRecipients as $onTheFlyRecipient) {
+                $recipient = new SimpleRecipient();
+                $recipient->email = $onTheFlyRecipient;
+
+                $recipients[] = $recipient;
+            }
+        }
+
+        $this->_onTheFlyRecipients = $recipients;
+    }
+
 
     /**
      * Returns the Mailer Title when used in string context
@@ -277,5 +330,180 @@ abstract class Mailer
             'defaultFromEmail' => $defaultFromEmail,
             'defaultReplyTo' => $defaultReplyTo,
         ]);
+    }
+
+    /**
+     * @return SimpleRecipientList
+     * @throws \yii\base\Exception
+     */
+    public function getRecipientList(EmailElement $email)
+    {
+        $recipientList = new SimpleRecipientList();
+
+        $validator = new EmailValidator();
+        $multipleValidations = new MultipleValidationWithAnd([
+            new RFCValidation(),
+            new DNSCheckValidation()
+        ]);
+
+        // Add any On The Fly Recipients to our List
+        if ($onTheFlyRecipients = $this->getOnTheFlyRecipients()) {
+            foreach ($onTheFlyRecipients as $onTheFlyRecipient) {
+                if ($validator->isValid($onTheFlyRecipient->email, $multipleValidations))
+                {
+                    $recipientList->addRecipient($onTheFlyRecipient);
+                }
+
+                $recipientList->addInvalidRecipient($onTheFlyRecipient);
+            }
+
+            // On the Fly Recipients are added in Test Modals and override all other
+            // potential recipients.
+            return $recipientList;
+        }
+
+        // Recipients are added as a comma-delimited list. While not on a formal list,
+        // they are considered permanent and will be included alongside any more formal lists
+        // Recipients can be dynamic values if matched to a value in the Event Object
+        $recipients = Craft::$app->getView()->renderObjectTemplate($email->recipients, $email->getEventObject());
+        $recipientArray = explode(',', $recipients);
+
+        foreach ($recipientArray as $recipient) {
+            $recipientModel = new SimpleRecipient();
+            $recipientModel->email = trim($recipient);
+
+            if ($validator->isValid($recipientModel->email, $multipleValidations))
+            {
+                $recipientList->addRecipient($recipientModel);
+            }
+
+            $recipientList->addInvalidRecipient($recipientModel);
+        }
+
+        // @todo - test this integration
+        if (Craft::$app->getPlugins()->getPlugin('sprout-lists')) {
+            $listRecipients = $this->getRecipientsFromSelectedLists($email->listSettings);
+
+            if (count($listRecipients))
+            {
+                foreach ($listRecipients as $listRecipient) {
+                    if ($validator->isValid($listRecipient->email, $multipleValidations))
+                    {
+                        $recipientList->addRecipient($listRecipient);
+                    }
+
+                    $recipientList->addInvalidRecipient($listRecipient);
+                }
+            }
+        }
+
+        return $recipientList;
+    }
+
+    public function getRecipientsFromSelectedLists($listSettings)
+    {
+        $listIds = [];
+        // Convert json format to array
+        if ($listSettings != null AND is_string($listSettings)) {
+            $listIds = Json::decode($listSettings);
+            $listIds = $listIds['listIds'];
+        }
+
+        if (empty($listIds))
+        {
+            return [];
+        }
+
+        // Get all subscribers by list IDs from the Subscriber ListType
+        $listRecords = Lists::find()
+            ->where([
+                'id' => $listIds
+            ])
+            ->all();
+
+        $sproutListsRecipientsInfo = [];
+        if ($listRecords != null) {
+            foreach ($listRecords as $listRecord) {
+                if (!empty($listRecord->subscribers)) {
+
+                    /** @var Subscribers $subscriber */
+                    foreach ($listRecord->subscribers as $subscriber) {
+                        // Assign email as key to not repeat subscriber
+                        $sproutListsRecipientsInfo[$subscriber->email] = $subscriber->getAttributes();
+                    }
+                }
+            }
+        }
+
+        // @todo - review what attributes are passed for recipients.
+        $listRecipients = [];
+        if ($sproutListsRecipientsInfo) {
+            foreach ($sproutListsRecipientsInfo as $listRecipient) {
+                $recipientModel = new SimpleRecipient();
+                $recipientModel->name = $listRecipient['name'] ?? null;
+                $recipientModel->email = $listRecipient['email'] ?? null;
+
+                $listRecipients[] = $recipientModel;
+            }
+        }
+
+        return $listRecipients;
+    }
+
+    /**
+     * Prepares the NotificationEmail Element and returns a Message model.
+     *
+     * @param EmailElement $email
+     *
+     * @return Message
+     * @throws \yii\base\Exception
+     */
+    public function getMessage(EmailElement $email)
+    {
+        $object = $this->getEventObject();
+
+        // Render Email Entry fields that have dynamic values
+        $subject = $this->renderObjectTemplateSafely($email->subjectLine, $object);
+        $fromName = $this->renderObjectTemplateSafely($email->fromName, $object);
+        $fromEmail = $this->renderObjectTemplateSafely($email->fromEmail, $object);
+        $replyTo = $this->renderObjectTemplateSafely($email->replyToEmail, $object);
+
+        $htmlBody = $this->getEmailTemplateHtmlBody($email, $object);
+        $body     = $this->getEmailTemplateTextBody($email, $object);
+
+        $message = new Message();
+
+        $message->setSubject($subject);
+        $message->setFrom([$fromEmail => $fromName]);
+        $message->setReplyTo($replyTo);
+        $message->setTextBody($body);
+        $message->setHtmlBody($htmlBody);
+
+        $styleTags = [];
+
+        $htmlBody = $this->addPlaceholderStyleTags($htmlBody, $styleTags);
+
+        // Some Twig code in our email fields may need us to decode
+        // entities so our email doesn't throw errors when we try to
+        // render the field objects. Example: {variable|date("Y/m/d")}
+
+        $body = Html::decode($body);
+        $htmlBody = Html::decode($htmlBody);
+
+        // Process the results of the template s once more, to render any dynamic objects used in fields
+        $body = $this->renderObjectTemplateSafely($body, $object);
+        $message->setTextBody($body);
+
+        $htmlBody = $this->renderObjectTemplateSafely($htmlBody, $object);
+
+        $htmlBody = $this->removePlaceholderStyleTags($htmlBody, $styleTags);
+        $message->setHtmlBody($htmlBody);
+
+        // Store our rendered email for later. We save this as separate variables as the Message Class
+        // we extend doesn't have a way to access these items once we set them.
+        $message->renderedBody = $body;
+        $message->renderedHtmlBody = $htmlBody;
+
+        return $message;
     }
 }

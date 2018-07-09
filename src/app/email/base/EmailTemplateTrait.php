@@ -7,15 +7,8 @@
 
 namespace barrelstrength\sproutbase\app\email\base;
 
-use barrelstrength\sproutbase\app\email\models\SimpleRecipient;
-use barrelstrength\sproutbase\app\email\models\SimpleRecipientList;
 use barrelstrength\sproutbase\SproutBase;
 use Craft;
-use craft\base\Element;
-use Egulias\EmailValidator\EmailValidator;
-use Egulias\EmailValidator\Validation\DNSCheckValidation;
-use Egulias\EmailValidator\Validation\MultipleValidationWithAnd;
-use Egulias\EmailValidator\Validation\RFCValidation;
 use League\HTMLToMarkdown\HtmlConverter;
 
 trait EmailTemplateTrait
@@ -31,65 +24,6 @@ trait EmailTemplateTrait
     private $folderPath;
 
     /**
-     * Returns whether or not a site template exists
-     *
-     * @param $template
-     *
-     * @return bool
-     * @throws \yii\base\Exception
-     */
-    public function doesSiteTemplateExist($template)
-    {
-        $path = Craft::$app->getView()->getTemplatesPath();
-
-        Craft::$app->getView()->setTemplatesPath(Craft::$app->getPath()->getSiteTemplatesPath());
-
-        $exists = Craft::$app->getView()->doesTemplateExist($template);
-
-        Craft::$app->getView()->setTemplatesPath($path);
-
-        return $exists;
-    }
-
-    /**
-     * @param Element $element
-     *
-     * @return array
-     */
-    public function getFieldLayoutTabs(Element $element)
-    {
-        $tabs = [];
-
-        if ($element->getFieldLayout() !== null) {
-            $fieldLayoutTabs = $element->getFieldLayout()->getTabs();
-
-            if (!empty($fieldLayoutTabs)) {
-                foreach ($fieldLayoutTabs as $index => $tab) {
-                    // Do any of the fields on this tab have errors?
-                    $hasErrors = false;
-
-                    if ($element->hasErrors()) {
-                        foreach ($tab->getFields() as $field) {
-                            if ($element->getErrors($field->handle)) {
-                                $hasErrors = true;
-                                break;
-                            }
-                        }
-                    }
-
-                    $tabs[] = [
-                        'label' => Craft::t('sprout-base', $tab->name),
-                        'url' => '#tab'.($index + 1),
-                        'class' => $hasErrors ? 'error' : null
-                    ];
-                }
-            }
-        }
-
-        return $tabs;
-    }
-
-    /**
      * Use to show folder path in error modal if invalid template folder is specified.
      *
      * @param $path
@@ -103,9 +37,9 @@ trait EmailTemplateTrait
      * @param       $template
      * @param array $variables
      *
-     * @return bool|null|string
+     * @return string|null
      */
-    public function renderSiteTemplateIfExists($template, array $variables = [])
+    public function renderTemplateSafely($template, array $variables = [])
     {
         $renderedTemplate = null;
 
@@ -129,9 +63,7 @@ trait EmailTemplateTrait
 
             SproutBase::error($message);
 
-            SproutBase::$app->emailErrorHelper->addError('template', $message);
-
-            return false;
+            return null;
         }
 
         return $renderedTemplate;
@@ -142,7 +74,9 @@ trait EmailTemplateTrait
         try {
             return Craft::$app->getView()->renderObjectTemplate($string, $object);
         } catch (\Exception $e) {
-            SproutBase::$app->emailErrorHelper->addError('template', Craft::t('sprout-base', 'Cannot render template. Check template file and object variables.'));
+            $message = Craft::t('sprout-base', 'Cannot render template. Check template file and object variables.');
+
+            SproutBase::error($message);
         }
 
         return null;
@@ -186,95 +120,58 @@ trait EmailTemplateTrait
     }
 
     /**
-     * @param string $recipients
+     * @param EmailElement $email
+     * @param array        $object
      *
-     * @return SimpleRecipientList
+     * @return null|string
+     * @throws \yii\base\Exception
      */
-    public function buildRecipientList($recipients)
+    public function getEmailTemplateHtmlBody(EmailElement $email, $object = [])
     {
-        $recipientList = new SimpleRecipientList();
+        $oldTemplatePath = Craft::$app->getView()->getTemplatesPath();
+        $emailTemplatePath = SproutBase::$app->sproutEmail->getEmailTemplatePath($email);
+        $this->setFolderPath($emailTemplatePath);
 
-        $recipientArray = explode(',', $recipients);
+        // @todo - fix hard coded extension
+        $htmlEmailTemplate = 'email.html';
 
-        $validator = new EmailValidator();
-        $multipleValidations = new MultipleValidationWithAnd([
-            new RFCValidation(),
-            new DNSCheckValidation()
+        Craft::$app->getView()->setTemplatesPath($emailTemplatePath);
+
+        $htmlBody = $this->renderTemplateSafely($htmlEmailTemplate, [
+            'email' => $email,
+            'object' => $object
         ]);
 
-        foreach ($recipientArray as $recipient) {
-            $recipientModel = new SimpleRecipient();
-            $recipientModel->email = trim($recipient);
+        Craft::$app->getView()->setTemplatesPath($oldTemplatePath);
 
-            if ($validator->isValid($recipientModel->email, $multipleValidations))
-            {
-                $recipientList->addRecipient($recipientModel);
-            }
-
-            $recipientList->addInvalidRecipient($recipientModel);
-        }
-
-        return $recipientList;
-    }
-
-
-    public function getValidAndInvalidRecipients($recipients)
-    {
-        $invalidRecipients = [];
-        $validRecipients = [];
-        $emails = [];
-
-        if (!empty($recipients)) {
-            $recipients = explode(',', $recipients);
-
-            foreach ($recipients as $recipient) {
-                $email = trim($recipient);
-                $emails[] = $email;
-
-                if (filter_var($email, FILTER_VALIDATE_EMAIL) === false) {
-                    $invalidRecipients[] = $email;
-                } else {
-                    $recipientEmail = new SimpleRecipient();
-                    $recipientEmail->email = $email;
-
-                    $validRecipients[] = $recipientEmail;
-                }
-            }
-        }
-
-        return [
-            'valid' => $validRecipients,
-            'invalid' => $invalidRecipients,
-            'emails' => $emails
-        ];
+        return trim($htmlBody);
     }
 
     /**
-     * @param       $model
-     * @param array $object
-     * @param array $modelTemplate
+     * @todo - The getEmailTemplateHtmlBody and getEmailTemplateTextBody methods
+     *       are a bit redundant right now. Refactor combine both into a single
+     *       call where the rendered values are set on a Message or Sent Email model
+     *       vs. the previous ['html', 'text'] array
      *
-     * @return array
+     * @param EmailElement $email
+     * @param array        $object
+     *
+     * @return null|string
      * @throws \yii\base\Exception
      */
-    public function getHtmlBody($model, $object = [], $modelTemplate = null)
+    public function getEmailTemplateTextBody(EmailElement $email, $object = [])
     {
-        $view = Craft::$app->getView();
-        $oldTemplatePath = $view->getTemplatesPath();
-
-        // Gets the emailTemplateId from a model
-        $modelTemplate = $modelTemplate ?? $model;
-        $emailTemplatePath = SproutBase::$app->sproutEmail->getEmailTemplate($modelTemplate);
-
+        $oldTemplatePath = Craft::$app->getView()->getTemplatesPath();
+        $emailTemplatePath = SproutBase::$app->sproutEmail->getEmailTemplatePath($email);
         $this->setFolderPath($emailTemplatePath);
 
         $htmlEmailTemplate = 'email.html';
         $textEmailTemplate = 'email.txt';
 
-        $view->setTemplatesPath($emailTemplatePath);
+        Craft::$app->getView()->setTemplatesPath($emailTemplatePath);
 
-        $htmlBody = $this->renderSiteTemplateIfExists($htmlEmailTemplate, [
-            'email' => $model,
+        $htmlBody = $this->renderTemplateSafely($htmlEmailTemplate, [
+            'email' => $email,
             'object' => $object
         ]);
 
@@ -282,8 +179,8 @@ trait EmailTemplateTrait
 
         // Converts html body to text email if no .txt
         if ($textEmailTemplateExists) {
-            $body = $this->renderSiteTemplateIfExists($textEmailTemplate, [
-                'email' => $model,
+            $body = $this->renderTemplateSafely($textEmailTemplate, [
+                'email' => $email,
                 'object' => $object
             ]);
         } else {
@@ -299,8 +196,8 @@ trait EmailTemplateTrait
             $body = trim($markdown);
         }
 
-        $view->setTemplatesPath($oldTemplatePath);
+        Craft::$app->getView()->setTemplatesPath($oldTemplatePath);
 
-        return ['html' => $htmlBody, 'body' => $body];
+        return trim($body);
     }
 }

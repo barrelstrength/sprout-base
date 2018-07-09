@@ -217,7 +217,7 @@ class NotificationEmailEvents extends Component
     /**
      * @param NotificationEmail $notificationEmail
      *
-     * @return NotificationEvent
+     * @return NotificationEvent|null
      */
     public function getEvent(NotificationEmail $notificationEmail)
     {

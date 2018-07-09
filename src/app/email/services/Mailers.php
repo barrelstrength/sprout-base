@@ -14,6 +14,7 @@ use craft\mail\Message;
 use Craft;
 use craft\elements\User;
 use yii\base\Event;
+use yii\base\Exception;
 
 class Mailers extends Component
 {
@@ -24,7 +25,7 @@ class Mailers extends Component
     protected $mailers;
 
     /**
-     * @return array
+     * @return Mailer[]
      */
     public function getMailers()
     {
