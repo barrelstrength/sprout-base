@@ -372,9 +372,9 @@ abstract class Mailer
 
             if ($validator->isValid($recipientModel->email, $multipleValidations)) {
                 $recipientList->addRecipient($recipientModel);
+            } else {
+                $recipientList->addInvalidRecipient($recipientModel);
             }
-
-            $recipientList->addInvalidRecipient($recipientModel);
         }
 
         // @todo - test this integration
@@ -385,9 +385,9 @@ abstract class Mailer
                 foreach ($listRecipients as $listRecipient) {
                     if ($validator->isValid($listRecipient->email, $multipleValidations)) {
                         $recipientList->addRecipient($listRecipient);
+                    } else {
+                        $recipientList->addInvalidRecipient($listRecipient);
                     }
-
-                    $recipientList->addInvalidRecipient($listRecipient);
                 }
             }
         }
