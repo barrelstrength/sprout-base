@@ -97,6 +97,7 @@ class DefaultMailer extends Mailer implements NotificationEmailSenderInterface
         $view->setTemplatesPath($emailTemplates->getPath());
 
         $mailer = $notificationEmail->getMailer();
+
         $message = $mailer->getMessage($notificationEmail);
 
         $view->setTemplatesPath($oldTemplatePath);

@@ -135,7 +135,6 @@ abstract class EmailElement extends Element
 
         // Allow our settings to override our default
         if ($sproutEmail) {
-
             /**
              * @var Settings $settings
              */
@@ -155,19 +154,29 @@ abstract class EmailElement extends Element
             }
         }
 
+        $isCustom = false;
+        $emailTemplateId = $this->getEmailTemplateId() ?? null;
+
         // Allow our email Element to override our settings
-        if ($this->getEmailTemplateId()) {
+        if ($emailTemplateId && class_exists($emailTemplateId)) {
 
-            if ($this->getEmailTemplateId() instanceof EmailTemplates) {
-                $emailTemplateId = $this->getEmailTemplateId();
-                $emailTemplates = new $emailTemplateId();
-            } else {
-                // custom folder on site path
-                $templatePath = $sitePath.DIRECTORY_SEPARATOR.$this->getEmailTemplateId();
+            $emailTemplates = new $emailTemplateId();
 
-                $emailTemplates = new CustomTemplates();
-                $emailTemplates->setPath($templatePath);
+            if (!$emailTemplates instanceof EmailTemplates) {
+                // if a class but does not extend EmailTemplates
+                $isCustom = true;
             }
+        } else {
+            // if emailTemplateId is a string
+            $isCustom = true;
+        }
+
+        if ($isCustom) {
+            // custom folder on site path
+            $templatePath = $sitePath.DIRECTORY_SEPARATOR.$emailTemplateId;
+
+            $emailTemplates = new CustomTemplates();
+            $emailTemplates->setPath($templatePath);
         }
 
         // Set the EmailElement on the Email Template Object
