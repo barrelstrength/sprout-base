@@ -263,25 +263,23 @@ class NotificationEmails extends Component
 
         $notificationEmail->setEventObject($event->getMockEventObject());
 
-        $mailer = $notificationEmail->getMailer();
-
-        $message = $mailer->getMessage($notificationEmail);
-
-        $this->showPreviewEmail($message, $fileExtension);
+        $this->showPreviewEmail($notificationEmail, $fileExtension);
     }
 
     /**
-     * @param EmailTemplate $emailTemplate
-     * @param string        $fileExtension
+     * @param EmailElement $email
+     * @param string       $fileExtension
      *
+     * @throws \Twig_Error_Loader
+     * @throws \yii\base\Exception
      * @throws \yii\base\ExitException
      */
-    public function showPreviewEmail(EmailTemplate $emailTemplate, $fileExtension = 'html')
+    public function showPreviewEmail(EmailElement $email, $fileExtension = 'html')
     {
         if ($fileExtension == 'txt') {
-            $output = $emailTemplate->textBody;
+            $output = $email->getEmailTemplates()->getTextBody();
         } else {
-            $output = $emailTemplate->htmlBody;
+            $output = $email->getEmailTemplates()->getHtmlBody();
         }
 
         // Output it into a buffer, in case TasksService wants to close the connection prematurely
@@ -311,7 +309,7 @@ class NotificationEmails extends Component
 
         $event = SproutBase::$app->notificationEvents->getEventById($notificationEmail->eventId);
 
-        $template = SproutBase::$app->sproutEmail->getEmailTemplatePath($notificationEmail);
+        $emailTemplates = $notificationEmail->getEmailTemplates();
 
         if ($event === null) {
             $errors[] = Craft::t('sprout-base', 'No Event is selected. <a href="{url}">Edit Notification</a>.', [
@@ -319,8 +317,8 @@ class NotificationEmails extends Component
             ]);
         }
 
-        if (empty($template)) {
-            $errors[] = Craft::t('sprout-base', 'No template added. <a href="{url}">Edit Notification Settings</a>.',
+        if (empty($emailTemplates->getPath())) {
+            $errors[] = Craft::t('sprout-base', 'No template found. <a href="{url}">Edit Notification Settings</a>.',
                 [
                     'url' => $notificationEditSettingsUrl
                 ]);
@@ -337,6 +335,7 @@ class NotificationEmails extends Component
          */
         $mailer = $notificationEmail->getMailer();
 
+        // Process our message to generate any errors on the NotificationEmail element we may see when preparing the send
         $mailer->getMessage($notificationEmail);
 
         $templateErrors = $notificationEmail->getErrors();

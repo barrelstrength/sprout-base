@@ -25,7 +25,7 @@ use barrelstrength\sproutbase\app\fields\services\Email;
 use barrelstrength\sproutbase\app\fields\services\Address;
 use barrelstrength\sproutbase\app\import\services\Importers;
 use craft\base\Component;
-use barrelstrength\sproutbase\app\email\services\Email as SproutEmail;
+use barrelstrength\sproutbase\app\email\services\EmailTemplates as SproutEmail;
 
 class App extends Component
 {

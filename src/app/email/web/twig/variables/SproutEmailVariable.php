@@ -88,7 +88,9 @@ class SproutEmailVariable
     public function getEmailTemplateOptions($notificationEmail = null)
     {
         $defaultEmailTemplates = new BasicTemplates();
+
         $templates = SproutBase::$app->sproutEmail->getAllEmailTemplates();
+
         $templateIds = [];
         $options = [
             [

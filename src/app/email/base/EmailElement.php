@@ -2,7 +2,10 @@
 
 namespace barrelstrength\sproutbase\app\email\base;
 
+use barrelstrength\sproutbase\app\email\emailtemplates\BasicTemplates;
+use barrelstrength\sproutbase\app\email\emailtemplates\CustomTemplates;
 use barrelstrength\sproutbase\app\email\mailers\DefaultMailer;
+use barrelstrength\sproutemail\models\Settings;
 use craft\base\Element;
 use Craft;
 
@@ -119,6 +122,70 @@ abstract class EmailElement extends Element
     abstract public function getEmailTemplateId();
 
     /**
+     * @return BasicTemplates|CustomTemplates
+     * @throws \yii\base\Exception
+     */
+    public function getEmailTemplates()
+    {
+        // Set our default
+        $emailTemplates = new BasicTemplates();
+
+        $sproutEmail = Craft::$app->plugins->getPlugin('sprout-email');
+        $sitePath = Craft::$app->path->getSiteTemplatesPath();
+
+        // Allow our settings to override our default
+        if ($sproutEmail) {
+
+            /**
+             * @var Settings $settings
+             */
+            $settings = $sproutEmail->getSettings();
+
+            if ($settings->emailTemplateId) {
+
+                if ($settings->emailTemplateId instanceof EmailTemplates) {
+                    $emailTemplates = new $settings->emailTemplateId();
+                } else {
+                    // custom folder on site path
+                    $templatePath = $sitePath.DIRECTORY_SEPARATOR.$settings->emailTemplateId;
+
+                    $emailTemplates = new CustomTemplates();
+                    $emailTemplates->setPath($templatePath);
+                }
+            }
+        }
+
+        // Allow our email Element to override our settings
+        if ($this->getEmailTemplateId()) {
+
+            if ($this->getEmailTemplateId() instanceof EmailTemplates) {
+                $emailTemplates = new $emailTemplateId();
+            } else {
+                // custom folder on site path
+                $templatePath = $sitePath.DIRECTORY_SEPARATOR.$this->getEmailTemplateId();
+
+                $emailTemplates = new CustomTemplates();
+                $emailTemplates->setPath($templatePath);
+            }
+        }
+
+        // Set the EmailElement on the Email Template Object
+        $emailTemplates->email = $this;
+
+        return $emailTemplates;
+    }
+
+    /**
+     * The Email Service provide can be update via Craft's Email Settings
+     *
+     * @return DefaultMailer
+     */
+    public function getMailer()
+    {
+        return new DefaultMailer();
+    }
+
+    /**
      * @return array
      */
     public function getFieldLayoutTabs()
@@ -152,15 +219,5 @@ abstract class EmailElement extends Element
         }
 
         return $tabs;
-    }
-
-    /**
-     * The Email Service provide can be update via Craft's Email Settings
-     *
-     * @return DefaultMailer
-     */
-    public function getMailer()
-    {
-        return new DefaultMailer();
     }
 }

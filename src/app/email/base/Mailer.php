@@ -32,8 +32,6 @@ use yii\base\Model;
  */
 abstract class Mailer
 {
-    use EmailTemplateTrait;
-
     /**
      * The settings for this mailer
      *
@@ -456,7 +454,7 @@ abstract class Mailer
      * Prepares the NotificationEmail Element and returns a Message model.
      * @param EmailElement $email
      *
-     * @return EmailTemplate
+     * @return Message
      * @throws \Twig_Error_Loader
      * @throws \yii\base\Exception
      */
@@ -464,6 +462,7 @@ abstract class Mailer
     {
         $object = $email->getEventObject();
 
+        // @todo - can we handle these errors better?
         try {
             // Render Email Entry fields that have dynamic values
             $subject = $this->renderObjectTemplateSafely($email->subjectLine, $object);
@@ -474,17 +473,23 @@ abstract class Mailer
             $email->addError('template', $exception->getMessage());
         }
 
-        $emailTemplate = $this->getEmailTemplate($email, $object);
+        $textBody = $email->getEmailTemplates()->getTextBody();
+        $htmlBody = $email->getEmailTemplates()->getHtmlBody();
 
-        $htmlBody = $emailTemplate->htmlBody;
-        $body     = $emailTemplate->textBody;
+        if (empty($textBody)) {
+            $email->addError('template', Craft::t('sprout-base', 'Text template is blank.'));
+        }
+
+        if (empty($htmlBody)) {
+            $email->addError('template', Craft::t('sprout-base', 'HTML template is blank.'));
+        }
 
         $message = new Message();
 
         $message->setSubject($subject);
         $message->setFrom([$fromEmail => $fromName]);
         $message->setReplyTo($replyTo);
-        $message->setTextBody($body);
+        $message->setTextBody($textBody);
         $message->setHtmlBody($htmlBody);
 
         $styleTags = [];
@@ -495,26 +500,76 @@ abstract class Mailer
         // entities so our email doesn't throw errors when we try to
         // render the field objects. Example: {variable|date("Y/m/d")}
 
-        $body = Html::decode($body);
+        $textBody = Html::decode($textBody);
         $htmlBody = Html::decode($htmlBody);
 
+        // @todo - can we handle these errors better?
         try {
-            // Process the results of the template s once more, to render any dynamic objects used in fields
-            $body = $this->renderObjectTemplateSafely($body, $object);
+            // Process the results of the templates once more, to render any dynamic objects used in fields
+            $textBody = $this->renderObjectTemplateSafely($textBody, $object);
             $htmlBody = $this->renderObjectTemplateSafely($htmlBody, $object);
         } catch (\Exception $exception) {
             $email->addError('template', $exception->getMessage());
         }
 
-        $message->setTextBody($body);
+        $message->setTextBody($textBody);
 
         $htmlBody = $this->removePlaceholderStyleTags($htmlBody, $styleTags);
         $message->setHtmlBody($htmlBody);
 
-        $emailTemplate = new EmailTemplate();
-        $emailTemplate->htmlBody = $htmlBody;
-        $emailTemplate->textBody = $body;
+        // Make sure we use the HTML and Text after they are processed the second time
+        $email->getEmailTemplates()->setTextBody($textBody);
+        $email->getEmailTemplates()->setHtmlBody($htmlBody);
 
-        return $emailTemplate;
+        return $message;
+    }
+
+    /**
+     * @param $string
+     * @param $object
+     *
+     * @return string
+     * @throws \yii\base\Exception
+     */
+    public function renderObjectTemplateSafely($string, $object)
+    {
+        return Craft::$app->getView()->renderObjectTemplate($string, $object);
+    }
+
+    public function addPlaceholderStyleTags($htmlBody, &$styleTags)
+    {
+        // Get the style tag
+        preg_match_all("/<style\\b[^>]*>(.*?)<\\/style>/s", $htmlBody, $matches);
+
+        if (!empty($matches)) {
+            $tags = $matches[0];
+
+            // Temporarily replace with style tags with a random string
+            if (!empty($tags)) {
+                $i = 0;
+                foreach ($tags as $tag) {
+                    $key = "<!-- %style$i% -->";
+
+                    $styleTags[$key] = $tag;
+
+                    $htmlBody = str_replace($tag, $key, $htmlBody);
+
+                    $i++;
+                }
+            }
+        }
+
+        return $htmlBody;
+    }
+
+    public function removePlaceholderStyleTags($htmlBody, $styleTags)
+    {
+        if (!empty($styleTags)) {
+            foreach ($styleTags as $key => $tag) {
+                $htmlBody = str_replace($key, $tag, $htmlBody);
+            }
+        }
+
+        return $htmlBody;
     }
 }

@@ -93,25 +93,18 @@ class DefaultMailer extends Mailer implements NotificationEmailSenderInterface
 
         $notificationEmail->setEventObject($object);
 
-        $template = SproutBase::$app->sproutEmail->getEmailTemplatePath($notificationEmail);
+        $emailTemplates = $notificationEmail->getEmailTemplates();
 
         $view = Craft::$app->getView();
         $oldTemplatePath = $view->getTemplatesPath();
 
-        $view->setTemplatesPath($template);
+        // @todo are we setting the template path here and in the getEmailTemplate method? Do we need both?
+        $view->setTemplatesPath($emailTemplates->getPath());
 
         $mailer = $notificationEmail->getMailer();
         $message = $mailer->getMessage($notificationEmail);
 
         $view->setTemplatesPath($oldTemplatePath);
-
-        $body = $message->textBody;
-        $htmlBody = $message->htmlBody;
-
-        if (empty($templateErrors) && (empty($body) || empty($htmlBody))) {
-            $message = Craft::t('sprout-base', 'Email Text or HTML template cannot be blank. Check Email Templates setting.');
-            $notificationEmail->addError('recipients', $message);
-        }
 
         $externalPaths = [];
 
@@ -148,6 +141,7 @@ class DefaultMailer extends Mailer implements NotificationEmailSenderInterface
                 $message->setTo($recipient->email);
             }
 
+            // Skip any emails that we have already processed
             if (array_key_exists($recipient->email, $processedRecipients)) {
                 continue;
             }
@@ -170,10 +164,12 @@ class DefaultMailer extends Mailer implements NotificationEmailSenderInterface
                         'info' => $infoTable
                     ];
                 }
-                ;
+
                 if (SproutBase::$app->mailers->sendEmail($message, $variables)) {
                     $processedRecipients[] = $recipient->email;
                 } else {
+                    // @todo - Update this so we fail gracefully
+                    // if an email in the middle of the list doesn't get processed properly
                     return false;
                 }
             } catch (\Exception $e) {

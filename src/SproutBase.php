@@ -7,7 +7,7 @@
 
 namespace barrelstrength\sproutbase;
 
-use barrelstrength\sproutbase\app\email\services\Email;
+use barrelstrength\sproutbase\app\email\services\EmailTemplates;
 use barrelstrength\sproutbase\base\BaseSproutTrait;
 use barrelstrength\sproutbase\controllers\SettingsController;
 use barrelstrength\sproutbase\app\email\controllers\NotificationsController;
@@ -142,7 +142,7 @@ class SproutBase extends Module
         });
 
         // Register Sprout Email Templates
-        Event::on(Email::class, Email::EVENT_REGISTER_EMAIL_TEMPLATES, function(RegisterComponentTypesEvent $event) {
+        Event::on(EmailTemplates::class, EmailTemplates::EVENT_REGISTER_EMAIL_TEMPLATES, function(RegisterComponentTypesEvent $event) {
             $event->types[] = BasicTemplates::class;
         });
 
