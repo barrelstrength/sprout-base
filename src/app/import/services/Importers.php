@@ -340,18 +340,15 @@ class Importers extends Component
 
     protected function isWeedable(Weed $weedModel = null, $newModel)
     {
-        if ($weedModel === null)
-        {
+        if ($weedModel === null) {
             return false;
         }
 
-        if ($weedModel->seed !== true)
-        {
+        if ($weedModel->seed !== true) {
             return false;
         }
 
-        if (!isset($newModel->id))
-        {
+        if (!isset($newModel->id)) {
             return false;
         }
 

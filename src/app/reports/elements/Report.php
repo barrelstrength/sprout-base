@@ -119,13 +119,10 @@ class Report extends Element
     {
         $pluginHandle = null;
 
-        if (Craft::$app->getRequest()->getIsActionRequest())
-        {
+        if (Craft::$app->getRequest()->getIsActionRequest()) {
             // criteria.pluginHandle is used on the Report Element index page
             $pluginHandle = Craft::$app->request->getBodyParam('criteria.pluginHandle') ?? 'sprout-reports';
-        }
-        else
-        {
+        } else {
             // Used on Results page
             $pluginHandle = Craft::$app->getRequest()->getSegment(1) ?? 'sprout-reports';
         }

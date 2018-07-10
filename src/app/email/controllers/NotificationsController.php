@@ -68,7 +68,7 @@ class NotificationsController extends Controller
     }
 
     /**
-     * @param null                                    $emailId
+     * @param null                   $emailId
      * @param NotificationEmail|null $notificationEmail
      *
      * @return \yii\web\Response
@@ -138,15 +138,13 @@ class NotificationsController extends Controller
         if ($currentPluginHandle !== 'sprout-email') {
             $events = SproutBase::$app->notificationEvents->getNotificationEmailEventsByPluginHandle($notificationEmail, $currentPluginHandle);
 
-            if (new $routeParams['defaultEmailTemplate'] instanceof EmailTemplates)
-            {
+            if (new $routeParams['defaultEmailTemplate'] instanceof EmailTemplates) {
                 $defaultEmailTemplate = $routeParams['defaultEmailTemplate'];
             }
         }
 
         // Set a default template if we don't have one set
-        if (!$notificationEmail->emailTemplateId)
-        {
+        if (!$notificationEmail->emailTemplateId) {
             $notificationEmail->emailTemplateId = $defaultEmailTemplate;
         }
 
@@ -278,7 +276,7 @@ class NotificationsController extends Controller
         // Set the field layout
         $fieldLayout = Craft::$app->getFields()->assembleLayoutFromPost();
         $fieldLayout->type = NotificationEmail::class;
-        
+
         $notificationEmail->setFieldLayout($fieldLayout);
 
         if (!SproutBase::$app->notifications->saveNotification($notificationEmail)) {
@@ -411,8 +409,7 @@ class NotificationsController extends Controller
             );
         }
 
-        if (!$mailer->sendNotificationEmail($notificationEmail))
-        {
+        if (!$mailer->sendNotificationEmail($notificationEmail)) {
             return $this->asJson(
                 Response::createErrorModalResponse('sprout-base-email/_modals/response', [
                     'email' => $notificationEmail,
@@ -488,6 +485,7 @@ class NotificationsController extends Controller
 
     /**
      * Renders a shared Notification Email
+     *
      * @param null $notificationId
      * @param null $type
      *
@@ -506,6 +504,7 @@ class NotificationsController extends Controller
 
     /**
      * Renders a Notification Email for Live Preview
+     *
      * @throws Exception
      * @throws \Twig_Error_Loader
      * @throws \yii\base\ExitException

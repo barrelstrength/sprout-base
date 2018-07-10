@@ -12,10 +12,10 @@ use craft\db\ActiveRecord;
 /**
  * Class DataSource
  *
- * @property int    $id       ID
+ * @property int    $id           ID
  * @property int    $pluginHandle Plugin ID
- * @property string $type     Data Source Class
- * @property bool   $allowNew Allow New
+ * @property string $type         Data Source Class
+ * @property bool   $allowNew     Allow New
  *
  * @package barrelstrength\sproutbase\app\reports\records
  */

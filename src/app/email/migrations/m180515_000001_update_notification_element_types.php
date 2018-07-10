@@ -23,7 +23,8 @@ class m180515_000001_update_notification_element_types extends Migration
 
         foreach ($seedClasses as $seedClass) {
             $this->update('{{%elements}}', [
-                'type' => $seedClass['newType']], ['type' => $seedClass['oldType']], [], false);
+                'type' => $seedClass['newType']
+            ], ['type' => $seedClass['oldType']], [], false);
         }
 
         return true;

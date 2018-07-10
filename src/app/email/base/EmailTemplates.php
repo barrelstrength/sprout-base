@@ -71,7 +71,7 @@ abstract class EmailTemplates
      * The folder path where your email templates exist
      *
      * This value should be a folder. Sprout Email will look for a required email.html file and an optional email.txt file within this folder.
-     * 
+     *
      * @return string
      */
     abstract public function getPath();
@@ -99,8 +99,7 @@ abstract class EmailTemplates
      */
     public function getHtmlBody()
     {
-        if (!$this->_htmlBody)
-        {
+        if (!$this->_htmlBody) {
             $this->processEmailTemplates();
         }
 

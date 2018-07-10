@@ -142,7 +142,6 @@ class NotificationEmails extends Component
             $mailer = $notificationEmail->getMailer();
 
             return $mailer->sendNotificationEmail($notificationEmail, $object);
-
         } catch (\Exception $e) {
             throw $e;
         }
@@ -218,6 +217,7 @@ class NotificationEmails extends Component
 
     /**
      * Retrieves a rendered Notification Email to be shared or for Live Preview
+     *
      * @param      $notificationId
      * @param null $type
      *

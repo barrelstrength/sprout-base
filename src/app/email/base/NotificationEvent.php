@@ -55,7 +55,7 @@ abstract class NotificationEvent extends SavableComponent
      *
      * This value is used for the Event::on $class parameter
      *
-     * @see \yii\base\Event
+     * @see     \yii\base\Event
      * @example Event::on($class, $name, function($handler) { ... });
      *
      * @return string
@@ -79,7 +79,7 @@ abstract class NotificationEvent extends SavableComponent
      *
      * This value is used for the Event::on $handler parameter
      *
-     * @see \yii\base\Event
+     * @see     \yii\base\Event
      * @example Event::on($class, $name, function($handler) { ... });
      *
      * @return string

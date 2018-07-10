@@ -60,7 +60,7 @@ class Phone extends Model
      */
     public function __toString()
     {
-        return (string) $this->international ?? '';
+        return (string)$this->international ?? '';
     }
 
     /**

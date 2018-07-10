@@ -63,8 +63,7 @@ abstract class Mailer
     {
         $recipients = [];
 
-        if (count($onTheFlyRecipients))
-        {
+        if (count($onTheFlyRecipients)) {
             foreach ($onTheFlyRecipients as $onTheFlyRecipient) {
                 $recipient = new SimpleRecipient();
                 $recipient->email = $onTheFlyRecipient;
@@ -323,7 +322,7 @@ abstract class Mailer
         $defaultFromEmail = "";
         $defaultReplyTo = "";
 
-        return Craft::$app->getView()->renderTemplate('sprout-base-email/_components/mailers/recipients-html',[
+        return Craft::$app->getView()->renderTemplate('sprout-base-email/_components/mailers/recipients-html', [
             'campaignEmail' => $campaignEmail,
             'defaultFromName' => $defaultFromName,
             'defaultFromEmail' => $defaultFromEmail,
@@ -349,8 +348,7 @@ abstract class Mailer
         // Add any On The Fly Recipients to our List
         if ($onTheFlyRecipients = $this->getOnTheFlyRecipients()) {
             foreach ($onTheFlyRecipients as $onTheFlyRecipient) {
-                if ($validator->isValid($onTheFlyRecipient->email, $multipleValidations))
-                {
+                if ($validator->isValid($onTheFlyRecipient->email, $multipleValidations)) {
                     $recipientList->addRecipient($onTheFlyRecipient);
                 }
 
@@ -372,8 +370,7 @@ abstract class Mailer
             $recipientModel = new SimpleRecipient();
             $recipientModel->email = trim($recipient);
 
-            if ($validator->isValid($recipientModel->email, $multipleValidations))
-            {
+            if ($validator->isValid($recipientModel->email, $multipleValidations)) {
                 $recipientList->addRecipient($recipientModel);
             }
 
@@ -384,11 +381,9 @@ abstract class Mailer
         if (Craft::$app->getPlugins()->getPlugin('sprout-lists')) {
             $listRecipients = $this->getRecipientsFromSelectedLists($email->listSettings);
 
-            if (count($listRecipients))
-            {
+            if (count($listRecipients)) {
                 foreach ($listRecipients as $listRecipient) {
-                    if ($validator->isValid($listRecipient->email, $multipleValidations))
-                    {
+                    if ($validator->isValid($listRecipient->email, $multipleValidations)) {
                         $recipientList->addRecipient($listRecipient);
                     }
 
@@ -409,8 +404,7 @@ abstract class Mailer
             $listIds = $listIds['listIds'];
         }
 
-        if (empty($listIds))
-        {
+        if (empty($listIds)) {
             return [];
         }
 
@@ -452,6 +446,7 @@ abstract class Mailer
 
     /**
      * Prepares the NotificationEmail Element and returns a Message model.
+     *
      * @param EmailElement $email
      *
      * @return Message

@@ -31,6 +31,7 @@ class DataSources extends Component
     const EVENT_REGISTER_DATA_SOURCES = 'registerSproutReportsDataSources';
 
     private $dataSources;
+
     /**
      * @param int $dataSourceId
      *
@@ -101,7 +102,7 @@ class DataSources extends Component
 
             /** @var DataSource $dataSource */
             $dataSource = new $dataSourceClass();
-            
+
             $dataSourceModel = new DataSourceModel();
             $dataSourceModel->type = $dataSourceClass;
             $dataSourceModel->allowNew = 1;
@@ -201,9 +202,9 @@ class DataSources extends Component
 
     private function isDataSourceExists($dataSourceRecord)
     {
-       return class_exists($dataSourceRecord->type)
-           AND isset($this->dataSources[$dataSourceRecord->type])
-           AND $dataSourceRecord->type === get_class($this->dataSources[$dataSourceRecord->type]);
+        return class_exists($dataSourceRecord->type)
+            AND isset($this->dataSources[$dataSourceRecord->type])
+            AND $dataSourceRecord->type === get_class($this->dataSources[$dataSourceRecord->type]);
     }
 
     public function getDataSourcePlugins()
@@ -282,7 +283,7 @@ class DataSources extends Component
             ->where(['type' => $type])
             ->one();
 
-        if ($source){
+        if ($source) {
             $query->createCommand()
                 ->delete('{{%sproutreports_reports}}', ['dataSourceId' => $source['id']])
                 ->execute();

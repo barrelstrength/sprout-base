@@ -110,7 +110,7 @@ abstract class DataSource
      * Should return an array of strings to be used as column headings in display/output
      *
      * @param Report $report
-     * @param array       $settings
+     * @param array  $settings
      *
      * @return array
      */
@@ -123,7 +123,7 @@ abstract class DataSource
      * Should return an array of records to use in the report
      *
      * @param Report $report
-     * @param array       $settings
+     * @param array  $settings
      *
      * @return array
      */

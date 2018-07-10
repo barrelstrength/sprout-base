@@ -153,7 +153,7 @@ class SproutBase extends Module
             $this->controllerNamespace = 'sproutbase\\controllers';
 
             $this->controllerMap = [
-                'settings'=> SettingsController::class,
+                'settings' => SettingsController::class,
                 'notifications' => NotificationsController::class,
                 'fields' => FieldsController::class,
                 'fields-address' => AddressController::class,

@@ -291,8 +291,7 @@ class NotificationEmailEvents extends Component
         $events = $this->getNotificationEmailEvents($notificationEmail);
 
         foreach ($events as $key => $event) {
-            if ($pluginHandle !== $event->getPlugin()->id)
-            {
+            if ($pluginHandle !== $event->getPlugin()->id) {
                 unset($events[$key]);
             }
         }
