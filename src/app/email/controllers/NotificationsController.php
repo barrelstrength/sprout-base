@@ -226,13 +226,14 @@ class NotificationsController extends Controller
                 $notificationEmail->settings = Json::encode($eventSettings);
             }
 
-
             /**
              * @var $plugin Plugin
              */
             $plugin = $event->getPlugin();
 
-            $notificationEmail->pluginHandle = $plugin->id;
+            if ($plugin) {
+                $notificationEmail->pluginHandle = $plugin->id;
+            }
         }
 
         if (!SproutBase::$app->notifications->saveNotification($notificationEmail)) {
