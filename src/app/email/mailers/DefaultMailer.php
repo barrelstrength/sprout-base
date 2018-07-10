@@ -5,17 +5,12 @@ namespace barrelstrength\sproutbase\app\email\mailers;
 use barrelstrength\sproutbase\app\email\base\Mailer;
 use barrelstrength\sproutbase\app\email\base\NotificationEmailSenderInterface;
 use barrelstrength\sproutbase\app\email\models\Message;
-use barrelstrength\sproutbase\app\email\models\SimpleRecipientList;
 use barrelstrength\sproutbase\SproutBase;
 use barrelstrength\sproutemail\elements\CampaignEmail;
 use barrelstrength\sproutbase\app\email\elements\NotificationEmail;
 use barrelstrength\sproutemail\models\CampaignType;
-use barrelstrength\sproutbase\app\email\models\Response;
-use barrelstrength\sproutbase\app\email\models\SimpleRecipient;
 use barrelstrength\sproutemail\SproutEmail;
-use barrelstrength\sproutlists\elements\Subscribers;
 use barrelstrength\sproutlists\listtypes\SubscriberListType;
-use barrelstrength\sproutlists\records\Lists;
 use barrelstrength\sproutlists\SproutLists;
 use craft\base\Element;
 use craft\elements\Asset;
@@ -27,7 +22,6 @@ use Craft;
 use craft\helpers\UrlHelper;
 use craft\volumes\Local;
 use yii\base\Exception;
-
 
 class DefaultMailer extends Mailer implements NotificationEmailSenderInterface
 {
@@ -81,8 +75,9 @@ class DefaultMailer extends Mailer implements NotificationEmailSenderInterface
     /**
      * @inheritdoc
      *
-     * @throws \Exception
-     * @throws \ReflectionException
+     * @throws Exception
+     * @throws \Twig_Error_Loader
+     * @throws \yii\base\InvalidConfigException
      */
     public function sendNotificationEmail(NotificationEmail $notificationEmail, $object = null)
     {

@@ -5,7 +5,7 @@ namespace barrelstrength\sproutbase\app\email\services;
 use barrelstrength\sproutbase\app\email\base\EmailElement;
 use barrelstrength\sproutbase\app\email\base\Mailer;
 use barrelstrength\sproutbase\app\email\elements\NotificationEmail;
-use barrelstrength\sproutbase\app\email\mailers\DefaultMailer;
+
 use barrelstrength\sproutbase\app\email\models\EmailTemplate;
 use barrelstrength\sproutbase\SproutBase;
 use barrelstrength\sproutbase\app\email\models\Message;
@@ -14,10 +14,10 @@ use barrelstrength\sproutbase\app\email\records\NotificationEmail as Notificatio
 use craft\base\Component;
 use Craft;
 use craft\helpers\ElementHelper;
-use craft\helpers\Html;
+
 use craft\helpers\UrlHelper;
 use craft\base\ElementInterface;
-use yii\db\Exception;
+
 use yii\web\NotFoundHttpException;
 
 /**
@@ -185,7 +185,6 @@ class NotificationEmails extends Component
      * @param NotificationEmail $notificationEmail
      *
      * @return string
-     * @throws \ReflectionException
      * @throws \Twig_Error_Loader
      * @throws \yii\base\Exception
      */

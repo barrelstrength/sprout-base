@@ -11,7 +11,7 @@ use Craft;
 use craft\base\Plugin;
 use craft\helpers\Json;
 use yii\base\Component;
-use barrelstrength\sproutbase\events\BeforeSaveSettingsEvent;
+
 
 class Settings extends Component
 {

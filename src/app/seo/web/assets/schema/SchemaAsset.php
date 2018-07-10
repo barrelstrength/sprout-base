@@ -7,10 +7,7 @@
 
 namespace barrelstrength\sproutbase\app\seo\web\assets\schema;
 
-use barrelstrength\sproutbase\app\seo\web\assets\base\BaseAsset;
-use barrelstrength\sproutbase\app\seo\web\assets\opengraph\OpenGraphAsset;
-use barrelstrength\sproutbase\app\seo\web\assets\tageditor\TagEditorAsset;
-use barrelstrength\sproutbase\app\seo\web\assets\twittercard\TwitterCardAsset;
+
 use craft\web\AssetBundle;
 
 class SchemaAsset extends AssetBundle

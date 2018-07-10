@@ -137,7 +137,6 @@ class ReportsController extends Controller
 
     /**
      * @param string      $dataSourceId
-     * @param string      $dataSourceSlug
      * @param Report|null $report
      * @param int|null    $reportId
      *

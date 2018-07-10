@@ -22,7 +22,7 @@ use craft\helpers\UrlHelper;
 use Craft;
 use craft\mail\Message;
 use Egulias\EmailValidator\EmailValidator;
-use Egulias\EmailValidator\Validation\DNSCheckValidation;
+
 use Egulias\EmailValidator\Validation\MultipleValidationWithAnd;
 use Egulias\EmailValidator\Validation\RFCValidation;
 use yii\base\Model;

@@ -3,13 +3,13 @@
 namespace barrelstrength\sproutbase\app\email\services;
 
 use barrelstrength\sproutbase\app\email\base\Mailer;
-use barrelstrength\sproutbase\app\email\elements\NotificationEmail;
+
 use barrelstrength\sproutbase\app\email\events\RegisterMailersEvent;
 use barrelstrength\sproutbase\SproutBase;
 use barrelstrength\sproutbase\app\email\events\RegisterSendEmailEvent;
 use craft\base\Component;
-use craft\helpers\ArrayHelper;
-use craft\helpers\Json;
+
+
 use craft\mail\Message;
 use Craft;
 use craft\elements\User;

@@ -3,17 +3,17 @@
 namespace barrelstrength\sproutbase\app\email\elements;
 
 use barrelstrength\sproutbase\app\email\base\EmailElement;
-use barrelstrength\sproutbase\app\email\base\Mailer;
 
-use barrelstrength\sproutbase\app\email\base\NotificationEvent;
+
 use barrelstrength\sproutbase\app\email\elements\actions\DeleteNotification;
-use barrelstrength\sproutbase\app\email\mailers\DefaultMailer;
+
 use barrelstrength\sproutbase\SproutBase;
 use barrelstrength\sproutbase\app\email\web\assets\base\NotificationAsset;
 use barrelstrength\sproutbase\app\email\elements\db\NotificationEmailQuery;
 use barrelstrength\sproutbase\app\email\records\NotificationEmail as NotificationEmailRecord;
-use craft\base\Element;
+
 use Craft;
+use craft\base\ElementInterface;
 use craft\behaviors\FieldLayoutBehavior;
 use craft\elements\db\ElementQueryInterface;
 use craft\helpers\UrlHelper;
@@ -22,7 +22,7 @@ use yii\base\Exception;
 /**
  * Class NotificationEmail
  *
- * * @mixin FieldLayoutBehavior
+ * @mixin FieldLayoutBehavior
  */
 class NotificationEmail extends EmailElement
 {
@@ -248,6 +248,10 @@ class NotificationEmail extends EmailElement
     public function getFieldLayout()
     {
         $behaviors = $this->getBehaviors();
+
+        /**
+         * @var FieldLayoutBehavior $fieldLayout
+         */
         $fieldLayout = $behaviors['fieldLayout'];
 
         return $fieldLayout->getFieldLayout();

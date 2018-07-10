@@ -159,6 +159,7 @@ abstract class EmailElement extends Element
         if ($this->getEmailTemplateId()) {
 
             if ($this->getEmailTemplateId() instanceof EmailTemplates) {
+                $emailTemplateId = $this->getEmailTemplateId();
                 $emailTemplates = new $emailTemplateId();
             } else {
                 // custom folder on site path

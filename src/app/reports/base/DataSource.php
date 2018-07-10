@@ -160,6 +160,8 @@ abstract class DataSource
     /**
      * Returns the CP URL for the given data source
      *
+     * @param null $append
+     *
      * @return string
      */
     public function getUrl($append = null)
