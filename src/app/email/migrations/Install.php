@@ -41,6 +41,7 @@ class Install extends Migration
                     'fromName' => $this->string(),
                     'fromEmail' => $this->string(),
                     'replyToEmail' => $this->string(),
+                    'singleEmail' => $this->boolean(),
                     'enableFileAttachments' => $this->boolean(),
                     'dateCreated' => $this->dateTime(),
                     'dateUpdated' => $this->dateTime(),

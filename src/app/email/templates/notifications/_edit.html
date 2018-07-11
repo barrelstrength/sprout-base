@@ -155,6 +155,16 @@
             errors: notificationEmail is defined ? notificationEmail.getErrors('recipients')
         }) }}
 
+        {{ forms.lightswitchField({
+            first: true,
+            label: "Single Email<span class='info'>Send email recipients in one email.</span>"|t('sprout-base'),
+            id: 'singleEmail',
+            name: 'singleEmail',
+            on: notificationEmail.singleEmail,
+            onLabel: "Enable"|t('sprout-base'),
+            offLabel: "Disable"|t('sprout-base')
+        }) }}
+
         {% if (mailer is not null and mailer.getLists()|length) %}
             <div class="field mailing-lists">
                 <div class="heading">

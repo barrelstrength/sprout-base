@@ -30,6 +30,7 @@ class NotificationEmailQuery extends ElementQuery
             'sproutemail_notificationemails.fromName',
             'sproutemail_notificationemails.fromEmail',
             'sproutemail_notificationemails.replyToEmail',
+            'sproutemail_notificationemails.singleEmail',
             'sproutemail_notificationemails.enableFileAttachments',
             'sproutemail_notificationemails.dateCreated',
             'sproutemail_notificationemails.dateUpdated',

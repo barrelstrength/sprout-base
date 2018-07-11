@@ -4,13 +4,11 @@ namespace barrelstrength\sproutbase\app\email\mailers;
 
 use barrelstrength\sproutbase\app\email\base\Mailer;
 use barrelstrength\sproutbase\app\email\base\NotificationEmailSenderInterface;
-use barrelstrength\sproutbase\app\email\models\Message;
 use barrelstrength\sproutbase\SproutBase;
 use barrelstrength\sproutemail\elements\CampaignEmail;
 use barrelstrength\sproutbase\app\email\elements\NotificationEmail;
 use barrelstrength\sproutemail\models\CampaignType;
 use barrelstrength\sproutemail\SproutEmail;
-use barrelstrength\sproutlists\listtypes\SubscriberListType;
 use barrelstrength\sproutlists\SproutLists;
 use craft\base\Element;
 use craft\elements\Asset;
@@ -127,52 +125,74 @@ class DefaultMailer extends Mailer implements NotificationEmailSenderInterface
             $notificationEmail->addError('recipients', Craft::t('sprout-base', 'No recipients found.'));
         }
 
-        $processedRecipients = [];
+        $variables = [];
 
-        foreach ($recipientList->getRecipients() as $recipient) {
+        if (Craft::$app->plugins->getPlugin('sprout-email')) {
+            $infoTable = SproutEmail::$app->sentEmails->createInfoTableModel('sprout-email', [
+                'emailType' => Craft::t('sprout-base', 'Notification'),
+                'deliveryType' => $notificationEmail->isTest() ? Craft::t('sprout-base', 'Test') : Craft::t('sprout-base', 'Live')
+            ]);
 
-            if ($recipient->name) {
-                $message->setTo([$recipient->email => $recipient->name]);
-            } else {
-                $message->setTo($recipient->email);
-            }
+            $variables = [
+                'email' => $notificationEmail,
+                'renderedEmail' => $message,
+                'object' => $object,
+                'recipients' => $recipientList->getRecipients(),
+                'processedRecipients' => null,
+                'info' => $infoTable
+            ];
 
-            // Skip any emails that we have already processed
-            if (array_key_exists($recipient->email, $processedRecipients)) {
-                continue;
-            }
-
-            try {
-                $variables = [];
-
-                if (Craft::$app->plugins->getPlugin('sprout-email')) {
-                    $infoTable = SproutEmail::$app->sentEmails->createInfoTableModel('sprout-email', [
-                        'emailType' => Craft::t('sprout-base', 'Notification'),
-                        'deliveryType' => $notificationEmail->isTest() ? Craft::t('sprout-base', 'Test') : Craft::t('sprout-base', 'Live')
-                    ]);
-
-                    $variables = [
-                        'email' => $notificationEmail,
-                        'renderedEmail' => $message,
-                        'object' => $object,
-                        'recipients' => $recipientList->getRecipients(),
-                        'processedRecipients' => null,
-                        'info' => $infoTable
-                    ];
-                }
-
-                if (SproutBase::$app->mailers->sendEmail($message, $variables)) {
-                    $processedRecipients[] = $recipient->email;
-                } else {
-                    // @todo - Update this so we fail gracefully
-                    // if an email in the middle of the list doesn't get processed properly
-                    return false;
-                }
-            } catch (\Exception $e) {
-                $notificationEmail->addError('send-failure', $e->getMessage());
-            }
+            $message->variables = $variables;
         }
 
+        $processedRecipients = [];
+
+        $recipients = $recipientList->getRecipients();
+
+        $prepareRecipients = [];
+
+        if ($recipients) {
+            foreach ($recipients as $key => $recipient) {
+
+                if ($recipient->name) {
+                    $prepareRecipients[] = [$recipient->email => $recipient->name];
+                } else {
+                    $prepareRecipients[] = $recipient->email;
+                }
+            }
+            $mailer = Craft::$app->getMailer();
+
+            if ($notificationEmail->singleEmail) {
+                $message->setTo($prepareRecipients);
+                $mailer->send($message);
+            } else {
+                foreach ($recipients as $recipient) {
+
+                    if ($recipient->name) {
+                        $message->setTo([$recipient->email => $recipient->name]);
+                    } else {
+                        $message->setTo($recipient->email);
+                    }
+
+                    // Skip any emails that we have already processed
+                    if (array_key_exists($recipient->email, $processedRecipients)) {
+                        continue;
+                    }
+
+                    try {
+                        if ($mailer->send($message)) {
+                            $processedRecipients[] = $recipient->email;
+                        } else {
+                            // @todo - Update this so we fail gracefully
+                            // if an email in the middle of the list doesn't get processed properly
+                            return false;
+                        }
+                    } catch (\Exception $e) {
+                        $notificationEmail->addError('send-failure', $e->getMessage());
+                    }
+                }
+            }
+        }
         // Trigger on send notification event
         if (!empty($processedRecipients)) {
             $variables['processedRecipients'] = $processedRecipients;

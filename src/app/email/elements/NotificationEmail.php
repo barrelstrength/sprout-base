@@ -85,6 +85,11 @@ class NotificationEmail extends EmailElement
     public $defaultBody;
 
     /**
+     * @var boolean
+     */
+    public $singleEmail;
+
+    /**
      * @inheritdoc
      */
     public static function displayName(): string
@@ -290,6 +295,7 @@ class NotificationEmail extends EmailElement
         $notificationEmailRecord->fromName = $this->fromName;
         $notificationEmailRecord->fromEmail = $this->fromEmail;
         $notificationEmailRecord->replyToEmail = $this->replyToEmail;
+        $notificationEmailRecord->singleEmail = $this->singleEmail;
         $notificationEmailRecord->enableFileAttachments = $this->enableFileAttachments;
         $notificationEmailRecord->recipients = $this->recipients;
         $notificationEmailRecord->listSettings = $this->listSettings;
