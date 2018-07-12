@@ -2,8 +2,7 @@
 {% import "sprout-base-seo/_includes/sproutseo" as sprout %}
 
 {# This needs to be here to make sure the checkboxes work properly #}
-<input type="hidden" name="{{ nameContext }}[{{ robotsNamespace }}][robots]"
-       value="">
+<input type="hidden" name="{{ robotsNamespace }}" value="">
 
 {% set robotsCheckboxes %}
     <table class="data" style="width: auto;">
@@ -18,7 +17,7 @@
             <td class="centeralign">
                 <div>
                     {{ forms.lightswitch({
-                        name: nameContext~'[' ~ robotsNamespace ~ '][robots][noindex]',
+                        name: robotsNamespace ~ '[noindex]',
                         on:   values.robots.noindex
                     }) }}
                 </div>
@@ -34,7 +33,7 @@
             <td class="centeralign">
                 <div>
                     {{ forms.lightswitch({
-                        name: nameContext~'[' ~ robotsNamespace ~ '][robots][nofollow]',
+                        name: robotsNamespace ~ '[nofollow]',
                         on:   values.robots.nofollow
                     }) }}
                 </div>
@@ -50,7 +49,7 @@
             <td class="centeralign">
                 <div>
                     {{ forms.lightswitch({
-                        name: nameContext~'[' ~ robotsNamespace ~ '][robots][noarchive]',
+                        name: robotsNamespace ~ '[noarchive]',
                         on:   values.robots.noarchive
                     }) }}
                 </div>
@@ -66,7 +65,7 @@
             <td class="centeralign">
                 <div>
                     {{ forms.lightswitch({
-                        name: nameContext~'[' ~ robotsNamespace ~ '][robots][noimageindex]',
+                        name: robotsNamespace ~ '[noimageindex]',
                         on:   values.robots.noimageindex
                     }) }}
                 </div>
@@ -82,7 +81,7 @@
             <td class="centeralign">
                 <div>
                     {{ forms.lightswitch({
-                        name: nameContext~'[' ~ robotsNamespace ~ '][robots][noodp]',
+                        name: robotsNamespace ~ '[noodp]',
                         on:   values.robots.noodp
                     }) }}
                 </div>
@@ -99,7 +98,7 @@
             <td class="centeralign">
                 <div>
                     {{ forms.lightswitch({
-                        name: nameContext~'[' ~ robotsNamespace ~ '][robots][noydir]',
+                        name: robotsNamespace ~ '[noydir]',
                         on:   values.robots.noydir
                     }) }}
                 </div>
@@ -117,13 +116,21 @@
 
 {% endset %}
 
-{{ forms.field({
-    label: "Robots"|t ~ sprout.infoIcon({
-        label: "Robots"|t,
-        search: true,
-        priority: 'globals'
-    }),
-    instructions: "Communicate with robots and try to make them behave a bit differently&mdash;if they listen!",
-    errors: '',
-    first: true,
-}, robotsCheckboxes) }}
+{% if robotsContext is defined and robotsContext == 'globals' %}
+    {{ forms.field({
+        label: "Robots"|t ~ sprout.infoIcon({
+            label: "Robots"|t,
+            search: true,
+            priority: 'globals'
+        }),
+        instructions: "Communicate with robots and try to make them behave a bit differently&mdash;if they listen!",
+        errors: '',
+        first: true,
+    }, robotsCheckboxes) }}
+{% else %}
+    {{ forms.field({
+        instructions: "Communicate with robots and try to make them behave a bit differently&mdash;if they listen!",
+        errors: '',
+        first: true,
+    }, robotsCheckboxes) }}
+{% endif %}

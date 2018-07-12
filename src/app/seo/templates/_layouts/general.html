@@ -4,14 +4,13 @@
     {% set title = "Global Metadata"|t %}
 {% endif %}
 
-{% set selectedItem = globalHandle %}
 {% set fullPageForm = true %}
 
 {% block contextMenu %}
     {% if craft.app.getIsMultiSite() %}
         {% include "_elements/sitemenu" with {
             selectedSiteId: globals.siteId,
-            urlFormat: "sprout-seo/globals/{handle}/"~selectedItem
+            urlFormat: "sprout-seo/globals/"~selectedTabHandle~"/{handle}"
         } %}
     {% endif %}
 {% endblock %}
@@ -30,17 +29,19 @@
     'robots': { title: "Robots"|t },
 } %}
 
-{% set docTitle = navItems[selectedItem].title~' - '~title %}
+{% set docTitle = navItems[selectedTabHandle].title~' - '~title %}
 
 {% block sidebar %}
     <nav>
         <ul>
-            {% for id, item in navItems %}
+            {% for tabHandle, item in navItems %}
                 {% if item.heading is defined %}
                     <li class="heading"><span>{{ item.heading }}</span></li>
                 {% else %}
+                    {% set selected = tabHandle == selectedTabHandle ? 'sel' : null %}
+                    {% set tabUrl = url('sprout-seo/globals/'~tabHandle~(currentSite.handle is not null ? '/' ~ currentSite.handle)) %}
                     <li>
-                        <a href="{{ url('sprout-seo/globals/'~id) }}"{% if id == selectedItem %} class="sel"{% endif %}>{{ item.title }}</a>
+                        <a href="{{ tabUrl }}" class="{{ selected }}">{{ item.title }}</a>
                     </li>
                 {% endif %}
             {% endfor %}

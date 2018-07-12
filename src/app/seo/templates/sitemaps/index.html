@@ -7,15 +7,15 @@
 {% block contextMenu %}
     {% if craft.app.getIsMultiSite() %}
         {% if enableMultilingualSitemaps %}
-            {% include "sprout-base-seo/sitemaps/_groupmenu" with {
+            {% include "sprout-base-seo/sitemaps/_sitegroupmenu" with {
                 selectedSiteId: currentSite.id,
-                siteIds: enabledSiteIds,
+                siteIds: editableSiteIds,
                 urlFormat: "sprout-seo/sitemaps/{handle}"
             } %}
         {% else %}
             {% include "_elements/sitemenu" with {
                 selectedSiteId: currentSite.id,
-                siteIds: enabledSiteIds,
+                siteIds: editableSiteIds,
                 urlFormat: "sprout-seo/sitemaps/{handle}"
             } %}
         {% endif %}
@@ -87,7 +87,7 @@
         {{ forms.selectField({
             name: 'sproutseo[sections][' ~ urlEnabledSectionKey ~ '][priority]',
             options: priorityList,
-            value: (sitemapSection.priority is defined ? sitemapSection.priority : 0.5),
+            value: sitemapSection.priority ?? 0.5,
             errors: "",
             required: false
         }) }}
@@ -96,7 +96,7 @@
         {{ forms.selectField({
             name: 'sproutseo[sections][' ~ urlEnabledSectionKey ~ '][changeFrequency]',
             options: frequencyList,
-            value: (sitemapSection.changeFrequency is defined ? sitemapSection.changeFrequency : 'weekly'),
+            value: sitemapSection.changeFrequency ?? 'weekly',
             errors: "",
             required: false
         }) }}
@@ -104,7 +104,7 @@
     <td style="text-align: center;">
         {{ forms.lightswitch({
             name: 'sproutseo[sections][' ~ urlEnabledSectionKey ~ '][enabled]',
-            on: sitemapSection.enabled is defined and sitemapSection.enabled == 1 ? true : false
+            on: sitemapSection.enabled == 1 ?? false
         }) }}
     </td>
     <td>
@@ -147,7 +147,7 @@
         {{ forms.selectField({
             name: 'sproutseo[sections][' ~ customSectionId ~ '][priority]',
             options: priorityList,
-            value: (customSection.priority is defined ? customSection.priority : 0.5),
+            value: customSection.priority ?? 0.5,
             errors: "",
             required: false
         }) }}
@@ -156,7 +156,7 @@
         {{ forms.selectField({
             name: 'sproutseo[sections][' ~ customSectionId ~ '][changeFrequency]',
             options: frequencyList,
-            value: (customSection.changeFrequency is defined ? customSection.changeFrequency : 'weekly'),
+            value: customSection.changeFrequency ?? 'weekly',
             errors: "",
             required: false
         }) }}
@@ -164,7 +164,7 @@
     <td style="text-align: center;">
         {{ forms.lightswitch({
             name: 'sproutseo[sections][' ~ customSectionId ~ '][enabled]',
-            on: customSection.enabled is defined and customSection.enabled == 1 ? true : false
+            on: customSection.enabled == 1 ?? false
         }) }}
     </td>
     <td>
@@ -173,10 +173,6 @@
 
 {% endblock %}
 
-{% do view.registerAssetBundle("barrelstrength\\sproutbase\\web\\assets\\cp\\CpAsset") %}
-
-{% set js %}
+{% js %}
     new Craft.SproutSeo.Sitemap();
-{% endset %}
-
-{% includeJs js %}
+{% endjs %}

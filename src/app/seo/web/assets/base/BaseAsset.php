@@ -10,9 +10,6 @@ namespace barrelstrength\sproutbase\app\seo\web\assets\base;
 use craft\web\AssetBundle;
 use craft\web\assets\cp\CpAsset;
 
-/**
- * @todo - move this Asset Bundle to Sprout Core.
- */
 class BaseAsset extends AssetBundle
 {
     /**
@@ -28,11 +25,6 @@ class BaseAsset extends AssetBundle
 
         $this->css = [
             'css/sproutseo.css'
-        ];
-
-        $this->js = [
-            // @todo - this has Section and Sitemap specific js
-            'js/sproutseo.js'
         ];
 
         parent::init();

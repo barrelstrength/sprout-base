@@ -1,14 +1,8 @@
 {% import "_includes/forms" as forms %}
 {% import "sprout-base-fields/_includes/forms" as sproutFields %}
 
-{% do view.registerAssetBundle("barrelstrength\\sproutbase\\app\\fields\\web\\assets\\selectother\\SelectOtherFieldAsset") %}
-
-{% do view.registerAssetBundle("barrelstrength\\sproutbase\\app\\seo\\web\\assets\\elementmetadata\\ElementMetadataAsset") %}
-
 {% set pluginSettings = craft.sproutSeo.getSettings() %}
 {% set optimizedTitleOptions = craft.sproutSeo.getOptimizedTitleOptions(settings) %}
-{% set schemas          = craft.sproutSeo.getSchemaOptions() %}
-{% set schemaSubtypes   = craft.sproutSeo.getSchemaSubtypes(schemas) %}
 {% set mainEntityValues = {'schemaTypeId': settings.schemaTypeId, 'schemaOverrideTypeId': settings.schemaOverrideTypeId} %}
 
 <div class="field">
@@ -53,6 +47,18 @@
         </div>
     </div>
 </div>
+
+
+{% set optimizedKeywordOptions = craft.sproutSeo.getKeywordsOptions() %}
+
+{{ forms.selectField({
+    label: "Meta Keywords"|t,
+    instructions: "Generate keywords and key phrases dynamically based on an algorithm or add them manually."|t,
+    id: 'optimizedKeywordsField',
+    name: 'optimizedKeywordsField',
+    options: optimizedKeywordOptions,
+    value: settings.optimizedKeywordsField is defined ? settings.optimizedKeywordsField : 'manually',
+}) }}
 
 {% set optimizedImageOptions = craft.sproutSeo.getOptimizedAssetsOptions(settings) %}
 
@@ -100,20 +106,29 @@
     </div>
 </div>
 
-{% set optimizedKeywordOptions = craft.sproutSeo.getKeywordsOptions() %}
+<hr>
 
-{{ forms.selectField({
-    label: "Meta Keywords"|t,
-    instructions: "Generate keywords and key phrases dynamically based on an algorithm or add them manually."|t,
-    id: 'optimizedKeywordsField',
-    name: 'optimizedKeywordsField',
-    options: optimizedKeywordOptions,
-    value: settings.optimizedKeywordsField is defined ? settings.optimizedKeywordsField : 'manually',
+{{ forms.lightswitchField({
+    label: "Enable Canonical URL field"|t,
+    instructions: "Allow users to override the Canonical URL at Element Metadata field level"|t,
+    id: 'editCanonical',
+    name: 'editCanonical',
+    on: settings.editCanonical,
 }) }}
 
-{% if pluginSettings.enableMetaDetailsFields %}
+<hr>
 
-    <hr>
+{{ forms.lightswitchField({
+    label: "Enable Meta Details fields"|t,
+    instructions: "Meta Details fields add one more level of fine-tuning over your metadata. With Meta Details fields enabled, content editors will have additional control to customize Search, Open Graph, Twitter Card, Geo, and Robots metadata. Note: enabling Meta Details fields may require additional time for content planning and monitoring in your SEO strategy."|t,
+    name: 'enableMetaDetailsFields',
+    toggle: 'settings-enablemetadadetails',
+    on: settings.enableMetaDetailsFields,
+    onLabel: "Enable"|t
+}) }}
+
+<div id="settings-enablemetadadetails"
+     class="{% if not settings.enableMetaDetailsFields %} hidden {% endif %}">
 
     {% set advancedInput %}
         <table class="data" style="width: auto;">
@@ -126,28 +141,13 @@
             <tbody>
             <tr>
                 <td>
-                    <label for="showMainEntity">{{ "Allow Main Entity to be edited?"|t }}</label>
-                </td>
-                <td class="centeralign">
-                    <div>
-                        {{ forms.lightswitch({
-                            name: 'showMainEntity',
-                            on:   settings.showMainEntity,
-                            small: true
-                        }) }}
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td>
                     <label for="showSearchMeta">{{ "Allow Search Meta fields to be edited?"|t }}</label>
                 </td>
                 <td class="centeralign">
                     <div>
                         {{ forms.lightswitch({
                             name: 'showSearchMeta',
-                            on:   settings.showSearchMeta,
-                            small: true
+                            on:   settings.showSearchMeta
                         }) }}
                     </div>
                 </td>
@@ -160,8 +160,7 @@
                     <div>
                         {{ forms.lightswitch({
                             name: 'showOpenGraph',
-                            on:   settings.showOpenGraph,
-                            small: true
+                            on:   settings.showOpenGraph
                         }) }}
                     </div>
                 </td>
@@ -174,8 +173,7 @@
                     <div>
                         {{ forms.lightswitch({
                             name: 'showTwitter',
-                            on:   settings.showTwitter,
-                            small: true
+                            on:   settings.showTwitter
                         }) }}
                     </div>
                 </td>
@@ -188,8 +186,7 @@
                     <div>
                         {{ forms.lightswitch({
                             name: 'showGeo',
-                            on:   settings.showGeo,
-                            small: true
+                            on:   settings.showGeo
                         }) }}
                     </div>
                 </td>
@@ -202,8 +199,7 @@
                     <div>
                         {{ forms.lightswitch({
                             name: 'showRobots',
-                            on:   settings.showRobots,
-                            small: true
+                            on:   settings.showRobots
                         }) }}
                     </div>
                 </td>
@@ -214,36 +210,10 @@
     {% endset %}
 
     {{ forms.field({
-        label: "Meta Details"|t,
-        instructions: "Enable one more level of control to fine-tune your metadata to your specific SEO needs. Note: enabling Meta Details fields may require additional time to content planning and monitoring in your SEO strategy."|t,
         errors: ''
     }, advancedInput) }}
 
-{% endif %}
-
- {# @todo - Upcoming Feature - SEO Preview #}
-
-<hr>
-
-{{ forms.lightswitchField({
-    label: "Display Preview?"|t,
-    instructions: "Display an SEO Preview button to review an example of your metadata as it could appear in Search or Social Sharing. The SEO Preview button will display below the Live Preview button."|t,
-    warning: '',
-    id: 'displayPreview',
-    name: 'displayPreview',
-    on: settings.displayPreview,
-}) }}
-
-<hr>
-
-{{ forms.lightswitchField({
-    label: "Edit Canonical?"|t,
-    instructions: "Override Canonical URL at Element Metadata field level"|t,
-    warning: '',
-    id: 'editCanonical',
-    name: 'editCanonical',
-    on: settings.editCanonical,
-}) }}
+</div> {# End meta details div #}
 
 {% js %}
     var items = {{ schemaSubtypes|json_encode|raw }};

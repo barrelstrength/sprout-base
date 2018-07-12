@@ -5,7 +5,7 @@
  * @license   http://sprout.barrelstrengthdesign.com/license
  */
 
-namespace barrelstrength\sproutbase\app\seo\web\assets\elementmetadata;
+namespace barrelstrength\sproutbase\app\seo\web\assets\schema;
 
 use barrelstrength\sproutbase\app\seo\web\assets\base\BaseAsset;
 use barrelstrength\sproutbase\app\seo\web\assets\opengraph\OpenGraphAsset;
@@ -13,21 +13,14 @@ use barrelstrength\sproutbase\app\seo\web\assets\tageditor\TagEditorAsset;
 use barrelstrength\sproutbase\app\seo\web\assets\twittercard\TwitterCardAsset;
 use craft\web\AssetBundle;
 
-class ElementMetadataAsset extends AssetBundle
+class SchemaAsset extends AssetBundle
 {
     public function init()
     {
-        $this->sourcePath = '@sproutbase/app/seo/web/assets/elementmetadata/dist';
-
-        $this->depends = [
-            BaseAsset::class,
-            OpenGraphAsset::class,
-            TwitterCardAsset::class,
-            TagEditorAsset::class
-        ];
+        $this->sourcePath = '@sproutbase/app/seo/web/assets/schema/dist';
 
         $this->js = [
-            'js/elementmetadata.js'
+            'js/schema.js'
         ];
 
         parent::init();

@@ -4,16 +4,26 @@
 {% set title = (redirect.id != "" ? "Edit Redirect"|t('sprout-seo') : "Create a new redirect"|t('sprout-seo')) %}
 
 {% set crumbs = [
-    { label: "Redirects"|t('sprout-seo'), url: url('sprout-seo/redirects/' ~ currentSite.handle) }
+    { label: "Redirects"|t('sprout-seo'), url: url('sprout-seo/redirects/' ~ currentSite.id) }
 ] %}
 
 {% set fullPageForm = true %}
 {% set saveShortcutRedirect = continueEditingUrl %}
+{% set selectedItem = currentSite.id %}
+
+{% block contextMenu %}
+    {% if craft.app.getIsMultiSite() %}
+        {% set urlFormat = redirect.id ? "sprout-seo/redirects/edit/"~ redirect.id ~"/{baseSiteId}" : "sprout-seo/redirects/{baseSiteId}/new" %}
+        {% include "sprout-base-seo/_layouts/sitemenu" with {
+            selectedSiteId: currentSite.id,
+            urlFormat: urlFormat
+        } %}
+    {% endif %}
+{% endblock %}
 
 {% block actionButton %}
     <div class="btngroup submit first">
-        <input type="submit" class="btn submit"
-               value="{{ 'Save'|t('sprout-seo') }}">
+        <input type="submit" class="btn submit" value="{{ 'Save'|t('sprout-seo') }}">
         <div class="btn submit menubtn"></div>
         <div class="menu">
             <ul>
@@ -21,7 +31,7 @@
                        data-redirect="{{ continueEditingUrl|hash }}">{{ "Save and continue editing"|t('sprout-seo') }}
                         <span class="shortcut">⌘S</span></a></li>
                 <li><a class="formsubmit"
-                       data-redirect="{{ 'sprout-seo/redirects/' ~ currentSite.handle ~ '/new'|hash }}">{{ "Save and add another"|t('sprout-seo') }}</a>
+                       data-redirect="{{ 'sprout-seo/redirects/' ~ currentSite.id ~ '/new'|hash }}">{{ "Save and add another"|t('sprout-seo') }}</a>
                 </li>
             </ul>
         </div>
@@ -41,7 +51,7 @@
                value="{{ redirect.id }}">
     {% endif %}
 
-    <input type="hidden" name="siteId"
+    <input type="hidden" name="baseSiteId"
            value="{{ currentSite.id }}">
 
     {% include "sprout-base-seo/redirects/_fields" %}
