@@ -37,30 +37,6 @@ abstract class EmailTemplates
     private $_textBody;
 
     /**
-     * @todo - clarify naming. We are using ID to reference a namespace at times and a short name at others
-     *
-     * Generates the Template ID
-     *
-     * @return string
-     * @throws \ReflectionException
-     */
-    public function getTemplateId()
-    {
-        $pluginHandle = Craft::$app->getPlugins()->getPluginHandleByClass(get_class($this));
-
-        // Build $templateId: pluginhandle-emailtemplateclassname
-        $pluginHandleWithoutSpaces = str_replace('-', '', $pluginHandle);
-
-        $captchaClass = (new \ReflectionClass($this))->getShortName();
-        $pluginHandleWithoutSpaces = $pluginHandleWithoutSpaces ?: 'sproutemail';
-        $templateId = $pluginHandleWithoutSpaces.'-'.$captchaClass;
-
-        $this->templateId = strtolower($templateId);
-
-        return $this->templateId;
-    }
-
-    /**
      * The name of your Email Templates.
      *
      * @return string

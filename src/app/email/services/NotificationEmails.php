@@ -5,10 +5,7 @@ namespace barrelstrength\sproutbase\app\email\services;
 use barrelstrength\sproutbase\app\email\base\EmailElement;
 use barrelstrength\sproutbase\app\email\base\Mailer;
 use barrelstrength\sproutbase\app\email\elements\NotificationEmail;
-
-use barrelstrength\sproutbase\app\email\models\EmailTemplate;
 use barrelstrength\sproutbase\SproutBase;
-use barrelstrength\sproutbase\app\email\models\Message;
 use barrelstrength\sproutbase\app\email\models\Response;
 use barrelstrength\sproutbase\app\email\records\NotificationEmail as NotificationEmailRecord;
 use craft\base\Component;

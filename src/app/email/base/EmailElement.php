@@ -159,13 +159,13 @@ abstract class EmailElement extends Element
 
         // Allow our email Element to override our settings
         if ($emailTemplateId && class_exists($emailTemplateId)) {
-
             $emailTemplates = new $emailTemplateId();
 
             if (!$emailTemplates instanceof EmailTemplates) {
                 // if a class but does not extend EmailTemplates
                 $isCustom = true;
             }
+
         } else {
             // if emailTemplateId is a string
             $isCustom = true;
