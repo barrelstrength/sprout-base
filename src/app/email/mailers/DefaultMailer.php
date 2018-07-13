@@ -4,7 +4,6 @@ namespace barrelstrength\sproutbase\app\email\mailers;
 
 use barrelstrength\sproutbase\app\email\base\Mailer;
 use barrelstrength\sproutbase\app\email\base\NotificationEmailSenderInterface;
-use barrelstrength\sproutbase\SproutBase;
 use barrelstrength\sproutemail\elements\CampaignEmail;
 use barrelstrength\sproutbase\app\email\elements\NotificationEmail;
 use barrelstrength\sproutemail\models\CampaignType;
@@ -18,6 +17,7 @@ use craft\helpers\Json;
 use craft\helpers\Template;
 use Craft;
 use craft\helpers\UrlHelper;
+use craft\mail\Message;
 use craft\volumes\Local;
 use yii\base\Exception;
 
@@ -80,25 +80,18 @@ class DefaultMailer extends Mailer implements NotificationEmailSenderInterface
     public function sendNotificationEmail(NotificationEmail $notificationEmail, $object = null)
     {
         // Allow disabled emails to be tested
-        if (!$notificationEmail->isReady() && !$notificationEmail->isTest()) {
+        if (!$notificationEmail->isReady()) {
             return false;
         }
 
         $notificationEmail->setEventObject($object);
 
-        $emailTemplates = $notificationEmail->getEmailTemplates();
-
-        $view = Craft::$app->getView();
-        $oldTemplatePath = $view->getTemplatesPath();
-
-        // @todo are we setting the template path here and in the getEmailTemplate method? Do we need both?
-        $view->setTemplatesPath($emailTemplates->getPath());
-
         $mailer = $notificationEmail->getMailer();
-
+        /**
+         * @var $message Message
+         */
         $message = $mailer->getMessage($notificationEmail);
 
-        $view->setTemplatesPath($oldTemplatePath);
 
         $externalPaths = [];
 
@@ -132,7 +125,7 @@ class DefaultMailer extends Mailer implements NotificationEmailSenderInterface
             $infoTable = SproutEmail::$app->sentEmails->createInfoTableModel('sprout-email', [
                 'emailType' => Craft::t('sprout-base', 'Notification'),
                 'mailer' => $this->getName(),
-                'deliveryType' => $notificationEmail->isTest() ? Craft::t('sprout-base', 'Test') : Craft::t('sprout-base', 'Live')
+                'deliveryType' => $notificationEmail->getIsTest() ? Craft::t('sprout-base', 'Test') : Craft::t('sprout-base', 'Live')
             ]);
 
             $variables = [

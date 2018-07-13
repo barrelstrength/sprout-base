@@ -3,17 +3,12 @@
 namespace barrelstrength\sproutbase\app\email\elements;
 
 use barrelstrength\sproutbase\app\email\base\EmailElement;
-
-
 use barrelstrength\sproutbase\app\email\elements\actions\DeleteNotification;
-
 use barrelstrength\sproutbase\SproutBase;
 use barrelstrength\sproutbase\app\email\web\assets\base\NotificationAsset;
 use barrelstrength\sproutbase\app\email\elements\db\NotificationEmailQuery;
 use barrelstrength\sproutbase\app\email\records\NotificationEmail as NotificationEmailRecord;
-
 use Craft;
-use craft\base\ElementInterface;
 use craft\behaviors\FieldLayoutBehavior;
 use craft\elements\db\ElementQueryInterface;
 use craft\helpers\UrlHelper;
@@ -414,11 +409,6 @@ class NotificationEmail extends EmailElement
      * @return bool
      */
     public function isReady()
-    {
-        return (bool)($this->getStatus() == static::ENABLED);
-    }
-
-    public function isTest()
     {
         return (bool)($this->getStatus() == static::ENABLED);
     }

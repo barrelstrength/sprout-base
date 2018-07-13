@@ -7,8 +7,6 @@
 
 namespace barrelstrength\sproutbase\app\email\base;
 
-
-use barrelstrength\sproutbase\app\email\models\EmailTemplate;
 use barrelstrength\sproutbase\app\email\models\SimpleRecipient;
 use barrelstrength\sproutbase\app\email\models\SimpleRecipientList;
 use barrelstrength\sproutemail\elements\CampaignEmail;
@@ -22,7 +20,6 @@ use craft\helpers\UrlHelper;
 use Craft;
 use craft\mail\Message;
 use Egulias\EmailValidator\EmailValidator;
-
 use Egulias\EmailValidator\Validation\MultipleValidationWithAnd;
 use Egulias\EmailValidator\Validation\RFCValidation;
 use yii\base\Model;
@@ -49,7 +46,7 @@ abstract class Mailer
      *
      * @return SimpleRecipient[]
      */
-    public function getOnTheFlyRecipients()
+    public function  getOnTheFlyRecipients()
     {
         return $this->_onTheFlyRecipients;
     }
