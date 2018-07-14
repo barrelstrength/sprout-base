@@ -8,6 +8,7 @@ use barrelstrength\sproutemail\elements\CampaignEmail;
 use barrelstrength\sproutbase\app\email\elements\NotificationEmail;
 use barrelstrength\sproutemail\models\CampaignType;
 use barrelstrength\sproutemail\SproutEmail;
+use barrelstrength\sproutlists\listtypes\SubscriberListType;
 use barrelstrength\sproutlists\SproutLists;
 use craft\base\Element;
 use craft\elements\Asset;
