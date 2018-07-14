@@ -1,18 +1,18 @@
-{% set baseSiteIds = baseSiteIds ?? craft.sproutSeo.getBaseSiteIds() %}
-{% if baseSiteIds|length %}
-    {% if selectedSiteId is not defined %}
-        {% set selectedSiteId = baseSiteIds|first %}
+{% set sites = sites ?? craft.sproutSeo.getSiteIds() %}
+{% if sites|length %}
+    {% if selectedSite is not defined %}
+        {% set selectedSite = sites|first %}
     {% endif %}
 
     <div>
-        <div class="btn menubtn sitemenubtn" data-icon="world">{{ selectedSiteId ? craft.sproutSeo.getBaseSiteById(selectedSiteId).baseUrl }}</div>
+        <div class="btn menubtn sitemenubtn" data-icon="world">{{ selectedSite ? selectedSite.baseUrl }}</div>
         <div class="menu">
             <ul class="padded">
-                {% for baseSite in baseSiteIds %}
+                {% for site in sites %}
                     {% set url = urlFormat is defined ? url(urlFormat|replace({
-                        '{baseSiteId}': baseSite.id
+                        '{siteId}': site.id
                     })) %}
-                    <li><a{% if selectedSiteId and baseSite.id == selectedSiteId %} class="sel"{% endif %} data-site-id="{{ baseSite.id }}"{% if url %} href="{{ url }}"{% endif %}>{{ baseSite.baseUrl }}</a></li>
+                    <li><a{% if selectedSite and site.id == selectedSite.id %} class="sel"{% endif %} data-site-id="{{ site.id }}"{% if url %} href="{{ url }}"{% endif %}>{{ site.baseUrl }}</a></li>
                 {% endfor %}
             </ul>
         </div>
