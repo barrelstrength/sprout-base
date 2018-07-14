@@ -11,12 +11,10 @@
 {% endblock %}
 
 {% block contextMenu %}
-    {% if showSiteMenu %}
         {% include "sprout-base-seo/_layouts/sitemenu" with {
-            selectedSiteId: currentSite.id,
-            urlFormat: "sprout-seo/redirects/{baseSiteId}"
+            selectedSite: currentSite,
+            urlFormat: "sprout-seo/redirects/{siteId}"
         } %}
-    {% endif %}
 {% endblock %}
 
 {% css %}

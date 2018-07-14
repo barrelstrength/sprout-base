@@ -9,13 +9,13 @@
 
 {% set fullPageForm = true %}
 {% set saveShortcutRedirect = continueEditingUrl %}
-{% set selectedItem = currentSite.id %}
+{% set selectedItem = currentSite %}
 
 {% block contextMenu %}
     {% if craft.app.getIsMultiSite() %}
-        {% set urlFormat = redirect.id ? "sprout-seo/redirects/edit/"~ redirect.id ~"/{baseSiteId}" : "sprout-seo/redirects/{baseSiteId}/new" %}
+        {% set urlFormat = redirect.id ? "sprout-seo/redirects/edit/"~ redirect.id ~"/{siteId}" : "sprout-seo/redirects/{siteId}/new" %}
         {% include "sprout-base-seo/_layouts/sitemenu" with {
-            selectedSiteId: currentSite.id,
+            selectedSite: currentSite,
             urlFormat: urlFormat
         } %}
     {% endif %}
@@ -51,7 +51,7 @@
                value="{{ redirect.id }}">
     {% endif %}
 
-    <input type="hidden" name="baseSiteId"
+    <input type="hidden" name="siteId"
            value="{{ currentSite.id }}">
 
     {% include "sprout-base-seo/redirects/_fields" %}
