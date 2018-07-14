@@ -368,19 +368,13 @@ body.rtl .fieldlayoutform.sprout-field .newfieldbtn-container .btn.add {
     text-align: left;
 }
 
-/* Wheel tab
-#icon-wheel {
-    //display: none;
-}
-*/
 #tabs {
     width: 100%;
 }
-ul.sproutTabs {
+ul#sprout-forms-tabs {
     width:100% !important;
     display: flex;
-    overflow-x: auto;
 }
-ul.sproutTabs li {
+ul#sprout-forms-tabs li {
     display: inline-table;
 }
