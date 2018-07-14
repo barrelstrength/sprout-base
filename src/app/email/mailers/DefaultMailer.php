@@ -8,6 +8,7 @@ use barrelstrength\sproutemail\elements\CampaignEmail;
 use barrelstrength\sproutbase\app\email\elements\NotificationEmail;
 use barrelstrength\sproutemail\models\CampaignType;
 use barrelstrength\sproutemail\SproutEmail;
+use barrelstrength\sproutforms\fields\formfields\FileUpload;
 use barrelstrength\sproutlists\listtypes\SubscriberListType;
 use barrelstrength\sproutlists\SproutLists;
 use craft\base\Element;
@@ -93,14 +94,13 @@ class DefaultMailer extends Mailer implements NotificationEmailSenderInterface
          */
         $message = $mailer->getMessage($notificationEmail);
 
-
         $externalPaths = [];
 
         // Adds support for attachments
         if ($notificationEmail->enableFileAttachments) {
             if ($object instanceof Element && method_exists($object, 'getFields')) {
                 foreach ($object->getFields() as $field) {
-                    if (get_class($field) === 'barrelstrength\\sproutforms\\fields\\formfields\\FileUpload' OR get_class($field) === Assets::class) {
+                    if (get_class($field) === FileUpload::class OR get_class($field) === Assets::class) {
                         $query = $object->{$field->handle};
 
                         if ($query instanceof AssetQuery) {
@@ -115,12 +115,20 @@ class DefaultMailer extends Mailer implements NotificationEmailSenderInterface
 
         $recipientList = $mailer->getRecipientList($notificationEmail);
 
+        // @todo - we throw an error if RecipientLIst is empty and then immediately check recipients and do the same... do we need both?
         if (empty($recipientList)) {
             $notificationEmail->addError('recipients', Craft::t('sprout-base', 'No recipients found.'));
         }
 
+        $recipients = $recipientList->getRecipients();
+
+        if (!$recipients) {
+            return false;
+        }
+
         $variables = [];
 
+        // Only track Sent Emails if Sprout Email is installed
         if (Craft::$app->plugins->getPlugin('sprout-email')) {
 
             $infoTable = SproutEmail::$app->sentEmails->createInfoTableModel('sprout-email', [
@@ -129,12 +137,13 @@ class DefaultMailer extends Mailer implements NotificationEmailSenderInterface
                 'deliveryType' => $notificationEmail->getIsTest() ? Craft::t('sprout-base', 'Test') : Craft::t('sprout-base', 'Live')
             ]);
 
+            // @todo - make sure we don't create conflicts here. namespace under a sprout-email-variable
             $variables = [
                 'email' => $notificationEmail,
-                'renderedEmail' => $message,
-                'object' => $object,
-                'recipients' => $recipientList->getRecipients(),
-                'processedRecipients' => null,
+                'renderedEmail' => $message, // @todo - why are we storing the message on the messsage as a variable?
+                'object' => $object, // @todo - we shouldn't need this any longer as the templates have already been rendered
+                'recipients' => $recipients, // @todo - recipients are stored o nthe message model in the To fields
+                'processedRecipients' => null, // @todo - why pass a hard coded null?
                 'info' => $infoTable
             ];
 
@@ -142,53 +151,49 @@ class DefaultMailer extends Mailer implements NotificationEmailSenderInterface
         }
 
         $processedRecipients = [];
-
-        $recipients = $recipientList->getRecipients();
-
         $prepareRecipients = [];
+        $mailer = Craft::$app->getMailer();
 
-        if ($recipients) {
+        if ($notificationEmail->singleEmail) {
             foreach ($recipients as $key => $recipient) {
-
                 if ($recipient->name) {
                     $prepareRecipients[] = [$recipient->email => $recipient->name];
                 } else {
                     $prepareRecipients[] = $recipient->email;
                 }
             }
-            $mailer = Craft::$app->getMailer();
 
-            if ($notificationEmail->singleEmail) {
-                $message->setTo($prepareRecipients);
-                $mailer->send($message);
-            } else {
-                foreach ($recipients as $recipient) {
+            // @todo - we don't track processedRecipients here, do we need to?
+            $message->setTo($prepareRecipients);
+            $mailer->send($message);
+        } else {
+            foreach ($recipients as $recipient) {
 
-                    if ($recipient->name) {
-                        $message->setTo([$recipient->email => $recipient->name]);
+                if ($recipient->name) {
+                    $message->setTo([$recipient->email => $recipient->name]);
+                } else {
+                    $message->setTo($recipient->email);
+                }
+
+                // Skip any emails that we have already processed
+                if (array_key_exists($recipient->email, $processedRecipients)) {
+                    continue;
+                }
+
+                try {
+                    if ($mailer->send($message)) {
+                        $processedRecipients[] = $recipient->email;
                     } else {
-                        $message->setTo($recipient->email);
+                        // @todo - Update this so we fail gracefully
+                        // if an email in the middle of the list doesn't get processed properly
+                        return false;
                     }
-
-                    // Skip any emails that we have already processed
-                    if (array_key_exists($recipient->email, $processedRecipients)) {
-                        continue;
-                    }
-
-                    try {
-                        if ($mailer->send($message)) {
-                            $processedRecipients[] = $recipient->email;
-                        } else {
-                            // @todo - Update this so we fail gracefully
-                            // if an email in the middle of the list doesn't get processed properly
-                            return false;
-                        }
-                    } catch (\Exception $e) {
-                        $notificationEmail->addError('send-failure', $e->getMessage());
-                    }
+                } catch (\Exception $e) {
+                    $notificationEmail->addError('send-failure', $e->getMessage());
                 }
             }
         }
+
         // Trigger on send notification event
         if (!empty($processedRecipients)) {
             $variables['processedRecipients'] = $processedRecipients;

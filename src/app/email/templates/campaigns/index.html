@@ -7,24 +7,25 @@
 
     <div class="buttons">
         <div class="btngroup submit">
-            <div class="btn submit menubtn add icon">{{ "New
-            Email"|t('sprout-email') }}
-            </div>
+
+            {% if campaignTypes|length %}
+
+            <div class="btn submit menubtn add icon">{{ "New Campaign"|t('sprout-email') }}</div>
             <div class="menu">
                 <ul>
-                    {% if campaignTypes|length %}
-                        {% for campaignType in campaignTypes %}
-                            <li>
-                                <a href="{{ url('sprout-email/campaigns/' ~ campaignType.id ~ '/new') }}">{{ campaignType.name|t('sprout-email') }}</a>
-                            </li>
-                        {% endfor %}
-                        <hr>
-                    {% endif %}
-                    <li>
-                        <a href="{{ url('sprout-email/settings/campaigntypes/edit/new') }}">{{ "New Campaign"|t('sprout-email') }}</a>
-                    </li>
+                    {% for campaignType in campaignTypes %}
+                        <li>
+                            <a href="{{ url('sprout-email/campaigns/' ~ campaignType.id ~ '/new') }}">{{ campaignType.name|t('sprout-email') }}</a>
+                        </li>
+                    {% endfor %}
                 </ul>
             </div>
+
+            {% else %}
+
+                <a class="btn submit add icon"  href="{{ url('sprout-email/settings/campaigntypes/edit/new') }}">{{ "New Campaign Type"|t('sprout-email') }}</a>
+
+            {% endif %}
         </div>
     </div>
 {% endblock %}

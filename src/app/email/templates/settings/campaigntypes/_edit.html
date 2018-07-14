@@ -4,7 +4,16 @@
 
 {% set selectedSubnavItem = 'settings' %}
 
-{% set title = "Edit Campaign"|t('sprout-email') %}
+{% if craft.request.getSegment(5) == 'new' %}
+    {% set title = "New Campaign Type"|t('sprout-email') %}
+{% else %}
+    {% set title = "Edit Campaign Type"|t('sprout-email') %}
+{% endif %}
+
+{% set crumbs = [
+    { label: "Settings"|t('sprout-email'), url: url('sprout-email/settings/general') },
+    { label: "Campaigns"|t('sprout-email'), url: url('sprout-email/settings/campaigntypes') }
+] %}
 
 {% set fullPageForm = true %}
 
@@ -27,10 +36,10 @@
     {% if mailers %}
 
         {{ forms.textField({
-            label: "Campaign Name"|t('sprout-email'),
+            label: "Campaign Type Name"|t('sprout-email'),
             id: 'name',
             name: 'sproutEmail[name]',
-            instructions: "Human readable name for this type of email"|t('sprout-email'),
+            instructions: "Human readable name for this Campaign Type"|t('sprout-email'),
             value: (campaignType is defined ? campaignType.name : null),
             autofocus: true,
             required: true,
@@ -39,18 +48,18 @@
         }) }}
 
         {{ forms.textField({
-            label: "Campaign Handle"|t('sprout-email'),
+            label: "Campaign Type Handle"|t('sprout-email'),
             id: 'handle',
             name: 'sproutEmail[handle]',
-            instructions: "How you'll refer to this section in the templates."|t('sprout-email'),
+            instructions: "How you'll refer to this Campaign Type in the templates."|t('sprout-email'),
             value: (campaignType is defined ? campaignType.handle : null),
             required: true,
             errors: (campaignType is defined ? campaignType.getErrors('handle') : null)
         }) }}
 
         {{ forms.selectField({
-            label: "How you would like to send this email"|t('sprout-email'),
-            instructions: '',
+            label: "Mailer"|t('sprout-email'),
+            instructions: 'How you would like to send this email. Add a new Mailer via the Plugin Store or create your own.',
             id: 'mailer',
             name: 'sproutEmail[mailer]',
             required: true,
@@ -58,13 +67,12 @@
             value: (campaignType is defined ? campaignType.mailer : null),
             errors: (campaignType is defined ? campaignType.getErrors('mailer') : null)
         }) }}
-Select the Mailer you will use to send Email Campaigns.
-<a href="{{ url('sprout-email/settings/mailers') }}">{{ "Edit Mailer settings"|t('sprout-base') }}</a>
 
         {% set templateOptions = craft.sproutEmail.getEmailTemplateOptions(campaignType) %}
 
         {{ forms.field({
-            label: "Templates <span class='info'>The Email Templates to display your email.</span>"|t('sprout-base'),
+            label: "Email Templates"|t('sprout-base'),
+            instructions: "The Email Templates that will be used to display your email."|t('sprout-base'),
             errors: campaignType is defined ? campaignType.getErrors('emailTemplateId') : null,
             }, sproutFields.selectOther({
             name: 'sproutEmail[emailTemplateId]',
@@ -123,8 +131,7 @@ Select the Mailer you will use to send Email Campaigns.
 
             {{ forms.textField({
                 label: 'Subject Format'|t('sprout-email'),
-                instructions: 'What the auto-generated email Subject should look like. You
-    can include tags that output email properties, such as {code}.'|t({ code:
+                instructions: 'What the auto-generated email Subject should look like. You can include tags that output email properties, such as {code}.'|t({ code:
                     '<code>{myCustomField}</code>' }),
                 id: 'titleFormat',
                 name: 'sproutEmail[titleFormat]',
