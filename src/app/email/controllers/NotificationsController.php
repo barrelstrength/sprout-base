@@ -150,11 +150,21 @@ class NotificationsController extends Controller
 
         $lists = [];
 
+        $tabs = [
+            [
+                'label' => 'Message',
+                'url' => '#tab1',
+                'class' => null,
+            ]
+        ];
+
+        $tabs = count($notificationEmail->getFieldLayoutTabs()) ? $notificationEmail->getFieldLayoutTabs() : $tabs;
+
         return $this->renderTemplate('sprout-base-email/notifications/_edit', [
             'notificationEmail' => $notificationEmail,
             'events' => $events,
             'lists' => $lists,
-            'tabs' => $notificationEmail->getFieldLayoutTabs(),
+            'tabs' => $tabs,
             'showPreviewBtn' => $showPreviewBtn,
             'shareUrl' => $shareUrl
         ]);
