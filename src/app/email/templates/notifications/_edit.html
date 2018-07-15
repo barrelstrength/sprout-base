@@ -296,12 +296,6 @@
 {% do view.registerAssetBundle("craft\\web\\assets\\fields\\FieldsAsset") %}
 {% do view.registerAssetBundle("barrelstrength\\sproutbase\\app\\email\\web\\assets\\base\\NotificationAsset") %}
 
-{% css %}
-    .sprout-meta-heading h6 {
-    color:#333;
-    }
-{% endcss %}
-
 {% if not notificationEmail.slug %}
     {% includeJs "window.slugGenerator = new Craft.SlugGenerator('#subjectLine', '#slug');" %}
 {% endif %}

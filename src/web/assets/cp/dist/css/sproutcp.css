@@ -70,3 +70,7 @@
 #main-container #main #main-content #details .meta.read-only.sprout-meta-heading:first-child {
     margin-top: 14px;
 }
+
+.sprout-meta-heading h6 {
+    color:#333;
+}
