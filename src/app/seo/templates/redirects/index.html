@@ -6,15 +6,8 @@
 {% block actionButton %}
     <div class="buttons">
         <a class="btn submit add icon"
-           href="{{ url('sprout-seo/redirects/' ~ currentSite.id ~ '/new') }}">{{ "New Redirect"|t }}</a>
+           href="{{ url('sprout-seo/redirects/new/' ~ currentSite.handle) }}">{{ "New Redirect"|t }}</a>
     </div>
-{% endblock %}
-
-{% block contextMenu %}
-        {% include "sprout-base-seo/_layouts/sitemenu" with {
-            selectedSite: currentSite,
-            urlFormat: "sprout-seo/redirects/{siteId}"
-        } %}
 {% endblock %}
 
 {% css %}
