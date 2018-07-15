@@ -3,14 +3,14 @@
 {% import 'sprout-base/_includes/sproutcp' as sprout %}
 
 {% set sectionLayout = craft.app.request.getSegment(2) %}
-
 {% set pluginSettings = craft.sproutSeo.getSettings() %}
+{% set siteGroup = craft.app.sites.getGroupById(firstSiteInGroup.groupId) %}
 
 {% block content %}
     <input type="hidden" name="siteId" value="{{ currentSite.id }}">
 
     <div class="sproutseo-section-header"
-         style="display: flex;align-items: center;">
+         style="display: flex;align-items: center;{% if enableMultilingualSitemaps and currentSite.id != firstSiteInGroup.id %}padding:18px 24px 17px;{% endif %}">
         <div style="flex-grow: 1;">
             <h3 style="text-transform: uppercase;">{{ "Sections"|t }}
                 <span class="info">{{ "Manage all of your Section-level SEO for Search, Social Sharing, Sitemaps, and Structured Data."|t }}</span>
@@ -20,13 +20,14 @@
             {% if enableMultilingualSitemaps and currentSite.id != firstSiteInGroup.id %}
                 <div class="buttons right">
                     <a class="btn submit icon"
-                       href="{{ url('sprout-seo/sitemaps/') ~ '/' ~ firstSiteInGroup.handle }}">{{ "Edit Sitemap"|t }}</a>
+                       href="{{ url('sprout-seo/sitemaps') ~ '/' ~ firstSiteInGroup.handle }}">{{ "Edit {group} Sitemap"|t('sprout-base', {
+                            group: siteGroup.name
+                        }) }}</a>
                 </div>
             {% endif %}
         </div>
     </div>
 
-    {# @todo - only display the settings for the first site. #}
     {% if not enableMultilingualSitemaps or (enableMultilingualSitemaps and currentSite.id == firstSiteInGroup.id) %}
 
         {% for urlEnabledSectionTypeKey, urlEnabledSectionType in urlEnabledSectionTypes %}
@@ -79,11 +80,16 @@
 
     {% else %}
         {% set boxBody %}
-            <p>{{ "Multi-lingual sitemaps have a single set of settings for all sites in a group. You can edit those on the paimary site page."|t('sprout-base')|raw }}</p>
+            <p>{{ "Multi-lingual sitemaps have a single sitemap edit page for all URL-Enabled Sites in a Site Group. Edit the <a href='{url}'>{group} Sitemap</a> to manage the multi-lingual sitemap for all sites in the site group."|t('sprout-base', {
+                    group: siteGroup.name,
+                    url: url('sprout-seo/sitemaps') ~ '/' ~ firstSiteInGroup.handle
+                })|raw }}</p>
         {% endset %}
 
         {{ sprout.mediaBox({
-            heading: "Multi-lingual Sitemaps"|t('sprout-seo'),
+            heading: "{group} Multi-lingual Sitemap"|t('sprout-base', {
+                group: siteGroup.name
+            }),
             body: boxBody,
             resourcePath: '@barrelstrength/sproutseo/icon.svg'
         }) }}
@@ -99,13 +105,12 @@
             <div style="flex-shrink: 0;">
                 <div class="buttons right">
                     <a class="btn submit add icon"
-                       href="{{ url('sprout-seo/sitemaps/' ~ currentSite.handle ~ '/new') }}">{{ "Custom URL"|t }}</a>
+                       href="{{ url('sprout-seo/sitemaps/new/' ~ currentSite.handle) }}">{{ "Custom URL"|t }}</a>
                 </div>
             </div>
         </div>
 
-        <table class="data fullwidth custom-pages sitemap-settings"
-               id="custom-pages">
+        <table class="data fullwidth custom-pages sitemap-settings" id="custom-pages">
             <thead>
 
             {% block customSectionTableRowHead %}{% endblock %}
@@ -121,7 +126,8 @@
 
                     <tr data-rowid="{{ customSectionId }}"
                         data-id="{{ customSection.id }}"
-                        data-type="{{ customSection.type }}">
+                        data-type="{{ customSection.type }}"
+                        data-name="{{ "Custom Page"|t('sprout-base') }}">
 
                         {% block customSectionTableRow %}{% endblock %}
 
@@ -132,7 +138,7 @@
             {% else %}
 
                 {% set boxBody %}
-                    <p>{{ "Add your first Custom Page."|t('sprout-seo')|raw }}</p>
+                    <p>{{ "Add a Custom URL for any page that doesn't exist in a URL-Enabled Section."|t('sprout-seo')|raw }}</p>
                 {% endset %}
 
                 {{ sprout.mediaBox({
@@ -158,14 +164,13 @@
     new Craft.SproutSeo.Sitemaps();
 
     new Craft.AdminTable({
-    tableSelector: '#custom-pages',
-    deleteAction: 'sprout-seo/sitemaps/delete-sitemap-by-id',
-    onDeleteObject: function(id)
-    {
-    if($('#custom-pages').find('tbody').find('tr').size() == 0)
-    {
-    $('#custom-pages').hide();
-    }
-    }
+        tableSelector: '#custom-pages',
+        deleteAction: 'sprout-seo/sitemaps/delete-sitemap-by-id',
+        onDeleteObject: function(id) {
+            if($('#custom-pages').find('tbody').find('tr').size() == 0)
+            {
+                $('#custom-pages').hide();
+            }
+        }
     });
 {% endjs %}

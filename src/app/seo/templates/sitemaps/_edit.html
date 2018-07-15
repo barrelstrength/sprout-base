@@ -59,80 +59,84 @@
 {% block content %}
 
     {{ forms.textField({
-        label: "URI"|t,
+        label: "URI"|t('sprout-base'),
+        instructions: "The relative path of the Custom Page. The Base URL will be appended for you."|t('sprout-base'),
         id: "uri",
         required: true,
         name: 'uri',
         value: (sitemapSection.uri == '__home__') ? "/" : sitemapSection.uri,
         errors: sitemapSection.getErrors('uri')
     }) }}
+
+    {% set priorityList = {
+        '1.0': '1.0 ↑ Highest'|t,
+        '0.9': '0.9',
+        '0.8': '0.8',
+        '0.7': '0.7',
+        '0.6': '0.6',
+        '0.5': '0.5',
+        '0.4': '0.4',
+        '0.3': '0.3',
+        '0.2': '0.2',
+        '0.1': '0.1',
+        '0.0': '0.0 ↓ Lowest'|t
+    } %}
+
+    {% set frequencyList = {
+        'always': 'Always'|t,
+        'hourly': 'Hourly'|t,
+        'daily': 'Daily'|t,
+        'weekly': 'Weekly'|t,
+        'monthly': 'Monthly'|t,
+        'yearly': 'Yearly'|t,
+        'never': 'Never'|t
+    } %}
+
+    {{ forms.selectField({
+        label: "Priority"|t,
+        name: 'priority',
+        options: priorityList,
+        value: (sitemapSection.priority ? sitemapSection.priority : 0.5),
+        errors: "",
+        required: false
+    }) }}
+
+    {{ forms.selectField({
+        label: "Change Frequency"|t,
+        name: 'changeFrequency',
+        options: frequencyList,
+        value: (sitemapSection.changeFrequency ? sitemapSection.changeFrequency : 'weekly'),
+        errors: "",
+        required: false
+    }) }}
+
+
 {% endblock %}
 
 {% block details %}
 
-    <div class="meta" id="settings">
-
-        <div class="field">
-            <div class="heading">
-                <label>{{ "Section"|t }}</label>
-            </div>
-            <div class="input">
-                <h6>{{ "Custom Page"|t }}</h6>
-            </div>
-        </div>
-
+    <div class="meta">
         {{ forms.lightswitchField({
             label: "Enable"|t,
             id: 'enabled',
             name: 'enabled',
             on:  (sitemapSection.enabled is defined ? sitemapSection.enabled : false)
         }) }}
-
-        <hr>
-
-        {% set priorityList = {
-            '1.0': '1.0 ↑ Highest'|t,
-            '0.9': '0.9',
-            '0.8': '0.8',
-            '0.7': '0.7',
-            '0.6': '0.6',
-            '0.5': '0.5',
-            '0.4': '0.4',
-            '0.3': '0.3',
-            '0.2': '0.2',
-            '0.1': '0.1',
-            '0.0': '0.0 ↓ Lowest'|t
-        } %}
-
-        {% set frequencyList = {
-            'always': 'Always'|t,
-            'hourly': 'Hourly'|t,
-            'daily': 'Daily'|t,
-            'weekly': 'Weekly'|t,
-            'monthly': 'Monthly'|t,
-            'yearly': 'Yearly'|t,
-            'never': 'Never'|t
-        } %}
-
-        {{ forms.selectField({
-            label: "Priority"|t,
-            name: 'priority',
-            options: priorityList,
-            value: (sitemapSection.priority ? sitemapSection.priority : 0.5),
-            errors: "",
-            required: false
-        }) }}
-
-        {{ forms.selectField({
-            label: "Change Frequency"|t,
-            name: 'changeFrequency',
-            options: frequencyList,
-            value: (sitemapSection.changeFrequency ? sitemapSection.changeFrequency : 'weekly'),
-            errors: "",
-            required: false
-        }) }}
-
     </div>
+
+    <hr>
+
+    <div class="meta read-only">
+        <div class="data">
+            <div class="heading">{{ "Site"|t('sprout-base') }}</div>
+            <div class="value">{{ currentSite.name }}</div>
+        </div>
+        <div class="data">
+            <div class="heading">{{ "Base URL"|t('sprout-base') }}</div>
+            <div class="value">{{ currentSite.baseUrl }}</div>
+        </div>
+    </div>
+
 {% endblock %}
 
 {% do view.registerAssetBundle("barrelstrength\\sproutbase\\app\\seo\\web\\assets\\sitemaps\\SitemapsAsset") %}

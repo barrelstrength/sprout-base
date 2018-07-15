@@ -14,7 +14,7 @@
 
 {% if craft.app.isMultiSite %}
     {{ forms.lightswitchField({
-        label: "Enable multi-lingual sitemap"|t('sprout-seo'),
+        label: "Enable multi-lingual sitemaps"|t('sprout-seo'),
         instructions: "Generate a single, multilingual sitemap.xml file for each Site Group. By default, a sitemap.xml is generated for every Site on your Craft website. If you are managing content in multiple languages, enable this setting to generate a single, multi-lingual sitemap.xml for all Sites in each Site Group. The sitemap.xml be created for the primary domain or the first domain that appears in the list of a specific Site Group."|t,
         name: 'enableMultilingualSitemaps',
         on: settings.enableMultilingualSitemaps,
@@ -110,12 +110,11 @@
 {% endif %}
 
 {{ forms.lightswitchField({
-    label: "Enable Custom Sitemap Pages"|t,
-    instructions: "Enable this setting to add Pages to your Sitemaps with Custom URL requirements."|t,
+    label: "Enable Custom Pages"|t,
+    instructions: "Add a section on the Sitemaps tab to manage Custom Pages that exist outside of any URL-Enabled Sections."|t,
     name: 'enableCustomSections',
     on: (settings.enableCustomSections is empty ? false : true),
     onLabel: "Enable"|t
 }) }}
-
 
 {% do view.registerAssetBundle("barrelstrength\\sproutbase\\app\\seo\\web\\assets\\general\\GeneralAsset") %}
