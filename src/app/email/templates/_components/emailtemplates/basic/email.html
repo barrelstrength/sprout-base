@@ -7,7 +7,9 @@
 
 <h1>{{ email.subjectLine }}</h1>
 
-<p>{{ email.defaultBody }}</p>
+{% if email.defaultBody|length %}
+    <p>{{ email.defaultBody }}</p>
+{% endif %}
 
 </body>
 </html>
