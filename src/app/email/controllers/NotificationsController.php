@@ -84,7 +84,7 @@ class NotificationsController extends Controller
         $currentPluginHandle = Craft::$app->request->getSegment(1);
 
         // Immediately create a new Notification
-        if (Craft::$app->request->getSegment(4) == 'new') {
+        if ($emailId === 'new') {
             $notificationEmail = SproutBase::$app->notifications->createNewNotification();
 
             if ($notificationEmail) {
