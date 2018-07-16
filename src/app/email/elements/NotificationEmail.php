@@ -21,13 +21,6 @@ use yii\base\Exception;
  */
 class NotificationEmail extends EmailElement
 {
-    // Constants
-    // =========================================================================
-
-    const ENABLED = 'enabled';
-    const PENDING = 'pending';
-    const DISABLED = 'disabled';
-
     /**
      * The Email Notification Field Layout ID
      *
@@ -78,11 +71,6 @@ class NotificationEmail extends EmailElement
      * @var string
      */
     public $defaultBody;
-
-    /**
-     * @var boolean
-     */
-    public $singleEmail;
 
     /**
      * @inheritdoc
@@ -401,16 +389,6 @@ class NotificationEmail extends EmailElement
     public function getOptions()
     {
         return json_decode($this->settings, true);
-    }
-
-    /**
-     * Confirm that an email is enabled.
-     *
-     * @return bool
-     */
-    public function isReady()
-    {
-        return (bool)($this->getStatus() == static::ENABLED);
     }
 
     /**

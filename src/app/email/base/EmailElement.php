@@ -11,6 +11,12 @@ use Craft;
 
 abstract class EmailElement extends Element
 {
+    // Constants
+    // =========================================================================
+
+    const ENABLED = 'enabled';
+    const PENDING = 'pending';
+    const DISABLED = 'disabled';
     /**
      * The Subject Line of your email. Your title will also default to the Subject Line unless you set a Title Format.
      *
@@ -73,6 +79,11 @@ abstract class EmailElement extends Element
      * @var object|null
      */
     private $_eventObject = null;
+
+    /**
+     * @var boolean
+     */
+    public $singleEmail;
 
     /**
      * Returns whether this should be treated as a Test Email
@@ -229,5 +240,15 @@ abstract class EmailElement extends Element
         }
 
         return $tabs;
+    }
+
+    /**
+     * Confirm that an email is enabled.
+     *
+     * @return bool
+     */
+    public function isReady()
+    {
+        return (bool)($this->getStatus() == static::ENABLED);
     }
 }

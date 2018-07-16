@@ -2,6 +2,7 @@
 
 namespace barrelstrength\sproutbase\app\email\mailers;
 
+use barrelstrength\sproutbase\app\email\base\EmailElement;
 use barrelstrength\sproutbase\app\email\base\Mailer;
 use barrelstrength\sproutbase\app\email\base\NotificationEmailSenderInterface;
 use barrelstrength\sproutemail\elements\CampaignEmail;
@@ -79,13 +80,8 @@ class DefaultMailer extends Mailer implements NotificationEmailSenderInterface
      * @throws \Twig_Error_Loader
      * @throws \yii\base\InvalidConfigException
      */
-    public function sendNotificationEmail(NotificationEmail $notificationEmail, $object = null)
+    public function sendNotificationEmail(EmailElement $notificationEmail, $object = null)
     {
-        // Allow disabled emails to be tested
-        if (!$notificationEmail->isReady()) {
-            return false;
-        }
-
         $notificationEmail->setEventObject($object);
 
         $mailer = $notificationEmail->getMailer();
@@ -126,24 +122,16 @@ class DefaultMailer extends Mailer implements NotificationEmailSenderInterface
             return false;
         }
 
-        $variables = [];
-
         // Only track Sent Emails if Sprout Email is installed
         if (Craft::$app->plugins->getPlugin('sprout-email')) {
 
             $infoTable = SproutEmail::$app->sentEmails->createInfoTableModel('sprout-email', [
-                'emailType' => Craft::t('sprout-base', 'Notification'),
+                'emailType' => $notificationEmail->displayName(),
                 'mailer' => $this->getName(),
                 'deliveryType' => $notificationEmail->getIsTest() ? Craft::t('sprout-base', 'Test') : Craft::t('sprout-base', 'Live')
             ]);
 
-            // @todo - make sure we don't create conflicts here. namespace under a sprout-email-variable
             $variables = [
-                'email' => $notificationEmail,
-                'renderedEmail' => $message, // @todo - why are we storing the message on the messsage as a variable?
-                'object' => $object, // @todo - we shouldn't need this any longer as the templates have already been rendered
-                'recipients' => $recipients, // @todo - recipients are stored o nthe message model in the To fields
-                'processedRecipients' => null, // @todo - why pass a hard coded null?
                 'info' => $infoTable
             ];
 
@@ -184,19 +172,13 @@ class DefaultMailer extends Mailer implements NotificationEmailSenderInterface
                     if ($mailer->send($message)) {
                         $processedRecipients[] = $recipient->email;
                     } else {
-                        // @todo - Update this so we fail gracefully
-                        // if an email in the middle of the list doesn't get processed properly
-                        return false;
+                        //  If it fails proceed to next email
+                        continue;
                     }
                 } catch (\Exception $e) {
                     $notificationEmail->addError('send-failure', $e->getMessage());
                 }
             }
-        }
-
-        // Trigger on send notification event
-        if (!empty($processedRecipients)) {
-            $variables['processedRecipients'] = $processedRecipients;
         }
 
         $this->deleteExternalPaths($externalPaths);
