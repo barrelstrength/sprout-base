@@ -84,7 +84,7 @@ class NotificationsController extends Controller
         $currentPluginHandle = Craft::$app->request->getSegment(1);
 
         // Immediately create a new Notification
-        if (Craft::$app->request->getSegment(4) == 'new') {
+        if ($emailId === 'new') {
             $notificationEmail = SproutBase::$app->notifications->createNewNotification();
 
             if ($notificationEmail) {
@@ -150,11 +150,21 @@ class NotificationsController extends Controller
 
         $lists = [];
 
+        $tabs = [
+            [
+                'label' => 'Message',
+                'url' => '#tab1',
+                'class' => null,
+            ]
+        ];
+
+        $tabs = count($notificationEmail->getFieldLayoutTabs()) ? $notificationEmail->getFieldLayoutTabs() : $tabs;
+
         return $this->renderTemplate('sprout-base-email/notifications/_edit', [
             'notificationEmail' => $notificationEmail,
             'events' => $events,
             'lists' => $lists,
-            'tabs' => $notificationEmail->getFieldLayoutTabs(),
+            'tabs' => $tabs,
             'showPreviewBtn' => $showPreviewBtn,
             'shareUrl' => $shareUrl
         ]);

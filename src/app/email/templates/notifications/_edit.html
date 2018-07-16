@@ -145,26 +145,6 @@
     <hr>
     <div class="meta">
 
-        {{ forms.textField({
-            label: "Recipients <span class='info'>A comma separated list of email addresses.</span>"|t('sprout-base'),
-            placeholder: "user@domain.com, other@domain.com"|t('sprout-base'),
-            name: "recipients",
-            fieldClass: 'field-border-top',
-            class: "code",
-            value: notificationEmail is defined ? notificationEmail.recipients : "",
-            errors: notificationEmail is defined ? notificationEmail.getErrors('recipients')
-        }) }}
-
-        {{ forms.lightswitchField({
-            first: true,
-            label: "Single Email<span class='info'>Send email recipients in one email.</span>"|t('sprout-base'),
-            id: 'singleEmail',
-            name: 'singleEmail',
-            on: notificationEmail.singleEmail,
-            onLabel: "Enable"|t('sprout-base'),
-            offLabel: "Disable"|t('sprout-base')
-        }) }}
-
         {% if (mailer is not null and mailer.getLists()|length) %}
             <div class="field mailing-lists">
                 <div class="heading">
@@ -177,6 +157,26 @@
                 </div>
             </div>
         {% endif %}
+
+        {{ forms.textField({
+            label: "Recipients <span class='info'>A comma separated list of email addresses.</span>"|t('sprout-base'),
+            placeholder: "user@domain.com, other@domain.com"|t('sprout-base'),
+            name: "recipients",
+            fieldClass: 'field-border-top',
+            class: "code",
+            value: notificationEmail is defined ? notificationEmail.recipients : "",
+            errors: notificationEmail is defined ? notificationEmail.getErrors('recipients')
+        }) }}
+
+        {{ forms.lightswitchField({
+            first: true,
+            label: "Single Email <span class='info'>Send a single message to all Recipients (and Recipients on selected Lists) just like it would be sent if you used your mail client.</span>"|t('sprout-base'),
+            id: 'singleEmail',
+            name: 'singleEmail',
+            on: notificationEmail.singleEmail,
+            onLabel: "Enable"|t('sprout-base'),
+            offLabel: "Disable"|t('sprout-base')
+        }) }}
 
     </div>
 
@@ -292,14 +292,9 @@
 
 {% endblock %}
 
+{% do view.registerAssetBundle("barrelstrength\\sproutbase\\web\\assets\\cp\\CpAsset") %}
 {% do view.registerAssetBundle("craft\\web\\assets\\fields\\FieldsAsset") %}
 {% do view.registerAssetBundle("barrelstrength\\sproutbase\\app\\email\\web\\assets\\base\\NotificationAsset") %}
-
-{% css %}
-    .sprout-meta-heading h6 {
-    color:#333;
-    }
-{% endcss %}
 
 {% if not notificationEmail.slug %}
     {% includeJs "window.slugGenerator = new Craft.SlugGenerator('#subjectLine', '#slug');" %}

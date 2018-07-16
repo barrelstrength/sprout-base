@@ -1,1 +1,30 @@
-{% redirect 'sprout-email/notifications' %}
+{% import "_includes/forms" as forms %}
+{% import "sprout-base-fields/_includes/forms" as sproutFields %}
+
+{% block content %}
+
+    {% set templateOptions = craft.sproutEmail.getEmailTemplateOptions() %}
+
+    {{ forms.field({
+        label: "Default Email Templates"|t('sprout-email'),
+        required: true,
+        errors: (settings is defined ? settings.getErrors('emailTemplateId') :
+        null),
+        instructions: "The templates that will be used to display your Notification Emails. Add additional Email Templates via the Email Templates API or providing a custom path to your email templates folder."|t('sprout-email'),
+    }, sproutFields.selectOther({
+        name: 'emailTemplateId',
+        options: templateOptions,
+        value: settings.emailTemplateId ?? null,
+        otherPlaceholderText: '_email/email-templates-folder'|t('sprout-email')
+    })) }}
+
+    {{ forms.lightswitchField({
+        label: "Enable custom Email Templates on a per-email basis"|t('sprout-email'),
+        instructions: "Allow admins to (optionally) choose custom Email Templates for each email created. Enabling this setting will display the Email Template dropdown field for every Notification Email Element."|t('sprout-email'),
+        id: 'enablePerEmailEmailTemplateIdOverride',
+        name: 'enablePerEmailEmailTemplateIdOverride',
+        on: settings.enablePerEmailEmailTemplateIdOverride,
+        onLabel: "Enable"|t('sprout-email'),
+    }) }}
+
+{% endblock %}

@@ -109,16 +109,6 @@
 <hr>
 
 {{ forms.lightswitchField({
-    label: "Enable Canonical URL field"|t,
-    instructions: "Allow users to override the Canonical URL at Element Metadata field level"|t,
-    id: 'editCanonical',
-    name: 'editCanonical',
-    on: settings.editCanonical,
-}) }}
-
-<hr>
-
-{{ forms.lightswitchField({
     label: "Enable Meta Details fields"|t,
     instructions: "Meta Details fields add one more level of fine-tuning over your metadata. With Meta Details fields enabled, content editors will have additional control to customize Search, Open Graph, Twitter Card, Geo, and Robots metadata. Note: enabling Meta Details fields may require additional time for content planning and monitoring in your SEO strategy."|t,
     name: 'enableMetaDetailsFields',
@@ -214,6 +204,16 @@
     }, advancedInput) }}
 
 </div> {# End meta details div #}
+
+<hr>
+
+{{ forms.lightswitchField({
+    label: "Enable Canonical URL field"|t,
+    instructions: "Allow users to override the Canonical URL at Element Metadata field level"|t,
+    id: 'editCanonical',
+    name: 'editCanonical',
+    on: settings.editCanonical,
+}) }}
 
 {% js %}
     var items = {{ schemaSubtypes|json_encode|raw }};

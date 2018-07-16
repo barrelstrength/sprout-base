@@ -7,7 +7,7 @@
     {% endif %}
 
     {% if isCustom is defined and isCustom %}
-        <a href="{{ cpUrl('sprout-seo/sitemaps/' ~ sitemapSection.getSite().handle ~ '/edit/' ~ sitemapSection.id) }}"
+        <a href="{{ cpUrl('sprout-seo/sitemaps/edit/' ~ sitemapSection.id ~ '/' ~ sitemapSection.getSite().handle) }}"
            class="sproutseo-sectiontitle">
            <code>{{ sitemapSection.uri }}</code>
         </a>
