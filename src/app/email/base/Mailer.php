@@ -12,6 +12,7 @@ use barrelstrength\sproutbase\app\email\models\SimpleRecipientList;
 use barrelstrength\sproutemail\elements\CampaignEmail;
 use barrelstrength\sproutemail\models\CampaignType;
 use barrelstrength\sproutlists\elements\Lists;
+use barrelstrength\sproutlists\records\Lists as ListsRecord;
 use barrelstrength\sproutlists\elements\Subscribers;
 use craft\base\Element;
 use craft\helpers\Html;
@@ -306,6 +307,11 @@ abstract class Mailer
         return $email;
     }
 
+    public function sendCampaignEmail(CampaignEmail $campaignEmail, CampaignType $campaignType)
+    {
+        return null;
+    }
+
     /**
      * @param $campaignEmail
      *
@@ -357,29 +363,34 @@ abstract class Mailer
             return $recipientList;
         }
 
-        // Recipients are added as a comma-delimited list. While not on a formal list,
-        // they are considered permanent and will be included alongside any more formal lists
-        // Recipients can be dynamic values if matched to a value in the Event Object
-        $recipients = Craft::$app->getView()->renderObjectTemplate($email->recipients, $email->getEventObject());
-        $recipientArray = explode(',', $recipients);
+        if (!empty($email->recipients)) {
+            // Recipients are added as a comma-delimited list. While not on a formal list,
+            // they are considered permanent and will be included alongside any more formal lists
+            // Recipients can be dynamic values if matched to a value in the Event Object
+            $recipients = Craft::$app->getView()->renderObjectTemplate($email->recipients, $email->getEventObject());
 
-        foreach ($recipientArray as $recipient) {
-            $recipientModel = new SimpleRecipient();
-            $recipientModel->email = trim($recipient);
+            $recipientArray = explode(',', $recipients);
 
-            if ($validator->isValid($recipientModel->email, $multipleValidations)) {
-                $recipientList->addRecipient($recipientModel);
-            } else {
-                $recipientList->addInvalidRecipient($recipientModel);
+            foreach ($recipientArray as $recipient) {
+                $recipientModel = new SimpleRecipient();
+                $recipientModel->email = trim($recipient);
+
+                if ($validator->isValid($recipientModel->email, $multipleValidations)) {
+                    $recipientList->addRecipient($recipientModel);
+                } else {
+                    $recipientList->addInvalidRecipient($recipientModel);
+                }
             }
         }
 
         // @todo - test this integration
         if (Craft::$app->getPlugins()->getPlugin('sprout-lists')) {
+
             $listRecipients = $this->getRecipientsFromSelectedLists($email->listSettings);
 
             if (count($listRecipients)) {
                 foreach ($listRecipients as $listRecipient) {
+
                     if ($validator->isValid($listRecipient->email, $multipleValidations)) {
                         $recipientList->addRecipient($listRecipient);
                     } else {
@@ -387,6 +398,7 @@ abstract class Mailer
                     }
                 }
             }
+
         }
 
         return $recipientList;
@@ -406,11 +418,12 @@ abstract class Mailer
         }
 
         // Get all subscribers by list IDs from the Subscriber ListType
-        $listRecords = Lists::find()
+        $listRecords = ListsRecord::find()
             ->where([
                 'id' => $listIds
             ])
             ->all();
+
 
         $sproutListsRecipientsInfo = [];
         if ($listRecords != null) {
@@ -431,7 +444,12 @@ abstract class Mailer
         if ($sproutListsRecipientsInfo) {
             foreach ($sproutListsRecipientsInfo as $listRecipient) {
                 $recipientModel = new SimpleRecipient();
-                $recipientModel->name = $listRecipient['name'] ?? null;
+
+                $firstName = $listRecipient['firstName'] ?? '';
+                $lastName  = $listRecipient['lastName'] ?? '';
+                $name = $firstName . ' ' . $lastName;
+
+                $recipientModel->name = trim($name) ?? null;
                 $recipientModel->email = $listRecipient['email'] ?? null;
 
                 $listRecipients[] = $recipientModel;

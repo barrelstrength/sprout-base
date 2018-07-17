@@ -143,17 +143,17 @@ class DefaultMailer extends Mailer implements NotificationEmailSenderInterface
         $mailer = Craft::$app->getMailer();
 
         if ($notificationEmail->singleEmail) {
+             /*
+              * Assigning email with name array does not work on carft
+              * [$recipient->email => $recipient->name]
+              */
             foreach ($recipients as $key => $recipient) {
-                if ($recipient->name) {
-                    $prepareRecipients[] = [$recipient->email => $recipient->name];
-                } else {
-                    $prepareRecipients[] = $recipient->email;
-                }
+              $prepareRecipients[] = $recipient->email;
             }
-
-            // @todo - we don't track processedRecipients here, do we need to?
             $message->setTo($prepareRecipients);
+
             $mailer->send($message);
+
         } else {
             foreach ($recipients as $recipient) {
 
