@@ -81,6 +81,13 @@ abstract class EmailElement extends Element
     private $_eventObject = null;
 
     /**
+     * The Email Templates model after $templateId is processed
+     *
+     * @var EmailTemplates|null
+     */
+    private $_emailTemplates = null;
+
+    /**
      * @var boolean
      */
     public $singleEmail;
@@ -133,11 +140,29 @@ abstract class EmailElement extends Element
     abstract public function getEmailTemplateId();
 
     /**
-     * @return BasicTemplates|CustomTemplates
+     * @param EmailTemplates $emailTemplates
+     */
+    public function setEmailTemplates($emailTemplates)
+    {
+        $this->_emailTemplates = $emailTemplates;
+    }
+
+    /**
+     * @return EmailTemplates|BasicTemplates|CustomTemplates|null
      * @throws \yii\base\Exception
      */
     public function getEmailTemplates()
     {
+        // If we've already figured out which EmailTemplates to use, use them
+        if ($this->_emailTemplates !== null) {
+
+            // Make sure we have the latest EmailElement
+            $emailTemplates = $this->_emailTemplates;
+            $emailTemplates->email = $this;
+
+            return $emailTemplates;
+        }
+
         // Set our default
         $emailTemplates = new BasicTemplates();
 
@@ -176,7 +201,6 @@ abstract class EmailElement extends Element
                 // if a class but does not extend EmailTemplates
                 $isCustom = true;
             }
-
         } else {
             // if emailTemplateId is a string
             $isCustom = true;
@@ -192,6 +216,9 @@ abstract class EmailElement extends Element
 
         // Set the EmailElement on the Email Template Object
         $emailTemplates->email = $this;
+
+        // Cache the EmailTemplates for subsequent calls
+        $this->setEmailTemplates($emailTemplates);
 
         return $emailTemplates;
     }

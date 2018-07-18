@@ -104,14 +104,21 @@ abstract class EmailTemplates
     {
         $view = Craft::$app->getView();
         $oldTemplatePath = $view->getTemplatesPath();
+        $view->setTemplatesPath($this->getPath());
 
-        // @todo - update hard coded extension to allow .twig and other config extensions too
         $htmlEmailTemplate = 'email.html';
         $textEmailTemplate = 'email.txt';
 
-        $view->setTemplatesPath($this->getPath());
+        // Allow other extensions for email.html
+        foreach (Craft::$app->getConfig()->getGeneral()->defaultTemplateExtensions as $extension) {
+            $templateName = 'email.'.$extension;
+            if (Craft::$app->getView()->doesTemplateExist($templateName)) {
+                $htmlEmailTemplate = $templateName;
+                break;
+            }
+        }
 
-        $htmlBody = $this->renderTemplateSafely($htmlEmailTemplate, [
+        $htmlBody = Craft::$app->getView()->renderTemplate($htmlEmailTemplate, [
             'email' => $this->email,
             'object' => $this->email->getEventObject()
         ]);
@@ -120,7 +127,7 @@ abstract class EmailTemplates
 
         // Converts html body to text email if no .txt
         if ($textEmailTemplateExists) {
-            $body = $this->renderTemplateSafely($textEmailTemplate, [
+            $body = Craft::$app->getView()->renderTemplate($textEmailTemplate, [
                 'email' => $this->email,
                 'object' => $this->email->getEventObject()
             ]);
@@ -141,28 +148,5 @@ abstract class EmailTemplates
 
         $this->setHtmlBody($htmlBody);
         $this->setTextBody($body);
-    }
-
-    /**
-     * @param       $template
-     * @param array $variables
-     *
-     * @return null|string
-     * @throws \Twig_Error_Loader
-     * @throws \yii\base\Exception
-     */
-    public function renderTemplateSafely($template, array $variables = [])
-    {
-        $renderedTemplate = null;
-
-        // @todo Craft 3 - figure out why this is necessary
-        // If a blank template is passed in, Craft renders the index template
-        // If a template is set specifically to the value `test` Craft also
-        // appears to render the index template.
-        if (empty($template)) {
-            return $renderedTemplate;
-        }
-
-        return Craft::$app->getView()->renderTemplate($template, $variables);
     }
 }

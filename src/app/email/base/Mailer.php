@@ -47,7 +47,7 @@ abstract class Mailer
      *
      * @return SimpleRecipient[]
      */
-    public function  getOnTheFlyRecipients()
+    public function getOnTheFlyRecipients()
     {
         return $this->_onTheFlyRecipients;
     }
@@ -398,7 +398,6 @@ abstract class Mailer
                     }
                 }
             }
-
         }
 
         return $recipientList;
@@ -446,8 +445,8 @@ abstract class Mailer
                 $recipientModel = new SimpleRecipient();
 
                 $firstName = $listRecipient['firstName'] ?? '';
-                $lastName  = $listRecipient['lastName'] ?? '';
-                $name = $firstName . ' ' . $lastName;
+                $lastName = $listRecipient['lastName'] ?? '';
+                $name = $firstName.' '.$lastName;
 
                 $recipientModel->name = trim($name) ?? null;
                 $recipientModel->email = $listRecipient['email'] ?? null;
@@ -472,59 +471,65 @@ abstract class Mailer
     {
         $object = $email->getEventObject();
 
-        // @todo - can we handle these errors better?
+        $message = new Message();
+
+        // Render Email Entry fields that have dynamic values
+        $this->renderObjectTemplateSafely($email, 'subjectLine', $object);
+        $this->renderObjectTemplateSafely($email, 'fromName', $object);
+        $this->renderObjectTemplateSafely($email, 'fromEmail', $object);
+        $this->renderObjectTemplateSafely($email, 'replyToEmail', $object);
+
+        $message->setSubject($email->subjectLine);
+        $message->setFrom([$email->fromEmail => $email->fromName]);
+        $message->setReplyTo($email->replyToEmail);
+
+        // Our templates take a few steps to process
+        $textBody = '';
+        $htmlBody = '';
+
+        // Get the initial rendering of the templates
         try {
-            // Render Email Entry fields that have dynamic values
-            $subject = $this->renderObjectTemplateSafely($email->subjectLine, $object);
-            $fromName = $this->renderObjectTemplateSafely($email->fromName, $object);
-            $fromEmail = $this->renderObjectTemplateSafely($email->fromEmail, $object);
-            $replyTo = $this->renderObjectTemplateSafely($email->replyToEmail, $object);
-        } catch (\Exception $exception) {
-            $email->addError('template', $exception->getMessage());
+            $textBody = $email->getEmailTemplates()->getTextBody();
+            $htmlBody = $email->getEmailTemplates()->getHtmlBody();
+        } catch (\Exception $e) {
+            $email->addError('template', $e->getMessage());
         }
 
-        $textBody = $email->getEmailTemplates()->getTextBody();
-        $htmlBody = $email->getEmailTemplates()->getHtmlBody();
-
         if (empty($textBody)) {
-            $email->addError('template', Craft::t('sprout-base', 'Text template is blank.'));
+            $email->addError('body', Craft::t('sprout-base', 'Text template is blank.'));
         }
 
         if (empty($htmlBody)) {
-            $email->addError('template', Craft::t('sprout-base', 'HTML template is blank.'));
+            $email->addError('htmlBody', Craft::t('sprout-base', 'HTML template is blank.'));
         }
-
-        $message = new Message();
-
-        $message->setSubject($subject);
-        $message->setFrom([$fromEmail => $fromName]);
-        $message->setReplyTo($replyTo);
-        $message->setTextBody($textBody);
-        $message->setHtmlBody($htmlBody);
 
         $styleTags = [];
 
+        // Swap out Style tags so we don't run into conflicts with shorthand object-syntax
         $htmlBody = $this->addPlaceholderStyleTags($htmlBody, $styleTags);
 
         // Some Twig code in our email fields may need us to decode
         // entities so our email doesn't throw errors when we try to
         // render the field objects. Example: {variable|date("Y/m/d")}
-
         $textBody = Html::decode($textBody);
         $htmlBody = Html::decode($htmlBody);
 
-        // @todo - can we handle these errors better?
+        // Process the results of the templates once more, to render any dynamic objects used in fields
         try {
-            // Process the results of the templates once more, to render any dynamic objects used in fields
-            $textBody = $this->renderObjectTemplateSafely($textBody, $object);
-            $htmlBody = $this->renderObjectTemplateSafely($htmlBody, $object);
-        } catch (\Exception $exception) {
-            $email->addError('template', $exception->getMessage());
+            $textBody = Craft::$app->getView()->renderObjectTemplate($textBody, $object);
+        } catch (\Exception $e) {
+            $email->addError('body', $e->getMessage());
         }
 
-        $message->setTextBody($textBody);
+        try {
+            $htmlBody = Craft::$app->getView()->renderObjectTemplate($htmlBody, $object);
+        } catch (\Exception $e) {
+            $email->addError('htmlBody', $e->getMessage());
+        }
 
         $htmlBody = $this->removePlaceholderStyleTags($htmlBody, $styleTags);
+
+        $message->setTextBody($textBody);
         $message->setHtmlBody($htmlBody);
 
         // Make sure we use the HTML and Text after they are processed the second time
@@ -535,15 +540,20 @@ abstract class Mailer
     }
 
     /**
-     * @param $string
-     * @param $object
+     * Render a specific attribute on the EmailElement model and add an error to
+     * the model if something goes wrong.
      *
-     * @return string
-     * @throws \yii\base\Exception
+     * @param EmailElement $email
+     * @param              $attribute
+     * @param              $object
      */
-    public function renderObjectTemplateSafely($string, $object)
+    public function renderObjectTemplateSafely(EmailElement $email, $attribute, $object)
     {
-        return Craft::$app->getView()->renderObjectTemplate($string, $object);
+        try {
+            $email->{$attribute} = Craft::$app->getView()->renderObjectTemplate($email->{$attribute}, $object);
+        } catch (\Exception $e) {
+            $email->addError($email->{$attribute}, $e->getMessage());
+        }
     }
 
     public function addPlaceholderStyleTags($htmlBody, &$styleTags)
