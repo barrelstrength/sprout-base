@@ -184,8 +184,9 @@ class NotificationEmailEvents extends Component
                 if ($eventHandlerClass->validate()) {
 
                     $object = $eventHandlerClass->getEventObject();
+                    $notificationEmail->setEventObject($object);
 
-                    SproutBase::$app->notifications->sendNotificationViaMailer($notificationEmail, $object);
+                    SproutBase::$app->notifications->sendNotificationViaMailer($notificationEmail);
                 }
             }
         }

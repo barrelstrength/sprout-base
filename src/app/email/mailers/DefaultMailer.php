@@ -80,10 +80,8 @@ class DefaultMailer extends Mailer implements NotificationEmailSenderInterface
      * @throws \Twig_Error_Loader
      * @throws \yii\base\InvalidConfigException
      */
-    public function sendNotificationEmail(EmailElement $notificationEmail, $object = null)
+    public function sendNotificationEmail(EmailElement $notificationEmail)
     {
-        $notificationEmail->setEventObject($object);
-
         $mailer = $notificationEmail->getMailer();
         /**
          * @var $message Message
@@ -91,6 +89,7 @@ class DefaultMailer extends Mailer implements NotificationEmailSenderInterface
         $message = $mailer->getMessage($notificationEmail);
 
         $externalPaths = [];
+        $object = $notificationEmail->getEventObject();
 
         // Adds support for attachments
         if ($notificationEmail->enableFileAttachments) {
