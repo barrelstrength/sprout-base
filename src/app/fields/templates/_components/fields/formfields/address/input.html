@@ -29,7 +29,12 @@
         <div class='address-format hidden'>
             <div class='spinner'></div>
         </div>
+        <div class='sproutaddress-form hidden'>
+            {{ countryInput|raw }}
+            {{ addressForm|raw }}
+        </div>
     </div>
+
 {% endset %}
 
 {{ forms.field({
