@@ -93,21 +93,17 @@
 
         <p>{{ "Redirect multiple URLs with a similar pattern by selecting the 'Evaluate regular expressions' option."|t('sprout-base') }}</p>
 
-        <p>
-            <strong>{{ "Old URL - Regular Expressions"|t('sprout-base') }}</strong>
-            <ul>
-                <li>{{ "old-location/(.*)"|t('sprout-base') }}</li>
-                <li>{{ "old-location/(\d{4})/(\d{2})"|t('sprout-base') }}</li>
-            </ul>
-        </p>
+        <p><strong>{{ "Old URL - Regular Expressions"|t('sprout-base') }}</strong></p>
+        <ul>
+            <li>{{ "old-location/(.*)"|t('sprout-base') }}</li>
+            <li>{{ "old-location/(\d{4})/(\d{2})"|t('sprout-base') }}</li>
+        </ul>
 
-        <p>
-            <strong>{{ "New URL - Capture Groups"|t('sprout-base') }}</strong>
-            <ul>
-                <li><em>{{ "new-location/$1"|t('sprout-base') }}</em></li>
-                <li><em>{{ "new-location/$1/$2"|t('sprout-base') }}</em></li>
-            </ul>
-        </p>
+        <p><strong>{{ "New URL - Capture Groups"|t('sprout-base') }}</strong></p>
+        <ul>
+            <li><em>{{ "new-location/$1"|t('sprout-base') }}</em></li>
+            <li><em>{{ "new-location/$1/$2"|t('sprout-base') }}</em></li>
+        </ul>
 
     </div>
 {% endblock %}
