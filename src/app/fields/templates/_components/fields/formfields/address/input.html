@@ -27,11 +27,12 @@
                href='#'>{{ "Edit"|t('sprout-base') }}</a>
         </div>
         <div class='address-format hidden'>
-            <div class='spinner'></div>
+            {{ addressFormat|raw }}
         </div>
         <div class='sproutaddress-form hidden'>
             {{ countryInput|raw }}
             {{ addressForm|raw }}
+            <input type="hidden" name="{{ field.handle }}[delete]" />
         </div>
     </div>
 
