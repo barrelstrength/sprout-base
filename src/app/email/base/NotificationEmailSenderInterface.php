@@ -20,5 +20,5 @@ interface NotificationEmailSenderInterface
      *
      * @return bool
      */
-    public function sendNotificationEmail(EmailElement $notificationEmail, $object = null);
+    public function sendNotificationEmail(EmailElement $notificationEmail);
 }
