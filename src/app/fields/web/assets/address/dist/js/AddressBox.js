@@ -95,7 +95,7 @@ if (typeof Craft.SproutBase === typeof undefined) {
                 this.$addressFormat.removeClass('hidden');
             }
 
-            this.$addressForm = $("<div class='sproutaddress-form hidden' />").appendTo(this.$addressBox);
+            this.$addressForm = this.$addressBox.find('.sproutaddress-form');
 
             this._getAddressFormFields();
 
@@ -132,12 +132,12 @@ if (typeof Craft.SproutBase === typeof undefined) {
             ev.preventDefault();
 
             var self = this;
-            var data = {addressInfoId: self.addressInfoId};
 
             this.$addButtons.removeClass('hidden');
             this.$editButtons.addClass('hidden');
             this.$addressFormat.addClass('hidden');
-            $(".sproutaddressinfo-box").data("addressinfoid", "");
+
+            this.$addressForm.find("[name='" + this.settings.namespace + "[delete]']").val(1);
 
             self.addressInfoId = null;
 
@@ -198,9 +198,6 @@ if (typeof Craft.SproutBase === typeof undefined) {
                 this.$addressBox.find('.address-format .spinner').remove();
                 self.$addressBox.find('.address-format').empty();
                 self.$addressBox.find('.address-format').append(response.html);
-                self.$addressForm.empty();
-                self.$addressForm.append(response.countryCodeHtml);
-                self.$addressForm.append(response.formInputHtml);
 
             }, this));
         },

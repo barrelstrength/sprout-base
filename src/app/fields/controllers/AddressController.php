@@ -161,7 +161,7 @@ class AddressController extends Controller
 
         $addressInfoModel = new AddressModel($formValues);
 
-        if ($addressInfoModel->validate() == true) {
+        if ($addressInfoModel->validate()) {
             $html = $this->addressHelper->getAddressWithFormat($addressInfoModel);
             $countryCode = $addressInfoModel->countryCode;
 

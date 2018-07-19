@@ -133,12 +133,12 @@ class NotificationEmails extends Component
      * @return bool
      * @throws \Exception
      */
-    public function sendNotificationViaMailer(NotificationEmail $notificationEmail, $object)
+    public function sendNotificationViaMailer(NotificationEmail $notificationEmail)
     {
         try {
             $mailer = $notificationEmail->getMailer();
 
-            return $mailer->sendNotificationEmail($notificationEmail, $object);
+            return $mailer->sendNotificationEmail($notificationEmail);
         } catch (\Exception $e) {
             throw $e;
         }

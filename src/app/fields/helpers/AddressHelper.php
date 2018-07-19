@@ -737,11 +737,7 @@ class AddressHelper
     {
         $countries = $this->getCountries();
 
-        if ($countries[$code]) {
-            return $countries[$code];
-        }
-
-        return null;
+        return $countries[$code] ?? null;
     }
 
     /**
