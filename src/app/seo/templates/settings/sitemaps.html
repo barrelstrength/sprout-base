@@ -1,5 +1,14 @@
 {% import "_includes/forms" as forms %}
 
+{{ forms.lightswitchField({
+    label: "Enable Dynamic Sitemaps"|t,
+    instructions: "Output a dynamic XML sitemap of all pages in your URL-Enabled Sections."|t('sprout-seo'),
+    name: 'enableDynamicSitemaps',
+    toggle: 'settings-total-elements',
+    on: settings.enableDynamicSitemaps,
+    onLabel: "Enable"|t
+}) }}
+
 {{ forms.textField({
     label: "Total Elements Per Sitemap"|t('sprout-seo'),
     instructions: "The number of items that display on each page of your sitemap. A lower number may be necessary for sitemaps with a large number of elements or limited server resources."|t('sprout-seo'),
