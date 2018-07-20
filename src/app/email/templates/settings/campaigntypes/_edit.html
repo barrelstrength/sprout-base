@@ -81,15 +81,6 @@
             otherPlaceholderText: '_email/email-template-folder'|t('sprout-email')
         })) }}
 
-        {{ forms.textField({
-            label: "Email Copy/Paste Template"|t('sprout-email'),
-            id: 'templateCopyPaste',
-            name: 'sproutEmail[templateCopyPaste]',
-            instructions: "The template to use if you want to copy only part of your template.  The text version of the Copy/Paste content will use the same template name and append .txt"|t('sprout-email'),
-            placeholder: 'email/copypaste-template',
-            value: (campaignType is defined ? campaignType.templateCopyPaste : null),
-            errors: (campaignType is defined ? campaignType.getErrors('templateCopyPaste') : null)
-        }) }}
 
         <hr>
 
@@ -165,32 +156,3 @@
 {% if campaignType is not defined or not campaignType.handle %}
     {% includeJs "window.slugGenerator = new Craft.SlugGenerator('#name', '#handle');" %}
 {% endif %}
-
-{% js %}
-
-    (function() {
-
-    function toggleCopyPasteField(selectedOption)
-    {
-        if (selectedOption == 'barrelstrength\\sproutemail\\mailers\\CopyPasteMailer')
-        {
-            $('#templateCopyPaste-field').show();
-        }
-        else
-        {
-            $('#templateCopyPaste-field input').val('');
-            $('#templateCopyPaste-field').hide();
-        }
-    }
-
-    // Setup listener for copy/paste field
-    $('#mailer').change(function() {
-        toggleCopyPasteField($('#mailer').val());
-    });
-
-    // Show/hide copy/paste field on page load
-    toggleCopyPasteField($('#mailer').val());
-
-    })();
-
-{% endjs %}
