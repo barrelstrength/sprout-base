@@ -19,3 +19,11 @@
     name: 'enableUserSync',
     on: settings.enableUserSync
 }) }}
+
+{{ forms.lightswitchField({
+    first: true,
+    label: "Create Lists Automatically"|t('sprout-lists'),
+    instructions: "When you enable this setting List is automatically created when it doesn't exist."|t('sprout-lists'),
+    name: 'enableAutoList',
+    on: settings.enableAutoList
+}) }}
