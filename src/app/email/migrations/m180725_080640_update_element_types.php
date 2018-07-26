@@ -49,14 +49,6 @@ class m180725_080640_update_element_types extends Migration
                 'type' => $sentClass['newType']
             ], ['type' => $sentClass['oldType']], [], false);
         }
-
-        $this->update('{{%sproutemail_campaigntype}}', [
-            'mailer' => "barrelstrength\sproutemail\mailers\CopyPasteMailer"
-        ], ['mailer' => 'copypaste'], [], false);
-
-        $this->update('{{%sproutemail_campaigntype}}', [
-            'mailer' => "barrelstrength\sproutmailchimp\integrations\sproutemail\MailChimpMailer"
-        ], ['mailer' => 'mailchimp'], [], false);
     }
 
     /**
