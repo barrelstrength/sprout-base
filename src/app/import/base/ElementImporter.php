@@ -241,8 +241,7 @@ abstract class ElementImporter extends Importer
 
         $existingElement = SproutImport::$app->elementImporter->getElementFromImportSettings($elementTypeName, $updateElementSettings);
 
-        if (!$existingElement)
-        {
+        if (!$existingElement) {
             return null;
         }
 

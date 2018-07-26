@@ -2,22 +2,19 @@
 
 namespace barrelstrength\sproutbase\app\email\services;
 
-use barrelstrength\sproutbase\app\email\base\EmailTemplateTrait;
-
-use barrelstrength\sproutbase\app\email\base\NotificationEvent;
+use barrelstrength\sproutbase\app\email\base\EmailElement;
+use barrelstrength\sproutbase\app\email\base\Mailer;
 use barrelstrength\sproutbase\app\email\elements\NotificationEmail;
-use barrelstrength\sproutbase\app\email\mailers\DefaultMailer;
 use barrelstrength\sproutbase\SproutBase;
-use barrelstrength\sproutbase\app\email\models\Message;
 use barrelstrength\sproutbase\app\email\models\Response;
 use barrelstrength\sproutbase\app\email\records\NotificationEmail as NotificationEmailRecord;
 use craft\base\Component;
 use Craft;
 use craft\helpers\ElementHelper;
-use craft\helpers\Html;
+
 use craft\helpers\UrlHelper;
-use League\HTMLToMarkdown\HtmlConverter;
 use craft\base\ElementInterface;
+
 use yii\web\NotFoundHttpException;
 
 /**
@@ -27,8 +24,6 @@ use yii\web\NotFoundHttpException;
  */
 class NotificationEmails extends Component
 {
-    use EmailTemplateTrait;
-
     /**
      * @param NotificationEmail $notificationEmail
      *
@@ -132,219 +127,22 @@ class NotificationEmails extends Component
     }
 
     /**
-     * Prepares the NotificationEmail Element and returns a Message model.
-     *
      * @param NotificationEmail $notificationEmail
-     * @param null              $object
+     * @param                   $object
      *
-     * @return Message
-     * @throws \ReflectionException
-     * @throws \yii\base\Exception
-     */
-    public function getNotificationEmailMessage(NotificationEmail $notificationEmail, $object = null)
-    {
-        // Render Email Entry fields that have dynamic values
-        $subject = $this->renderObjectTemplateSafely($notificationEmail->subjectLine, $object);
-        $fromName = $this->renderObjectTemplateSafely($notificationEmail->fromName, $object);
-        $fromEmail = $this->renderObjectTemplateSafely($notificationEmail->fromEmail, $object);
-        $replyTo = $this->renderObjectTemplateSafely($notificationEmail->replyToEmail, $object);
-
-        $view = Craft::$app->getView();
-        $oldTemplatePath = $view->getTemplatesPath();
-
-        $emailTemplatePath = SproutBase::$app->sproutEmail->getEmailTemplate($notificationEmail);
-
-        $this->setFolderPath($emailTemplatePath);
-
-        $htmlEmailTemplate = 'email.html';
-        $textEmailTemplate = 'email.txt';
-
-        $view->setTemplatesPath($emailTemplatePath);
-
-        $htmlBody = $this->renderSiteTemplateIfExists($htmlEmailTemplate, [
-            'email' => $notificationEmail,
-            'object' => $object
-        ]);
-
-        $textEmailTemplateExists = Craft::$app->getView()->doesTemplateExist($textEmailTemplate);
-
-        // Converts html body to text email if no .txt
-        if ($textEmailTemplateExists) {
-            $body = $this->renderSiteTemplateIfExists($textEmailTemplate, [
-                'email' => $notificationEmail,
-                'object' => $object
-            ]);
-        } else {
-            $converter = new HtmlConverter([
-                'strip_tags' => true
-            ]);
-
-            // For more advanced html templates, conversion may be tougher. Minifying the HTML
-            // can help and ensuring that content is wrapped in proper tags that adds spaces between
-            // things in Markdown, like <p> tags or <h1> tags and not just <td> or <div>, etc.
-            $markdown = $converter->convert($htmlBody);
-
-            $body = trim($markdown);
-        }
-
-        $view->setTemplatesPath($oldTemplatePath);
-
-        $message = new Message();
-
-        $message->setSubject($subject);
-        $message->setFrom([$fromEmail => $fromName]);
-        $message->setReplyTo($replyTo);
-        $message->setTextBody($body);
-        $message->setHtmlBody($htmlBody);
-
-        $styleTags = [];
-
-        $htmlBody = $this->addPlaceholderStyleTags($htmlBody, $styleTags);
-
-        // Some Twig code in our email fields may need us to decode
-        // entities so our email doesn't throw errors when we try to
-        // render the field objects. Example: {variable|date("Y/m/d")}
-
-        $body = Html::decode($body);
-        $htmlBody = Html::decode($htmlBody);
-
-        // Process the results of the template s once more, to render any dynamic objects used in fields
-        $body = $this->renderObjectTemplateSafely($body, $object);
-        $message->setTextBody($body);
-
-        $htmlBody = $this->renderObjectTemplateSafely($htmlBody, $object);
-
-        $htmlBody = $this->removePlaceholderStyleTags($htmlBody, $styleTags);
-        $message->setHtmlBody($htmlBody);
-
-        // Store our rendered email for later. We save this as separate variables as the Message Class
-        // we extend doesn't have a way to access these items once we set them.
-        $message->renderedBody = $body;
-        $message->renderedHtmlBody = $htmlBody;
-
-        return $message;
-    }
-
-    /**
-     * @param ElementInterface $notificationEmail
-     * @param                  $object - will be an element model most of the time
-     *
-     * @return bool|null
+     * @return bool
      * @throws \Exception
      */
-    public function sendNotificationViaMailer(ElementInterface $notificationEmail, $object)
+    public function sendNotificationViaMailer(NotificationEmail $notificationEmail)
     {
-        $mailer = SproutBase::$app->mailers->getMailerByName(DefaultMailer::class);
-
-        if (!method_exists($mailer, 'sendNotificationEmail')) {
-            throw new \BadMethodCallException(Craft::t('sprout-base', 'The {mailer} does not have a sendNotificationEmail() method.',
-                ['mailer' => get_class($mailer)]));
-        }
-
         try {
+            $mailer = $notificationEmail->getMailer();
 
-            if ($mailer) {
-                /**
-                 * @var $notificationEmail NotificationEmail
-                 */
-                return $mailer->sendNotificationEmail($notificationEmail, $object);
-            }
+            return $mailer->sendNotificationEmail($notificationEmail);
         } catch (\Exception $e) {
             throw $e;
         }
-
-        return null;
     }
-
-    /**
-     * @param NotificationEmail $notificationEmail
-     *
-     * @return bool
-     */
-    public function sendTestNotificationEmail(NotificationEmail $notificationEmail)
-    {
-        /** @var NotificationEvent $event */
-        $event = SproutBase::$app->notificationEvents->getEventById($notificationEmail->eventId);
-        $mailer = SproutBase::$app->mailers->getMailerByName(DefaultMailer::class);
-
-        if (!$event or !$mailer) {
-            return false;
-        }
-
-        // @todo - move this to getEventById and refactor getEventById to pass necessary variables
-        $settings = json_decode($notificationEmail->settings, true);
-        $event = new $event($settings);
-
-        try {
-
-            if (!$mailer->sendNotificationEmail($notificationEmail, $event->getMockEventObject()))
-            {
-                $customErrorMessage = SproutBase::$app->emailErrorHelper->getErrors();
-
-                if (!empty($customErrorMessage)) {
-                    $message = $customErrorMessage;
-                } else {
-                    $message = Craft::t('sprout-base', 'Unable to send Test Notification Email.');
-                }
-
-                SproutBase::$app->emailErrorHelper->addError('notification-mock-error', $message);
-
-                SproutBase::error($message);
-
-                return false;
-            }
-
-            return true;
-
-        } catch (\Exception $e) {
-            SproutBase::$app->emailErrorHelper->addError('notification-mock-error', $e->getMessage());
-
-            return false;
-        }
-    }
-
-    /**
-     * @todo - doesn't appear to be in use. Confirm.
-     *
-     * Returns an array or variables for a notification template
-     *
-     * @example
-     * The following syntax is supported to access event element properties
-     *
-     * {attribute}
-     * {{ attribute }}
-     * {{ object.attribute }}
-     *
-     * @param NotificationEmail $notificationEmail
-     * @param mixed|null        $element
-     *
-     * @return array
-     */
-//    public function prepareNotificationTemplateVariables(NotificationEmail $notificationEmail, $element = null)
-//    {
-//        if (is_object($element) && method_exists($element, 'getAttributes')) {
-//            $attributes = $element->getAttributes();
-//
-//            if (isset($element->elementType)) {
-//                $content = $element->getContent()->getAttributes();
-//
-//                if (count($content)) {
-//                    foreach ($content as $key => $value) {
-//                        if (!isset($attributes[$key])) {
-//                            $attributes[$key] = $value;
-//                        }
-//                    }
-//                }
-//            }
-//        } else {
-//            $attributes = (array)$element;
-//        }
-//
-//        return array_merge($attributes, [
-//            'email' => $notificationEmail,
-//            'object' => $element
-//        ]);
-//    }
 
     /**
      * @param $notificationId
@@ -384,7 +182,6 @@ class NotificationEmails extends Component
      * @param NotificationEmail $notificationEmail
      *
      * @return string
-     * @throws \ReflectionException
      * @throws \Twig_Error_Loader
      * @throws \yii\base\Exception
      */
@@ -400,6 +197,8 @@ class NotificationEmails extends Component
 
         $errors = [];
 
+        // This processes the whole email to check for errors ahead of time
+        // @todo - review
         $errors = $this->getNotificationErrors($notificationEmail, $errors);
 
         return Craft::$app->getView()->renderTemplate(
@@ -418,7 +217,7 @@ class NotificationEmails extends Component
      * @param      $notificationId
      * @param null $type
      *
-     * @throws \ReflectionException
+     * @throws \Twig_Error_Loader
      * @throws \yii\base\Exception
      * @throws \yii\base\ExitException
      */
@@ -429,9 +228,7 @@ class NotificationEmails extends Component
          */
         $notificationEmail = $this->getNotificationEmailById($notificationId);
 
-        $eventId = $notificationEmail->eventId;
-
-        $event = SproutBase::$app->notificationEvents->getEventById($eventId);
+        $event = SproutBase::$app->notificationEvents->getEvent($notificationEmail);
 
         if (!$event) {
             ob_start();
@@ -460,23 +257,25 @@ class NotificationEmails extends Component
 
         $fileExtension = ($type != null && $type == 'text') ? 'txt' : 'html';
 
-        $message = $this->getNotificationEmailMessage($notificationEmail);
+        $notificationEmail->setEventObject($event->getMockEventObject());
 
-        $this->showPreviewEmail($message, $fileExtension);
+        $this->showPreviewEmail($notificationEmail, $fileExtension);
     }
 
     /**
-     * @param        $message
-     * @param string $fileExtension
+     * @param EmailElement $email
+     * @param string       $fileExtension
      *
+     * @throws \Twig_Error_Loader
+     * @throws \yii\base\Exception
      * @throws \yii\base\ExitException
      */
-    public function showPreviewEmail($message, $fileExtension = 'html')
+    public function showPreviewEmail(EmailElement $email, $fileExtension = 'html')
     {
         if ($fileExtension == 'txt') {
-            $output = $message->renderedBody;
+            $output = $email->getEmailTemplates()->getTextBody();
         } else {
-            $output = $message->renderedHtmlBody;
+            $output = $email->getEmailTemplates()->getHtmlBody();
         }
 
         // Output it into a buffer, in case TasksService wants to close the connection prematurely
@@ -489,14 +288,14 @@ class NotificationEmails extends Component
     }
 
     /**
-     * @param       $notificationEmail
-     * @param array $errors
+     * @param EmailElement $notificationEmail
+     * @param array        $errors
      *
      * @return array
-     * @throws \ReflectionException
+     * @throws \Twig_Error_Loader
      * @throws \yii\base\Exception
      */
-    public function getNotificationErrors($notificationEmail, array $errors = [])
+    public function getNotificationErrors(EmailElement $notificationEmail, array $errors = [])
     {
         $currentPluginHandle = Craft::$app->request->getSegment(1);
 
@@ -506,7 +305,7 @@ class NotificationEmails extends Component
 
         $event = SproutBase::$app->notificationEvents->getEventById($notificationEmail->eventId);
 
-        $template = SproutBase::$app->sproutEmail->getEmailTemplate($notificationEmail);
+        $emailTemplates = $notificationEmail->getEmailTemplates();
 
         if ($event === null) {
             $errors[] = Craft::t('sprout-base', 'No Event is selected. <a href="{url}">Edit Notification</a>.', [
@@ -514,8 +313,8 @@ class NotificationEmails extends Component
             ]);
         }
 
-        if (empty($template)) {
-            $errors[] = Craft::t('sprout-base', 'No template added. <a href="{url}">Edit Notification Settings</a>.',
+        if (empty($emailTemplates->getPath())) {
+            $errors[] = Craft::t('sprout-base', 'No template found. <a href="{url}">Edit Notification Settings</a>.',
                 [
                     'url' => $notificationEditSettingsUrl
                 ]);
@@ -525,11 +324,17 @@ class NotificationEmails extends Component
             return $errors;
         }
 
-        $mockObject = $event->getMockEventObject();
+        $notificationEmail->setEventObject($event->getMockEventObject());
 
-        $this->getNotificationEmailMessage($notificationEmail, $mockObject);
+        /**
+         * @var $mailer Mailer
+         */
+        $mailer = $notificationEmail->getMailer();
 
-        $templateErrors = SproutBase::$app->emailErrorHelper->getErrors();
+        // Process our message to generate any errors on the NotificationEmail element we may see when preparing the send
+        $mailer->getMessage($notificationEmail);
+
+        $templateErrors = $notificationEmail->getErrors();
 
         if (!empty($templateErrors['template'])) {
 

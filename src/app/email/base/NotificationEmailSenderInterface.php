@@ -15,10 +15,10 @@ interface NotificationEmailSenderInterface
      * Gives a mailer the responsibility to send Notification Emails
      * if they implement NotificationEmailSenderInterface
      *
-     * @param NotificationEmail $notificationEmail
+     * @param EmailElement $notificationEmail
      * @param                   $object
      *
      * @return bool
      */
-    public function sendNotificationEmail(NotificationEmail $notificationEmail, $object = null);
+    public function sendNotificationEmail(EmailElement $notificationEmail);
 }

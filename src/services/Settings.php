@@ -11,12 +11,10 @@ use Craft;
 use craft\base\Plugin;
 use craft\helpers\Json;
 use yii\base\Component;
-use barrelstrength\sproutbase\events\BeforeSaveSettingsEvent;
+
 
 class Settings extends Component
 {
-    const EVENT_BEFORE_SAVE_SETTINGS = 'beforeSaveSettings';
-
     /**
      * @param $plugin Plugin
      * @param $settings
@@ -28,13 +26,6 @@ class Settings extends Component
     {
         // The existing settings
         $pluginSettings = $plugin->getSettings();
-
-        $event = new BeforeSaveSettingsEvent([
-            'plugin' => $plugin,
-            'settings' => $settings
-        ]);
-
-        $this->trigger(self::EVENT_BEFORE_SAVE_SETTINGS, $event);
 
         // Have namespace?
         $settings = $settings['settings'] ?? $settings;

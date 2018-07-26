@@ -7,7 +7,6 @@
 
 namespace barrelstrength\sproutbase\services;
 
-use barrelstrength\sproutbase\app\email\services\ErrorHelper;
 use barrelstrength\sproutbase\app\email\services\Mailers;
 use barrelstrength\sproutbase\app\email\services\NotificationEmailEvents;
 use barrelstrength\sproutbase\app\email\services\NotificationEmails;
@@ -26,7 +25,7 @@ use barrelstrength\sproutbase\app\fields\services\Email;
 use barrelstrength\sproutbase\app\fields\services\Address;
 use barrelstrength\sproutbase\app\import\services\Importers;
 use craft\base\Component;
-use barrelstrength\sproutbase\app\email\services\Email as SproutEmail;
+use barrelstrength\sproutbase\app\email\services\EmailTemplates as SproutEmail;
 
 class App extends Component
 {
@@ -116,11 +115,6 @@ class App extends Component
     public $themes;
 
     /**
-     * @var ErrorHelper
-     */
-    public $emailErrorHelper;
-
-    /**
      * @var SproutEmail
      */
     public $sproutEmail;
@@ -138,7 +132,6 @@ class App extends Component
         $this->notificationEvents = new NotificationEmailEvents();
         $this->mailers = new Mailers();
         $this->sproutEmail = new SproutEmail();
-        $this->emailErrorHelper = ErrorHelper::Instance();
 
         // Sprout Fields
         $this->addressField = new Address();

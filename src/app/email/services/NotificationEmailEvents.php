@@ -184,8 +184,9 @@ class NotificationEmailEvents extends Component
                 if ($eventHandlerClass->validate()) {
 
                     $object = $eventHandlerClass->getEventObject();
+                    $notificationEmail->setEventObject($object);
 
-                    SproutBase::$app->notifications->sendNotificationViaMailer($notificationEmail, $object);
+                    SproutBase::$app->notifications->sendNotificationViaMailer($notificationEmail);
                 }
             }
         }
@@ -212,6 +213,25 @@ class NotificationEmailEvents extends Component
         }
 
         return $default;
+    }
+
+    /**
+     * @param NotificationEmail $notificationEmail
+     *
+     * @return NotificationEvent|null
+     */
+    public function getEvent(NotificationEmail $notificationEmail)
+    {
+        $notificationEmailEventTypes = $this->getNotificationEmailEventTypes();
+
+        foreach ($notificationEmailEventTypes as $notificationEmailEventClass) {
+            if ($notificationEmail->eventId === $notificationEmailEventClass) {
+                $settings = json_decode($notificationEmail->settings, true);
+                return new $notificationEmailEventClass($settings);
+            }
+        }
+
+        return null;
     }
 
     /**
@@ -272,8 +292,7 @@ class NotificationEmailEvents extends Component
         $events = $this->getNotificationEmailEvents($notificationEmail);
 
         foreach ($events as $key => $event) {
-            if ($pluginHandle !== $event->getPlugin()->id)
-            {
+            if ($pluginHandle !== $event->getPlugin()->id) {
                 unset($events[$key]);
             }
         }

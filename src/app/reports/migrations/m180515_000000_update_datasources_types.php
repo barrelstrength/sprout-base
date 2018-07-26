@@ -27,7 +27,8 @@ class m180515_000000_update_datasources_types extends Migration
 
         foreach ($seedClasses as $seedClass) {
             $this->update('{{%sproutreports_datasources}}', [
-                'type' => $seedClass['newType']], ['type' => $seedClass['oldType']], [], false);
+                'type' => $seedClass['newType']
+            ], ['type' => $seedClass['oldType']], [], false);
         }
 
         return true;

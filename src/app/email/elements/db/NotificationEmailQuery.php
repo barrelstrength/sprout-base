@@ -30,6 +30,7 @@ class NotificationEmailQuery extends ElementQuery
             'sproutemail_notificationemails.fromName',
             'sproutemail_notificationemails.fromEmail',
             'sproutemail_notificationemails.replyToEmail',
+            'sproutemail_notificationemails.singleEmail',
             'sproutemail_notificationemails.enableFileAttachments',
             'sproutemail_notificationemails.dateCreated',
             'sproutemail_notificationemails.dateUpdated',
@@ -38,7 +39,8 @@ class NotificationEmailQuery extends ElementQuery
 
         $pluginHandle = Craft::$app->request->getBodyParam('criteria.base');
 
-        if ($pluginHandle != null) {
+        // Displays all notification event on sprout-email plugin and filters on plugin integration
+        if ($pluginHandle != null && $pluginHandle != 'sprout-email') {
             $this->query->where(['sproutemail_notificationemails.pluginHandle' => $pluginHandle]);
         }
 

@@ -137,7 +137,6 @@ class ReportsController extends Controller
 
     /**
      * @param string      $dataSourceId
-     * @param string      $dataSourceSlug
      * @param Report|null $report
      * @param int|null    $reportId
      *
@@ -156,7 +155,7 @@ class ReportsController extends Controller
         } elseif ($reportId !== null) {
             $reportElement = SproutBase::$app->reports->getReport($reportId);
         }
-    
+
         // This is for creating new report
         if ($dataSourceId !== null) {
             $reportElement->dataSourceId = $dataSourceId;
@@ -410,7 +409,7 @@ class ReportsController extends Controller
         } else {
             $report = new Report();
         }
-        
+
         $settings = $request->getBodyParam('settings');
 
         $report->name = $request->getBodyParam('name');

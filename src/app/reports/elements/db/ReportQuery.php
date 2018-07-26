@@ -91,7 +91,7 @@ class ReportQuery extends ElementQuery
                 'sproutreports_reports.dataSourceId', $this->dataSourceId)
             );
         }
-        
+
         if ($this->groupId) {
             $this->query->andWhere(Db::parseParam(
                 'sproutreports_reports.groupId', $this->groupId)

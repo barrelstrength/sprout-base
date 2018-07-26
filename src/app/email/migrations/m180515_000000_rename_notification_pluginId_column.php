@@ -11,6 +11,8 @@ class m180515_000000_rename_notification_pluginId_column extends Migration
 {
     /**
      * @inheritdoc
+     *
+     * @throws \yii\base\NotSupportedException
      */
     public function safeUp()
     {

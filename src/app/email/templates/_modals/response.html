@@ -1,3 +1,5 @@
+{% import "_includes/forms" as forms %}
+
 <div class="body">
 
     {% if success is defined and success %}
@@ -31,8 +33,14 @@
             </tr>
             <tr>
                 <td><strong>{{ 'Message'|t('sprout-base') }}</strong></td>
-                <td><em>{{ message is defined ? message : 'An error occurred while sending your campaign. Please review the Craft logs
-     for more info.'|t('sprout-base') }}</em></td>
+                <td>
+                    <p><em>{{ message is defined ? message : 'An error occurred while sending your campaign. Please review the Craft logs
+     for more info.'|t('sprout-base') }}</em></p>
+
+                    {% if email.getErrors()|length %}
+                        {{ forms.errorList(email.getErrors()) }}
+                    {% endif %}
+                </td>
             </tr>
             </tbody>
         </table>

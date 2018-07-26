@@ -24,6 +24,8 @@ interface CampaignEmailSenderInterface
     public function sendCampaignEmail(CampaignEmail $campaignEmail, CampaignType $campaignType);
 
     /**
+     * @todo - change method signature and remove $emails in favor of $campaignEmail->getRecipients()
+     *
      * @param CampaignEmail $campaignEmail
      * @param CampaignType  $campaignType
      * @param array         $emails

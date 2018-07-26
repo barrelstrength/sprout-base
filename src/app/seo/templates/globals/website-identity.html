@@ -192,7 +192,12 @@
                        href='#'>{{ "Edit"|t('sprout-seo') }}</a>
                 </div>
                 <div class='address-format hidden'>
-                    <div class='spinner'></div>
+                      {{ addressFormat|raw }}
+                </div>
+                <div class='sproutaddress-form hidden'>
+                    {{ countryInput|raw }}
+                    {{ addressForm|raw }}
+                    <input type="hidden" name="address[delete]" />
                 </div>
             </div>
         {% endset %}
@@ -507,9 +512,10 @@
     }
     });
 
-    new Craft.SproutBase.AddressBox($('.sproutaddressinfo-box'), {
-    source: 'websiteIdentity'
-    })
+        new Craft.SproutBase.AddressBox($('.sproutaddressinfo-box'), {
+            source: 'websiteIdentity',
+            namespace: 'address'
+        })
     });
 
 {% endjs %}

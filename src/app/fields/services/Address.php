@@ -10,6 +10,7 @@ namespace barrelstrength\sproutbase\app\fields\services;
 use barrelstrength\sproutbase\app\fields\models\Address as AddressModel;
 use barrelstrength\sproutbase\app\fields\events\OnSaveAddressEvent;
 use barrelstrength\sproutbase\app\fields\records\Address as AddressRecord;
+use barrelstrength\sproutbase\SproutBase;
 use Craft;
 use craft\base\Component;
 
@@ -22,7 +23,9 @@ class Address extends Component
      * @param int|null $fieldId
      *
      * @return bool
-     * @throws \Exception
+     * @throws \Throwable
+     * @throws \yii\db\Exception
+     * @throws \yii\db\StaleObjectException
      */
     public function saveAddressByPost($namespace = 'address', int $fieldId = null)
     {
@@ -33,6 +36,16 @@ class Address extends Component
                 $addressInfo['fieldId'] = $fieldId;
             }
 
+            $isDelete = $addressInfo['delete'] ?? null;
+            $addressId = $addressInfo['id'] ?? null;
+
+            if ($isDelete && $addressId) {
+                SproutBase::$app->addressField->deleteAddressById($addressId);
+
+                return false;
+            }
+            unset($addressInfo['delete']);
+            
             $addressInfoModel = new AddressModel($addressInfo);
 
             if ($addressInfoModel->validate() == true && $this->saveAddress($addressInfoModel)) {

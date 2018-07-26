@@ -27,7 +27,8 @@ class m180515_000003_update_notification_eventId_types extends Migration
 
         foreach ($types as $type) {
             $this->update('{{%sproutemail_notificationemails}}', [
-                'emailTemplateId' => $type['newType']], ['emailTemplateId' => $type['oldType']], [], false);
+                'emailTemplateId' => $type['newType']
+            ], ['emailTemplateId' => $type['oldType']], [], false);
         }
 
         return true;

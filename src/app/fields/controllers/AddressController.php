@@ -161,7 +161,7 @@ class AddressController extends Controller
 
         $addressInfoModel = new AddressModel($formValues);
 
-        if ($addressInfoModel->validate() == true) {
+        if ($addressInfoModel->validate()) {
             $html = $this->addressHelper->getAddressWithFormat($addressInfoModel);
             $countryCode = $addressInfoModel->countryCode;
 
@@ -217,7 +217,7 @@ class AddressController extends Controller
 
             $globals = (new Query())
                 ->select('*')
-                ->from(['{{%sproutseo_metadata_globals}}'])
+                ->from(['{{%sproutseo_globals}}'])
                 ->one();
 
             if ($globals && $response) {
@@ -228,7 +228,7 @@ class AddressController extends Controller
                     $identity['addressId'] = "";
                     $globals['identity'] = json_encode($identity);
 
-                    Craft::$app->db->createCommand()->update('{{%sproutseo_metadata_globals}}',
+                    Craft::$app->db->createCommand()->update('{{%sproutseo_globals}}',
                         $globals,
                         'id=:id',
                         [':id' => 1]

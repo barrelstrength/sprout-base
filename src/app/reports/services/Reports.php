@@ -135,8 +135,8 @@ class Reports extends Component
         $query = new Query();
         // We only get reports that currently has dataSourceId or existing installed dataSource
         $query->select('reports.*')
-        ->from('{{%sproutreports_reports}} as reports')
-        ->innerJoin('{{%sproutreports_datasources}} as datasource', 'datasource.id = reports.dataSourceId');
+            ->from('{{%sproutreports_reports}} as reports')
+            ->innerJoin('{{%sproutreports_datasources}} as datasource', 'datasource.id = reports.dataSourceId');
 
         return $query;
     }
@@ -188,18 +188,16 @@ class Reports extends Component
 
     public function getReportsAsSelectFieldOptions()
     {
-        $options = array();
+        $options = [];
 
         $reports = $this->getAllReports();
 
-        if ($reports)
-        {
-            foreach ($reports as $report)
-            {
-                $options[] = array(
+        if ($reports) {
+            foreach ($reports as $report) {
+                $options[] = [
                     'label' => $report->name,
                     'value' => $report->id,
-                );
+                ];
             }
         }
         return $options;

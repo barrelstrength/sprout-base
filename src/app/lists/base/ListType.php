@@ -3,6 +3,8 @@
 namespace barrelstrength\sproutbase\app\lists\base;
 
 use barrelstrength\sproutlists\elements\Lists;
+use barrelstrength\sproutlists\elements\Subscribers;
+use barrelstrength\sproutlists\models\Subscription;
 use craft\base\Component;
 
 abstract class ListType extends Component
@@ -20,38 +22,38 @@ abstract class ListType extends Component
     /**
      * Subscribe a user to a list for this List Type
      *
-     * @param $subscription
+     * @param Subscription $subscription
      *
      * @return mixed
      */
-    abstract public function subscribe($subscription);
+    abstract public function subscribe(Subscription $subscription);
 
     /**
      * Unsubscribe a user from a list for this List Type
      *
-     * @param $subscription
+     * @param Subscription $subscription
      *
      * @return mixed
      */
-    abstract public function unsubscribe($subscription);
+    abstract public function unsubscribe(Subscription $subscription);
 
     /**
      * Check if a user is subscribed to a list
      *
-     * @param $subscription
+     * @param Subscription $subscription
      *
      * @return mixed
      */
-    abstract public function isSubscribed($subscription);
+    abstract public function isSubscribed(Subscription $subscription);
 
     /**
      * Return all lists for a given subscriber.
      *
-     * @param $subscriber
+     * @param Subscribers $subscriber
      *
      * @return mixed
      */
-    abstract public function getLists($subscriber);
+    abstract public function getLists(Subscribers $subscriber);
 
     /**
      * Get subscribers on a given list.
@@ -62,30 +64,30 @@ abstract class ListType extends Component
      * @internal param $criteria
      *
      */
-    abstract public function getSubscribers($list);
+    abstract public function getSubscribers(Lists $list);
 
     /**
      * Return total subscriptions for a given subscriber.
      *
-     * @param null $subscriber
+     * @param Subscribers $subscriber
      *
      * @return mixed
      */
-    abstract public function getListCount($subscriber = null);
+    abstract public function getListCount(Subscribers $subscriber = null);
 
     /**
      * @param $list
      *
      * @return mixed
      */
-    abstract public function getSubscriberCount($list);
+    abstract public function getSubscriberCount(Lists $list);
 
     /**
-     * @param $listId
+     * @param int $listId
      *
      * @return mixed
      */
-    abstract public function getListById($listId);
+    abstract public function getListById(int $listId);
 
     /**
      * @param Lists $list
