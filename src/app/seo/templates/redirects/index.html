@@ -1,6 +1,7 @@
 {% extends "sprout-base-seo/_layouts/elementindex" %}
 {% set elementType = 'barrelstrength\\sproutseo\\elements\\Redirect' %}
 {% set title = "Redirects" %}
+
 {% do view.registerAssetBundle("barrelstrength\\sproutbase\\app\\seo\\web\\assets\\redirects\\RedirectsAsset") %}
 
 {% block actionButton %}
@@ -8,6 +9,15 @@
         <a class="btn submit add icon" id="sprout-seo-new-button"
            href="{{ url('sprout-seo/redirects/new/' ~ currentSite.handle) }}">{{ "New Redirect"|t }}</a>
     </div>
+{% endblock %}
+
+{% block contextMenu %}
+    {% if showSiteMenu %}
+        {% include "sprout-base-seo/_layouts/sitemenu" with {
+            selectedSiteId: currentSite.id,
+            urlFormat: "sprout-seo/redirects/{baseSiteId}"
+        } %}
+    {% endif %}
 {% endblock %}
 
 {% css %}

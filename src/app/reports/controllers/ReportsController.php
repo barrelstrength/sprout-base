@@ -364,12 +364,8 @@ class ReportsController extends Controller
     public function actionExportReport()
     {
         $reportId = Craft::$app->getRequest()->getParam('reportId');
-
         $report = SproutBase::$app->reports->getReport($reportId);
-
-        $settings = Craft::$app->getRequest()->getBodyParam('settings');
-
-        $settings = count($settings) ? $settings : [];
+        $settings = Craft::$app->getRequest()->getBodyParam('settings') ?? [];
 
         if ($report) {
             $dataSource = SproutBase::$app->dataSources->getDataSourceById($report->dataSourceId);

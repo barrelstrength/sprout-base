@@ -7,19 +7,17 @@
 
 namespace barrelstrength\sproutbase\app\seo\web\assets\schema;
 
-
+use barrelstrength\sproutbase\app\seo\web\assets\base\BaseAsset;
+use barrelstrength\sproutbase\app\seo\web\assets\opengraph\OpenGraphAsset;
+use barrelstrength\sproutbase\app\seo\web\assets\tageditor\TagEditorAsset;
+use barrelstrength\sproutbase\app\seo\web\assets\twittercard\TwitterCardAsset;
 use craft\web\AssetBundle;
-use craft\web\assets\cp\CpAsset;
 
 class SchemaAsset extends AssetBundle
 {
     public function init()
     {
         $this->sourcePath = '@sproutbase/app/seo/web/assets/schema/dist';
-
-        $this->depends = [
-            CpAsset::class,
-        ];
 
         $this->js = [
             'js/schema.js'
