@@ -121,6 +121,14 @@ class NotificationEmail extends EmailElement
     }
 
     /**
+     * @return bool
+     */
+    public static function isLocalized(): bool
+    {
+        return true;
+    }
+
+    /**
      * @inheritdoc
      */
     public function getStatuses()
