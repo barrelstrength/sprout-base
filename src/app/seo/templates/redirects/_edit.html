@@ -4,7 +4,7 @@
 {% set title = (redirect.id != "" ? "Edit Redirect"|t('sprout-seo') : "Create a new redirect"|t('sprout-seo')) %}
 
 {% set crumbs = [
-    { label: "Redirects"|t('sprout-seo'), url: url('sprout-seo/redirects/' ~ currentSite.id) }
+    { label: "Redirects"|t('sprout-seo'), url: url('sprout-seo/redirects/' ~ currentSite.handle) }
 ] %}
 
 {% set fullPageForm = true %}
@@ -48,7 +48,7 @@
                value="{{ redirect.id }}">
     {% endif %}
 
-    <input type="hidden" name="baseSiteId"
+    <input type="hidden" name="siteId"
            value="{{ currentSite.id }}">
 
     {% include "sprout-base-seo/redirects/_fields" %}

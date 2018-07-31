@@ -17,7 +17,7 @@
         <input type="hidden" name="globalKeys" value="settings,meta">
         <input type="hidden" name="siteId" value="{{ globals.siteId }}">
 
-        {% set dividerOptions = craft.sproutSeo.getSeoDividerOptions() %}
+        {% set dividerOptions = craft.sproutSeo.getSeoDividerOptions(currentSite) %}
 
         {{ forms.field({
             label: 'Select the character that will be used between Title segments'|t ~ sprout.infoIcon({
@@ -34,7 +34,7 @@
             otherPlaceholderText: 'Custom Divider'|t
         })) }}
 
-        {% set titleOptions = craft.sproutSeo.getAppendMetaTitleOptions() %}
+        {% set titleOptions = craft.sproutSeo.getAppendMetaTitleOptions(currentSite) %}
 
         {{ forms.field({
             label: 'Append value to all Meta Titles'|t ~ sprout.infoIcon({
