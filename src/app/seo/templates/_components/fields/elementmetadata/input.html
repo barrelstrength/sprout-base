@@ -135,6 +135,8 @@
 
         {% if settings.editCanonical %}
 
+            {% set displayMetadataField = true %}
+
             {{ forms.textField({
                 label: "Canonical URL"|t ~ sprout.infoIcon({
                     label: "Canonical URL"|t,
@@ -340,6 +342,8 @@
 
 </div>
 
+
+
 {% css %}
     {# Hide the Heading of our Field so all our grouped sub-fields
 feel like they are part of the natural flow of fields #}
@@ -347,9 +351,9 @@ feel like they are part of the natural flow of fields #}
         #{{ fieldId }} > .heading:first-of-type { display: none; }
     {% endif %}
 
-    {% if fieldId is defined and not displayMetadataField %}
-        #{{ fieldId }} { display: none; }
-    {% endif %}
+    {#{% if fieldId is defined and not displayMetadataField %}#}
+        {##{{ fieldId }} { display: none; }#}
+    {#{% endif %}#}
 {% endcss %}
 
 {% js %}
