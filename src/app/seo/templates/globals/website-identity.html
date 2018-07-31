@@ -337,7 +337,7 @@
             <div id="localbusiness"
                  {% if not globals.isLocalBusiness() %}class="hidden"{% endif %}>
 
-                {% set priceRangeOptions = craft.sproutSeo.getPriceRangeOptions() %}
+                {% set priceRangeOptions = craft.sproutSeo.getPriceRangeOptions(currentSite) %}
 
                 <div class="field">
                     <div class="heading">
@@ -411,7 +411,7 @@
         {# These fields should only display when 'Person' is selected #}
         <div class="person-info {% if globals.getWebsiteIdentityType() == 'Organization' %}hidden{% endif %}">
 
-            {% set genderOptions = craft.sproutSeo.getGenderOptions() %}
+            {% set genderOptions = craft.sproutSeo.getGenderOptions(currentSite) %}
 
             {{ forms.field({
                 label: "Gender"|t('sprout-seo') ~ sprout.infoIcon({
