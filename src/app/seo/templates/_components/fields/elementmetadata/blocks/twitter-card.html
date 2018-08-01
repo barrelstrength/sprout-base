@@ -52,16 +52,6 @@
             criteria: {kind: ['image'], siteId : null}
         })) }}
 
-        {{ forms.selectField({
-            label: 'Image Transform'|t,
-            instructions: 'Select the Twitter Card Image Transform'|t,
-            name: field.handle~'[metadata][twitterTransform]',
-            options: transformOptions,
-            value: values.twitterTransform,
-            errors: "",
-            required: false
-        }) }}
-
         {{ forms.textField({
             label: "Creator"|t,
             instructions: "If the content of this card was authored by someone, include their Twitter username here."|t,

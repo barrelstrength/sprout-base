@@ -30,6 +30,7 @@ class Address extends Model
     public $sortingCode;
     public $address1;
     public $address2;
+    public $country;
 
     public function init()
     {

@@ -53,16 +53,6 @@
             criteria: {kind: ['image'], siteId : null}
         })) }}
 
-        {{ forms.selectField({
-            label: 'Image Transform'|t,
-            instructions: 'Select the Open Graph Image Transform'|t,
-            name: field.handle~'[metadata][ogTransform]',
-            options: transformOptions,
-            value: values.ogTransform,
-            errors: "",
-            required: false
-        }) }}
-
     </div>
 
 </div>

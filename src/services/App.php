@@ -55,7 +55,7 @@ class App extends Component
     public $emailField;
 
     /**
-     * @var Email
+     * @var EmailDropdown
      */
     public $emailDropdownField;
 

@@ -135,6 +135,8 @@
 
         {% if settings.editCanonical %}
 
+            {% set displayMetadataField = true %}
+
             {{ forms.textField({
                 label: "Canonical URL"|t ~ sprout.infoIcon({
                     label: "Canonical URL"|t,
@@ -340,6 +342,8 @@
 
 </div>
 
+
+
 {% css %}
     {# Hide the Heading of our Field so all our grouped sub-fields
 feel like they are part of the natural flow of fields #}
@@ -347,9 +351,9 @@ feel like they are part of the natural flow of fields #}
         #{{ fieldId }} > .heading:first-of-type { display: none; }
     {% endif %}
 
-    {% if fieldId is defined and not displayMetadataField %}
-        #{{ fieldId }} { display: none; }
-    {% endif %}
+    {#{% if fieldId is defined and not displayMetadataField %}#}
+        {##{{ fieldId }} { display: none; }#}
+    {#{% endif %}#}
 {% endcss %}
 
 {% js %}
@@ -418,10 +422,12 @@ feel like they are part of the natural flow of fields #}
         }
     }
 
-    function appendSeoBadge(fieldId)
+    function appendSeoBadge(targetLabelId, seoButton)
     {
-        var labelId = '#fields-' + fieldId + '-label';
-        $(labelId).append(metaTitleSeoButton);
+        if ($(targetLabelId).find('.sproutseo-info').length === 0)
+        {
+            $(targetLabelId).append(seoButton).removeClass('hidden');
+        }
     }
 
     {% if settings.optimizedKeywordsField == 'manually' %}
@@ -438,7 +444,7 @@ feel like they are part of the natural flow of fields #}
 
         var metaTitleSeoButton = $('div.sproutseo-metatitle-info').html();
         var metaTitleLabelId = '#title-label';
-        $(metaTitleLabelId).append(metaTitleSeoButton).removeClass('hidden');
+        appendSeoBadge(metaTitleLabelId, metaTitleSeoButton);
         Craft.initUiElements($(metaTitleLabelId));
 
         var metaTitleInput = $('#title');
@@ -456,7 +462,7 @@ feel like they are part of the natural flow of fields #}
             var metaTitleSeoButton = $('div.sproutseo-metatitle-info').html();
             var metaTitleLabelId = '#fields-{{ optimizedTitleFieldModel.handle }}-label';
 
-            $(metaTitleLabelId).append(metaTitleSeoButton).removeClass('hidden');
+            appendSeoBadge(metaTitleLabelId, metaTitleSeoButton);
             Craft.initUiElements($(metaTitleLabelId));
             var metaTitleInput = $('#fields-{{ optimizedTitleFieldModel.handle }}-field input');
             metaTitleInput.attr('maxlength', 60);
@@ -475,7 +481,7 @@ feel like they are part of the natural flow of fields #}
             {% if titleFieldHandle == 'title' %}
 
                 var metaTitleLabelId = '#title-label';
-                $(metaTitleLabelId).append(metaTitleSeoButton).removeClass('hidden');
+                appendSeoBadge(metaTitleLabelId, metaTitleSeoButton);
 
                 Craft.initUiElements($(metaTitleLabelId));
 
@@ -489,7 +495,7 @@ feel like they are part of the natural flow of fields #}
 
                     var metaTitleLabelId = '#fields-{{ optimizedTitleFieldModel.handle }}-label';
 
-                    $(metaTitleLabelId).append(metaTitleSeoButton).removeClass('hidden');
+                    appendSeoBadge(metaTitleLabelId, metaTitleSeoButton);
                     Craft.initUiElements($(metaTitleLabelId));
 
                     var metaTitleInput = $('#fields-{{ optimizedTitleFieldModel.handle }}-field input');
@@ -507,7 +513,7 @@ feel like they are part of the natural flow of fields #}
 
             var metaDescriptionSeoButton = $('div.sproutseo-metadescription-info').html();
             var metaDescriptionLabelId = '#fields-{{ optimizedDescriptionFieldModel.handle }}-label';
-            $(metaDescriptionLabelId).append(metaDescriptionSeoButton).removeClass('hidden');
+            appendSeoBadge(metaDescriptionLabelId, metaDescriptionSeoButton);
             Craft.initUiElements($(metaDescriptionLabelId));
 
             var metaDescriptionInput = $('#fields-{{ optimizedDescriptionFieldModel.handle }}-field textarea');
@@ -530,7 +536,7 @@ feel like they are part of the natural flow of fields #}
             {% if descriptionFieldHandle == 'title' %}
 
                 var metaDescriptionLabelId = '#title-label';
-                $(metaDescriptionLabelId).append(metaDescriptionSeoButton).removeClass('hidden');
+                appendSeoBadge(metaDescriptionLabelId, metaDescriptionSeoButton);
                 Craft.initUiElements($(metaDescriptionLabelId));
 
             {% else %}
@@ -539,7 +545,7 @@ feel like they are part of the natural flow of fields #}
                 {% if optimizedDescriptionFieldModel %}
 
                     var metaDescriptionLabelId = '#fields-{{ optimizedDescriptionFieldModel.handle }}-label';
-                    $(metaDescriptionLabelId).append(metaDescriptionSeoButton).removeClass('hidden');
+                    appendSeoBadge(metaDescriptionLabelId, metaDescriptionSeoButton);
                     Craft.initUiElements($(metaDescriptionLabelId));
 
                     var metaDescriptionInput = $('#fields-{{ optimizedDescriptionFieldModel.handle }}-field textarea');
@@ -566,7 +572,7 @@ feel like they are part of the natural flow of fields #}
             {% if optimizedImageFieldModel %}
 
                 var metaImageLabelId = '#fields-{{ optimizedImageFieldModel.handle }}-label';
-                $(metaImageLabelId).append(metaImageSeoButton).removeClass('hidden');
+                appendSeoBadge(metaImageLabelId, metaImageSeoButton);
                 Craft.initUiElements($(metaImageLabelId));
 
                 var metaImageInput = $('#fields-{{ optimizedImageFieldModel.handle }}-field input');
@@ -587,7 +593,7 @@ feel like they are part of the natural flow of fields #}
 
             var metaImageSeoButton = $('div.sproutseo-metaimage-info').html();
             var metaImageLabelId = '#fields-{{ optimizedImageFieldModel.handle }}-label';
-            $(metaImageLabelId).append(metaImageSeoButton).removeClass('hidden');
+            appendSeoBadge(metaImageLabelId, metaImageSeoButton);
 
             Craft.initUiElements($(metaImageLabelId));
 

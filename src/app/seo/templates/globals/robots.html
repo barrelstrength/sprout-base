@@ -3,7 +3,7 @@
 {% import "sprout-base-seo/_includes/sproutseo" as sprout %}
 
 {% set settings = craft.sproutSeo.getSettings() %}
-{% set values = { robots : craft.sproutSeo.getGlobalRobots } %}
+{% set values = { robots : craft.sproutSeo.getGlobalRobots(globals.siteId) } %}
 
 {% block content %}
 
