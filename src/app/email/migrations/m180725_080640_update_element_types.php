@@ -56,7 +56,7 @@ class m180725_080640_update_element_types extends Migration
      */
     public function safeDown()
     {
-        echo "m180725_080640_update_element_type cannot be reverted.\n";
+        echo "m180725_080640_update_element_types cannot be reverted.\n";
         return false;
     }
 }
