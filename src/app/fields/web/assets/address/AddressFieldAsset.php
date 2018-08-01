@@ -20,6 +20,10 @@ class AddressFieldAsset extends AssetBundle
             CpAsset::class
         ];
 
+        $this->css = [
+            'css/addressfield.css'
+        ];
+
         $this->js = [
             'js/AddressBox.js',
             'js/AddressForm.js',

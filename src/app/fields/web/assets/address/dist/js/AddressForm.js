@@ -12,6 +12,7 @@ SproutBase.AddressForm = {
     $element: null,
     changeFormInput: null,
     resultHtml: null,
+
     init: function($element, settings) {
         this.$element = $element;
         this.settings = settings;
@@ -26,15 +27,16 @@ SproutBase.AddressForm = {
             var $target = $(target);
             var countryCode = $target.val();
 
-            this.changeFormInput(countryCode, this)
+            this.changeFormInput(countryCode, this);
         }, this));
 
         // public method
         var self = this;
         this.initFormInput = $.proxy(function(countryCode) {
-            return SproutBase.AddressForm.changeFormInput(countryCode)
-        }, this)
+            return SproutBase.AddressForm.changeFormInput(countryCode);
+        }, this);
     },
+
     changeFormInput: function(countryCode, obj) {
 
         var data = {
@@ -46,8 +48,8 @@ SproutBase.AddressForm = {
         var self = obj;
         $.post(actionUrl, data, $.proxy(function(response) {
             self.$element.find('.field-address-input').remove();
-            self.$element.append(response)
-        }, this))
+            self.$element.append(response);
+        }, this));
     },
     defaults: {
         onChange: $.noop
