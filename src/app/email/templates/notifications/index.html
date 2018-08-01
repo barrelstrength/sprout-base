@@ -6,8 +6,8 @@
 
 {% block actionButton %}
     <div class="buttons">
-        <a class="btn submit add icon"
-           href="{{ url(currentPluginHandle ~ '/notifications/edit/new') }}">
+        <a id="sprout-notification-new-button" class="btn submit add icon"
+           href="{{ url(currentPluginHandle ~ '/notifications/edit/new/default') }}">
             {{ "New Notification"|t('sprout-base') }}
         </a>
     </div>
@@ -34,4 +34,43 @@
     });
 
     $('#main-content').removeClass('has-sidebar');
+
+
+    (function($) {
+        var NotificationIndex = Garnish.Base.extend({
+            $menu: null,
+            $form: null,
+
+            /**
+             * The constructor.
+             */
+            init: function() {
+                var $siteMenu = $('.sitemenubtn:first').menubtn().data('menubtn').menu;
+
+                // Change the siteId when on hidden values
+                $siteMenu.on('optionselect', function(ev) {
+
+                    var uri = '';
+                    for (var i = 0; i < Craft.sites.length; i++) {
+                        if (Craft.sites[i].id == Craft.elementIndex.siteId) {
+                            uri += 'sprout-email/notifications/edit/new/' + Craft.sites[i].handle;
+                            uri = Craft.getUrl(uri);
+
+                            $("#sprout-notification-new-button").attr("href", uri);
+                        }
+                    }
+                });
+            },
+        });
+
+        window.NotificationIndex = NotificationIndex;
+
+    })(jQuery);
+
 {% endblock %}
+
+{% js %}
+jQuery(document).ready(function() {
+    new NotificationIndex();
+});
+{% endjs %}

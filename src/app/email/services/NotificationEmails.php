@@ -15,6 +15,7 @@ use craft\helpers\ElementHelper;
 use craft\helpers\UrlHelper;
 use craft\base\ElementInterface;
 
+use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
 
 /**
@@ -347,21 +348,20 @@ class NotificationEmails extends Component
     }
 
     /**
-     * @param string $subjectLine
-     * @param string $handle
+     * @param $siteId
      *
      * @return NotificationEmail|null
-     * @throws \Exception
+     * @throws NotFoundHttpException
      * @throws \Throwable
-     * @throws \yii\base\Exception
+     * @throws \yii\db\Exception
      */
-    public function createNewNotification($subjectLine = null, $handle = null)
+    public function createNewNotification($siteId)
     {
         $currentPluginHandle = Craft::$app->request->getSegment(1);
 
         $notificationEmail = new NotificationEmail();
-        $subjectLine = $subjectLine ?? Craft::t('sprout-base', 'Notification');
-        $handle = $handle ?? ElementHelper::createSlug($subjectLine);
+        $subjectLine = Craft::t('sprout-base', 'Notification');
+        $handle = ElementHelper::createSlug($subjectLine);
 
         $subjectLine = $this->getFieldAsNew('subjectLine', $subjectLine);
 
@@ -369,6 +369,8 @@ class NotificationEmails extends Component
         $notificationEmail->subjectLine = $subjectLine;
         $notificationEmail->pluginHandle = $currentPluginHandle;
         $notificationEmail->slug = $handle;
+
+        $notificationEmail->siteId = $siteId;
 
         $systemEmailSettings = Craft::$app->getSystemSettings()->getEmailSettings();
 

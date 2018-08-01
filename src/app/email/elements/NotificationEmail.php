@@ -143,13 +143,27 @@ class NotificationEmail extends EmailElement
     /**
      * @inheritdoc
      */
+    public function getSupportedSites(): array
+    {
+        // limit to just the one site this element is set to so that we don't propagate when saving
+        return [$this->siteId];
+    }
+
+    /**
+     * @inheritdoc
+     */
     public function getCpEditUrl()
     {
         $pluginHandle = Craft::$app->request->getBodyParam('criteria.base') ?: 'sprout-email';
-
-        return UrlHelper::cpUrl(
+        $url =  UrlHelper::cpUrl(
             $pluginHandle.'/notifications/edit/'.$this->id
         );
+
+        if (Craft::$app->getIsMultiSite() && $this->siteId != Craft::$app->getSites()->getCurrentSite()->id) {
+            $url .= '/'.$this->getSite()->handle;
+        }
+
+        return $url;
     }
 
     /**

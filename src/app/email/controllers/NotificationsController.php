@@ -16,6 +16,7 @@ use Craft;
 use craft\base\Plugin;
 
 use yii\base\Exception;
+use yii\web\ForbiddenHttpException;
 use yii\web\HttpException;
 
 /**
@@ -69,26 +70,42 @@ class NotificationsController extends Controller
 
     /**
      * @param null                   $emailId
+     * @param $
+     * @param null                   $siteHandle
      * @param NotificationEmail|null $notificationEmail
      *
      * @return \yii\web\Response
-     * @throws \Exception
+     * @throws Exception
      * @throws \Throwable
-     * @throws \yii\base\Exception
+     * @throws \craft\errors\SiteNotFoundException
      */
-    public function actionEditNotificationEmailTemplate($emailId = null, NotificationEmail $notificationEmail = null)
+    public function actionEditNotificationEmailTemplate($emailId = null, $siteHandle = null, NotificationEmail $notificationEmail = null)
     {
         $routeParams = Craft::$app->getUrlManager()->getRouteParams();
 
         // Our currentPluginHandle helps us allow notifications to be managed in other plugins
         $currentPluginHandle = Craft::$app->request->getSegment(1);
 
+        if ($siteHandle === null)
+        {
+            $primarySite = Craft::$app->getSites()->getPrimarySite();
+            $siteHandle = $primarySite->handle;
+        }
+
+        $currentSite = Craft::$app->getSites()->getSiteByHandle($siteHandle);
+
+        if (!$currentSite) {
+            throw new ForbiddenHttpException(Craft::t('sprout-base', 'Unable to identify current site.'));
+        }
+
+        $siteId = $currentSite->id;
+
         // Immediately create a new Notification
         if ($emailId === 'new') {
-            $notificationEmail = SproutBase::$app->notifications->createNewNotification();
+            $notificationEmail = SproutBase::$app->notifications->createNewNotification($siteId);
 
             if ($notificationEmail) {
-                $url = UrlHelper::cpUrl($currentPluginHandle.'/notifications/edit/'.$notificationEmail->id);
+                $url = UrlHelper::cpUrl($currentPluginHandle.'/notifications/edit/'.$notificationEmail->id . '/' . $siteHandle);
                 return $this->redirect($url);
             } else {
                 throw new Exception(Craft::t('sprout-base', 'Unable to create Notification Email'));
@@ -96,7 +113,11 @@ class NotificationsController extends Controller
         }
 
         if (!$notificationEmail) {
-            $notificationEmail = SproutBase::$app->notifications->getNotificationEmailById($emailId);
+            $notificationEmail = Craft::$app->getElements()->getElementById($emailId, NotificationEmail::class, $siteId);
+        }
+
+        if ($notificationEmail == null) {
+            throw new ForbiddenHttpException(Craft::t('sprout-base', 'Unable to identify email.'));
         }
 
         // Sort out Live Preview and Share button behaviors
@@ -187,7 +208,7 @@ class NotificationsController extends Controller
         $notificationEmail->id = Craft::$app->getRequest()->getBodyParam('emailId');
 
         if ($notificationEmail->id) {
-            $notificationEmail = SproutBase::$app->notifications->getNotificationEmailById($notificationEmail->id);
+            $notificationEmail = Craft::$app->getElements()->getElementById($notificationEmail->id, NotificationEmail::class, $notificationEmail->siteId);
         }
 
         $notificationEmail->subjectLine = Craft::$app->getRequest()->getRequiredBodyParam('subjectLine');
