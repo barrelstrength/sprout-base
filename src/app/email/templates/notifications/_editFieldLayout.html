@@ -53,6 +53,10 @@
     <input type="hidden" name="emailId" value="{{ emailId }}">
     <input type="hidden" name="mailer" value="defaultmailer">
 
+    {% if notificationEmail.siteId is not null %}
+        <input type="hidden" name="siteId" value="{{ notificationEmail.siteId }}">
+    {% endif %}
+
     {% include "_includes/fieldlayoutdesigner" with {
         fieldLayout: notificationEmail.getFieldLayout()
     } only %}

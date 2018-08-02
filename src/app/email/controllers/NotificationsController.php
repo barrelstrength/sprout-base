@@ -39,11 +39,14 @@ class NotificationsController extends Controller
 
     /**
      * @param null                   $emailId
+     * @param null                   $siteHandle
      * @param NotificationEmail|null $notificationEmail
      *
      * @return \yii\web\Response
+     * @throws ForbiddenHttpException
+     * @throws \craft\errors\SiteNotFoundException
      */
-    public function actionEditNotificationEmailSettingsTemplate($emailId = null, NotificationEmail $notificationEmail = null)
+    public function actionEditNotificationEmailSettingsTemplate($emailId = null, $siteHandle = null, NotificationEmail $notificationEmail = null)
     {
         $currentUser = Craft::$app->getUser()->getIdentity();
 
@@ -51,13 +54,28 @@ class NotificationsController extends Controller
             return $this->redirect($this->currentPluginHandle);
         }
 
+
+        if ($siteHandle === null)
+        {
+            $primarySite = Craft::$app->getSites()->getPrimarySite();
+            $siteHandle = $primarySite->handle;
+        }
+
+        $currentSite = Craft::$app->getSites()->getSiteByHandle($siteHandle);
+
+        if (!$currentSite) {
+            throw new ForbiddenHttpException(Craft::t('sprout-base', 'Unable to identify current site.'));
+        }
+
+        $siteId = $currentSite->id;
+
         $isNewNotificationEmail = $emailId !== null && $emailId === 'new';
 
         if (!$notificationEmail) {
             if ($isNewNotificationEmail) {
                 $notificationEmail = new NotificationEmail();
             } else {
-                $notificationEmail = SproutBase::$app->notifications->getNotificationEmailById($emailId);
+                $notificationEmail = Craft::$app->getElements()->getElementById($emailId, NotificationEmail::class, $siteId);
             }
         }
 
@@ -148,6 +166,7 @@ class NotificationsController extends Controller
             if ($notificationEmail->id && $notificationEmail->getUrl()) {
                 $shareUrl = UrlHelper::actionUrl('sprout-base/notifications/share-notification-email', [
                     'notificationId' => $notificationEmail->id,
+                    'siteId' => $siteId
                 ]);
             }
         }
@@ -187,7 +206,8 @@ class NotificationsController extends Controller
             'lists' => $lists,
             'tabs' => $tabs,
             'showPreviewBtn' => $showPreviewBtn,
-            'shareUrl' => $shareUrl
+            'shareUrl' => $shareUrl,
+            'currentSite' => $currentSite
         ]);
     }
 
@@ -206,9 +226,10 @@ class NotificationsController extends Controller
         $notificationEmail = new NotificationEmail();
 
         $notificationEmail->id = Craft::$app->getRequest()->getBodyParam('emailId');
+        $siteId = Craft::$app->getRequest()->getBodyParam('siteId');
 
         if ($notificationEmail->id) {
-            $notificationEmail = Craft::$app->getElements()->getElementById($notificationEmail->id, NotificationEmail::class, $notificationEmail->siteId);
+            $notificationEmail = Craft::$app->getElements()->getElementById($notificationEmail->id, NotificationEmail::class, $siteId);
         }
 
         $notificationEmail->subjectLine = Craft::$app->getRequest()->getRequiredBodyParam('subjectLine');
@@ -300,9 +321,10 @@ class NotificationsController extends Controller
         $notificationEmail = new NotificationEmail();
 
         $notificationEmail->id = Craft::$app->getRequest()->getBodyParam('emailId');
+        $siteId = Craft::$app->getRequest()->getBodyParam('siteId');
 
         if ($notificationEmail->id) {
-            $notificationEmail = SproutBase::$app->notifications->getNotificationEmailById($notificationEmail->id);
+            $notificationEmail = Craft::$app->getElements()->getElementById($notificationEmail->id, NotificationEmail::class, $siteId);
         }
 
         // Set the field layout
@@ -477,17 +499,16 @@ class NotificationsController extends Controller
 
     /**
      * Prepares a Notification Email to be shared via token-based URL
-     *
      * @param null $notificationId
+     * @param null $siteId
      *
      * @return \yii\web\Response
-     * @throws Exception
      * @throws HttpException
      */
-    public function actionShareNotificationEmail($notificationId = null)
+    public function actionShareNotificationEmail($notificationId = null, $siteId = null)
     {
         if ($notificationId) {
-            $notificationEmail = SproutBase::$app->notifications->getNotificationEmailById($notificationId);
+            $notificationEmail = Craft::$app->getElements()->getElementById($notificationId, NotificationEmail::class, $siteId);
 
             if (!$notificationEmail) {
                 throw new HttpException(404);
@@ -497,7 +518,8 @@ class NotificationsController extends Controller
 
             $params = [
                 'notificationId' => $notificationId,
-                'type' => $type
+                'type' => $type,
+                'siteId' => $siteId
             ];
         } else {
             throw new HttpException(404);
@@ -526,11 +548,11 @@ class NotificationsController extends Controller
      * @throws \yii\base\ExitException
      * @throws \yii\web\BadRequestHttpException
      */
-    public function actionViewSharedNotificationEmail($notificationId = null, $type = null)
+    public function actionViewSharedNotificationEmail($notificationId = null, $type = null, $siteId = null)
     {
         $this->requireToken();
 
-        SproutBase::$app->notifications->getPreviewNotificationEmailById($notificationId, $type);
+        SproutBase::$app->notifications->getPreviewNotificationEmailById($notificationId, $type, $siteId);
     }
 
 

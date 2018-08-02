@@ -17,7 +17,7 @@
 {% set title  = notificationEmail is defined ? notificationEmail.title : 'Create a new Notification Email'|t('sprout-base') %}
 
 {% set fullPageForm = true %}
-{% set saveShortcutRedirect = url(currentPluginHandle ~ '/notifications/edit/' ~ notificationId) %}
+{% set saveShortcutRedirect = url(currentPluginHandle ~ '/notifications/edit/' ~ notificationId ~ '/' ~ currentSite.handle) %}
 
 {% set mailer = notificationEmail.getMailer() %}
 
@@ -57,14 +57,14 @@
                             <span
                                     class="shortcut">⌘S</span></a></li>
                     <li><a class="formsubmit"
-                           data-redirect="{{ currentPluginHandle }}/settings/notifications/edit/new">
+                           data-redirect="{{ currentPluginHandle }}/settings/notifications/edit/new/{{ currentSite.handle }}">
                             {{ "Save and add another"|t('sprout-base') }}</a>
                     </li>
                 </ul>
                 <hr>
                 <ul>
                     <li>
-                        <a href="{{ cpUrl(currentPluginHandle ~ '/settings/notifications/edit/' ~ notificationId) }}">
+                        <a href="{{ cpUrl(currentPluginHandle ~ '/settings/notifications/edit/' ~ notificationId ~ '/' ~ currentSite.handle) }}">
                             {{ "Edit Field Layout"|t('sprout-base') }}</a>
                     </li>
                 </ul>
@@ -89,8 +89,13 @@
     <input type="hidden" name="action"
            value="sprout-base/notifications/save-notification-email">
     {{ redirectInput(currentPluginHandle ~ '/notifications') }}
+
     {% if notificationEmail.id is not null %}
         <input type="hidden" name="emailId" value="{{ notificationEmail.id }}">
+    {% endif %}
+
+    {% if notificationEmail.siteId is not null %}
+        <input type="hidden" name="siteId" value="{{ notificationEmail.siteId }}">
     {% endif %}
 
     {% if namespace is not defined %}{% set namespace = 'fields' %}{% endif %}
