@@ -60,7 +60,7 @@
                 <tr data-id="{{ loop.index }}">
                     <td>
                         {{ sproutFields.selectOther({
-                            name: 'sproutseo[meta][ownership][' ~ loop.index ~ '][0]',
+                            name: 'ownership[' ~ loop.index ~ '][0]',
                             options: verifyOwnershipOptions,
                             value: property.service,
                             otherPlaceholderText: 'Name of Service'|t
@@ -68,14 +68,14 @@
                     </td>
                     <td>
                         {{ forms.text({
-                            name: 'sproutseo[meta][ownership][' ~ loop.index ~ '][1]',
+                            name: 'ownership[' ~ loop.index ~ '][1]',
                             value: property.metaTag,
                             errors: ''
                         }) }}
                     </td>
                     <td>
                         {{ forms.text({
-                            name: 'sproutseo[meta][ownership][' ~ loop.index ~ '][2]',
+                            name: 'ownership[' ~ loop.index ~ '][2]',
                             value: property.verificationCode,
                             errors: ''
                         }) }}
@@ -135,7 +135,7 @@
         (function() {
 
         var tableId = 'sproutseo-schema-ownership';
-        var baseName = 'sproutseo[meta][ownership]';
+        var baseName = 'ownership';
         var columns = {{ cols|json_encode|raw }};
         var settings = {};
 

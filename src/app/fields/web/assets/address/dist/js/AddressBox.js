@@ -165,8 +165,8 @@ if (typeof Craft.SproutBase === typeof undefined) {
                         var latitude = response.geo.latitude;
                         var longitude = response.geo.longitude;
                         // @todo - add generic name?
-                        $("input[name='sproutseo[globals][identity][latitude]']").val(latitude);
-                        $("input[name='sproutseo[globals][identity][longitude]']").val(longitude);
+                        $("input[name='identity[latitude]']").val(latitude);
+                        $("input[name='identity[longitude]']").val(longitude);
 
                         Craft.cp.displayNotice(Craft.t('sprout-base', 'Latitude and Longitude updated.'));
                     }

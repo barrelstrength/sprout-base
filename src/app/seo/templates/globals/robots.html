@@ -11,11 +11,10 @@
         {{ csrfInput() }}
         <input type="hidden" name="action"
                value="sprout-seo/global-metadata/save-global-metadata">
-        <input type="hidden" name="globalKeys" value="meta,robots">
         <input type="hidden" name="siteId" value="{{ globals.siteId }}">
 
         {% set robotsContext = 'globals' %}
-        {% set robotsNamespace = 'sproutseo[globals][robots]' %}
+        {% set robotsNamespace = 'robots' %}
         {% include "sprout-base-seo/_components/fields/elementmetadata/blocks/robots" %}
 
         <hr>
