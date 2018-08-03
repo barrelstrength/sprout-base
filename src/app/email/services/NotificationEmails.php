@@ -35,22 +35,10 @@ class NotificationEmails extends Component
      */
     public function saveNotification(NotificationEmail $notificationEmail)
     {
-        $isNewNotificationEmail = !$notificationEmail->id;
-
         if (!$notificationEmail->validate()) {
             SproutBase::info(Craft::t('sprout-base', 'Notification Email not saved due to validation error.'));
             return false;
         }
-
-//        if (!$isNewNotificationEmail) {
-//            $notificationEmailRecord = NotificationEmail::findOne($notificationEmail->id);
-//
-//            if (!$notificationEmailRecord) {
-//                throw new NotFoundHttpException(Craft::t('sprout-base', 'No entry exists with the ID “{id}”', ['id' => $notificationEmail->id]));
-//            }
-//        } else {
-//            $notificationEmailRecord = new NotificationEmailRecord();
-//        }
 
         $transaction = Craft::$app->getDb()->beginTransaction();
 
@@ -60,17 +48,11 @@ class NotificationEmails extends Component
             $fieldLayout = $notificationEmail->getFieldLayout();
             Craft::$app->getFields()->saveLayout($fieldLayout);
             $notificationEmail->fieldLayoutId = $fieldLayout->id;
-           // $notificationEmailRecord->fieldLayoutId = $fieldLayout->id;
 
             // Save the global set
             if (!Craft::$app->getElements()->saveElement($notificationEmail, false)) {
                 return false;
             }
-
-            // Now that we have an element ID, save the record
-/*            if ($isNewNotificationEmail) {
-                $notificationEmailRecord->id = $notificationEmail->id;
-            }*/
 
             $transaction->commit();
 
@@ -217,18 +199,19 @@ class NotificationEmails extends Component
      *
      * @param      $notificationId
      * @param null $type
+     * @param null $siteId
      *
      * @throws \Twig_Error_Loader
      * @throws \yii\base\Exception
-     * @throws \yii\base\ExitException
+     * @throws \yii\base\ExitException'
      */
-    public function getPreviewNotificationEmailById($notificationId, $type = null, $siteId = null)
+    public function getPreviewNotificationEmailById($notificationId, $siteId = null, $type = null)
     {
         /**
          * @var $notificationEmail NotificationEmail
          */
         $notificationEmail = Craft::$app->getElements()->getElementById($notificationId, NotificationEmail::class, $siteId);
-
+;
         $event = SproutBase::$app->notificationEvents->getEvent($notificationEmail);
 
         if (!$event) {

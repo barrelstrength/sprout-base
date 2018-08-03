@@ -20,7 +20,7 @@
 
     {% if emailType == 'campaign' %}
 
-        {% set email = craft.sproutEmail.getCampaignEmailById(emailId) %}
+        {% set email = craft.sproutEmail.getCampaignEmailById(emailId, siteHandle) %}
 
         {#{% set shareUrl = craft.sproutEmail.getCampaignEmailShareUrl() %}#}
 
@@ -37,7 +37,7 @@
 
     {% if emailType == 'notification' %}
 
-        {% set email = craft.sproutEmail.getNotificationEmailById(emailId) %}
+        {% set email = craft.sproutEmail.getNotificationEmailById(emailId, siteHandle) %}
 
         {% set emailUrl = actionUrl('sprout-base/notifications/share-notification-email', {
             notificationId: email.id

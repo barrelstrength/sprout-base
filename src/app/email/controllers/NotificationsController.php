@@ -158,6 +158,7 @@ class NotificationsController extends Controller
                         'previewAction' => 'sprout-base/notifications/live-preview-notification-email',
                         'previewParams' => [
                             'notificationId' => $notificationEmail->id,
+                            'siteId' => $siteId
                         ]
                     ]
                 ).');'
@@ -363,9 +364,10 @@ class NotificationsController extends Controller
         $this->requirePostRequest();
 
         $notificationEmailId = Craft::$app->getRequest()->getBodyParam('emailId');
+        $siteId = Craft::$app->getRequest()->getBodyParam('siteId');
 
         /** @var NotificationEmail $notificationEmail */
-        $notificationEmail = SproutBase::$app->notifications->getNotificationEmailById($notificationEmailId);
+        $notificationEmail = Craft::$app->getElements()->getElementById($notificationEmailId, NotificationEmail::class, $siteId);
 
         if (!$notificationEmail) {
             throw new \InvalidArgumentException(Craft::t('sprout-base', 'No Notification Email exists with the ID “{id}”.', [
@@ -518,8 +520,8 @@ class NotificationsController extends Controller
 
             $params = [
                 'notificationId' => $notificationId,
-                'type' => $type,
-                'siteId' => $siteId
+                'siteId' => $siteId,
+                'type' => $type
             ];
         } else {
             throw new HttpException(404);
@@ -539,20 +541,20 @@ class NotificationsController extends Controller
 
     /**
      * Renders a shared Notification Email
-     *
      * @param null $notificationId
      * @param null $type
+     * @param null $siteId
      *
      * @throws Exception
      * @throws \Twig_Error_Loader
      * @throws \yii\base\ExitException
      * @throws \yii\web\BadRequestHttpException
      */
-    public function actionViewSharedNotificationEmail($notificationId = null, $type = null, $siteId = null)
+    public function actionViewSharedNotificationEmail($notificationId = null, $siteId = null, $type = null)
     {
         $this->requireToken();
 
-        SproutBase::$app->notifications->getPreviewNotificationEmailById($notificationId, $type, $siteId);
+        SproutBase::$app->notifications->getPreviewNotificationEmailById($notificationId, $siteId, $type);
     }
 
 
@@ -566,7 +568,8 @@ class NotificationsController extends Controller
     public function actionLivePreviewNotificationEmail()
     {
         $notificationId = Craft::$app->getRequest()->getBodyParam('notificationId');
+        $siteId         = Craft::$app->getRequest()->getBodyParam('siteId');
 
-        SproutBase::$app->notifications->getPreviewNotificationEmailById($notificationId);
+        SproutBase::$app->notifications->getPreviewNotificationEmailById($notificationId, $siteId);
     }
 }

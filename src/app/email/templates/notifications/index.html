@@ -3,7 +3,7 @@
 {% set elementType = 'barrelstrength\\sproutbase\\app\\email\\elements\\NotificationEmail' %}
 
 {% set currentPluginHandle = craft.app.request.getSegment(1) %}
-
+{% set selectedSiteId = craft.app.sites.currentSite.id %}
 {% block actionButton %}
     <div class="buttons">
         <a id="sprout-notification-new-button" class="btn submit add icon"
@@ -46,21 +46,24 @@
              */
             init: function() {
                 var $siteMenu = $('.sitemenubtn:first').menubtn().data('menubtn').menu;
-
+                var self = this;
+                self.setNewUrl();
                 // Change the siteId when on hidden values
                 $siteMenu.on('optionselect', function(ev) {
-
-                    var uri = '';
-                    for (var i = 0; i < Craft.sites.length; i++) {
-                        if (Craft.sites[i].id == Craft.elementIndex.siteId) {
-                            uri += 'sprout-email/notifications/edit/new/' + Craft.sites[i].handle;
-                            uri = Craft.getUrl(uri);
-
-                            $("#sprout-notification-new-button").attr("href", uri);
-                        }
-                    }
+                    self.setNewUrl();
                 });
             },
+            setNewUrl: function() {
+                var uri = '';
+                for (var i = 0; i < Craft.sites.length; i++) {
+                    if (Craft.sites[i].id == Craft.elementIndex.siteId) {
+                        uri += 'sprout-email/notifications/edit/new/' + Craft.sites[i].handle;
+                        uri = Craft.getUrl(uri);
+
+                        $("#sprout-notification-new-button").attr("href", uri);
+                    }
+                }
+            }
         });
 
         window.NotificationIndex = NotificationIndex;

@@ -3,6 +3,7 @@
 namespace barrelstrength\sproutbase\app\email\web\twig\variables;
 
 use barrelstrength\sproutbase\app\email\base\Mailer;
+use barrelstrength\sproutbase\app\email\elements\NotificationEmail;
 use barrelstrength\sproutbase\SproutBase;
 use barrelstrength\sproutbase\app\email\base\EmailTemplates;
 use barrelstrength\sproutbase\app\email\emailtemplates\BasicTemplates;
@@ -84,9 +85,11 @@ class SproutEmailVariable
         ]);
     }
 
-    public function getNotificationEmailById($id)
+    public function getNotificationEmailById($id, $siteHandle = null)
     {
-        return SproutBase::$app->notifications->getNotificationEmailById($id);
+        $currentSite = Craft::$app->getSites()->getSiteByHandle($siteHandle);
+
+        return Craft::$app->getElements()->getElementById($id, NotificationEmail::class, $currentSite->id);
     }
 
     /**

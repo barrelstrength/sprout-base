@@ -1,4 +1,4 @@
-{% set emailUrl = cpUrl(pluginHandle ~ '/preview/notification/' ~ email.id) %}
+{% set emailUrl = cpUrl(pluginHandle ~ '/preview/notification/' ~ email.id ~ '/' ~ currentSite.handle) %}
 
 <a href="{{ emailUrl }}" title="{{ email.title }}"
    data-preview-url="{{ emailUrl }}" class="email-preview" data-icon="view"></a>

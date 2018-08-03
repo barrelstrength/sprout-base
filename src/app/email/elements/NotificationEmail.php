@@ -224,6 +224,8 @@ class NotificationEmail extends EmailElement
             ]);
         }
 
+        $currentSite = Craft::$app->getSites()->getSiteById($this->siteId);
+
         if ($attribute === 'preview') {
             $shareUrl = null;
 
@@ -238,7 +240,8 @@ class NotificationEmail extends EmailElement
                 'email' => $this,
                 'pluginHandle' => $pluginHandle,
                 'shareUrl' => $shareUrl,
-                'type' => $attribute
+                'type' => $attribute,
+                'currentSite' => $currentSite
             ]);
         }
         return parent::getTableAttributeHtml($attribute);
