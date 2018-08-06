@@ -97,19 +97,6 @@ class NotificationEmails extends Component
     }
 
     /**
-     * @param int $emailId
-     *
-     * @return NotificationEmail|null
-     */
-    public function getNotificationEmailById(int $emailId)
-    {
-        /** @var NotificationEmail|null $notificationEmail */
-        $notificationEmail = Craft::$app->getElements()->getElementById($emailId);
-
-        return $notificationEmail;
-    }
-
-    /**
      * @param NotificationEmail $notificationEmail
      * @param                   $object
      *

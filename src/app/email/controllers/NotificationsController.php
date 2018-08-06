@@ -201,6 +201,12 @@ class NotificationsController extends Controller
 
         $tabs = count($notificationEmail->getFieldLayoutTabs()) ? $notificationEmail->getFieldLayoutTabs() : $tabs;
 
+        $enabledSiteIds = [];
+
+        if ($notificationEmail->id !== null) {
+            $enabledSiteIds = Craft::$app->getElements()->getEnabledSiteIdsForElement($notificationEmail->id);
+        }
+
         return $this->renderTemplate('sprout-base-email/notifications/_edit', [
             'notificationEmail' => $notificationEmail,
             'events' => $events,
@@ -208,7 +214,11 @@ class NotificationsController extends Controller
             'tabs' => $tabs,
             'showPreviewBtn' => $showPreviewBtn,
             'shareUrl' => $shareUrl,
-            'currentSite' => $currentSite
+            'currentSite' => $currentSite,
+            'showSites' => Craft::$app->getIsMultiSite(),
+            'siteIds' => Craft::$app->getSites()->getEditableSiteIds(),
+            'enabledSiteIds' => $enabledSiteIds,
+            'revisionLabel' => Craft::t('sprout-email', $notificationEmail->getSite()->name)
         ]);
     }
 

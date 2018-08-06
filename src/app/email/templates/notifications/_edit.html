@@ -21,6 +21,11 @@
 
 {% set mailer = notificationEmail.getMailer() %}
 
+{% block contextMenu %}
+    {% include "sprout-base-email/notifications/_special/sitemenu" %}
+{% endblock %}
+
+
 {% block header %}
 
     {{ block('pageTitle') }}
