@@ -4,8 +4,9 @@
 {{ textField({
     label: "Subject Line"|t('sprout-base'),
     id: 'subjectLine',
+    siteId: notificationEmail.siteId,
     name: 'subjectLine',
-    value: notificationEmail.subjectLine,
+    value: notificationEmail.title,
     errors:  notificationEmail is defined ? notificationEmail.getErrors('subjectLine') : null,
     first: true,
     autofocus: true,
