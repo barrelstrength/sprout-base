@@ -165,6 +165,11 @@ abstract class NotificationEvent extends SavableComponent
         return true;
     }
 
+    public function isMultiSite()
+    {
+        return false;
+    }
+
     /**
      * Determines if an event matches the conditions defined in it's settings for a Notification Email.
      *

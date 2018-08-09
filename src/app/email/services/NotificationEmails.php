@@ -80,16 +80,23 @@ class NotificationEmails extends Component
     /**
      * Returns all campaign notifications based on the passed in event id
      *
-     * @param string $eventId
+     * @param null $eventId
+     * @param null $siteId
      *
-     * @return ElementInterface[]|null
+     * @return ElementInterface[]
      */
-    public function getAllNotificationEmails($eventId = null)
+    public function getAllNotificationEmails($eventId = null, $siteId = null)
     {
         $notifications = NotificationEmail::find();
 
+        if ($siteId != null) {
+            $notifications->siteId($siteId);
+        }
+
         if ($eventId) {
-            $attributes = ['eventId' => $eventId];
+            $attributes = [
+                'eventId' => $eventId,
+            ];
             $notifications = $notifications->where($attributes);
         }
 

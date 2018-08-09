@@ -1,4 +1,4 @@
-{{ email.subjectLine }}
+{{ email.title }}
 
 {%- if object['firstName'] is defined -%}
   <p>Good Day {{ object['firstName'] }},</p>

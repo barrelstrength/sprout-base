@@ -164,14 +164,19 @@ class NotificationEmailEvents extends Component
             'eventName' => $eventHandlerClass->getName()
         ]));
 
+        $siteId = null;
+        if ($eventHandlerClass->isMultiSite()) {
+            $siteId = $event->sender->siteId;
+        }
         // Get all Notification Emails that match this Notification Event
-        $notificationEmails = SproutBase::$app->notifications->getAllNotificationEmails($notificationEmailEventClassName);
+        $notificationEmails = SproutBase::$app->notifications->getAllNotificationEmails($notificationEmailEventClassName, $siteId);
 
+        $titles = [];
         if ($notificationEmails) {
 
             /** @var NotificationEmail $notificationEmail */
             foreach ($notificationEmails as $notificationEmail) {
-
+                $titles[] = $notificationEmail->title;
                 // Add the Notification Event settings to the $eventHandlerClass
                 $settings = json_decode($notificationEmail->settings, true);
 
@@ -184,6 +189,7 @@ class NotificationEmailEvents extends Component
                 if ($eventHandlerClass->validate()) {
 
                     $object = $eventHandlerClass->getEventObject();
+
                     $notificationEmail->setEventObject($object);
 
                     SproutBase::$app->notifications->sendNotificationViaMailer($notificationEmail);

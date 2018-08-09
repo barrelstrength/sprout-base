@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>{{ email.subjectLine }} - {{ siteName }}</title>
+    <title>{{ email.title }} - {{ siteName }}</title>
 </head>
 <body>
 
-<h1>{{ email.subjectLine }}</h1>
+<h1>{{ email.title }}</h1>
 
 {% if email.defaultBody|length %}
     <p>{{ email.defaultBody }}</p>

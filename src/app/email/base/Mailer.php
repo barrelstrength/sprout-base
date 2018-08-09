@@ -11,7 +11,6 @@ use barrelstrength\sproutbase\app\email\models\SimpleRecipient;
 use barrelstrength\sproutbase\app\email\models\SimpleRecipientList;
 use barrelstrength\sproutemail\elements\CampaignEmail;
 use barrelstrength\sproutemail\models\CampaignType;
-use barrelstrength\sproutlists\elements\Lists;
 use barrelstrength\sproutlists\records\Lists as ListsRecord;
 use barrelstrength\sproutlists\elements\Subscribers;
 use craft\base\Element;
@@ -474,12 +473,12 @@ abstract class Mailer
         $message = new Message();
 
         // Render Email Entry fields that have dynamic values
-        $this->renderObjectTemplateSafely($email, 'subjectLine', $object);
+        $this->renderObjectTemplateSafely($email, 'title', $object);
         $this->renderObjectTemplateSafely($email, 'fromName', $object);
         $this->renderObjectTemplateSafely($email, 'fromEmail', $object);
         $this->renderObjectTemplateSafely($email, 'replyToEmail', $object);
 
-        $message->setSubject($email->subjectLine);
+        $message->setSubject($email->title);
         $message->setFrom([$email->fromEmail => $email->fromName]);
         $message->setReplyTo($email->replyToEmail);
 

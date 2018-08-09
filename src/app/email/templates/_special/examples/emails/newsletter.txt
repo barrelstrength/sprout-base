@@ -1,4 +1,4 @@
-{{ email.subjectLine }}
+{{ email.title }}
 
 {{ email.exampleTextEmailBody }}
 

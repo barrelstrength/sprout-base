@@ -83,6 +83,7 @@ class DefaultMailer extends Mailer implements NotificationEmailSenderInterface
     public function sendNotificationEmail(EmailElement $notificationEmail)
     {
         $mailer = $notificationEmail->getMailer();
+
         /**
          * @var $message Message
          */
