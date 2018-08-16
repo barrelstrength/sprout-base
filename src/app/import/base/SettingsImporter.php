@@ -88,4 +88,17 @@ abstract class SettingsImporter extends Importer
     {
         return '';
     }
+
+    public function returnRelatedValue($params)
+    {
+        $recordClass = $this->getRecordName();
+        $record = new $recordClass();
+
+        $record = $record::findOne($params);
+        if ($record) {
+            return $record->id;
+        }
+
+        return null;
+    }
 }
