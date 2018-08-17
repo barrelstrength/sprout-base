@@ -371,12 +371,27 @@ if (typeof Craft.SproutForms === typeof undefined) {
             var userResponse = this.confirmDeleteTab();
 
             if (userResponse) {
-                $("#sproutforms-" + tabId).slideUp(500, function() {
-                    $(this).remove();
-                });
-                $("#" + tabId).closest("li").slideUp(500, function() {
-                    $(this).remove();
-                });
+
+                var data = {
+                    tabId: tabId
+                };
+
+                Craft.postActionRequest('sprout-forms/fields/delete-tab', data, $.proxy(function(response, textStatus) {
+                    if (response.success) {
+                        Craft.cp.displayNotice(Craft.t('sprout-forms', 'Tab Deleted'));
+                        $("#sproutforms-" + tabId).slideUp(500, function() {
+                            $(this).remove();
+                        });
+                        $("#" + tabId).closest("li").slideUp(500, function() {
+                            $(this).remove();
+                        });
+                    }
+                    else {
+                        Craft.cp.displayError(Craft.t('sprout-forms', 'Unable to delete the tab'));
+                    }
+                }, this));
+
+
             }
         },
 
