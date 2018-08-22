@@ -142,10 +142,12 @@
 {% do view.registerAssetBundle("barrelstrength\\sproutbase\\app\\seo\\web\\assets\\sitemaps\\SitemapsAsset") %}
 
 {% if sitemapSection.name is not defined or not sitemapSection.handle %}
-    {% includeJs "new Craft.HandleGenerator('#name', '#handle');" %}
+    {% js %}
+        new Craft.HandleGenerator('#name', '#handle');
+    {% endjs %}
 {% endif %}
 
-{% set js %}
+{% js %}
 
     $('#sproutseo-optimizedkeywords-field input').tagEditor({
     animateDelete: 20
@@ -153,8 +155,6 @@
 
     new Craft.SproutSeoMetaTags();
 
-{% endset %}
-
-{% includeJs js %}
+{% endjs %}
 
 
