@@ -170,5 +170,7 @@
 {% do view.registerAssetBundle("barrelstrength\\sproutbase\\web\\assets\\cp\\CpAsset") %}
 
 {% if not campaignEmail.slug %}
-    {% includeJs "window.slugGenerator = new Craft.SlugGenerator('#subjectLine', '#slug');" %}
+    {% js %}
+        window.slugGenerator = new Craft.SlugGenerator('#subjectLine', '#slug');
+    {% endjs %}
 {% endif %}

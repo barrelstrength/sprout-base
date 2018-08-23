@@ -111,7 +111,7 @@
 {% endblock %}
 
 {% if not list.handle %}
-    {% includejs %}
+    {% js %}
         new Craft.HandleGenerator('#name', '#handle');
-    {% endincludejs %}
+    {% endjs %}
 {% endif %}

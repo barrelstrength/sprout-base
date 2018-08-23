@@ -297,7 +297,9 @@
 {% do view.registerAssetBundle("barrelstrength\\sproutbase\\app\\email\\web\\assets\\base\\NotificationAsset") %}
 
 {% if not notificationEmail.slug %}
-    {% includeJs "window.slugGenerator = new Craft.SlugGenerator('#subjectLine', '#slug');" %}
+    {% js %}
+        window.slugGenerator = new Craft.SlugGenerator('#subjectLine', '#slug');
+    {% endjs %}
 {% endif %}
 
 {% js %}

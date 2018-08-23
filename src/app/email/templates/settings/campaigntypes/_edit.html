@@ -154,5 +154,7 @@
 {% endset %}
 
 {% if campaignType is not defined or not campaignType.handle %}
-    {% includeJs "window.slugGenerator = new Craft.SlugGenerator('#name', '#handle');" %}
+    {% js %}
+        window.slugGenerator = new Craft.SlugGenerator('#name', '#handle');
+    {% endjs %}
 {% endif %}
