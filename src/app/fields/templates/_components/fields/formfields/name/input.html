@@ -12,7 +12,7 @@
                     {{ forms.textField({
                         label: 'Prefix'|t('sprout-fields'),
                         name: name ~ '[address][prefix]',
-                        value: value is defined ? value.prefix : ''
+                        value: value.prefix ?? ''
                     }) }}
                 </div>
             {% endif %}
@@ -21,7 +21,7 @@
                 {{ forms.textField({
                     label: 'First'|t('sprout-fields'),
                     name: name ~ '[address][firstName]',
-                    value: value is defined ? value.firstName : ''
+                    value: value.firstName ?? ''
                 }) }}
             </div>
 
@@ -30,7 +30,7 @@
                     {{ forms.textField({
                         label: 'Middle'|t('sprout-fields'),
                         name: name ~ '[address][middleName]',
-                        value: value is defined ? value.middleName : ''
+                        value: value.middleName ?? ''
                     }) }}
                 </div>
             {% endif %}
@@ -39,7 +39,7 @@
                 {{ forms.textField({
                     label: 'Last'|t('sprout-fields'),
                     name: name ~ '[address][lastName]',
-                    value: value is defined ? value.lastName : ''
+                    value: value.lastName ?? ''
                 }) }}
             </div>
 
@@ -48,7 +48,7 @@
                     {{ forms.textField({
                         label: 'Suffix'|t('sprout-fields'),
                         name: name ~ '[address][suffix]',
-                        value: value is defined ? value.suffix : ''
+                        value: value.suffix ?? ''
                     }) }}
                 </div>
             {% endif %}
