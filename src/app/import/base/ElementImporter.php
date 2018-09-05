@@ -294,7 +294,7 @@ abstract class ElementImporter extends Importer
 
     private function isDateAttribute($handle)
     {
-        $dates = ['postDate', 'dateCreated', 'dateUpdated'];
+        $dates = ['postDate', 'dateCreated', 'dateUpdated', 'expiryDate'];
 
         return in_array($handle, $dates, false);
     }
