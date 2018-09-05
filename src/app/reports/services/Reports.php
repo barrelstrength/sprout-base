@@ -136,7 +136,7 @@ class Reports extends Component
         // We only get reports that currently has dataSourceId or existing installed dataSource
         $query->select('reports.*')
             ->from('{{%sproutreports_reports}} as reports')
-            ->innerJoin('{{%sproutreports_datasources}} as datasource', 'datasource.id = reports.dataSourceId');
+            ->innerJoin('{{%sproutreports_datasources}} as datasource', "[[datasource.id]] = [[reports.dataSourceId]]");
 
         return $query;
     }
