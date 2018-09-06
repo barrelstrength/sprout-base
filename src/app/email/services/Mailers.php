@@ -74,7 +74,7 @@ class Mailers extends Component
     {
         $mailers = SproutBase::$app->mailers->getMailers();
 
-        if (count($mailers)) {
+        if ($mailers) {
             /**
              * @var $mailer Mailer
              */

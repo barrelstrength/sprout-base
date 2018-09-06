@@ -301,14 +301,14 @@ class DefaultMailer extends Mailer implements NotificationEmailSenderInterface
         $options = [];
         $lists = $this->getLists();
 
-        if (!count($lists)) {
+        if (empty($lists)) {
             return '';
         }
 
         foreach ($lists as $list) {
             $listName = $list->name;
 
-            if (count($list->totalSubscribers)) {
+            if ($list->totalSubscribers) {
                 $listName .= ' ('.$list->totalSubscribers.')';
             } else {
                 $listName .= ' (0)';

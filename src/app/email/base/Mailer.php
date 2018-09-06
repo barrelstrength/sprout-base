@@ -61,7 +61,7 @@ abstract class Mailer
     {
         $recipients = [];
 
-        if (count($onTheFlyRecipients)) {
+        if ($onTheFlyRecipients) {
             foreach ($onTheFlyRecipients as $onTheFlyRecipient) {
                 $recipient = new SimpleRecipient();
                 $recipient->email = $onTheFlyRecipient;
@@ -122,7 +122,7 @@ abstract class Mailer
     {
         $settings = $this->defineSettings();
 
-        return is_array($settings) && count($settings);
+        return is_array($settings) && $settings;
     }
 
     /**
@@ -388,7 +388,7 @@ abstract class Mailer
 
             $listRecipients = $this->getRecipientsFromSelectedLists($email->listSettings);
 
-            if (count($listRecipients)) {
+            if ($listRecipients) {
                 foreach ($listRecipients as $listRecipient) {
 
                     if ($validator->isValid($listRecipient->email, $multipleValidations)) {

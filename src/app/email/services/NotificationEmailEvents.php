@@ -88,7 +88,7 @@ class NotificationEmailEvents extends Component
         $self = $this;
         $notificationEmailEventTypes = $this->getNotificationEmailEventTypes();
 
-        if (!count($notificationEmailEventTypes)) {
+        if (empty($notificationEmailEventTypes)) {
             return false;
         }
 

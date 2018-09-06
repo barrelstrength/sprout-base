@@ -320,7 +320,7 @@ class NotificationEmails extends Component
                 ]);
         }
 
-        if (count($errors)) {
+        if ($errors) {
             return $errors;
         }
 
