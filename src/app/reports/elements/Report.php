@@ -7,6 +7,7 @@
 
 namespace barrelstrength\sproutbase\app\reports\elements;
 
+use barrelstrength\sproutbase\app\reports\elements\actions\DeleteReport;
 use barrelstrength\sproutbase\base\BaseSproutTrait;
 use barrelstrength\sproutbase\app\reports\base\DataSource;
 use barrelstrength\sproutbase\SproutBase;
@@ -376,5 +377,18 @@ class Report extends Element
         $reportRecord->save(false);
 
         parent::afterSave($isNew);
+    }
+
+
+    /**
+     * @inheritdoc
+     */
+    protected static function defineActions(string $source = null): array
+    {
+        $actions = [];
+
+        $actions[] = DeleteReport::class;
+
+        return $actions;
     }
 }

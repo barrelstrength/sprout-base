@@ -40,7 +40,7 @@
                            data-redirect="{{ continueEditingUrl|hash }}">{{ "Save and continue editing"|t('sprout-base') }}</a>
                     </li>
                     <li><a class="formsubmit"
-                           data-redirect="{{ dataSource.getUrl('/new')|hash }}">
+                           data-redirect="{{ dataSource.getUrl(dataSource.dataSourceId ~ '/new')|hash }}">
                             {{ "Save and add another report"|t('sprout-base') }}</a>
                     </li>
                 </ul>

@@ -47,6 +47,8 @@ class Install extends Migration
                 ]
             );
 
+            $this->addForeignKey(null, $this->reportTable, ['id'], '{{%elements}}', ['id'], 'CASCADE', null);
+
             $this->createIndex($this->db->getIndexName($this->reportTable, 'handle', true, true),
                 $this->reportTable, 'handle', true);
 
