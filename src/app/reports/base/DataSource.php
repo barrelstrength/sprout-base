@@ -168,7 +168,7 @@ abstract class DataSource
     {
         $pluginHandle = Craft::$app->getRequest()->getSegment(1);
 
-        $baseUrl = $pluginHandle.'/reports/' . $this->dataSourceId . '/';
+        $baseUrl = $pluginHandle.'/reports/';
 
         $appendedUrl = ltrim($append, '/');
 
