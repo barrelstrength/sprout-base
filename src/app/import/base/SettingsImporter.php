@@ -7,6 +7,8 @@
 
 namespace barrelstrength\sproutbase\app\import\base;
 
+use yii\db\BaseActiveRecord;
+
 abstract class SettingsImporter extends Importer
 {
     /**
@@ -87,5 +89,19 @@ abstract class SettingsImporter extends Importer
     public function getSettingsHtml()
     {
         return '';
+    }
+
+    public function returnRelatedValue($params)
+    {
+        $recordClass = $this->getRecordName();
+        /**
+         * @var $record BaseActiveRecord
+         */
+        $record = new $recordClass();
+
+        $record = $record::findOne($params);
+
+
+        return ($record !== null)? $record->id : null;
     }
 }
