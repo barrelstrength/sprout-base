@@ -91,6 +91,11 @@ abstract class SettingsImporter extends Importer
         return '';
     }
 
+    /**
+     * @param $params
+     *
+     * @return mixed|null
+     */
     public function returnRelatedValue($params)
     {
         $recordClass = $this->getRecordName();
@@ -101,7 +106,6 @@ abstract class SettingsImporter extends Importer
 
         $record = $record::findOne($params);
 
-
-        return ($record !== null)? $record->id : null;
+        return ($record !== null) ? $record->id : null;
     }
 }
