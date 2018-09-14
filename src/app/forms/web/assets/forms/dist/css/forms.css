@@ -35,3 +35,9 @@
     font-style: italic;
     margin: 5px 0 10px;
 }
+
+.sproutform-field-common-countries {
+    overflow-y: scroll;
+    height: 200px;
+    padding: 0 10px;
+}
