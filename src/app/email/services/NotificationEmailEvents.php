@@ -5,6 +5,7 @@ namespace barrelstrength\sproutbase\app\email\services;
 use barrelstrength\sproutbase\app\email\base\NotificationEvent;
 use barrelstrength\sproutbase\app\email\elements\NotificationEmail;
 use barrelstrength\sproutbase\app\email\events\NotificationEmailEvent;
+use barrelstrength\sproutbase\app\email\events\SendNotificationEmailEvent;
 use barrelstrength\sproutbase\SproutBase;
 use craft\base\Component;
 use Craft;
@@ -22,6 +23,11 @@ class NotificationEmailEvents extends Component
      * @event NotificationEmailEvent Event is triggered when the Craft App initializes
      */
     const EVENT_REGISTER_EMAIL_EVENT_TYPES = 'registerSproutNotificationEmailEvents';
+
+    /**
+     * @event SendNotificationEmailEvent Event is triggered when a Notification Email is sent
+     */
+    const EVENT_SEND_NOTIFICATION_EMAIL    = 'onSendNotificationEmail';
 
     /**
      * @var \Callable[] Events that notifications have subscribed to
@@ -187,6 +193,13 @@ class NotificationEmailEvents extends Component
                     $notificationEmail->setEventObject($object);
 
                     SproutBase::$app->notifications->sendNotificationViaMailer($notificationEmail);
+
+                    $sendNotificationEmailEvent = new SendNotificationEmailEvent([
+                        'event'             => $event,
+                        'notificationEmail' => $notificationEmail,
+                    ]);
+
+                    $this->trigger(self::EVENT_SEND_NOTIFICATION_EMAIL, $sendNotificationEmailEvent);
                 }
             }
         }
