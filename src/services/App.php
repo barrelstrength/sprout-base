@@ -11,7 +11,7 @@ use barrelstrength\sproutbase\app\email\services\Mailers;
 use barrelstrength\sproutbase\app\email\services\NotificationEmailEvents;
 use barrelstrength\sproutbase\app\email\services\NotificationEmails;
 use barrelstrength\sproutbase\app\fields\services\EmailDropdown;
-use barrelstrength\sproutbase\app\import\services\Themes;
+use barrelstrength\sproutbase\app\import\services\Bundles;
 use barrelstrength\sproutbase\app\reports\services\DataSources;
 use barrelstrength\sproutbase\app\reports\services\Exports;
 use barrelstrength\sproutbase\app\reports\services\ReportGroups;
@@ -21,7 +21,6 @@ use barrelstrength\sproutbase\app\fields\services\Url;
 use barrelstrength\sproutbase\app\fields\services\Phone;
 use barrelstrength\sproutbase\app\fields\services\RegularExpression;
 use barrelstrength\sproutbase\app\fields\services\Email;
-
 use barrelstrength\sproutbase\app\fields\services\Address;
 use barrelstrength\sproutbase\app\import\services\Importers;
 use craft\base\Component;
@@ -110,9 +109,9 @@ class App extends Component
     public $importers;
 
     /**
-     * @var Themes
+     * @var Bundles
      */
-    public $themes;
+    public $bundles;
 
     /**
      * @var SproutEmail
@@ -150,6 +149,6 @@ class App extends Component
 
         // Sprout Import
         $this->importers = new Importers();
-        $this->themes = new Themes();
+        $this->bundles = new Bundles();
     }
 }
