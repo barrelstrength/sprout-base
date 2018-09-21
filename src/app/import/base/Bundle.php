@@ -13,7 +13,7 @@ use craft\base\Plugin;
 /**
  * Class Theme
  */
-abstract class Theme
+abstract class Bundle
 {
     /**
      * The Plugin class for the plugin where this theme lives

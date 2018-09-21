@@ -27,9 +27,9 @@ class SproutImportVariable
     /**
      * @return array
      */
-    public function getSproutImportThemes()
+    public function getSproutImportBundles()
     {
-        return SproutBase::$app->themes->getSproutImportThemes();
+        return SproutBase::$app->bundles->getSproutImportBundles();
     }
 
     /**
