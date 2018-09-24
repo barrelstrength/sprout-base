@@ -7,7 +7,6 @@
 
 namespace barrelstrength\sproutbase\app\import\base;
 
-use barrelstrength\sproutbase\SproutBase;
 use Craft;
 use craft\base\Plugin;
 

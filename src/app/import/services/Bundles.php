@@ -6,6 +6,8 @@ use barrelstrength\sproutbase\app\import\bundles\SimpleBundle;
 use barrelstrength\sproutbase\app\import\base\Bundle;
 use craft\base\Component;
 use craft\events\RegisterComponentTypesEvent;
+use Craft;
+use craft\helpers\FileHelper;
 
 class Bundles extends Component
 {
@@ -49,5 +51,24 @@ class Bundles extends Component
         });
 
         return $this->bundles;
+    }
+
+    /**
+     * Make sure the Sprout Import temp folder is created
+     * @return string
+     * @throws \yii\base\ErrorException
+     * @throws \yii\base\Exception
+     */
+    public function createTempFolder()
+    {
+        $folderPath = Craft::$app->getPath()->getTempAssetUploadsPath().'/sproutimport/';
+
+        if (file_exists($folderPath)) {
+            FileHelper::clearDirectory($folderPath);
+        }
+
+        FileHelper::createDirectory($folderPath);
+
+        return $folderPath;
     }
 }
