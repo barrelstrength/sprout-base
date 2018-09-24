@@ -3,11 +3,11 @@
 namespace barrelstrength\sproutbase\app\import\controllers;
 
 use barrelstrength\sproutbase\app\import\base\Bundle;
-use barrelstrength\sproutimport\models\jobs\ImportJobs;
-use barrelstrength\sproutimport\models\Json;
-use barrelstrength\sproutimport\models\Seed;
-use barrelstrength\sproutimport\queue\jobs\Import;
-use barrelstrength\sproutimport\SproutImport;
+use barrelstrength\sproutbase\app\import\models\jobs\ImportJobs;
+use barrelstrength\sproutbase\app\import\models\Json;
+use barrelstrength\sproutbase\app\import\models\Seed;
+use barrelstrength\sproutbase\app\import\queue\jobs\Import;
+use barrelstrength\sproutbase\SproutBase;
 use Craft;
 use craft\helpers\FileHelper;
 use craft\web\Controller;
@@ -63,11 +63,11 @@ class ImportController extends Controller
             } catch (\Exception $e) {
                 $importJobs->addError('queue', $e->getMessage());
 
-                SproutImport::error($e->getMessage());
+                SproutBase::error($e->getMessage());
             }
         } else {
 
-            SproutImport::error($importJobs->getErrors());
+            SproutBase::error($importJobs->getErrors());
 
             Craft::$app->getUrlManager()->setRouteParams([
                 'errors' => $importJobs->getErrors()
@@ -103,7 +103,7 @@ class ImportController extends Controller
                     'filepath' => $filepath
                 ]);
                 $importJobs->addError('file', $errorMessage);
-                SproutImport::error($errorMessage);
+                SproutBase::error($errorMessage);
                 break;
             }
 
@@ -113,7 +113,7 @@ class ImportController extends Controller
             // Make sure we have JSON
             if ($jsonContent->hasErrors()) {
                 $importJobs->addError('json', $jsonContent->getFirstError('json'));
-                SproutImport::error($jsonContent->getFirstError('json'));
+                SproutBase::error($jsonContent->getFirstError('json'));
                 break;
             }
 
@@ -130,8 +130,8 @@ class ImportController extends Controller
      * @param            $uploadedFiles
      * @param            $seed
      *
-     * @return void
      * @throws ErrorException
+     * @throws \yii\base\Exception
      */
     protected function prepareUploadedFileImportJobs(ImportJobs $importJobs, $uploadedFiles, $seed)
     {
@@ -143,14 +143,14 @@ class ImportController extends Controller
         $seedModel->seedType = ImportType::File;
         $seedModel->enabled = (bool)$seed;
 
-        $tempFolderPath = SproutImport::$app->utilities->createTempFolder();
+        $tempFolderPath = SproutBase::$app->bundles->createTempFolder();
 
         foreach ($uploadedFiles as $file) {
 
             // Make sure our files don't have errors
             if ($file->getHasError()) {
                 $importJobs->addError('file', $file->error);
-                SproutImport::error($file->error);
+                SproutBase::error($file->error);
                 break;
             }
 
@@ -162,7 +162,7 @@ class ImportController extends Controller
             // Make sure we have JSON
             if ($jsonContent->hasErrors()) {
                 $importJobs->addError('json', $jsonContent->getFirstError('json'));
-                SproutImport::error($jsonContent->getFirstError('json'));
+                SproutBase::error($jsonContent->getFirstError('json'));
                 break;
             }
 
