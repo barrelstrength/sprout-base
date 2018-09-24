@@ -1,11 +1,12 @@
 {% set bundles = craft.sproutImport.getSproutImportBundles() %}
+
 <div class="bundle-cards">
 
     {% for bundle in bundles %}
 
     <div class="bundle-card">
         <div class="bundle-header">
-            <h6>{{ bundle.plugin.name }}</h6>
+            <h6>{{ bundle.plugin.name ?? 'Sprout Import' }}</h6>
             <strong>{{ bundle.getName() }}</strong>
         </div>
         <div class="body">
@@ -16,7 +17,7 @@
                 {{ csrfInput() }}
                 {{ redirectInput("sprout-import/bundles") }}
                 <input type="hidden" name="action"
-                       value="sprout-import/import/install-bundle">
+                       value="sprout-base/import/install-bundle">
                 <input type="hidden" name="className"
                        value="{{ bundle.getClassName() }}">
 

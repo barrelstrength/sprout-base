@@ -2,7 +2,7 @@
 
 namespace barrelstrength\sproutbase\app\import\services;
 
-use barrelstrength\sproutimport\bundles\SimpleBundle;
+use barrelstrength\sproutbase\app\import\bundles\SimpleBundle;
 use barrelstrength\sproutbase\app\import\base\Bundle;
 use craft\base\Component;
 use craft\events\RegisterComponentTypesEvent;
