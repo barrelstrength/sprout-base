@@ -7,6 +7,7 @@
 
 namespace barrelstrength\sproutbase\app\import\base;
 
+use barrelstrength\sproutbase\SproutBase;
 use Craft;
 use craft\base\Plugin;
 
@@ -26,7 +27,9 @@ abstract class Bundle
     {
         $pluginHandle = Craft::$app->getPlugins()->getPluginHandleByClass(get_class($this));
 
-        $this->plugin = Craft::$app->getPlugins()->getPlugin($pluginHandle);
+        if ($pluginHandle !== null) {
+            $this->plugin =  Craft::$app->getPlugins()->getPlugin($pluginHandle);
+        }
     }
 
     public function getPlugin()

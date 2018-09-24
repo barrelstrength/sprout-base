@@ -9,7 +9,7 @@
 {% set actionUrl = navItems[selectedSidebarItem]['actionUrl'] ?? 'sprout-base/settings/save-settings' %}
 {% set settingsForm = navItems[selectedSidebarItem]['settingsForm'] ?? true %}
 {% set selectedSettingsInfo = attribute(navItems, selectedSidebarItem) %}
-{% set fullPageForm = true %}
+{% set fullPageForm = selectedSettingsInfo.fullPageForm ?? true %}
 
 {% set sidebar %}
     <nav>
@@ -40,7 +40,7 @@
 
         {% include actionTemplate %}
 
-    {% else %}
+    {% elseif actionTemplate is not same as(false) %}
 
         <div class="buttons">
             <input class="btn submit" type="submit"
