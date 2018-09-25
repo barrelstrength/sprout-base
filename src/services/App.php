@@ -12,6 +12,8 @@ use barrelstrength\sproutbase\app\email\services\NotificationEmailEvents;
 use barrelstrength\sproutbase\app\email\services\NotificationEmails;
 use barrelstrength\sproutbase\app\fields\services\EmailDropdown;
 use barrelstrength\sproutbase\app\import\services\Bundles;
+use barrelstrength\sproutbase\app\import\services\ElementImporter;
+use barrelstrength\sproutbase\app\import\services\ImportUtilities;
 use barrelstrength\sproutbase\app\reports\services\DataSources;
 use barrelstrength\sproutbase\app\reports\services\Exports;
 use barrelstrength\sproutbase\app\reports\services\ReportGroups;
@@ -119,6 +121,16 @@ class App extends Component
     public $sproutEmail;
 
     /**
+     * @var ElementImporter
+     */
+    public $elementImporter;
+
+    /**
+     * @var ImportUtilities
+     */
+    public $importUtilities;
+
+    /**
      * @inheritdoc
      */
     public function init()
@@ -150,5 +162,7 @@ class App extends Component
         // Sprout Import
         $this->importers = new Importers();
         $this->bundles = new Bundles();
+        $this->elementImporter = new ElementImporter();
+        $this->importUtilities = new ImportUtilities();
     }
 }

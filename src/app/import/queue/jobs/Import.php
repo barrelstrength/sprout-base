@@ -2,9 +2,10 @@
 
 namespace barrelstrength\sproutbase\app\import\queue\jobs;
 
+use barrelstrength\sproutbase\app\import\services\Importers;
 use barrelstrength\sproutbase\SproutBase;
-use barrelstrength\sproutimport\models\Seed;
-use barrelstrength\sproutimport\models\Weed;
+use barrelstrength\sproutbase\app\import\models\Seed;
+use barrelstrength\sproutbase\app\import\models\Weed;
 use barrelstrength\sproutimport\SproutImport;
 use craft\helpers\Json;
 use craft\queue\BaseJob;
@@ -42,7 +43,7 @@ class Import extends BaseJob
 
             SproutBase::$app->importers->save($this->importData, $weedModel);
 
-            $errors = SproutImport::$app->utilities->getErrors();
+            $errors = SproutBase::$app->importUtilities->getErrors();
 
             if (!empty($errors)) {
 
@@ -72,6 +73,6 @@ class Import extends BaseJob
      */
     protected function defaultDescription(): string
     {
-        return Craft::t('sprout-import', 'Importing Data.');
+        return Craft::t('sprout-base', 'Importing Data.');
     }
 }

@@ -8,6 +8,7 @@
 namespace barrelstrength\sproutbase\app\import\base;
 
 
+use barrelstrength\sproutbase\SproutBase;
 use barrelstrength\sproutimport\models\jobs\SeedJob;
 use Craft;
 use barrelstrength\sproutimport\SproutImport;
@@ -202,7 +203,7 @@ abstract class ElementImporter extends Importer
 
         $updateElementSettings = $settings['settings']['updateElement'];
 
-        $utilities = SproutImport::$app->utilities;
+        $utilities = SproutBase::$app->utilities;
 
         $params = $utilities->getValueByKey('params', $updateElementSettings);
 
@@ -254,7 +255,7 @@ abstract class ElementImporter extends Importer
      */
     public function save()
     {
-        $utilities = SproutImport::$app->utilities;
+        $utilities = SproutBase::$app->importUtilities;
 
         try {
             $element = Craft::$app->getElements()->saveElement($this->model);

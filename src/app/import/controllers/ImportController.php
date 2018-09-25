@@ -11,7 +11,7 @@ use barrelstrength\sproutbase\SproutBase;
 use Craft;
 use craft\helpers\FileHelper;
 use craft\web\Controller;
-use sproutimport\enums\ImportType;
+use barrelstrength\sproutbase\app\import\enums\ImportType;
 use yii\base\ErrorException;
 use yii\web\BadRequestHttpException;
 
@@ -49,17 +49,16 @@ class ImportController extends Controller
 
         // Queue our Jobs
         if (count($importJobs->jobs)) {
-
             try {
-
                 foreach ($importJobs->jobs as $job) {
+
                     Craft::$app->queue->push(new Import([
                         'importData' => $job->importData,
                         'seedAttributes' => $job->seedAttributes
                     ]));
                 }
 
-                Craft::$app->getSession()->setNotice(Craft::t('sprout-import', 'Importing bundle.'));
+                Craft::$app->getSession()->setNotice(Craft::t('sprout-base', 'Importing bundle.'));
             } catch (\Exception $e) {
                 $importJobs->addError('queue', $e->getMessage());
 
@@ -73,7 +72,7 @@ class ImportController extends Controller
                 'errors' => $importJobs->getErrors()
             ]);
 
-            Craft::$app->getSession()->setError(Craft::t('sprout-import', 'Unable to import bundle.'));
+            Craft::$app->getSession()->setError(Craft::t('sprout-base', 'Unable to import bundle.'));
         }
     }
 
@@ -99,7 +98,7 @@ class ImportController extends Controller
             $fileContent = file_get_contents($filepath);
 
             if ($fileContent === false) {
-                $errorMessage = Craft::t('sprout-import', 'Unable to import file: {filepath}', [
+                $errorMessage = Craft::t('sprout-base', 'Unable to import file: {filepath}', [
                     'filepath' => $filepath
                 ]);
                 $importJobs->addError('file', $errorMessage);
