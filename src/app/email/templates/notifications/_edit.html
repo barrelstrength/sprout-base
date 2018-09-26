@@ -159,13 +159,33 @@
         {% endif %}
 
         {{ forms.textField({
-            label: "Recipients <span class='info'>A comma separated list of email addresses.</span>"|t('sprout-base'),
+            label: "To <span class='info'>A comma separated list of email addresses.</span>"|t('sprout-base'),
             placeholder: "user@domain.com, other@domain.com"|t('sprout-base'),
             name: "recipients",
             fieldClass: 'field-border-top',
             class: "code",
             value: notificationEmail is defined ? notificationEmail.recipients : "",
             errors: notificationEmail is defined ? notificationEmail.getErrors('recipients')
+        }) }}
+
+        {{ forms.textField({
+            label: "CC <span class='info'>A comma separated list of email addresses.</span>"|t('sprout-base'),
+            placeholder: "user@domain.com, other@domain.com"|t('sprout-base'),
+            name: "cc",
+            fieldClass: 'field-border-top',
+            class: "code",
+            value: notificationEmail is defined ? notificationEmail.recipientsCc : "",
+            errors: notificationEmail is defined ? notificationEmail.getErrors('recipientsCc')
+        }) }}
+
+        {{ forms.textField({
+            label: "BCC <span class='info'>A comma separated list of email addresses.</span>"|t('sprout-base'),
+            placeholder: "user@domain.com, other@domain.com"|t('sprout-base'),
+            name: "bcc",
+            fieldClass: 'field-border-top',
+            class: "code",
+            value: notificationEmail is defined ? notificationEmail.recipientsBcc : "",
+            errors: notificationEmail is defined ? notificationEmail.getErrors('recipientsBcc')
         }) }}
 
         {{ forms.lightswitchField({

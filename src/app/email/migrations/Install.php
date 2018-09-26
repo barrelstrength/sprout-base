@@ -37,6 +37,8 @@ class Install extends Migration
                     'subjectLine' => $this->string()->notNull(),
                     'defaultBody' => $this->text(),
                     'recipients' => $this->string(),
+                    'cc' => $this->string(),
+                    'bcc' => $this->string(),
                     'listSettings' => $this->text(),
                     'fromName' => $this->string(),
                     'fromEmail' => $this->string(),
