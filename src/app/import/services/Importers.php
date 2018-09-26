@@ -2,6 +2,7 @@
 
 namespace barrelstrength\sproutbase\app\import\services;
 
+use barrelstrength\sproutbase\SproutBase;
 use barrelstrength\sproutimport\importers\elements\Asset;
 use barrelstrength\sproutimport\importers\elements\Category;
 use barrelstrength\sproutimport\importers\elements\Entry;
@@ -305,9 +306,9 @@ class Importers extends Component
             }
 
             if ($importerClass->model instanceof Element) {
-                $newModel = SproutImport::$app->elementImporter->saveElement($row, $importerClass);
+                $newModel = SproutBase::$app->elementImporter->saveElement($row, $importerClass);
             } else {
-                $newModel = SproutImport::$app->settingsImporter->saveSetting($row, $importerClass);
+                $newModel = SproutBase::$app->settingsImporter->saveSetting($row, $importerClass);
             }
 
             if (!$this->isWeedable($weedModel, $newModel)) {

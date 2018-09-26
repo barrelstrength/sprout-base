@@ -11,6 +11,7 @@ use barrelstrength\sproutbase\app\email\services\Mailers;
 use barrelstrength\sproutbase\app\email\services\NotificationEmailEvents;
 use barrelstrength\sproutbase\app\email\services\NotificationEmails;
 use barrelstrength\sproutbase\app\fields\services\EmailDropdown;
+use barrelstrength\sproutbase\app\import\services\SettingsImporter;
 use barrelstrength\sproutbase\app\import\services\Bundles;
 use barrelstrength\sproutbase\app\import\services\ElementImporter;
 use barrelstrength\sproutbase\app\import\services\ImportUtilities;
@@ -126,6 +127,11 @@ class App extends Component
     public $elementImporter;
 
     /**
+     * @var SettingsImporter
+     */
+    public $settingsImporter;
+
+    /**
      * @var ImportUtilities
      */
     public $importUtilities;
@@ -163,6 +169,7 @@ class App extends Component
         $this->importers = new Importers();
         $this->bundles = new Bundles();
         $this->elementImporter = new ElementImporter();
+        $this->settingsImporter = new SettingsImporter();
         $this->importUtilities = new ImportUtilities();
     }
 }
