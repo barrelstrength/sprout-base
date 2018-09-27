@@ -25,11 +25,25 @@ abstract class EmailElement extends Element
     public $subjectLine;
 
     /**
-     * A comma, delimited list of recipients
+     * A comma, delimited list of recipients (To email)
      *
      * @var string
      */
     public $recipients;
+
+    /**
+     * A comma, delimited list of cc emails
+     *
+     * @var string
+     */
+    public $cc;
+
+    /**
+     * A comma, delimited list of bcc emails
+     *
+     * @var string
+     */
+    public $bcc;
 
     /**
      * List settings.

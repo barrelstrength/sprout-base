@@ -117,6 +117,9 @@ class DefaultMailer extends Mailer implements NotificationEmailSenderInterface
 
         $recipients = $recipientList->getRecipients();
 
+        $recipientCc = $mailer->getRecipients($notificationEmail->cc, $notificationEmail);
+        $recipientBc = $mailer->getRecipients($notificationEmail->bcc, $notificationEmail);
+
         if (!$recipients) {
             return false;
         }
@@ -140,6 +143,14 @@ class DefaultMailer extends Mailer implements NotificationEmailSenderInterface
         $processedRecipients = [];
         $prepareRecipients = [];
         $mailer = Craft::$app->getMailer();
+
+        if ($bcc = $recipientBc->getRecipientEmails()) {
+            $message->setBcc($bcc);
+        }
+
+        if ($cc = $recipientCc->getRecipientEmails()) {
+            $message->setCc($cc);
+        }
 
         if ($notificationEmail->singleEmail) {
              /*

@@ -174,8 +174,8 @@
             name: "cc",
             fieldClass: 'field-border-top',
             class: "code",
-            value: notificationEmail is defined ? notificationEmail.recipientsCc : "",
-            errors: notificationEmail is defined ? notificationEmail.getErrors('recipientsCc')
+            value: notificationEmail is defined ? notificationEmail.cc : "",
+            errors: notificationEmail is defined ? notificationEmail.getErrors('cc')
         }) }}
 
         {{ forms.textField({
@@ -184,8 +184,8 @@
             name: "bcc",
             fieldClass: 'field-border-top',
             class: "code",
-            value: notificationEmail is defined ? notificationEmail.recipientsBcc : "",
-            errors: notificationEmail is defined ? notificationEmail.getErrors('recipientsBcc')
+            value: notificationEmail is defined ? notificationEmail.bcc : "",
+            errors: notificationEmail is defined ? notificationEmail.getErrors('bcc')
         }) }}
 
         {{ forms.lightswitchField({

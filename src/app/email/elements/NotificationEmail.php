@@ -281,6 +281,8 @@ class NotificationEmail extends EmailElement
         $notificationEmailRecord->singleEmail = $this->singleEmail;
         $notificationEmailRecord->enableFileAttachments = $this->enableFileAttachments;
         $notificationEmailRecord->recipients = $this->recipients;
+        $notificationEmailRecord->cc = $this->cc;
+        $notificationEmailRecord->bcc = $this->bcc;
         $notificationEmailRecord->listSettings = $this->listSettings;
         $notificationEmailRecord->dateCreated = $this->dateCreated;
         $notificationEmailRecord->dateUpdated = $this->dateUpdated;
