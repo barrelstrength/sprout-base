@@ -44,7 +44,7 @@ class Product extends ElementImporter
                     $rowVariants[$var->id] = $variant;
 
                     if (!$this->model->id) {
-                        SproutImport::$app
+                        SproutBase::$app
                             ->utilities
                             ->addError('exist-' . $variant['sku'], $variant['sku'] . ' sku already exists');
                     }

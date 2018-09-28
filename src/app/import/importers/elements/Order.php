@@ -25,7 +25,7 @@ class Order extends ElementImporter
      */
     public function getName()
     {
-        return Craft::t('sprout-import', 'Commerce Orders');
+        return Craft::t('sprout-base', 'Commerce Orders');
     }
 
     /**
@@ -102,10 +102,10 @@ class Order extends ElementImporter
 
         if ($customer === null) {
             if (empty($customerEmail)) {
-                $message = Craft::t('sprout-import',
+                $message = Craft::t('sprout-base',
                     'customerId attribute is required.');
             } else {
-                $message = Craft::t('sprout-import',
+                $message = Craft::t('sprout-base',
                     'The customer ' .$customerEmail . ' was not found.');
             }
 
@@ -228,7 +228,7 @@ class Order extends ElementImporter
             $gateway = $order->getGateway();
 
             if (!$gateway) {
-                $error = Craft::t('sprout-import', 'There is no gateway selected for this order.');
+                $error = Craft::t('sprout-base', 'There is no gateway selected for this order.');
                 $utilities->addError('invalid-gateway', $error);
             }
             /**
@@ -268,7 +268,7 @@ class Order extends ElementImporter
                     $utilities->addError('invalid-payment', $exception->getMessage());
                 }
             } else {
-                $customError = Craft::t('sprout-import', 'Invalid payment or order. Please review.');
+                $customError = Craft::t('sprout-base', 'Invalid payment or order. Please review.');
                 $utilities->addError('invalid-payment', $customError);
             }
         }

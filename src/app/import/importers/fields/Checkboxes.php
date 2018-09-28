@@ -3,7 +3,6 @@
 namespace barrelstrength\sproutbase\app\import\importers\fields;
 
 use barrelstrength\sproutbase\app\import\base\FieldImporter;
-use barrelstrength\sproutbase\app\import\SproutImport;
 use craft\fields\Checkboxes as CheckboxesField;
 
 class Checkboxes extends FieldImporter
@@ -31,9 +30,9 @@ class Checkboxes extends FieldImporter
             $length = count($options);
             $number = random_int(1, $length);
 
-            $randomArrayItems = SproutImport::$app->fieldImporter->getRandomArrayItems($options, $number);
+            $randomArrayItems = SproutBase::$app->fieldImporter->getRandomArrayItems($options, $number);
 
-            $values = SproutImport::$app->fieldImporter->getOptionValuesByKeys($randomArrayItems, $options);
+            $values = SproutBase::$app->fieldImporter->getOptionValuesByKeys($randomArrayItems, $options);
         }
 
         return $values;

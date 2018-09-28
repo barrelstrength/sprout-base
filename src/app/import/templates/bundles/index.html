@@ -1,7 +1,7 @@
 {% extends "sprout-base-import/_layouts/base" %}
 {% import "_includes/forms" as forms %}
 
-{% set title = 'Bundles'|t('sprout-import') %}
+{% set title = 'Bundles'|t('sprout-base') %}
 
 {% block content %}
     {% include 'sprout-base-import/bundles/bundle-cards' %}
@@ -11,23 +11,23 @@
 
     <div class="meta">
 
-        <h2>{{ "Bundles"|t('sprout-import') }}
-            <sup>{{ "beta"|t('sprout-import') }}</sup></h2>
+        <h2>{{ "Bundles"|t('sprout-base') }}
+            <sup>{{ "beta"|t('sprout-base') }}</sup></h2>
 
-        <p>{{ 'Bundles allow you to reuse content architecture and templates.'|t('sprout-import') }}</p>
+        <p>{{ 'Bundles allow you to reuse content architecture and templates.'|t('sprout-base') }}</p>
 
         <h6>{{ "Schema"|t }}</h6>
-        <p>{{ 'Schema are defined in Craft import JSON format. See the documentation for supported Elements and Settings and import behavior.'|t('sprout-import') }}</p>
+        <p>{{ 'Schema are defined in Craft import JSON format. See the documentation for supported Elements and Settings and import behavior.'|t('sprout-base') }}</p>
 
         <h6>{{ "Templates"|t }}</h6>
-        <p>{{ 'Templates are defined in Bundle integration and can be any number of nested folders and templates. Your Bundle /templates folder will be copied to your Craft /templates folder and overwrite any existing templates of the same name.'|t('sprout-import') }}</p>
+        <p>{{ 'Templates are defined in Bundle integration and can be any number of nested folders and templates. Your Bundle /templates folder will be copied to your Craft /templates folder and overwrite any existing templates of the same name.'|t('sprout-base') }}</p>
 
         <br>
         <hr>
 
         <h6>{{ "Getting Started"|t }}</h6>
 
-        <p>{{ "See working Bundles in the following Sprout plugins:"|t('sprout-import') }}</p>
+        <p>{{ "See working Bundles in the following Sprout plugins:"|t('sprout-base') }}</p>
 
         <ul class="bullets">
             <li>Sprout Forms</li>

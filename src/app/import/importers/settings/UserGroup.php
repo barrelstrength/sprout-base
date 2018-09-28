@@ -19,7 +19,7 @@ class UserGroup extends SettingsImporter
      */
     public function getName()
     {
-        return Craft::t('sprout-import', 'User Group');
+        return Craft::t('sprout-base', 'User Group');
     }
 
     /**

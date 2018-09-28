@@ -42,7 +42,7 @@ class Matrix extends FieldImporter
 
                 $fieldLayouts = Craft::$app->getFields()->getFieldsByLayoutId($fieldLayoutId);
 
-                $values[$key]['fields'] = SproutImport::$app->fieldImporter->getFieldsWithMockData($fieldLayouts);
+                $values[$key]['fields'] = SproutBase::$app->fieldImporter->getFieldsWithMockData($fieldLayouts);
 
                 $count++;
             }

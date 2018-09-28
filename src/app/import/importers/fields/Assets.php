@@ -48,7 +48,7 @@ class Assets extends FieldImporter
             $relatedMax = $assetSettings['relatedMax'] ?: $relatedMax;
         }
 
-        $relatedMax = SproutImport::$app->fieldImporter->getLimit($settings['limit'], $relatedMax);
+        $relatedMax = SproutBase::$app->fieldImporter->getLimit($settings['limit'], $relatedMax);
 
         $mockDataSettings = [
             'fieldName' => $this->model->name,
@@ -58,7 +58,7 @@ class Assets extends FieldImporter
         ];
 
         if (empty($settings['sources'])) {
-            SproutImport::info(Craft::t('sprout-import', 'Unable to generate Mock Data for relations field: {fieldName}. No Sources found.', [
+            SproutBase::info(Craft::t('sprout-base', 'Unable to generate Mock Data for relations field: {fieldName}. No Sources found.', [
                 'fieldName' => $this->model->name
             ]));
             return null;
@@ -66,7 +66,7 @@ class Assets extends FieldImporter
 
         $sources = $settings['sources'];
 
-        $sourceIds = SproutImport::$app->fieldImporter->getElementGroupIds($sources);
+        $sourceIds = SproutBase::$app->fieldImporter->getElementGroupIds($sources);
 
         $attributes = null;
 
@@ -78,7 +78,7 @@ class Assets extends FieldImporter
 
         $assetElement = new Asset();
 
-        $elementIds = SproutImport::$app->fieldImporter->getMockRelations($assetElement, $attributes, $mockDataSettings);
+        $elementIds = SproutBase::$app->fieldImporter->getMockRelations($assetElement, $attributes, $mockDataSettings);
 
         return $elementIds;
     }

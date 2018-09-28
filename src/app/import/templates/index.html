@@ -21,7 +21,7 @@
 
     {% if errors is defined and errors|length %}
         <div class="pane">
-            <h3>{{ "Unable to process import"|t('sprout-import') }}</h3>
+            <h3>{{ "Unable to process import"|t('sprout-base') }}</h3>
             {{ errorList(errors) }}
         </div>
         <br>
@@ -30,8 +30,8 @@
     <form method="post" accept-charset="utf-8" enctype="multipart/form-data">
         {{ csrfInput() }}
         <input type="hidden" name="action"
-               value="sprout-import/import/run-import">
-        {{ redirectInput("sprout-import") }}
+               value="sprout-base/import/run-import">
+        {{ redirectInput("sprout-base") }}
 
         {{ forms.textareaField({
             label: "Import via Copy/Paste"|t,
@@ -45,9 +45,9 @@
 
         <div class="field first" id="files-field">
             <div class="heading">
-                <label for="files">{{ 'Import via Files'|t('sprout-import') }}</label>
+                <label for="files">{{ 'Import via Files'|t('sprout-base') }}</label>
                 <div class="instructions">
-                    <p>{{ 'Select one or more JSON encoded files to import.'|t('sprout-import') }}</p>
+                    <p>{{ 'Select one or more JSON encoded files to import.'|t('sprout-base') }}</p>
                 </div>
             </div>
             <div class="input">
@@ -56,14 +56,14 @@
         </div>
 
         {{ forms.lightswitchField({
-            label: "Seed data"|t('sprout-import'),
-            instructions: "Mark your imported data as seed data. Seed data can be removed via the Weed tab."|t('sprout-import'),
+            label: "Seed data"|t('sprout-base'),
+            instructions: "Mark your imported data as seed data. Seed data can be removed via the Weed tab."|t('sprout-base'),
             on: true,
             name: 'seed'
         }) }}
 
         <button class="btn submit"
-                type="submit">{{ 'Run Import'|t('sprout-import') }}</button>
+                type="submit">{{ 'Run Import'|t('sprout-base') }}</button>
 
     </form>
 
@@ -73,13 +73,13 @@
 
     <div class="meta">
 
-        <h2>{{ "All aboard!"|t('sprout-import') }} <span
-                    class="info">{{ "If you need to import something that isn't supported, see our documentation on how to add custom integrations."|t('sprout-import') }}</span>
+        <h2>{{ "All aboard!"|t('sprout-base') }} <span
+                    class="info">{{ "If you need to import something that isn't supported, see our documentation on how to add custom integrations."|t('sprout-base') }}</span>
         </h2>
 
-        <p>{{ 'Sprout Import provides a flexible and extensible framework to import your content and settings into Craft. A list of supported data types for this Craft install are below. Third-party plugins can add support for <a href="" target="_blank">additional data types</a>.'|t('sprout-import')|raw }}</p>
+        <p>{{ 'Sprout Import provides a flexible and extensible framework to import your content and settings into Craft. A list of supported data types for this Craft install are below. Third-party plugins can add support for <a href="" target="_blank">additional data types</a>.'|t('sprout-base')|raw }}</p>
 
-        <h6>{{ "Supported Elements"|t('sprout-import') }}</h6>
+        <h6>{{ "Supported Elements"|t('sprout-base') }}</h6>
 
         {% set importers = craft.sproutImport.getSproutImportImporters() %}
 
@@ -92,7 +92,7 @@
             {% endfor %}
         </ul>
 
-        <h6>{{ "Supported Settings"|t('sprout-import') }}</h6>
+        <h6>{{ "Supported Settings"|t('sprout-base') }}</h6>
 
         <ul>
             {% for importer in importers if importer.isSettings() %}
@@ -113,7 +113,7 @@
             <br>
             <hr>
 
-            <h6>{{ "Additional Sprout Integrations"|t('sprout-import') }}</h6>
+            <h6>{{ "Additional Sprout Integrations"|t('sprout-base') }}</h6>
 
             {% if sproutFormsIsInstalled %}
                 <p class="light">

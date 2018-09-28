@@ -28,7 +28,7 @@ class RadioButtons extends FieldImporter
         if (!empty($settings['options'])) {
             $options = $settings['options'];
 
-            $radioValue = SproutImport::$app->fieldImporter->getRandomOptionValue($options);
+            $radioValue = SproutBase::$app->fieldImporter->getRandomOptionValue($options);
         }
 
         return $radioValue;

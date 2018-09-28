@@ -82,11 +82,11 @@ class User extends ElementImporter
 
         $username = $faker->userName;
 
-        $username = SproutImport::$app->fieldImporter->generateUsernameOrEmail($username, $faker);
+        $username = SproutBase::$app->fieldImporter->generateUsernameOrEmail($username, $faker);
 
         $email = $faker->email;
 
-        $email = SproutImport::$app->fieldImporter->generateUsernameOrEmail($email, $faker, true);
+        $email = SproutBase::$app->fieldImporter->generateUsernameOrEmail($email, $faker, true);
 
         $data = [];
         $data['@model'] = User::class;
@@ -100,7 +100,7 @@ class User extends ElementImporter
 
         $fieldLayoutFieldModel = $fieldLayout->getFields();
 
-        $data['content']['fields'] = SproutImport::$app->fieldImporter->getFieldsWithMockData($fieldLayoutFieldModel);
+        $data['content']['fields'] = SproutBase::$app->fieldImporter->getFieldsWithMockData($fieldLayoutFieldModel);
 
         return $data;
     }

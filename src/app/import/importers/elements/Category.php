@@ -63,7 +63,7 @@ class Category extends ElementImporter
     {
 
         if (isset($settings['categoryGroup']) && empty($settings['categoryGroup'])) {
-            return Craft::t('sprout-import', 'Category Group is required.');
+            return Craft::t('sprout-base', 'Category Group is required.');
         }
 
         return null;
@@ -110,7 +110,7 @@ class Category extends ElementImporter
 
         $fieldLayouts = $this->getFieldLayoutsByGroupId();
 
-        $data['content']['fields'] = SproutImport::$app->fieldImporter->getFieldsWithMockData($fieldLayouts);
+        $data['content']['fields'] = SproutBase::$app->fieldImporter->getFieldsWithMockData($fieldLayouts);
 
         return $data;
     }

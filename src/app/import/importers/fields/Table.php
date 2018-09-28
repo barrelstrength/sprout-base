@@ -36,7 +36,7 @@ class Table extends FieldImporter
         $values = [];
 
         for ($inc = 1; $inc <= $randomLength; $inc++) {
-            $values[] = SproutImport::$app->fieldImporter->generateTableColumns($columns);
+            $values[] = SproutBase::$app->fieldImporter->generateTableColumns($columns);
         }
 
         return $values;

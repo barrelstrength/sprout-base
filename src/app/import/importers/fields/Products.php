@@ -43,13 +43,13 @@ class Products extends FieldImporter
         $sources = $settings['sources'];
 
         if (!isset($settings['sources'])) {
-            SproutImport::info(Craft::t('sprout-import', 'Unable to generate Mock Data for relations field: {fieldName}. No Sources found.', [
+            SproutBase::info(Craft::t('sprout-base', 'Unable to generate Mock Data for relations field: {fieldName}. No Sources found.', [
                 'fieldName' => $this->model->name
             ]));
             return null;
         }
 
-        $productTypeIds = SproutImport::$app->fieldImporter->getElementGroupIds($sources);
+        $productTypeIds = SproutBase::$app->fieldImporter->getElementGroupIds($sources);
 
         $attributes = [
             'typeId' => $productTypeIds
@@ -57,7 +57,7 @@ class Products extends FieldImporter
 
         $productElement = new Product();
 
-        $elementIds = SproutImport::$app->fieldImporter->getMockRelations($productElement, $attributes, $mockDataSettings);
+        $elementIds = SproutBase::$app->fieldImporter->getMockRelations($productElement, $attributes, $mockDataSettings);
 
         return $elementIds;
     }

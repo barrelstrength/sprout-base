@@ -48,7 +48,7 @@ class Entries extends FieldImporter
             $relatedMax = $entrySettings['relatedMax'] ?: $relatedMax;
         }
 
-        $relatedMax = SproutImport::$app->fieldImporter->getLimit($settings['limit'], $relatedMax);
+        $relatedMax = SproutBase::$app->fieldImporter->getLimit($settings['limit'], $relatedMax);
 
         $mockDataSettings = [
             'fieldName' => $this->model->name,
@@ -58,7 +58,7 @@ class Entries extends FieldImporter
         ];
 
         if (!isset($settings['sources'])) {
-            SproutImport::info(Craft::t('sprout-import', 'Unable to generate Mock Data for relations field: {fieldName}. No Sources found.', [
+            SproutBase::info(Craft::t('sprout-base', 'Unable to generate Mock Data for relations field: {fieldName}. No Sources found.', [
                 'fieldName' => $this->model->name
             ]));
             return null;
@@ -66,7 +66,7 @@ class Entries extends FieldImporter
 
         $sources = $settings['sources'];
 
-        $sectionIds = SproutImport::$app->fieldImporter->getElementGroupIds($sources);
+        $sectionIds = SproutBase::$app->fieldImporter->getElementGroupIds($sources);
 
         $attributes = null;
 
@@ -78,7 +78,7 @@ class Entries extends FieldImporter
 
         $entryElement = new Entry();
 
-        $elementIds = SproutImport::$app->fieldImporter->getMockRelations($entryElement, $attributes, $mockDataSettings);
+        $elementIds = SproutBase::$app->fieldImporter->getMockRelations($entryElement, $attributes, $mockDataSettings);
 
         return $elementIds;
     }

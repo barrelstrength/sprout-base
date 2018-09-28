@@ -79,7 +79,7 @@ class ElementImporter extends Component
         if (!empty($dataKeysDiff)) {
             $inputKeysText = implode(', ', $dataKeysDiff);
 
-            $message = Craft::t('sprout-import', "Invalid element keys '$inputKeysText'.");
+            $message = Craft::t('sprout-base', "Invalid element keys '$inputKeysText'.");
 
             SproutBase::error($message);
 
@@ -103,7 +103,7 @@ class ElementImporter extends Component
                 if (!in_array($fieldHandle, $elementFieldHandles, false)) {
                     $key = 'field-null-'.$fieldHandle;
 
-                    $message = Craft::t('sprout-import', 'Could not find the {fieldHandle} field.', [
+                    $message = Craft::t('sprout-base', 'Could not find the {fieldHandle} field.', [
                         'fieldHandle' => $fieldHandle
                     ]);
 
@@ -153,7 +153,7 @@ class ElementImporter extends Component
 
                     $saved = true;
                 } catch (\Exception $e) {
-                    $message = Craft::t('sprout-import', "Error when saving Element. \n ");
+                    $message = Craft::t('sprout-base', "Error when saving Element. \n ");
                     $message .= $e->getMessage();
 
                     SproutBase::error($message);
@@ -181,7 +181,7 @@ class ElementImporter extends Component
 
                 $fieldsMessage = is_array($fields) ? implode(', ', array_keys($fields)) : $fields;
 
-                $message = $title.' '.$fieldsMessage.Craft::t('sprout-import', ' Check field values if it exists.');
+                $message = $title.' '.$fieldsMessage.Craft::t('sprout-base', ' Check field values if it exists.');
 
                 SproutBase::error($message);
 
@@ -214,7 +214,7 @@ class ElementImporter extends Component
      */
     public function logErrorByModel(Model $model)
     {
-        SproutBase::error(Craft::t('sprout-import', 'Errors found on model while saving Element'));
+        SproutBase::error(Craft::t('sprout-base', 'Errors found on model while saving Element'));
 
         SproutBase::$app->importUtilities->addError('sproutImport', $model->getErrors());
     }

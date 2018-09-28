@@ -17,7 +17,7 @@ class EntryType extends SettingsImporter
      */
     public function getName()
     {
-        return Craft::t('sprout-import', 'Entry Type');
+        return Craft::t('sprout-base', 'Entry Type');
     }
 
     /**
@@ -42,7 +42,7 @@ class EntryType extends SettingsImporter
         $entryType->name = $rows['name'] ?? null;
         $entryType->handle = $rows['handle'] ?? null;
         $entryType->hasTitleField = $rows['hasTitleField'] ?? true;
-        $entryType->titleLabel = $rows['titleLabel'] ?? Craft::t('sprout-import', 'Title');
+        $entryType->titleLabel = $rows['titleLabel'] ?? Craft::t('sprout-base', 'Title');
         $entryType->titleFormat = $rows['titleFormat'] ?? '';
 
         if (isset($rows['fieldLayout'])) {
@@ -57,7 +57,7 @@ class EntryType extends SettingsImporter
                 foreach ($fields as $fieldSettings) {
                     $model = SproutBase::$app->importers->getImporter($fieldSettings);
 
-                    $field = SproutImport::$app->settingsImporter->saveSetting($fieldSettings, $model);
+                    $field = SproutBase::$app->settingsImporter->saveSetting($fieldSettings, $model);
 
                     $fieldLayout[$tabName][] = $field->id;
 

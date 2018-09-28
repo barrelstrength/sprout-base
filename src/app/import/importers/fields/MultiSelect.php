@@ -31,9 +31,9 @@ class MultiSelect extends FieldImporter
             $length = count($options);
             $number = random_int(1, $length);
 
-            $randomArrayItems = SproutImport::$app->fieldImporter->getRandomArrayItems($options, $number);
+            $randomArrayItems = SproutBase::$app->fieldImporter->getRandomArrayItems($options, $number);
 
-            $values = SproutImport::$app->fieldImporter->getOptionValuesByKeys($randomArrayItems, $options);
+            $values = SproutBase::$app->fieldImporter->getOptionValuesByKeys($randomArrayItems, $options);
         }
 
         return $values;

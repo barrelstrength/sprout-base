@@ -58,7 +58,7 @@ class Entry extends ElementImporter
     public function getSeedSettingsErrors($settings)
     {
         if (isset($settings['channel']) && empty($settings['channel'])) {
-            return Craft::t('sprout-import', 'Section is required.');
+            return Craft::t('sprout-base', 'Section is required.');
         }
 
         return null;
@@ -139,7 +139,7 @@ class Entry extends ElementImporter
 
         $fieldLayouts = $this->getFieldLayouts();
 
-        $data['content']['fields'] = SproutImport::$app->fieldImporter->getFieldsWithMockData($fieldLayouts);
+        $data['content']['fields'] = SproutBase::$app->fieldImporter->getFieldsWithMockData($fieldLayouts);
 
         return $data;
     }

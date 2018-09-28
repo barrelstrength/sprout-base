@@ -48,7 +48,7 @@ class Tags extends FieldImporter
             $relatedMax = $tagSettings['relatedMax'] ?: $relatedMax;
         }
 
-        $relatedMax = SproutImport::$app->fieldImporter->getLimit($settings['limit'], $relatedMax);
+        $relatedMax = SproutBase::$app->fieldImporter->getLimit($settings['limit'], $relatedMax);
 
         $mockDataSettings = [
             'fieldName' => $this->model->name,
@@ -58,7 +58,7 @@ class Tags extends FieldImporter
         ];
 
         if (empty($settings['source'])) {
-            SproutImport::info(Craft::t('sprout-import', 'Unable to generate Mock Data for relations field: {fieldName}. No Source found.', [
+            SproutBase::info(Craft::t('sprout-base', 'Unable to generate Mock Data for relations field: {fieldName}. No Source found.', [
                 'fieldName' => $this->model->name
             ]));
             return null;
@@ -66,7 +66,7 @@ class Tags extends FieldImporter
 
         $source = $settings['source'];
 
-        $groupId = SproutImport::$app->fieldImporter->getElementGroupId($source);
+        $groupId = SproutBase::$app->fieldImporter->getElementGroupId($source);
 
         $attributes = null;
 
@@ -78,7 +78,7 @@ class Tags extends FieldImporter
 
         $tagElement = new Tag();
 
-        $elementIds = SproutImport::$app->fieldImporter->getMockRelations($tagElement, $attributes, $mockDataSettings);
+        $elementIds = SproutBase::$app->fieldImporter->getMockRelations($tagElement, $attributes, $mockDataSettings);
 
         return $elementIds;
     }

@@ -1,11 +1,11 @@
 {% import "_includes/forms" as forms %}
 
 {{ forms.selectField({
-    label: "Category Group"|t('sprout-import'),
-    instructions: "The category group to import content."|t('sprout-import'),
+    label: "Category Group"|t('sprout-base'),
+    instructions: "The category group to import content."|t('sprout-base'),
     required: true,
     name: "settings[categoryGroup]",
-    options: [{label: "Select a group..."|t('sprout-import'), value: null}]|merge(categoryGroups),
+    options: [{label: "Select a group..."|t('sprout-base'), value: null}]|merge(categoryGroups),
     value: seedJob.settings.categoryGroup ?? null,
     errors: seedJob.getErrors('categoryGroup') ?? null
 }) }}

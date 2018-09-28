@@ -65,7 +65,7 @@ class Tag extends ElementImporter
     public function getSeedSettingsErrors($settings)
     {
         if (isset($settings['tagGroup']) && empty($settings['tagGroup'])) {
-            return Craft::t('sprout-import', 'Tag Group is required.');
+            return Craft::t('sprout-base', 'Tag Group is required.');
         }
 
         return null;
@@ -110,7 +110,7 @@ class Tag extends ElementImporter
 
         $fieldLayouts = $this->getFieldLayoutsByGroupId();
 
-        $data['content']['fields'] = SproutImport::$app->fieldImporter->getFieldsWithMockData($fieldLayouts);
+        $data['content']['fields'] = SproutBase::$app->fieldImporter->getFieldsWithMockData($fieldLayouts);
 
         return $data;
     }

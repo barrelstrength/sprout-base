@@ -10,7 +10,7 @@ class Asset extends ElementImporter
 {
     public function getName()
     {
-        return Craft::t('sprout-import', 'Assets');
+        return Craft::t('sprout-base', 'Assets');
     }
 
     /**

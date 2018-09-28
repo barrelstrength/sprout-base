@@ -185,7 +185,7 @@ class Section extends SettingsImporter
 
             $typeModel = SproutBase::$app->importers->getImporter($settings['entryTypes'][$key]);
 
-            SproutImport::$app->settingsImporter->saveSetting($settings['entryTypes'][$key], $typeModel);
+            SproutBase::$app->settingsImporter->saveSetting($settings['entryTypes'][$key], $typeModel);
         }
 
         return true;

@@ -3,7 +3,6 @@
 namespace barrelstrength\sproutbase\app\import\importers\fields;
 
 use barrelstrength\sproutbase\app\import\base\FieldImporter;
-use barrelstrength\sproutbase\app\import\SproutImport;
 use craft\fields\Date as DateField;
 
 class Date extends FieldImporter
@@ -38,7 +37,7 @@ class Date extends FieldImporter
         if ($showTime == true) {
             $randomTimestamp = strtotime($this->fakerService->time('g:i:s A'));
 
-            $values['time'] = SproutImport::$app->fieldImporter->getMinutesByIncrement($randomTimestamp, $minuteIncrement);
+            $values['time'] = SproutBase::$app->fieldImporter->getMinutesByIncrement($randomTimestamp, $minuteIncrement);
         }
 
         return $values;
