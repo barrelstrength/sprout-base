@@ -1,6 +1,6 @@
 [
   {
-    "@model": "barrelstrength\\sproutimport\\importers\\settings\\Field",
+    "@model": "barrelstrength\\sproutbase\\app\\import\\importers\\settings\\Field",
     "type": "craft\\fields\\Checkboxes",
     "groupId": 1,
     "name": "BUNDLE Example Checkboxes",

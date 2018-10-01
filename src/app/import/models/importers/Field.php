@@ -1,6 +1,6 @@
 <?php
 
-namespace barrelstrength\sproutbase\app\import\models\importers\importers;
+namespace barrelstrength\sproutbase\app\import\models\importers;
 
 use craft\base\Model;
 

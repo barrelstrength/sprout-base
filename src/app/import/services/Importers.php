@@ -239,7 +239,7 @@ class Importers extends Component
             $errorLog['message'] = $message;
             $errorLog['attributes'] = $settings;
 
-            SproutImport::error($message);
+            SproutBase::error($message);
 
             $this->addError('invalid-model-key', $errorLog);
 
@@ -301,9 +301,7 @@ class Importers extends Component
             $importerClass = $this->getImporter($row);
 
             // Confirm model for this row of import data is supported
-            if (!$importerClass) {
-                return false;
-            }
+            if (!$importerClass) continue;
 
             if ($importerClass->model instanceof Element) {
                 $newModel = SproutBase::$app->elementImporter->saveElement($row, $importerClass);
@@ -327,13 +325,13 @@ class Importers extends Component
 
             $seedModel->setAttributes($seedAttributes, false);
             if (!$importerClass->isUpdated) {
-                SproutImport::$app->seed->trackSeed($seedModel);
+                SproutBase::$app->seed->trackSeed($seedModel);
             }
         }
 
         // Assign importer errors to utilities error for easy debugging and call of errors.
-        if ($newModel === false && ($importer !== null AND $importer->hasErrors())) {
-            $this->addErrors($importer->getErrors());
+        if ($this->hasErrors()) {
+            SproutBase::$app->importUtilities->addErrors($this->getErrors());
         }
 
         return $newModel;
