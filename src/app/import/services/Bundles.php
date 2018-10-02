@@ -53,6 +53,13 @@ class Bundles extends Component
         return $this->bundles;
     }
 
+    public function getBundleByClass($class)
+    {
+        $this->getSproutImportBundles();
+
+        return $this->bundles[$class] ?? null;
+    }
+
     /**
      * Make sure the Sprout Import temp folder is created
      * @return string

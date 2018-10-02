@@ -40,6 +40,11 @@ class SproutImportVariable
         return SproutBase::$app->importers->getSproutImportImporters();
     }
 
+    public function getBundleByClass($class)
+    {
+        return SproutBase::$app->bundles->getBundleByClass($class);
+    }
+
     /**
      * @return mixed
      */
