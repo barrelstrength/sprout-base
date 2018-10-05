@@ -3,7 +3,7 @@
 namespace barrelstrength\sproutbase\app\import\importers\fields;
 
 use barrelstrength\sproutbase\app\import\base\FieldImporter;
-use barrelstrength\sproutbase\app\import\SproutImport;
+use barrelstrength\sproutbase\SproutBase;
 use Craft;
 use craft\commerce\elements\Product;
 use craft\commerce\fields\Products as ProductsField;

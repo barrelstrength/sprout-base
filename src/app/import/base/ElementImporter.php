@@ -9,7 +9,7 @@ namespace barrelstrength\sproutbase\app\import\base;
 
 
 use barrelstrength\sproutbase\SproutBase;
-use barrelstrength\sproutimport\models\jobs\SeedJob;
+use barrelstrength\sproutbase\app\import\models\jobs\SeedJob;
 use Craft;
 use barrelstrength\sproutimport\SproutImport;
 use craft\base\Element;
