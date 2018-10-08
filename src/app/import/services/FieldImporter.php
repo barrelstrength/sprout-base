@@ -4,11 +4,11 @@ namespace barrelstrength\sproutbase\app\import\services;
 
 use barrelstrength\sproutbase\app\import\base\FieldImporter as BaseFieldImporter;
 use barrelstrength\sproutbase\SproutBase;
-use barrelstrength\sproutimport\SproutImport;
 use craft\base\Component;
 use craft\base\Element;
 use Craft;
 use craft\services\Users;
+use Faker\Factory;
 
 /**
  * Class SproutImport_MockDataService
@@ -70,7 +70,7 @@ class FieldImporter extends Component
         $results = $element::findAll($attributes);
 
         if (!$results) {
-            SproutImport::info(Craft::t('sprout-import', 'Unable to generate mock {displayName} relations. No relationships found: {elementClass}', [
+            SproutBase::info(Craft::t('sprout-import', 'Unable to generate mock {displayName} relations. No relationships found: {elementClass}', [
                 'displayName' => $element::displayName(),
                 'elementClass' => get_class($element)
             ]));
@@ -96,7 +96,7 @@ class FieldImporter extends Component
         }
 
         if ($relatedMin > $relatedMax) {
-            SproutImport::info(Craft::t('sprout-import', 'Unable to generate Mock Data for relations field: {fieldName}. The minimum amount of relations are less than the total available relations. Make sure your mock settings are valid and that you have content available to relate to all required relations fields.', [
+            SproutBase::info(Craft::t('sprout-import', 'Unable to generate Mock Data for relations field: {fieldName}. The minimum amount of relations are less than the total available relations. Make sure your mock settings are valid and that you have content available to relate to all required relations fields.', [
                 'fieldName' => $fieldName
             ]));
             return false;
@@ -303,7 +303,8 @@ class FieldImporter extends Component
     public function generateTableColumn($column)
     {
         $value = '';
-        $fakerService = SproutImport::$app->faker->getGenerator();
+
+        $fakerService = Factory::create();
 
         if (!empty($column)) {
             $type = $column['type'];

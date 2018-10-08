@@ -4,7 +4,6 @@ namespace barrelstrength\sproutbase\app\import\importers\settings;
 
 use barrelstrength\sproutbase\app\import\base\SettingsImporter;
 use barrelstrength\sproutbase\SproutBase;
-use barrelstrength\sproutbase\app\import\SproutImport;
 use Craft;
 use craft\models\Section as SectionModel;
 use craft\models\Section_SiteSettings;

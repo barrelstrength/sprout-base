@@ -3,6 +3,7 @@
 namespace barrelstrength\sproutbase\app\import\importers\fields;
 
 use barrelstrength\sproutbase\app\import\base\FieldImporter;
+use barrelstrength\sproutbase\SproutBase;
 use craft\fields\Date as DateField;
 
 class Date extends FieldImporter

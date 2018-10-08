@@ -4,7 +4,6 @@ namespace barrelstrength\sproutbase\app\import\importers\elements;
 
 use barrelstrength\sproutbase\SproutBase;
 use barrelstrength\sproutbase\app\import\models\jobs\SeedJob;
-use barrelstrength\sproutbase\app\import\SproutImport;
 use Craft;
 use barrelstrength\sproutbase\app\import\base\ElementImporter;
 use craft\elements\Category as CategoryElement;

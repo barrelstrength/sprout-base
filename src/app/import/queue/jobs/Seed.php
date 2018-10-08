@@ -2,7 +2,7 @@
 
 namespace barrelstrength\sproutbase\app\import\queue\jobs;
 
-use barrelstrength\sproutimport\SproutImport;
+use barrelstrength\sproutbase\SproutBase;
 use craft\queue\BaseJob;
 use Craft;
 
@@ -15,12 +15,13 @@ class Seed extends BaseJob
 
     /**
      * @inheritdoc
+     * @throws \Exception
      */
     public function execute($queue)
     {
         $seedJob = $this->seedJob;
 
-        SproutImport::$app->seed->runSeed($seedJob);
+        SproutBase::$app->seed->runSeed($seedJob);
     }
 
     // Protected Methods

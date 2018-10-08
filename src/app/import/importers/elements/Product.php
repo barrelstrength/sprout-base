@@ -2,9 +2,8 @@
 
 namespace barrelstrength\sproutbase\app\import\importers\elements;
 use barrelstrength\sproutbase\app\import\base\ElementImporter;
-use barrelstrength\sproutbase\app\import\SproutImport;
+use barrelstrength\sproutbase\SproutBase;
 use craft\commerce\elements\Product as ProductElement;
-use Craft;
 use craft\commerce\records\Purchasable;
 
 class Product extends ElementImporter
@@ -27,8 +26,6 @@ class Product extends ElementImporter
      *
      * @return bool|mixed|void
      * @throws \Throwable
-     * @throws \craft\errors\ElementNotFoundException
-     * @throws \yii\base\Exception
      */
     public function setModel($model, array $settings = [])
     {
@@ -45,7 +42,7 @@ class Product extends ElementImporter
 
                     if (!$this->model->id) {
                         SproutBase::$app
-                            ->utilities
+                            ->importUtilities
                             ->addError('exist-' . $variant['sku'], $variant['sku'] . ' sku already exists');
                     }
                 } else {

@@ -11,7 +11,6 @@ namespace barrelstrength\sproutbase\app\import\base;
 use barrelstrength\sproutbase\SproutBase;
 use barrelstrength\sproutbase\app\import\models\jobs\SeedJob;
 use Craft;
-use barrelstrength\sproutimport\SproutImport;
 use craft\base\Element;
 use craft\elements\db\ElementQuery;
 use craft\helpers\DateTimeHelper;
@@ -82,7 +81,7 @@ abstract class ElementImporter extends Importer
 
             $relatedAttributes = [];
             if (isset($attributes['related']) && count($attributes['related'])) {
-                $relatedAttributes = SproutImport::$app->elementImporter->resolveRelationships($attributes['related'], $relatedAttributes);
+                $relatedAttributes = SproutBase::$app->elementImporter->resolveRelationships($attributes['related'], $relatedAttributes);
                 unset($attributes['related']);
             }
 
@@ -126,14 +125,14 @@ abstract class ElementImporter extends Importer
             $relatedFields = [];
             if (isset($settings['content']['related']) && count($settings['content']['related'])) {
                 $related = $settings['content']['related'];
-                $relatedFields = SproutImport::$app->elementImporter->resolveRelationships($related, $relatedFields);
+                $relatedFields = SproutBase::$app->elementImporter->resolveRelationships($related, $relatedFields);
 
                 $message = [];
                 if (!$relatedFields) {
                     $message['error'] = Craft::t('sprout-base', 'Unable to resolve related relationships.');
                     $message['fields'] = $relatedFields;
 
-                    SproutImport::error($message);
+                    SproutBase::error($message);
                 }
             }
 
@@ -143,14 +142,14 @@ abstract class ElementImporter extends Importer
                 $fields = $settings['content']['fields'];
 
                 if (!empty($fields)) {
-                    $fields = SproutImport::$app->elementImporter->resolveMatrixRelationships($fields);
+                    $fields = SproutBase::$app->elementImporter->resolveMatrixRelationships($fields);
 
                     $message = [];
                     if (!$fields) {
                         $message['error'] = Craft::t('sprout-base', 'Unable to resolve matrix relationships.');
                         $message['fields'] = $fields;
 
-                        SproutImport::error($message);
+                        SproutBase::error($message);
                     }
                 }
             }
@@ -203,7 +202,7 @@ abstract class ElementImporter extends Importer
 
         $updateElementSettings = $settings['settings']['updateElement'];
 
-        $utilities = SproutBase::$app->utilities;
+        $utilities = SproutBase::$app->importUtilities;
 
         $params = $utilities->getValueByKey('params', $updateElementSettings);
 
@@ -240,7 +239,7 @@ abstract class ElementImporter extends Importer
 
         $elementTypeName = get_class($element);
 
-        $existingElement = SproutImport::$app->elementImporter->getElementFromImportSettings($elementTypeName, $updateElementSettings);
+        $existingElement = SproutBase::$app->elementImporter->getElementFromImportSettings($elementTypeName, $updateElementSettings);
 
         if (!$existingElement) {
             return null;
@@ -264,7 +263,7 @@ abstract class ElementImporter extends Importer
 
             return $element;
         } catch (\Exception $e) {
-            SproutImport::error($e->getMessage());
+            SproutBase::error($e->getMessage());
 
             $utilities->addError('invalid-entry-model', $e->getMessage());
 

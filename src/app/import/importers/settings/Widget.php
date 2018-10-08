@@ -4,6 +4,7 @@ namespace barrelstrength\sproutbase\app\import\importers\settings;
 
 use barrelstrength\sproutbase\app\import\base\SettingsImporter;
 use barrelstrength\sproutbase\app\import\models\importers\Widget as WidgetModel;
+use barrelstrength\sproutbase\SproutBase;
 use craft\records\Widget as WidgetRecord;
 use Craft;
 use craft\base\WidgetInterface;

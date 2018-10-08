@@ -2,6 +2,7 @@
 
 namespace barrelstrength\sproutbase\app\import\services;
 
+use barrelstrength\sproutbase\app\import\base\Importer;
 use barrelstrength\sproutbase\SproutBase;
 use barrelstrength\sproutbase\app\import\importers\elements\Asset;
 use barrelstrength\sproutbase\app\import\importers\elements\Category;
@@ -32,10 +33,8 @@ use barrelstrength\sproutbase\app\import\importers\settings\Field;
 use barrelstrength\sproutbase\app\import\importers\settings\Section;
 use barrelstrength\sproutbase\app\import\importers\settings\Widget;
 use barrelstrength\sproutbase\app\import\base\FieldImporter;
-use barrelstrength\sproutbase\app\import\base\Importer;
 use barrelstrength\sproutbase\app\import\models\Seed as SeedModel;
 use barrelstrength\sproutbase\app\import\models\Weed;
-use barrelstrength\sproutbase\app\import\SproutImport;
 use craft\base\Component;
 use craft\base\Element;
 use craft\events\RegisterComponentTypesEvent;
@@ -222,12 +221,12 @@ class Importers extends Component
      * and return it if it exists.
      *
      * Examples:
-     * - "@model": "barrelstrength\\sproutimport\\integrations\\sproutimport\\elements\\Entry"
-     * - "@model": "barrelstrength\\sproutimport\\integrations\\sproutimport\\settings\\Field"
+     * - "@model": "barrelstrength\\sproutbase\\app\\import\\importers\\elements\\Entry"
+     * - "@model": "barrelstrength\\sproutbase\\app\\import\\importers\\settings\\Field"
      *
      * @param      $settings
      *
-     * @return bool
+     * @return bool | Importer
      */
     public function getImporter($settings)
     {
@@ -274,8 +273,8 @@ class Importers extends Component
      * @param Weed|null $weedModel
      *
      * @return bool|\craft\base\Model|mixed|null
-     * @throws \Exception
      * @throws \ReflectionException
+     * @throws \Throwable
      */
     public function save($importData, Weed $weedModel = null)
     {
@@ -304,6 +303,9 @@ class Importers extends Component
             if (!$importerClass) continue;
 
             if ($importerClass->model instanceof Element) {
+                /**
+                 * @var $importerClass \barrelstrength\sproutbase\app\import\base\ElementImporter
+                 */
                 $newModel = SproutBase::$app->elementImporter->saveElement($row, $importerClass);
             } else {
                 $newModel = SproutBase::$app->settingsImporter->saveSetting($row, $importerClass);

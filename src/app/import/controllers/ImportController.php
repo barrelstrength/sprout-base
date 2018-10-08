@@ -12,6 +12,7 @@ use Craft;
 use craft\helpers\FileHelper;
 use craft\web\Controller;
 use barrelstrength\sproutbase\app\import\enums\ImportType;
+use craft\web\UploadedFile;
 use yii\base\ErrorException;
 use yii\web\BadRequestHttpException;
 
@@ -145,7 +146,9 @@ class ImportController extends Controller
         $tempFolderPath = SproutBase::$app->bundles->createTempFolder();
 
         foreach ($uploadedFiles as $file) {
-
+            /**
+             * @var $file UploadedFile
+             */
             // Make sure our files don't have errors
             if ($file->getHasError()) {
                 $importJobs->addError('file', $file->error);

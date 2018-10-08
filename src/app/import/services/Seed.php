@@ -8,7 +8,6 @@ use barrelstrength\sproutbase\SproutBase;
 use barrelstrength\sproutbase\app\import\models\jobs\SeedJob as SeedJobModel;
 use barrelstrength\sproutbase\app\import\queue\jobs\Seed as SeedJob;
 use barrelstrength\sproutbase\app\import\models\Weed;
-use barrelstrength\sproutimport\SproutImport;
 use craft\base\Component;
 use Craft;
 use craft\db\Query;
@@ -165,9 +164,9 @@ class Seed extends Component
      */
     public function getSeedCountByElementType($type)
     {
-        $count = SeedRecord::model()->countByAttributes([
-            'type' => $type
-        ]);
+        $count = SeedRecord::find()->where([
+                'type' => $type
+        ])->count();
 
         if ($count) {
             return $count;

@@ -5,7 +5,6 @@ namespace barrelstrength\sproutbase\app\import\importers\elements;
 use barrelstrength\sproutbase\app\import\base\ElementImporter;
 use barrelstrength\sproutbase\SproutBase;
 use barrelstrength\sproutbase\app\import\models\jobs\SeedJob;
-use barrelstrength\sproutbase\app\import\SproutImport;
 use Craft;
 use craft\elements\Tag as TagElement;
 

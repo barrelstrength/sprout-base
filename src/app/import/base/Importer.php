@@ -7,7 +7,7 @@
 
 namespace barrelstrength\sproutbase\app\import\base;
 
-use barrelstrength\sproutimport\SproutImport;
+use barrelstrength\sproutbase\SproutBase;
 use Craft;
 use Faker\Factory;
 use Faker\Generator;
@@ -149,7 +149,7 @@ abstract class Importer
      * - \craft\elements\Entry::class
      * - \craft\elements\Category::class
      * - \craft\models\Section::class
-     * - \barrelstrength\sproutimport\models\importers\Field::class
+     * - barrelstrength\sproutbase\app\import\importers\settings\Field::class
      *
      * @return mixed
      */
@@ -248,7 +248,7 @@ abstract class Importer
     {
         $name = $this->getModelName();
 
-        return SproutImport::$app->seed->getSeedCountByElementType($name);
+        return SproutBase::$app->seed->getSeedCountByElementType($name);
     }
 
     /**

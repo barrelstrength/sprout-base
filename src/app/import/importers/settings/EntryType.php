@@ -4,7 +4,6 @@ namespace barrelstrength\sproutbase\app\import\importers\settings;
 
 use barrelstrength\sproutbase\app\import\base\SettingsImporter;
 use barrelstrength\sproutbase\SproutBase;
-use barrelstrength\sproutbase\app\import\SproutImport;
 use craft\models\EntryType as EntryTypeModel;
 use craft\records\EntryType as EntryTypeRecord;
 use craft\elements\Entry;

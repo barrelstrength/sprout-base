@@ -4,7 +4,6 @@ namespace barrelstrength\sproutbase\app\import\importers\elements;
 
 use barrelstrength\sproutbase\app\import\base\ElementImporter;
 use barrelstrength\sproutbase\SproutBase;
-use barrelstrength\sproutbase\app\import\SproutImport;
 use craft\commerce\base\Gateway;
 use craft\commerce\elements\Order as OrderElement;
 use Craft;

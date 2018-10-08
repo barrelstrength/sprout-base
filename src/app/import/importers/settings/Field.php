@@ -4,6 +4,7 @@ namespace barrelstrength\sproutbase\app\import\importers\settings;
 
 use barrelstrength\sproutbase\app\import\base\SettingsImporter;
 use barrelstrength\sproutbase\app\import\models\importers\Field as FieldModel;
+use barrelstrength\sproutbase\SproutBase;
 use craft\records\Field as FieldRecord;
 use Craft;
 

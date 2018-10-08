@@ -4,6 +4,7 @@ namespace barrelstrength\sproutbase\app\import\importers\fields;
 
 use barrelstrength\sproutbase\app\import\base\FieldImporter;
 use craft\fields\Checkboxes as CheckboxesField;
+use barrelstrength\sproutbase\SproutBase;
 
 class Checkboxes extends FieldImporter
 {
