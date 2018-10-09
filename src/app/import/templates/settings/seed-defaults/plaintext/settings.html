@@ -1,8 +1,8 @@
 {% import "_includes/forms" as forms %}
 
 {{ forms.textField({
-    label: "Single Line Minimum Lines"|t('sprout-import'),
-    instructions: "Minimum number of lines to generate."|t('sprout-import'),
+    label: "Single Line Minimum Lines"|t('sprout-base'),
+    instructions: "Minimum number of lines to generate."|t('sprout-base'),
     name: 'fields[plaintext][singleLineLinesMin]',
     value: settings.singleLineLinesMin ?? null,
     placeholder: '2',
@@ -11,8 +11,8 @@
 }) }}
 
 {{ forms.textField({
-    label: "Single Line Maximum Lines"|t('sprout-import'),
-    instructions: "Maximum number of lines to generate."|t('sprout-import'),
+    label: "Single Line Maximum Lines"|t('sprout-base'),
+    instructions: "Maximum number of lines to generate."|t('sprout-base'),
     name: 'fields[plaintext][singleLineLinesMax]',
     value: settings.singleLineLinesMax ?? null,
     placeholder: '4',
@@ -21,8 +21,8 @@
 }) }}
 
 {{ forms.textField({
-    label: "Multiline Minimum Paragraphs"|t('sprout-import'),
-    instructions: "Minimum number of paragraphs to generate."|t('sprout-import'),
+    label: "Multiline Minimum Paragraphs"|t('sprout-base'),
+    instructions: "Minimum number of paragraphs to generate."|t('sprout-base'),
     name: 'fields[plaintext][multilineParagraphsMin]',
     value: settings.multilineParagraphsMin ?? null,
     placeholder: '1',
@@ -31,8 +31,8 @@
 }) }}
 
 {{ forms.textField({
-    label: "Multiline Maximum Paragraphs"|t('sprout-import'),
-    instructions: "Maximum number of paragraphs to generate."|t('sprout-import'),
+    label: "Multiline Maximum Paragraphs"|t('sprout-base'),
+    instructions: "Maximum number of paragraphs to generate."|t('sprout-base'),
     name: 'fields[plaintext][multilineParagraphsMax]',
     value: settings.multilineParagraphsMax ?? null,
     placeholder: '3',

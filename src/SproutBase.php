@@ -8,13 +8,13 @@
 namespace barrelstrength\sproutbase;
 
 use barrelstrength\sproutbase\app\email\services\EmailTemplates;
+use barrelstrength\sproutbase\app\import\controllers\ImportController;
 use barrelstrength\sproutbase\base\BaseSproutTrait;
 use barrelstrength\sproutbase\controllers\SettingsController;
 use barrelstrength\sproutbase\app\email\controllers\NotificationsController;
 use barrelstrength\sproutbase\app\email\events\RegisterMailersEvent;
 use barrelstrength\sproutbase\app\email\emailtemplates\BasicTemplates;
 use barrelstrength\sproutbase\app\email\mailers\DefaultMailer;
-
 use barrelstrength\sproutbase\app\email\services\Mailers;
 use barrelstrength\sproutbase\app\fields\controllers\AddressController;
 use barrelstrength\sproutbase\app\fields\controllers\FieldsController;
@@ -157,7 +157,8 @@ class SproutBase extends Module
                 'notifications' => NotificationsController::class,
                 'fields' => FieldsController::class,
                 'fields-address' => AddressController::class,
-                'reports' => ReportsController::class
+                'reports' => ReportsController::class,
+                'import' => ImportController::class
             ];
         }
 

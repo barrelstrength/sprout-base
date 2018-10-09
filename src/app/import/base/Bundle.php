@@ -13,7 +13,7 @@ use craft\base\Plugin;
 /**
  * Class Theme
  */
-abstract class Theme
+abstract class Bundle
 {
     /**
      * The Plugin class for the plugin where this theme lives
@@ -26,7 +26,9 @@ abstract class Theme
     {
         $pluginHandle = Craft::$app->getPlugins()->getPluginHandleByClass(get_class($this));
 
-        $this->plugin = Craft::$app->getPlugins()->getPlugin($pluginHandle);
+        if ($pluginHandle !== null) {
+            $this->plugin =  Craft::$app->getPlugins()->getPlugin($pluginHandle);
+        }
     }
 
     public function getPlugin()

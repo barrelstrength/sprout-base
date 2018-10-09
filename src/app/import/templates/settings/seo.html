@@ -5,12 +5,12 @@
       data-confirm-unload>
     {{ csrfInput() }}
     <input type="hidden" name="action"
-           value="sprout-import/sprout-seo/generate-redirect-json">
-    <input type="hidden" name="redirect" value="sprout-import/tools/">
+           value="sprout-base/sprout-seo/generate-redirect-json">
+    <input type="hidden" name="redirect" value="sprout-base/tools/">
 
     {{ forms.textareaField({
-        label: "Redirect Element Import Helper"|t('sprout-import'),
-        instructions: "Paste your Redirects in comma-delimited CSV format to convert them into Sprout Import JSON Format."|t('sprout-import'),
+        label: "Redirect Element Import Helper"|t('sprout-base'),
+        instructions: "Paste your Redirects in comma-delimited CSV format to convert them into Sprout Import JSON Format."|t('sprout-base'),
         name: 'pastedCSV',
         value: pastedCSV ?? null,
         errors: errors ?? null,
@@ -20,13 +20,13 @@
 
     <div class="buttons">
         <input class="btn submit" type="submit"
-               value="{{ 'Generate JSON'|t('sprout-import') }}">
+               value="{{ 'Generate JSON'|t('sprout-base') }}">
     </div>
 
     {% if params.importableJson is defined %}
         {{ forms.textareaField({
-            label: "Redirect Element JSON"|t('sprout-import'),
-            instructions: "Use the JSON generated below to import your Redirects on the Sprout Import->Import tab."|t('sprout-import'),
+            label: "Redirect Element JSON"|t('sprout-base'),
+            instructions: "Use the JSON generated below to import your Redirects on the Sprout Import->Import tab."|t('sprout-base'),
             name: 'json',
             value: params.importableJson ?? null,
             rows: 20,
