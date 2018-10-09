@@ -30,8 +30,8 @@
     <form method="post" accept-charset="utf-8" enctype="multipart/form-data">
         {{ csrfInput() }}
         <input type="hidden" name="action"
-               value="sprout-base/import/run-import">
-        {{ redirectInput("sprout-base") }}
+               value="sprout-import/import/run-import">
+        {{ redirectInput("sprout-import") }}
 
         {{ forms.textareaField({
             label: "Import via Copy/Paste"|t,

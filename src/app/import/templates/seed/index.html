@@ -30,9 +30,9 @@
 
     <form method="post" accept-charset="UTF-8">
         {{ csrfInput() }}
-        {{ redirectInput('sprout-base/seed') }}
+        {{ redirectInput('sprout-import/seed') }}
         <input type="hidden" name="action"
-               value="sprout-base/seed/generate-element-seeds">
+               value="sprout-import/seed/generate-element-seeds">
 
         {{ forms.textField({
             label: 'How many items to seed?'|t('sprout-base'),
