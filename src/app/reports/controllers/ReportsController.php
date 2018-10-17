@@ -373,7 +373,7 @@ class ReportsController extends Controller
             if ($dataSource) {
                 $date = date('Ymd-his');
 
-                $filename = $report->name.'-'.$date;
+                $filename = ((string)$report).'-'.$date;
                 $labels = $dataSource->getDefaultLabels($report, $settings);
                 $values = $dataSource->getResults($report, $settings);
 
