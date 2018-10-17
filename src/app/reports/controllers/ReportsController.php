@@ -185,7 +185,7 @@ class ReportsController extends Controller
             'dataSource' => $dataSource,
             'reportIndexUrl' => $reportIndexUrl,
             'groups' => $groups,
-            'continueEditingUrl' => $dataSource->getUrl().'/edit/{id}'
+            'continueEditingUrl' => $dataSource->getUrl()."/$dataSourceId/edit/{id}"
         ]);
     }
 
