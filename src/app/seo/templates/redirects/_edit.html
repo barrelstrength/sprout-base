@@ -22,7 +22,7 @@
                        data-redirect="{{ continueEditingUrl|hash }}">{{ "Save and continue editing"|t('sprout-seo') }}
                         <span class="shortcut">⌘S</span></a></li>
                 <li><a class="formsubmit"
-                       data-redirect="{{ 'sprout-seo/redirects/' ~ currentSite.id ~ '/new'|hash }}">{{ "Save and add another"|t('sprout-seo') }}</a>
+                       data-redirect="{{ saveAsNewUrl|hash }}">{{ "Save and add another"|t('sprout-seo') }}</a>
                 </li>
                 {% if redirect.id is not null %}
                     <hr>
