@@ -21,6 +21,11 @@ class m180307_042132_craft3_schema_changes extends Migration
         if (!$this->db->columnExists('{{%sproutreports_reports}}', 'hasNameFormat')) {
             $this->addColumn('{{%sproutreports_reports}}', 'hasNameFormat', $this->integer()->after('name'));
         }
+
+        if (!$this->db->columnExists('{{%sproutreports_reports}}', 'nameFormat')) {
+            $this->addColumn('{{%sproutreports_reports}}', 'nameFormat', $this->string()->after('name'));
+        }
+
         if (!$this->db->columnExists('{{%sproutreports_reports}}', 'settings')) {
             $this->renameColumn('{{%sproutreports_reports}}', 'options', 'settings');
         }

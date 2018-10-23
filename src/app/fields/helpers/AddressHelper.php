@@ -175,7 +175,7 @@ class AddressHelper
                 'name' => $this->name.'[countryCode]',
                 'inputName' => 'countryCode',
                 'options' => $countries,
-                'value' => $this->countryCode,
+                'value' => $this->countryCode ?? $this->defaultCountryCode(),
                 'nameValue' => $this->name,
                 'hidden' => $hidden,
                 'addressInfo' => $this->addressModel
