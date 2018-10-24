@@ -2,6 +2,7 @@
 
 namespace barrelstrength\sproutbase\app\email\services;
 
+use barrelstrength\sproutbase\app\email\base\EmailElement;
 use barrelstrength\sproutbase\app\email\base\NotificationEvent;
 use barrelstrength\sproutbase\app\email\elements\NotificationEmail;
 use barrelstrength\sproutbase\app\email\events\NotificationEmailEvent;
@@ -192,6 +193,9 @@ class NotificationEmailEvents extends Component
                     $object = $eventHandlerClass->getEventObject();
                     $notificationEmail->setEventObject($object);
 
+                    // Don't send emails for disabled notification email entries.
+                    if (!$notificationEmail->isReady()) continue;
+
                     SproutBase::$app->notifications->sendNotificationViaMailer($notificationEmail);
 
                     $sendNotificationEmailEvent = new SendNotificationEmailEvent([
@@ -233,7 +237,7 @@ class NotificationEmailEvents extends Component
      *
      * @return NotificationEvent|null
      */
-    public function getEvent(NotificationEmail $notificationEmail)
+    public function getEvent(EmailElement $notificationEmail)
     {
         $notificationEmailEventTypes = $this->getNotificationEmailEventTypes();
 
