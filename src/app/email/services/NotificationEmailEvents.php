@@ -193,6 +193,9 @@ class NotificationEmailEvents extends Component
                     $object = $eventHandlerClass->getEventObject();
                     $notificationEmail->setEventObject($object);
 
+                    // Don't send emails for disabled notification email entries.
+                    if (!$notificationEmail->isReady()) continue;
+
                     SproutBase::$app->notifications->sendNotificationViaMailer($notificationEmail);
 
                     $sendNotificationEmailEvent = new SendNotificationEmailEvent([

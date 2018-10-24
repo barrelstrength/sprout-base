@@ -398,4 +398,9 @@ class NotificationEmail extends EmailElement
     {
         return $this->emailTemplateId;
     }
+
+    public function isReady()
+    {
+        return (bool) ($this->getStatus() == static::ENABLED);
+    }
 }

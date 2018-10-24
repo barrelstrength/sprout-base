@@ -14,7 +14,6 @@ use craft\helpers\UrlHelper;
 use craft\web\Controller;
 use Craft;
 use craft\base\Plugin;
-
 use yii\base\Exception;
 use yii\web\HttpException;
 
