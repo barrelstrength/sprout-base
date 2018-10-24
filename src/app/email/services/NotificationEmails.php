@@ -278,6 +278,15 @@ class NotificationEmails extends Component
             $output = $email->getEmailTemplates()->getHtmlBody();
         }
 
+        $event = SproutBase::$app->notificationEvents->getEvent($email);
+
+        $email->setEventObject($event->getMockEventObject());
+
+        $output = Craft::$app->getView()->renderString($output, [
+            'email' => $email,
+            'object' => $email->getEventObject()
+        ]);
+
         // Output it into a buffer, in case TasksService wants to close the connection prematurely
         ob_start();
 
