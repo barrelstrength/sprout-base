@@ -19,16 +19,16 @@ class m180501_000003_add_notification_columns extends Migration
         // Craft 2 updates
         $table = '{{%sproutemail_notificationemails}}';
 
-        if (!$this->db->columnExists($table, 'defaultBody')) {
-            $this->addColumn($table, 'defaultBody', $this->string()->after('id'));
-        }
-
         if (!$this->db->columnExists($table, 'pluginHandle')) {
             $this->addColumn($table, 'pluginHandle', $this->string()->after('id'));
         }
 
+        if (!$this->db->columnExists($table, 'defaultBody')) {
+            $this->addColumn($table, 'defaultBody', $this->text()->after('subjectLine'));
+        }
+
         if (!$this->db->columnExists($table, 'singleEmail')) {
-            $this->addColumn($table, 'singleEmail', $this->string()->after('id'));
+            $this->addColumn($table, 'singleEmail', $this->tinyInteger()->after('replyToEmail'));
         }
 
         // Sort out Title Format
