@@ -7,7 +7,7 @@ use craft\db\Migration;
 /**
  * m180515_000002_rename_notification_options_column migration.
  */
-class m180515_000002_rename_notification_options_column extends Migration
+class m180501_000002_rename_notification_options_column extends Migration
 {
     /**
      * @inheritdoc
@@ -16,6 +16,7 @@ class m180515_000002_rename_notification_options_column extends Migration
      */
     public function safeUp()
     {
+        // Craft 2 Updates
         $table = '{{%sproutemail_notificationemails}}';
 
         if ($this->db->columnExists($table, 'options')) {

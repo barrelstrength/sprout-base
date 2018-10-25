@@ -4,13 +4,14 @@ namespace barrelstrength\sproutbase\app\email\migrations;
 
 use craft\db\Migration;
 
-class m180725_080640_update_element_types extends Migration
+class m180501_000004_update_element_types extends Migration
 {
     /**
      * @inheritdoc
      */
     public function safeUp()
     {
+        // Updates from Craft 2
         $campaignClasses = [
             0 => [
                 'oldType' => 'SproutEmail_CampaignEmail',

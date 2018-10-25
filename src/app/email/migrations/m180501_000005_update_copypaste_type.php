@@ -4,7 +4,7 @@ namespace barrelstrength\sproutbase\app\email\migrations;
 
 use craft\db\Migration;
 
-class m180726_080640_update_copypaste_type extends Migration
+class m180501_000005_update_copypaste_type extends Migration
 {
     /**
      * @inheritdoc

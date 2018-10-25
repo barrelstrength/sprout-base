@@ -14,6 +14,7 @@ class m180515_000003_update_notification_eventId_types extends Migration
      */
     public function safeUp()
     {
+        // This migration isn't relevant to most users, this was a minor change during beta development
         $types = [
             0 => [
                 'oldType' => 'sproutforms-basicsproutformsnotification',

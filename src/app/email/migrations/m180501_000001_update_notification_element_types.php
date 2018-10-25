@@ -7,13 +7,14 @@ use craft\db\Migration;
 /**
  * m180515_000001_update_notification_element_types migration.
  */
-class m180515_000001_update_notification_element_types extends Migration
+class m180501_000001_update_notification_element_types extends Migration
 {
     /**
      * @inheritdoc
      */
     public function safeUp()
     {
+        // Craft 2 Updates
         $seedClasses = [
             0 => [
                 'oldType' => 'barrelstrength\sproutbase\elements\sproutemail\NotificationEmail',
