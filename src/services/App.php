@@ -157,9 +157,11 @@ class App extends Component
         $this->settings = new Settings();
 
         // Sprout Email
-        $this->notifications = new NotificationEmails();
-        $this->notificationEvents = new NotificationEmailEvents();
         $this->mailers = new Mailers();
+        $this->notificationEvents = new NotificationEmailEvents();
+        $this->notifications = new NotificationEmails();
+
+        // @todo - Rename this to EmailTemplates or something more appropriate
         $this->sproutEmail = new SproutEmail();
 
         // Sprout Fields
@@ -172,18 +174,18 @@ class App extends Component
         $this->utilities = new Utilities();
 
         // Sprout Reports
-        $this->reports = new Reports();
-        $this->reportGroups = new ReportGroups();
         $this->dataSources = new DataSources();
         $this->exports = new Exports();
+        $this->reportGroups = new ReportGroups();
+        $this->reports = new Reports();
 
         // Sprout Import
-        $this->importers = new Importers();
         $this->bundles = new Bundles();
         $this->elementImporter = new ElementImporter();
-        $this->settingsImporter = new SettingsImporter();
-        $this->importUtilities = new ImportUtilities();
         $this->fieldImporter = new FieldImporter();
+        $this->importers = new Importers();
+        $this->importUtilities = new ImportUtilities();
         $this->seed = new Seed();
+        $this->settingsImporter = new SettingsImporter();
     }
 }
