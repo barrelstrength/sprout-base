@@ -62,14 +62,11 @@ class m181026_000000_update_notification_data extends Migration
                     if (isset($options['craft'])){
                         if (isset($options['craft']['saveUser'])) {
                             $newOptions = $options['craft']['saveUser'];
-                        }
-                        if (isset($options['craft']['deleteUser'])) {
+                        }else if (isset($options['craft']['deleteUser'])) {
                             $newOptions = $options['craft']['deleteUser'];
-                        }
-                        if (isset($options['craft']['saveEntry'])) {
+                        }else if (isset($options['craft']['saveEntry'])) {
                             $newOptions = $options['craft']['saveEntry'];
-                        }
-                        if (isset($options['craft']['deleteEntry'])) {
+                        }else if (isset($options['craft']['deleteEntry'])) {
                             $newOptions = $options['craft']['deleteEntry'];
                         }
                     }else if(isset($options['sproutForms'])){
