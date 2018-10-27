@@ -40,31 +40,31 @@ class Json extends Model
                 $this->json = $string;
                 break;
             case JSON_ERROR_DEPTH:
-                $this->addError('json', Craft::t('sprout-import', 'The maximum stack depth has been exceeded.'));
+                $this->addError('json', Craft::t('sprout-base', 'The maximum stack depth has been exceeded.'));
                 break;
             case JSON_ERROR_STATE_MISMATCH:
-                $this->addError('json', Craft::t('sprout-import', 'Invalid or malformed JSON.'));
+                $this->addError('json', Craft::t('sprout-base', 'Invalid or malformed JSON.'));
                 break;
             case JSON_ERROR_CTRL_CHAR:
-                $this->addError('json', Craft::t('sprout-import', 'Control character error, possibly incorrectly encoded.'));
+                $this->addError('json', Craft::t('sprout-base', 'Control character error, possibly incorrectly encoded.'));
                 break;
             case JSON_ERROR_SYNTAX:
-                $this->addError('json', Craft::t('sprout-import', 'Syntax error, malformed JSON.'));
+                $this->addError('json', Craft::t('sprout-base', 'Syntax error, malformed JSON.'));
                 break;
             case JSON_ERROR_UTF8:
-                $this->addError('json', Craft::t('sprout-import', 'Malformed UTF-8 characters, possibly incorrectly encoded.'));
+                $this->addError('json', Craft::t('sprout-base', 'Malformed UTF-8 characters, possibly incorrectly encoded.'));
                 break;
             case JSON_ERROR_RECURSION:
-                $this->addError('json', Craft::t('sprout-import', 'One or more recursive references in the value to be encoded.'));
+                $this->addError('json', Craft::t('sprout-base', 'One or more recursive references in the value to be encoded.'));
                 break;
             case JSON_ERROR_INF_OR_NAN:
-                $this->addError('json', Craft::t('sprout-import', 'One or more NAN or INF values in the value to be encoded.'));
+                $this->addError('json', Craft::t('sprout-base', 'One or more NAN or INF values in the value to be encoded.'));
                 break;
             case JSON_ERROR_UNSUPPORTED_TYPE:
-                $this->addError('json', Craft::t('sprout-import', 'A value of a type that cannot be encoded was given.'));
+                $this->addError('json', Craft::t('sprout-base', 'A value of a type that cannot be encoded was given.'));
                 break;
             default:
-                $this->addError('json', Craft::t('sprout-import', 'Unknown JSON error occurred.'));
+                $this->addError('json', Craft::t('sprout-base', 'Unknown JSON error occurred.'));
                 break;
         }
     }

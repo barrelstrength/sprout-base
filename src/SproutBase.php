@@ -9,6 +9,8 @@ namespace barrelstrength\sproutbase;
 
 use barrelstrength\sproutbase\app\email\services\EmailTemplates;
 use barrelstrength\sproutbase\app\import\controllers\ImportController;
+use barrelstrength\sproutbase\app\import\console\controllers\ImportController as ConsoleImportController;
+use barrelstrength\sproutbase\app\import\console\controllers\SeedController as ConsoleSeedController;
 use barrelstrength\sproutbase\base\BaseSproutTrait;
 use barrelstrength\sproutbase\controllers\SettingsController;
 use barrelstrength\sproutbase\app\email\controllers\NotificationsController;
@@ -149,6 +151,12 @@ class SproutBase extends Module
 
         if (Craft::$app->getRequest()->getIsConsoleRequest()) {
             $this->controllerNamespace = 'sproutbase\\console\\controllers';
+
+            $this->controllerMap = [
+                'import' => ConsoleImportController::class,
+                'seed' => ConsoleSeedController::class
+            ];
+
         } else {
             $this->controllerNamespace = 'sproutbase\\controllers';
 

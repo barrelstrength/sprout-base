@@ -4,9 +4,8 @@ namespace barrelstrength\sproutbase\app\import\services;
 
 use barrelstrength\sproutbase\app\import\base\Importer;
 use barrelstrength\sproutbase\SproutBase;
-use barrelstrength\sproutimport\events\ElementImportEvent;
+use barrelstrength\sproutbase\app\import\events\ElementImportEvent;
 use Craft;
-use barrelstrength\sproutimport\SproutImport;
 use craft\base\Component;
 use craft\base\Element;
 use craft\base\Model;
@@ -58,14 +57,15 @@ class ElementImporter extends Component
     protected $updatedElements = [];
 
     /**
-     * @param              $rows
-     * @param Importer     $importerClass
-     * @param bool         $seed
+     * @param                     $rows
+     * @param BaseElementImporter $importerClass
+     * @param bool                $seed
      *
      * @return bool|mixed
      * @throws \ReflectionException
+     * @throws \Throwable
      */
-    public function saveElement($rows, Importer $importerClass, $seed = false)
+    public function saveElement($rows, BaseElementImporter $importerClass, $seed = false)
     {
         $additionalDataKeys = $importerClass->getImporterDataKeys();
 
@@ -79,7 +79,7 @@ class ElementImporter extends Component
         if (!empty($dataKeysDiff)) {
             $inputKeysText = implode(', ', $dataKeysDiff);
 
-            $message = Craft::t('sprout-import', "Invalid element keys '$inputKeysText'.");
+            $message = Craft::t('sprout-base', "Invalid element keys '$inputKeysText'.");
 
             SproutBase::error($message);
 
@@ -103,7 +103,7 @@ class ElementImporter extends Component
                 if (!in_array($fieldHandle, $elementFieldHandles, false)) {
                     $key = 'field-null-'.$fieldHandle;
 
-                    $message = Craft::t('sprout-import', 'Could not find the {fieldHandle} field.', [
+                    $message = Craft::t('sprout-base', 'Could not find the {fieldHandle} field.', [
                         'fieldHandle' => $fieldHandle
                     ]);
 
@@ -153,7 +153,7 @@ class ElementImporter extends Component
 
                     $saved = true;
                 } catch (\Exception $e) {
-                    $message = Craft::t('sprout-import', "Error when saving Element. \n ");
+                    $message = Craft::t('sprout-base', "Error when saving Element. \n ");
                     $message .= $e->getMessage();
 
                     SproutBase::error($message);
@@ -181,7 +181,7 @@ class ElementImporter extends Component
 
                 $fieldsMessage = is_array($fields) ? implode(', ', array_keys($fields)) : $fields;
 
-                $message = $title.' '.$fieldsMessage.Craft::t('sprout-import', ' Check field values if it exists.');
+                $message = $title.' '.$fieldsMessage.Craft::t('sprout-base', ' Check field values if it exists.');
 
                 SproutBase::error($message);
 
@@ -214,7 +214,7 @@ class ElementImporter extends Component
      */
     public function logErrorByModel(Model $model)
     {
-        SproutBase::error(Craft::t('sprout-import', 'Errors found on model while saving Element'));
+        SproutBase::error(Craft::t('sprout-base', 'Errors found on model while saving Element'));
 
         SproutBase::$app->importUtilities->addError('sproutImport', $model->getErrors());
     }
@@ -353,7 +353,11 @@ class ElementImporter extends Component
     /**
      * Returns the related Element ID(s)
      *
+     * @param BaseElementImporter $importerClass
+     * @param array               $relatedSettings
+     *
      * @return array|bool
+     * @throws \Throwable
      */
     private function getElementRelationIds(BaseElementImporter $importerClass, array $relatedSettings = array())
     {
@@ -373,6 +377,9 @@ class ElementImporter extends Component
         if (is_array($newElements) && count($newElements)) {
             try {
                 foreach ($newElements as $row) {
+                    /**
+                     * @var $importerClass BaseElementImporter
+                     */
                     $importerClass = SproutBase::$app->importers->getImporter($row);
 
                     $this->saveElement($row, $importerClass);
@@ -385,7 +392,7 @@ class ElementImporter extends Component
                 $message['errorMessage'] = $e->getMessage();
                 $message['errorObject'] = $e;
 
-                SproutImport::error($message);
+                SproutBase::error($message);
 
                 return false;
             }
@@ -397,6 +404,9 @@ class ElementImporter extends Component
     /**
      * Returns the matched settings record ID
      *
+     * @param SettingsImporter $importerClass
+     * @param array            $relatedSettings
+     * 
      * @return int|null
      */
     private function getSettingRelationIds(BaseSettingsImporter $importerClass, array $relatedSettings = array())

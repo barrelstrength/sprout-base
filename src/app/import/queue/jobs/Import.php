@@ -2,11 +2,9 @@
 
 namespace barrelstrength\sproutbase\app\import\queue\jobs;
 
-use barrelstrength\sproutbase\app\import\services\Importers;
 use barrelstrength\sproutbase\SproutBase;
 use barrelstrength\sproutbase\app\import\models\Seed;
 use barrelstrength\sproutbase\app\import\models\Weed;
-use barrelstrength\sproutimport\SproutImport;
 use craft\helpers\Json;
 use craft\queue\BaseJob;
 use Craft;
@@ -21,6 +19,8 @@ class Import extends BaseJob
 
     /**
      * @inheritdoc
+     * 
+     * @throws \Exception
      */
     public function execute($queue)
     {
@@ -32,7 +32,7 @@ class Import extends BaseJob
             $weedModelAttributes = [
                 'seed' => $seedModel->enabled,
                 'seedType' => $seedModel->seedType,
-                'details' => Craft::t('sprout-import', 'Import Type: '.$seedModel->seedType),
+                'details' => Craft::t('sprout-base', 'Import Type: '.$seedModel->seedType),
                 'dateSubmitted' => $seedModel->dateCreated
             ];
 
@@ -49,17 +49,16 @@ class Import extends BaseJob
 
                 $errors = VarDumper::dumpAsString($errors);
 
-                $message = Craft::t('sprout-import', 'Error(s) while running Sprout Import job.');
+                $message = Craft::t('sprout-base', 'Error(s) while running Sprout Import job.');
 
-                SproutImport::error($message);
-                SproutImport::error($errors);
+                SproutBase::error($message);
+                SproutBase::error($errors);
 
                 throw new Exception($message);
             }
         } catch (\Exception $e) {
-
-            SproutImport::error('Unable to run Sprout Import job.');
-            SproutImport::error($e->getMessage());
+            SproutBase::error('Unable to run Sprout Import job.');
+            SproutBase::error($e->getMessage());
 
             throw $e;
         }
