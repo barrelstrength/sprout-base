@@ -13,16 +13,40 @@ use barrelstrength\sproutbase\app\import\enums\ImportType;
 
 class SeedController extends Controller
 {
+    /**
+     * @var
+     */
     public $content;
+
+    /**
+     * @var
+     */
     public $settingPath;
+
+    /**
+     * @var integer The number of items you would like to seed to your database
+     */
     public $quantity;
 
+    /**
+     * @inheritdoc
+     */
+    public $defaultAction = 'generate';
+
+    /**
+     * @param string $actionID
+     *
+     * @return array|string[]
+     */
     public function options($actionID)
     {
         return ['content', 'quantity', 'settingPath'];
     }
 
-    public function actionIndex()
+    /**
+     * Seed your database with dummy content
+     */
+    public function actionGenerate()
     {
         if (!file_exists($this->settingPath)) {
             $message = Craft::t("sprout-import", "File path does not exist.");
