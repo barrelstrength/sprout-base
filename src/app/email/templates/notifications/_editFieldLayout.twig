@@ -47,7 +47,7 @@
 {% set content %}
 
     <input type="hidden" name="action"
-       value="sprout-base/notifications/save-notification-email-settings">
+       value="sprout/notifications/save-notification-email-settings">
     {{ redirectInput(currentPluginHandle ~ '/notifications/edit/' ~ notificationEmailId) }}
 
     <input type="hidden" name="emailId" value="{{ emailId }}">

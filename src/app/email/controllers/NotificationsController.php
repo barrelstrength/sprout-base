@@ -115,7 +115,7 @@ class NotificationsController extends Controller
                         'fields' => '#subjectLine-field, #body-field, #defaultBody, #title-field, #fields > div > .field',
                         'extraFields' => '#settings',
                         'previewUrl' => $notificationEmail->getUrl(),
-                        'previewAction' => 'sprout-base/notifications/live-preview-notification-email',
+                        'previewAction' => 'sprout/notifications/live-preview-notification-email',
                         'previewParams' => [
                             'notificationId' => $notificationEmail->id,
                         ]
@@ -124,7 +124,7 @@ class NotificationsController extends Controller
             );
 
             if ($notificationEmail->id && $notificationEmail->getUrl()) {
-                $shareUrl = UrlHelper::actionUrl('sprout-base/notifications/share-notification-email', [
+                $shareUrl = UrlHelper::actionUrl('sprout/notifications/share-notification-email', [
                     'notificationId' => $notificationEmail->id,
                 ]);
             }
@@ -487,7 +487,7 @@ class NotificationsController extends Controller
 
         // Create the token and redirect to the entry URL with the token in place
         $token = Craft::$app->getTokens()->createToken([
-                'sprout-base/notifications/view-shared-notification-email',
+                'sprout/notifications/view-shared-notification-email',
                 $params
             ]
         );

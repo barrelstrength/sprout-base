@@ -33,7 +33,7 @@
                         <form method="post" accept-charset="UTF-8">
                             {{ csrfInput() }}
                             <input type="hidden" name="action"
-                                   value="sprout-base/weed/process-weed">
+                                   value="sprout/weed/process-weed">
                             {{ redirectInput("sprout-import/weed") }}
                             <input type="hidden" name="dateCreated"
                                    value="{{ seed['dateCreated'] }}">
@@ -52,7 +52,7 @@
             <form method="post" accept-charset="UTF-8">
                 {{ csrfInput() }}
                 <input type="hidden" name="action"
-                       value="sprout-base/weed/process-weed">
+                       value="sprout/weed/process-weed">
                 {{ redirectInput("sprout-import/weed") }}
                 <input type="hidden" name="dateCreated" value="*">
                 <input class="btn submit" name="submit"
@@ -68,8 +68,8 @@
             resourcePath: '@sproutbase/web/assets/cp/dist/images/sprout-icon.svg',
             heading: "The garden is weeded"|t('sprout-base'),
             body: "Currently, no content or settings in your database are marked as seed content. Get started and <a href='{importLink}'>import content and settings</a> or <a href='{seedLink}'>generate seed content</a>."|t({
-                importLink: cpUrl('sprout-base/index'),
-                seedLink: cpUrl('sprout-base/seed')
+                importLink: cpUrl('sprout-import/index'),
+                seedLink: cpUrl('sprout-import/seed')
             })
         }) }}
 

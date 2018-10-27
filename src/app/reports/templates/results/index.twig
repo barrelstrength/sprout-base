@@ -17,7 +17,7 @@
     <form method="post" accept-charset="UTF-8">
         {{ csrfInput() }}
         <input type="hidden" name="action"
-               value="sprout-base/reports/export-report">
+               value="sprout/reports/export-report">
         <input type="hidden" name="reportId" value="{{ reportId }}">
 
         <a id="btn-download-csv" class="btn">
@@ -38,7 +38,7 @@
                 {{ csrfInput() }}
                 {{ redirectInput(redirectUrl) }}
                 <input type="hidden" name="action"
-                       value="sprout-base/reports/update-report">
+                       value="sprout/reports/update-report">
                 <input type="hidden" name="reportId" value="{{ reportId }}">
 
                 {{ settingsHtml | raw }}

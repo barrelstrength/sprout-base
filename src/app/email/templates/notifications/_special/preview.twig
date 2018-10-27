@@ -18,7 +18,7 @@
 
     {% set email = craft.sproutEmail.getNotificationEmailById(emailId) %}
 
-    {% set emailUrl = actionUrl('sprout-base/notifications/share-notification-email', {
+    {% set emailUrl = actionUrl('sprout/notifications/share-notification-email', {
         notificationId: email.id
     }) %}
 

@@ -15,9 +15,9 @@
         <div class="buttons">
             <form method="post" accept-charset="utf-8">
                 {{ csrfInput() }}
-                {{ redirectInput("sprout-base/bundles") }}
+                {{ redirectInput("sprout-import/bundles") }}
                 <input type="hidden" name="action"
-                       value="sprout-base/import/install-bundle">
+                       value="sprout/import/install-bundle">
                 <input type="hidden" name="className"
                        value="{{ bundle.getClassName() }}">
 
