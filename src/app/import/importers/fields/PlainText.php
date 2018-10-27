@@ -30,6 +30,7 @@ class PlainText extends FieldImporter
 
     /**
      * @return mixed|string
+     * @throws \Exception
      */
     public function getMockData()
     {
@@ -40,8 +41,7 @@ class PlainText extends FieldImporter
         $multilineParagraphsMin = 1;
         $multilineParagraphsMax = 3;
 
-        if (isset($this->seedSettings['fields']))
-        {
+        if (isset($this->seedSettings['fields'])) {
             $singlelineLinesMin = $this->seedSettings['fields']['plaintext']['singleLineLinesMin'] ?: $singlelineLinesMin;
             $singlelineLinesMax = $this->seedSettings['fields']['plaintext']['singleLineLinesMax'] ?: $singlelineLinesMax;
             $multilineParagraphsMin = $this->seedSettings['fields']['plaintext']['multilineParagraphsMin'] ?: $multilineParagraphsMin;
@@ -63,7 +63,7 @@ class PlainText extends FieldImporter
         $charLimit = $settings['charLimit'] ?? null;
 
         if ($charLimit) {
-            $charLimit = (int) $charLimit;
+            $charLimit = (int)$charLimit;
             $text = trim(substr($text, 0, $charLimit));
         }
 

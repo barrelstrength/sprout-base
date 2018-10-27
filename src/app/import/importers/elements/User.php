@@ -114,16 +114,14 @@ class User extends ElementImporter
     {
         // If photoId is an array we matched it via a 'related' attribute and we should set
         // it to be an integer because photoId is an attribute and not like custom relation fields
-        if (is_array($this->model->photoId) && count($this->model->photoId))
-        {
+        if (is_array($this->model->photoId) && count($this->model->photoId)) {
             $this->model->photoId = $this->model->photoId[0];
         }
     }
 
     public function afterSaveElement()
     {
-        if (count($this->model->getGroups()))
-        {
+        if (count($this->model->getGroups())) {
             $groupIds = $this->model->getGroups();
 
             $userId = $this->model->id;

@@ -97,7 +97,9 @@ class SeedController extends Controller
     /**
      * Generates Elements with mock data and mark them as Seeds
      *
+     * @return bool|Response
      * @throws BadRequestHttpException
+     * @throws \craft\errors\MissingComponentException
      */
     public function actionGenerateElementSeeds()
     {

@@ -98,6 +98,7 @@ class Seed extends Component
      * @param bool  $isKeep
      *
      * @return bool
+     * @throws \Throwable
      * @throws \yii\db\Exception
      */
     public function weed(array $seeds = [], $isKeep = false)
@@ -212,7 +213,7 @@ class Seed extends Component
      * @param array $seedJob
      *
      * @return bool
-     * @throws \Exception
+     * @throws \Throwable
      */
     public function runSeed(array $seedJob)
     {

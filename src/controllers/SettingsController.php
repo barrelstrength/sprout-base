@@ -103,6 +103,7 @@ class SettingsController extends BaseController
      *
      * @return null|\yii\web\Response
      * @throws BadRequestHttpException
+     * @throws \craft\errors\MissingComponentException
      * @throws \yii\db\Exception
      */
     public function actionSaveSettings()

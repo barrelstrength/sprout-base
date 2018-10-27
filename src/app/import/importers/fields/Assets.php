@@ -32,6 +32,7 @@ class Assets extends FieldImporter
 
     /**
      * @return array|bool|mixed|null
+     * @throws \Exception
      */
     public function getMockData()
     {
@@ -42,8 +43,7 @@ class Assets extends FieldImporter
 
         $assetSettings = $this->seedSettings['fields']['assets'] ?? null;
 
-        if ($assetSettings)
-        {
+        if ($assetSettings) {
             $relatedMin = $assetSettings['relatedMin'] ?: $relatedMin;
             $relatedMax = $assetSettings['relatedMax'] ?: $relatedMax;
         }

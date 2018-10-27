@@ -11,9 +11,10 @@ use yii\db\BaseActiveRecord;
 class UserGroup extends SettingsImporter
 {
     /**
-     * @var
+     * @var bool
      */
     public $isNewSection;
+
     /**
      * @return string
      */
@@ -64,7 +65,7 @@ class UserGroup extends SettingsImporter
     {
         $recordClass = $this->getRecordName();
         /**
-         * @var $record BaseActiveRecord
+         * @var $record UserGroupRecord
          */
         $record = new $recordClass();
 
@@ -72,7 +73,7 @@ class UserGroup extends SettingsImporter
 
         $ids = null;
         if ($records) {
-            foreach ($records as$record ) {
+            foreach ($records as $record) {
                 $ids[] = $record->id;
             }
         }

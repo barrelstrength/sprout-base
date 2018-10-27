@@ -17,6 +17,7 @@ class Redactor extends FieldImporter
 
     /**
      * @return mixed
+     * @throws \Exception
      */
     public function getMockData()
     {

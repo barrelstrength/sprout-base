@@ -32,6 +32,7 @@ class Categories extends FieldImporter
 
     /**
      * @return array|bool|mixed
+     * @throws \Exception
      */
     public function getMockData()
     {
@@ -42,8 +43,7 @@ class Categories extends FieldImporter
 
         $categorySettings = $this->seedSettings['fields']['categories'] ?? null;
 
-        if ($categorySettings)
-        {
+        if ($categorySettings) {
             $relatedMin = $categorySettings['branchLimitMin'] ?: $relatedMin;
             $relatedMax = $categorySettings['branchLimitMax'] ?: $relatedMax;
         }

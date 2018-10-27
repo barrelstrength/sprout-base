@@ -362,8 +362,9 @@ class NotificationsController extends Controller
      * Send a notification email via a Mailer
      *
      * @return \yii\web\Response
+     * @throws Exception
+     * @throws \Throwable
      * @throws \Twig_Error_Loader
-     * @throws \yii\base\Exception
      * @throws \yii\web\BadRequestHttpException
      */
     public function actionSendTestNotificationEmail()
@@ -442,6 +443,7 @@ class NotificationsController extends Controller
      * Provides a way for mailers to render content to perform actions inside a a modal window
      *
      * @return \yii\web\Response
+     * @throws \Throwable
      * @throws \yii\web\BadRequestHttpException
      */
     public function actionGetPrepareModal()

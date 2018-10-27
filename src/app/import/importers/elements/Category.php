@@ -152,8 +152,7 @@ class Category extends ElementImporter
     {
         // If newParentId is an array we matched it via a 'related' attribute and we should set
         // it to be an integer because newParentId is an attribute and not like custom relation fields
-        if (is_array($this->model->newParentId) && count($this->model->newParentId))
-        {
+        if (is_array($this->model->newParentId) && count($this->model->newParentId)) {
             $this->model->newParentId = $this->model->newParentId[0];
         }
     }

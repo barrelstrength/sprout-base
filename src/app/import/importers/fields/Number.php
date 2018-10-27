@@ -37,8 +37,7 @@ class Number extends FieldImporter
         $max = 3;
         $decimals = 0;
 
-        if (isset($this->seedSettings['fields']))
-        {
+        if (isset($this->seedSettings['fields'])) {
             $min = $this->seedSettings['fields']['number']['min'] ?: $min;
             $max = $this->seedSettings['fields']['number']['max'] ?: $max;
             $decimals = $this->seedSettings['fields']['number']['decimals'] ?: $decimals;

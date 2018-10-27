@@ -66,6 +66,7 @@ class Report extends Element
 
     /**
      * @return string
+     * @throws \Throwable
      */
     public function __toString()
     {
@@ -270,6 +271,7 @@ class Report extends Element
 
     /**
      * @return string
+     * @throws \Throwable
      * @throws \yii\base\Exception
      */
     public function processNameFormat()

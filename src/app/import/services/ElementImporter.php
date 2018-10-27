@@ -302,6 +302,7 @@ class ElementImporter extends Component
      * @param array      $fields
      *
      * @return array|false
+     * @throws \Throwable
      */
     public function resolveRelationships(array $related = null, array $fields)
     {
@@ -465,6 +466,7 @@ class ElementImporter extends Component
      * @param $fields
      *
      * @return bool
+     * @throws \Throwable
      */
     public function resolveMatrixRelationships($fields)
     {

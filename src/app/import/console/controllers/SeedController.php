@@ -52,8 +52,8 @@ class SeedController extends Controller
         $seedJobErrors = null;
 
         if (SproutBase::$app->seed->generateSeeds($seedJob)) {
-            $message = Craft::t("sprout-import", $this->content . " seed in queue.");
-            $this->stdout($message. PHP_EOL);
+            $message = Craft::t("sprout-import", $this->content." seed in queue.");
+            $this->stdout($message.PHP_EOL);
         }
 
         return null;

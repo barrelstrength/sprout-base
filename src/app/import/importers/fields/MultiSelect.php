@@ -18,6 +18,7 @@ class MultiSelect extends FieldImporter
 
     /**
      * @return mixed
+     * @throws \Exception
      */
     public function getMockData()
     {

@@ -64,7 +64,7 @@ abstract class ElementImporter extends Importer
      * @param array $settings
      *
      * @return bool|mixed
-     * @throws \Exception
+     * @throws \Throwable
      */
     public function setModel($model, array $settings = [])
     {

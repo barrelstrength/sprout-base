@@ -403,6 +403,6 @@ class NotificationEmail extends EmailElement
 
     public function isReady()
     {
-        return (bool) ($this->getStatus() == static::ENABLED);
+        return (bool)($this->getStatus() == static::ENABLED);
     }
 }

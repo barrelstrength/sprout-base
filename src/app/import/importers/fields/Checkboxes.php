@@ -18,6 +18,7 @@ class Checkboxes extends FieldImporter
 
     /**
      * @return mixed
+     * @throws \Exception
      */
     public function getMockData()
     {

@@ -32,6 +32,7 @@ class Entries extends FieldImporter
 
     /**
      * @return array|bool|mixed
+     * @throws \Exception
      */
     public function getMockData()
     {
@@ -42,8 +43,7 @@ class Entries extends FieldImporter
 
         $entrySettings = $this->seedSettings['fields']['entries'] ?? null;
 
-        if ($entrySettings)
-        {
+        if ($entrySettings) {
             $relatedMin = $entrySettings['relatedMin'] ?: $relatedMin;
             $relatedMax = $entrySettings['relatedMax'] ?: $relatedMax;
         }

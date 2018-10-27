@@ -19,6 +19,7 @@ class Lightswitch extends FieldImporter
      * Returns a boolean value
      *
      * @return mixed
+     * @throws \Exception
      */
     public function getMockData()
     {

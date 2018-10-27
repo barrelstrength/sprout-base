@@ -32,6 +32,7 @@ class Users extends FieldImporter
 
     /**
      * @return array|bool|mixed
+     * @throws \Exception
      */
     public function getMockData()
     {
@@ -40,8 +41,7 @@ class Users extends FieldImporter
         $relatedMin = 1;
         $relatedMax = 3;
 
-        if (isset($this->seedSettings['fields']))
-        {
+        if (isset($this->seedSettings['fields'])) {
             $relatedMin = $this->seedSettings['fields']['assets']['relatedMin'] ?: $relatedMin;
             $relatedMax = $this->seedSettings['fields']['assets']['relatedMax'] ?: $relatedMax;
         }

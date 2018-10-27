@@ -64,6 +64,7 @@ class FieldImporter extends Component
      * @param            $mockDataSettings
      *
      * @return array|bool
+     * @throws \Exception
      */
     public function getMockRelations(Element $element, array $attributes = null, $mockDataSettings)
     {
@@ -281,6 +282,7 @@ class FieldImporter extends Component
      * @param $columns
      *
      * @return array
+     * @throws \Exception
      */
     public function generateTableColumns($columns)
     {
@@ -299,6 +301,7 @@ class FieldImporter extends Component
      * @param $column
      *
      * @return array|int|string
+     * @throws \Exception
      */
     public function generateTableColumn($column)
     {

@@ -2,7 +2,6 @@
 
 namespace barrelstrength\sproutbase\app\email\migrations;
 
-use Craft;
 use craft\db\Migration;
 
 /**

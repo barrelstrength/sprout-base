@@ -6,7 +6,6 @@ use barrelstrength\sproutbase\app\email\base\EmailElement;
 use barrelstrength\sproutbase\app\email\base\Mailer;
 use barrelstrength\sproutbase\app\email\base\NotificationEmailSenderInterface;
 use barrelstrength\sproutemail\elements\CampaignEmail;
-use barrelstrength\sproutbase\app\email\elements\NotificationEmail;
 use barrelstrength\sproutemail\models\CampaignType;
 use barrelstrength\sproutemail\SproutEmail;
 use barrelstrength\sproutforms\fields\formfields\FileUpload;
@@ -76,8 +75,11 @@ class DefaultMailer extends Mailer implements NotificationEmailSenderInterface
     /**
      * @inheritdoc
      *
+     * @param EmailElement $notificationEmail
+     *
+     * @return bool
      * @throws Exception
-     * @throws \Twig_Error_Loader
+     * @throws \Throwable
      * @throws \yii\base\InvalidConfigException
      */
     public function sendNotificationEmail(EmailElement $notificationEmail)
@@ -154,7 +156,7 @@ class DefaultMailer extends Mailer implements NotificationEmailSenderInterface
 
         if ($notificationEmail->singleEmail) {
              /*
-              * Assigning email with name array does not work on carft
+              * Assigning email with name array does not work on craft
               * [$recipient->email => $recipient->name]
               */
             foreach ($recipients as $key => $recipient) {

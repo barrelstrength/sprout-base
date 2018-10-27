@@ -18,6 +18,7 @@ class Table extends FieldImporter
 
     /**
      * @return array|mixed|null
+     * @throws \Exception
      */
     public function getMockData()
     {

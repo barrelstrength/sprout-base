@@ -84,6 +84,8 @@ class Utilities extends Component
     /**
      * @param Predefined $field
      * @param Element    $element
+     *
+     * @throws \Throwable
      */
     public function processPredefinedField($field, $element)
     {

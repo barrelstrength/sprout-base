@@ -15,7 +15,10 @@ class Seed extends BaseJob
 
     /**
      * @inheritdoc
-     * @throws \Exception
+     *
+     * @param $queue
+     *
+     * @throws \Throwable
      */
     public function execute($queue)
     {

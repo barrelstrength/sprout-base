@@ -32,6 +32,7 @@ class Tags extends FieldImporter
 
     /**
      * @return array|bool|mixed
+     * @throws \Exception
      */
     public function getMockData()
     {
@@ -42,8 +43,7 @@ class Tags extends FieldImporter
 
         $tagSettings = $this->seedSettings['fields']['tags'] ?? null;
 
-        if ($tagSettings)
-        {
+        if ($tagSettings) {
             $relatedMin = $tagSettings['relatedMin'] ?: $relatedMin;
             $relatedMax = $tagSettings['relatedMax'] ?: $relatedMax;
         }

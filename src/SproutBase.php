@@ -156,7 +156,6 @@ class SproutBase extends Module
                 'import' => ConsoleImportController::class,
                 'seed' => ConsoleSeedController::class
             ];
-
         } else {
             $this->controllerNamespace = 'sproutbase\\controllers';
 

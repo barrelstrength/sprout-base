@@ -59,7 +59,6 @@ class Order extends ElementImporter
         if (!$orderStatusId) {
             $orderStatus = Plugin::getInstance()->getOrderStatuses()->getDefaultOrderStatus();
             $orderStatusId = $orderStatus->id;
-
         } elseif (is_string($orderStatusId)) {
             $orderStatus = Plugin::getInstance()->getOrderStatuses()->getOrderStatusByHandle($orderStatusId);
 
@@ -105,7 +104,7 @@ class Order extends ElementImporter
                     'customerId attribute is required.');
             } else {
                 $message = Craft::t('sprout-base',
-                    'The customer ' .$customerEmail . ' was not found.');
+                    'The customer '.$customerEmail.' was not found.');
             }
 
             throw new \Exception($message);

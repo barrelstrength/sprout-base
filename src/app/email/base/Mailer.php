@@ -45,6 +45,7 @@ abstract class Mailer
      * @var EmailElement
      */
     private $emailElement;
+
     /**
      * Returns a list of On The Fly Recipients
      *
@@ -340,6 +341,7 @@ abstract class Mailer
      * @param EmailElement $email
      *
      * @return SimpleRecipientList
+     * @throws \Throwable
      * @throws \yii\base\Exception
      */
     public function getRecipientList(EmailElement $email)
@@ -450,6 +452,7 @@ abstract class Mailer
      * @param $email
      *
      * @return SimpleRecipientList
+     * @throws \Throwable
      * @throws \yii\base\Exception
      */
     public function getRecipients($recipients, $email)
@@ -490,7 +493,7 @@ abstract class Mailer
      * @param EmailElement $email
      *
      * @return Message
-     * @throws \Twig_Error_Loader
+     * @throws \Throwable
      * @throws \yii\base\Exception
      */
     public function getMessage(EmailElement $email)
@@ -572,6 +575,8 @@ abstract class Mailer
      * @param EmailElement $email
      * @param              $attribute
      * @param              $object
+     *
+     * @throws \Throwable
      */
     public function renderObjectTemplateSafely(EmailElement $email, $attribute, $object)
     {
