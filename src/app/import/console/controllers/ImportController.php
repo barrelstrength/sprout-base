@@ -23,6 +23,11 @@ class ImportController extends Controller
     public $seed;
 
     /**
+     * @inheritdoc
+     */
+    public $defaultAction = 'run';
+
+    /**
      * @param string $actionID
      *
      * @return array|string[]
@@ -33,9 +38,9 @@ class ImportController extends Controller
     }
 
     /**
-     * Queue files for import
+     * Queue one or more files for import
      */
-    public function actionIndex()
+    public function actionRun()
     {
         if ($this->filePath) {
             $paths = array_map('trim', explode(' ', $this->filePath));
