@@ -112,7 +112,7 @@ class Seed extends Component
                         $row = [];
 
                         $row['@model'] = $seed['type'];
-                        Craft::dd($row);
+
                         /**
                          * @var $importerClass ElementImporter|SettingsImporter
                          */
