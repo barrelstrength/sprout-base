@@ -22,7 +22,7 @@ class SproutSeoController extends Controller
 
         $importableJson = $this->convertToJson($pastedCSV);
 
-        // Format: /old-url, /new-url, 301, 0
+        // Format: /old-url, /new-url, 301, 0, 0
         if (!empty($importableJson)) {
             Craft::$app->getSession()->setNotice(Craft::t('sprout-import', 'Redirect JSON generated.'));
 

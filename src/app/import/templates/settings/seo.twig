@@ -13,6 +13,10 @@
         instructions: "Paste your Redirects in comma-delimited CSV format to convert them into Sprout Import JSON Format."|t('sprout-base'),
         name: 'pastedCSV',
         value: pastedCSV ?? null,
+        placeholder: 'Old URL, New URL, Method, Regex?, Count
+/old-url, /new-url, 301, 0, 0
+/another-old-url, /another-new-url, 302, 0, 0
+',
         errors: errors ?? null,
         rows: 20,
         first: true
