@@ -20,6 +20,56 @@ class ImportController extends Controller
 {
     /**
      * @throws BadRequestHttpException
+     * @throws ErrorException
+     * @throws \craft\errors\MissingComponentException
+     * @throws \yii\base\Exception
+     */
+    public function actionRunImport()
+    {
+        $this->requirePostRequest();
+
+        // Prepare our variables
+        $importDataString = Craft::$app->getRequest()->getBodyParam('importData');
+        $uploadedFiles = UploadedFile::getInstancesByName('files');
+        $seed = Craft::$app->getRequest()->getBodyParam('seed');
+
+        // Prepare our Jobs
+        $importJobs = new ImportJobs();
+
+        $this->prepareUploadedFileImportJobs($importJobs, $uploadedFiles, $seed);
+        $this->preparePostImportJobs($importJobs, $importDataString, $seed);
+
+        // Queue our Jobs
+        if (count($importJobs->jobs)) {
+
+            try {
+                foreach ($importJobs->jobs as $job) {
+                    Craft::$app->queue->push(new Import([
+                        'importData' => $job->importData,
+                        'seedAttributes' => $job->seedAttributes
+                    ]));
+                }
+
+                Craft::$app->getSession()->setNotice(Craft::t('sprout-import', '{count} job(s) queued for import.', [
+                    'count' => count($importJobs->jobs)
+                ]));
+            } catch (\Exception $e) {
+                $importJobs->addError('queue', $e->getMessage());
+
+                SproutBase::error($e->getMessage());
+            }
+        } else {
+            Craft::$app->getUrlManager()->setRouteParams([
+                'importData' => $importDataString,
+                'errors' => $importJobs->getErrors()
+            ]);
+
+            Craft::$app->getSession()->setError(Craft::t('sprout-import', 'Unable to queue import.'));
+        }
+    }
+
+    /**
+     * @throws BadRequestHttpException
      * @throws \yii\base\Exception
      */
     public function actionInstallBundle()
@@ -76,6 +126,45 @@ class ImportController extends Controller
             Craft::$app->getSession()->setError(Craft::t('sprout-base', 'Unable to import bundle.'));
         }
     }
+
+    /**
+     * @param ImportJobs $importJobs
+     * @param            $importDataString
+     * @param            $seed
+     *
+     * @return void
+     */
+    public function preparePostImportJobs(ImportJobs $importJobs, $importDataString, $seed)
+    {
+        if (!$importDataString) {
+            return;
+        }
+
+        $seedModel = new Seed();
+        $seedModel->seedType = ImportType::Post;
+        $seedModel->enabled = (bool)$seed;
+
+        $importData = new Json();
+        $importData->setJson($importDataString);
+
+        // Make sure we have JSON
+        if ($importData->hasErrors()) {
+
+            $errorMessage = $importData->getFirstError('json');
+
+            $importJobs->addError('json', $errorMessage);
+            SproutBase::error($errorMessage);
+
+            return;
+        }
+
+        $fileImportJob = new Import();
+        $fileImportJob->seedAttributes = $seedModel->getAttributes();
+        $fileImportJob->importData = $importData->json;
+
+        $importJobs->addJob($fileImportJob);
+    }
+
 
     /**
      * @param ImportJobs $importJobs
