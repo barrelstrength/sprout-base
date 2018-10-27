@@ -11,6 +11,9 @@ use barrelstrength\sproutbase\app\email\services\EmailTemplates;
 use barrelstrength\sproutbase\app\import\controllers\ImportController;
 use barrelstrength\sproutbase\app\import\console\controllers\ImportController as ConsoleImportController;
 use barrelstrength\sproutbase\app\import\console\controllers\SeedController as ConsoleSeedController;
+use barrelstrength\sproutbase\app\import\controllers\SeedController;
+use barrelstrength\sproutbase\app\import\controllers\SproutSeoController;
+use barrelstrength\sproutbase\app\import\controllers\WeedController;
 use barrelstrength\sproutbase\base\BaseSproutTrait;
 use barrelstrength\sproutbase\controllers\SettingsController;
 use barrelstrength\sproutbase\app\email\controllers\NotificationsController;
@@ -129,7 +132,10 @@ class SproutBase extends Module
                 'fields' => FieldsController::class,
                 'fields-address' => AddressController::class,
                 'reports' => ReportsController::class,
-                'import' => ImportController::class
+                'import' => ImportController::class,
+                'seed' => SeedController::class,
+                'weed' => WeedController::class,
+                'redirects-tool' => SproutSeoController::class
             ];
         }
 

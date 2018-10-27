@@ -12,9 +12,21 @@ use barrelstrength\sproutbase\app\import\queue\jobs\Import;
 
 class ImportController extends Controller
 {
+    /**
+     * @var string
+     */
     public $filePath;
+
+    /**
+     * @var bool
+     */
     public $seed;
 
+    /**
+     * @param string $actionID
+     *
+     * @return array|string[]
+     */
     public function options($actionID)
     {
         return ['filePath', 'seed'];
@@ -38,6 +50,11 @@ class ImportController extends Controller
         }
     }
 
+    /**
+     * @param $path
+     *
+     * @return int|null
+     */
     private function queueFile($path)
     {
         if (!file_exists($path)) {

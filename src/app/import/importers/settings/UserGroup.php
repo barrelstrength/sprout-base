@@ -6,7 +6,6 @@ use barrelstrength\sproutbase\app\import\base\SettingsImporter;
 use Craft;
 use craft\models\UserGroup as UserGroupModel;
 use craft\records\UserGroup as UserGroupRecord;
-use yii\db\BaseActiveRecord;
 
 class UserGroup extends SettingsImporter
 {

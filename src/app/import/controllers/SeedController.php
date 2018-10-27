@@ -8,7 +8,6 @@ use barrelstrength\sproutbase\app\import\importers\elements\Category;
 use barrelstrength\sproutbase\app\import\importers\elements\Entry;
 use barrelstrength\sproutbase\app\import\importers\elements\Tag;
 use barrelstrength\sproutbase\app\import\importers\elements\User;
-use barrelstrength\sproutimport\SproutImport;
 use craft\helpers\DateTimeHelper;
 use craft\web\Controller;
 use Craft;
@@ -139,7 +138,7 @@ class SeedController extends Controller
 
             Craft::$app->getSession()->setError($message);
 
-            SproutImport::error($errors);
+            SproutBase::error($errors);
 
             Craft::$app->getUrlManager()->setRouteParams([
                 'seedJob' => $seedJob

@@ -1,6 +1,6 @@
 <?php
 
-namespace barrelstrength\sproutimport\controllers;
+namespace barrelstrength\sproutbase\app\import\controllers;
 
 use barrelstrength\sproutbase\SproutBase;
 use Craft;
@@ -27,6 +27,7 @@ class WeedController extends Controller
      * @return null|Response
      * @throws BadRequestHttpException
      * @throws Exception
+     * @throws \Throwable
      * @throws \craft\errors\MissingComponentException
      */
     public function actionProcessWeed()

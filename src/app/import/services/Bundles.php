@@ -18,6 +18,9 @@ class Bundles extends Component
      */
     protected $bundles = [];
 
+    /**
+     * @return array
+     */
     public function getSproutImportBundles(): array
     {
         $bundleTypes = [
@@ -53,6 +56,11 @@ class Bundles extends Component
         return $this->bundles;
     }
 
+    /**
+     * @param $class
+     *
+     * @return mixed|null
+     */
     public function getBundleByClass($class)
     {
         $this->getSproutImportBundles();

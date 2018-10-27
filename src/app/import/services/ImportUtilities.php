@@ -8,6 +8,9 @@ use craft\base\Component;
 
 class ImportUtilities extends Component
 {
+    /**
+     * @var array
+     */
     public $errors;
 
     /**

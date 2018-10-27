@@ -1,11 +1,14 @@
 <?php
 
-namespace barrelstrength\sproutimport\controllers;
+namespace barrelstrength\sproutbase\app\import\controllers;
 
 use barrelstrength\sproutseo\integrations\sproutimport\importers\elements\Redirect as RedirectImporter;
 use Craft;
 use yii\web\Controller;
 
+/**
+ * @todo - move these methods to a better place, they don't belong here.
+ */
 class SproutSeoController extends Controller
 {
     /**

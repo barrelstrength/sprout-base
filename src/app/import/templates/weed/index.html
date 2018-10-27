@@ -6,7 +6,6 @@
 
 {% set hasSeeds = craft.sproutImport.hasSeeds() %}
 {% do view.registerAssetBundle("barrelstrength\\sproutbase\\app\\import\\web\\assets\\import\\ImportAsset") %}
-{% set baseAssetsUrl = view.getAssetManager().getPublishedUrl('@sproutimport', true) %}
 
 {% block content %}
 
@@ -34,7 +33,7 @@
                         <form method="post" accept-charset="UTF-8">
                             {{ csrfInput() }}
                             <input type="hidden" name="action"
-                                   value="sprout-import/weed/process-weed">
+                                   value="sprout-base/weed/process-weed">
                             {{ redirectInput("sprout-import/weed") }}
                             <input type="hidden" name="dateCreated"
                                    value="{{ seed['dateCreated'] }}">
@@ -53,7 +52,7 @@
             <form method="post" accept-charset="UTF-8">
                 {{ csrfInput() }}
                 <input type="hidden" name="action"
-                       value="sprout-import/weed/process-weed">
+                       value="sprout-base/weed/process-weed">
                 {{ redirectInput("sprout-import/weed") }}
                 <input type="hidden" name="dateCreated" value="*">
                 <input class="btn submit" name="submit"
