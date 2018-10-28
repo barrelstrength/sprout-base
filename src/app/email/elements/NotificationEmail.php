@@ -232,6 +232,8 @@ class NotificationEmail extends EmailElement
 
     /**
      * @inheritdoc
+     *
+     * @throws \yii\base\InvalidConfigException
      */
     public function getFieldLayout()
     {

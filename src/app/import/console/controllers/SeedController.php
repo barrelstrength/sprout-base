@@ -5,7 +5,6 @@ namespace barrelstrength\sproutbase\app\import\console\controllers;
 use barrelstrength\sproutbase\SproutBase;
 use craft\helpers\DateTimeHelper;
 use yii\console\Controller;
-use craft\helpers\Json;
 use Craft;
 use yii\console\ExitCode;
 use barrelstrength\sproutbase\app\import\models\jobs\SeedJob;
