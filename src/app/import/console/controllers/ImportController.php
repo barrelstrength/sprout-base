@@ -13,14 +13,14 @@ use barrelstrength\sproutbase\app\import\queue\jobs\Import;
 class ImportController extends Controller
 {
     /**
-     * @var string
+     * @var string The file(s) to import.
      */
-    public $filePath;
+    public $file;
 
     /**
-     * @var bool
+     * @var bool Track the imported data as seed data
      */
-    public $seed;
+    public $seed = false;
 
     /**
      * @inheritdoc
@@ -34,7 +34,19 @@ class ImportController extends Controller
      */
     public function options($actionID)
     {
-        return ['filePath', 'seed'];
+        return ['file', 'seed'];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function optionAliases()
+    {
+        $aliases = parent::optionAliases();
+        $aliases['f'] = 'file';
+        $aliases['s'] = 'seed';
+
+        return $aliases;
     }
 
     /**
@@ -42,15 +54,22 @@ class ImportController extends Controller
      */
     public function actionRun()
     {
-        if ($this->filePath) {
-            $paths = array_map('trim', explode(' ', $this->filePath));
-            if ($paths) {
-                foreach ($paths as $path) {
-                    $this->queueFile($path);
+        if (!$this->file) {
+            $message = Craft::t("sprout-base", "Invalid attribute: --file requires a valid file path");
+            $this->stdout($message);
 
-                    $message = Craft::t("sprout-import", $path." file in queue.");
-                    $this->stdout($message.PHP_EOL);
-                }
+            return ExitCode::DATAERR;
+        }
+
+        $paths = array_map('trim', explode(',', $this->file));
+
+        if ($paths) {
+            foreach ($paths as $path) {
+                $filepath = Craft::getAlias($path);
+                $this->queueFile($filepath);
+
+                $message = Craft::t("sprout-import", $filepath." queued for import.");
+                $this->stdout($message.PHP_EOL);
             }
         }
     }
@@ -86,7 +105,7 @@ class ImportController extends Controller
 
             $seedModel = new Seed();
             $seedModel->seedType = ImportType::Console;
-            $seedModel->enabled = ($this->seed) ? true : false;
+            $seedModel->enabled = $this->seed;
 
             $fileImportJob = new Import();
             $fileImportJob->seedAttributes = $seedModel->getAttributes();

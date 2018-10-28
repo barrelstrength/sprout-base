@@ -14,19 +14,27 @@ use barrelstrength\sproutbase\app\import\enums\ImportType;
 class SeedController extends Controller
 {
     /**
-     * @var
+     * @var string The Element Class for which you wish to generate seeds
+     *
+     * @example craft\elements\Entry
      */
-    public $content;
+    public $element;
 
     /**
-     * @var
+     * @var string Any settings necessary for the seed job
+     *
+     * @example
+     * A settings array can be sent as a string using a comma delimiter
+     * and a key=value separated with an equals sign
+     * --settings="value1,value2"
+     * --settings="section=news;entryType=post"
      */
-    public $settingPath;
+    public $settings = [];
 
     /**
      * @var integer The number of items you would like to seed to your database
      */
-    public $quantity;
+    public $quantity = 11;
 
     /**
      * @inheritdoc
@@ -40,7 +48,20 @@ class SeedController extends Controller
      */
     public function options($actionID)
     {
-        return ['content', 'quantity', 'settingPath'];
+        return ['element', 'settings', 'quantity'];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function optionAliases()
+    {
+        $aliases = parent::optionAliases();
+        $aliases['e'] = 'element';
+        $aliases['s'] = 'settings';
+        $aliases['q'] = 'quantity';
+
+        return $aliases;
     }
 
     /**
@@ -48,27 +69,57 @@ class SeedController extends Controller
      */
     public function actionGenerate()
     {
-        if (!file_exists($this->settingPath)) {
-            $message = Craft::t("sprout-import", "File path does not exist.");
+        if (!$this->element) {
+            $message = Craft::t("sprout-base", "Invalid attribute: --element requires an Element class");
             $this->stdout($message);
 
             return ExitCode::DATAERR;
         }
 
-        $jsonSetting = file_get_contents($this->settingPath);
+        $allSeedImporters = SproutBase::$app->importers->getSproutImportSeedImporters();
 
-        $setting = Json::decode($this->settingPath);
+        foreach ($allSeedImporters as $seedImporter) {
+            // Allow the command to use the actual element class
+            // or the Element Importer class
+            if ($seedImporter->getModelName() === $this->element OR
+                get_class($seedImporter) === $this->element) {
+                $this->element = get_class($seedImporter);
+                continue;
+            }
+        }
+
+        if ($this->settings) {
+            $seedSettings = [];
+            foreach ($this->settings as $key => $value) {
+                if (strstr($value, '=')) {
+                    $value = explode("=", $value);
+                }
+
+                // If we have a setting with a key/value pair
+                if (is_array($value) && isset($value[0]) && isset($value[1])) {
+                    $seedSettings[$value[0]] = $value[1];
+                } else {
+                    $seedSettings[] = $value;
+                }
+            }
+
+            if (is_array($seedSettings)) {
+                $this->settings = $seedSettings;
+            } else {
+                $this->settings = [$seedSettings];
+            }
+        }
 
         $weedMessage = Craft::t('sprout-import', '{elementType} Element(s)');
 
         $details = Craft::t('sprout-import', $weedMessage, [
-            'elementType' => $this->content
+            'elementType' => $this->element
         ]);
 
         $seedJob = new SeedJob();
-        $seedJob->elementType = $this->content;
-        $seedJob->quantity = !empty($this->quantity) ? $this->quantity : 11;
-        $seedJob->settings = $setting;
+        $seedJob->elementType = $this->element;
+        $seedJob->quantity = $this->quantity;
+        $seedJob->settings = $this->settings;
         $seedJob->seedType = ImportType::Seed;
         $seedJob->details = $details;
         $seedJob->dateCreated = DateTimeHelper::currentUTCDateTime();
@@ -76,9 +127,12 @@ class SeedController extends Controller
         $seedJobErrors = null;
 
         if (SproutBase::$app->seed->generateSeeds($seedJob)) {
-            $message = Craft::t("sprout-import", $this->content." seed in queue.");
+            $message = Craft::t("sprout-import", $this->element." seed in queue.");
             $this->stdout($message.PHP_EOL);
         }
+
+        // @todo - doesn't behave as expected, just removes the job from the db
+        // Craft::$app->getQueue()->run();
 
         return null;
     }
