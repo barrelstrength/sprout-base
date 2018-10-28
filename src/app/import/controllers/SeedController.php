@@ -106,7 +106,7 @@ class SeedController extends Controller
 
         $elementType = Craft::$app->getRequest()->getRequiredBodyParam('elementType');
         $quantity = Craft::$app->getRequest()->getBodyParam('quantity');
-        $settings = Craft::$app->getRequest()->getBodyParam('settings');
+        $settings = Craft::$app->getRequest()->getBodyParam('settings.'.$elementType);
 
         $weedMessage = Craft::t('sprout-import', '{elementType} Element(s)');
 

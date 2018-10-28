@@ -60,7 +60,9 @@
         {% for key, importer in importers %}
             <div class="field element-options {{ key|replace({'\\': "-"}) }}"
                  style="display: none">
-                {{ importer.getSeedSettingsHtml(seedJob)|raw }}
+                {% namespace 'settings[' ~ key ~ ']' %}
+                    {{ importer.getSeedSettingsHtml(seedJob)|raw }}
+                {% endnamespace %}
             </div>
         {% endfor %}
 
