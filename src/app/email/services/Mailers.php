@@ -6,14 +6,10 @@ use barrelstrength\sproutbase\app\email\base\Mailer;
 
 use barrelstrength\sproutbase\app\email\events\RegisterMailersEvent;
 use barrelstrength\sproutbase\SproutBase;
-use barrelstrength\sproutbase\app\email\events\RegisterSendEmailEvent;
 use craft\base\Component;
 
 
-use craft\mail\Message;
 use Craft;
-use craft\elements\User;
-use yii\base\Event;
 use yii\base\Exception;
 
 class Mailers extends Component

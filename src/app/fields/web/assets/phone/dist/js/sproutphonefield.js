@@ -42,9 +42,7 @@
 
                 function validatePhoneNumber(currentPhoneField, phoneNumber, data) {
 
-                    Craft.postActionRequest('sprout-base/fields/phone-validate', data, function(response) {
-
-
+                    Craft.postActionRequest('sprout/fields/phone-validate', data, function(response) {
                         if (response) {
                             $(sproutPhoneFieldButtonClass).addClass('fade');
                             $(sproutPhoneFieldButtonClass + ' a').attr("href", "tel:" + phoneNumber);

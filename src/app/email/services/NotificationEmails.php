@@ -15,8 +15,6 @@ use craft\helpers\ElementHelper;
 use craft\helpers\UrlHelper;
 use craft\base\ElementInterface;
 
-use yii\web\NotFoundHttpException;
-
 /**
  * Class NotificationEmails
  *
@@ -28,7 +26,6 @@ class NotificationEmails extends Component
      * @param NotificationEmail $notificationEmail
      *
      * @return bool
-     * @throws NotFoundHttpException
      * @throws \Throwable
      * @throws \yii\db\Exception
      */
@@ -110,10 +107,9 @@ class NotificationEmails extends Component
 
     /**
      * @param NotificationEmail $notificationEmail
-     * @param                   $object
      *
      * @return bool
-     * @throws \Exception
+     * @throws \Throwable
      */
     public function sendNotificationViaMailer(NotificationEmail $notificationEmail)
     {
@@ -130,6 +126,7 @@ class NotificationEmails extends Component
      * @param $notificationId
      *
      * @return Response
+     * @throws \Throwable
      */
     public function getPrepareModal($notificationId)
     {
@@ -164,6 +161,7 @@ class NotificationEmails extends Component
      * @param NotificationEmail $notificationEmail
      *
      * @return string
+     * @throws \Throwable
      * @throws \Twig_Error_Loader
      * @throws \yii\base\Exception
      */
@@ -283,7 +281,7 @@ class NotificationEmails extends Component
      * @param array        $errors
      *
      * @return array
-     * @throws \Twig_Error_Loader
+     * @throws \Throwable
      * @throws \yii\base\Exception
      */
     public function getNotificationErrors(EmailElement $notificationEmail, array $errors = [])

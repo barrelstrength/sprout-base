@@ -26,6 +26,8 @@ class NotificationEmailQuery extends ElementQuery
             'sproutemail_notificationemails.subjectLine',
             'sproutemail_notificationemails.defaultBody',
             'sproutemail_notificationemails.recipients',
+            'sproutemail_notificationemails.cc',
+            'sproutemail_notificationemails.bcc',
             'sproutemail_notificationemails.listSettings',
             'sproutemail_notificationemails.fromName',
             'sproutemail_notificationemails.fromEmail',

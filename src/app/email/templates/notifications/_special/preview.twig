@@ -1,0 +1,174 @@
+{% extends "_layouts/base" %}
+
+{% set title = "Preview"|t('sprout-base') %}
+{% block body %}
+    <div class="sproutemail-sentemail-header">
+        <div class="btngroup sentemail-btngroup">
+            <button data-preview-target="html"
+                    class="btn active sentemail-btn preview-html-btn">{{ 'HTML'|t('sprout-base') }}</button>
+            <button data-preview-target="text"
+                    class="btn sentemail-btn preview-text-btn">{{ 'Text'|t('sprout-base') }}</button>
+        </div>
+    </div>
+
+    {% set emailUrl = null %}
+    {% set separator = '&' %}
+    {% set htmlBody = null %}
+    {% set body = null %}
+
+    {% set email = craft.sproutEmail.getNotificationEmailById(emailId) %}
+
+    {% set emailUrl = actionUrl('sprout/notifications/share-notification-email', {
+        notificationId: email.id
+    }) %}
+
+    <section class="sentemail-pane sentemail-html active">
+
+        {% if htmlBody is not empty %}
+            <iframe width='100%'
+                    src="data:text/html;charset=utf-8,{{ htmlBody|raw|url_encode }}"></iframe>
+
+        {% else %}
+            <iframe id="preview-html" src="{{ emailUrl }}"></iframe>
+
+            {#<h3>{{ "No HTML content"|t('sprout-base') }}</h3>#}
+
+        {% endif %}
+
+    </section>
+
+    <section class="sentemail-pane sentemail-text">
+
+        {% if body is not empty %}
+
+            <pre>{{ body }}</pre>
+
+        {% else %}
+
+            <iframe id="preview-text" src="{{ emailUrl }}&type=text"></iframe>
+
+            {#<h3>{{ "No Text content"|t('sprout-base') }}</h3>#}
+
+        {% endif %}
+
+    </section>
+
+    {% js %}
+
+        {% set isText = (craft.app.request.getParam('type') == 'text') ? true : false %}
+
+        {% if isText == true %}
+            jQuery(document).ready(function() {
+            jQuery('.preview-text-btn').click();
+            });
+        {% endif %}
+
+        jQuery(".sentemail-btn").click(function() {
+
+        jQuery(".sentemail-btn").removeClass('active');
+        jQuery(this).addClass('active');
+
+        var previewTarget      = jQuery(this).data('preview-target');
+        var previewTargetClass = ".sentemail-" + previewTarget;
+
+        jQuery('.sentemail-pane').removeClass('active');
+        jQuery(previewTargetClass).addClass('active');
+
+        })
+
+    {% endjs %}
+
+    <style>
+
+        html {
+            overflow: hidden;
+            height: 100%;
+        }
+
+        body {
+            background: #fff;
+            box-sizing: border-box;
+            height: 100%;
+            margin: 0;
+            padding-top: 60px;
+            width: 100%;
+        }
+
+        iframe {
+            border: 0;
+            height: 100%;
+            width: 100%;
+        }
+
+        /* Preview Header */
+        .sproutemail-sentemail-header {
+            border-bottom: 1px solid #eeeeee;
+            position: fixed;
+            height: 60px;
+            top: 0;
+            width: 100%;
+        }
+
+        .sentemail-btngroup {
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            float: right;
+            margin: 15px 15px;
+        }
+
+        .sentemail-btngroup .btn {
+            background: none;
+            border: none;
+            padding: 6px 12px;
+            outline: none;
+            font-size: 12px;
+            font-weight: bold;
+            color: #6a6a6a;
+            float: left;
+            height: 30px;
+            vertical-align: middle;
+            margin: 0;
+        }
+
+        .sentemail-btngroup .btn.preview-html-btn {
+            border-right: 1px solid #ccc;
+        }
+
+        .sentemail-btngroup .btn:hover {
+            cursor: pointer;
+        }
+
+        .sentemail-btngroup .btn.active {
+            background-image: -webkit-linear-gradient(#e4e5e7, #eaebec);
+            background-image: -moz-linear-gradient(#e4e5e7, #eaebec);
+            background-image: -ms-linear-gradient(#e4e5e7, #eaebec);
+            background-image: -o-linear-gradient(#e4e5e7, #eaebec);
+            background-image: linear-gradient(#e4e5e7, #eaebec);
+        }
+
+        /* Body */
+        .sentemail-pane {
+            display: none;
+            height: 100%;
+        }
+
+        .sentemail-pane.active {
+            display: block;
+        }
+
+        /* Text Preview Body */
+        .sentemail-text {
+            margin: 10px;
+        }
+
+        .sentemail-text pre {
+            height: auto;
+            min-height: 500px;
+            max-height: 500px;
+            white-space: pre-wrap;
+            width: 100%;
+        }
+
+    </style>
+
+{% endblock %}

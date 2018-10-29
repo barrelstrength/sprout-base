@@ -163,7 +163,7 @@ class NotificationEmailEvents extends Component
      * @param NotificationEvent     $eventHandlerClass
      *
      * @return bool
-     * @throws \Exception
+     * @throws \Throwable
      */
     public function handleDynamicEvent($notificationEmailEventClassName, Event $event, NotificationEvent $eventHandlerClass)
     {
@@ -233,7 +233,7 @@ class NotificationEmailEvents extends Component
     }
 
     /**
-     * @param NotificationEmail $notificationEmail
+     * @param EmailElement $notificationEmail
      *
      * @return NotificationEvent|null
      */

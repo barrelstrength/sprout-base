@@ -11,7 +11,6 @@ use barrelstrength\sproutbase\app\email\models\SimpleRecipient;
 use barrelstrength\sproutbase\app\email\models\SimpleRecipientList;
 use barrelstrength\sproutemail\elements\CampaignEmail;
 use barrelstrength\sproutemail\models\CampaignType;
-use barrelstrength\sproutlists\elements\Lists;
 use barrelstrength\sproutlists\records\Lists as ListsRecord;
 use barrelstrength\sproutlists\elements\Subscribers;
 use craft\base\Element;
@@ -41,6 +40,11 @@ abstract class Mailer
      * @var SimpleRecipient[]
      */
     private $_onTheFlyRecipients = [];
+
+    /**
+     * @var EmailElement
+     */
+    private $emailElement;
 
     /**
      * Returns a list of On The Fly Recipients
@@ -337,6 +341,7 @@ abstract class Mailer
      * @param EmailElement $email
      *
      * @return SimpleRecipientList
+     * @throws \Throwable
      * @throws \yii\base\Exception
      */
     public function getRecipientList(EmailElement $email)
@@ -363,25 +368,7 @@ abstract class Mailer
             return $recipientList;
         }
 
-        if (!empty($email->recipients)) {
-            // Recipients are added as a comma-delimited list. While not on a formal list,
-            // they are considered permanent and will be included alongside any more formal lists
-            // Recipients can be dynamic values if matched to a value in the Event Object
-            $recipients = Craft::$app->getView()->renderObjectTemplate($email->recipients, $email->getEventObject());
-
-            $recipientArray = explode(',', $recipients);
-
-            foreach ($recipientArray as $recipient) {
-                $recipientModel = new SimpleRecipient();
-                $recipientModel->email = trim($recipient);
-
-                if ($validator->isValid($recipientModel->email, $multipleValidations)) {
-                    $recipientList->addRecipient($recipientModel);
-                } else {
-                    $recipientList->addInvalidRecipient($recipientModel);
-                }
-            }
-        }
+        $recipientList = $this->getRecipients($email->recipients, $email);
 
         // @todo - test this integration
         if (Craft::$app->getPlugins()->getPlugin('sprout-lists')) {
@@ -459,12 +446,54 @@ abstract class Mailer
     }
 
     /**
+     * Get SimpleRecipient objects group in valid and invalid emails
+     *
+     * @param $recipients
+     * @param $email
+     *
+     * @return SimpleRecipientList
+     * @throws \Throwable
+     * @throws \yii\base\Exception
+     */
+    public function getRecipients($recipients, $email)
+    {
+        $recipientList = new SimpleRecipientList;
+
+        $validator = new EmailValidator();
+        $multipleValidations = new MultipleValidationWithAnd([
+            new RFCValidation()
+        ]);
+
+        if (!empty($recipients)) {
+            // Recipients are added as a comma-delimited list. While not on a formal list,
+            // they are considered permanent and will be included alongside any more formal lists
+            // Recipients can be dynamic values if matched to a value in the Event Object
+            $recipients = Craft::$app->getView()->renderObjectTemplate($recipients, $email->getEventObject());
+
+            $recipientArray = explode(',', $recipients);
+
+            foreach ($recipientArray as $recipient) {
+                $recipientModel = new SimpleRecipient();
+                $recipientModel->email = trim($recipient);
+
+                if ($validator->isValid($recipientModel->email, $multipleValidations)) {
+                    $recipientList->addRecipient($recipientModel);
+                } else {
+                    $recipientList->addInvalidRecipient($recipientModel);
+                }
+            }
+        }
+
+        return $recipientList;
+    }
+
+    /**
      * Prepares the NotificationEmail Element and returns a Message model.
      *
      * @param EmailElement $email
      *
      * @return Message
-     * @throws \Twig_Error_Loader
+     * @throws \Throwable
      * @throws \yii\base\Exception
      */
     public function getMessage(EmailElement $email)
@@ -546,6 +575,8 @@ abstract class Mailer
      * @param EmailElement $email
      * @param              $attribute
      * @param              $object
+     *
+     * @throws \Throwable
      */
     public function renderObjectTemplateSafely(EmailElement $email, $attribute, $object)
     {

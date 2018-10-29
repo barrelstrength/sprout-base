@@ -7,8 +7,6 @@
 
 namespace barrelstrength\sproutbase\app\email\base;
 
-use barrelstrength\sproutbase\app\email\elements\NotificationEmail;
-
 interface NotificationEmailSenderInterface
 {
     /**
@@ -16,7 +14,6 @@ interface NotificationEmailSenderInterface
      * if they implement NotificationEmailSenderInterface
      *
      * @param EmailElement $notificationEmail
-     * @param                   $object
      *
      * @return bool
      */

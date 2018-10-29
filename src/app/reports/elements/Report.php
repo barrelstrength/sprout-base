@@ -66,6 +66,7 @@ class Report extends Element
 
     /**
      * @return string
+     * @throws \Throwable
      */
     public function __toString()
     {
@@ -178,7 +179,7 @@ class Report extends Element
         }
 
         if ($attribute === 'download') {
-            return '<a href="'.UrlHelper::actionUrl('sprout-base/reports/export-report', ['reportId' => $this->id]).'" class="btn small">'.Craft::t('sprout-base', 'Download CSV').'</a>';
+            return '<a href="'.UrlHelper::actionUrl('sprout/reports/export-report', ['reportId' => $this->id]).'" class="btn small">'.Craft::t('sprout-base', 'Download CSV').'</a>';
         }
 
         if ($attribute === 'results') {
@@ -270,6 +271,7 @@ class Report extends Element
 
     /**
      * @return string
+     * @throws \Throwable
      * @throws \yii\base\Exception
      */
     public function processNameFormat()

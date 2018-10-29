@@ -8,6 +8,7 @@ use barrelstrength\sproutbase\app\email\mailers\DefaultMailer;
 use barrelstrength\sproutemail\models\Settings;
 use craft\base\Element;
 use Craft;
+use craft\base\Field;
 
 abstract class EmailElement extends Element
 {
@@ -25,11 +26,25 @@ abstract class EmailElement extends Element
     public $subjectLine;
 
     /**
-     * A comma, delimited list of recipients
+     * A comma, delimited list of recipients (To email)
      *
      * @var string
      */
     public $recipients;
+
+    /**
+     * A comma, delimited list of cc emails
+     *
+     * @var string
+     */
+    public $cc;
+
+    /**
+     * A comma, delimited list of bcc emails
+     *
+     * @var string
+     */
+    public $bcc;
 
     /**
      * List settings.
@@ -250,6 +265,9 @@ abstract class EmailElement extends Element
 
                     if ($this->hasErrors()) {
                         foreach ($tab->getFields() as $field) {
+                            /**
+                             * @var $field Field
+                             */
                             if ($this->getErrors($field->handle)) {
                                 $hasErrors = true;
                                 break;
