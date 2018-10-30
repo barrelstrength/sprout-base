@@ -8,6 +8,7 @@
 namespace barrelstrength\sproutbase\app\fields\helpers;
 
 use barrelstrength\sproutbase\app\fields\models\Address as AddressModel;
+use barrelstrength\sproutbase\app\fields\services\Url;
 use CommerceGuys\Addressing\Model\AddressFormat;
 use CommerceGuys\Addressing\Model\Subdivision;
 use Craft;
@@ -34,12 +35,12 @@ class AddressHelper
     /**
      * @var
      */
-    private $name;
+    protected $name;
 
     /**
      * @var
      */
-    private $addressModel;
+    protected $addressModel;
 
     /**
      * @var
@@ -178,6 +179,7 @@ class AddressHelper
                 'value' => $this->countryCode ?? $this->defaultCountryCode(),
                 'nameValue' => $this->name,
                 'hidden' => $hidden,
+                'actionUrl' => UrlHelper::actionUrl('sprout-base/fields-address/change-form'),
                 'addressInfo' => $this->addressModel
             ]
         );
