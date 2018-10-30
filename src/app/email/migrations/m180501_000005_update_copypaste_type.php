@@ -11,9 +11,11 @@ class m180501_000005_update_copypaste_type extends Migration
      */
     public function safeUp()
     {
-        $this->update('{{%sproutemail_campaigntype}}', [
-            'mailer' => "barrelstrength\sproutemail\mailers\CopyPasteMailer"
-        ], ['mailer' => 'copypaste'], [], false);
+        if ($this->db->tableExists('{{%sproutemail_campaigntype}}')) {
+            $this->update('{{%sproutemail_campaigntype}}', [
+                'mailer' => "barrelstrength\sproutemail\mailers\CopyPasteMailer"
+            ], ['mailer' => 'copypaste'], [], false);
+        }
     }
 
     /**
