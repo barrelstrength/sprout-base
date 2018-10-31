@@ -1,99 +1,104 @@
-{% set info = sentEmail %}
+<div class="body">
+    <h1>{{ "Details"|t('sprout-email') }}</h1>
 
-<div class="main field" style="max-width:600px;">
-    <table class='data fullwidth sproutemail-sentemailinfo'>
-        <tbody>
-        <tr>
-            <th colspan="2">
-                <h6>{{ "General Info"|t('sprout-email') }}</h6>
-            </th>
-        </tr>
-        <tr>
-            <th>{{ 'Email Type'|t('sprout-email') }}</th>
-            <td>{{ info.emailType ?? '–' }}</td>
-        </tr>
-        <tr>
-            <th>{{ 'Delivery Type'|t('sprout-email') }}</th>
-            <td>{{ info.deliveryType ?? '–' }}</td>
-        </tr>
-        <tr>
-            <th>{{ 'Delivery Status'|t('sprout-email') }}</th>
-            <td>{{ info.deliveryStatus ?? '–' }}</td>
-        </tr>
-        <tr>
-            <th>{{ 'Message'|t('sprout-email') }}</th>
-            <td>{{ info.message ?? '–' }}</td>
-        </tr>
-        <tr>
-            <th colspan="2">
-                <h6>{{ "Sender Info"|t('sprout-email') }}</h6>
-            </th>
-        </tr>
-        <tr>
-            <th>{{ 'Sender Name'|t('sprout-email') }}</th>
-            <td>{{ info.senderName ?? '–' }}</td>
-        </tr>
-        <tr>
-            <th>{{ 'Sender Email'|t('sprout-email') }}</th>
-            <td>{{ info.senderEmail ?? '–' }}</td>
-        </tr>
-        <tr>
-            <th>{{ 'Source'|t('sprout-email') }}</th>
-            <td>{{ info.source ?? '–' }}</td>
-        </tr>
-        <tr>
-            <th>{{ 'Source Version'|t('sprout-email') }}</th>
-            <td>{{ info.sourceVersion ?? '–' }}</td>
-        </tr>
-        <tr>
-            <th>{{ 'Craft Version'|t('sprout-email') }}</th>
-            <td>{{ info.craftVersion ?? '–' }}</td>
-        </tr>
-        <tr>
-            <th>{{ 'IP Address'|t('sprout-email') }}</th>
-            <td>{{ info.ipAddress ?? '–' }}</td>
-        </tr>
-        <tr>
-            <th>{{ 'User Agent'|t('sprout-email') }}</th>
-            <td>{{ info.userAgent ?? '–' }}</td>
-        </tr>
-        <tr>
-            <th colspan="2">
-                <h6>{{ "Email Settings"|t('sprout-email') }}</h6>
-            </th>
-        </tr>
-        {% if info.mailer is defined %}
+    <div class="sproutemail-preparemodalbody">
+        <table class='data fullwidth sproutemail-sentemailinfo'>
+            <tbody>
             <tr>
-                <th>{{ 'Mailer'|t('sprout-email') }}</th>
-                <td>{{ info.mailer ?? '–' }}</td>
-            </tr>
-        {% else %}
-            <tr>
-                <th>{{ 'Protocol'|t('sprout-email') }}</th>
-                <td>{{ info.protocol ?? '–' }}</td>
+                <th colspan="2">
+                    <h6>{{ "General Info"|t('sprout-email') }}</h6>
+                </th>
             </tr>
             <tr>
-                <th>{{ 'Host Name'|t('sprout-email') }}</th>
-                <td>{{ info.hostName ?? '–' }}</td>
+                <th>{{ 'Email Type'|t('sprout-email') }}</th>
+                <td>{{ info.emailType ?? '–' }}</td>
             </tr>
             <tr>
-                <th>{{ 'Port'|t('sprout-email') }}</th>
-                <td>{{ info.port ?? '–' }}</td>
+                <th>{{ 'Delivery Type'|t('sprout-email') }}</th>
+                <td>{{ info.deliveryType ?? '–' }}</td>
             </tr>
             <tr>
-                <th>{{ 'SMTP Secure Transport Type'|t('sprout-email') }}</th>
-                <td>{{ info.smtpSecureTransportType ?? '–' }}</td>
+                <th>{{ 'Delivery Status'|t('sprout-email') }}</th>
+                <td>{{ info.deliveryStatus ?? '–' }}</td>
             </tr>
             <tr>
-                <th>{{ 'Timeout'|t('sprout-email') }}</th>
-                <td>{{ info.timeout ?? '–' }}</td>
+                <th>{{ 'Message'|t('sprout-email') }}</th>
+                <td>{{ info.message ?? '–' }}</td>
             </tr>
-        {% endif %}
-        </tbody>
-    </table>
+            <tr>
+                <th colspan="2">
+                    <h6>{{ "Sender Info"|t('sprout-email') }}</h6>
+                </th>
+            </tr>
+            <tr>
+                <th>{{ 'Sender Name'|t('sprout-email') }}</th>
+                <td>{{ info.senderName ?? '–' }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'Sender Email'|t('sprout-email') }}</th>
+                <td>{{ info.senderEmail ?? '–' }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'Source'|t('sprout-email') }}</th>
+                <td>{{ info.source ?? '–' }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'Source Version'|t('sprout-email') }}</th>
+                <td>{{ info.sourceVersion ?? '–' }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'Craft Version'|t('sprout-email') }}</th>
+                <td>{{ info.craftVersion ?? '–' }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'IP Address'|t('sprout-email') }}</th>
+                <td>{{ info.ipAddress ?? '–' }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'User Agent'|t('sprout-email') }}</th>
+                <td>{{ info.userAgent ?? '–' }}</td>
+            </tr>
+            <tr>
+                <th colspan="2">
+                    <h6>{{ "Email Settings"|t('sprout-email') }}</h6>
+                </th>
+            </tr>
+            {% if info.mailer is defined %}
+                <tr>
+                    <th>{{ 'Mailer'|t('sprout-email') }}</th>
+                    <td>{{ info.mailer ?? '–' }}</td>
+                </tr>
+            {% else %}
+                <tr>
+                    <th>{{ 'Protocol'|t('sprout-email') }}</th>
+                    <td>{{ info.protocol ?? '–' }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'Host Name'|t('sprout-email') }}</th>
+                    <td>{{ info.hostName ?? '–' }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'Port'|t('sprout-email') }}</th>
+                    <td>{{ info.port ?? '–' }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'SMTP Secure Transport Type'|t('sprout-email') }}</th>
+                    <td>{{ info.smtpSecureTransportType ?? '–' }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'Timeout'|t('sprout-email') }}</th>
+                    <td>{{ info.timeout ?? '–' }}</td>
+                </tr>
+            {% endif %}
+            </tbody>
+        </table>
+    </div>
 </div>
 
 <style>
+    #sproutmodal .body {
+        overflow: auto;
+    }
     .sproutemail-sentemailinfo tr th {
         min-width: 100px;
     }
