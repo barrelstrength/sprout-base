@@ -164,32 +164,4 @@ abstract class NotificationEvent extends SavableComponent
     {
         return true;
     }
-
-    /**
-     * Determines if an event matches the conditions defined in it's settings for a Notification Email.
-     *
-     * If the Notification Email Event settings validate, the Notification Email will be triggered
-     * If the Notification Email Event settings don't validate, no message will be triggered
-     *
-     * @example
-     * Let $options be an array containing section ids (1,3)
-     * Let $model be an EntryModel with section id (1)
-     * Let $params be the EVENT_AFTER_SAVE_ELEMENT event params
-     * Result is true
-     *
-     * @todo - revisit if we need both $eventData and $params as separate variables or can just pass $params
-     *
-     * @param NotificationEmail $notificationEmail
-     * @param Event             $event
-     *
-     * @note
-     * $eventData will be an element model most of the time but...
-     * it could also be a string as is the case for user session login
-     *
-     * @return bool
-     */
-//    public function validateSettings(NotificationEmail $notificationEmail, Event $event)
-//    {
-//        return true;
-//    }
 }
