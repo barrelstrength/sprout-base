@@ -15,8 +15,6 @@ use yii\base\Exception;
 class Mailers extends Component
 {
     const EVENT_REGISTER_MAILER_TYPES = 'defineSproutEmailMailers';
-    const ON_SEND_EMAIL = 'onSendEmail';
-    const ON_SEND_EMAIL_ERROR = 'onSendEmailError';
 
     protected $mailers;
 
