@@ -7,6 +7,7 @@ use barrelstrength\sproutbase\app\email\base\Mailer;
 use barrelstrength\sproutbase\app\email\base\NotificationEmailSenderInterface;
 use barrelstrength\sproutemail\elements\CampaignEmail;
 use barrelstrength\sproutemail\models\CampaignType;
+use barrelstrength\sproutemail\services\SentEmails;
 use barrelstrength\sproutemail\SproutEmail;
 use barrelstrength\sproutforms\fields\formfields\FileUpload;
 use barrelstrength\sproutlists\listtypes\SubscriberListType;
@@ -136,7 +137,7 @@ class DefaultMailer extends Mailer implements NotificationEmailSenderInterface
             ]);
 
             $variables = [
-                'info' => $infoTable
+                SentEmails::SENT_EMAIL_MESSAGE_VARIABLE => $infoTable
             ];
 
             $message->variables = $variables;
