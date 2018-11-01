@@ -8,7 +8,7 @@
 <h1>{{ email.subjectLine }}</h1>
 
 {% if email.defaultBody|length %}
-    <p>{{ email.defaultBody }}</p>
+    <p>{{ email.defaultBody|nl2br }}</p>
 {% endif %}
 
 </body>
