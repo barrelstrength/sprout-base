@@ -4,7 +4,7 @@
 
 {% set selectedSubnavItem = 'settings' %}
 
-{% if craft.request.getSegment(5) == 'new' %}
+{% if craft.app.request.getSegment(5) == 'new' %}
     {% set title = "New Campaign Type"|t('sprout-email') %}
 {% else %}
     {% set title = "Edit Campaign Type"|t('sprout-email') %}
