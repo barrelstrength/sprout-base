@@ -490,7 +490,7 @@ feel like they are part of the natural flow of fields #}
                 new Garnish.NiceText(metaTitleInput, { showCharsLeft: true });
 
             {% else %}
-                {% set optimizedTitleFieldModel = craft.fields.getFieldByHandle(titleFieldHandle) %}
+                {% set optimizedTitleFieldModel = craft.app.fields.getFieldByHandle(titleFieldHandle) %}
                 {% if optimizedTitleFieldModel %}
 
                     var metaTitleLabelId = '#fields-{{ optimizedTitleFieldModel.handle }}-label';
@@ -541,7 +541,7 @@ feel like they are part of the natural flow of fields #}
 
             {% else %}
 
-                {% set optimizedDescriptionFieldModel = craft.fields.getFieldByHandle(descriptionFieldHandle) %}
+                {% set optimizedDescriptionFieldModel = craft.app.fields.getFieldByHandle(descriptionFieldHandle) %}
                 {% if optimizedDescriptionFieldModel %}
 
                     var metaDescriptionLabelId = '#fields-{{ optimizedDescriptionFieldModel.handle }}-label';
@@ -568,7 +568,7 @@ feel like they are part of the natural flow of fields #}
 
             var metaImageSeoButton = $('div.sproutseo-metaimage-info').html();
 
-            {% set optimizedImageFieldModel = craft.fields.getFieldByHandle(imageFieldHandle) %}
+            {% set optimizedImageFieldModel = craft.app.fields.getFieldByHandle(imageFieldHandle) %}
             {% if optimizedImageFieldModel %}
 
                 var metaImageLabelId = '#fields-{{ optimizedImageFieldModel.handle }}-label';

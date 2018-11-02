@@ -13,7 +13,7 @@
 
      {#@todo - where do we add a report edit permission to Sprout Integrations?#}
        {#Can we have each integration define a permission with the same name?#}
-    {% if currentUser.can('sproutReports-editReports') %}
+    {% if currentUser.can('sproutReports-editReports') or currentUser.can('editReportsOnSproutForms') %}
 
         {% if newReportOptions|length > 1 %}
             <div class="btngroup submit first">
