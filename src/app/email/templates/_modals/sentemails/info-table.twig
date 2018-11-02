@@ -68,14 +68,15 @@
                     <th>{{ 'Mailer'|t('sprout-email') }}</th>
                     <td>{{ info.mailer ?? '–' }}</td>
                 </tr>
-            {% else %}
+            {% endif %}
+            {% if info.mailer is defined or info.mailer == 'Craft Mailer' %}
                 <tr>
                     <th>{{ 'Protocol'|t('sprout-email') }}</th>
                     <td>{{ info.protocol ?? '–' }}</td>
                 </tr>
                 <tr>
                     <th>{{ 'Host Name'|t('sprout-email') }}</th>
-                    <td>{{ info.hostName ?? '–' }}</td>
+                    <td>{{ info.host ?? '–' }}</td>
                 </tr>
                 <tr>
                     <th>{{ 'Port'|t('sprout-email') }}</th>
