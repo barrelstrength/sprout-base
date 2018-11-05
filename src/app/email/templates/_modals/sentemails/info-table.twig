@@ -69,11 +69,13 @@
                     <td>{{ info.mailer ?? '–' }}</td>
                 </tr>
             {% endif %}
-            {% if info.mailer is defined or info.mailer == 'Craft Mailer' %}
-                <tr>
-                    <th>{{ 'Protocol'|t('sprout-email') }}</th>
-                    <td>{{ info.protocol ?? '–' }}</td>
-                </tr>
+            {% if info.transportType is defined %}
+            <tr>
+                <th>{{ 'Transport Type'|t('sprout-email') }}</th>
+                <td>{{ info.transportType ?? '–' }}</td>
+            </tr>
+            {% endif %}
+            {% if info.transportType == 'SMTP' %}
                 <tr>
                     <th>{{ 'Host Name'|t('sprout-email') }}</th>
                     <td>{{ info.host ?? '–' }}</td>
@@ -83,8 +85,12 @@
                     <td>{{ info.port ?? '–' }}</td>
                 </tr>
                 <tr>
-                    <th>{{ 'SMTP Secure Transport Type'|t('sprout-email') }}</th>
-                    <td>{{ info.smtpSecureTransportType ?? '–' }}</td>
+                    <th>{{ 'Username'|t('sprout-email') }}</th>
+                    <td>{{ info.username ?? '–' }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'Encryption Method'|t('sprout-email') }}</th>
+                    <td>{{ info.encryptionMethod ?? '–' }}</td>
                 </tr>
                 <tr>
                     <th>{{ 'Timeout'|t('sprout-email') }}</th>
@@ -101,6 +107,6 @@
         overflow: auto;
     }
     .sproutemail-sentemailinfo tr th {
-        min-width: 100px;
+        min-width: 160px;
     }
 </style>
