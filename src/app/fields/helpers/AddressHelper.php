@@ -8,14 +8,14 @@
 namespace barrelstrength\sproutbase\app\fields\helpers;
 
 use barrelstrength\sproutbase\app\fields\models\Address as AddressModel;
-use CommerceGuys\Addressing\Model\AddressFormat;
-use CommerceGuys\Addressing\Model\Subdivision;
+use CommerceGuys\Addressing\AddressFormat\AddressFormat;
+use CommerceGuys\Addressing\Subdivision\Subdivision;
 use Craft;
-use CommerceGuys\Addressing\Repository\AddressFormatRepository;
-use CommerceGuys\Addressing\Repository\SubdivisionRepository;
-use CommerceGuys\Addressing\Repository\CountryRepository;
+use CommerceGuys\Addressing\AddressFormat\AddressFormatRepository;
+use CommerceGuys\Addressing\Subdivision\SubdivisionRepository;
+use CommerceGuys\Addressing\Country\CountryRepository;
 use CommerceGuys\Addressing\Formatter\DefaultFormatter;
-use CommerceGuys\Addressing\Model\Address;
+use CommerceGuys\Addressing\Address;
 use craft\helpers\Template;
 use craft\helpers\UrlHelper;
 
@@ -107,7 +107,7 @@ class AddressHelper
         if ($this->addressModel->id != null) {
             $format .= $this->getAddressInfoInput();
         }
-
+//\Craft::dd($format);
         return $format;
     }
 
@@ -290,9 +290,9 @@ class AddressHelper
 
         $options = [];
 
-        if ($this->subdivisonObj->getAll($this->countryCode)) {
+        $states = $this->subdivisonObj->getAll([$this->countryCode]);
 
-            $states = $this->subdivisonObj->getAll($this->countryCode);
+        if ($states) {
 
             if (!empty($states)) {
 
