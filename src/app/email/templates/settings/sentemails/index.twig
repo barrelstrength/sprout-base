@@ -1,0 +1,12 @@
+{% import "_includes/forms" as forms %}
+
+<div id="settings-total-sentEmailsLimit">
+    {{ forms.textField({
+        label: "Sent Emails Limit"|t('sprout-base'),
+        instructions: "The total number of sent emails that will be stored in the database per-site. When the limit is reached, the recently emails will be deleted from the Sent Emails stored for that site."|t('sprout-base'),
+        name: 'sentEmailsLimit',
+        size:'10',
+        value: settings.sentEmailsLimit,
+        errors: ''
+    }) }}
+</div>
