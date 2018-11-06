@@ -76,7 +76,18 @@
         {% if sitemapSection.uri == '__home__' %}
             <span data-icon="home" title="Homepage"></span>
         {% else %}
-            <code>{{ sitemapSection.uri }}</code>
+            {% if craft.sproutSeo.uriHasTags(sitemapSection.uri) %}
+                <code>
+                    {{ "Dynamic URL"|t('sprout-base') }}
+                    <span class="info">
+                        <h6>{{ "Dynamic URL details"|t('sprout-base') }}</h6>
+                        <p>{{ sitemapSection.uri }}</p>
+                    </span>
+                </code>
+            {% else %}
+                <code>{{ sitemapSection.uri }}</code>
+            {% endif %}
+
         {% endif %}
 
         <input type="hidden"
@@ -118,7 +129,8 @@
 
 {% block customSectionTableRowHead %}
 
-    <th colspan="2" style="padding-left:9px;width:62%">{{ "Custom URL"|t }} <span
+    <th colspan="2" style="padding-left:9px;width:62%">{{ "Custom URL"|t }}
+        <span
                 class="info">{{ "A Custom Page allows you to add a Custom URL that will display in your sitemap when enabled."|t }}</span>
     </th>
     <th style="width:15%;">{{ "Priority"|t }}</th>

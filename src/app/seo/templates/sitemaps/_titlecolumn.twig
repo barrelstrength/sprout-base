@@ -13,6 +13,14 @@
         </a>
     {% else %}
         {{ sitemapSection.name }}
+
+        {% if sitemapSection.uri == '__home__' %}
+                <span data-icon="home" title="Homepage"></span>
+        {% endif %}
+
+            <input type="hidden"
+                   name="sproutseo[sections][{{ urlEnabledSectionKey }}][uri]"
+                   value="{{ sitemapSection.uri }}">
     {% endif %}
 
 
