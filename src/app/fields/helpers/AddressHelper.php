@@ -55,7 +55,7 @@ class AddressHelper
     {
         $this->name = $name;
         $this->addressModel = ($addressModel == null) ? new AddressModel : $addressModel;
-        $this->countryCode = $countryCode;
+        $this->countryCode = $countryCode ?? $this->defaultCountryCode();
     }
 
     /**
@@ -70,6 +70,7 @@ class AddressHelper
         $addressRepo = new AddressFormatRepository;
         $this->subdivisonObj = new SubdivisionRepository;
         $this->addressObj = $addressRepo->get($countryCode);
+
         $format = $this->addressObj->getFormat();
 
         // Remove unused format
