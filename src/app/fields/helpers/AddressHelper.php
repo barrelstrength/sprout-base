@@ -75,6 +75,8 @@ class AddressHelper
         // Remove unused format
         $format = preg_replace('/%recipient/', '', $format);
         $format = preg_replace('/%organization/', '', $format);
+        $format = preg_replace('/%givenName/', '', $format);
+        $format = preg_replace('/%familyName/', '', $format);
 
         // Removed the extra country name embedded on the commerceguys addressing json file
         $countryName = $this->getCountryNameByCode($countryCode);
@@ -107,7 +109,7 @@ class AddressHelper
         if ($this->addressModel->id != null) {
             $format .= $this->getAddressInfoInput();
         }
-//\Craft::dd($format);
+
         return $format;
     }
 
