@@ -48,7 +48,7 @@ class DeleteSentEmails extends BaseJob
         $sentEmails = SentEmail::find()
             ->limit(null)
             ->offset($this->limit)
-            ->orderBy(['dateCreated' => SORT_DESC])
+            ->orderBy(['sproutemail_sentemail.dateCreated' => SORT_DESC])
             ->anyStatus()
             ->siteId($this->siteId)
             ->all();
