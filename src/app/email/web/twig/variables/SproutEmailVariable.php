@@ -152,4 +152,12 @@ class SproutEmailVariable
 
         return $options;
     }
+
+    /**
+     * Trigger a cleanUpSentEmails Job
+     */
+    public function cleanUpSentEmails()
+    {
+        SproutEmail::$app->sentEmails->cleanUpSentEmails();
+    }
 }

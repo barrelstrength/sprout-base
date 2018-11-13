@@ -17,8 +17,15 @@ use Craft;
  */
 class DeleteSentEmails extends BaseJob
 {
+    /**
+     * @var int
+     */
     public $siteId;
-    public $totalToDelete;
+
+    /**
+     * @var int
+     */
+    public $limit;
 
     /**
      * Returns the default description for this job.
@@ -27,7 +34,7 @@ class DeleteSentEmails extends BaseJob
      */
     protected function defaultDescription(): string
     {
-        return Craft::t('sprout-base', 'Deleting oldest Sent Emails');
+        return Craft::t('sprout-base', 'Cleaning up Sent Email');
     }
 
     /**
@@ -39,24 +46,27 @@ class DeleteSentEmails extends BaseJob
     public function execute($queue)
     {
         $sentEmails = SentEmail::find()
-            ->limit($this->totalToDelete)
-            ->orderBy(['id' => SORT_ASC])
+            ->limit(null)
+            ->offset($this->limit)
+            ->orderBy(['dateCreated' => SORT_DESC])
             ->anyStatus()
             ->siteId($this->siteId)
             ->all();
 
         $totalSteps = count($sentEmails);
 
-        if (!empty($sentEmails)) {
-            foreach ($sentEmails as $key => $sentEmail) {
-                $step = $key + 1;
-                $this->setProgress($queue, $step / $totalSteps);
+        if (empty($sentEmails)) {
+            return true;
+        }
 
-                $response = Craft::$app->elements->deleteElementById($sentEmail->id);
+        foreach ($sentEmails as $key => $sentEmail) {
+            $step = $key + 1;
+            $this->setProgress($queue, $step / $totalSteps);
 
-                if (!$response) {
-                    SproutBase::error('SproutSeo has failed to delete the 404 redirect Id:'.$sentEmail->id);
-                }
+            $response = Craft::$app->elements->deleteElementById($sentEmail->id);
+
+            if (!$response) {
+                SproutBase::error('Unable to delete Sent Email ID: '.$sentEmail->id);
             }
         }
 
