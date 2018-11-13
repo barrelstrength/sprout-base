@@ -61,6 +61,11 @@ class m180501_000003_add_notification_columns extends Migration
             $this->db->columnExists($table, 'emailTemplateId')) {
             $this->dropColumn($table, 'template');
         }
+
+        // Remove NOT NULL to the next columns
+        $this->alterColumn($table, 'titleFormat', $this->string());
+        $this->alterColumn($table, 'emailTemplateId', $this->string());
+        $this->alterColumn($table, 'enableFileAttachments', $this->boolean());
     }
 
     /**
