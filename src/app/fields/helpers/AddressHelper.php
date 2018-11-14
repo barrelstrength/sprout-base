@@ -67,8 +67,8 @@ class AddressHelper
     {
         $countryCode = $this->countryCode;
 
-        $addressRepo = new AddressFormatRepository;
-        $this->subdivisonObj = new SubdivisionRepository;
+        $addressRepo = new AddressFormatRepository();
+        $this->subdivisonObj = new SubdivisionRepository();
         $this->addressObj = $addressRepo->get($countryCode);
 
         $format = $this->addressObj->getFormat();
