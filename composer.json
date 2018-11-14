@@ -1,7 +1,7 @@
 {
   "name": "barrelstrength/sprout-base",
   "description": "Common libraries for Sprout Plugins for Craft CMS",
-  "version": "4.0.1",
+  "version": "4.0.2",
   "type": "yii-module",
   "license": "proprietary",
   "authors": [
