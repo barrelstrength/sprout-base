@@ -132,9 +132,11 @@ class DefaultMailer extends Mailer implements NotificationEmailSenderInterface
 
             $infoTable = SproutEmail::$app->sentEmails->createInfoTableModel('sprout-email', [
                 'emailType' => $notificationEmail->displayName(),
-                'mailer' => $this->getName(),
-                'deliveryType' => $notificationEmail->getIsTest() ? Craft::t('sprout-base', 'Test') : Craft::t('sprout-base', 'Live')
+                'mailer' => $this->getName()
             ]);
+
+            $deliveryTypes = $infoTable->getDeliveryTypes();
+            $infoTable->deliveryType = $notificationEmail->getIsTest() ? $deliveryTypes['Test'] : $deliveryTypes['Live'];
 
             $variables = [
                 SentEmails::SENT_EMAIL_MESSAGE_VARIABLE => $infoTable
