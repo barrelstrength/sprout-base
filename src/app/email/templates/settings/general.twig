@@ -69,9 +69,9 @@
 
     {% endset %}
 
-    {#{{ forms.field({#}
-        {#label: "Choose which features to enable"|t('sprout-email'),#}
-        {#instructions: "Disabled items will be removed from the sidebar navigation and no longer accessible in the Control Panel."|t('sprout-email')#}
-    {#}, advancedInput) }}#}
+    {{ forms.field({
+        label: "Choose which features to enable"|t('sprout-email'),
+        instructions: "Disabled items will be removed from the sidebar navigation and no longer accessible in the Control Panel."|t('sprout-email')
+    }, advancedInput) }}
 
 {% endblock %}
