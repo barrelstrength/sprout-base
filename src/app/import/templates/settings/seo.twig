@@ -1,0 +1,40 @@
+{% import "_includes/forms" as forms %}
+
+
+<form method="post" accept-charset="UTF-8" data-saveshortcut
+      data-confirm-unload>
+    {{ csrfInput() }}
+    <input type="hidden" name="action"
+           value="sprout/redirects-tool/generate-redirect-json">
+
+    {{ forms.textareaField({
+        label: "Redirect Element Import Helper"|t('sprout-base'),
+        instructions: "Paste your Redirects in comma-delimited CSV format to convert them into Sprout Import JSON Format."|t('sprout-base'),
+        name: 'pastedCSV',
+        value: pastedCSV ?? null,
+        placeholder: 'Old URL, New URL, Method, Regex?, Count
+/old-url, /new-url, 301, 0, 0
+/another-old-url, /another-new-url, 302, 0, 0
+',
+        errors: errors ?? null,
+        rows: 20,
+        first: true
+    }) }}
+
+    <div class="buttons">
+        <input class="btn submit" type="submit"
+               value="{{ 'Generate JSON'|t('sprout-base') }}">
+    </div>
+
+    {% if params.importableJson is defined %}
+        {{ forms.textareaField({
+            label: "Redirect Element JSON"|t('sprout-base'),
+            instructions: "Use the JSON generated below to import your Redirects on the Sprout Import->Import tab."|t('sprout-base'),
+            name: 'json',
+            value: params.importableJson ?? null,
+            rows: 20,
+            first: true
+        }) }}
+    {% endif %}
+
+</form>

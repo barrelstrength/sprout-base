@@ -18,12 +18,15 @@ abstract class SproutBaseHelper
      */
     public static function registerModule()
     {
-        if (!Craft::$app->hasModule('sprout-base')) {
+        $moduleId = 'sprout';
 
-            Craft::$app->setModule('sprout-base', SproutBase::class);
+        if (!Craft::$app->hasModule($moduleId)) {
+
+            $sproutModule = new SproutBase($moduleId);
+            Craft::$app->setModule($moduleId, $sproutModule);
 
             // Have Craft load this module right away (so we can create templates)
-            Craft::$app->getModule('sprout-base');
+            Craft::$app->getModule($moduleId);
         }
     }
 }

@@ -206,7 +206,7 @@ class NotificationEmail extends EmailElement
             $shareUrl = null;
 
             if ($this->id && $this->getUrl()) {
-                $shareUrl = UrlHelper::actionUrl('sprout-base/notifications/share-notification-email', [
+                $shareUrl = UrlHelper::actionUrl('sprout/notifications/share-notification-email', [
                     'notificationId' => $this->id,
                 ]);
             }
@@ -232,6 +232,8 @@ class NotificationEmail extends EmailElement
 
     /**
      * @inheritdoc
+     *
+     * @throws \yii\base\InvalidConfigException
      */
     public function getFieldLayout()
     {
@@ -281,6 +283,8 @@ class NotificationEmail extends EmailElement
         $notificationEmailRecord->singleEmail = $this->singleEmail;
         $notificationEmailRecord->enableFileAttachments = $this->enableFileAttachments;
         $notificationEmailRecord->recipients = $this->recipients;
+        $notificationEmailRecord->cc = $this->cc;
+        $notificationEmailRecord->bcc = $this->bcc;
         $notificationEmailRecord->listSettings = $this->listSettings;
         $notificationEmailRecord->dateCreated = $this->dateCreated;
         $notificationEmailRecord->dateUpdated = $this->dateUpdated;
@@ -401,6 +405,6 @@ class NotificationEmail extends EmailElement
 
     public function isReady()
     {
-        return (bool) ($this->getStatus() == static::ENABLED);
+        return (bool)($this->getStatus() == static::ENABLED);
     }
 }

@@ -6,8 +6,8 @@ use barrelstrength\sproutbase\app\email\base\EmailElement;
 use barrelstrength\sproutbase\app\email\base\Mailer;
 use barrelstrength\sproutbase\app\email\base\NotificationEmailSenderInterface;
 use barrelstrength\sproutemail\elements\CampaignEmail;
-use barrelstrength\sproutbase\app\email\elements\NotificationEmail;
 use barrelstrength\sproutemail\models\CampaignType;
+use barrelstrength\sproutemail\services\SentEmails;
 use barrelstrength\sproutemail\SproutEmail;
 use barrelstrength\sproutforms\fields\formfields\FileUpload;
 use barrelstrength\sproutlists\listtypes\SubscriberListType;
@@ -76,8 +76,11 @@ class DefaultMailer extends Mailer implements NotificationEmailSenderInterface
     /**
      * @inheritdoc
      *
+     * @param EmailElement $notificationEmail
+     *
+     * @return bool
      * @throws Exception
-     * @throws \Twig_Error_Loader
+     * @throws \Throwable
      * @throws \yii\base\InvalidConfigException
      */
     public function sendNotificationEmail(EmailElement $notificationEmail)
@@ -117,6 +120,9 @@ class DefaultMailer extends Mailer implements NotificationEmailSenderInterface
 
         $recipients = $recipientList->getRecipients();
 
+        $recipientCc = $mailer->getRecipients($notificationEmail->cc, $notificationEmail);
+        $recipientBc = $mailer->getRecipients($notificationEmail->bcc, $notificationEmail);
+
         if (!$recipients) {
             return false;
         }
@@ -126,12 +132,14 @@ class DefaultMailer extends Mailer implements NotificationEmailSenderInterface
 
             $infoTable = SproutEmail::$app->sentEmails->createInfoTableModel('sprout-email', [
                 'emailType' => $notificationEmail->displayName(),
-                'mailer' => $this->getName(),
-                'deliveryType' => $notificationEmail->getIsTest() ? Craft::t('sprout-base', 'Test') : Craft::t('sprout-base', 'Live')
+                'mailer' => $this->getName()
             ]);
 
+            $deliveryTypes = $infoTable->getDeliveryTypes();
+            $infoTable->deliveryType = $notificationEmail->getIsTest() ? $deliveryTypes['Test'] : $deliveryTypes['Live'];
+
             $variables = [
-                'info' => $infoTable
+                SentEmails::SENT_EMAIL_MESSAGE_VARIABLE => $infoTable
             ];
 
             $message->variables = $variables;
@@ -141,9 +149,17 @@ class DefaultMailer extends Mailer implements NotificationEmailSenderInterface
         $prepareRecipients = [];
         $mailer = Craft::$app->getMailer();
 
+        if ($bcc = $recipientBc->getRecipientEmails()) {
+            $message->setBcc($bcc);
+        }
+
+        if ($cc = $recipientCc->getRecipientEmails()) {
+            $message->setCc($cc);
+        }
+
         if ($notificationEmail->singleEmail) {
              /*
-              * Assigning email with name array does not work on carft
+              * Assigning email with name array does not work on craft
               * [$recipient->email => $recipient->name]
               */
             foreach ($recipients as $key => $recipient) {

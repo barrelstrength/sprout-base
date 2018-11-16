@@ -1,0 +1,18 @@
+{% import "_includes/forms" as forms %}
+
+<div id="settings-total-sentEmailsLimit">
+    {{ forms.textField({
+        label: "Sent Emails Limit"|t('sprout-base'),
+        instructions: "The total number of Sent Emails that will be stored in the database per-site. When the limit is reached, the oldest Sent Emails for the site will be deleted. Default limit is 5000."|t('sprout-base'),
+        name: 'sentEmailsLimit',
+        size:'10',
+        placeholder: '5000',
+        value: settings.sentEmailsLimit,
+        errors: ''
+    }) }}
+</div>
+
+{# Clean up any old emails after we update our settings #}
+{% if craft.app.request.getReferrer() == cpUrl('sprout-email/settings/sentemails') %}
+    {{ craft.sproutEmail.cleanUpSentEmails() }}
+{% endif %}

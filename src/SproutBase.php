@@ -8,13 +8,18 @@
 namespace barrelstrength\sproutbase;
 
 use barrelstrength\sproutbase\app\email\services\EmailTemplates;
+use barrelstrength\sproutbase\app\import\controllers\ImportController;
+use barrelstrength\sproutbase\app\import\console\controllers\ImportController as ConsoleImportController;
+use barrelstrength\sproutbase\app\import\console\controllers\SeedController as ConsoleSeedController;
+use barrelstrength\sproutbase\app\import\controllers\SeedController;
+use barrelstrength\sproutbase\app\import\controllers\SproutSeoController;
+use barrelstrength\sproutbase\app\import\controllers\WeedController;
 use barrelstrength\sproutbase\base\BaseSproutTrait;
 use barrelstrength\sproutbase\controllers\SettingsController;
 use barrelstrength\sproutbase\app\email\controllers\NotificationsController;
 use barrelstrength\sproutbase\app\email\events\RegisterMailersEvent;
 use barrelstrength\sproutbase\app\email\emailtemplates\BasicTemplates;
 use barrelstrength\sproutbase\app\email\mailers\DefaultMailer;
-
 use barrelstrength\sproutbase\app\email\services\Mailers;
 use barrelstrength\sproutbase\app\fields\controllers\AddressController;
 use barrelstrength\sproutbase\app\fields\controllers\FieldsController;
@@ -110,7 +115,31 @@ class SproutBase extends Module
         Craft::setAlias('@sproutbaselib', dirname(__DIR__, 2).'/sprout-base/lib');
         Craft::setAlias('@sproutbaseicons', $this->getBasePath().'/web/assets/icons');
 
-        // Register our base template path
+        // Setup Controllers
+        if (Craft::$app->getRequest()->getIsConsoleRequest()) {
+            $this->controllerNamespace = 'sproutbase\\console\\controllers';
+
+            $this->controllerMap = [
+                'import' => ConsoleImportController::class,
+                'seed' => ConsoleSeedController::class
+            ];
+        } else {
+            $this->controllerNamespace = 'sproutbase\\controllers';
+
+            $this->controllerMap = [
+                'settings' => SettingsController::class,
+                'notifications' => NotificationsController::class,
+                'fields' => FieldsController::class,
+                'fields-address' => AddressController::class,
+                'reports' => ReportsController::class,
+                'import' => ImportController::class,
+                'seed' => SeedController::class,
+                'weed' => WeedController::class,
+                'redirects-tool' => SproutSeoController::class
+            ];
+        }
+
+        // Setup Template Roots
         Event::on(View::class, View::EVENT_REGISTER_CP_TEMPLATE_ROOTS, function(RegisterTemplateRootsEvent $e) {
             $e->roots['sprout-base'] = $this->getBasePath().DIRECTORY_SEPARATOR.'templates';
             $e->roots['sprout-base-email'] = $this->getBasePath().DIRECTORY_SEPARATOR.'app/email/templates';
@@ -123,7 +152,7 @@ class SproutBase extends Module
             $e->roots['sprout-base-seo'] = $this->getBasePath().DIRECTORY_SEPARATOR.'app/seo/templates';
         });
 
-        // Register our Variables
+        // Setup Variables
         Event::on(CraftVariable::class, CraftVariable::EVENT_INIT, function(Event $event) {
             $variable = $event->sender;
             $variable->set('sproutEmail', SproutEmailVariable::class);
@@ -145,21 +174,6 @@ class SproutBase extends Module
         Event::on(EmailTemplates::class, EmailTemplates::EVENT_REGISTER_EMAIL_TEMPLATES, function(RegisterComponentTypesEvent $event) {
             $event->types[] = BasicTemplates::class;
         });
-
-
-        if (Craft::$app->getRequest()->getIsConsoleRequest()) {
-            $this->controllerNamespace = 'sproutbase\\console\\controllers';
-        } else {
-            $this->controllerNamespace = 'sproutbase\\controllers';
-
-            $this->controllerMap = [
-                'settings' => SettingsController::class,
-                'notifications' => NotificationsController::class,
-                'fields' => FieldsController::class,
-                'fields-address' => AddressController::class,
-                'reports' => ReportsController::class
-            ];
-        }
 
         parent::init();
     }

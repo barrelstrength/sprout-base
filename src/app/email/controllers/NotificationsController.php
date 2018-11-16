@@ -115,7 +115,7 @@ class NotificationsController extends Controller
                         'fields' => '#subjectLine-field, #body-field, #defaultBody, #title-field, #fields > div > .field',
                         'extraFields' => '#settings',
                         'previewUrl' => $notificationEmail->getUrl(),
-                        'previewAction' => 'sprout-base/notifications/live-preview-notification-email',
+                        'previewAction' => 'sprout/notifications/live-preview-notification-email',
                         'previewParams' => [
                             'notificationId' => $notificationEmail->id,
                         ]
@@ -124,7 +124,7 @@ class NotificationsController extends Controller
             );
 
             if ($notificationEmail->id && $notificationEmail->getUrl()) {
-                $shareUrl = UrlHelper::actionUrl('sprout-base/notifications/share-notification-email', [
+                $shareUrl = UrlHelper::actionUrl('sprout/notifications/share-notification-email', [
                     'notificationId' => $notificationEmail->id,
                 ]);
             }
@@ -201,6 +201,8 @@ class NotificationsController extends Controller
         $notificationEmail->enabled = Craft::$app->getRequest()->getBodyParam('enabled');
         $notificationEmail->eventId = Craft::$app->getRequest()->getBodyParam('eventId');
         $notificationEmail->recipients = Craft::$app->getRequest()->getBodyParam('recipients');
+        $notificationEmail->cc = Craft::$app->getRequest()->getBodyParam('cc');
+        $notificationEmail->bcc = Craft::$app->getRequest()->getBodyParam('bcc');
         $notificationEmail->listSettings = Craft::$app->getRequest()->getBodyParam('lists');
         $notificationEmail->emailTemplateId = Craft::$app->getRequest()->getBodyParam('emailTemplateId');
 
@@ -360,8 +362,9 @@ class NotificationsController extends Controller
      * Send a notification email via a Mailer
      *
      * @return \yii\web\Response
+     * @throws Exception
+     * @throws \Throwable
      * @throws \Twig_Error_Loader
-     * @throws \yii\base\Exception
      * @throws \yii\web\BadRequestHttpException
      */
     public function actionSendTestNotificationEmail()
@@ -440,6 +443,7 @@ class NotificationsController extends Controller
      * Provides a way for mailers to render content to perform actions inside a a modal window
      *
      * @return \yii\web\Response
+     * @throws \Throwable
      * @throws \yii\web\BadRequestHttpException
      */
     public function actionGetPrepareModal()
@@ -483,7 +487,7 @@ class NotificationsController extends Controller
 
         // Create the token and redirect to the entry URL with the token in place
         $token = Craft::$app->getTokens()->createToken([
-                'sprout-base/notifications/view-shared-notification-email',
+                'sprout/notifications/view-shared-notification-email',
                 $params
             ]
         );

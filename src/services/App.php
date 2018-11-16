@@ -11,7 +11,12 @@ use barrelstrength\sproutbase\app\email\services\Mailers;
 use barrelstrength\sproutbase\app\email\services\NotificationEmailEvents;
 use barrelstrength\sproutbase\app\email\services\NotificationEmails;
 use barrelstrength\sproutbase\app\fields\services\EmailDropdown;
-use barrelstrength\sproutbase\app\import\services\Themes;
+use barrelstrength\sproutbase\app\import\services\FieldImporter;
+use barrelstrength\sproutbase\app\import\services\Seed;
+use barrelstrength\sproutbase\app\import\services\SettingsImporter;
+use barrelstrength\sproutbase\app\import\services\Bundles;
+use barrelstrength\sproutbase\app\import\services\ElementImporter;
+use barrelstrength\sproutbase\app\import\services\ImportUtilities;
 use barrelstrength\sproutbase\app\reports\services\DataSources;
 use barrelstrength\sproutbase\app\reports\services\Exports;
 use barrelstrength\sproutbase\app\reports\services\ReportGroups;
@@ -21,7 +26,6 @@ use barrelstrength\sproutbase\app\fields\services\Url;
 use barrelstrength\sproutbase\app\fields\services\Phone;
 use barrelstrength\sproutbase\app\fields\services\RegularExpression;
 use barrelstrength\sproutbase\app\fields\services\Email;
-
 use barrelstrength\sproutbase\app\fields\services\Address;
 use barrelstrength\sproutbase\app\import\services\Importers;
 use craft\base\Component;
@@ -110,14 +114,39 @@ class App extends Component
     public $importers;
 
     /**
-     * @var Themes
+     * @var Bundles
      */
-    public $themes;
+    public $bundles;
 
     /**
      * @var SproutEmail
      */
     public $sproutEmail;
+
+    /**
+     * @var ElementImporter
+     */
+    public $elementImporter;
+
+    /**
+     * @var SettingsImporter
+     */
+    public $settingsImporter;
+
+    /**
+     * @var FieldImporter
+     */
+    public $fieldImporter;
+
+    /**
+     * @var ImportUtilities
+     */
+    public $importUtilities;
+
+    /**
+     * @var Seed
+     */
+    public $seed;
 
     /**
      * @inheritdoc
@@ -128,9 +157,11 @@ class App extends Component
         $this->settings = new Settings();
 
         // Sprout Email
-        $this->notifications = new NotificationEmails();
-        $this->notificationEvents = new NotificationEmailEvents();
         $this->mailers = new Mailers();
+        $this->notificationEvents = new NotificationEmailEvents();
+        $this->notifications = new NotificationEmails();
+
+        // @todo - Rename this to EmailTemplates or something more appropriate
         $this->sproutEmail = new SproutEmail();
 
         // Sprout Fields
@@ -143,13 +174,18 @@ class App extends Component
         $this->utilities = new Utilities();
 
         // Sprout Reports
-        $this->reports = new Reports();
-        $this->reportGroups = new ReportGroups();
         $this->dataSources = new DataSources();
         $this->exports = new Exports();
+        $this->reportGroups = new ReportGroups();
+        $this->reports = new Reports();
 
         // Sprout Import
+        $this->bundles = new Bundles();
+        $this->elementImporter = new ElementImporter();
+        $this->fieldImporter = new FieldImporter();
         $this->importers = new Importers();
-        $this->themes = new Themes();
+        $this->importUtilities = new ImportUtilities();
+        $this->seed = new Seed();
+        $this->settingsImporter = new SettingsImporter();
     }
 }

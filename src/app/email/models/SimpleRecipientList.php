@@ -33,6 +33,19 @@ class SimpleRecipientList extends Model
         return $this->recipients;
     }
 
+    public function getRecipientEmails()
+    {
+        $recipients = $this->recipients;
+        $emails = [];
+        if ($recipients) {
+            foreach ($recipients as $recipient) {
+                $emails[] =  $recipient->email;
+            }
+        }
+
+        return $emails;
+    }
+
     public function addInvalidRecipient(SimpleRecipient $recipient)
     {
         $this->invalidRecipients[] = $recipient;

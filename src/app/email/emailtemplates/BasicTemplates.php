@@ -15,7 +15,7 @@ class BasicTemplates extends EmailTemplates
      */
     public function getName()
     {
-        return Craft::t('sprout-base', 'Basic Email (Sprout Email)');
+        return Craft::t('sprout-base', 'Basic Notification (Sprout Email)');
     }
 
     /**

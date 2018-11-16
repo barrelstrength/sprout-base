@@ -3,7 +3,6 @@
 namespace barrelstrength\sproutbase\app\import\web\twig\variables;
 
 use barrelstrength\sproutbase\SproutBase;
-use barrelstrength\sproutimport\SproutImport;
 use Craft;
 
 class SproutImportVariable
@@ -27,9 +26,9 @@ class SproutImportVariable
     /**
      * @return array
      */
-    public function getSproutImportThemes()
+    public function getSproutImportBundles()
     {
-        return SproutBase::$app->themes->getSproutImportThemes();
+        return SproutBase::$app->bundles->getSproutImportBundles();
     }
 
     /**
@@ -38,6 +37,11 @@ class SproutImportVariable
     public function getSproutImportImporters()
     {
         return SproutBase::$app->importers->getSproutImportImporters();
+    }
+
+    public function getBundleByClass($class)
+    {
+        return SproutBase::$app->bundles->getBundleByClass($class);
     }
 
     /**
@@ -55,7 +59,7 @@ class SproutImportVariable
      */
     public function hasSeeds()
     {
-        $seeds = SproutImport::$app->seed->getAllSeeds();
+        $seeds = SproutBase::$app->seed->getAllSeeds();
 
         return count($seeds);
     }

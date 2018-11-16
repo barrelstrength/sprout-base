@@ -7,8 +7,9 @@
 
 namespace barrelstrength\sproutbase\app\import\base;
 
-use barrelstrength\sproutimport\SproutImport;
+use barrelstrength\sproutbase\SproutBase;
 use Craft;
+use Faker\Factory;
 use Faker\Generator;
 use yii\base\Model;
 
@@ -94,14 +95,18 @@ abstract class Importer
         }
 
         if ($fakerService == null) {
-            $this->fakerService = SproutImport::$app->faker->getGenerator();
+            $this->fakerService = Factory::create();
         } else {
             $this->fakerService = $fakerService;
         }
 
-        $settings = Craft::$app->plugins->getPlugin('sprout-import')->getSettings();
+        $plugin = Craft::$app->plugins->getPlugin('sprout-base');
 
-        $this->seedSettings = $settings['seedSettings'];
+        if ($plugin) {
+            $settings = $plugin->getSettings();
+
+            $this->seedSettings = $settings['seedSettings'];
+        }
     }
 
     /**
@@ -144,7 +149,7 @@ abstract class Importer
      * - \craft\elements\Entry::class
      * - \craft\elements\Category::class
      * - \craft\models\Section::class
-     * - \barrelstrength\sproutimport\models\importers\Field::class
+     * - barrelstrength\sproutbase\app\import\importers\settings\Field::class
      *
      * @return mixed
      */
@@ -243,7 +248,7 @@ abstract class Importer
     {
         $name = $this->getModelName();
 
-        return SproutImport::$app->seed->getSeedCountByElementType($name);
+        return SproutBase::$app->seed->getSeedCountByElementType($name);
     }
 
     /**

@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ email.subjectLine }} - {{ siteName }}</title>
+</head>
+<body>
+
+<h1>{{ email.subjectLine }}</h1>
+
+{% if email.defaultBody|length %}
+    <p>{{ email.defaultBody|nl2br }}</p>
+{% endif %}
+
+</body>
+</html>

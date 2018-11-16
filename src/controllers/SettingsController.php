@@ -20,11 +20,11 @@ use yii\web\BadRequestHttpException;
  * Using the Sprout Base settings controller requires:
  *
  * 1. Adding two routes to a plugin:
- * 'sprout-seo/settings' => 'sprout-base/settings/edit-settings',
- * 'sprout-seo/settings/<settingsSectionHandle:.*>' => 'sprout-base/settings/edit-settings'
+ * 'sprout-seo/settings' => 'sprout/settings/edit-settings',
+ * 'sprout-seo/settings/<settingsSectionHandle:.*>' => 'sprout/settings/edit-settings'
  *
  * 2. Submitting your settings form to Sprout Base
- * <input type="hidden" name="action" value="sprout-base/settings/save-settings">
+ * <input type="hidden" name="action" value="sprout/settings/save-settings">
  *
  * 3. Ensuring all settings are included in a settings array of the submitted form
  * <input type="text" name="settings[pluginNameOverride]" value="">
@@ -103,6 +103,7 @@ class SettingsController extends BaseController
      *
      * @return null|\yii\web\Response
      * @throws BadRequestHttpException
+     * @throws \craft\errors\MissingComponentException
      * @throws \yii\db\Exception
      */
     public function actionSaveSettings()

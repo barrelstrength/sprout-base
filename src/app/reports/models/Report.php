@@ -75,6 +75,7 @@ class Report extends Model
 
     /**
      * @return string
+     * @throws \Throwable
      * @throws \yii\base\Exception
      */
     public function processNameFormat()
