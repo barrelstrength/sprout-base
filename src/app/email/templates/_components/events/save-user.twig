@@ -28,3 +28,10 @@
     <p><em>{{ "Add a User Group to limit this event by User Group."|t('sprout-email') }}</em></p>
 
 {% endif %}
+
+{{ forms.lightSwitchField({
+    label: "Trigger Admin Roles"|t('sprout-email'),
+    instructions: "Admin users will trigger the notification."|t('sprout-email'),
+    name: "adminUsers",
+    on: event.adminUsers
+}) }}
