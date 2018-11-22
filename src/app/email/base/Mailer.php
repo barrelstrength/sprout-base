@@ -24,9 +24,6 @@ use Egulias\EmailValidator\Validation\MultipleValidationWithAnd;
 use Egulias\EmailValidator\Validation\RFCValidation;
 use yii\base\Model;
 
-/**
- * @mixin NotificationEmailSenderInterface
- */
 abstract class Mailer
 {
     /**
