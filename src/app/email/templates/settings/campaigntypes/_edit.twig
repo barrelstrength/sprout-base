@@ -74,13 +74,23 @@
             label: "Email Templates"|t('sprout-base'),
             instructions: "The Email Templates that will be used to display your email."|t('sprout-base'),
             errors: campaignType is defined ? campaignType.getErrors('emailTemplateId') : null,
-            }, sproutFields.selectOther({
+        }, sproutFields.selectOther({
             name: 'sproutEmail[emailTemplateId]',
             options: templateOptions,
             value: campaignType is defined ? campaignType.emailTemplateId : null,
             otherPlaceholderText: '_email/email-template-folder'|t('sprout-email')
         })) }}
 
+        {# @todo - add support for copying a partial template #}
+        {#{{ forms.textField({#}
+            {#label: "Email Copy/Paste Template"|t,#}
+            {#id: 'templateCopyPaste',#}
+            {#name: 'sproutEmail[templateCopyPaste]',#}
+            {#instructions: "The template to use if you want to copy only part of your template.  The text version of the Copy/Paste content will use the same template name and append .txt"|t,#}
+            {#placeholder: 'email/copypaste-template',#}
+            {#value: (campaignType is defined ? campaignType.templateCopyPaste : null),#}
+            {#errors: (campaignType is defined ? campaignType.getErrors('templateCopyPaste') : null)#}
+        {#}) }}#}
 
         <hr>
 
