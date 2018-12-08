@@ -97,15 +97,18 @@
     {#}) }}#}
     {#{% endif %}#}
 
-    <div class="meta read-only sprout-meta-heading">
-        <h6>{{ "Sender"|t('sprout-base') }}</h6>
-    </div>
-    <hr>
-    <div class="meta">
-        {{ mailer.getRecipientsHtml(campaignEmail)|raw }}
-    </div>
+    {% if mailer.hasSender() %}
+        <div class="meta read-only sprout-meta-heading">
+            <h6>{{ "Sender"|t('sprout-base') }}</h6>
+        </div>
+        <hr>
+        <div class="meta">
+            {{ mailer.getRecipientsHtml(campaignEmail)|raw }}
+        </div>
+        <hr>
+    {% endif %}
 
-    <hr>
+    {% if mailer.hasRecipients() %}
     <div class="meta read-only sprout-meta-heading">
         <h6>{{ "Recipients"|t('sprout-base') }}</h6>
     </div>
@@ -138,8 +141,9 @@
         {% endif %}
 
     </div>
-
     <hr>
+    {% endif %}
+    
     <div class="meta read-only sprout-meta-heading">
         <h6>{{ "Genderal Settings"|t('sprout-base') }}</h6>
     </div>

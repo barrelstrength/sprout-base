@@ -105,6 +105,30 @@ abstract class Mailer
     abstract public function getDescription();
 
     /**
+     * Returns if a Mailer supports a Sender
+     *
+     * This setting is mostly to support the Copy/Paste Mailer use case where a user is using
+     * Sprout Email to prepare an email to be sent from another platform
+     *
+     * @return bool
+     */
+    public function hasSender() {
+        return true;
+    }
+
+    /**
+     * Returns if a Mailer supports Recipients
+     *
+     * This setting is mostly to support the Copy/Paste Mailer use case where a user is using
+     * Sprout Email to prepare an email to be sent from another platform
+     *
+     * @return bool
+     */
+    public function hasRecipients() {
+        return true;
+    }
+
+    /**
      * Returns whether or not the mailer has registered routes to accomplish tasks within Sprout Email
      *
      * @return bool
