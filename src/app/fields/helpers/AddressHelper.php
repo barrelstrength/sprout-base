@@ -8,14 +8,14 @@
 namespace barrelstrength\sproutbase\app\fields\helpers;
 
 use barrelstrength\sproutbase\app\fields\models\Address as AddressModel;
-use CommerceGuys\Addressing\Model\AddressFormat;
-use CommerceGuys\Addressing\Model\Subdivision;
+use CommerceGuys\Addressing\AddressFormat\AddressFormat;
+use CommerceGuys\Addressing\Subdivision\Subdivision;
 use Craft;
-use CommerceGuys\Addressing\Repository\AddressFormatRepository;
-use CommerceGuys\Addressing\Repository\SubdivisionRepository;
-use CommerceGuys\Addressing\Repository\CountryRepository;
+use CommerceGuys\Addressing\AddressFormat\AddressFormatRepository;
+use CommerceGuys\Addressing\Subdivision\SubdivisionRepository;
+use CommerceGuys\Addressing\Country\CountryRepository;
 use CommerceGuys\Addressing\Formatter\DefaultFormatter;
-use CommerceGuys\Addressing\Model\Address;
+use CommerceGuys\Addressing\Address;
 use craft\helpers\Template;
 use craft\helpers\UrlHelper;
 
@@ -55,7 +55,7 @@ class AddressHelper
     {
         $this->name = $name;
         $this->addressModel = ($addressModel == null) ? new AddressModel : $addressModel;
-        $this->countryCode = $countryCode;
+        $this->countryCode = $countryCode ?? $this->defaultCountryCode();
     }
 
     /**
@@ -67,14 +67,17 @@ class AddressHelper
     {
         $countryCode = $this->countryCode;
 
-        $addressRepo = new AddressFormatRepository;
-        $this->subdivisonObj = new SubdivisionRepository;
+        $addressRepo = new AddressFormatRepository();
+        $this->subdivisonObj = new SubdivisionRepository();
         $this->addressObj = $addressRepo->get($countryCode);
+
         $format = $this->addressObj->getFormat();
 
         // Remove unused format
         $format = preg_replace('/%recipient/', '', $format);
         $format = preg_replace('/%organization/', '', $format);
+        $format = preg_replace('/%givenName/', '', $format);
+        $format = preg_replace('/%familyName/', '', $format);
 
         // Removed the extra country name embedded on the commerceguys addressing json file
         $countryName = $this->getCountryNameByCode($countryCode);
@@ -290,9 +293,9 @@ class AddressHelper
 
         $options = [];
 
-        if ($this->subdivisonObj->getAll($this->countryCode)) {
+        $states = $this->subdivisonObj->getAll([$this->countryCode]);
 
-            $states = $this->subdivisonObj->getAll($this->countryCode);
+        if ($states) {
 
             if (!empty($states)) {
 

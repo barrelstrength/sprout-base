@@ -2,7 +2,6 @@
 
 namespace barrelstrength\sproutbase\app\email\services;
 
-use barrelstrength\sproutbase\app\email\base\EmailElement;
 use barrelstrength\sproutbase\app\email\base\NotificationEvent;
 use barrelstrength\sproutbase\app\email\elements\NotificationEmail;
 use barrelstrength\sproutbase\app\email\events\NotificationEmailEvent;
@@ -115,6 +114,7 @@ class NotificationEmailEvents extends Component
 
                 $eventClassName = $notificationEmailEvent->getEventClassName();
                 $event = $notificationEmailEvent->getEventName();
+                /** @noinspection PhpUnusedLocalVariableInspection */
                 $eventHandlerClassName = $notificationEmailEvent->getEventHandlerClassName();
 
                 Event::on($eventClassName, $event, function($eventHandlerClassName)
@@ -233,11 +233,11 @@ class NotificationEmailEvents extends Component
     }
 
     /**
-     * @param EmailElement $notificationEmail
+     * @param NotificationEmail $notificationEmail
      *
      * @return NotificationEvent|null
      */
-    public function getEvent(EmailElement $notificationEmail)
+    public function getEvent(NotificationEmail $notificationEmail)
     {
         $notificationEmailEventTypes = $this->getNotificationEmailEventTypes();
 

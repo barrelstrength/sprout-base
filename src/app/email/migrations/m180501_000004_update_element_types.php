@@ -37,19 +37,6 @@ class m180501_000004_update_element_types extends Migration
                 'type' => $notificationClass['newType']
             ], ['type' => $notificationClass['oldType']], [], false);
         }
-
-        $sentClasses = [
-            0 => [
-                'oldType' => 'SproutEmail_SentEmail',
-                'newType' => 'barrelstrength\sproutbase\app\email\elements\SentEmail'
-            ]
-        ];
-
-        foreach ($sentClasses as $sentClass) {
-            $this->update('{{%elements}}', [
-                'type' => $sentClass['newType']
-            ], ['type' => $sentClass['oldType']], [], false);
-        }
     }
 
     /**

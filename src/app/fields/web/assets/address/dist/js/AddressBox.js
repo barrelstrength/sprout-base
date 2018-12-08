@@ -128,7 +128,6 @@ if (typeof Craft.SproutBase === typeof undefined) {
         },
 
         clearAddressBox: function(ev) {
-
             ev.preventDefault();
 
             var self = this;
@@ -140,6 +139,8 @@ if (typeof Craft.SproutBase === typeof undefined) {
             this.$addressForm.find("[name='" + this.settings.namespace + "[delete]']").val(1);
 
             self.addressInfoId = null;
+
+            this.$addressBox.find('.field-address-input').remove();
 
             this._getAddressFormFields();
         },

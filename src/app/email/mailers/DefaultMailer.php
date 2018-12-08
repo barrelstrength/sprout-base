@@ -7,6 +7,7 @@ use barrelstrength\sproutbase\app\email\base\Mailer;
 use barrelstrength\sproutbase\app\email\base\NotificationEmailSenderInterface;
 use barrelstrength\sproutemail\elements\CampaignEmail;
 use barrelstrength\sproutemail\models\CampaignType;
+use barrelstrength\sproutemail\services\SentEmails;
 use barrelstrength\sproutemail\SproutEmail;
 use barrelstrength\sproutforms\fields\formfields\FileUpload;
 use barrelstrength\sproutlists\listtypes\SubscriberListType;
@@ -131,12 +132,14 @@ class DefaultMailer extends Mailer implements NotificationEmailSenderInterface
 
             $infoTable = SproutEmail::$app->sentEmails->createInfoTableModel('sprout-email', [
                 'emailType' => $notificationEmail->displayName(),
-                'mailer' => $this->getName(),
-                'deliveryType' => $notificationEmail->getIsTest() ? Craft::t('sprout-base', 'Test') : Craft::t('sprout-base', 'Live')
+                'mailer' => $this->getName()
             ]);
 
+            $deliveryTypes = $infoTable->getDeliveryTypes();
+            $infoTable->deliveryType = $notificationEmail->getIsTest() ? $deliveryTypes['Test'] : $deliveryTypes['Live'];
+
             $variables = [
-                'info' => $infoTable
+                SentEmails::SENT_EMAIL_MESSAGE_VARIABLE => $infoTable
             ];
 
             $message->variables = $variables;

@@ -22,8 +22,7 @@ class EmailAsset extends AssetBundle
 
         $this->js = [
             'js/sproutmodal.js',
-            'js/SproutEmail.SentEmailElementEditor.js',
-            'js/SproutEmail.SentEmailHud.js'
+            'js/SproutEmail.SentEmailElementEditor.js'
         ];
 
         $this->css = [

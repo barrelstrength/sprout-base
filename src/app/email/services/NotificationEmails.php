@@ -2,7 +2,6 @@
 
 namespace barrelstrength\sproutbase\app\email\services;
 
-use barrelstrength\sproutbase\app\email\base\EmailElement;
 use barrelstrength\sproutbase\app\email\base\Mailer;
 use barrelstrength\sproutbase\app\email\elements\NotificationEmail;
 use barrelstrength\sproutbase\SproutBase;
@@ -243,14 +242,14 @@ class NotificationEmails extends Component
     }
 
     /**
-     * @param EmailElement $email
-     * @param string       $fileExtension
+     * @param NotificationEmail $email
+     * @param string            $fileExtension
      *
      * @throws \Twig_Error_Loader
      * @throws \yii\base\Exception
      * @throws \yii\base\ExitException
      */
-    public function showPreviewEmail(EmailElement $email, $fileExtension = 'html')
+    public function showPreviewEmail(NotificationEmail $email, $fileExtension = 'html')
     {
         if ($fileExtension == 'txt') {
             $output = $email->getEmailTemplates()->getTextBody();
@@ -277,14 +276,14 @@ class NotificationEmails extends Component
     }
 
     /**
-     * @param EmailElement $notificationEmail
-     * @param array        $errors
+     * @param NotificationEmail $notificationEmail
+     * @param array             $errors
      *
      * @return array
      * @throws \Throwable
      * @throws \yii\base\Exception
      */
-    public function getNotificationErrors(EmailElement $notificationEmail, array $errors = [])
+    public function getNotificationErrors(NotificationEmail $notificationEmail, array $errors = [])
     {
         $currentPluginHandle = Craft::$app->request->getSegment(1);
 
