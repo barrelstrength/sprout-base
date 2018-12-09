@@ -53,9 +53,9 @@ abstract class NotificationEvent extends SavableComponent
     /**
      * Returns the namespace as a string with dashes so it can be used in html as a css class
      *
-     * @return string
+     * @return string|null
      */
-    final public function getEventId(): string
+    final public function getEventId()
     {
         return strtolower(str_replace('\\', '-', get_class($this)));
     }
@@ -68,9 +68,9 @@ abstract class NotificationEvent extends SavableComponent
      * @see     \yii\base\Event
      * @example Event::on($class, $name, function($handler) { ... });
      *
-     * @return string
+     * @return string|null
      */
-    abstract public function getEventClassName(): string;
+    abstract public function getEventClassName();
 
     /**
      * Returns the event name.
@@ -80,9 +80,9 @@ abstract class NotificationEvent extends SavableComponent
      * @see     \yii\base\Event
      * @example Event::on($class, $name, function($handler) { ... });
      *
-     * @return string
+     * @return string|null
      */
-    abstract public function getEventName(): string;
+    abstract public function getEventName();
 
     /**
      * Returns the callable event handler.
@@ -92,9 +92,9 @@ abstract class NotificationEvent extends SavableComponent
      * @see     \yii\base\Event
      * @example Event::on($class, $name, function($handler) { ... });
      *
-     * @return string
+     * @return string|null
      */
-    abstract public function getEventHandlerClassName(): string;
+    abstract public function getEventHandlerClassName();
 
     /**
      * Returns the name of the event

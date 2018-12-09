@@ -446,24 +446,6 @@ class NotificationsController extends Controller
     }
 
     /**
-     * Provides a way for mailers to render content to perform actions inside a a modal window
-     *
-     * @return Response
-     * @throws \Throwable
-     * @throws \yii\web\BadRequestHttpException
-     */
-    public function actionGetPrepareModal(): Response
-    {
-        $this->requirePostRequest();
-
-        $notificationId = Craft::$app->getRequest()->getBodyParam('notificationId');
-
-        $response = SproutBase::$app->notifications->getPrepareModal($notificationId);
-
-        return $this->asJson($response->getAttributes());
-    }
-
-    /**
      * Prepares a Notification Email to be shared via token-based URL
      *
      * @param null $notificationId

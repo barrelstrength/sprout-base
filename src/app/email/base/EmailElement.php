@@ -21,6 +21,8 @@ use craft\base\Field;
  */
 abstract class EmailElement extends Element
 {
+    use ListsTrait;
+
     // Constants
     // =========================================================================
 
@@ -157,11 +159,11 @@ abstract class EmailElement extends Element
     }
 
     /**
-     * Returns the Email Template ID for the given Email Element
+     * Returns the Email Template ID (which is the namespace) for the given Email Element
      *
-     * @return int
+     * @return string
      */
-    abstract public function getEmailTemplateId(): int;
+    abstract public function getEmailTemplateId(): string;
 
     /**
      * @param EmailTemplates $emailTemplates

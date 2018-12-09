@@ -2,6 +2,7 @@
 
 namespace barrelstrength\sproutbase\app\email\services;
 
+use barrelstrength\sproutbase\app\email\base\EmailElement;
 use barrelstrength\sproutbase\app\email\base\Mailer;
 use barrelstrength\sproutbase\app\email\base\NotificationEmailSenderInterface;
 use barrelstrength\sproutbase\app\email\elements\NotificationEmail;
@@ -121,75 +122,6 @@ class NotificationEmails extends Component
         } catch (\Exception $e) {
             throw $e;
         }
-    }
-
-    /**
-     * @param $notificationId
-     *
-     * @return ModalResponse
-     * @throws \Throwable
-     */
-    public function getPrepareModal($notificationId): ModalResponse
-    {
-        $notificationEmail = Craft::$app->getElements()->getElementById($notificationId);
-
-        $response = new ModalResponse();
-        /**
-         * @var $notificationEmail NotificationEmail
-         */
-        if ($notificationEmail) {
-            try {
-                $response->success = true;
-                $response->content = $this->getPrepareModalHtml($notificationEmail);
-
-                return $response;
-            } catch (\Exception $e) {
-                $response->success = false;
-                $response->message = $e->getMessage();
-
-                return $response;
-            }
-        } else {
-            $response->success = false;
-
-            $response->message = Craft::t('sprout-base', 'No actions available for this notification.');
-        }
-
-        return $response;
-    }
-
-    /**
-     * @param NotificationEmail $notificationEmail
-     *
-     * @return string
-     * @throws \Throwable
-     * @throws \Twig_Error_Loader
-     * @throws \yii\base\Exception
-     */
-    public function getPrepareModalHtml(NotificationEmail $notificationEmail): string
-    {
-        // Display the testToEmailAddress if it exists
-        $recipients = Craft::$app->getConfig()->getGeneral()->testToEmailAddress;
-
-        if (empty($recipients)) {
-            $currentUser = Craft::$app->getUser()->getIdentity();
-            $recipients = $currentUser->email;
-        }
-
-        $errors = [];
-
-        // This processes the whole email to check for errors ahead of time
-        // @todo - review
-        $errors = $this->getNotificationErrors($notificationEmail, $errors);
-
-        return Craft::$app->getView()->renderTemplate(
-            'sprout-base-email/_modals/prepare-email-snapshot',
-            [
-                'email' => $notificationEmail,
-                'recipients' => $recipients,
-                'errors' => $errors
-            ]
-        );
     }
 
     /**

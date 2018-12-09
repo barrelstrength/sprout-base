@@ -27,6 +27,7 @@ use barrelstrength\sproutbase\app\fields\web\twig\variables\SproutFieldsVariable
 use barrelstrength\sproutbase\app\email\web\twig\variables\SproutEmailVariable;
 use barrelstrength\sproutbase\app\reports\controllers\ReportsController;
 use barrelstrength\sproutbase\app\import\web\twig\variables\SproutImportVariable;
+use barrelstrength\sproutemail\controllers\MailersController;
 use craft\events\RegisterComponentTypesEvent;
 use craft\web\Application;
 use craft\web\twig\variables\CraftVariable;
@@ -127,15 +128,16 @@ class SproutBase extends Module
             $this->controllerNamespace = 'sproutbase\\controllers';
 
             $this->controllerMap = [
-                'settings' => SettingsController::class,
-                'notifications' => NotificationsController::class,
                 'fields' => FieldsController::class,
                 'fields-address' => AddressController::class,
-                'reports' => ReportsController::class,
                 'import' => ImportController::class,
+                'mailers' => MailersController::class,
+                'notifications' => NotificationsController::class,
+                'redirects-tool' => SproutSeoController::class,
+                'reports' => ReportsController::class,
                 'seed' => SeedController::class,
+                'settings' => SettingsController::class,
                 'weed' => WeedController::class,
-                'redirects-tool' => SproutSeoController::class
             ];
         }
 

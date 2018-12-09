@@ -402,7 +402,7 @@ class NotificationEmail extends EmailElement
     /**
      * @inheritdoc
      */
-    public function getEmailTemplateId(): int
+    public function getEmailTemplateId(): string
     {
         return $this->emailTemplateId;
     }

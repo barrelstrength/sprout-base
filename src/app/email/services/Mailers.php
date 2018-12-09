@@ -3,7 +3,6 @@
 namespace barrelstrength\sproutbase\app\email\services;
 
 use barrelstrength\sproutbase\app\email\base\Mailer;
-
 use barrelstrength\sproutbase\app\email\events\RegisterMailersEvent;
 use barrelstrength\sproutbase\SproutBase;
 use craft\base\Component;
