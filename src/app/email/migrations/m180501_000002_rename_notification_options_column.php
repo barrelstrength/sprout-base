@@ -14,7 +14,7 @@ class m180501_000002_rename_notification_options_column extends Migration
      *
      * @throws \yii\base\NotSupportedException
      */
-    public function safeUp()
+    public function safeUp(): bool
     {
         // Craft 2 Updates
         $table = '{{%sproutemail_notificationemails}}';
@@ -29,7 +29,7 @@ class m180501_000002_rename_notification_options_column extends Migration
     /**
      * @inheritdoc
      */
-    public function safeDown()
+    public function safeDown(): bool
     {
         echo "m180515_000002_rename_notification_options_column cannot be reverted.\n";
         return false;

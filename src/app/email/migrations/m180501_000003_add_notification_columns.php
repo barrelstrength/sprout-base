@@ -10,10 +10,10 @@ use craft\db\Migration;
 class m180501_000003_add_notification_columns extends Migration
 {
     /**
-     * @return bool|void
+     * @return bool
      * @throws \yii\base\NotSupportedException
      */
-    public function safeUp()
+    public function safeUp(): bool
     {
         // Craft 2 updates
         $table = '{{%sproutemail_notificationemails}}';
@@ -66,12 +66,14 @@ class m180501_000003_add_notification_columns extends Migration
         $this->alterColumn($table, 'titleFormat', $this->string());
         $this->alterColumn($table, 'emailTemplateId', $this->string());
         $this->alterColumn($table, 'enableFileAttachments', $this->boolean());
+
+        return true;
     }
 
     /**
      * @inheritdoc
      */
-    public function safeDown()
+    public function safeDown(): bool
     {
         echo "m180725_080639_add_notification_columns cannot be reverted.\n";
         return false;

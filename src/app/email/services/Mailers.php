@@ -21,7 +21,7 @@ class Mailers extends Component
     /**
      * @return Mailer[]
      */
-    public function getMailers()
+    public function getMailers(): array
     {
         $event = new RegisterMailersEvent([
             'mailers' => []
@@ -49,7 +49,7 @@ class Mailers extends Component
      * @return Mailer
      * @throws Exception
      */
-    public function getMailerByName($name = null)
+    public function getMailerByName($name = null) : Mailer
     {
         $this->mailers = $this->getMailers();
 

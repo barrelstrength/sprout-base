@@ -1,9 +1,12 @@
-<?php
+<?php /** @noinspection ClassConstantCanBeUsedInspection */
+
+/** @noinspection ClassConstantCanBeUsedInspection */
 
 namespace barrelstrength\sproutbase\app\email\migrations;
 
 use craft\db\Migration;
 use craft\db\Query;
+use craft\helpers\Json;
 
 /**
  * m181026_000000_update_notification_data migration.
@@ -13,7 +16,7 @@ class m181026_000000_update_notification_data extends Migration
     /**
      * @inheritdoc
      */
-    public function safeUp()
+    public function safeUp(): bool
     {
         // Craft 2 envent ids
         $types = [
@@ -52,33 +55,31 @@ class m181026_000000_update_notification_data extends Migration
             $notifications = (new Query())
                 ->select(['id', 'settings'])
                 ->from(['{{%sproutemail_notificationemails}}'])
-                ->where(["eventId" => $type['oldType']])
+                ->where(['eventId' => $type['oldType']])
                 ->all();
 
-            if ($notifications){
-                foreach ($notifications as $notification){
-                    $options = json_decode($notification['settings'], true);
+            if ($notifications) {
+                foreach ($notifications as $notification) {
+                    $options = Json::decode($notification['settings'], true);
                     $newOptions = [];
-                    if (isset($options['craft'])){
+                    if (isset($options['craft'])) {
                         if (isset($options['craft']['saveUser'])) {
                             $newOptions = $options['craft']['saveUser'];
-                        }else if (isset($options['craft']['deleteUser'])) {
+                        } else if (isset($options['craft']['deleteUser'])) {
                             $newOptions = $options['craft']['deleteUser'];
-                        }else if (isset($options['craft']['saveEntry'])) {
+                        } else if (isset($options['craft']['saveEntry'])) {
                             $newOptions = $options['craft']['saveEntry'];
-                        }else if (isset($options['craft']['deleteEntry'])) {
+                        } else if (isset($options['craft']['deleteEntry'])) {
                             $newOptions = $options['craft']['deleteEntry'];
                         }
-                    }else if(isset($options['sproutForms'])){
-                        if (isset($options['sproutForms']['saveEntry'])) {
-                            $newOptions = $options['sproutForms']['saveEntry'];
-                        }
+                    } else if (isset($options['sproutForms']['saveEntry'])) {
+                        $newOptions = $options['sproutForms']['saveEntry'];
                     }
 
                     $this->update('{{%sproutemail_notificationemails}}', [
                         'eventId' => $type['newType'],
                         'pluginHandle' => $type['pluginHandle'],
-                        'settings' => json_encode($newOptions)
+                        'settings' => Json::encode($newOptions)
                     ], ['id' => $notification['id']], [], false);
                 }
             }
@@ -90,7 +91,7 @@ class m181026_000000_update_notification_data extends Migration
     /**
      * @inheritdoc
      */
-    public function safeDown()
+    public function safeDown(): bool
     {
         echo "m181026_000000_update_notification_data cannot be reverted.\n";
         return false;

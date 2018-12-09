@@ -1,4 +1,4 @@
-<?php
+<?php /** @noinspection ClassConstantCanBeUsedInspection */
 
 namespace barrelstrength\sproutbase\app\email\migrations;
 
@@ -9,7 +9,7 @@ class m180501_000004_update_element_types extends Migration
     /**
      * @inheritdoc
      */
-    public function safeUp()
+    public function safeUp(): bool
     {
         // Updates from Craft 2
         $campaignClasses = [
@@ -37,12 +37,14 @@ class m180501_000004_update_element_types extends Migration
                 'type' => $notificationClass['newType']
             ], ['type' => $notificationClass['oldType']], [], false);
         }
+
+        return true;
     }
 
     /**
      * @inheritdoc
      */
-    public function safeDown()
+    public function safeDown(): bool
     {
         echo "m180725_080640_update_element_types cannot be reverted.\n";
         return false;

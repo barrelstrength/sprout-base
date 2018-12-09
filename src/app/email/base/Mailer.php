@@ -13,10 +13,9 @@ use barrelstrength\sproutemail\elements\CampaignEmail;
 use barrelstrength\sproutemail\models\CampaignType;
 use barrelstrength\sproutlists\records\Lists as ListsRecord;
 use barrelstrength\sproutlists\elements\Subscribers;
-use craft\base\Element;
+use craft\base\Component;
 use craft\helpers\Html;
 use craft\helpers\Json;
-use craft\helpers\UrlHelper;
 use Craft;
 use craft\mail\Message;
 use Egulias\EmailValidator\EmailValidator;
@@ -24,7 +23,18 @@ use Egulias\EmailValidator\Validation\MultipleValidationWithAnd;
 use Egulias\EmailValidator\Validation\RFCValidation;
 use yii\base\Model;
 
-abstract class Mailer
+/**
+ * Class Mailer
+ *
+ *
+ * @property \barrelstrength\sproutbase\app\email\models\SimpleRecipient[]|array $onTheFlyRecipients
+ * @property array                                                               $lists
+ * @property string                                                              $name
+ * @property string                                                              $description
+ * @property string                                                              $actionForPrepareModal
+ * @property null|string                                                         $cpSettingsUrl
+ */
+abstract class Mailer extends Component
 {
     /**
      * The settings for this mailer
@@ -41,14 +51,14 @@ abstract class Mailer
     /**
      * @var EmailElement
      */
-    private $emailElement;
+    public $emailElement;
 
     /**
      * Returns a list of On The Fly Recipients
      *
      * @return SimpleRecipient[]
      */
-    public function getOnTheFlyRecipients()
+    public function getOnTheFlyRecipients(): array
     {
         return $this->_onTheFlyRecipients;
     }
@@ -93,7 +103,7 @@ abstract class Mailer
      *
      * @return string
      */
-    abstract public function getName();
+    abstract public function getName(): string;
 
     /**
      * Returns a short description of this mailer
@@ -102,7 +112,7 @@ abstract class Mailer
      *
      * @return string
      */
-    abstract public function getDescription();
+    abstract public function getDescription(): string;
 
     /**
      * Returns if a Mailer supports a Sender
@@ -112,7 +122,8 @@ abstract class Mailer
      *
      * @return bool
      */
-    public function hasSender() {
+    public function hasSender(): bool
+    {
         return true;
     }
 
@@ -124,7 +135,8 @@ abstract class Mailer
      *
      * @return bool
      */
-    public function hasRecipients() {
+    public function hasRecipients(): bool
+    {
         return true;
     }
 
@@ -133,7 +145,7 @@ abstract class Mailer
      *
      * @return bool
      */
-    public function hasCpSection()
+    public function hasCpSection(): bool
     {
         return false;
     }
@@ -143,7 +155,7 @@ abstract class Mailer
      *
      * @return bool
      */
-    public function hasCpSettings()
+    public function hasCpSettings(): bool
     {
         $settings = $this->defineSettings();
 
@@ -157,12 +169,7 @@ abstract class Mailer
      */
     public function getCpSettingsUrl()
     {
-        if (!$this->hasCpSettings()) {
-            return null;
-        }
-
-        // @todo - getId no longer exists, review
-        return UrlHelper::cpUrl('sprout-email/settings/mailers/'.$this->getId());
+        return null;
     }
 
     /**
@@ -172,7 +179,7 @@ abstract class Mailer
      *
      * @return array
      */
-    public function defineSettings()
+    public function defineSettings(): array
     {
         return [];
     }
@@ -196,7 +203,7 @@ abstract class Mailer
      *
      * @return Model
      */
-    public function getSettings()
+    public function getSettings(): Model
     {
         $currentPluginHandle = Craft::$app->request->getSegment(1);
 
@@ -230,7 +237,7 @@ abstract class Mailer
      *
      * @return CampaignType
      */
-    public function prepareSave(CampaignType $model)
+    public function prepareSave(CampaignType $model): CampaignType
     {
         return $model;
     }
@@ -257,7 +264,7 @@ abstract class Mailer
      *
      * @return string
      */
-    public function getActionForPrepareModal()
+    public function getActionForPrepareModal(): string
     {
         return 'sprout-email/mailer/get-prepare-modal';
     }
@@ -268,14 +275,14 @@ abstract class Mailer
      *
      * @return mixed
      */
-    abstract public function getPrepareModalHtml(CampaignEmail $campaignEmail, CampaignType $campaignType);
+    abstract public function getPrepareModalHtml(CampaignEmail $campaignEmail, CampaignType $campaignType): string;
 
     /**
      * Return true to allow and show mailer dynamic recipients
      *
      * @return bool
      */
-    public function hasInlineRecipients()
+    public function hasInlineRecipients(): bool
     {
         return false;
     }
@@ -285,15 +292,17 @@ abstract class Mailer
      *
      * @return bool Whether this Mailer supports lists. Default is `true`.
      */
-    public function hasLists()
+    public function hasLists(): bool
     {
         return true;
     }
 
     /**
      * Returns the Lists available to this Mailer
+     *
+     * @return array
      */
-    public function getLists()
+    public function getLists(): array
     {
         return [];
     }
@@ -322,16 +331,6 @@ abstract class Mailer
         return $lists;
     }
 
-    /**
-     * @param Element $email
-     *
-     * @return Element
-     */
-    public function beforeValidate(Element $email)
-    {
-        return $email;
-    }
-
     public function sendCampaignEmail(CampaignEmail $campaignEmail, CampaignType $campaignType)
     {
         return null;
@@ -344,11 +343,11 @@ abstract class Mailer
      * @throws \Twig_Error_Loader
      * @throws \yii\base\Exception
      */
-    public function getRecipientsHtml($campaignEmail)
+    public function getRecipientsHtml($campaignEmail): string
     {
-        $defaultFromName = "";
-        $defaultFromEmail = "";
-        $defaultReplyTo = "";
+        $defaultFromName = '';
+        $defaultFromEmail = '';
+        $defaultReplyTo = '';
 
         return Craft::$app->getView()->renderTemplate('sprout-base-email/_components/mailers/recipients-html', [
             'campaignEmail' => $campaignEmail,
@@ -365,7 +364,7 @@ abstract class Mailer
      * @throws \Throwable
      * @throws \yii\base\Exception
      */
-    public function getRecipientList(EmailElement $email)
+    public function getRecipientList(EmailElement $email): SimpleRecipientList
     {
         $recipientList = new SimpleRecipientList();
 
@@ -411,7 +410,7 @@ abstract class Mailer
         return $recipientList;
     }
 
-    public function getRecipientsFromSelectedLists($listSettings)
+    public function getRecipientsFromSelectedLists($listSettings): array
     {
         $listIds = [];
         // Convert json format to array
@@ -476,9 +475,9 @@ abstract class Mailer
      * @throws \Throwable
      * @throws \yii\base\Exception
      */
-    public function getRecipients($recipients, $email)
+    public function getRecipients($recipients, EmailElement $email): SimpleRecipientList
     {
-        $recipientList = new SimpleRecipientList;
+        $recipientList = new SimpleRecipientList();
 
         $validator = new EmailValidator();
         $multipleValidations = new MultipleValidationWithAnd([
@@ -517,7 +516,7 @@ abstract class Mailer
      * @throws \Throwable
      * @throws \yii\base\Exception
      */
-    public function getMessage(EmailElement $email)
+    public function getMessage(EmailElement $email): Message
     {
         $object = $email->getEventObject();
 

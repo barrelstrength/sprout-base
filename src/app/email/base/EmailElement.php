@@ -10,6 +10,15 @@ use craft\base\Element;
 use Craft;
 use craft\base\Field;
 
+/**
+ *
+ * @property bool                                                                                                                                                                                            $isTest
+ * @property null|object                                                                                                                                                                                     $eventObject
+ * @property int                                                                                                                                                                                             $emailTemplateId
+ * @property \barrelstrength\sproutbase\app\email\base\Mailer                                                                                                                                                $mailer
+ * @property array                                                                                                                                                                                           $fieldLayoutTabs
+ * @property \barrelstrength\sproutbase\app\email\base\EmailTemplates|\barrelstrength\sproutbase\app\email\emailtemplates\CustomTemplates|\barrelstrength\sproutbase\app\email\emailtemplates\BasicTemplates $emailTemplates
+ */
 abstract class EmailElement extends Element
 {
     // Constants
@@ -93,14 +102,14 @@ abstract class EmailElement extends Element
     /**
      * @var object|null
      */
-    private $_eventObject = null;
+    private $_eventObject;
 
     /**
      * The Email Templates model after $templateId is processed
      *
      * @var EmailTemplates|null
      */
-    private $_emailTemplates = null;
+    private $_emailTemplates;
 
     /**
      * @var boolean
@@ -152,7 +161,7 @@ abstract class EmailElement extends Element
      *
      * @return int
      */
-    abstract public function getEmailTemplateId();
+    abstract public function getEmailTemplateId(): int;
 
     /**
      * @param EmailTemplates $emailTemplates
@@ -163,7 +172,7 @@ abstract class EmailElement extends Element
     }
 
     /**
-     * @return EmailTemplates|BasicTemplates|CustomTemplates|null
+     * @return EmailTemplates|BasicTemplates|CustomTemplates
      * @throws \yii\base\Exception
      */
     public function getEmailTemplates()
@@ -171,7 +180,11 @@ abstract class EmailElement extends Element
         // If we've already figured out which EmailTemplates to use, use them
         if ($this->_emailTemplates !== null) {
 
-            // Make sure we have the latest EmailElement
+            /**
+             * Make sure we have the latest EmailElement
+             *
+             * @var $emailTemplates EmailTemplates
+             */
             $emailTemplates = $this->_emailTemplates;
             $emailTemplates->email = $this;
 
@@ -241,9 +254,9 @@ abstract class EmailElement extends Element
     /**
      * The Email Service provide can be update via Craft's Email Settings
      *
-     * @return DefaultMailer
+     * @return Mailer
      */
-    public function getMailer()
+    public function getMailer(): Mailer
     {
         return new DefaultMailer();
     }
@@ -251,7 +264,7 @@ abstract class EmailElement extends Element
     /**
      * @return array
      */
-    public function getFieldLayoutTabs()
+    public function getFieldLayoutTabs(): array
     {
         $tabs = [];
 
@@ -292,8 +305,8 @@ abstract class EmailElement extends Element
      *
      * @return bool
      */
-    public function isReady()
+    public function isReady(): bool
     {
-        return (bool)($this->getStatus() == static::ENABLED);
+        return ($this->getStatus() == static::ENABLED);
     }
 }

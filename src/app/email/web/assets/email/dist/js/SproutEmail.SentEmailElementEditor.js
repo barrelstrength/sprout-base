@@ -19,7 +19,7 @@ Craft.SproutEmail.SentEmailElementEditor = Craft.BaseElementEditor.extend({
 
                 for (var i = 0; i < response.sites.length; i++) {
                     var siteInfo = response.sites[i];
-                    $('<option value="' + siteInfo.id + '"' + (siteInfo.id == response.siteId ? ' selected="selected"' : '') + '>' + siteInfo.name + '</option>').appendTo(this.$siteSelect);
+                    $('<option value="' + siteInfo.id + '"' + (siteInfo.id === response.siteId ? ' selected="selected"' : '') + '>' + siteInfo.name + '</option>').appendTo(this.$siteSelect);
                 }
 
                 this.addListener(this.$siteSelect, 'change', 'switchSite');

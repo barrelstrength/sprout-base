@@ -18,12 +18,12 @@ class CustomTemplates extends EmailTemplates
     /**
      * @var string
      */
-    private $_path = null;
+    private $_path;
 
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return Craft::t('sprout-base', 'Custom Templates');
     }
@@ -31,7 +31,7 @@ class CustomTemplates extends EmailTemplates
     /**
      * @return string
      */
-    public function getPath()
+    public function getPath(): string
     {
         return $this->_path;
     }

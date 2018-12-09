@@ -10,10 +10,10 @@ use craft\db\Migration;
 class m180927_080639_add_cc_bcc_columns extends Migration
 {
     /**
-     * @return bool|void
+     * @return bool
      * @throws \yii\base\NotSupportedException
      */
-    public function safeUp()
+    public function safeUp(): bool
     {
         $table = '{{%sproutemail_notificationemails}}';
 
@@ -24,12 +24,14 @@ class m180927_080639_add_cc_bcc_columns extends Migration
         if (!$this->db->columnExists($table, 'bcc')) {
             $this->addColumn($table, 'bcc', $this->string()->after('recipients'));
         }
+
+        return true;
     }
 
     /**
      * @inheritdoc
      */
-    public function safeDown()
+    public function safeDown(): bool
     {
         echo "m180927_080639_add_cc_bcc_columns cannot be reverted.\n";
         return false;

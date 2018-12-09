@@ -13,6 +13,7 @@ use barrelstrength\sproutforms\fields\formfields\FileUpload;
 use barrelstrength\sproutlists\listtypes\SubscriberListType;
 use barrelstrength\sproutlists\SproutLists;
 use craft\base\Element;
+use craft\base\LocalVolumeInterface;
 use craft\elements\Asset;
 use craft\elements\db\AssetQuery;
 use craft\fields\Assets;
@@ -34,7 +35,7 @@ class DefaultMailer extends Mailer implements NotificationEmailSenderInterface
     /**
      * @inheritdoc
      */
-    public function getName()
+    public function getName(): string
     {
         return 'Sprout Email';
     }
@@ -42,7 +43,7 @@ class DefaultMailer extends Mailer implements NotificationEmailSenderInterface
     /**
      * @inheritdoc
      */
-    public function getDescription()
+    public function getDescription(): string
     {
         return Craft::t('sprout-base', 'Smart transactional email, easy recipient management, and advanced third party integrations.');
     }
@@ -50,7 +51,7 @@ class DefaultMailer extends Mailer implements NotificationEmailSenderInterface
     /**
      * @inheritdoc
      */
-    public function hasCpSection()
+    public function hasCpSection(): bool
     {
         return true;
     }
@@ -83,7 +84,7 @@ class DefaultMailer extends Mailer implements NotificationEmailSenderInterface
      * @throws \Throwable
      * @throws \yii\base\InvalidConfigException
      */
-    public function sendNotificationEmail(EmailElement $notificationEmail)
+    public function sendNotificationEmail(EmailElement $notificationEmail): bool
     {
         $mailer = $notificationEmail->getMailer();
         /**
@@ -95,17 +96,15 @@ class DefaultMailer extends Mailer implements NotificationEmailSenderInterface
         $object = $notificationEmail->getEventObject();
 
         // Adds support for attachments
-        if ($notificationEmail->enableFileAttachments) {
-            if ($object instanceof Element && method_exists($object, 'getFields')) {
-                foreach ($object->getFields() as $field) {
-                    if (get_class($field) === FileUpload::class OR get_class($field) === Assets::class) {
-                        $query = $object->{$field->handle};
+        if ($notificationEmail->enableFileAttachments && $object instanceof Element && method_exists($object, 'getFields')) {
+            foreach ($object->getFields() as $field) {
+                if (get_class($field) === FileUpload::class OR get_class($field) === Assets::class) {
+                    $query = $object->{$field->handle};
 
-                        if ($query instanceof AssetQuery) {
-                            $assets = $query->all();
+                    if ($query instanceof AssetQuery) {
+                        $assets = $query->all();
 
-                            $this->attachAssetFilesToEmailModel($message, $assets, $externalPaths);
-                        }
+                        $this->attachAssetFilesToEmailModel($message, $assets, $externalPaths);
                     }
                 }
             }
@@ -113,12 +112,11 @@ class DefaultMailer extends Mailer implements NotificationEmailSenderInterface
 
         $recipientList = $mailer->getRecipientList($notificationEmail);
 
-        // @todo - we throw an error if RecipientLIst is empty and then immediately check recipients and do the same... do we need both?
-        if (empty($recipientList)) {
+        $recipients = $recipientList->getRecipients();
+
+        if (empty($recipients)) {
             $notificationEmail->addError('recipients', Craft::t('sprout-base', 'No recipients found.'));
         }
-
-        $recipients = $recipientList->getRecipients();
 
         $recipientCc = $mailer->getRecipients($notificationEmail->cc, $notificationEmail);
         $recipientBc = $mailer->getRecipients($notificationEmail->bcc, $notificationEmail);
@@ -228,12 +226,12 @@ class DefaultMailer extends Mailer implements NotificationEmailSenderInterface
             $path = null;
 
             if (get_class($volume) === Local::class) {
-                $path = $this->getAssetFilePath($asset);
+                $path = $this->getLocalAssetFilePath($asset);
             } else {
                 // External Asset sources
                 $path = $asset->getCopyOfFile();
                 // let's save the path to delete it after sent
-                array_push($externalPaths, $path);
+                $externalPaths[] = $path;
             }
             if ($path) {
                 $message->attach($path, ['fileName' => $name]);
@@ -247,9 +245,12 @@ class DefaultMailer extends Mailer implements NotificationEmailSenderInterface
      * @return string
      * @throws \yii\base\InvalidConfigException
      */
-    protected function getAssetFilePath(Asset $asset)
+    protected function getLocalAssetFilePath(Asset $asset): string
     {
-        return $asset->getVolume()->getRootPath().$asset->getFolder()->path.DIRECTORY_SEPARATOR.$asset->filename;
+        /** @var LocalVolumeInterface $volume */
+        $volume = $asset->getVolume();
+
+        return $volume->getRootPath().$asset->getFolder()->path.DIRECTORY_SEPARATOR.$asset->filename;
     }
 
     /**
@@ -258,7 +259,7 @@ class DefaultMailer extends Mailer implements NotificationEmailSenderInterface
      * @throws Exception
      * @throws \Twig_Error_Loader
      */
-    public function getPrepareModalHtml(CampaignEmail $campaignEmail, CampaignType $campaignType)
+    public function getPrepareModalHtml(CampaignEmail $campaignEmail, CampaignType $campaignType): string
     {
         if (!empty($campaignEmail->recipients)) {
             $recipients = $campaignEmail->recipients;
@@ -283,7 +284,7 @@ class DefaultMailer extends Mailer implements NotificationEmailSenderInterface
     /**
      * @inheritdoc
      */
-    public function hasInlineRecipients()
+    public function hasInlineRecipients(): bool
     {
         return true;
     }
@@ -293,7 +294,7 @@ class DefaultMailer extends Mailer implements NotificationEmailSenderInterface
      *
      * @throws Exception
      */
-    public function getLists()
+    public function getLists(): array
     {
         if ($this->lists === null && Craft::$app->getPlugins()->getPlugin('sprout-lists') != null) {
             $listType = SproutLists::$app->lists
@@ -384,7 +385,7 @@ class DefaultMailer extends Mailer implements NotificationEmailSenderInterface
      * @throws Exception
      * @throws \Twig_Error_Loader
      */
-    public function getRecipientsHtml($campaignEmail)
+    public function getRecipientsHtml($campaignEmail): string
     {
         $defaultFromName = $this->settings->fromName ?? null;
         $defaultFromEmail = $this->settings->fromEmail ?? null;

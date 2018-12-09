@@ -13,6 +13,7 @@ use craft\base\Plugin;
 use craft\errors\InvalidPluginException;
 use craft\web\Controller as BaseController;
 use yii\web\BadRequestHttpException;
+use yii\web\Response;
 
 /**
  * Manage plugin settings from a custom plugin settings area on the Plugin tab
@@ -72,10 +73,10 @@ class SettingsController extends BaseController
     /**
      * Prepare plugin settings for output
      *
-     * @return \yii\web\Response
+     * @return Response
      * @throws InvalidPluginException
      */
-    public function actionEditSettings()
+    public function actionEditSettings(): Response
     {
         if (!$this->plugin) {
             throw new InvalidPluginException($this->plugin->handle);

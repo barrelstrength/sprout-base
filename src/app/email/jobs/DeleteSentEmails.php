@@ -43,8 +43,9 @@ class DeleteSentEmails extends BaseJob
      * @return bool
      * @throws \Throwable
      */
-    public function execute($queue)
+    public function execute($queue): bool
     {
+        /** @var SentEmail[] $sentEmails */
         $sentEmails = SentEmail::find()
             ->limit(null)
             ->offset($this->limit)

@@ -9,7 +9,7 @@ use Craft;
 /**
  * Class Response
  */
-class Response extends Model
+class ModalResponse extends Model
 {
     /**
      * Whether or not the request was successful
@@ -41,14 +41,14 @@ class Response extends Model
      * @param string $template
      * @param array  $variables
      *
-     * @return Response
+     * @return ModalResponse
      * @throws \Twig_Error_Loader
      * @throws \yii\base\Exception
      */
-    public static function createModalResponse($template = '', array $variables = [])
+    public static function createModalResponse($template = '', array $variables = []): ModalResponse
     {
-        /** @var $instance Response */
-        $instance = get_called_class();
+        /** @var $instance ModalResponse */
+        $instance = static::class;
         $instance = new $instance();
 
         $instance->success = true;
@@ -67,14 +67,14 @@ class Response extends Model
      * @param null  $template
      * @param array $variables
      *
-     * @return Response
+     * @return ModalResponse
      * @throws \Twig_Error_Loader
      * @throws \yii\base\Exception
      */
-    public static function createErrorModalResponse($template = null, array $variables = [])
+    public static function createErrorModalResponse($template = null, array $variables = []): ModalResponse
     {
-        /** @var Response $instance */
-        $instance = get_called_class();
+        /** @var ModalResponse $instance */
+        $instance = static::class;
         $instance = new $instance();
 
         $instance->success = false;

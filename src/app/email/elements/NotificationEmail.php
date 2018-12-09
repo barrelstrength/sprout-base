@@ -11,6 +11,7 @@ use barrelstrength\sproutbase\app\email\records\NotificationEmail as Notificatio
 use Craft;
 use craft\behaviors\FieldLayoutBehavior;
 use craft\elements\db\ElementQueryInterface;
+use craft\helpers\Json;
 use craft\helpers\UrlHelper;
 use yii\base\Exception;
 
@@ -18,6 +19,9 @@ use yii\base\Exception;
  * Class NotificationEmail
  *
  * @mixin FieldLayoutBehavior
+ *
+ * @property mixed $options
+ * @property array $statuses
  */
 class NotificationEmail extends EmailElement
 {
@@ -123,7 +127,7 @@ class NotificationEmail extends EmailElement
     /**
      * @inheritdoc
      */
-    public function getStatuses()
+    public function getStatuses(): array
     {
         return [
             self::ENABLED => Craft::t('sprout-base', 'enabled'),
@@ -361,7 +365,7 @@ class NotificationEmail extends EmailElement
      *
      * @throws \yii\base\InvalidConfigException
      */
-    public function rules()
+    public function rules(): array
     {
         $rules = parent::rules();
 
@@ -392,19 +396,19 @@ class NotificationEmail extends EmailElement
      */
     public function getOptions()
     {
-        return json_decode($this->settings, true);
+        return Json::decode($this->settings, true);
     }
 
     /**
      * @inheritdoc
      */
-    public function getEmailTemplateId()
+    public function getEmailTemplateId(): int
     {
         return $this->emailTemplateId;
     }
 
-    public function isReady()
+    public function isReady(): bool
     {
-        return (bool)($this->getStatus() == static::ENABLED);
+        return ($this->getStatus() == static::ENABLED);
     }
 }

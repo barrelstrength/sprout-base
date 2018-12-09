@@ -15,6 +15,16 @@ use yii\base\Event;
  * Class NotificationEvent
  *
  * @package Craft
+ *
+ * @property string $eventHandlerClassName
+ * @property string $eventId
+ * @property mixed  $mockEventObject
+ * @property mixed  $eventObject
+ * @property string $name
+ * @property string $eventName
+ * @property string $description
+ * @property string $settingsHtml
+ * @property string $eventClassName
  */
 abstract class NotificationEvent extends SavableComponent
 {
@@ -45,7 +55,7 @@ abstract class NotificationEvent extends SavableComponent
      *
      * @return string
      */
-    final public function getEventId()
+    final public function getEventId(): string
     {
         return strtolower(str_replace('\\', '-', get_class($this)));
     }
@@ -60,7 +70,7 @@ abstract class NotificationEvent extends SavableComponent
      *
      * @return string
      */
-    abstract public function getEventClassName();
+    abstract public function getEventClassName(): string;
 
     /**
      * Returns the event name.
@@ -72,7 +82,7 @@ abstract class NotificationEvent extends SavableComponent
      *
      * @return string
      */
-    abstract public function getEventName();
+    abstract public function getEventName(): string;
 
     /**
      * Returns the callable event handler.
@@ -84,7 +94,7 @@ abstract class NotificationEvent extends SavableComponent
      *
      * @return string
      */
-    abstract public function getEventHandlerClassName();
+    abstract public function getEventHandlerClassName(): string;
 
     /**
      * Returns the name of the event
@@ -97,7 +107,7 @@ abstract class NotificationEvent extends SavableComponent
      *
      * @return string
      */
-    abstract public function getName();
+    abstract public function getName(): string;
 
     /**
      * Returns a short description of this event
@@ -106,7 +116,7 @@ abstract class NotificationEvent extends SavableComponent
      *
      * @return string
      */
-    public function getDescription()
+    public function getDescription(): string
     {
         return null;
     }
@@ -122,7 +132,7 @@ abstract class NotificationEvent extends SavableComponent
      *
      * @return string
      */
-    public function getSettingsHtml()
+    public function getSettingsHtml(): string
     {
         return '';
     }
@@ -160,8 +170,8 @@ abstract class NotificationEvent extends SavableComponent
      *
      * @return bool
      */
-    public function validateEvent()
+    public function validateEvent(): bool
     {
-        return true;
+        return null;
     }
 }

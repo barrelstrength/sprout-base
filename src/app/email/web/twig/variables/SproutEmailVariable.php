@@ -15,7 +15,7 @@ class SproutEmailVariable
     /**
      * @return Mailer[]
      */
-    public function getCampaignMailers()
+    public function getCampaignMailers(): array
     {
         return SproutBase::$app->mailers->getMailers();
     }
@@ -23,7 +23,7 @@ class SproutEmailVariable
     /**
      * @return array
      */
-    public function getCampaignTypes()
+    public function getCampaignTypes(): array
     {
         return SproutEmail::$app->campaignTypes->getCampaignTypes();
     }
@@ -34,7 +34,7 @@ class SproutEmailVariable
      * @return Mailer
      * @throws \yii\base\Exception
      */
-    public function getMailer($mailer)
+    public function getMailer($mailer): Mailer
     {
         return SproutBase::$app->mailers->getMailerByName($mailer);
     }
@@ -53,9 +53,7 @@ class SproutEmailVariable
             return false;
         }
 
-        $dateScheduled = isset($config->displayDateScheduled) ? $config->displayDateScheduled : false;
-
-        return $dateScheduled;
+        return $config->displayDateScheduled ?? false;
     }
 
     public function getCampaignEmailById($id)
@@ -96,7 +94,7 @@ class SproutEmailVariable
      *
      * @return array
      */
-    public function getEmailTemplateOptions($notificationEmail = null)
+    public function getEmailTemplateOptions($notificationEmail = null): array
     {
         $defaultEmailTemplates = new BasicTemplates();
 
@@ -155,6 +153,8 @@ class SproutEmailVariable
 
     /**
      * Trigger a cleanUpSentEmails Job
+     *
+     * @throws \craft\errors\SiteNotFoundException
      */
     public function cleanUpSentEmails()
     {

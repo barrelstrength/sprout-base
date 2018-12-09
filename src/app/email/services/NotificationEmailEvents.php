@@ -10,12 +10,16 @@ use barrelstrength\sproutbase\SproutBase;
 use craft\base\Component;
 use Craft;
 
+use craft\helpers\Json;
 use yii\base\Event;
 
 /**
  * Class NotificationEmailEvents
  *
  * @package barrelstrength\sproutbase\app\email\services
+ *
+ * @property array    $notificationEmailEventTypes
+ * @property Callable $dynamicEventHandler
  */
 class NotificationEmailEvents extends Component
 {
@@ -27,7 +31,7 @@ class NotificationEmailEvents extends Component
     /**
      * @event SendNotificationEmailEvent Event is triggered when a Notification Email is sent
      */
-    const EVENT_SEND_NOTIFICATION_EMAIL    = 'onSendNotificationEmail';
+    const EVENT_SEND_NOTIFICATION_EMAIL = 'onSendNotificationEmail';
 
     /**
      * @var \Callable[] Events that notifications have subscribed to
@@ -52,14 +56,10 @@ class NotificationEmailEvents extends Component
      *
      * @return \Callable
      */
-    public function getRegisteredEvent($eventId)
+    public function getRegisteredEvent($eventId): callable
     {
-        if (isset($this->registeredEvents[$eventId])) {
-            return $this->registeredEvents[$eventId];
-        }
-
-        return function() {
-        };
+        return $this->registeredEvents[$eventId] ?? function() {
+            };
     }
 
 
@@ -68,7 +68,7 @@ class NotificationEmailEvents extends Component
      *
      * @return array
      */
-    public function getNotificationEmailEventTypes()
+    public function getNotificationEmailEventTypes(): array
     {
         $event = new NotificationEmailEvent([
             'events' => []
@@ -89,7 +89,7 @@ class NotificationEmailEvents extends Component
      *
      * @return bool
      */
-    public function registerNotificationEmailEventHandlers()
+    public function registerNotificationEmailEventHandlers(): bool
     {
         $self = $this;
         $notificationEmailEventTypes = $this->getNotificationEmailEventTypes();
@@ -146,7 +146,7 @@ class NotificationEmailEvents extends Component
      *
      * @return \Callable
      */
-    public function getDynamicEventHandler()
+    public function getDynamicEventHandler(): callable
     {
         $self = $this;
 
@@ -165,7 +165,7 @@ class NotificationEmailEvents extends Component
      * @return bool
      * @throws \Throwable
      */
-    public function handleDynamicEvent($notificationEmailEventClassName, Event $event, NotificationEvent $eventHandlerClass)
+    public function handleDynamicEvent($notificationEmailEventClassName, Event $event, NotificationEvent $eventHandlerClass): bool
     {
         Craft::info(Craft::t('sprout-base', 'A Notification Event has been triggered: {eventName}', [
             'eventName' => $eventHandlerClass->getName()
@@ -180,7 +180,7 @@ class NotificationEmailEvents extends Component
             foreach ($notificationEmails as $notificationEmail) {
 
                 // Add the Notification Event settings to the $eventHandlerClass
-                $settings = json_decode($notificationEmail->settings, true);
+                $settings = Json::decode($notificationEmail->settings, true);
 
                 /** @var NotificationEvent $eventHandlerClass */
                 $eventHandlerClass = new $eventHandlerClass($settings);
@@ -194,12 +194,14 @@ class NotificationEmailEvents extends Component
                     $notificationEmail->setEventObject($object);
 
                     // Don't send emails for disabled notification email entries.
-                    if (!$notificationEmail->isReady()) continue;
+                    if (!$notificationEmail->isReady()) {
+                        continue;
+                    }
 
                     SproutBase::$app->notifications->sendNotificationViaMailer($notificationEmail);
 
                     $sendNotificationEmailEvent = new SendNotificationEmailEvent([
-                        'event'             => $event,
+                        'event' => $event,
                         'notificationEmail' => $notificationEmail,
                     ]);
 
@@ -219,7 +221,7 @@ class NotificationEmailEvents extends Component
      *
      * @return NotificationEvent
      */
-    public function getEventById($type, $default = null)
+    public function getEventById($type, $default = null): NotificationEvent
     {
         $notificationEmailEventTypes = $this->getNotificationEmailEventTypes();
 
@@ -243,7 +245,7 @@ class NotificationEmailEvents extends Component
 
         foreach ($notificationEmailEventTypes as $notificationEmailEventClass) {
             if ($notificationEmail->eventId === $notificationEmailEventClass) {
-                $settings = json_decode($notificationEmail->settings, true);
+                $settings = Json::decode($notificationEmail->settings, true);
                 return new $notificationEmailEventClass($settings);
             }
         }
@@ -258,7 +260,7 @@ class NotificationEmailEvents extends Component
      *
      * @return array
      */
-    public function getNotificationEmailEvents(NotificationEmail $notificationEmail)
+    public function getNotificationEmailEvents(NotificationEmail $notificationEmail): array
     {
         $notificationEmailEventTypes = $this->getNotificationEmailEventTypes();
 
@@ -267,7 +269,7 @@ class NotificationEmailEvents extends Component
         if (!empty($notificationEmailEventTypes)) {
             foreach ($notificationEmailEventTypes as $notificationEmailEventClass) {
 
-                $settings = json_decode($notificationEmail->settings, true);
+                $settings = Json::decode($notificationEmail->settings, true);
 
                 if ($notificationEmailEventClass === $notificationEmail->eventId) {
                     // If the Event matches are current selected event, initialize the NotificationEvent class with the Event settings
@@ -304,7 +306,7 @@ class NotificationEmailEvents extends Component
      *
      * @return array
      */
-    public function getNotificationEmailEventsByPluginHandle($notificationEmail, $pluginHandle)
+    public function getNotificationEmailEventsByPluginHandle($notificationEmail, $pluginHandle): array
     {
         $events = $this->getNotificationEmailEvents($notificationEmail);
 

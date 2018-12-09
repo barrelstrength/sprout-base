@@ -3,9 +3,10 @@
 namespace barrelstrength\sproutbase\app\email\services;
 
 use barrelstrength\sproutbase\app\email\base\Mailer;
+use barrelstrength\sproutbase\app\email\base\NotificationEmailSenderInterface;
 use barrelstrength\sproutbase\app\email\elements\NotificationEmail;
 use barrelstrength\sproutbase\SproutBase;
-use barrelstrength\sproutbase\app\email\models\Response;
+use barrelstrength\sproutbase\app\email\models\ModalResponse;
 use barrelstrength\sproutbase\app\email\records\NotificationEmail as NotificationEmailRecord;
 use craft\base\Component;
 use Craft;
@@ -67,7 +68,7 @@ class NotificationEmails extends Component
      * @return bool
      * @throws \Throwable
      */
-    public function deleteNotificationEmailById($id)
+    public function deleteNotificationEmailById($id): bool
     {
         return Craft::$app->getElements()->deleteElementById($id);
     }
@@ -113,6 +114,7 @@ class NotificationEmails extends Component
     public function sendNotificationViaMailer(NotificationEmail $notificationEmail)
     {
         try {
+            /** @var Mailer|NotificationEmailSenderInterface $mailer */
             $mailer = $notificationEmail->getMailer();
 
             return $mailer->sendNotificationEmail($notificationEmail);
@@ -124,14 +126,14 @@ class NotificationEmails extends Component
     /**
      * @param $notificationId
      *
-     * @return Response
+     * @return ModalResponse
      * @throws \Throwable
      */
-    public function getPrepareModal($notificationId)
+    public function getPrepareModal($notificationId): ModalResponse
     {
         $notificationEmail = Craft::$app->getElements()->getElementById($notificationId);
 
-        $response = new Response();
+        $response = new ModalResponse();
         /**
          * @var $notificationEmail NotificationEmail
          */
@@ -164,7 +166,7 @@ class NotificationEmails extends Component
      * @throws \Twig_Error_Loader
      * @throws \yii\base\Exception
      */
-    public function getPrepareModalHtml(NotificationEmail $notificationEmail)
+    public function getPrepareModalHtml(NotificationEmail $notificationEmail): string
     {
         // Display the testToEmailAddress if it exists
         $recipients = Craft::$app->getConfig()->getGeneral()->testToEmailAddress;
@@ -283,7 +285,7 @@ class NotificationEmails extends Component
      * @throws \Throwable
      * @throws \yii\base\Exception
      */
-    public function getNotificationErrors(NotificationEmail $notificationEmail, array $errors = [])
+    public function getNotificationErrors(NotificationEmail $notificationEmail, array $errors = []): array
     {
         $currentPluginHandle = Craft::$app->request->getSegment(1);
 

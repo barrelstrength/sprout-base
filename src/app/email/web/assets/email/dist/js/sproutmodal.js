@@ -140,7 +140,7 @@ SproutModal.prototype.create = function(content) {
 
         var data = $self.data();
 
-        if ($("#recipients").val() != "") {
+        if ($("#recipients").val() !== "") {
             var recipients = {recipients: $("#recipients").val()};
 
             data = $.extend(data, recipients);

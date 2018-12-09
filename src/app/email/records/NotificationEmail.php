@@ -6,6 +6,10 @@ use craft\base\Element;
 use craft\db\ActiveRecord;
 use yii\db\ActiveQueryInterface;
 
+/**
+ *
+ * @property \yii\db\ActiveQueryInterface $element
+ */
 class NotificationEmail extends ActiveRecord
 {
     /**

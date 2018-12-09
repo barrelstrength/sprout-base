@@ -14,7 +14,7 @@ class m180515_000000_rename_notification_pluginId_column extends Migration
      *
      * @throws \yii\base\NotSupportedException
      */
-    public function safeUp()
+    public function safeUp(): bool
     {
         $table = '{{%sproutemail_notificationemails}}';
 
@@ -29,7 +29,7 @@ class m180515_000000_rename_notification_pluginId_column extends Migration
     /**
      * @inheritdoc
      */
-    public function safeDown()
+    public function safeDown(): bool
     {
         echo "m180515_000000_rename_notification_pluginId_column cannot be reverted.\n";
         return false;

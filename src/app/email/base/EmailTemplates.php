@@ -41,7 +41,7 @@ abstract class EmailTemplates
      *
      * @return string
      */
-    abstract public function getName();
+    abstract public function getName(): string;
 
     /**
      * The folder path where your email templates exist
@@ -50,7 +50,7 @@ abstract class EmailTemplates
      *
      * @return string
      */
-    abstract public function getPath();
+    abstract public function getPath(): string;
 
     /**
      * @param $html
@@ -73,7 +73,7 @@ abstract class EmailTemplates
      * @throws \Twig_Error_Loader
      * @throws \yii\base\Exception
      */
-    public function getHtmlBody()
+    public function getHtmlBody(): string
     {
         if (!$this->_htmlBody) {
             $this->processEmailTemplates();
@@ -87,7 +87,7 @@ abstract class EmailTemplates
      * @throws \Twig_Error_Loader
      * @throws \yii\base\Exception
      */
-    public function getTextBody()
+    public function getTextBody(): string
     {
         if (!$this->_textBody) {
             $this->processEmailTemplates();

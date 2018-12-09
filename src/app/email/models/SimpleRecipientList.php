@@ -6,6 +6,8 @@ use craft\base\Model;
 
 /**
  * Represents a list of Simple Recipients
+ *
+ * @property array $recipientEmails
  */
 class SimpleRecipientList extends Model
 {
@@ -14,26 +16,35 @@ class SimpleRecipientList extends Model
      *
      * @var SimpleRecipient[]
      */
-    protected $recipients;
+    protected $recipients = [];
 
     /**
      * An array of invalid recipients
      *
      * @var array
      */
-    protected $invalidRecipients;
+    protected $invalidRecipients = [];
 
+    /**
+     * @param SimpleRecipient $recipient
+     */
     public function addRecipient(SimpleRecipient $recipient)
     {
         $this->recipients[] = $recipient;
     }
 
-    public function getRecipients()
+    /**
+     * @return array
+     */
+    public function getRecipients(): array
     {
         return $this->recipients;
     }
 
-    public function getRecipientEmails()
+    /**
+     * @return array
+     */
+    public function getRecipientEmails(): array
     {
         $recipients = $this->recipients;
         $emails = [];
@@ -46,12 +57,18 @@ class SimpleRecipientList extends Model
         return $emails;
     }
 
+    /**
+     * @param SimpleRecipient $recipient
+     */
     public function addInvalidRecipient(SimpleRecipient $recipient)
     {
         $this->invalidRecipients[] = $recipient;
     }
 
-    public function getInvalidRecipients()
+    /**
+     * @return array
+     */
+    public function getInvalidRecipients(): array
     {
         return $this->invalidRecipients;
     }

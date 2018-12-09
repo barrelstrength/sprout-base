@@ -6,11 +6,16 @@ use barrelstrength\sproutbase\app\email\base\EmailTemplates as BaseEmailTemplate
 use craft\events\RegisterComponentTypesEvent;
 use craft\base\Component;
 
+/**
+ *
+ * @property array          $emailTemplatesTypes
+ * @property array|string[] $allEmailTemplates
+ */
 class EmailTemplates extends Component
 {
     const EVENT_REGISTER_EMAIL_TEMPLATES = 'registerEmailTemplatesEvent';
 
-    public function getEmailTemplatesTypes()
+    public function getEmailTemplatesTypes(): array
     {
         $event = new RegisterComponentTypesEvent([
             'types' => []
@@ -26,7 +31,7 @@ class EmailTemplates extends Component
      *
      * @return string[]
      */
-    public function getAllEmailTemplates()
+    public function getAllEmailTemplates(): array
     {
         $templateTypes = $this->getEmailTemplatesTypes();
         $templates = [];

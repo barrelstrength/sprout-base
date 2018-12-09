@@ -1,4 +1,4 @@
-<?php
+<?php /** @noinspection ClassConstantCanBeUsedInspection */
 
 namespace barrelstrength\sproutbase\app\email\migrations;
 
@@ -12,7 +12,7 @@ class m180515_000003_update_notification_eventId_types extends Migration
     /**
      * @inheritdoc
      */
-    public function safeUp()
+    public function safeUp(): bool
     {
         // This migration isn't relevant to most users, this was a minor change during beta development
         $types = [
@@ -38,7 +38,7 @@ class m180515_000003_update_notification_eventId_types extends Migration
     /**
      * @inheritdoc
      */
-    public function safeDown()
+    public function safeDown(): bool
     {
         echo "m180515_000003_update_notification_eventId_types cannot be reverted.\n";
         return false;
