@@ -48,7 +48,7 @@ class Mailers extends Component
      * @return Mailer
      * @throws Exception
      */
-    public function getMailerByName($name = null) : Mailer
+    public function getMailerByName($name = null): Mailer
     {
         $this->mailers = $this->getMailers();
 

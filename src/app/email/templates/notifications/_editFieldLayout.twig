@@ -19,35 +19,37 @@
 
 {% block actionButton %}
 
-<div class="buttons">
-    <div class="btngroup">
-        <input class="btn submit" type="submit" value="{{ 'Save'|t('sprout-base') }}">
+    <div class="buttons">
+        <div class="btngroup">
+            <input class="btn submit" type="submit"
+                   value="{{ 'Save'|t('sprout-base') }}">
 
-        {% if notificationEmail['id'] is defined %}
+            {% if notificationEmail['id'] is defined %}
 
-            {% set dataSaveEditRedirect = cpUrl(currentPluginHandle ~ '/notifications/edit/' ~ notificationEmailId) %}
+                {% set dataSaveEditRedirect = cpUrl(currentPluginHandle ~ '/notifications/edit/' ~ notificationEmailId) %}
 
-            <div class="btn submit menubtn"></div>
-            <div class="menu">
-                <ul>
-                    <li><a class="formsubmit"
-                           data-redirect="{{ craft.app.request.url|hash }}"
-                           title="{{ 'Save and continue editing'|t('sprout-base') }}">{{ 'Save and continue editing'|t('sprout-base') }} <span
-                                    class="shortcut">⌘S</span></a>
-                    </li>
-                </ul>
-            </div>
+                <div class="btn submit menubtn"></div>
+                <div class="menu">
+                    <ul>
+                        <li><a class="formsubmit"
+                               data-redirect="{{ craft.app.request.url|hash }}"
+                               title="{{ 'Save and continue editing'|t('sprout-base') }}">{{ 'Save and continue editing'|t('sprout-base') }}
+                                <span
+                                        class="shortcut">⌘S</span></a>
+                        </li>
+                    </ul>
+                </div>
 
-        {% endif %}
+            {% endif %}
+        </div>
     </div>
-</div>
 
 {% endblock %}
 
 {% set content %}
 
     <input type="hidden" name="action"
-       value="sprout/notifications/save-notification-email-settings">
+           value="sprout/notifications/save-notification-email-settings">
     {{ redirectInput(currentPluginHandle ~ '/notifications/edit/' ~ notificationEmailId) }}
 
     <input type="hidden" name="emailId" value="{{ emailId }}">

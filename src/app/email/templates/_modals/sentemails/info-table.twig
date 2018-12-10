@@ -70,10 +70,10 @@
                 </tr>
             {% endif %}
             {% if info.transportType is defined %}
-            <tr>
-                <th>{{ 'Transport Type'|t('sprout-email') }}</th>
-                <td>{{ info.transportType ?? '–' }}</td>
-            </tr>
+                <tr>
+                    <th>{{ 'Transport Type'|t('sprout-email') }}</th>
+                    <td>{{ info.transportType ?? '–' }}</td>
+                </tr>
             {% endif %}
             {% if info.transportType == 'SMTP' %}
                 <tr>
@@ -106,6 +106,7 @@
     #sproutmodal {
         overflow: auto;
     }
+
     .sproutemail-sentemailinfo tr th {
         min-width: 160px;
     }

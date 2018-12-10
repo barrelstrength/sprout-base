@@ -57,8 +57,7 @@ Craft.SproutEmail.SentEmailElementEditor = Craft.BaseElementEditor.extend({
                 this.hud.on('hide', $.proxy(function() {
                     delete this.hud;
                 }, this));
-            }
-            else {
+            } else {
                 this.hud.updateBody($hudContents);
                 this.hud.updateSizeAndPosition();
             }

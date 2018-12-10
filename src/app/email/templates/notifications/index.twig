@@ -27,10 +27,10 @@
     var criteria = Object.assign(Craft.defaultIndexCriteria, pluginHandle);
 
     Craft.elementIndex = Craft.createElementIndex('{{ elementType|e("js") }}', $('#main'), {
-        context:        '{{ context }}',
-        storageKey:     'elementindex.{{ elementType }}',
-        criteria:       criteria,
-        hideSidebar:    '{{ hideSidebar ?? false }}'
+    context:        '{{ context }}',
+    storageKey:     'elementindex.{{ elementType }}',
+    criteria:       criteria,
+    hideSidebar:    '{{ hideSidebar ?? false }}'
     });
 
     $('#main-content').removeClass('has-sidebar');

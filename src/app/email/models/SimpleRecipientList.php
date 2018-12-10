@@ -50,7 +50,7 @@ class SimpleRecipientList extends Model
         $emails = [];
         if ($recipients) {
             foreach ($recipients as $recipient) {
-                $emails[] =  $recipient->email;
+                $emails[] = $recipient->email;
             }
         }
 

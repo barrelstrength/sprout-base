@@ -156,17 +156,16 @@ class DefaultMailer extends Mailer implements NotificationEmailSenderInterface
         }
 
         if ($notificationEmail->singleEmail) {
-             /*
-              * Assigning email with name array does not work on craft
-              * [$recipient->email => $recipient->name]
-              */
+            /*
+             * Assigning email with name array does not work on craft
+             * [$recipient->email => $recipient->name]
+             */
             foreach ($recipients as $key => $recipient) {
-              $prepareRecipients[] = $recipient->email;
+                $prepareRecipients[] = $recipient->email;
             }
             $message->setTo($prepareRecipients);
 
             $mailer->send($message);
-
         } else {
             foreach ($recipients as $recipient) {
 
@@ -364,38 +363,17 @@ class DefaultMailer extends Mailer implements NotificationEmailSenderInterface
      *
      * @return array
      */
-    public function getErrors(CampaignEmail $campaignEmail, CampaignType $campaignType, $errors)
-    {
-        $currentPluginHandle = Craft::$app->getRequest()->getSegment(1);
-        $notificationEditSettingsUrl = UrlHelper::cpUrl($currentPluginHandle.'/settings/notifications/edit/'.$campaignType->id);
-
-        if (empty($campaignType->template)) {
-            $errors[] = Craft::t('sprout-base', 'Email Template setting is blank. <a href="{url}">Edit Settings</a>.', [
-                'url' => $notificationEditSettingsUrl
-            ]);
-        }
-
-        return $errors;
-    }
-
-    /**
-     * @param $campaignEmail
-     *
-     * @return string
-     * @throws Exception
-     * @throws \Twig_Error_Loader
-     */
-    public function getRecipientsHtml($campaignEmail): string
-    {
-        $defaultFromName = $this->settings->fromName ?? null;
-        $defaultFromEmail = $this->settings->fromEmail ?? null;
-        $defaultReplyTo = $this->settings->replyTo ?? null;
-
-        return Craft::$app->getView()->renderTemplate('sprout-base-email/_components/mailers/recipients-html', [
-            'campaignEmail' => $campaignEmail,
-            'defaultFromName' => $defaultFromName,
-            'defaultFromEmail' => $defaultFromEmail,
-            'defaultReplyTo' => $defaultReplyTo,
-        ]);
-    }
+//    public function getErrors(CampaignEmail $campaignEmail, CampaignType $campaignType, $errors)
+//    {
+//        $currentPluginHandle = Craft::$app->getRequest()->getSegment(1);
+//        $notificationEditSettingsUrl = UrlHelper::cpUrl($currentPluginHandle.'/settings/notifications/edit/'.$campaignType->id);
+//
+//        if (empty($campaignType->template)) {
+//            $errors[] = Craft::t('sprout-base', 'Email Template setting is blank. <a href="{url}">Edit Settings</a>.', [
+//                'url' => $notificationEditSettingsUrl
+//            ]);
+//        }
+//
+//        return $errors;
+//    }
 }
