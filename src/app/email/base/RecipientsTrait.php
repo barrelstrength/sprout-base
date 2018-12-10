@@ -118,11 +118,13 @@ trait RecipientsTrait
     }
 
     /**
+     * @param EmailElement $email
+     *
      * @return SimpleRecipientList
      * @throws \Throwable
      * @throws \yii\base\Exception
      */
-    public function getRecipientList(): SimpleRecipientList
+    public function getRecipientList(EmailElement $email): SimpleRecipientList
     {
         $recipientList = new SimpleRecipientList();
 
@@ -146,12 +148,12 @@ trait RecipientsTrait
             return $recipientList;
         }
 
-        $recipientList = $this->getRecipients($this->recipients, $this);
+        $recipientList = $this->getRecipients($email, $email->recipients);
 
         // @todo - test this integration
         if (Craft::$app->getPlugins()->getPlugin('sprout-lists')) {
 
-            $listRecipients = $this->getRecipientsFromSelectedLists($this->listSettings);
+            $listRecipients = $this->getRecipientsFromSelectedLists($email->listSettings);
 
             if ($listRecipients) {
                 foreach ($listRecipients as $listRecipient) {
@@ -169,36 +171,17 @@ trait RecipientsTrait
     }
 
     /**
-     * @return string
-     * @throws \Twig_Error_Loader
-     * @throws \yii\base\Exception
-     */
-    public function getSenderHtml(): string
-    {
-        // @todo - move these defaults to the Campaign Type model
-        $defaultFromName = '';
-        $defaultFromEmail = '';
-        $defaultReplyTo = '';
-
-        return Craft::$app->getView()->renderTemplate('sprout-base-email/_components/mailers/recipients-html', [
-            'campaignEmail' => $this,
-            'defaultFromName' => $defaultFromName,
-            'defaultFromEmail' => $defaultFromEmail,
-            'defaultReplyTo' => $defaultReplyTo,
-        ]);
-    }
-
-    /**
      * Get SimpleRecipient objects group in valid and invalid emails
      *
-     * @param $recipients
-     * @param $email
+     * @param EmailElement $email
+     *
+     * @param              $recipients
      *
      * @return SimpleRecipientList
      * @throws \Throwable
      * @throws \yii\base\Exception
      */
-    public function getRecipients($recipients, EmailElement $email): SimpleRecipientList
+    public function getRecipients(EmailElement $email, $recipients): SimpleRecipientList
     {
         $recipientList = new SimpleRecipientList();
 
