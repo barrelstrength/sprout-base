@@ -48,18 +48,8 @@ abstract class Mailer extends Component
      */
     public function __toString()
     {
-        return $this->getName();
+        return self::displayName();
     }
-
-    /**
-     * The Mailer Name
-     *
-     * @example Sprout Email
-     * @example AWS
-     *
-     * @return string
-     */
-    abstract public function getName(): string;
 
     /**
      * Returns a short description of this mailer
