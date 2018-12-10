@@ -30,7 +30,7 @@ class DefaultMailer extends Mailer implements NotificationEmailSenderInterface
     /**
      * @var
      */
-    protected $lists;
+    protected $lists = [];
 
     /**
      * @inheritdoc
@@ -118,8 +118,8 @@ class DefaultMailer extends Mailer implements NotificationEmailSenderInterface
             $notificationEmail->addError('recipients', Craft::t('sprout-base', 'No recipients found.'));
         }
 
-        $recipientCc = $mailer->getRecipients($notificationEmail->cc, $notificationEmail);
-        $recipientBc = $mailer->getRecipients($notificationEmail->bcc, $notificationEmail);
+        $recipientCc = $mailer->getRecipients($notificationEmail, $notificationEmail->cc);
+        $recipientBc = $mailer->getRecipients($notificationEmail, $notificationEmail->bcc);
 
         if (!$recipients) {
             return false;
