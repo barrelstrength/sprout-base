@@ -1,13 +1,13 @@
 {% import "_includes/forms" as forms %}
 
 {{ forms.checkboxField({
-    label: "When user is created?"|t('sprout-email'),
+    label: "When user is created?"|t('sprout-base'),
     name: "whenNew",
     checked: event.whenNew
 }) }}
 
 {{ forms.checkboxField({
-    label: "When user is updated?"|t('sprout-email'),
+    label: "When user is updated?"|t('sprout-base'),
     name: "whenUpdated",
     checked: event.whenUpdated
 }) }}
@@ -15,7 +15,7 @@
 {% if event.groups|length %}
 
     {{ forms.checkboxSelectField({
-        label: "User Groups <span class='info'>Select which user groups will trigger the notification.</span>"|t('sprout-email'),
+        label: "User Groups <span class='info'>Select which user groups will trigger the notification.</span>"|t('sprout-base'),
         name: "userGroupIds",
         options: event.groups,
         values: event.userGroupIds,
@@ -31,9 +31,9 @@
 
 {% endif %}
 
-{{ forms.lightSwitchField({
-    label: "Trigger Admin Roles"|t('sprout-email'),
-    instructions: "Admin users will trigger the notification."|t('sprout-email'),
+{{ forms.checkboxField({
+    label: "Send to Admins?"|t('sprout-base'),
     name: "adminUsers",
-    on: event.adminUsers
+    checked: event.adminUsers
 }) }}
+
