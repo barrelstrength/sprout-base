@@ -5,6 +5,7 @@ namespace barrelstrength\sproutbase\app\email\mailers;
 use barrelstrength\sproutbase\app\email\base\EmailElement;
 use barrelstrength\sproutbase\app\email\base\Mailer;
 use barrelstrength\sproutbase\app\email\base\NotificationEmailSenderInterface;
+use barrelstrength\sproutbase\app\email\elements\NotificationEmail;
 use barrelstrength\sproutemail\elements\CampaignEmail;
 use barrelstrength\sproutemail\models\CampaignType;
 use barrelstrength\sproutemail\services\SentEmails;
@@ -20,7 +21,6 @@ use craft\fields\Assets;
 use craft\helpers\Json;
 use craft\helpers\Template;
 use Craft;
-use craft\helpers\UrlHelper;
 use craft\mail\Message;
 use craft\volumes\Local;
 use yii\base\Exception;
@@ -84,7 +84,7 @@ class DefaultMailer extends Mailer implements NotificationEmailSenderInterface
      * @throws \Throwable
      * @throws \yii\base\InvalidConfigException
      */
-    public function sendNotificationEmail(EmailElement $notificationEmail): bool
+    public function sendNotificationEmail(NotificationEmail $notificationEmail): bool
     {
         $mailer = $notificationEmail->getMailer();
         /**
@@ -259,10 +259,10 @@ class DefaultMailer extends Mailer implements NotificationEmailSenderInterface
      * @throws Exception
      * @throws \Twig_Error_Loader
      */
-    public function getPrepareModalHtml(CampaignEmail $campaignEmail, CampaignType $campaignType): string
+    public function getPrepareModalHtml(EmailElement $email): string
     {
-        if (!empty($campaignEmail->recipients)) {
-            $recipients = $campaignEmail->recipients;
+        if (!empty($email->recipients)) {
+            $recipients = $email->recipients;
         }
 
         if (empty($recipients)) {
@@ -270,12 +270,12 @@ class DefaultMailer extends Mailer implements NotificationEmailSenderInterface
         }
 
         $errors = [];
-
-        $errors = $this->getErrors($campaignEmail, $campaignType, $errors);
+// @todo - re-implement error handling using Yii Component getErrors behavior
+//        $errors = $this->getErrors($campaignEmail, $campaignType, $errors);
 
         return Craft::$app->getView()->renderTemplate('sprout-base-email/_modals/campaigns/prepare-email-snapshot', [
-            'campaignEmail' => $campaignEmail,
-            'campaignType' => $campaignType,
+            'campaignEmail' => $email,
+            'campaignType' => $email->getCampaignType(),
             'recipients' => $recipients,
             'errors' => $errors
         ]);

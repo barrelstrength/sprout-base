@@ -7,15 +7,17 @@
 
 namespace barrelstrength\sproutbase\app\email\base;
 
+use barrelstrength\sproutbase\app\email\elements\NotificationEmail;
+
 interface NotificationEmailSenderInterface
 {
     /**
      * Gives a mailer the responsibility to send Notification Emails
      * if they implement NotificationEmailSenderInterface
      *
-     * @param EmailElement $notificationEmail
+     * @param NotificationEmail $notificationEmail
      *
      * @return bool
      */
-    public function sendNotificationEmail(EmailElement $notificationEmail): bool;
+    public function sendNotificationEmail(NotificationEmail $notificationEmail): bool;
 }

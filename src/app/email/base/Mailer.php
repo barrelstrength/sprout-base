@@ -31,7 +31,7 @@ use yii\base\Model;
  */
 abstract class Mailer extends Component
 {
-    use ListsTrait;
+    use RecipientsTrait;
     use ModalWorkflowTrait;
 
     /**

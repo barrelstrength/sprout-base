@@ -5,29 +5,49 @@ namespace barrelstrength\sproutbase\app\email\base;
 use barrelstrength\sproutbase\app\email\models\SimpleRecipient;
 use barrelstrength\sproutbase\app\email\models\SimpleRecipientList;
 use barrelstrength\sproutlists\records\Lists as ListsRecord;
+use barrelstrength\sproutlists\records\Subscribers;
 use Craft;
 use craft\helpers\Json;
 use Egulias\EmailValidator\EmailValidator;
 use Egulias\EmailValidator\Validation\MultipleValidationWithAnd;
 use Egulias\EmailValidator\Validation\RFCValidation;
 
-trait ListsTrait
+trait RecipientsTrait
 {
-    public $defaultFromName;
-    public $defaultFromEmail;
-    public $defaultReplyTo;
+    /**
+     * @var SimpleRecipient[]
+     */
+    private $onTheFlyRecipients = [];
 
     /**
-     * Returns if a Mailer supports a Sender
+     * Returns a list of On The Fly Recipients
      *
-     * This setting is mostly to support the Copy/Paste Mailer use case where a user is using
-     * Sprout Email to prepare an email to be sent from another platform
-     *
-     * @return bool
+     * @return SimpleRecipient[]
      */
-    public function hasSender(): bool
+    public function getOnTheFlyRecipients(): array
     {
-        return true;
+        return $this->onTheFlyRecipients;
+    }
+
+    /**
+     * Sets a list of On The Fly Recipients
+     *
+     * @param array $onTheFlyRecipients Array of Email Addresses
+     */
+    public function setOnTheFlyRecipients($onTheFlyRecipients = [])
+    {
+        $recipients = [];
+
+        if ($onTheFlyRecipients) {
+            foreach ($onTheFlyRecipients as $onTheFlyRecipient) {
+                $recipient = new SimpleRecipient();
+                $recipient->email = $onTheFlyRecipient;
+
+                $recipients[] = $recipient;
+            }
+        }
+
+        $this->onTheFlyRecipients = $recipients;
     }
 
     /**
@@ -54,42 +74,6 @@ trait ListsTrait
     }
 
     /**
-     * @var SimpleRecipient[]
-     */
-    private $_onTheFlyRecipients = [];
-
-    /**
-     * Returns a list of On The Fly Recipients
-     *
-     * @return SimpleRecipient[]
-     */
-    public function getOnTheFlyRecipients(): array
-    {
-        return $this->_onTheFlyRecipients;
-    }
-
-    /**
-     * Sets a list of On The Fly Recipients
-     *
-     * @param array $onTheFlyRecipients Array of Email Addresses
-     */
-    public function setOnTheFlyRecipients($onTheFlyRecipients = [])
-    {
-        $recipients = [];
-
-        if ($onTheFlyRecipients) {
-            foreach ($onTheFlyRecipients as $onTheFlyRecipient) {
-                $recipient = new SimpleRecipient();
-                $recipient->email = $onTheFlyRecipient;
-
-                $recipients[] = $recipient;
-            }
-        }
-
-        $this->_onTheFlyRecipients = $recipients;
-    }
-
-    /**
      * Returns whether this Mailer supports mailing lists
      *
      * @return bool Whether this Mailer supports lists. Default is `true`.
@@ -97,6 +81,18 @@ trait ListsTrait
     public function hasLists(): bool
     {
         return true;
+    }
+
+    /**
+     * Prepare the list data before we save it in the database
+     *
+     * @param $lists
+     *
+     * @return mixed
+     */
+    public function prepListSettings($lists)
+    {
+        return $lists;
     }
 
     /**
@@ -122,42 +118,6 @@ trait ListsTrait
     }
 
     /**
-     * Prepare the list data before we save it in the database
-     *
-     * @param $lists
-     *
-     * @return mixed
-     */
-    public function prepListSettings($lists)
-    {
-        return $lists;
-    }
-
-    /**
-     * @param $campaignEmail
-     *
-     * @return string
-     * @throws \Twig_Error_Loader
-     * @throws \yii\base\Exception
-     */
-    public function getRecipientsHtml(): string
-    {
-        // @todo - move these defaults to the Campaign Type model
-        $defaultFromName = '';
-        $defaultFromEmail = '';
-        $defaultReplyTo = '';
-
-        return Craft::$app->getView()->renderTemplate('sprout-base-email/_components/mailers/recipients-html', [
-            'campaignEmail' => $this,
-            'defaultFromName' => $defaultFromName,
-            'defaultFromEmail' => $defaultFromEmail,
-            'defaultReplyTo' => $defaultReplyTo,
-        ]);
-    }
-
-    /**
-     * @param EmailElement $email
-     *
      * @return SimpleRecipientList
      * @throws \Throwable
      * @throws \yii\base\Exception
@@ -208,59 +168,24 @@ trait ListsTrait
         return $recipientList;
     }
 
-    public function getRecipientsFromSelectedLists($listSettings): array
+    /**
+     * @return string
+     * @throws \Twig_Error_Loader
+     * @throws \yii\base\Exception
+     */
+    public function getSenderHtml(): string
     {
-        $listIds = [];
-        // Convert json format to array
-        if ($listSettings != null AND is_string($listSettings)) {
-            $listIds = Json::decode($listSettings);
-            $listIds = $listIds['listIds'];
-        }
+        // @todo - move these defaults to the Campaign Type model
+        $defaultFromName = '';
+        $defaultFromEmail = '';
+        $defaultReplyTo = '';
 
-        if (empty($listIds)) {
-            return [];
-        }
-
-        // Get all subscribers by list IDs from the Subscriber ListType
-        $listRecords = ListsRecord::find()
-            ->where([
-                'id' => $listIds
-            ])
-            ->all();
-
-
-        $sproutListsRecipientsInfo = [];
-        if ($listRecords != null) {
-            foreach ($listRecords as $listRecord) {
-                if (!empty($listRecord->subscribers)) {
-
-                    /** @var Subscribers $subscriber */
-                    foreach ($listRecord->subscribers as $subscriber) {
-                        // Assign email as key to not repeat subscriber
-                        $sproutListsRecipientsInfo[$subscriber->email] = $subscriber->getAttributes();
-                    }
-                }
-            }
-        }
-
-        // @todo - review what attributes are passed for recipients.
-        $listRecipients = [];
-        if ($sproutListsRecipientsInfo) {
-            foreach ($sproutListsRecipientsInfo as $listRecipient) {
-                $recipientModel = new SimpleRecipient();
-
-                $firstName = $listRecipient['firstName'] ?? '';
-                $lastName = $listRecipient['lastName'] ?? '';
-                $name = $firstName.' '.$lastName;
-
-                $recipientModel->name = trim($name) ?? null;
-                $recipientModel->email = $listRecipient['email'] ?? null;
-
-                $listRecipients[] = $recipientModel;
-            }
-        }
-
-        return $listRecipients;
+        return Craft::$app->getView()->renderTemplate('sprout-base-email/_components/mailers/recipients-html', [
+            'campaignEmail' => $this,
+            'defaultFromName' => $defaultFromName,
+            'defaultFromEmail' => $defaultFromEmail,
+            'defaultReplyTo' => $defaultReplyTo,
+        ]);
     }
 
     /**
@@ -303,5 +228,68 @@ trait ListsTrait
         }
 
         return $recipientList;
+    }
+
+    /**
+     * @param $listSettings
+     *
+     * @return array
+     */
+    public function getRecipientsFromSelectedLists($listSettings): array
+    {
+        $listIds = [];
+        // Convert json format to array
+        if ($listSettings != null AND is_string($listSettings)) {
+            $listIds = Json::decode($listSettings);
+            $listIds = $listIds['listIds'];
+        }
+
+        if (empty($listIds)) {
+            return [];
+        }
+
+        // Get all subscribers by list IDs from the Subscriber ListType
+        $listRecords = ListsRecord::find()
+            ->where([
+                'id' => $listIds
+            ])
+            ->all();
+
+
+        $sproutListsRecipientsInfo = [];
+        if ($listRecords != null) {
+            foreach ($listRecords as $listRecord) {
+                if (!empty($listRecord->subscribers)) {
+
+                    /** @var Subscribers $subscribers */
+                    $subscribers = $listRecord->subscribers;
+
+                    /** @var SimpleRecipient $subscriber */
+                    foreach ($subscribers as $subscriber) {
+                        // Assign email as key to not repeat subscriber
+                        $sproutListsRecipientsInfo[$subscriber->email] = $subscriber->getAttributes();
+                    }
+                }
+            }
+        }
+
+        // @todo - review what attributes are passed for recipients.
+        $listRecipients = [];
+        if ($sproutListsRecipientsInfo) {
+            foreach ($sproutListsRecipientsInfo as $listRecipient) {
+                $recipientModel = new SimpleRecipient();
+
+                $firstName = $listRecipient['firstName'] ?? '';
+                $lastName = $listRecipient['lastName'] ?? '';
+                $name = $firstName.' '.$lastName;
+
+                $recipientModel->name = trim($name) ?? null;
+                $recipientModel->email = $listRecipient['email'] ?? null;
+
+                $listRecipients[] = $recipientModel;
+            }
+        }
+
+        return $listRecipients;
     }
 }

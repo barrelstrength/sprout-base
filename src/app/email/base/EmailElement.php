@@ -21,8 +21,6 @@ use craft\base\Field;
  */
 abstract class EmailElement extends Element
 {
-    use ListsTrait;
-
     // Constants
     // =========================================================================
 

@@ -103,7 +103,7 @@
         </div>
         <hr>
         <div class="meta">
-            {{ mailer.getRecipientsHtml(campaignEmail)|raw }}
+            {{ campaignType.getSenderHtml()|raw }}
         </div>
         <hr>
     {% endif %}

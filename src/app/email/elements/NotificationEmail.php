@@ -3,6 +3,7 @@
 namespace barrelstrength\sproutbase\app\email\elements;
 
 use barrelstrength\sproutbase\app\email\base\EmailElement;
+use barrelstrength\sproutbase\app\email\base\SenderTrait;
 use barrelstrength\sproutbase\app\email\elements\actions\DeleteNotification;
 use barrelstrength\sproutbase\SproutBase;
 use barrelstrength\sproutbase\app\email\web\assets\base\NotificationAsset;
@@ -25,6 +26,8 @@ use yii\base\Exception;
  */
 class NotificationEmail extends EmailElement
 {
+    use SenderTrait;
+
     /**
      * The Email Notification Field Layout ID
      *

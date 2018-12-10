@@ -2,12 +2,11 @@
 
 namespace barrelstrength\sproutbase\app\email\services;
 
-use barrelstrength\sproutbase\app\email\base\EmailElement;
 use barrelstrength\sproutbase\app\email\base\Mailer;
 use barrelstrength\sproutbase\app\email\base\NotificationEmailSenderInterface;
+use barrelstrength\sproutbase\app\email\base\NotificationEvent;
 use barrelstrength\sproutbase\app\email\elements\NotificationEmail;
 use barrelstrength\sproutbase\SproutBase;
-use barrelstrength\sproutbase\app\email\models\ModalResponse;
 use barrelstrength\sproutbase\app\email\records\NotificationEmail as NotificationEmailRecord;
 use craft\base\Component;
 use Craft;
@@ -15,6 +14,7 @@ use craft\helpers\ElementHelper;
 
 use craft\helpers\UrlHelper;
 use craft\base\ElementInterface;
+use craft\models\FieldLayout;
 
 /**
  * Class NotificationEmails
@@ -40,8 +40,8 @@ class NotificationEmails extends Component
         $transaction = Craft::$app->getDb()->beginTransaction();
 
         try {
-
             // Save the Field Layout
+            /* @var FieldLayout $fieldLayout */
             $fieldLayout = $notificationEmail->getFieldLayout();
             Craft::$app->getFields()->saveLayout($fieldLayout);
             $notificationEmail->fieldLayoutId = $fieldLayout->id;
@@ -191,6 +191,7 @@ class NotificationEmails extends Component
             $output = $email->getEmailTemplates()->getHtmlBody();
         }
 
+        /* @var NotificationEvent $event */
         $event = SproutBase::$app->notificationEvents->getEvent($email);
 
         $email->setEventObject($event->getMockEventObject());
