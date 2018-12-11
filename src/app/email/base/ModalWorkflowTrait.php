@@ -3,7 +3,6 @@
 namespace barrelstrength\sproutbase\app\email\base;
 
 use barrelstrength\sproutbase\app\email\models\ModalResponse;
-use barrelstrength\sproutbase\SproutBase;
 use Craft;
 
 trait ModalWorkflowTrait
