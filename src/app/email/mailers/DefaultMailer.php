@@ -35,7 +35,7 @@ class DefaultMailer extends Mailer implements NotificationEmailSenderInterface
     /**
      * @inheritdoc
      */
-    public function getName(): string
+    public static function displayName(): string
     {
         return 'Sprout Email';
     }
@@ -130,7 +130,7 @@ class DefaultMailer extends Mailer implements NotificationEmailSenderInterface
 
             $infoTable = SproutEmail::$app->sentEmails->createInfoTableModel('sprout-email', [
                 'emailType' => $notificationEmail->displayName(),
-                'mailer' => $this->getName()
+                'mailer' => self::displayName()
             ]);
 
             $deliveryTypes = $infoTable->getDeliveryTypes();
