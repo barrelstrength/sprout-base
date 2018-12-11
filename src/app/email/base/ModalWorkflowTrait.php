@@ -68,26 +68,23 @@ trait ModalWorkflowTrait
      */
     public function getPrepareModalHtml(EmailElement $email): string
     {
-        // Display the testToEmailAddress if it exists
-        $recipients = Craft::$app->getConfig()->getGeneral()->testToEmailAddress;
-
-        if (empty($recipients)) {
-            $currentUser = Craft::$app->getUser()->getIdentity();
-            $recipients = $currentUser->email;
+        if (!empty($email->recipients)) {
+            $recipients = $email->recipients;
         }
 
-        $errors = [];
+        if (empty($recipients)) {
+            $recipients = Craft::$app->getUser()->getIdentity()->email;
+        }
 
-        // This processes the whole email to check for errors ahead of time
-        // @todo - review - this should just be $email->getErrors()? $mailer->getErrors()? $message->getErrors()?
-        $errors = SproutBase::$app->notifications->getNotificationErrors($email, $errors);
+        if (empty($email->getEmailTemplateId())) {
+            $email->addError('emailTemplateId', Craft::t('sprout-base', 'No email template setting found.'));
+        }
 
         return Craft::$app->getView()->renderTemplate(
             'sprout-base-email/_modals/prepare-email-snapshot',
             [
                 'email' => $email,
-                'recipients' => $recipients,
-                'errors' => $errors
+                'recipients' => $recipients
             ]
         );
     }

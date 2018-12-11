@@ -268,14 +268,13 @@ class DefaultMailer extends Mailer implements NotificationEmailSenderInterface
             $recipients = Craft::$app->getUser()->getIdentity()->email;
         }
 
-        $errors = [];
-// @todo - re-implement error handling using Yii Component getErrors behavior
-//        $errors = $this->getErrors($campaignEmail, $campaignType, $errors);
+        if (empty($email->getEmailTemplateId())) {
+            $email->addError('emailTemplateId', Craft::t('sprout-base', 'No email template setting found.'));
+        }
 
         return Craft::$app->getView()->renderTemplate('sprout-base-email/_modals/campaigns/prepare-email-snapshot', [
             'campaignEmail' => $email,
-            'recipients' => $recipients,
-            'errors' => $errors
+            'recipients' => $recipients
         ]);
     }
 

@@ -33,9 +33,12 @@
 
     <table class="data fullwidth">
         <tbody>
+
         <tr style="background-color:#eee;font-size:14px;">
             <th colspan="2">{{ 'Content'|t('sprout-email') }}</th>
         </tr>
+
+        {% if not email.getErrors('emailTemplateId') %}
         <tr>
             <td>
                 <strong>{{ "HTML"|t('sprout-email') }}</strong>
@@ -59,6 +62,14 @@
                    class="email-preview">{{ "Preview"|t('sprout-email') }}</a>
             </td>
         </tr>
+
+        {% else %}
+
+            <td colspan="2">
+                {{ email.getError('emailTemplateId') }}
+            </td>
+
+        {% endif %}
         </tbody>
     </table>
     <br>
