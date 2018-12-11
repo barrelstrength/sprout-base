@@ -274,7 +274,6 @@ class DefaultMailer extends Mailer implements NotificationEmailSenderInterface
 
         return Craft::$app->getView()->renderTemplate('sprout-base-email/_modals/campaigns/prepare-email-snapshot', [
             'campaignEmail' => $email,
-            'campaignType' => $email->getCampaignType(),
             'recipients' => $recipients,
             'errors' => $errors
         ]);
