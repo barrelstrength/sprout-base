@@ -410,7 +410,7 @@ class NotificationsController extends Controller
 
         $notificationEmail->setEventObject($event->getMockEventObject());
 
-        $recipientList = $notificationEmail->getRecipientList();
+        $recipientList = $mailer->getRecipientList($notificationEmail);
 
         if ($recipientList->getInvalidRecipients()) {
             $invalidEmails = [];
