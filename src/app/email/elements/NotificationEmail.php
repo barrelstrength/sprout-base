@@ -205,7 +205,8 @@ class NotificationEmail extends EmailElement
     {
         if ($attribute === 'send') {
             return Craft::$app->getView()->renderTemplate('sprout-base-email/_components/elementindex/NotificationEmail/prepare-link', [
-                'notification' => $this
+                'notification' => $this,
+                'mailer' => $this->getMailer()
             ]);
         }
 

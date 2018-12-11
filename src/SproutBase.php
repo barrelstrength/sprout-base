@@ -27,7 +27,7 @@ use barrelstrength\sproutbase\app\fields\web\twig\variables\SproutFieldsVariable
 use barrelstrength\sproutbase\app\email\web\twig\variables\SproutEmailVariable;
 use barrelstrength\sproutbase\app\reports\controllers\ReportsController;
 use barrelstrength\sproutbase\app\import\web\twig\variables\SproutImportVariable;
-use barrelstrength\sproutemail\controllers\MailersController;
+use barrelstrength\sproutbase\app\email\controllers\MailersController;
 use craft\events\RegisterComponentTypesEvent;
 use craft\web\Application;
 use craft\web\twig\variables\CraftVariable;

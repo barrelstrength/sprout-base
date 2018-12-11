@@ -1,6 +1,6 @@
 <?php
 
-namespace barrelstrength\sproutemail\controllers;
+namespace barrelstrength\sproutbase\app\email\controllers;
 
 use barrelstrength\sproutbase\app\email\base\EmailElement;
 use craft\web\Controller;
