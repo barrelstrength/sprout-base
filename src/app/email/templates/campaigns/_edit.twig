@@ -6,7 +6,7 @@
 ] %}
 
 {% set title  = campaignEmail is defined and campaignEmail.title is not empty ? campaignEmail.title : 'Create a new Campaign Email'|t('sprout-email') %}
-{% set mailer = craft.sproutEmail.getMailer(campaignType.mailer) %}
+{% set mailer = campaignType.getMailer() %}
 
 {% set fullPageForm = true %}
 {% set saveShortcutRedirect = url('sprout-email/campaigns/edit/{id}') %}
@@ -103,7 +103,7 @@
         </div>
         <hr>
         <div class="meta">
-            {{ campaignType.getSenderHtml()|raw }}
+            {{ mailer.getSenderHtml(campaignEmail)|raw }}
         </div>
         <hr>
     {% endif %}
