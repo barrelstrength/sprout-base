@@ -32,7 +32,7 @@ use barrelstrength\sproutbase\app\import\importers\fields\Users;
 use barrelstrength\sproutbase\app\import\importers\settings\Field;
 use barrelstrength\sproutbase\app\import\importers\settings\Section;
 use barrelstrength\sproutbase\app\import\importers\settings\Widget;
-use barrelstrength\sproutbase\app\import\base\FieldImporter;
+use barrelstrength\sproutbase\app\import\base\FieldImporter as BaseFieldImporter;
 use barrelstrength\sproutbase\app\import\models\Seed as SeedModel;
 use barrelstrength\sproutbase\app\import\models\Weed;
 use craft\base\Component;
@@ -122,7 +122,7 @@ class Importers extends Component
                 $importer = new $importerNamespace;
 
                 // Pluck any Field Importers for their own list
-                if ($importer && $importer instanceof FieldImporter) {
+                if ($importer && $importer instanceof BaseFieldImporter) {
                     $this->fieldImporters[$importerNamespace] = $importer;
                     continue;
                 }

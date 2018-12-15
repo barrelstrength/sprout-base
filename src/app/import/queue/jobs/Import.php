@@ -55,14 +55,10 @@ class Import extends BaseJob
 
                 SproutBase::error($message);
                 SproutBase::error($errors);
-
-                throw new Exception($message);
             }
         } catch (\Exception $e) {
             SproutBase::error('Unable to run Sprout Import job.');
             SproutBase::error($e->getMessage());
-
-            throw $e;
         }
     }
 
