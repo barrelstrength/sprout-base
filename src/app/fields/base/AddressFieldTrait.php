@@ -8,15 +8,59 @@
 namespace barrelstrength\sproutbase\app\fields\base;
 
 use barrelstrength\sproutbase\app\fields\helpers\AddressHelper;
+use CommerceGuys\Intl\Language\Language;
+use CommerceGuys\Intl\Language\LanguageRepository;
+use craft\base\Element;
 use craft\base\ElementInterface;
 use Craft;
 use barrelstrength\sproutbase\SproutBase;
 use craft\base\Field;
 use barrelstrength\sproutbase\app\fields\models\Address as AddressModel;
 use CommerceGuys\Intl\Country\CountryRepository;
+use craft\helpers\Template;
 
+/**
+ * Trait AddressFieldTrait
+ *
+ * @package barrelstrength\sproutbase\app\fields\base
+ *
+ * @property null|string $settingsHtml
+ */
 trait AddressFieldTrait
 {
+    /**
+     * @var AddressHelper $addressHelper
+     */
+    public $addressHelper;
+
+    /**
+     * @var string
+     */
+    public $defaultLanguage = 'en';
+
+    /**
+     * @var string
+     */
+    public $defaultCountry = 'US';
+
+    /**
+     * @var bool
+     */
+    public $showCountryDropdown = true;
+
+    /**
+     * @var array
+     */
+    public $highlightCountries = [];
+
+    /**
+     * AddressFieldTrait constructor.
+     */
+    public function init()
+    {
+        $this->addressHelper = new AddressHelper();
+    }
+
     /**
      * @return null|string
      * @throws \Twig_Error_Loader
@@ -24,27 +68,47 @@ trait AddressFieldTrait
      */
     public function getSettingsHtml()
     {
-        $addressHelper = $this->addressHelper;
-        /**
-         * @var $addressHelper AddressHelper
-         */
-        $countries = $addressHelper->getCountries();
-        $settings = $this->getSettings();
+        // Languages
+        $primarySiteLocaleId = Craft::$app->getSites()->getPrimarySite()->language;
 
-        if ($settings !== null && !isset($settings['defaultCountry']))
-        {
-            $settings['defaultCountry'] = 'US';
-            $settings['country'] = 'US';
+        $allCraftLocaleIds = Craft::$app->getI18n()->getAllLocaleIds();
+
+        // Reads the language definitions from resources/language.
+        $languageRepository = new LanguageRepository();
+        $supportedLanguages = $languageRepository->getAll();
+
+        $availableLanguages = [];
+        foreach ($allCraftLocaleIds as $craftLocaleId) {
+            if (isset($supportedLanguages[$craftLocaleId])) {
+                /**
+                 * @var Language $language
+                 */
+                $language = $supportedLanguages[$craftLocaleId];
+                $availableLanguages[$craftLocaleId] = $language->getName();
+            }
         }
 
+        $this->defaultLanguage = 'en';
+        if (isset($availableLanguages[$primarySiteLocaleId])) {
+            $this->defaultLanguage = $primarySiteLocaleId;
+        }
+
+        // Countries
+        // @todo - is there any reliable way we can determine the default Country code based on the Primary Site language ID?
+        $this->defaultCountry = 'US';
+
+        $countryRepository = new CountryRepository();
+        $countries = $countryRepository->getList($this->defaultLanguage);
+
         return Craft::$app->getView()->renderTemplate(
-            'sprout-base-fields/_components/fields/formfields/address/settings',
-            [
-                'settings' => $settings,
-                'countries' => $countries
+            'sprout-base-fields/_components/fields/formfields/address/settings', [
+                'field' => $this,
+                'countries' => $countries,
+                'languages' => $availableLanguages
             ]
         );
     }
+
     /**
      * @param                       $value
      * @param ElementInterface|null $element
@@ -53,10 +117,13 @@ trait AddressFieldTrait
      * @throws \Twig_Error_Loader
      * @throws \yii\base\Exception
      */
-    public function getInputHtml($value, ElementInterface $element = null): string
-    {
+    public function getInputHtml(
+        $value, /** @noinspection PhpUnusedParameterInspection */
+        ElementInterface $element = null
+    ): string {
         /** @var $this Field */
         $name = $this->handle;
+
         $inputId = Craft::$app->getView()->formatInputId($name);
         $namespaceInputName = Craft::$app->getView()->namespaceInputName($inputId);
         $namespaceInputId = Craft::$app->getView()->namespaceInputId($inputId);
@@ -65,7 +132,7 @@ trait AddressFieldTrait
         $settings = $this->getSettings();
 
         $defaultCountryCode = $settings['defaultCountry'] ?? null;
-        $hideCountryDropdown = $settings['hideCountryDropdown'] ?? null;
+        $showCountryDropdown = $settings['showCountryDropdown'] ?? null;
 
         $addressId = null;
 
@@ -75,44 +142,36 @@ trait AddressFieldTrait
             $addressId = $value['id'];
         }
 
-        $addressInfoModel = SproutBase::$app->addressField->getAddressById($addressId);
+        $addressModel = SproutBase::$app->addressField->getAddressById($addressId);
 
-        $countryCode = $addressInfoModel->countryCode ?? $defaultCountryCode;
+        $countryCode = $addressModel->countryCode ?? $defaultCountryCode;
 
-        $addressHelper = $this->addressHelper;
+        $this->addressHelper->setNamespace($name);
+        $this->addressHelper->setCountryCode($countryCode);
+        $this->addressHelper->setAddressModel($addressModel);
 
-        /**
-         * @var $addressHelper AddressHelper
-         */
-        $addressHelper->setParams($countryCode, $name, $addressInfoModel);
-
-        $addressFormat = "";
-        if ($addressId) {
-            $addressFormat = $addressHelper->getAddressWithFormat($addressInfoModel);
-        }
-
-        $countryInput = $addressHelper->countryInput($hideCountryDropdown);
-
-        $addressForm = $addressHelper->getAddressFormHtml();
+        $addressDisplayHtml = $addressId ? $this->addressHelper->getAddressDisplayHtml($addressModel) : '';
+        $countryInputHtml = $this->addressHelper->getCountryInputHtml($showCountryDropdown);
+        $addressFormHtml = $this->addressHelper->getAddressFormHtml();
 
         return Craft::$app->getView()->renderTemplate(
-            'sprout-base-fields/_components/fields/formfields/address/input',
-            [
+            'sprout-base-fields/_components/fields/formfields/address/input', [
                 'namespaceInputId' => $namespaceInputId,
                 'namespaceInputName' => $namespaceInputName,
                 'field' => $this,
                 'addressId' => $addressId,
                 'defaultCountryCode' => $defaultCountryCode,
-                'addressFormat' => $addressFormat,
-                'countryInput' => $countryInput,
-                'addressForm' => $addressForm,
-                'hideCountryDropdown' => $hideCountryDropdown
+                'addressDisplayHtml' => Template::raw($addressDisplayHtml),
+                'countryInputHtml' => Template::raw($countryInputHtml),
+                'addressFormHtml' => Template::raw($addressFormHtml),
+                'showCountryDropdown' => $showCountryDropdown
             ]
         );
     }
 
     /**
      * Prepare our Address for use as an AddressModel
+     *
      * @param                       $value
      * @param ElementInterface|null $element
      *
@@ -120,8 +179,10 @@ trait AddressFieldTrait
      * @throws \Throwable
      * @throws \yii\db\StaleObjectException
      */
-    public function normalizeValue($value, ElementInterface $element = null)
-    {
+    public function normalizeValue(
+        $value, /** @noinspection PhpUnusedParameterInspection */
+        ElementInterface $element = null
+    ) {
         $addressModel = new AddressModel();
 
         // Numeric value when retrieved from db
@@ -168,8 +229,10 @@ trait AddressFieldTrait
      *
      * @return array|bool|mixed|null|string
      */
-    public function serializeValue($value, ElementInterface $element = null)
-    {
+    public function serializeValue(
+        $value, /** @noinspection PhpUnusedParameterInspection */
+        ElementInterface $element = null
+    ) {
         if (empty($value)) {
             return false;
         }
@@ -199,19 +262,20 @@ trait AddressFieldTrait
      * Save our Address Field a first time and assign the Address Record ID back to the Address field model
      * We'll save our Address Field a second time in afterElementSave to capture the Element ID for new entries.
      *
-     * @param ElementInterface $element
-     * @param bool             $isNew
+     * @param Element|ElementInterface $element
+     * @param bool                     $isNew
      *
      * @return bool
      * @throws \Exception
      * @throws \yii\db\Exception
      */
-    public function beforeElementSave(ElementInterface $element, bool $isNew) : bool
-    {
+    public function beforeElementSave(
+        ElementInterface $element, /** @noinspection PhpUnusedParameterInspection */
+        bool $isNew
+    ): bool {
         $address = $element->getFieldValue($this->handle);
 
-        if ($address instanceof AddressModel)
-        {
+        if ($address instanceof AddressModel) {
             $address->elementId = $element->id;
             $address->siteId = $element->siteId;
             $address->fieldId = $this->id;
@@ -225,8 +289,8 @@ trait AddressFieldTrait
     /**
      * Save our Address Field a second time for New Entries to ensure we have the Element ID.
      *
-     * @param ElementInterface $element
-     * @param bool             $isNew
+     * @param Element|ElementInterface $element
+     * @param bool                     $isNew
      *
      * @return bool|void
      * @throws \Exception
@@ -234,15 +298,16 @@ trait AddressFieldTrait
      */
     public function afterElementSave(ElementInterface $element, bool $isNew)
     {
-        if ($isNew)
-        {
-            $address = $element->getFieldValue($this->handle);
+        if (!$isNew) {
+            return;
+        }
 
-            if ($address instanceof AddressModel)
-            {
-                $address->elementId = $element->id;
-                SproutBase::$app->addressField->saveAddress($address);
-            }
+        /** @var $this Field */
+        $address = $element->getFieldValue($this->handle);
+
+        if ($address instanceof AddressModel) {
+            $address->elementId = $element->id;
+            SproutBase::$app->addressField->saveAddress($address);
         }
     }
 }

@@ -12,10 +12,12 @@ use barrelstrength\sproutbase\app\fields\models\Address as AddressModel;
 use barrelstrength\sproutbase\app\fields\records\Address as AddressRecord;
 use barrelstrength\sproutbase\SproutBase;
 use craft\db\Query;
+use craft\helpers\Json;
 use craft\web\Controller;
 use Craft;
 use yii\base\Exception;
 use yii\web\BadRequestHttpException;
+use yii\web\Response;
 
 class AddressController extends Controller
 {
@@ -29,39 +31,19 @@ class AddressController extends Controller
      *
      * @var array
      */
-    protected $allowAnonymous = ['actionGetAddressFormFields', 'actionDeleteAddress'];
+    protected $allowAnonymous = [
+        'action-update-address-form-html'
+    ];
 
     /**
      * Initialize the Address Field Helper
+     *
      */
     public function init()
     {
         $this->addressHelper = new AddressHelper();
 
         parent::init();
-    }
-
-    /**
-     * Display the Country Input for the selected Country
-     *
-     * @throws Exception
-     * @throws \Twig_Error_Loader
-     */
-    public function actionCountryInput()
-    {
-        $addressInfoId = Craft::$app->getRequest()->getBodyParam('addressInfoId');
-
-        $addressInfoModel = SproutBase::$app->addressField->getAddressById($addressInfoId);
-
-        $countryCode = $addressInfoModel->countryCode;
-
-        $namespace = (Craft::$app->getRequest()->getBodyParam('namespace') != null) ? Craft::$app->getRequest()->getBodyParam('namespace') : 'address';
-
-        $this->addressHelper->setParams($countryCode, $namespace);
-
-        echo $this->addressHelper->countryInput();
-
-        exit;
     }
 
     /**
@@ -72,19 +54,42 @@ class AddressController extends Controller
      * @throws Exception
      * @throws \Twig_Error_Loader
      */
-    public function actionChangeForm()
+    public function actionUpdateAddressFormHtml(): Response
     {
         $this->requireAcceptsJson();
         $this->requirePostRequest();
 
         $countryCode = Craft::$app->getRequest()->getBodyParam('countryCode');
-        $namespace = (Craft::$app->getRequest()->getBodyParam('namespace') != null) ? Craft::$app->getRequest()->getBodyParam('namespace') : 'address';
+        $namespace = Craft::$app->getRequest()->getBodyParam('namespace') ?? 'address';
+        $overrideTemplatePaths = Craft::$app->getRequest()->getBodyParam('overrideTemplatePaths', false);
 
-        $this->addressHelper->setParams($countryCode, $namespace);
+        $oldTemplatePath = Craft::$app->getView()->getTemplatesPath();
 
-        $html = $this->addressHelper->getAddressFormHtml();
+        if ($overrideTemplatePaths) {
+            $sproutFormsTemplatePath = Craft::$app->getSession()->get('sproutforms-templatepath-fields');
+            Craft::$app->getView()->setTemplatesPath($sproutFormsTemplatePath);
 
-        return $this->asJson(['html' => $html]);
+            // Set the base path to blank to enable Sprout Forms and Template Overrides
+            $this->addressHelper->setBaseAddressFieldPath('');
+        }
+
+        $this->addressHelper->setNamespace($namespace);
+        $this->addressHelper->setCountryCode($countryCode);
+        $this->addressHelper->setAddressModel();
+
+        $addressFormHtml = $this->addressHelper->getAddressFormHtml();
+
+        if ($overrideTemplatePaths) {
+            // Set the base path to blank to enable Sprout Forms and Template Overrides
+            $this->addressHelper->setBaseAddressFieldPath('');
+
+            // Set our template path back to what it was before our ajax request
+            Craft::$app->getView()->setTemplatesPath($oldTemplatePath);
+        }
+
+        return $this->asJson([
+            'html' => $addressFormHtml,
+        ]);
     }
 
     /**
@@ -93,47 +98,48 @@ class AddressController extends Controller
      * @throws \Exception
      * @throws \Twig_Error_Loader
      */
-    public function actionGetAddressFormFields()
+    public function actionGetAddressFormFieldsHtml(): Response
     {
         $this->requireAcceptsJson();
         $this->requirePostRequest();
 
         $addressInfoId = null;
 
-        $addressInfoModel = new AddressModel();
+        $addressModel = new AddressModel();
 
         if (Craft::$app->getRequest()->getBodyParam('addressInfoId') != null) {
             $addressInfoId = Craft::$app->getRequest()->getBodyParam('addressInfoId');
 
-            $addressInfoModel = SproutBase::$app->addressField->getAddressById($addressInfoId);
+            $addressModel = SproutBase::$app->addressField->getAddressById($addressInfoId);
         } elseif (Craft::$app->getRequest()->getBodyParam('defaultCountryCode') != null) {
             $defaultCountryCode = Craft::$app->getRequest()->getBodyParam('defaultCountryCode');
 
-            $addressInfoModel->countryCode = $defaultCountryCode;
+            $addressModel->countryCode = $defaultCountryCode;
         }
 
-        $html = $this->addressHelper->getAddressWithFormat($addressInfoModel);
+        $addressDisplayHtml = $this->addressHelper->getAddressDisplayHtml($addressModel);
 
         if ($addressInfoId == null) {
-            $html = "";
+            $addressDisplayHtml = '';
         }
 
-        $countryCode = $addressInfoModel->countryCode;
+        $countryCode = $addressModel->countryCode;
 
-        $namespace = Craft::$app->getRequest()->getBodyParam('namespace') != null ? Craft::$app->getRequest()->getBodyParam('namespace') : 'address';
+        $namespace = Craft::$app->getRequest()->getBodyParam('namespace') ?? 'address';
 
-        $this->addressHelper->setParams($countryCode, $namespace, $addressInfoModel);
+        $this->addressHelper->setNamespace($namespace);
+        $this->addressHelper->setCountryCode($countryCode);
+        $this->addressHelper->setAddressModel($addressModel);
 
-        $hiddenCountry = Craft::$app->getRequest()->getBodyParam('hideCountry') != null ? true : false;
+        $showCountryDropdown = Craft::$app->getRequest()->getBodyParam('showCountryDropdown') !== null;
 
-        $countryCodeHtml = $this->addressHelper->countryInput($hiddenCountry);
-
-        $formInputHtml = $this->addressHelper->getAddressFormHtml();
+        $countryCodeHtml = $this->addressHelper->getCountryInputHtml($showCountryDropdown);
+        $addressFormHtml = $this->addressHelper->getAddressFormHtml();
 
         return $this->asJson([
-            'html' => $html,
+            'html' => $addressDisplayHtml,
             'countryCodeHtml' => $countryCodeHtml,
-            'formInputHtml' => $formInputHtml,
+            'addressFormHtml' => $addressFormHtml,
             'countryCode' => $countryCode
         ]);
     }
@@ -146,41 +152,40 @@ class AddressController extends Controller
      * @throws Exception
      * @throws \Twig_Error_Loader
      */
-    public function actionGetAddress()
+    public function actionGetAddressDisplayHtml(): Response
     {
         $this->requireAcceptsJson();
         $this->requirePostRequest();
 
-        $result = [
-            'result' => true,
-            'errors' => []
-        ];
-
         $formValues = Craft::$app->getRequest()->getBodyParam('formValues');
-        $namespace = (Craft::$app->getRequest()->getBodyParam('namespace') != null) ? Craft::$app->getRequest()->getBodyParam('namespace') : 'address';
+        $namespace = Craft::$app->getRequest()->getBodyParam('namespace') ?? 'address';
 
-        $addressInfoModel = new AddressModel($formValues);
+        $addressModel = new AddressModel($formValues);
 
-        if ($addressInfoModel->validate()) {
-            $html = $this->addressHelper->getAddressWithFormat($addressInfoModel);
-            $countryCode = $addressInfoModel->countryCode;
-
-            $this->addressHelper->setParams($countryCode, $namespace, $addressInfoModel);
-            $countryCodeHtml = $this->addressHelper->countryInput();
-            $formInputHtml = $this->addressHelper->getAddressFormHtml();
-
-            $result['result'] = true;
-
-            $result['html'] = $html;
-            $result['countryCodeHtml'] = $countryCodeHtml;
-            $result['formInputHtml'] = $formInputHtml;
-            $result['countryCode'] = $countryCode;
-        } else {
-            $result['result'] = false;
-            $result['errors'] = $addressInfoModel->getErrors();
+        if (!$addressModel->validate()) {
+            return $this->asJson([
+                'result' => false,
+                'errors' => $addressModel->getErrors()
+            ]);
         }
 
-        return $this->asJson($result);
+        $addressDisplayHtml = $this->addressHelper->getAddressDisplayHtml($addressModel);
+        $countryCode = $addressModel->countryCode;
+
+        $this->addressHelper->setNamespace($namespace);
+        $this->addressHelper->setCountryCode($countryCode);
+        $this->addressHelper->setAddressModel($addressModel);
+
+        $countryCodeHtml = $this->addressHelper->getCountryInputHtml();
+        $addressFormHtml = $this->addressHelper->getAddressFormHtml();
+
+        return $this->asJson([
+            'result' => true,
+            'html' => $addressDisplayHtml,
+            'countryCodeHtml' => $countryCodeHtml,
+            'addressFormHtml' => $addressFormHtml,
+            'countryCode' => $countryCode
+        ]);
     }
 
     /**
@@ -189,17 +194,17 @@ class AddressController extends Controller
      * @return \yii\web\Response
      * @throws BadRequestHttpException
      */
-    public function actionDeleteAddress()
+    public function actionDeleteAddress(): Response
     {
         $this->requireAcceptsJson();
         $this->requirePostRequest();
 
         $addressId = null;
-        $addressInfoModel = null;
+        $addressModel = null;
 
         if (Craft::$app->getRequest()->getBodyParam('addressInfoId') != null) {
             $addressId = Craft::$app->getRequest()->getBodyParam('addressInfoId');
-            $addressInfoModel = SproutBase::$app->addressField->getAddressById($addressId);
+            $addressModel = SproutBase::$app->addressField->getAddressById($addressId);
         }
 
         $result = [
@@ -210,9 +215,9 @@ class AddressController extends Controller
         try {
             $response = false;
 
-            if ($addressInfoModel->id !== null && $addressInfoModel->id) {
+            if ($addressModel->id !== null && $addressModel->id) {
                 $addressRecord = new AddressRecord();
-                $response = $addressRecord->deleteByPk($addressInfoModel->id);
+                $response = $addressRecord->deleteByPk($addressModel->id);
             }
 
             $globals = (new Query())
@@ -222,11 +227,11 @@ class AddressController extends Controller
 
             if ($globals && $response) {
                 $identity = $globals['identity'];
-                $identity = json_decode($identity, true);
+                $identity = Json::decode($identity, true);
 
                 if ($identity['addressId'] != null) {
-                    $identity['addressId'] = "";
-                    $globals['identity'] = json_encode($identity);
+                    $identity['addressId'] = '';
+                    $globals['identity'] = Json::encode($identity);
 
                     Craft::$app->db->createCommand()->update('{{%sproutseo_globals}}',
                         $globals,
@@ -244,10 +249,12 @@ class AddressController extends Controller
     }
 
     /**
+     * Returns the Geo Coordinates for an Address via the Google Maps service
+     *
      * @return \yii\web\Response
      * @throws BadRequestHttpException
      */
-    public function actionQueryAddress()
+    public function actionQueryAddressCoordinatesFromGoogleMaps(): Response
     {
         $this->requireAcceptsJson();
         $this->requirePostRequest();
@@ -273,7 +280,7 @@ class AddressController extends Controller
                 $geo = file_get_contents('http://maps.googleapis.com/maps/api/geocode/json?address='.urlencode($addressInfo).'&sensor=false');
 
                 // Convert the JSON to an array
-                $geo = json_decode($geo, true);
+                $geo = Json::decode($geo, true);
 
                 if ($geo['status'] === 'OK') {
                     $data['latitude'] = $geo['results'][0]['geometry']['location']['lat'];

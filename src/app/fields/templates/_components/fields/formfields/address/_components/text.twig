@@ -1,0 +1,10 @@
+{% import "_includes/forms" as forms %}
+
+{% set fieldClass = fieldClass ?? name %}
+
+{{ forms.textField({
+    label: label,
+    fieldClass: fieldClass,
+    name: name ~ '[' ~ inputName ~ ']',
+    value: value
+}) }}

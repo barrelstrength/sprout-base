@@ -73,15 +73,15 @@ if (typeof Craft.SproutBase === typeof undefined) {
 
             this.addressInfoId = this.$addressBox.data('addressinfoid');
 
-            this._renderAddress();
+            this.renderAddress();
 
             this.addListener(this.$addButton, 'click', 'editAddressBox');
             this.addListener(this.$updateButton, 'click', 'editAddressBox');
             this.addListener(this.$clearButton, 'click', 'clearAddressBox');
-            this.addListener(this.$queryButton, 'click', 'queryGoogleMaps');
+            this.addListener(this.$queryButton, 'click', 'queryAddressCoordinatesFromGoogleMaps');
         },
 
-        _renderAddress: function() {
+        renderAddress: function() {
 
             if (this.addressInfoId == '' || this.addressInfoId == null) {
                 this.$addButtons.removeClass('hidden');
@@ -95,11 +95,11 @@ if (typeof Craft.SproutBase === typeof undefined) {
                 this.$addressFormat.removeClass('hidden');
             }
 
-            this.$addressForm = this.$addressBox.find('.sproutaddress-form');
+            this.$addressForm = this.$addressBox.find('.sproutaddressfield-form');
 
-            this._getAddressFormFields();
+            this.getAddressFormFields();
 
-            this.actionUrl = Craft.getActionUrl('sprout/address/change-form');
+            this.actionUrl = Craft.getActionUrl('sprout/fields-address/update-address-form-html');
         },
 
         editAddressBox: function(ev) {
@@ -114,10 +114,10 @@ if (typeof Craft.SproutBase === typeof undefined) {
 
             this.$target = $(ev.currentTarget);
 
-            var countryCode = this.$addressForm.find('.sproutaddress-country-select select').val();
+            var countryCode = this.$addressForm.find('.sproutaddressfield-country-select select').val();
 
             this.modal = new Craft.SproutBase.EditAddressModal(this.$addressForm, {
-                onSubmit: $.proxy(this, '_getAddress'),
+                onSubmit: $.proxy(this, 'getAddressDisplayHtml'),
                 countryCode: countryCode,
                 actionUrl: this.actionUrl,
                 addressInfoId: this.addressInfoId,
@@ -127,93 +127,17 @@ if (typeof Craft.SproutBase === typeof undefined) {
 
         },
 
-        clearAddressBox: function(ev) {
-            ev.preventDefault();
+        getAddressDisplayHtml: function(data) {
 
             var self = this;
 
-            this.$addButtons.removeClass('hidden');
-            this.$editButtons.addClass('hidden');
-            this.$addressFormat.addClass('hidden');
-
-            this.$addressForm.find("[name='" + this.settings.namespace + "[delete]']").val(1);
-
-            self.addressInfoId = null;
-
-            this.$addressBox.find('.field-address-input').remove();
-
-            this._getAddressFormFields();
-        },
-
-        queryGoogleMaps: function(ev) {
-
-            ev.preventDefault();
-
-            var self = this;
-            var spanValues = [];
-
-            $(".address-format").each(function() {
-                spanValues.push($(this).text());
-            });
-
-            self.addressInfo = spanValues.join("|");
-
-            if (!$('.address-format').is(':hidden')) {
-                var data = {addressInfo: self.addressInfo};
-
-                Craft.postActionRequest('sprout/fields-address/query-address', data, $.proxy(function(response) {
-                    if (response.result == true) {
-                        var latitude = response.geo.latitude;
-                        var longitude = response.geo.longitude;
-                        // @todo - add generic name?
-                        $("input[name='sproutseo[globals][identity][latitude]']").val(latitude);
-                        $("input[name='sproutseo[globals][identity][longitude]']").val(longitude);
-
-                        Craft.cp.displayNotice(Craft.t('sprout-base', 'Latitude and Longitude updated.'));
-                    }
-                    else {
-                        this.onError(response.errors);
-                    }
-                }, this))
-
-            }
-            else {
-                Craft.cp.displayError(Craft.t('sprout-base', 'Please add an address'));
-            }
-        },
-
-        _getAddressFormFields: function() {
-
-            var self = this;
-
-            var defaultCountryCode = this.$addressBox.data('defaultcountrycode');
-            var hideCountry = this.$addressBox.data('hidecountrydropdown');
-
-            Craft.postActionRequest('sprout/fields-address/get-address-form-fields', {
-                addressInfoId: this.addressInfoId,
-                defaultCountryCode: defaultCountryCode,
-                hideCountry: hideCountry,
-                namespace: this.settings.namespace
-            }, $.proxy(function(response) {
-
-                this.$addressBox.find('.address-format .spinner').remove();
-                self.$addressBox.find('.address-format').empty();
-                self.$addressBox.find('.address-format').append(response.html);
-
-            }, this));
-        },
-
-        _getAddress: function(data, onError) {
-
-            var self = this;
-
-            Craft.postActionRequest('sprout/fields-address/get-address', data, $.proxy(function(response) {
+            Craft.postActionRequest('sprout/fields-address/get-address-display-html', data, $.proxy(function(response) {
                 if (response.result == true) {
 
                     this.$addressBox.find('.address-format').html(response.html);
                     self.$addressForm.empty();
                     self.$addressForm.append(response.countryCodeHtml);
-                    self.$addressForm.append(response.formInputHtml);
+                    self.$addressForm.append(response.addressFormHtml);
 
                     self.$addButtons.addClass('hidden');
                     self.$editButtons.removeClass('hidden');
@@ -235,8 +159,81 @@ if (typeof Craft.SproutBase === typeof undefined) {
             }, this));
         },
 
-        onError: function(errors) {
-            Craft.cp.displayError(Craft.t('sprout-base', 'Unable to find the address: ' + errors));
+        getAddressFormFields: function() {
+
+            var self = this;
+
+            var defaultCountryCode = this.$addressBox.data('defaultcountrycode');
+            var showCountryDropdown = this.$addressBox.data('showcountrydropdown');
+
+            Craft.postActionRequest('sprout/fields-address/get-address-form-fields-html', {
+                addressInfoId: this.addressInfoId,
+                defaultCountryCode: defaultCountryCode,
+                showCountryDropdown: showCountryDropdown,
+                namespace: this.settings.namespace
+            }, $.proxy(function(response) {
+
+                this.$addressBox.find('.address-format .spinner').remove();
+                self.$addressBox.find('.address-format').empty();
+                self.$addressBox.find('.address-format').append(response.html);
+
+            }, this));
+        },
+
+        clearAddressBox: function(ev) {
+            ev.preventDefault();
+
+            var self = this;
+
+            this.$addButtons.removeClass('hidden');
+            this.$editButtons.addClass('hidden');
+            this.$addressFormat.addClass('hidden');
+
+            this.$addressForm.find("[name='" + this.settings.namespace + "[delete]']").val(1);
+
+            self.addressInfoId = null;
+
+            this.$addressBox.find('.sproutaddressfield-update-onchange-field').remove();
+
+            this.getAddressFormFields();
+        },
+
+        queryAddressCoordinatesFromGoogleMaps: function(ev) {
+
+            ev.preventDefault();
+
+            var self = this;
+            var spanValues = [];
+
+            $(".address-format").each(function() {
+                spanValues.push($(this).text());
+            });
+
+            self.addressInfo = spanValues.join("|");
+
+            if ($('.address-format').is(':hidden')) {
+                Craft.cp.displayError(Craft.t('sprout-base', 'Please add an address'));
+                return false;
+            }
+
+            var data = {
+                addressInfo: self.addressInfo
+            };
+
+            Craft.postActionRequest('sprout/fields-address/query-address-coordinates-from-google-maps', data, $.proxy(function(response) {
+                if (response.result == true) {
+                    var latitude = response.geo.latitude;
+                    var longitude = response.geo.longitude;
+                    // @todo - add generic name?
+                    $("input[name='sproutseo[globals][identity][latitude]']").val(latitude);
+                    $("input[name='sproutseo[globals][identity][longitude]']").val(longitude);
+
+                    Craft.cp.displayNotice(Craft.t('sprout-base', 'Latitude and Longitude updated.'));
+                }
+                else {
+                    Craft.cp.displayError(Craft.t('sprout-base', 'Unable to find the address: ' + response.errors));
+                }
+            }, this))
         }
     })
 })(jQuery);

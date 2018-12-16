@@ -1,17 +1,17 @@
-.sproutaddress-body .text,
-.sproutaddress-body .select {
+.sproutaddressfield-body .text,
+.sproutaddressfield-body .select {
     padding: 0;
 }
 
-.sproutaddress-modal {
+.sproutaddressfield-modal {
     overflow: visible;
     min-width: 380px!important;
 }
 
-.modal .sproutaddress-body {
+.modal .sproutaddressfield-body {
     padding: 0;
 }
 
-.sproutaddress-body .meta {
+.sproutaddressfield-body .meta {
     background-color: #fff;
 }

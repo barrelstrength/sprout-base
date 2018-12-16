@@ -182,22 +182,22 @@
                     data-defaultcountrycode='US'
             >
                 <div class='address-add-button hidden'>
-                    <a class='btn add icon dashed sproutaddress-edit'
+                    <a class='btn add icon dashed sproutaddressfield-edit'
                        href='#'>{{ "Add Address"|t('sprout-seo') }}</a>
                 </div>
                 <div class='address-edit-buttons hidden'>
-                    <a class='small btn right icon sproutaddress-edit clear-button'
+                    <a class='small btn right icon sproutaddressfield-edit clear-button'
                        href='#'>{{ "Clear"|t('sprout-seo') }}</a>
-                    <a class='small btn right icon sproutaddress-edit update-button'
+                    <a class='small btn right icon sproutaddressfield-edit update-button'
                        href='#'>{{ "Edit"|t('sprout-seo') }}</a>
                 </div>
                 <div class='address-format hidden'>
-                      {{ addressFormat|raw }}
+                      {{ addressDisplayHtml }}
                 </div>
-                <div class='sproutaddress-form hidden'>
+                <div class='sproutaddressfield-form hidden'>
                     <input type="hidden" name="address[delete]" />
-                    {{ countryInput|raw }}
-                    {{ addressForm|raw }}
+                    {{ countryInputHtml }}
+                    {{ addressFormHtml }}
                 </div>
             </div>
         {% endset %}
