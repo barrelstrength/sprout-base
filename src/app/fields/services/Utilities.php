@@ -24,7 +24,7 @@ class Utilities extends Component
      *
      * @return string
      */
-    public function getFieldContext($field, Element $element)
+    public function getFieldContext($field, Element $element): string
     {
         $context = 'global';
 
@@ -45,7 +45,7 @@ class Utilities extends Component
      *
      * @return bool
      */
-    public function isAnyOptionsSelected($options, $value = null)
+    public function isAnyOptionsSelected($options, $value = null): bool
     {
         if (!empty($options)) {
             foreach ($options as $option) {
@@ -61,7 +61,7 @@ class Utilities extends Component
     /**
      * @return string
      */
-    public function formatErrors()
+    public function formatErrors(): string
     {
         $errors = $this->getErrors();
 

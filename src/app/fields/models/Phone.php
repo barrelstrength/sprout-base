@@ -8,11 +8,14 @@
 namespace barrelstrength\sproutbase\app\fields\models;
 
 use craft\base\Model;
+use craft\helpers\Json;
 use libphonenumber\PhoneNumberFormat;
 use libphonenumber\PhoneNumberUtil;
 
 /**
  * Class Name
+ *
+ * @property string $asJson
  */
 class Phone extends Model
 {
@@ -93,7 +96,7 @@ class Phone extends Model
 
     public function getAsJson(): string
     {
-        return json_encode([
+        return Json::encode([
             'country' => $this->country,
             'phone' => $this->phone
         ]);
