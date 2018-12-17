@@ -271,6 +271,7 @@ class AddressHelper
                 'label' => $this->renderAddressLabel('Country'),
                 'name' => $this->namespace,
                 'inputName' => 'countryCode',
+                'autocomplete' => 'country',
                 'options' => $countries,
                 'value' => $this->countryCode ?? $this->defaultCountryCode(),
                 'hideDropdown' => !$showCountryDropdown
@@ -290,9 +291,11 @@ class AddressHelper
         $value = $this->addressModel->{$addressName};
 
         $label = $this->renderAddressLabel('Address 1');
+        $autocomplete = 'address-line1';
 
         if ($addressName === 'address2') {
             $label = $this->renderAddressLabel('Address 2');
+            $autocomplete = 'address-line2';
         }
 
         return Craft::$app->view->renderTemplate(
@@ -301,6 +304,7 @@ class AddressHelper
                 'label' => $label,
                 'name' => $this->namespace,
                 'inputName' => $addressName,
+                'autocomplete' => $autocomplete,
                 'value' => $value
             ]
         );
@@ -321,6 +325,7 @@ class AddressHelper
                 'label' => $this->renderAddressLabel('Sorting Code'),
                 'name' => $this->namespace,
                 'inputName' => 'sortingCode',
+                'autocomplete' => 'address-level4',
                 'value' => $value
             ]
         );
@@ -341,6 +346,7 @@ class AddressHelper
                 'label' => $this->renderAddressLabel($this->addressFormatRepository->getLocalityType()),
                 'name' => $this->namespace,
                 'inputName' => 'locality',
+                'autocomplete' => 'address-level2',
                 'value' => $value
             ]
         );
@@ -361,6 +367,7 @@ class AddressHelper
                 'label' => $this->renderAddressLabel($this->addressFormatRepository->getDependentLocalityType()),
                 'name' => $this->namespace,
                 'inputName' => 'dependentLocality',
+                'autocomplete' => 'address-level3',
                 'value' => $value
             ]
         );
@@ -384,6 +391,7 @@ class AddressHelper
                     'label' => $this->renderAddressLabel($this->addressFormatRepository->getAdministrativeAreaType()),
                     'name' => $this->namespace,
                     'inputName' => 'administrativeArea',
+                    'autocomplete' => 'address-level1',
                     'options' => $states,
                     'value' => $value
                 ]
@@ -396,6 +404,7 @@ class AddressHelper
                 'label' => $this->renderAddressLabel($this->addressFormatRepository->getAdministrativeAreaType()),
                 'name' => $this->namespace,
                 'inputName' => 'administrativeArea',
+                'autocomplete' => 'address-level1',
                 'value' => $value
             ]
         );
@@ -416,6 +425,7 @@ class AddressHelper
                 'label' => $this->renderAddressLabel($this->addressFormatRepository->getPostalCodeType()),
                 'name' => $this->namespace,
                 'inputName' => 'postalCode',
+                'autocomplete' => 'postal-code',
                 'value' => $value
             ]
         );

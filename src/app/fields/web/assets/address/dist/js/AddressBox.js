@@ -95,7 +95,7 @@ if (typeof Craft.SproutBase === typeof undefined) {
                 this.$addressFormat.removeClass('hidden');
             }
 
-            this.$addressForm = this.$addressBox.find('.sproutaddressfield-form');
+            this.$addressForm = this.$addressBox.find('.sproutaddressfield-form-fields');
 
             this.getAddressFormFields();
 
