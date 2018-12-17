@@ -6,6 +6,8 @@
 .sproutaddressfield-modal {
     overflow: visible;
     min-width: 380px!important;
+    height: auto !important;
+    min-height: 0 !important;
 }
 
 .modal .sproutaddressfield-body {
