@@ -55,6 +55,7 @@ Craft.SproutBase.EditAddressModal = Garnish.Modal.extend(
         },
 
         changeFormInput: function(target) {
+
             var $target = $(target);
             var countryCode = $(target).val();
             var $parents = $target.parents('.sproutaddressfield-body');

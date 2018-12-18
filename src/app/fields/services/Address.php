@@ -18,6 +18,9 @@ class Address extends Component
 {
     const EVENT_ON_SAVE_ADDRESS = 'onSaveAddressEvent';
 
+    const DEFAULT_COUNTRY  = 'US';
+    const DEFAULT_LANGUAGE = 'en';
+
     /**
      * @param string   $namespace
      * @param int|null $fieldId

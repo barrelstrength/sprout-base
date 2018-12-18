@@ -8,6 +8,7 @@
 namespace barrelstrength\sproutbase\app\fields\base;
 
 use barrelstrength\sproutbase\app\fields\helpers\AddressHelper;
+use barrelstrength\sproutbase\app\fields\services\Address;
 use CommerceGuys\Intl\Language\Language;
 use CommerceGuys\Intl\Language\LanguageRepository;
 use craft\base\Element;
@@ -36,12 +37,12 @@ trait AddressFieldTrait
     /**
      * @var string
      */
-    public $defaultLanguage = 'en';
+    public $defaultLanguage;
 
     /**
      * @var string
      */
-    public $defaultCountry = 'US';
+    public $defaultCountry;
 
     /**
      * @var bool
@@ -68,9 +69,6 @@ trait AddressFieldTrait
      */
     public function getSettingsHtml()
     {
-        // Languages
-        $primarySiteLocaleId = Craft::$app->getSites()->getPrimarySite()->language;
-
         $allCraftLocaleIds = Craft::$app->getI18n()->getAllLocaleIds();
 
         // Reads the language definitions from resources/language.
@@ -88,14 +86,21 @@ trait AddressFieldTrait
             }
         }
 
-        $this->defaultLanguage = 'en';
-        if (isset($availableLanguages[$primarySiteLocaleId])) {
-            $this->defaultLanguage = $primarySiteLocaleId;
+        if ($this->defaultLanguage === null) {
+            $this->defaultLanguage = Address::DEFAULT_LANGUAGE;
+
+            // If the primary site language is available choose it as a default language.
+            $primarySiteLocaleId = Craft::$app->getSites()->getPrimarySite()->language;
+            if (isset($availableLanguages[$primarySiteLocaleId])) {
+                $this->defaultLanguage = $primarySiteLocaleId;
+            }
         }
 
         // Countries
         // @todo - is there any reliable way we can determine the default Country code based on the Primary Site language ID?
-        $this->defaultCountry = 'US';
+        if ($this->defaultCountry === null) {
+            $this->defaultCountry = Address::DEFAULT_COUNTRY;
+        }
 
         $countryRepository = new CountryRepository();
         $countries = $countryRepository->getList($this->defaultLanguage);
