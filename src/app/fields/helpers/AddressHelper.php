@@ -53,6 +53,11 @@ class AddressHelper
     protected $language = 'en';
 
     /**
+     * @var array 
+     */
+    protected $highlightCountries = [];
+
+    /**
      * @return mixed
      */
     public function getLanguage()
@@ -66,6 +71,11 @@ class AddressHelper
     public function setLanguage($language)
     {
         $this->language = $language;
+    }
+
+    public function setHighlightCountries($highlightCountries)
+    {
+        $this->highlightCountries = $highlightCountries;
     }
 
     /**
@@ -265,7 +275,7 @@ class AddressHelper
         $countries = $countryRepository->getList($this->language);
 
         return Craft::$app->view->renderTemplate(
-            $this->getBaseAddressFieldPath().'address/_components/select', [
+            $this->getBaseAddressFieldPath().'address/_components/select-country', [
                 'id' => 'sproutaddressfield-country-select',
                 'fieldClass' => 'sproutaddressfield-country-select',
                 'label' => $this->renderAddressLabel('Country'),
@@ -274,7 +284,8 @@ class AddressHelper
                 'autocomplete' => 'country',
                 'options' => $countries,
                 'value' => $this->countryCode ?? $this->defaultCountryCode(),
-                'hideDropdown' => !$showCountryDropdown
+                'hideDropdown' => !$showCountryDropdown,
+                'highlightCountries' => $this->highlightCountries
             ]
         );
     }

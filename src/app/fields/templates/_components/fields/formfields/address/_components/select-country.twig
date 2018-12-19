@@ -1,0 +1,48 @@
+{% import "_includes/forms" as forms %}
+
+{% set id = id ?? name %}
+{% set fieldClass = fieldClass ?? name %}
+{% set class = class ?? name %}
+
+{% if hideDropdown is defined and hideDropdown %}
+
+    <div class="hidden">
+        <input type="hidden" name="{{ name ~ '[' ~ inputName ~ ']' }}" value="{{ value }}"/>
+    </div>
+
+{% else %}
+
+    {#<select#}
+            {#{%- if name %} name="{{ name ~ '[' ~ inputName ~ ']' }}"{% endif %}#}
+            {#{%- if id %} id="{{ id }}"{% endif %}#}
+            {#{%- if class %} class="{{ class }}"{% endif %}#}
+    {#>#}
+        {#{% if highlightCountries is not empty %}#}
+            {#{%- for key, option in highlightCountries -%}#}
+                {#{%- set optionLabel = option -%}#}
+                {#{%- set optionValue = key -%}#}
+
+                {#<option value="{{ optionValue }}"#}
+                        {#{% if optionValue == value %}selected{% endif %}>{{ optionLabel }}</option>#}
+            {#{% endfor %}#}
+        {#{% endif %}#}
+
+        {#{%- for key, option in options -%}#}
+
+            {#{%- set optionLabel = option -%}#}
+            {#{%- set optionValue = key -%}#}
+
+            {#<option value="{{ optionValue }}"#}
+                    {#{% if optionValue == value %}selected{% endif %}>{{ optionLabel }}</option>#}
+        {#{% endfor %}#}
+    {#</select>#}
+    {{ forms.selectField({
+        label: label,
+        id: id,
+        fieldClass: fieldClass,
+        class: class,
+        options: options,
+        name: name ~ '[' ~ inputName ~ ']',
+        value: value
+    }) }}
+{% endif %}

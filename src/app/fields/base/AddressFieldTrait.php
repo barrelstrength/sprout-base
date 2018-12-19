@@ -97,13 +97,17 @@ trait AddressFieldTrait
         }
 
         // Countries
-        // @todo - is there any reliable way we can determine the default Country code based on the Primary Site language ID?
         if ($this->defaultCountry === null) {
             $this->defaultCountry = Address::DEFAULT_COUNTRY;
         }
 
         $countryRepository = new CountryRepository();
         $countries = $countryRepository->getList($this->defaultLanguage);
+
+        if (count($this->highlightCountries)) {
+            $highlightCountries = $this->getHighlightCountries();
+            $countries = array_merge($highlightCountries, $countries);
+        }
 
         return Craft::$app->getView()->renderTemplate(
             'sprout-base-fields/_components/fields/formfields/address/settings', [
@@ -112,6 +116,27 @@ trait AddressFieldTrait
                 'languages' => $availableLanguages
             ]
         );
+    }
+
+    /**
+     * Format common countries setting values with country names
+     *
+     * @return array
+     */
+    private function getHighlightCountries()
+    {
+        $countryRepository = new CountryRepository();
+        $options = [];
+
+        $commonCountries = $this->highlightCountries;
+
+        if (is_array($commonCountries) && count($commonCountries)) {
+            foreach ($commonCountries as $code) {
+                $options[$code] = $countryRepository->get($code)->getName();
+            }
+        }
+
+        return $options;
     }
 
     /**
@@ -154,6 +179,12 @@ trait AddressFieldTrait
         $this->addressHelper->setNamespace($name);
         $this->addressHelper->setCountryCode($countryCode);
         $this->addressHelper->setAddressModel($addressModel);
+
+        if (count($this->highlightCountries)) {
+            $highlightCountries = $this->getHighlightCountries();
+
+            $this->addressHelper->setHighlightCountries($highlightCountries);
+        }
 
         $addressDisplayHtml = $addressId ? $this->addressHelper->getAddressDisplayHtml($addressModel) : '';
         $countryInputHtml = $this->addressHelper->getCountryInputHtml($showCountryDropdown);
