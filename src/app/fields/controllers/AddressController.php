@@ -173,6 +173,15 @@ class AddressController extends Controller
         $countryCode = $addressModel->countryCode;
 
         $this->addressHelper->setNamespace($namespace);
+
+        if ($addressModel->fieldId) {
+            $field = Craft::$app->fields->getFieldById($addressModel->fieldId);
+
+            if (isset($field->highlightCountries) && count($field->highlightCountries)) {
+                $this->addressHelper->setHighlightCountries($field->highlightCountries);
+            }
+        }
+
         $this->addressHelper->setCountryCode($countryCode);
         $this->addressHelper->setAddressModel($addressModel);
 

@@ -11,38 +11,39 @@
     </div>
 
 {% else %}
+    {% set input %}
+        <div class="select " {%- if class %} class="{{ class }}"{% endif %}>
+            <select
+                    {%- if name %} name="{{ name ~ '[' ~ inputName ~ ']' }}"{% endif %}
+                    {%- if id %} id="{{ id }}"{% endif %}
+            >
+                {% if highlightCountries is not empty %}
+                    {%- for key, option in highlightCountries -%}
+                        {%- set optionLabel = option -%}
+                        {%- set optionValue = key -%}
 
-    {#<select#}
-            {#{%- if name %} name="{{ name ~ '[' ~ inputName ~ ']' }}"{% endif %}#}
-            {#{%- if id %} id="{{ id }}"{% endif %}#}
-            {#{%- if class %} class="{{ class }}"{% endif %}#}
-    {#>#}
-        {#{% if highlightCountries is not empty %}#}
-            {#{%- for key, option in highlightCountries -%}#}
-                {#{%- set optionLabel = option -%}#}
-                {#{%- set optionValue = key -%}#}
+                        <option value="{{ optionValue }}"
+                                {% if optionValue == value %}selected{% endif %}>{{ optionLabel }}</option>
+                    {% endfor %}
+                    <option disabled>---</option>
+                {% endif %}
 
-                {#<option value="{{ optionValue }}"#}
-                        {#{% if optionValue == value %}selected{% endif %}>{{ optionLabel }}</option>#}
-            {#{% endfor %}#}
-        {#{% endif %}#}
+                {%- for key, option in options -%}
 
-        {#{%- for key, option in options -%}#}
+                    {%- set optionLabel = option -%}
+                    {%- set optionValue = key -%}
 
-            {#{%- set optionLabel = option -%}#}
-            {#{%- set optionValue = key -%}#}
+                    <option value="{{ optionValue }}"
+                            {% if optionValue == value %}selected{% endif %}>{{ optionLabel }}</option>
+                {% endfor %}
+            </select>
+        </div>
+    {% endset %}
 
-            {#<option value="{{ optionValue }}"#}
-                    {#{% if optionValue == value %}selected{% endif %}>{{ optionLabel }}</option>#}
-        {#{% endfor %}#}
-    {#</select>#}
-    {{ forms.selectField({
+    {{ forms.field({
         label: label,
         id: id,
         fieldClass: fieldClass,
-        class: class,
-        options: options,
-        name: name ~ '[' ~ inputName ~ ']',
-        value: value
-    }) }}
+        class: class
+    }, input) }}
 {% endif %}

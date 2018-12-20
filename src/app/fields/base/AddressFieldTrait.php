@@ -105,7 +105,7 @@ trait AddressFieldTrait
         $countries = $countryRepository->getList($this->defaultLanguage);
 
         if (count($this->highlightCountries)) {
-            $highlightCountries = $this->getHighlightCountries();
+            $highlightCountries = $this->addressHelper->getHighlightCountries($this->highlightCountries);
             $countries = array_merge($highlightCountries, $countries);
         }
 
@@ -116,27 +116,6 @@ trait AddressFieldTrait
                 'languages' => $availableLanguages
             ]
         );
-    }
-
-    /**
-     * Format common countries setting values with country names
-     *
-     * @return array
-     */
-    private function getHighlightCountries()
-    {
-        $countryRepository = new CountryRepository();
-        $options = [];
-
-        $commonCountries = $this->highlightCountries;
-
-        if (is_array($commonCountries) && count($commonCountries)) {
-            foreach ($commonCountries as $code) {
-                $options[$code] = $countryRepository->get($code)->getName();
-            }
-        }
-
-        return $options;
     }
 
     /**
@@ -181,9 +160,8 @@ trait AddressFieldTrait
         $this->addressHelper->setAddressModel($addressModel);
 
         if (count($this->highlightCountries)) {
-            $highlightCountries = $this->getHighlightCountries();
 
-            $this->addressHelper->setHighlightCountries($highlightCountries);
+            $this->addressHelper->setHighlightCountries($this->highlightCountries);
         }
 
         $addressDisplayHtml = $addressId ? $this->addressHelper->getAddressDisplayHtml($addressModel) : '';
@@ -195,6 +173,7 @@ trait AddressFieldTrait
                 'namespaceInputId' => $namespaceInputId,
                 'namespaceInputName' => $namespaceInputName,
                 'field' => $this,
+                'fieldId' => $addressModel->fieldId ?? null,
                 'addressId' => $addressId,
                 'defaultCountryCode' => $defaultCountryCode,
                 'addressDisplayHtml' => Template::raw($addressDisplayHtml),

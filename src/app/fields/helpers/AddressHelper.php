@@ -75,7 +75,31 @@ class AddressHelper
 
     public function setHighlightCountries($highlightCountries)
     {
+        $highlightCountries = $this->getHighlightCountries($highlightCountries);
+
         $this->highlightCountries = $highlightCountries;
+    }
+
+    /**
+     * Format common countries setting values with country names
+     * @param $highlightCountries
+     *
+     * @return array
+     */
+    public function getHighlightCountries($highlightCountries)
+    {
+        $countryRepository = new \CommerceGuys\Intl\Country\CountryRepository();
+        $options = [];
+
+        $commonCountries = $highlightCountries;
+
+        if (is_array($commonCountries) && count($commonCountries)) {
+            foreach ($commonCountries as $code) {
+                $options[$code] = $countryRepository->get($code)->getName();
+            }
+        }
+
+        return $options;
     }
 
     /**
