@@ -31,9 +31,9 @@
         </div>
         <div class='sproutaddressfield-form-fields hidden'>
             <input type="hidden" name="{{ field.handle }}[delete]"/>
+            <input type="hidden" name="{{ field.handle }}[fieldId]" value="{{ fieldId }}" />
             {{ countryInputHtml }}
             {{ addressFormHtml }}
-            <input type="hidden" name="{{ field.handle }}[fieldId]" value="{{ fieldId }}" />
         </div>
     </div>
 
