@@ -102,7 +102,7 @@ Craft.SproutBase.EditAddressModal = Garnish.Modal.extend(
             var formKeys = [
                 'fieldId',
                 'countryCode',
-                'administrativeArea',
+                'administrativeAreaCode',
                 'locality',
                 'dependentLocality',
                 'postalCode',

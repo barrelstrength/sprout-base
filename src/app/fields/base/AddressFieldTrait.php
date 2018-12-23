@@ -9,6 +9,7 @@ namespace barrelstrength\sproutbase\app\fields\base;
 
 use barrelstrength\sproutbase\app\fields\helpers\AddressHelper;
 use barrelstrength\sproutbase\app\fields\services\Address;
+use CommerceGuys\Addressing\Subdivision\SubdivisionRepository;
 use CommerceGuys\Intl\Language\Language;
 use CommerceGuys\Intl\Language\LanguageRepository;
 use craft\base\Element;
@@ -220,9 +221,20 @@ trait AddressFieldTrait
         // Adds country property that return country name
         if ($addressModel->countryCode) {
             $countryRepository = new CountryRepository();
-
             $country = $countryRepository->get($addressModel->countryCode);
+
             $addressModel->country = $country->getName();
+            $addressModel->countryCode = $country->getCountryCode();
+            $addressModel->countryThreeLetterCode = $country->getThreeLetterCode();
+            $addressModel->currencyCode = $country->getCurrencyCode();
+            $addressModel->locale = $country->getLocale();
+        }
+
+        $subdivisionRepository = new SubdivisionRepository();
+        $subdivision = $subdivisionRepository->get($addressModel->administrativeAreaCode, [$addressModel->countryCode]);
+
+        if ($subdivision) {
+            $addressModel->administrativeArea = $subdivision->getName();
         }
 
         // return null when clearing address to save null value on content table

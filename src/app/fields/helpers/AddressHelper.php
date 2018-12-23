@@ -201,7 +201,7 @@ class AddressHelper
 
         $address = $address
             ->withCountryCode($model->countryCode)
-            ->withAdministrativeArea($model->administrativeArea)
+            ->withAdministrativeArea($model->administrativeAreaCode)
             ->withLocality($model->locality)
             ->withPostalCode($model->postalCode)
             ->withAddressLine1($model->address1)
@@ -431,7 +431,7 @@ class AddressHelper
      */
     private function getAdministrativeAreaInputHtml(): string
     {
-        $value = $this->addressModel->administrativeArea;
+        $value = $this->addressModel->administrativeAreaCode;
 
         $states = $this->subdivisionRepository->getList([$this->countryCode], $this->language);
 
@@ -441,7 +441,7 @@ class AddressHelper
                     'fieldClass' => 'sproutaddressfield-update-onchange-field',
                     'label' => $this->renderAddressLabel($this->addressFormatRepository->getAdministrativeAreaType()),
                     'name' => $this->namespace,
-                    'inputName' => 'administrativeArea',
+                    'inputName' => 'administrativeAreaCode',
                     'autocomplete' => 'address-level1',
                     'options' => $states,
                     'value' => $value
@@ -454,7 +454,7 @@ class AddressHelper
                 'fieldClass' => 'sproutaddressfield-update-onchange-field',
                 'label' => $this->renderAddressLabel($this->addressFormatRepository->getAdministrativeAreaType()),
                 'name' => $this->namespace,
-                'inputName' => 'administrativeArea',
+                'inputName' => 'administrativeAreaCode',
                 'autocomplete' => 'address-level1',
                 'value' => $value
             ]

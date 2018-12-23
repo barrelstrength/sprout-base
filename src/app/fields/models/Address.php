@@ -8,6 +8,8 @@
 namespace barrelstrength\sproutbase\app\fields\models;
 
 use CommerceGuys\Addressing\AddressFormat\AddressFormatRepository;
+use CommerceGuys\Intl\Country\Country;
+use CommerceGuys\Addressing\Subdivision\Subdivision;
 use Craft;
 use barrelstrength\sproutbase\app\fields\helpers\AddressHelper;
 use craft\base\Model;
@@ -48,7 +50,27 @@ class Address extends Model
     /**
      * @var string
      */
+    public $countryThreeLetterCode;
+
+    /**
+     * @var string
+     */
+    public $currencyCode;
+
+    /**
+     * @var string
+     */
+    public $locale;
+
+    /**
+     * @var string
+     */
     public $administrativeArea;
+
+    /**
+     * @var string
+     */
+    public $administrativeAreaCode;
 
     /**
      * @var string
@@ -81,7 +103,7 @@ class Address extends Model
     public $address2;
 
     /**
-     * @var string
+     * @var Country
      */
     public $country;
 
