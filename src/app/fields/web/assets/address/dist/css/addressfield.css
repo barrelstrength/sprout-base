@@ -17,3 +17,7 @@
 .sproutaddressfield-body .meta {
     background-color: #fff;
 }
+
+.sproutaddressfield-body .meta .field .heading {
+    border-right: 1px solid #eeeeee;
+}
