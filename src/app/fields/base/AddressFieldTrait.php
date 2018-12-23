@@ -228,13 +228,13 @@ trait AddressFieldTrait
             $addressModel->countryThreeLetterCode = $country->getThreeLetterCode();
             $addressModel->currencyCode = $country->getCurrencyCode();
             $addressModel->locale = $country->getLocale();
-        }
 
-        $subdivisionRepository = new SubdivisionRepository();
-        $subdivision = $subdivisionRepository->get($addressModel->administrativeAreaCode, [$addressModel->countryCode]);
+            $subdivisionRepository = new SubdivisionRepository();
+            $subdivision = $subdivisionRepository->get($addressModel->administrativeAreaCode, [$addressModel->countryCode]);
 
-        if ($subdivision) {
-            $addressModel->administrativeArea = $subdivision->getName();
+            if ($subdivision) {
+                $addressModel->administrativeArea = $subdivision->getName();
+            }
         }
 
         // return null when clearing address to save null value on content table
