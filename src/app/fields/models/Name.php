@@ -79,7 +79,7 @@ class Name extends Model
         $lastName = trim($this->lastName);
 
         if (!$firstName && !$lastName) {
-            return null;
+            return '';
         }
 
         $name = $firstName;
