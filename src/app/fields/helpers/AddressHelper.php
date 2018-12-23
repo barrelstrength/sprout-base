@@ -249,6 +249,12 @@ class AddressHelper
         // Insert line break based on the format
         //$format = nl2br($format);
 
+        // An exception when building our Form Input Field in the CP
+        // Removes a backslash character that is needed for the Address Display Only
+        if ($this->countryCode === 'TR') {
+            $addressLayout = preg_replace('`%locality\/`', '%locality', $addressLayout);
+        }
+
         // More whitespace
         $addressLayout = preg_replace('/,/', '', $addressLayout);
 
@@ -265,6 +271,16 @@ class AddressHelper
 
         if ($this->addressModel->id !== null) {
             $addressLayout .= $this->getAddressIdInputHtml();
+        }
+
+        // A few exceptions when building our Form Input Fields for the CP
+        // Removes a hardcoded locality that is needed for the Address Display Only
+        // These are added automatically in the AddressFormat for front-end display
+        if ($this->countryCode === 'AX') {
+            $addressLayout = str_replace('ÅLAND', '', $addressLayout);
+        }
+        if ($this->countryCode === 'JE') {
+            $addressLayout = str_replace('JERSEY', '', $addressLayout);
         }
 
         return $addressLayout;
