@@ -161,7 +161,6 @@ trait AddressFieldTrait
         $this->addressHelper->setAddressModel($addressModel);
 
         if (count($this->highlightCountries)) {
-
             $this->addressHelper->setHighlightCountries($this->highlightCountries);
         }
 
