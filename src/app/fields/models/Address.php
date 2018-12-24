@@ -107,6 +107,12 @@ class Address extends Model
      */
     public $country;
 
+    public function __toString()
+    {
+        $addressHelper = new AddressHelper();
+        return $addressHelper->getAddressDisplayHtml($this);
+    }
+
     /**
      * Return the Address HTML for the appropriate region
      *
