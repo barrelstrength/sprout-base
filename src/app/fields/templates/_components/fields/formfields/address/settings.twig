@@ -25,10 +25,10 @@
     id: 'showCountryDropdown',
     name: 'showCountryDropdown',
     on: field.showCountryDropdown,
-    toggle: 'sproutaddressfield-highlight-countries'
+    toggle: 'sprout-address-highlight-countries'
 }) }}
 
-<div id="sproutaddressfield-highlight-countries" class="sproutaddressfield-highlight-countries {% if not field.showCountryDropdown %} hidden{% endif %}">
+<div id="sprout-address-highlight-countries" class="sprout-address-highlight-countries {% if not field.showCountryDropdown %} hidden{% endif %}">
     {{ forms.checkboxSelectField({
         label: "Highlight Countries"|t('sprout-base'),
         instructions: "Select the countries to highlight at the top of the Country dropdown list."|t('sprout-base'),
@@ -39,7 +39,7 @@
 </div>
 
 {% css %}
-    .sproutaddressfield-highlight-countries .input {
+    .sprout-address-highlight-countries .input {
         border: 1px solid #ccc;
         height: 300px;
         overflow: auto;

@@ -12,7 +12,7 @@
 
 {% else %}
     {% set input %}
-        <div class="select " {%- if class %} class="{{ class }}"{% endif %}>
+        <div class="select{% if class %} {{ class }}"{% endif %}">
             <select
                     {%- if name %} name="{{ name ~ '[' ~ inputName ~ ']' }}"{% endif %}
                     {%- if id %} id="{{ id }}"{% endif %}

@@ -4,20 +4,12 @@
 {% set fieldClass = fieldClass ?? name %}
 {% set class = class ?? name %}
 
-{% if hideDropdown is defined and hideDropdown %}
-
-    <div class="hidden">
-        <input type="hidden" name="{{ name ~ '[' ~ inputName ~ ']' }}" value="{{ value }}"/>
-    </div>
-
-{% else %}
-    {{ forms.selectField({
-        label: label,
-        id: id,
-        fieldClass: fieldClass,
-        class: class,
-        options: options,
-        name: name ~ '[' ~ inputName ~ ']',
-        value: value
-    }) }}
-{% endif %}
+{{ forms.selectField({
+    label: label,
+    id: id,
+    fieldClass: fieldClass,
+    class: class,
+    options: options,
+    name: name ~ '[' ~ inputName ~ ']',
+    value: value
+}) }}

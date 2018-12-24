@@ -346,16 +346,16 @@ a.fieldtoggle.instructionstoggle {
     padding-right: 20px;
 }
 
-.sproutaddressfield-body .text,
-.sproutaddressfield-body .select {
+.sprout-address-body .text,
+.sprout-address-body .select {
     padding: 0;
 }
 
-.sproutaddressfield-modal {
+.sprout-address-modal {
     overflow: visible
 }
 
-.modal .sproutaddressfield-body {
+.modal .sprout-address-body {
     padding: 0;
 }
 

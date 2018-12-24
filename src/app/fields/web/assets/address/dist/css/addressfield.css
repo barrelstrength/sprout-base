@@ -1,23 +1,23 @@
-.sproutaddressfield-body .text,
-.sproutaddressfield-body .select {
+.sprout-address-body .text,
+.sprout-address-body .select {
     padding: 0;
 }
 
-.sproutaddressfield-modal {
+.sprout-address-modal {
     overflow: visible;
     min-width: 380px!important;
     height: auto !important;
     min-height: 0 !important;
 }
 
-.modal .sproutaddressfield-body {
+.modal .sprout-address-body {
     padding: 0;
 }
 
-.sproutaddressfield-body .meta {
+.sprout-address-body .meta {
     background-color: #fff;
 }
 
-.sproutaddressfield-body .meta .field .heading {
+.sprout-address-body .meta .field .heading {
     border-right: 1px solid #eeeeee;
 }

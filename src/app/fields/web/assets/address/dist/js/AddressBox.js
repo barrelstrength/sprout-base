@@ -95,7 +95,7 @@ if (typeof Craft.SproutBase === typeof undefined) {
                 this.$addressFormat.removeClass('hidden');
             }
 
-            this.$addressForm = this.$addressBox.find('.sproutaddressfield-form-fields');
+            this.$addressForm = this.$addressBox.find('.sproutfields-address-formfields');
 
             this.getAddressFormFields();
 
@@ -114,7 +114,7 @@ if (typeof Craft.SproutBase === typeof undefined) {
 
             this.$target = $(ev.currentTarget);
 
-            var countryCode = this.$addressForm.find('.sproutaddressfield-country-select select').val();
+            var countryCode = this.$addressForm.find('.sprout-address-country-select select').val();
 
             this.modal = new Craft.SproutBase.EditAddressModal(this.$addressForm, {
                 onSubmit: $.proxy(this, 'getAddressDisplayHtml'),
@@ -193,7 +193,7 @@ if (typeof Craft.SproutBase === typeof undefined) {
 
             self.addressInfoId = null;
 
-            this.$addressBox.find('.sproutaddressfield-update-onchange-field').remove();
+            this.$addressBox.find('.sprout-address-onchange-country').remove();
 
             this.getAddressFormFields();
         },

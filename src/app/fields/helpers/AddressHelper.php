@@ -295,7 +295,7 @@ class AddressHelper
     {
         return Craft::$app->view->renderTemplate(
             $this->getBaseAddressFieldPath().'address/_components/hidden', [
-            'class' => 'sproutaddressfield-address-id',
+            'class' => 'sprout-address-id',
             'name' => $this->namespace,
             'inputName' => 'id',
             'value' => $this->addressModel->id
@@ -316,8 +316,7 @@ class AddressHelper
 
         return Craft::$app->view->renderTemplate(
             $this->getBaseAddressFieldPath().'address/_components/select-country', [
-                'id' => 'sproutaddressfield-country-select',
-                'fieldClass' => 'sproutaddressfield-country-select',
+                'fieldClass' => 'sprout-address-country-select',
                 'label' => $this->renderAddressLabel('Country'),
                 'name' => $this->namespace,
                 'inputName' => 'countryCode',
@@ -351,7 +350,7 @@ class AddressHelper
 
         return Craft::$app->view->renderTemplate(
             $this->getBaseAddressFieldPath().'address/_components/text', [
-                'fieldClass' => 'sproutaddressfield-update-onchange-field',
+                'fieldClass' => 'sprout-address-onchange-country',
                 'label' => $label,
                 'name' => $this->namespace,
                 'inputName' => $addressName,
@@ -372,7 +371,7 @@ class AddressHelper
 
         return Craft::$app->view->renderTemplate(
             $this->getBaseAddressFieldPath().'address/_components/text', [
-                'fieldClass' => 'sproutaddressfield-update-onchange-field',
+                'fieldClass' => 'sprout-address-onchange-country',
                 'label' => $this->renderAddressLabel('Sorting Code'),
                 'name' => $this->namespace,
                 'inputName' => 'sortingCode',
@@ -393,7 +392,7 @@ class AddressHelper
 
         return Craft::$app->view->renderTemplate(
             $this->getBaseAddressFieldPath().'address/_components/text', [
-                'fieldClass' => 'sproutaddressfield-update-onchange-field',
+                'fieldClass' => 'sprout-address-onchange-country',
                 'label' => $this->renderAddressLabel($this->addressFormatRepository->getLocalityType()),
                 'name' => $this->namespace,
                 'inputName' => 'locality',
@@ -414,7 +413,7 @@ class AddressHelper
 
         return Craft::$app->view->renderTemplate(
             $this->getBaseAddressFieldPath().'address/_components/text', [
-                'fieldClass' => 'sproutaddressfield-update-onchange-field',
+                'fieldClass' => 'sprout-address-onchange-country',
                 'label' => $this->renderAddressLabel($this->addressFormatRepository->getDependentLocalityType()),
                 'name' => $this->namespace,
                 'inputName' => 'dependentLocality',
@@ -438,7 +437,7 @@ class AddressHelper
         if ($states && !empty($states)) {
             return Craft::$app->view->renderTemplate(
                 $this->getBaseAddressFieldPath().'address/_components/select', [
-                    'fieldClass' => 'sproutaddressfield-update-onchange-field',
+                    'fieldClass' => 'sprout-address-onchange-country',
                     'label' => $this->renderAddressLabel($this->addressFormatRepository->getAdministrativeAreaType()),
                     'name' => $this->namespace,
                     'inputName' => 'administrativeAreaCode',
@@ -451,7 +450,7 @@ class AddressHelper
 
         return Craft::$app->view->renderTemplate(
             $this->getBaseAddressFieldPath().'address/_components/text', [
-                'fieldClass' => 'sproutaddressfield-update-onchange-field',
+                'fieldClass' => 'sprout-address-onchange-country',
                 'label' => $this->renderAddressLabel($this->addressFormatRepository->getAdministrativeAreaType()),
                 'name' => $this->namespace,
                 'inputName' => 'administrativeAreaCode',
@@ -472,7 +471,7 @@ class AddressHelper
 
         return Craft::$app->view->renderTemplate(
             $this->getBaseAddressFieldPath().'address/_components/text', [
-                'fieldClass' => 'sproutaddressfield-update-onchange-field',
+                'fieldClass' => 'sprout-address-onchange-country',
                 'label' => $this->renderAddressLabel($this->addressFormatRepository->getPostalCodeType()),
                 'name' => $this->namespace,
                 'inputName' => 'postalCode',

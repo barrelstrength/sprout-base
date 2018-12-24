@@ -17,19 +17,19 @@
         {% endif %}
     >
         <div class='address-add-button hidden'>
-            <a class='btn add icon dashed sproutaddressfield-edit'
+            <a class='btn add icon dashed sprout-address-edit'
                href='#'>{{ "Add Address"|t('sprout-base') }}</a>
         </div>
         <div class='address-edit-buttons hidden'>
-            <a class='small btn right icon sproutaddressfield-edit clear-button'
+            <a class='small btn right icon sprout-address-edit clear-button'
                href='#'>{{ "Clear"|t('sprout-base') }}</a>
-            <a class='small btn right icon sproutaddressfield-edit update-button'
+            <a class='small btn right icon sprout-address-edit update-button'
                href='#'>{{ "Edit"|t('sprout-base') }}</a>
         </div>
         <div class='address-format hidden'>
             {{ addressDisplayHtml }}
         </div>
-        <div class='sproutaddressfield-form-fields hidden'>
+        <div class='sproutfields-address-formfields hidden'>
             <input type="hidden" name="{{ field.handle }}[delete]"/>
             <input type="hidden" name="{{ field.handle }}[fieldId]" value="{{ fieldId }}" />
             {{ countryInputHtml }}
