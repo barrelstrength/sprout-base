@@ -5,10 +5,10 @@
 
     {% set addressInput %}
 
-        <div class="sproutaddressfield-input-wrapper">
+        <div class="sprout-address-input-wrapper">
 
             {% if field.displayPrefix %}
-                <div class="sproutaddressfield-input sproutaddressfield-input-prefix">
+                <div class="sprout-address-input sprout-address-input-prefix">
                     {{ forms.textField({
                         label: 'Prefix'|t('sprout-fields'),
                         name: name ~ '[address][prefix]',
@@ -17,7 +17,7 @@
                 </div>
             {% endif %}
 
-            <div class="sproutaddressfield-input sproutaddressfield-input-firstname">
+            <div class="sprout-address-input sprout-address-input-firstname">
                 {{ forms.textField({
                     label: 'First'|t('sprout-fields'),
                     name: name ~ '[address][firstName]',
@@ -26,7 +26,7 @@
             </div>
 
             {% if field.displayMiddleName %}
-                <div class="sproutaddressfield-input sproutaddressfield-input-middlename">
+                <div class="sprout-address-input sprout-address-input-middlename">
                     {{ forms.textField({
                         label: 'Middle'|t('sprout-fields'),
                         name: name ~ '[address][middleName]',
@@ -35,7 +35,7 @@
                 </div>
             {% endif %}
 
-            <div class="sproutaddressfield-input sproutaddressfield-input-lastname">
+            <div class="sprout-address-input sprout-address-input-lastname">
                 {{ forms.textField({
                     label: 'Last'|t('sprout-fields'),
                     name: name ~ '[address][lastName]',
@@ -44,7 +44,7 @@
             </div>
 
             {% if field.displaySuffix %}
-                <div class="sproutaddressfield-input sproutaddressfield-input-suffix">
+                <div class="sprout-address-input sprout-address-input-suffix">
                     {{ forms.textField({
                         label: 'Suffix'|t('sprout-fields'),
                         name: name ~ '[address][suffix]',
@@ -68,13 +68,13 @@
 {% endif %}
 
 <style>
-    .sproutaddressfield-input-wrapper {
+    .sprout-address-input-wrapper {
         display: flex;
         flex-direction: row;
         justify-content: space-between;
     }
 
-    .sproutaddressfield-input {
+    .sprout-address-input {
         flex-grow: 1;
         margin-right: 10px;
         width: 26%;
@@ -84,44 +84,44 @@
         margin-bottom: 0;
     }
 
-    .sproutaddressfield-input .heading > label {
+    .sprout-address-input .heading > label {
         font-weight: normal;
     }
 
-    .sproutaddressfield-input:last-of-type {
+    .sprout-address-input:last-of-type {
         margin-right: 0;
     }
 
-    .sproutaddressfield-input-prefix,
-    .sproutaddressfield-input-suffix {
+    .sprout-address-input-prefix,
+    .sprout-address-input-suffix {
         width: 11%;
     }
 
     @media (max-width: 600px) {
-        .sproutaddressfield-input-wrapper {
+        .sprout-address-input-wrapper {
             flex-direction: column;
         }
 
-        .sproutaddressfield-input {
+        .sprout-address-input {
             flex-grow: 1;
             margin-left: 0;
             margin-top: 10px;
             width: 100%;
         }
 
-        .sproutaddressfield-input .heading,
-        .sproutaddressfield-input .input {
+        .sprout-address-input .heading,
+        .sprout-address-input .input {
             float: left;
         }
 
-        .sproutaddressfield-input .heading {
+        .sprout-address-input .heading {
             padding-top: 6px;
             padding-right: 2%;
             text-align: right;
             width: 20%;
         }
 
-        .sproutaddressfield-input .input {
+        .sprout-address-input .input {
             width: 78%;
         }
     }

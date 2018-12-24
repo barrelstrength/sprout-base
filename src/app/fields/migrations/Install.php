@@ -36,7 +36,7 @@ class Install extends Migration
                 'siteId' => $this->integer(),
                 'fieldId' => $this->integer(),
                 'countryCode' => $this->string(),
-                'administrativeArea' => $this->string(),
+                'administrativeAreaCode' => $this->string(),
                 'locality' => $this->string(),
                 'dependentLocality' => $this->string(),
                 'postalCode' => $this->string(),

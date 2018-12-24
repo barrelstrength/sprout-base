@@ -15,8 +15,8 @@ Craft.SproutBase.EditAddressModal = Garnish.Modal.extend(
 
             this.setSettings(settings, Garnish.Modal.defaults);
 
-            this.$form = $('<form class="sproutaddress-modal modal fitted" method="post" accept-charset="UTF-8"/>').appendTo(Garnish.$bod);
-            this.$body = $('<div class="body sproutaddress-body"></div>').appendTo(this.$form);
+            this.$form = $('<form class="sprout-address-modal modal fitted" method="post" accept-charset="UTF-8"/>').appendTo(Garnish.$bod);
+            this.$body = $('<div class="body sprout-address-body"></div>').appendTo(this.$form);
             this.$bodyMeta = $('<div class="meta"></div>').appendTo(this.$body);
 
             this.$addressForm = $addressForm;
@@ -44,29 +44,31 @@ Craft.SproutBase.EditAddressModal = Garnish.Modal.extend(
 
             var self = this;
 
-            this.addListener('.sproutaddress-country-select select', 'change', function(ev) {
+            this.addListener('.sprout-address-country-select select', 'change', function(ev) {
                 this.changeFormInput(ev.currentTarget);
             });
 
             // Select the country dropdown again for some reason it does not get right value at the form box
-            this.$form.find(".sproutaddress-country-select select").val(this.settings.countryCode);
+            this.$form.find(".sprout-address-country-select select").val(this.settings.countryCode);
 
             this.base(this.$form, settings);
         },
+
         changeFormInput: function(target) {
+
             var $target = $(target);
             var countryCode = $(target).val();
-            var $parents = $target.parents('.sproutaddress-body');
+            var $parents = $target.parents('.sprout-address-body');
 
             var self = this;
-            Craft.postActionRequest('sprout/fields-address/change-form', {
+            Craft.postActionRequest('sprout/fields-address/update-address-form-html', {
                 countryCode: countryCode,
                 namespace: this.settings.namespace
             }, $.proxy(function(response) {
-                $parents.find('.field-address-input').remove();
+                $parents.find('.sprout-address-onchange-country').remove();
 
-                var $addressIdInput = $parents.find('.field-address-id');
-                $parents.find('.field-address-id').remove();
+                var $addressIdInput = $parents.find('.sprout-address-id');
+                $parents.find('.sprout-address-id').remove();
 
                 if (response.html) {
                     $parents.find('.meta').append(response.html);
@@ -76,12 +78,15 @@ Craft.SproutBase.EditAddressModal = Garnish.Modal.extend(
                 $parents.find('.meta').append($addressIdInput);
             }, this))
         },
+
         enableUpdateBtn: function() {
             this.$updateBtn.removeClass('disabled');
         },
+
         disableUpdateBtn: function() {
             this.$updateBtn.addClass('disabled');
         },
+
         showFooterSpinner: function() {
             this.$footerSpinner.removeClass('hidden');
         },
@@ -89,13 +94,15 @@ Craft.SproutBase.EditAddressModal = Garnish.Modal.extend(
         hideFooterSpinner: function() {
             this.$footerSpinner.addClass('hidden');
         },
+
         updateAddress: function() {
 
             var namespace = this.settings.namespace;
 
             var formKeys = [
+                'fieldId',
                 'countryCode',
-                'administrativeArea',
+                'administrativeAreaCode',
                 'locality',
                 'dependentLocality',
                 'postalCode',

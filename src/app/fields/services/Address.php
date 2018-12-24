@@ -18,42 +18,48 @@ class Address extends Component
 {
     const EVENT_ON_SAVE_ADDRESS = 'onSaveAddressEvent';
 
+    const DEFAULT_COUNTRY  = 'US';
+    const DEFAULT_LANGUAGE = 'en';
+
     /**
      * @param string   $namespace
      * @param int|null $fieldId
      *
-     * @return bool
+     * @return int|null
      * @throws \Throwable
      * @throws \yii\db\Exception
      * @throws \yii\db\StaleObjectException
      */
     public function saveAddressByPost($namespace = 'address', int $fieldId = null)
     {
-        if (Craft::$app->getRequest()->getBodyParam($namespace) != null) {
-            $addressInfo = Craft::$app->getRequest()->getBodyParam($namespace);
-
-            if ($fieldId != null) {
-                $addressInfo['fieldId'] = $fieldId;
-            }
-
-            $isDelete = $addressInfo['delete'] ?? null;
-            $addressId = $addressInfo['id'] ?? null;
-
-            if ($isDelete && $addressId) {
-                SproutBase::$app->addressField->deleteAddressById($addressId);
-
-                return false;
-            }
-            unset($addressInfo['delete']);
-            
-            $addressInfoModel = new AddressModel($addressInfo);
-
-            if ($addressInfoModel->validate() == true && $this->saveAddress($addressInfoModel)) {
-                return $addressInfoModel->id;
-            }
+        if (Craft::$app->getRequest()->getBodyParam($namespace) === null) {
+            return null;
         }
 
-        return false;
+        $addressInfo = Craft::$app->getRequest()->getBodyParam($namespace);
+
+        if ($fieldId !== null) {
+            $addressInfo['fieldId'] = $fieldId;
+        }
+
+        $isDelete = $addressInfo['delete'] ?? null;
+        $addressId = $addressInfo['id'] ?? null;
+
+        if ($isDelete !== null && $addressId !== null) {
+            SproutBase::$app->addressField->deleteAddressById($addressId);
+
+            return null;
+        }
+
+        unset($addressInfo['delete']);
+
+        $addressModel = new AddressModel($addressInfo);
+
+        if ($addressModel->validate() == true && $this->saveAddress($addressModel)) {
+            return $addressModel->id;
+        }
+
+        return null;
     }
 
     /**
@@ -64,7 +70,7 @@ class Address extends Component
      * @throws \Exception
      * @throws \yii\db\Exception
      */
-    public function saveAddress(AddressModel $model, $source = '')
+    public function saveAddress(AddressModel $model, $source = ''): bool
     {
         $result = false;
 
@@ -124,9 +130,10 @@ class Address extends Component
      *
      * @return AddressModel
      */
-    public function getAddressById($id)
+    public function getAddressById($id): AddressModel
     {
         $model = new AddressModel();
+
         if ($record = AddressRecord::findOne($id)) {
             $model->setAttributes($record->getAttributes(), false);
         }
@@ -134,7 +141,7 @@ class Address extends Component
         return $model;
     }
 
-    public function getAddress($elementId, $siteId, $fieldId)
+    public function getAddress($elementId, $siteId, $fieldId): AddressModel
     {
         $model = new AddressModel();
 

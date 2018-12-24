@@ -11,6 +11,9 @@ use craft\base\Model;
 
 /**
  * Class Name
+ *
+ * @property string $friendlyName
+ * @property string $fullNameExtended
  */
 class Name extends Model
 {
@@ -61,7 +64,7 @@ class Name extends Model
     /**
      * @return string
      */
-    public function getFriendlyName()
+    public function getFriendlyName(): string
     {
 
         return trim($this->firstName);
@@ -70,13 +73,13 @@ class Name extends Model
     /**
      * @return string
      */
-    public function getFullName()
+    public function getFullName(): string
     {
         $firstName = trim($this->firstName);
         $lastName = trim($this->lastName);
 
         if (!$firstName && !$lastName) {
-            return null;
+            return '';
         }
 
         $name = $firstName;
@@ -93,7 +96,7 @@ class Name extends Model
     /**
      * @return string
      */
-    public function getFullNameExtended()
+    public function getFullNameExtended(): string
     {
 
         $this->fullName = '';

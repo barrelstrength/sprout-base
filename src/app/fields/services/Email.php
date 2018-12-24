@@ -65,10 +65,8 @@ class Email extends Component
             if (preg_match($customPattern, $value)) {
                 return true;
             }
-        } else {
-            if (!filter_var($value, FILTER_VALIDATE_EMAIL) === false) {
-                return true;
-            }
+        } else if (!filter_var($value, FILTER_VALIDATE_EMAIL) === false) {
+            return true;
         }
 
         return false;
@@ -83,7 +81,7 @@ class Email extends Component
      *
      * @return bool
      */
-    public function validateUniqueEmailAddress($value, $element, $field)
+    public function validateUniqueEmailAddress($value, $element, $field): bool
     {
         $fieldHandle = $element->fieldColumnPrefix.$field->handle;
         $contentTable = $element->contentTable;
@@ -113,7 +111,7 @@ class Email extends Component
      *
      * @return string
      */
-    public function getErrorMessage($fieldName, $field)
+    public function getErrorMessage($fieldName, $field): string
     {
         if ($field->customPatternToggle && $field->customPatternErrorMessage) {
             return Craft::t('sprout-base', $field->customPatternErrorMessage);

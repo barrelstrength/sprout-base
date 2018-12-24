@@ -16,7 +16,7 @@ class SproutFieldsVariable
      *
      * @return array
      */
-    public function getCountries()
+    public function getCountries(): array
     {
         return SproutBase::$app->phoneField->getCountries();
     }

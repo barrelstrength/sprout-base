@@ -1,14 +1,17 @@
-.sproutform-exampleinput-customhtml {
+.sproutforms-exampleinput-address,
+.sproutforms-exampleinput-customhtml {
     display: flex;
     flex-direction: row;
     align-items: center;
 }
-.sproutform-exampleinput-customhtml .customhtml-icon svg {
+.sproutforms-exampleinput-address .address-icon svg,
+.sproutforms-exampleinput-customhtml .customhtml-icon svg{
     height:48px;
     width:48px;
     fill: #ccc;
 }
-.sproutform-exampleinput-customhtml p {
+.sproutforms-exampleinput-address p,
+.sproutforms-exampleinput-customhtml p {
     flex-grow: 1;
     margin-left: 20px;
     font-style: italic;

@@ -26,7 +26,6 @@ class AddressFieldAsset extends AssetBundle
 
         $this->js = [
             'js/AddressBox.js',
-            'js/AddressForm.js',
             'js/EditAddressModal.js'
         ];
 

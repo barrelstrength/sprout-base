@@ -7,75 +7,110 @@
 
 namespace barrelstrength\sproutbase\app\fields\models;
 
+use CommerceGuys\Addressing\AddressFormat\AddressFormatRepository;
+use CommerceGuys\Intl\Country\Country;
+use CommerceGuys\Addressing\Subdivision\Subdivision;
 use Craft;
 use barrelstrength\sproutbase\app\fields\helpers\AddressHelper;
 use craft\base\Model;
 
 /**
  * Class Address
+ *
+ * @property string $addressDisplayHtml
+ * @property string $addressHtml
  */
 class Address extends Model
 {
-    protected $addressHelper;
-
+    /**
+     * @var int
+     */
     public $id;
+
+    /**
+     * @var int
+     */
     public $elementId;
+
+    /**
+     * @var int
+     */
     public $siteId;
+
+    /**
+     * @var int
+     */
     public $fieldId;
+
+    /**
+     * @var string
+     */
     public $countryCode;
+
+    /**
+     * @var string
+     */
+    public $countryThreeLetterCode;
+
+    /**
+     * @var string
+     */
+    public $currencyCode;
+
+    /**
+     * @var string
+     */
+    public $locale;
+
+    /**
+     * @var string
+     */
     public $administrativeArea;
+
+    /**
+     * @var string
+     */
+    public $administrativeAreaCode;
+
+    /**
+     * @var string
+     */
     public $locality;
+
+    /**
+     * @var string
+     */
     public $dependentLocality;
+
+    /**
+     * @var string
+     */
     public $postalCode;
+
+    /**
+     * @var string
+     */
     public $sortingCode;
+
+    /**
+     * @var string
+     */
     public $address1;
+
+    /**
+     * @var string
+     */
     public $address2;
+
+    /**
+     * @var Country
+     */
     public $country;
 
-    public function init()
-    {
-        $this->addressHelper = new AddressHelper();
-
-        parent::init();
-    }
-
-    /**
-     * @return array
-     */
-    public function rules()
-    {
-        $rules = parent::rules();
-
-        $rules[] = ['postalCode', 'validatePostalCode'];
-        $rules[] = ['address1', 'required'];
-
-        return $rules;
-    }
-
-    /**
-     * @todo - this method exists in this class and in the AddressHelper class. Refactor into one method and cleanup.
-     *
-     * @param $attribute
-     */
-    public function validatePostalCode($attribute)
+    public function __toString()
     {
         $addressHelper = new AddressHelper();
-
-        $postalCode = $this->{$attribute};
-
-        if ($postalCode == null) {
-            return;
-        }
-
-        $countryCode = $this->countryCode;
-
-        if (!$addressHelper->validatePostalCode($countryCode, $postalCode)) {
-            $postalName = $addressHelper->getPostalName($countryCode);
-
-            $this->addError($attribute, Craft::t('sprout-base', '{postalName} is not a valid.', [
-                'postalName' => $postalName,
-            ]));
-        }
+        return $addressHelper->getAddressDisplayHtml($this);
     }
 
     /**
@@ -83,7 +118,7 @@ class Address extends Model
      *
      * @return string
      */
-    public function getAddressHtml()
+    public function getAddressDisplayHtml(): string
     {
         if (!$this->id) {
             return '';
@@ -91,6 +126,57 @@ class Address extends Model
 
         $addressHelper = new AddressHelper();
 
-        return $addressHelper->getAddressWithFormat($this);
+        return $addressHelper->getAddressDisplayHtml($this);
+    }
+
+    /**
+     * @todo - Add support for Symfony validation library
+     *       https://github.com/commerceguys/addressing
+     *
+     * @return array
+     */
+    public function rules(): array
+    {
+        $rules = parent::rules();
+
+        $rules[] = ['postalCode', 'validatePostalCode'];
+        $rules[] = [
+            'address1',
+            'required',
+            'message' => Craft::t('sprout-base', 'Address 1 cannot be blank.')
+        ];
+
+        return $rules;
+    }
+
+    /**
+     * @param $attribute
+     *
+     * @return bool
+     */
+    public function validatePostalCode($attribute): bool
+    {
+        $postalCode = $this->{$attribute};
+
+        if ($postalCode === null) {
+            return true;
+        }
+
+        $addressFormatRepository = new AddressFormatRepository();
+        $addressFormat = $addressFormatRepository->get($this->countryCode);
+
+        if ($addressFormat->getPostalCodePattern() !== null) {
+            $pattern = $addressFormat->getPostalCodePattern();
+
+            if (preg_match('/^'.$pattern.'$/', $postalCode)) {
+                return true;
+            }
+        }
+
+        $this->addError($attribute, Craft::t('sprout-base', '{postalName} is not a valid.', [
+            'postalName' => ucwords($addressFormat->getPostalCodeType()),
+        ]));
+
+        return true;
     }
 }

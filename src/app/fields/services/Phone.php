@@ -18,6 +18,8 @@ use Craft;
 /**
  * Class PhoneService
  *
+ *
+ * @property array $countries
  */
 class Phone extends Component
 {
@@ -77,7 +79,7 @@ class Phone extends Component
     /**
      * @return array
      */
-    public function getCountries()
+    public function getCountries(): array
     {
         $phoneUtil = PhoneNumberUtil::getInstance();
         $regions = $phoneUtil->getSupportedRegions();

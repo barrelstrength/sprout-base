@@ -12,6 +12,7 @@ use craft\base\Field;
 use craft\web\Controller as BaseController;
 
 use barrelstrength\sproutbase\SproutBase;
+use yii\web\Response;
 
 class FieldsController extends BaseController
 {
@@ -21,7 +22,7 @@ class FieldsController extends BaseController
      * @return \yii\web\Response
      * @throws \yii\web\BadRequestHttpException
      */
-    public function actionEmailValidate()
+    public function actionEmailValidate(): Response
     {
         $this->requirePostRequest();
         $this->requireAcceptsJson();
@@ -56,7 +57,7 @@ class FieldsController extends BaseController
      * @return \yii\web\Response
      * @throws \yii\web\BadRequestHttpException
      */
-    public function actionUrlValidate()
+    public function actionUrlValidate(): Response
     {
         $this->requirePostRequest();
         $this->requireAcceptsJson();
@@ -89,7 +90,7 @@ class FieldsController extends BaseController
      * @return \yii\web\Response
      * @throws \yii\web\BadRequestHttpException
      */
-    public function actionPhoneValidate()
+    public function actionPhoneValidate(): Response
     {
         $this->requirePostRequest();
         $this->requireAcceptsJson();
@@ -108,7 +109,7 @@ class FieldsController extends BaseController
      * @return \yii\web\Response
      * @throws \yii\web\BadRequestHttpException
      */
-    public function actionRegularExpressionValidate()
+    public function actionRegularExpressionValidate(): Response
     {
         $this->requirePostRequest();
         $this->requireAcceptsJson();

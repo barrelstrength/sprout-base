@@ -24,7 +24,7 @@ class Utilities extends Component
      *
      * @return string
      */
-    public function getFieldContext($field, Element $element)
+    public function getFieldContext($field, Element $element): string
     {
         $context = 'global';
 
@@ -45,7 +45,7 @@ class Utilities extends Component
      *
      * @return bool
      */
-    public function isAnyOptionsSelected($options, $value = null)
+    public function isAnyOptionsSelected($options, $value = null): bool
     {
         if (!empty($options)) {
             foreach ($options as $option) {
@@ -61,7 +61,7 @@ class Utilities extends Component
     /**
      * @return string
      */
-    public function formatErrors()
+    public function formatErrors(): string
     {
         $errors = $this->getErrors();
 
@@ -79,32 +79,6 @@ class Utilities extends Component
         }
 
         return $text;
-    }
-
-    /**
-     * @param Predefined $field
-     * @param Element    $element
-     *
-     * @throws \Throwable
-     */
-    public function processPredefinedField($field, $element)
-    {
-        try {
-            $value = Craft::$app->view->renderObjectTemplate($field->fieldFormat, $element);
-
-            $fieldColumnPrefix = $element->getFieldColumnPrefix();
-            $column = $fieldColumnPrefix.$field->handle;
-
-            Craft::$app->db->createCommand()->update($element->contentTable, [
-                $column => $value,
-            ], 'elementId=:elementId AND siteId=:siteId', [
-                ':elementId' => $element->id,
-                ':siteId' => $element->siteId
-            ])
-                ->execute();
-        } catch (\Exception $e) {
-            SproutBase::error($e->getMessage());
-        }
     }
 }
 
