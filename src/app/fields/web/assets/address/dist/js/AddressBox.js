@@ -141,10 +141,29 @@ if (typeof Craft.SproutBase === typeof undefined) {
 
             self.addressInfoId = null;
 
-            this._getAddressFormFields();
+            this.emptyForm();
+            this.getAddressFormFields();
         },
+        emptyForm: function() {
 
-        queryGoogleMaps: function(ev) {
+            var formKeys = [
+                'countryCode',
+                'administrativeArea',
+                'locality',
+                'dependentLocality',
+                'postalCode',
+                'sortingCode',
+                'address1',
+                'address2'
+            ];
+
+            var self = this;
+
+            $.each(formKeys, function(index, el) {
+                self.$addressBox.find("[name='" + self.settings.namespace + "[" + el + "]']").attr('value', '')
+            });
+        },
+        queryAddressCoordinatesFromGoogleMaps: function(ev) {
 
             ev.preventDefault();
 
