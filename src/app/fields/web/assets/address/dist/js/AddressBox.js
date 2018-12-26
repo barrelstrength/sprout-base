@@ -193,11 +193,28 @@ if (typeof Craft.SproutBase === typeof undefined) {
 
             self.addressInfoId = null;
 
-            this.$addressBox.find('.sproutaddressfield-update-onchange-field').remove();
-
+            this.emptyForm();
             this.getAddressFormFields();
         },
+        emptyForm: function() {
 
+            var formKeys = [
+                'countryCode',
+                'administrativeArea',
+                'locality',
+                'dependentLocality',
+                'postalCode',
+                'sortingCode',
+                'address1',
+                'address2'
+            ];
+
+            var self = this;
+
+            $.each(formKeys, function(index, el) {
+                self.$addressBox.find("[name='" + self.settings.namespace + "[" + el + "]']").attr('value', '')
+            });
+        },
         queryAddressCoordinatesFromGoogleMaps: function(ev) {
 
             ev.preventDefault();
