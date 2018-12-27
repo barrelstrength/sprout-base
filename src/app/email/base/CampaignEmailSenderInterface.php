@@ -13,11 +13,19 @@ interface CampaignEmailSenderInterface
 {
     /**
      * Gives a mailer the responsibility to send Campaign Emails
-     * if they implement CampaignEmailSenderInterface
      *
      * @param CampaignEmail $campaignEmail
      *
      * @return mixed
      */
     public function sendCampaignEmail(CampaignEmail $campaignEmail);
+
+    /**
+     * Gives a mailer the responsibility to send Test Campaign Emails
+     *
+     * @param CampaignEmail $campaignEmail
+     *
+     * @return mixed
+     */
+    public function sendTestCampaignEmail(CampaignEmail $campaignEmail);
 }
