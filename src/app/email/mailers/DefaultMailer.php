@@ -92,12 +92,16 @@ class DefaultMailer extends Mailer implements NotificationEmailSenderInterface
         $message = $mailer->getMessage($notificationEmail);
 
         $externalPaths = [];
+
+        /**
+         * @var $object Element
+         */
         $object = $notificationEmail->getEventObject();
 
         // Adds support for attachments
         if ($notificationEmail->enableFileAttachments) {
-            if ($object instanceof Element && method_exists($object, 'getFields')) {
-                foreach ($object->getFields() as $field) {
+            if ($object instanceof Element && method_exists($object, 'getFieldLayout')) {
+                foreach ($object->getFieldLayout()->getFields() as $field) {
                     if (get_class($field) === FileUpload::class OR get_class($field) === Assets::class) {
                         $query = $object->{$field->handle};
 
