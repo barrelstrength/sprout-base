@@ -4,8 +4,8 @@ namespace barrelstrength\sproutbase\app\email\base;
 
 use barrelstrength\sproutbase\app\email\models\SimpleRecipient;
 use barrelstrength\sproutbase\app\email\models\SimpleRecipientList;
-use barrelstrength\sproutlists\records\Lists as ListsRecord;
-use barrelstrength\sproutlists\records\Subscribers;
+use barrelstrength\sproutlists\records\SubscriberList as ListsRecord;
+use barrelstrength\sproutlists\records\Subscriber;
 use Craft;
 use craft\helpers\Json;
 use Egulias\EmailValidator\EmailValidator;
@@ -244,7 +244,7 @@ trait RecipientsTrait
             foreach ($listRecords as $listRecord) {
                 if (!empty($listRecord->subscribers)) {
 
-                    /** @var Subscribers $subscribers */
+                    /** @var Subscriber $subscribers */
                     $subscribers = $listRecord->subscribers;
 
                     /** @var SimpleRecipient $subscriber */
