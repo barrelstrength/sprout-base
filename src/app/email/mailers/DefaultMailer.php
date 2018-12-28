@@ -13,9 +13,11 @@ use barrelstrength\sproutforms\fields\formfields\FileUpload;
 use barrelstrength\sproutlists\listtypes\SubscriberListType;
 use barrelstrength\sproutlists\SproutLists;
 use craft\base\Element;
+use craft\base\LocalVolumeInterface;
 use craft\elements\Asset;
 use craft\elements\db\AssetQuery;
 use craft\fields\Assets;
+use craft\helpers\FileHelper;
 use craft\helpers\Json;
 use craft\helpers\Template;
 use Craft;
@@ -249,7 +251,14 @@ class DefaultMailer extends Mailer implements NotificationEmailSenderInterface
      */
     protected function getAssetFilePath(Asset $asset)
     {
-        return $asset->getVolume()->getRootPath().$asset->getFolder()->path.DIRECTORY_SEPARATOR.$asset->filename;
+        /**
+         * @var $volume LocalVolumeInterface
+         */
+        $volume = $asset->getVolume();
+
+        $path = $volume->getRootPath() . DIRECTORY_SEPARATOR . $asset->getPath();
+
+        return FileHelper::normalizePath($path);
     }
 
     /**
