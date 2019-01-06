@@ -18,6 +18,7 @@ use craft\base\LocalVolumeInterface;
 use craft\elements\Asset;
 use craft\elements\db\AssetQuery;
 use craft\fields\Assets;
+use craft\helpers\FileHelper;
 use craft\helpers\Json;
 use craft\helpers\Template;
 use Craft;
@@ -251,10 +252,14 @@ class DefaultMailer extends Mailer implements NotificationEmailSenderInterface
      */
     protected function getLocalAssetFilePath(Asset $asset): string
     {
-        /** @var LocalVolumeInterface $volume */
+        /**
+         * @var $volume LocalVolumeInterface
+         */
         $volume = $asset->getVolume();
 
-        return $volume->getRootPath().$asset->getFolder()->path.DIRECTORY_SEPARATOR.$asset->filename;
+        $path = $volume->getRootPath() . DIRECTORY_SEPARATOR . $asset->getPath();
+
+        return FileHelper::normalizePath($path);
     }
 
     /**
