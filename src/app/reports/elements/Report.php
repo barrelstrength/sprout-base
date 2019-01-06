@@ -24,6 +24,9 @@ use craft\validators\UniqueValidator;
 
 /**
  * SproutReports - Report element type
+ *
+ * @property string     $resultsError
+ * @property DataSource $dataSource
  */
 class Report extends Element
 {
@@ -141,7 +144,7 @@ class Report extends Element
      */
     public static function find(): ElementQueryInterface
     {
-        return new ReportQuery(get_called_class());
+        return new ReportQuery(static::class);
     }
 
     /**
@@ -311,12 +314,7 @@ class Report extends Element
     {
         $settings = $this->getSettings();
 
-        if (isset($settings[$name])) {
-
-            return $settings[$name];
-        }
-
-        return $default;
+        return $settings[$name] ?? $default;
     }
 
     /**

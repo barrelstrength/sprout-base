@@ -18,7 +18,7 @@ class Tag extends ElementImporter
     /**
      * @return mixed
      */
-    public function getModelName()
+    public function getModelName(): string
     {
         return TagElement::class;
     }
@@ -26,7 +26,7 @@ class Tag extends ElementImporter
     /**
      * @return bool
      */
-    public function hasSeedGenerator()
+    public function hasSeedGenerator(): bool
     {
         return true;
     }
@@ -38,7 +38,7 @@ class Tag extends ElementImporter
      * @throws \Twig_Error_Loader
      * @throws \yii\base\Exception
      */
-    public function getSeedSettingsHtml(SeedJob $seedJob)
+    public function getSeedSettingsHtml(SeedJob $seedJob): string
     {
         $groupsSelect = [];
 

@@ -11,7 +11,7 @@ class Number extends FieldImporter
     /**
      * @return string
      */
-    public function getModelName()
+    public function getModelName(): string
     {
         return NumberField::class;
     }

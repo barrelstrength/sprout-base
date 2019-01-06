@@ -9,6 +9,10 @@ use craft\events\RegisterComponentTypesEvent;
 use Craft;
 use craft\helpers\FileHelper;
 
+/**
+ *
+ * @property array $sproutImportBundles
+ */
 class Bundles extends Component
 {
     const EVENT_REGISTER_BUNDLE_TYPES = 'registerBundlesTypes';
@@ -74,7 +78,7 @@ class Bundles extends Component
      * @throws \yii\base\ErrorException
      * @throws \yii\base\Exception
      */
-    public function createTempFolder()
+    public function createTempFolder(): string
     {
         $folderPath = Craft::$app->getPath()->getTempAssetUploadsPath().'/sproutimport/';
 

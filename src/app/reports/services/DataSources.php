@@ -22,6 +22,10 @@ use yii\base\Exception;
  * Class DataSources
  *
  * @package Craft
+ *
+ * @property array    $allDataSources
+ * @property mixed    $dataSourcePlugins
+ * @property string[] $allDataSourceTypes
  */
 class DataSources extends Component
 {

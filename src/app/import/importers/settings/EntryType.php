@@ -14,7 +14,7 @@ class EntryType extends SettingsImporter
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return Craft::t('sprout-base', 'Entry Type');
     }
@@ -22,7 +22,7 @@ class EntryType extends SettingsImporter
     /**
      * @return string
      */
-    public function getModelName()
+    public function getModelName(): string
     {
         return EntryTypeModel::class;
     }

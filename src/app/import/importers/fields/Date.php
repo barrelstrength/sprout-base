@@ -11,7 +11,7 @@ class Date extends FieldImporter
     /**
      * @return string
      */
-    public function getModelName()
+    public function getModelName(): string
     {
         return DateField::class;
     }

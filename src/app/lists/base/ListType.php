@@ -7,6 +7,10 @@ use barrelstrength\sproutlists\elements\Subscriber;
 use barrelstrength\sproutlists\models\Subscription;
 use craft\base\Component;
 
+/**
+ *
+ * @property mixed $className
+ */
 abstract class ListType extends Component
 {
     /**

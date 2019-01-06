@@ -16,7 +16,7 @@ class Entry extends ElementImporter
     /**
      * @return mixed
      */
-    public function getModelName()
+    public function getModelName(): string
     {
         return EntryElement::class;
     }
@@ -24,7 +24,7 @@ class Entry extends ElementImporter
     /**
      * @return bool
      */
-    public function hasSeedGenerator()
+    public function hasSeedGenerator(): bool
     {
         return true;
     }
@@ -36,7 +36,7 @@ class Entry extends ElementImporter
      * @throws \Twig_Error_Loader
      * @throws \yii\base\Exception
      */
-    public function getSeedSettingsHtml(SeedJob $seedJob)
+    public function getSeedSettingsHtml(SeedJob $seedJob): string
     {
         $sections = [
             'channel' => 'Channel'
@@ -222,7 +222,7 @@ class Entry extends ElementImporter
         return $selects;
     }
 
-    public function getImporterDataKeys()
+    public function getImporterDataKeys(): array
     {
         return ['enableVersioning'];
     }

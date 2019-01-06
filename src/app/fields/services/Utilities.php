@@ -7,11 +7,8 @@
 
 namespace barrelstrength\sproutbase\app\fields\services;
 
-use barrelstrength\sproutbase\SproutBase;
-use barrelstrength\sproutfields\fields\Predefined;
 use craft\base\Component;
 use craft\base\Element;
-use Craft;
 
 
 class Utilities extends Component

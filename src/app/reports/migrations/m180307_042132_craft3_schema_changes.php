@@ -15,7 +15,7 @@ class m180307_042132_craft3_schema_changes extends Migration
      *
      * @throws \yii\base\NotSupportedException
      */
-    public function safeUp()
+    public function safeUp(): bool
     {
         // Update Reports Table columns
         if (!$this->db->columnExists('{{%sproutreports_reports}}', 'hasNameFormat')) {
@@ -97,7 +97,7 @@ class m180307_042132_craft3_schema_changes extends Migration
     /**
      * @inheritdoc
      */
-    public function safeDown()
+    public function safeDown(): bool
     {
         echo "m180307_042132_craft3_schema_changes cannot be reverted.\n";
         return false;

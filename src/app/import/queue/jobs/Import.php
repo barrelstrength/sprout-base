@@ -8,7 +8,6 @@ use barrelstrength\sproutbase\app\import\models\Weed;
 use craft\helpers\Json;
 use craft\queue\BaseJob;
 use Craft;
-use yii\base\Exception;
 use yii\helpers\VarDumper;
 
 class Import extends BaseJob

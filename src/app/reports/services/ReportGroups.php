@@ -11,6 +11,8 @@ use Craft;
  * Class ReportGroups
  *
  * @package barrelstrength\sproutreports\services
+ *
+ * @property array|\yii\db\ActiveRecord[] $allReportGroups
  */
 class ReportGroups extends Component
 {

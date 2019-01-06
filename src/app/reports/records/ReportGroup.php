@@ -13,6 +13,7 @@ use craft\db\ActiveRecord;
  * Class ReportGroup
  *
  * @property int    $id
+ * @property mixed  $reports
  * @property string $name
  *
  * @package barrelstrength\sproutbase\app\reports\records

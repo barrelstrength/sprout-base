@@ -140,7 +140,7 @@ abstract class Importer
      *
      * @return string
      */
-    abstract public function getName();
+    abstract public function getName(): string;
 
     /**
      * The primary model that the Importer supports
@@ -151,14 +151,14 @@ abstract class Importer
      * - \craft\models\Section::class
      * - barrelstrength\sproutbase\app\import\importers\settings\Field::class
      *
-     * @return mixed
+     * @return string
      */
-    abstract public function getModelName();
+    abstract public function getModelName(): string;
 
     /**
      * @return bool
      */
-    public function isElement()
+    public function isElement(): bool
     {
         return false;
     }
@@ -166,7 +166,7 @@ abstract class Importer
     /**
      * @return bool
      */
-    public function isSettings()
+    public function isSettings(): bool
     {
         return false;
     }
@@ -174,7 +174,7 @@ abstract class Importer
     /**
      * @return bool
      */
-    public function isField()
+    public function isField(): bool
     {
         return false;
     }
@@ -182,7 +182,7 @@ abstract class Importer
     /**
      * @return bool
      */
-    public function hasSeedGenerator()
+    public function hasSeedGenerator(): bool
     {
         return false;
     }
@@ -256,7 +256,7 @@ abstract class Importer
      *
      * @return array
      */
-    public function getImporterDataKeys()
+    public function getImporterDataKeys(): array
     {
         return [];
     }

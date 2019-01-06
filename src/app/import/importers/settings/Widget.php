@@ -14,7 +14,7 @@ class Widget extends SettingsImporter
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return Craft::t('sprout-base', 'Widget');
     }
@@ -22,7 +22,7 @@ class Widget extends SettingsImporter
     /**
      * @return string
      */
-    public function getModelName()
+    public function getModelName(): string
     {
         return WidgetModel::class;
     }

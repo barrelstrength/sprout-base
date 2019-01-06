@@ -13,7 +13,7 @@ class Entries extends FieldImporter
     /**
      * @return string
      */
-    public function getModelName()
+    public function getModelName(): string
     {
         return EntriesField::class;
     }

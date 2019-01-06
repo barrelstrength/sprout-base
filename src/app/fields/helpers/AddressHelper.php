@@ -86,7 +86,7 @@ class AddressHelper
      *
      * @return array
      */
-    public function getHighlightCountries($highlightCountries)
+    public function getHighlightCountries($highlightCountries): array
     {
         $countryRepository = new \CommerceGuys\Intl\Country\CountryRepository();
         $options = [];

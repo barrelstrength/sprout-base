@@ -27,7 +27,7 @@ abstract class ElementImporter extends Importer
      *
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         /**
          * @var $model Element
@@ -44,7 +44,7 @@ abstract class ElementImporter extends Importer
     /**
      * @return bool
      */
-    public function isElement()
+    public function isElement(): bool
     {
         return true;
     }
@@ -319,7 +319,7 @@ abstract class ElementImporter extends Importer
      *
      * @return string
      */
-    public function getSeedSettingsHtml(SeedJob $seedJob)
+    public function getSeedSettingsHtml(SeedJob $seedJob): string
     {
         return '';
     }

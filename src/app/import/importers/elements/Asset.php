@@ -8,7 +8,7 @@ use craft\elements\Asset as AssetElement;
 
 class Asset extends ElementImporter
 {
-    public function getName()
+    public function getName(): string
     {
         return Craft::t('sprout-base', 'Assets');
     }
@@ -16,7 +16,7 @@ class Asset extends ElementImporter
     /**
      * @return mixed
      */
-    public function getModelName()
+    public function getModelName(): string
     {
         return AssetElement::class;
     }

@@ -12,7 +12,7 @@ class Product extends ElementImporter
     /**
      * @return mixed|string
      */
-    public function getModelName()
+    public function getModelName(): string
     {
         return ProductElement::class;
     }
@@ -20,7 +20,7 @@ class Product extends ElementImporter
     /**
      * @return array
      */
-    public function getImporterDataKeys()
+    public function getImporterDataKeys(): array
     {
         return ['variants'];
     }

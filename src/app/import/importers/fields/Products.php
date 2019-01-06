@@ -13,7 +13,7 @@ class Products extends FieldImporter
     /**
      * @return string
      */
-    public function getModelName()
+    public function getModelName(): string
     {
         return ProductsField::class;
     }

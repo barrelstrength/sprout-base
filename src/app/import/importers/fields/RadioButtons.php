@@ -11,7 +11,7 @@ class RadioButtons extends FieldImporter
     /**
      * @return string
      */
-    public function getModelName()
+    public function getModelName(): string
     {
         return RadioButtonsField::class;
     }

@@ -14,7 +14,7 @@ abstract class SettingsImporter extends Importer
     /**
      * @return bool
      */
-    public function isSettings()
+    public function isSettings(): bool
     {
         return true;
     }

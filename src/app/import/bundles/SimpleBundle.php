@@ -36,7 +36,7 @@ class SimpleBundle extends Bundle
      *
      * @return string
      */
-    public function getSchemaFolder()
+    public function getSchemaFolder(): string
     {
         return SproutBase::getInstance()->getBasePath().DIRECTORY_SEPARATOR.'app/import/bundles/resources/simple/schema';
     }
@@ -48,7 +48,7 @@ class SimpleBundle extends Bundle
      *
      * @return string
      */
-    public function getSourceTemplateFolder()
+    public function getSourceTemplateFolder(): string
     {
         return SproutBase::getInstance()->getBasePath().DIRECTORY_SEPARATOR.'app/import/bundles/resources/simple/templates';
     }

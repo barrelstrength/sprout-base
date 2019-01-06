@@ -10,7 +10,7 @@ class Color extends FieldImporter
     /**
      * @return string
      */
-    public function getModelName()
+    public function getModelName(): string
     {
         return ColorField::class;
     }

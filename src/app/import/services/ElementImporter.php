@@ -13,6 +13,10 @@ use barrelstrength\sproutbase\app\import\base\ElementImporter as BaseElementImpo
 use barrelstrength\sproutbase\app\import\base\SettingsImporter as BaseSettingsImporter;
 use barrelstrength\sproutbase\app\import\base\SettingsImporter;
 
+/**
+ *
+ * @property array $elementDataKeys
+ */
 class ElementImporter extends Component
 {
     /**

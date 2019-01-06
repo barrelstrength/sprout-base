@@ -22,7 +22,7 @@ class Order extends ElementImporter
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return Craft::t('sprout-base', 'Commerce Orders');
     }
@@ -30,7 +30,7 @@ class Order extends ElementImporter
     /**
      * @return mixed
      */
-    public function getModelName()
+    public function getModelName(): string
     {
         return OrderElement::class;
     }
@@ -283,7 +283,7 @@ class Order extends ElementImporter
         return Craft::$app->elements->deleteElementById($id);
     }
 
-    public function getImporterDataKeys()
+    public function getImporterDataKeys(): array
     {
         return ['lineItems', 'payments', 'transactions', 'addresses'];
     }

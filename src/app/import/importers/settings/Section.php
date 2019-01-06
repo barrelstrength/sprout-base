@@ -20,7 +20,7 @@ class Section extends SettingsImporter
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return 'Section';
     }
@@ -28,7 +28,7 @@ class Section extends SettingsImporter
     /**
      * @return string
      */
-    public function getModelName()
+    public function getModelName(): string
     {
         return SectionModel::class;
     }

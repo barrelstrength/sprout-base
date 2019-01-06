@@ -16,6 +16,13 @@ use craft\validators\HandleValidator;
 use craft\validators\UniqueValidator;
 use Craft;
 
+/**
+ *
+ * @property mixed                                                  $editUrl
+ * @property string                                                 $resultsError
+ * @property mixed                                                  $type
+ * @property \barrelstrength\sproutbase\app\reports\base\DataSource $dataSource
+ */
 class Report extends Model
 {
     public $id;
@@ -114,12 +121,7 @@ class Report extends Model
     {
         $settings = $this->getSettings();
 
-        if (isset($settings[$name])) {
-
-            return $settings[$name];
-        }
-
-        return $default;
+        return $settings[$name] ?? $default;
     }
 
     /**

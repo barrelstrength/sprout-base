@@ -55,7 +55,7 @@ abstract class Bundle
      *
      * @return string
      */
-    public function getClassName()
+    public function getClassName(): string
     {
         return get_class($this);
     }
@@ -69,7 +69,7 @@ abstract class Bundle
      *
      * @return string
      */
-    public function getVersion()
+    public function getVersion(): string
     {
         return $this->plugin->getVersion();
     }
@@ -81,7 +81,7 @@ abstract class Bundle
      *
      * @return string
      */
-    public function getSchemaFolder()
+    public function getSchemaFolder(): string
     {
         return $this->plugin->getBasePath().DIRECTORY_SEPARATOR.'schema';
     }
@@ -93,7 +93,7 @@ abstract class Bundle
      *
      * @return string
      */
-    public function getSourceTemplateFolder()
+    public function getSourceTemplateFolder(): string
     {
         return $this->plugin->getBasePath().DIRECTORY_SEPARATOR.'templates';
     }
@@ -104,7 +104,7 @@ abstract class Bundle
      * @return string
      * @throws \yii\base\Exception
      */
-    public function getDestinationTemplateFolder()
+    public function getDestinationTemplateFolder(): string
     {
         return Craft::$app->getPath()->getSiteTemplatesPath();
     }

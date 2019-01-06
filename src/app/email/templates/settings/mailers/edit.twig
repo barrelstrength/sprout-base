@@ -5,7 +5,7 @@
     { label: "Mailers"|t('sprout-email'), url: url('sprout-email/settings/mailers') }
 ] %}
 
-{% set title = mailer.getName() ~ ' Settings' %}
+{% set title = mailer.displayName() ~ ' Settings' %}
 
 {% set fullPageForm = true %}
 {% set saveShortcutRedirect = 'sprout-email/settings/mailers' %}

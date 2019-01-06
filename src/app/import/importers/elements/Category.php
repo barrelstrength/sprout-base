@@ -15,7 +15,7 @@ class Category extends ElementImporter
     /**
      * @return mixed
      */
-    public function getModelName()
+    public function getModelName(): string
     {
         return CategoryElement::class;
     }
@@ -23,7 +23,7 @@ class Category extends ElementImporter
     /**
      * @return bool
      */
-    public function hasSeedGenerator()
+    public function hasSeedGenerator(): bool
     {
         return true;
     }
@@ -35,7 +35,7 @@ class Category extends ElementImporter
      * @throws \Twig_Error_Loader
      * @throws \yii\base\Exception
      */
-    public function getSeedSettingsHtml(SeedJob $seedJob)
+    public function getSeedSettingsHtml(SeedJob $seedJob): string
     {
         $groupsSelect = [];
 
@@ -72,7 +72,7 @@ class Category extends ElementImporter
      * @param $quantity
      * @param $settings
      *
-     * @return array
+     * @return array|null
      */
     public function getMockData($quantity, $settings)
     {

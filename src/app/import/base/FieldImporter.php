@@ -19,7 +19,7 @@ abstract class FieldImporter extends Importer
      *
      * @return mixed
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->getModel()->displayName();
     }
@@ -27,7 +27,7 @@ abstract class FieldImporter extends Importer
     /**
      * @return bool
      */
-    public function isField()
+    public function isField(): bool
     {
         return true;
     }

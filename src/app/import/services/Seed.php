@@ -14,6 +14,11 @@ use craft\db\Query;
 use barrelstrength\sproutbase\app\import\models\Seed as SeedModel;
 use barrelstrength\sproutbase\app\import\records\Seed as SeedRecord;
 
+/**
+ *
+ * @property mixed $seeds
+ * @property array $allSeeds
+ */
 class Seed extends Component
 {
     /**

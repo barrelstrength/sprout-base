@@ -15,17 +15,18 @@ use yii\db\ActiveQueryInterface;
  * Class Report
  *
  *
- * @property int    $id
- * @property string $name
- * @property bool   $hasNameFormat
- * @property string $nameFormat
- * @property string $handle
- * @property string $description
- * @property bool   $allowHtml
- * @property string $settings
- * @property int    $dataSourceId
- * @property bool   $enabled
- * @property int    $groupId
+ * @property int                          $id
+ * @property string                       $name
+ * @property bool                         $hasNameFormat
+ * @property string                       $nameFormat
+ * @property string                       $handle
+ * @property string                       $description
+ * @property bool                         $allowHtml
+ * @property string                       $settings
+ * @property int                          $dataSourceId
+ * @property bool                         $enabled
+ * @property \yii\db\ActiveQueryInterface $element
+ * @property int                          $groupId
  */
 class Report extends ActiveRecord
 {

@@ -40,6 +40,12 @@ use craft\base\Element;
 use craft\events\RegisterComponentTypesEvent;
 use Craft;
 
+/**
+ *
+ * @property array $sproutImportSeedImporters
+ * @property array $sproutImportFieldImporters
+ * @property array $sproutImportImporters
+ */
 class Importers extends Component
 {
     const EVENT_REGISTER_IMPORTER_TYPES = 'registerImporterTypes';

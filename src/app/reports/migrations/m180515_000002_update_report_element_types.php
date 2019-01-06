@@ -1,4 +1,4 @@
-<?php
+<?php /** @noinspection ClassConstantCanBeUsedInspection */
 
 namespace barrelstrength\sproutbase\app\reports\migrations;
 
@@ -12,7 +12,7 @@ class m180515_000002_update_report_element_types extends Migration
     /**
      * @inheritdoc
      */
-    public function safeUp()
+    public function safeUp(): bool
     {
         $seedClasses = [
             0 => [
@@ -33,7 +33,7 @@ class m180515_000002_update_report_element_types extends Migration
     /**
      * @inheritdoc
      */
-    public function safeDown()
+    public function safeDown(): bool
     {
         echo "m180515_000002_update_report_element_types cannot be reverted.\n";
         return false;

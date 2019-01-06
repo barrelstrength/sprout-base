@@ -14,7 +14,7 @@ class m180417_000000_sproutreports_datasources_pluginid_column extends Migration
      *
      * @throws \yii\base\NotSupportedException
      */
-    public function safeUp()
+    public function safeUp(): bool
     {
         $table = '{{%sproutreports_datasources}}';
 
@@ -28,7 +28,7 @@ class m180417_000000_sproutreports_datasources_pluginid_column extends Migration
     /**
      * @inheritdoc
      */
-    public function safeDown()
+    public function safeDown(): bool
     {
         echo "m180417_000000_sproutreports_datasources_pluginid_column cannot be reverted.\n";
         return false;

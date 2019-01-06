@@ -16,6 +16,12 @@ use barrelstrength\sproutbase\app\reports\records\Report as ReportRecord;
 use barrelstrength\sproutbase\app\reports\records\ReportGroup as ReportGroupRecord;
 use yii\base\Exception;
 
+/**
+ *
+ * @property null|\barrelstrength\sproutbase\app\reports\elements\Report[] $allReports
+ * @property array                                                         $reportsAsSelectFieldOptions
+ * @property \craft\db\Query                                               $reportsQuery
+ */
 class Reports extends Component
 {
     /**

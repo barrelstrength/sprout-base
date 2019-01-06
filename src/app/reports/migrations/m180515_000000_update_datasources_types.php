@@ -1,4 +1,6 @@
-<?php
+<?php /** @noinspection ClassConstantCanBeUsedInspection */
+
+/** @noinspection ClassConstantCanBeUsedInspection */
 
 namespace barrelstrength\sproutbase\app\reports\migrations;
 
@@ -12,7 +14,7 @@ class m180515_000000_update_datasources_types extends Migration
     /**
      * @inheritdoc
      */
-    public function safeUp()
+    public function safeUp(): bool
     {
         $seedClasses = [
             0 => [
@@ -37,7 +39,7 @@ class m180515_000000_update_datasources_types extends Migration
     /**
      * @inheritdoc
      */
-    public function safeDown()
+    public function safeDown(): bool
     {
         echo "m180515_000000_update_datasources_types cannot be reverted.\n";
         return false;
