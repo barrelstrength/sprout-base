@@ -107,10 +107,11 @@ class DefaultMailer extends Mailer implements NotificationEmailSenderInterface
                     if (get_class($field) === FileUpload::class OR get_class($field) === Assets::class) {
                         $query = $object->{$field->handle};
 
-                    if ($query instanceof AssetQuery) {
-                        $assets = $query->all();
+                        if ($query instanceof AssetQuery) {
+                            $assets = $query->all();
 
-                        $this->attachAssetFilesToEmailModel($message, $assets, $externalPaths);
+                            $this->attachAssetFilesToEmailModel($message, $assets, $externalPaths);
+                        }
                     }
                 }
             }
