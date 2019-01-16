@@ -51,6 +51,11 @@ trait AddressFieldTrait
     public $showCountryDropdown = true;
 
     /**
+     * @deprecated No longer in user. Necessary in craft 3.1 migration
+     */
+    public $hideCountryDropdown;
+
+    /**
      * @var array
      */
     public $highlightCountries = [];
