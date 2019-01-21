@@ -340,13 +340,11 @@ class NotificationEmail extends EmailElement
      */
     public function getUriFormat()
     {
-        $pluginHandle = Craft::$app->request->getSegment(1);
-
-        if ($pluginHandle == null) {
+        if ($this->pluginHandle == null) {
             throw new Exception('Invalid integration. No pluginHandle specified');
         }
 
-        return $pluginHandle.'/{slug}';
+        return $this->pluginHandle.'/{slug}';
     }
 
     /**
