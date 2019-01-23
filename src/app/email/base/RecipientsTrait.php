@@ -96,7 +96,7 @@ trait RecipientsTrait
     }
 
     /**
-     * Returns the Lists available to this Mailer
+     * Returns the SubscriberList available to this Mailer
      *
      * @return array
      */

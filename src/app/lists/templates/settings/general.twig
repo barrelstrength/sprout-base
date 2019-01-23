@@ -6,7 +6,7 @@
     id: 'pluginNameOverride',
     name: 'pluginNameOverride',
     value: settings.pluginNameOverride,
-    placeholder: settings.pluginNameOverride ?: 'Sprout Lists',
+    placeholder: settings.pluginNameOverride ?: 'Sprout Subscriber List',
     autofocus: true,
     first: true,
     errors: ''
@@ -15,15 +15,15 @@
 {{ forms.lightswitchField({
     first: true,
     label: "Enable User Sync"|t('sprout-lists'),
-    instructions: "When you enable this setting Sprout Lists will create a relationship between Sprout Lists Subscribers and Craft Users, based on the email address. When Craft User emails are updated, they will also be updated in Sprout Lists Subscriber Lists. When emails are updated in Sprout Lists Subscriber Lists, they will also be updated in the matching Craft User Profiles. When Users are deleted the relationship in the Sprout Lists Subscriber List will be removed."|t('sprout-lists'),
+    instructions: "When you enable this setting Sprout Subscriber Lists will create a relationship between Sprout SubscriberList Subscriber and Craft Users, based on the email address. When Craft User emails are updated, they will also be updated in Sprout SubscriberList Subscriber SubscriberList. When emails are updated in Sprout SubscriberList Subscriber SubscriberList, they will also be updated in the matching Craft User Profiles. When Users are deleted the relationship in the Sprout SubscriberList Subscriber List will be removed."|t('sprout-lists'),
     name: 'enableUserSync',
     on: settings.enableUserSync
 }) }}
 
 {{ forms.lightswitchField({
     first: true,
-    label: "Create Lists Automatically"|t('sprout-lists'),
-    instructions: "Lists will be automatically created when a subscribe form is submitted and no matching List is found."|t('sprout-lists'),
+    label: "Create SubscriberList Automatically"|t('sprout-lists'),
+    instructions: "Subscriber Lists will be automatically created when a subscribe form is submitted and no matching List is found."|t('sprout-lists'),
     name: 'enableAutoList',
     on: settings.enableAutoList
 }) }}
