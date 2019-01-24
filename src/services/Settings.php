@@ -46,14 +46,6 @@ class Settings extends Component
             return $pluginSettings;
         }
 
-        $settings = Json::encode($pluginSettings);
-
-        Craft::$app->db->createCommand()->update('{{%plugins}}', [
-            'settings' => $settings
-        ], [
-            'handle' => strtolower($plugin->handle)
-        ])->execute();
-
         return $pluginSettings;
     }
 
