@@ -1,7 +1,7 @@
 {
   "name": "barrelstrength/sprout-base",
   "description": "Common libraries for Sprout Plugins for Craft CMS",
-  "version": "4.0.4",
+  "version": "4.0.5",
   "type": "yii-module",
   "license": "proprietary",
   "authors": [
@@ -18,7 +18,7 @@
     "rss": "https://github.com/barrelstrength/sprout-base/commits/v2.atom"
   },
   "require": {
-    "craftcms/cms": "^3.0.0",
+    "craftcms/cms": "^3.1.0",
     "league/csv": "^8.2.0",
     "league/html-to-markdown": "^4.6.2",
     "commerceguys/addressing": "^1.0.1",
