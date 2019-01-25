@@ -20,7 +20,6 @@ class Settings extends Component
      * @param $settings
      *
      * @return \craft\base\Model
-     * @throws \yii\db\Exception
      */
     public function saveSettings($plugin, $settings)
     {
@@ -46,13 +45,7 @@ class Settings extends Component
             return $pluginSettings;
         }
 
-        $settings = Json::encode($pluginSettings);
-
-        Craft::$app->db->createCommand()->update('{{%plugins}}', [
-            'settings' => $settings
-        ], [
-            'handle' => strtolower($plugin->handle)
-        ])->execute();
+        Craft::$app->getPlugins()->savePluginSettings($plugin, $pluginSettings->getAttributes());
 
         return $pluginSettings;
     }
