@@ -228,7 +228,10 @@ class NotificationsController extends Controller
             $notificationEmail->title = Craft::$app->getView()->renderObjectTemplate($notificationEmail->titleFormat, $notificationEmail);
         }
 
-        $event = SproutBase::$app->notificationEvents->getEventById($notificationEmail->eventId);
+        $event = null;
+        if ($notificationEmail->eventId) {
+            $event = SproutBase::$app->notificationEvents->getEventById($notificationEmail->eventId);
+        }
 
         if ($event) {
 
@@ -258,7 +261,7 @@ class NotificationsController extends Controller
 
             SproutBase::error($errorMessage);
 
-            return Craft::$app->getUrlManager()->setRouteParams([
+           Craft::$app->getUrlManager()->setRouteParams([
                 'notificationEmail' => $notificationEmail
             ]);
         }
