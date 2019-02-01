@@ -15,6 +15,9 @@ use craft\elements\db\ElementQueryInterface;
 use craft\helpers\Json;
 use craft\helpers\UrlHelper;
 use yii\base\Exception;
+use Egulias\EmailValidator\EmailValidator;
+use Egulias\EmailValidator\Validation\MultipleValidationWithAnd;
+use Egulias\EmailValidator\Validation\RFCValidation;
 
 /**
  * Class NotificationEmail
@@ -372,9 +375,36 @@ class NotificationEmail extends EmailElement
 
         $rules[] = [['subjectLine', 'fromName', 'fromEmail'], 'required'];
         $rules[] = [['fromName', 'fromEmail', 'replyToEmail'], 'default', 'value' => ''];
-        $rules[] = [['fromEmail'], 'email'];
+        $rules[] = [['fromEmail', 'replyToEmail'], 'email'];
+        $rules[] = ['recipients', 'emailList'];
+        $rules[] = ['cc', 'emailList'];
+        $rules[] = ['bcc', 'emailList'];
 
         return $rules;
+    }
+
+    public function emailList($attribute): bool
+    {
+        $recipients = $this->{$attribute};
+        $validator = new EmailValidator();
+        $multipleValidations = new MultipleValidationWithAnd([
+            new RFCValidation()
+        ]);
+
+        // Add any On The Fly Recipients to our List
+        if (!empty($recipients)) {
+            $recipientArray = explode(',', trim($recipients));
+
+            foreach ($recipientArray as $recipient) {
+                if (!$validator->isValid(trim($recipient), $multipleValidations)) {
+                    $this->addError($attribute, Craft::t('sprout-base',
+                        $recipient . ' email is not valid.'));
+
+                }
+            }
+        }
+
+        return true;
     }
 
     /**

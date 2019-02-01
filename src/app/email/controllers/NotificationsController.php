@@ -181,7 +181,7 @@ class NotificationsController extends Controller
      * @throws \yii\db\Exception
      * @throws \yii\web\BadRequestHttpException
      */
-    public function actionSaveNotificationEmail(): Response
+    public function actionSaveNotificationEmail()
     {
         $this->requirePostRequest();
 
@@ -261,9 +261,11 @@ class NotificationsController extends Controller
 
             SproutBase::error($errorMessage);
 
-           Craft::$app->getUrlManager()->setRouteParams([
+            Craft::$app->getUrlManager()->setRouteParams([
                 'notificationEmail' => $notificationEmail
             ]);
+
+            return null;
         }
 
         Craft::$app->getSession()->setNotice(Craft::t('sprout-base', 'Notification saved.'));
