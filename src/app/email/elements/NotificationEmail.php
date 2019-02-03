@@ -435,7 +435,7 @@ class NotificationEmail extends EmailElement
      */
     public function getEmailTemplateId(): string
     {
-        return $this->emailTemplateId;
+        return $this->emailTemplateId ?? '';
     }
 
     public function isReady(): bool
