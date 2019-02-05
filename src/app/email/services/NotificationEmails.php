@@ -32,7 +32,7 @@ class NotificationEmails extends Component
      */
     public function saveNotification(NotificationEmail $notificationEmail)
     {
-        if (!$notificationEmail->validate()) {
+        if (!$notificationEmail->validate(null, false)) {
             SproutBase::info(Craft::t('sprout-base', 'Notification Email not saved due to validation error.'));
             return false;
         }

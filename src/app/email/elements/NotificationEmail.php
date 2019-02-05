@@ -404,7 +404,7 @@ class NotificationEmail extends EmailElement
 
             foreach ($recipientArray as $recipient) {
                 $recipient = trim($recipient);
-                $emailAttributes = $this->attributes();
+
                 // If it is dynamic string
                 if (strpos($recipient, '{') !== false) {
                     // Validate event object E.g. {{ object.email }}
@@ -443,14 +443,6 @@ class NotificationEmail extends EmailElement
                     if ($isExist === false) {
                         $this->addError($attribute, "Dynamic $recipient attribute does not exist.");
                     }
-
-
-//                    $recipient = str_replace('{', '', $recipient);
-//                    $recipient = str_replace('}', '', $recipient);
-//                    if (!in_array($recipient, $emailAttributes)) {
-//                        $this->addError($attribute,
-//                            "Dynamic $recipient attribute does not exist.");
-//                    }
                 } elseif (!$validator->isValid(trim($recipient), $multipleValidations)) {
                     $this->addError($attribute, Craft::t('sprout-base',
                         $recipient . ' email is not valid.'));

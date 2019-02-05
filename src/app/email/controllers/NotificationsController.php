@@ -251,15 +251,27 @@ class NotificationsController extends Controller
             if ($plugin) {
                 $notificationEmail->pluginHandle = $plugin->id;
             }
+
+            $notificationEmail->setEventObject($event->getMockEventObject());
         }
 
-        if (!SproutBase::$app->notifications->saveNotification($notificationEmail)) {
+        // Get cp path cause template validation change current template path
+        $cpPath = Craft::$app->getView()->getTemplatesPath();
+        $validateTemplate = $this->validateTemplate($notificationEmail);
+
+        if (!SproutBase::$app->notifications->saveNotification($notificationEmail)
+        || $validateTemplate == false) {
 
             Craft::$app->getSession()->setError(Craft::t('sprout-base', 'Unable to save notification.'));
 
             $errorMessage = SproutBase::$app->utilities->formatErrors();
 
             SproutBase::error($errorMessage);
+
+            // Set the previous cp path to avoid not found template when showing errors
+            if ($cpPath) {
+                Craft::$app->getView()->setTemplatesPath($cpPath);
+            }
 
             Craft::$app->getUrlManager()->setRouteParams([
                 'notificationEmail' => $notificationEmail
@@ -271,6 +283,24 @@ class NotificationsController extends Controller
         Craft::$app->getSession()->setNotice(Craft::t('sprout-base', 'Notification saved.'));
 
         return $this->redirectToPostedUrl();
+    }
+
+    private function validateTemplate(NotificationEmail $notificationEmail): bool
+    {
+        try {
+            $notificationEmail->getEmailTemplates()->getTextBody();
+            $notificationEmail->getEmailTemplates()->getHtmlBody();
+        } catch (\Exception $e) {
+            $errorMessage = "Dynamic variables on your template does not exist. " . $e->getMessage();
+            $notificationEmail->addError('emailTemplateId', $errorMessage);
+
+            SproutBase::$app->utilities->addError('template', $errorMessage);
+
+            return false;
+
+        }
+
+        return true;
     }
 
     /**
