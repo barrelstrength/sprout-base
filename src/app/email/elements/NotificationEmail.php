@@ -407,35 +407,23 @@ class NotificationEmail extends EmailElement
 
                 // If it is dynamic string
                 if (strpos($recipient, '{') !== false) {
-                    // Validate event object E.g. {{ object.email }}
+
+                    // Validate event object E.g. {{ object.email }} and {{ email }}
                     $isExist = true;
-                    if (strpos($recipient, 'object') !== false) {
-                        $event = SproutBase::$app->notificationEvents->getEvent($this);
 
-                        if ($event) {
-                            $this->setEventObject($event->getMockEventObject());
+                    $event = SproutBase::$app->notificationEvents->getEvent($this);
 
-                            $eventObject = $this->getEventObject();
+                    if ($event) {
+                        $this->setEventObject($event->getMockEventObject());
 
-                            try {
-                                $renderedEmail = Craft::$app->getView()->renderObjectTemplate($recipient, $eventObject);
-                                if (empty($renderedEmail)) {
-                                    $isExist = false;
-                                }
-                            } catch (\Exception $e) {
-                                $isExist = false;
-                            }
-                        }
-                    } else {
+                        $eventObject = $this->getEventObject();
+
                         try {
-                            $renderedEmail = Craft::$app->getView()->renderObjectTemplate($recipient, $this);
-
-                            // Return empty string for single brackets { }
+                            $renderedEmail = Craft::$app->getView()->renderObjectTemplate($recipient, $eventObject);
                             if (empty($renderedEmail)) {
                                 $isExist = false;
                             }
                         } catch (\Exception $e) {
-                            // Throws error for double brackets {{ }}
                             $isExist = false;
                         }
                     }
