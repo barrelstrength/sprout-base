@@ -13,6 +13,7 @@ use Craft;
 use craft\db\Query;
 use barrelstrength\sproutbase\app\import\models\Seed as SeedModel;
 use barrelstrength\sproutbase\app\import\records\Seed as SeedRecord;
+use craft\helpers\DateTimeHelper;
 
 /**
  *
@@ -190,6 +191,16 @@ class Seed extends Component
             ->groupBy(['dateCreated', 'details', 'seedType'])
             ->orderBy('dateCreated DESC')
             ->all();
+
+        if ($seeds) {
+            foreach ($seeds as $key => $seed) {
+                $currentTimeZone = Craft::$app->getTimeZone();
+
+                $dateTime = DateTimeHelper::toDateTime($seed['dateCreated'], true, $currentTimeZone);
+                // Display the user set control panel timezone
+                $seeds[$key]['dateCreated'] = $dateTime->getTimestamp();
+            }
+        }
 
         return $seeds;
     }
