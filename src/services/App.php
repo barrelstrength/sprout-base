@@ -34,119 +34,9 @@ use barrelstrength\sproutbase\app\email\services\EmailTemplates as SproutEmail;
 class App extends Component
 {
     /**
-     * @var Address
-     */
-    public $addressField;
-
-    /**
-     * @var Phone
-     */
-    public $phoneField;
-
-    /**
-     * @var Utilities
-     */
-    public $utilities;
-
-    /**
-     * @var Url
-     */
-    public $urlField;
-
-    /**
-     * @var Email
-     */
-    public $emailField;
-
-    /**
-     * @var EmailDropdown
-     */
-    public $emailDropdownField;
-
-    /**
-     * @var RegularExpression
-     */
-    public $regularExpressionField;
-
-    /**
-     * @var Reports
-     */
-    public $reports;
-
-    /**
-     * @var ReportGroups
-     */
-    public $reportGroups;
-
-    /**
-     * @var NotificationEmails
-     */
-    public $notifications;
-
-    /**
-     * @var NotificationEmailEvents
-     */
-    public $notificationEvents;
-
-    /**
-     * @var DataSources
-     */
-    public $dataSources;
-
-    /**
-     * @var Exports
-     */
-    public $exports;
-
-    /**
      * @var Settings
      */
     public $settings;
-
-    /**
-     * @var Mailers
-     */
-    public $mailers;
-
-    /**
-     * @var Importers
-     */
-    public $importers;
-
-    /**
-     * @var Bundles
-     */
-    public $bundles;
-
-    /**
-     * @var SproutEmail
-     */
-    public $sproutEmail;
-
-    /**
-     * @var ElementImporter
-     */
-    public $elementImporter;
-
-    /**
-     * @var SettingsImporter
-     */
-    public $settingsImporter;
-
-    /**
-     * @var FieldImporter
-     */
-    public $fieldImporter;
-
-    /**
-     * @var ImportUtilities
-     */
-    public $importUtilities;
-
-    /**
-     * @var Seed
-     */
-    public $seed;
 
     /**
      * @inheritdoc
@@ -155,37 +45,5 @@ class App extends Component
     {
         // Sprout Base
         $this->settings = new Settings();
-
-        // Sprout Email
-        $this->mailers = new Mailers();
-        $this->notificationEvents = new NotificationEmailEvents();
-        $this->notifications = new NotificationEmails();
-
-        // @todo - Rename this to EmailTemplates or something more appropriate
-        $this->sproutEmail = new SproutEmail();
-
-        // Sprout Fields
-        $this->addressField = new Address();
-        $this->emailField = new Email();
-        $this->emailDropdownField = new EmailDropdown();
-        $this->phoneField = new Phone();
-        $this->regularExpressionField = new RegularExpression();
-        $this->urlField = new Url();
-        $this->utilities = new Utilities();
-
-        // Sprout Reports
-        $this->dataSources = new DataSources();
-        $this->exports = new Exports();
-        $this->reportGroups = new ReportGroups();
-        $this->reports = new Reports();
-
-        // Sprout Import
-        $this->bundles = new Bundles();
-        $this->elementImporter = new ElementImporter();
-        $this->fieldImporter = new FieldImporter();
-        $this->importers = new Importers();
-        $this->importUtilities = new ImportUtilities();
-        $this->seed = new Seed();
-        $this->settingsImporter = new SettingsImporter();
     }
 }
