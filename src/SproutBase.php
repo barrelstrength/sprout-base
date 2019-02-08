@@ -7,29 +7,11 @@
 
 namespace barrelstrength\sproutbase;
 
-use barrelstrength\sproutbase\app\email\services\EmailTemplates;
-use barrelstrength\sproutbase\app\import\controllers\ImportController;
-use barrelstrength\sproutbase\app\import\console\controllers\ImportController as ConsoleImportController;
-use barrelstrength\sproutbase\app\import\console\controllers\SeedController as ConsoleSeedController;
-use barrelstrength\sproutbase\app\import\controllers\SeedController;
-use barrelstrength\sproutbase\app\import\controllers\SproutSeoController;
-use barrelstrength\sproutbase\app\import\controllers\WeedController;
 use barrelstrength\sproutbase\base\BaseSproutTrait;
 use barrelstrength\sproutbase\controllers\SettingsController;
-use barrelstrength\sproutbase\app\email\controllers\NotificationsController;
-use barrelstrength\sproutbase\app\email\events\RegisterMailersEvent;
-use barrelstrength\sproutbase\app\email\emailtemplates\BasicTemplates;
-use barrelstrength\sproutbase\app\email\mailers\DefaultMailer;
-use barrelstrength\sproutbase\app\email\services\Mailers;
-use barrelstrength\sproutbase\app\fields\controllers\AddressController;
-use barrelstrength\sproutbase\app\fields\controllers\FieldsController;
 use barrelstrength\sproutbase\app\fields\web\twig\variables\SproutFieldsVariable;
 use barrelstrength\sproutbase\app\email\web\twig\variables\SproutEmailVariable;
-use barrelstrength\sproutbase\app\reports\controllers\ReportsController;
 use barrelstrength\sproutbase\app\import\web\twig\variables\SproutImportVariable;
-use barrelstrength\sproutbase\app\email\controllers\MailersController;
-use craft\events\RegisterComponentTypesEvent;
-use craft\web\Application;
 use craft\web\twig\variables\CraftVariable;
 use yii\base\Event;
 use \yii\base\Module;
@@ -119,25 +101,11 @@ class SproutBase extends Module
         // Setup Controllers
         if (Craft::$app->getRequest()->getIsConsoleRequest()) {
             $this->controllerNamespace = 'sproutbase\\console\\controllers';
-
-            $this->controllerMap = [
-                'import' => ConsoleImportController::class,
-                'seed' => ConsoleSeedController::class
-            ];
         } else {
             $this->controllerNamespace = 'sproutbase\\controllers';
 
             $this->controllerMap = [
-                'fields' => FieldsController::class,
-                'fields-address' => AddressController::class,
-                'import' => ImportController::class,
-                'mailers' => MailersController::class,
-                'notifications' => NotificationsController::class,
-                'redirects-tool' => SproutSeoController::class,
-                'reports' => ReportsController::class,
-                'seed' => SeedController::class,
-                'settings' => SettingsController::class,
-                'weed' => WeedController::class,
+                'settings' => SettingsController::class
             ];
         }
 
