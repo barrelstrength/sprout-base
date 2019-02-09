@@ -1,7 +1,0 @@
-{% import "_includes/forms" as forms %}
-
-{{ forms.text({
-    name: name,
-    value: value is defined ? value : '',
-    placeholder: placeholder ?? null,
-}) }}

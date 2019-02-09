@@ -9,9 +9,6 @@ namespace barrelstrength\sproutbase;
 
 use barrelstrength\sproutbase\base\BaseSproutTrait;
 use barrelstrength\sproutbase\controllers\SettingsController;
-use barrelstrength\sproutbase\app\fields\web\twig\variables\SproutFieldsVariable;
-use barrelstrength\sproutbase\app\email\web\twig\variables\SproutEmailVariable;
-use barrelstrength\sproutbase\app\import\web\twig\variables\SproutImportVariable;
 use craft\web\twig\variables\CraftVariable;
 use yii\base\Event;
 use \yii\base\Module;
@@ -112,37 +109,6 @@ class SproutBase extends Module
         // Setup Template Roots
         Event::on(View::class, View::EVENT_REGISTER_CP_TEMPLATE_ROOTS, function(RegisterTemplateRootsEvent $e) {
             $e->roots['sprout-base'] = $this->getBasePath().DIRECTORY_SEPARATOR.'templates';
-            $e->roots['sprout-base-email'] = $this->getBasePath().DIRECTORY_SEPARATOR.'app/email/templates';
-            $e->roots['sprout-base-fields'] = $this->getBasePath().DIRECTORY_SEPARATOR.'app/fields/templates';
-            $e->roots['sprout-base-forms'] = $this->getBasePath().DIRECTORY_SEPARATOR.'app/forms/templates';
-            $e->roots['sprout-base-import'] = $this->getBasePath().DIRECTORY_SEPARATOR.'app/import/templates';
-            $e->roots['sprout-base-lists'] = $this->getBasePath().DIRECTORY_SEPARATOR.'app/lists/templates';
-            $e->roots['sprout-base-notes'] = $this->getBasePath().DIRECTORY_SEPARATOR.'app/notes/templates';
-            $e->roots['sprout-base-reports'] = $this->getBasePath().DIRECTORY_SEPARATOR.'app/reports/templates';
-            $e->roots['sprout-base-seo'] = $this->getBasePath().DIRECTORY_SEPARATOR.'app/seo/templates';
-        });
-
-        // Setup Variables
-        Event::on(CraftVariable::class, CraftVariable::EVENT_INIT, function(Event $event) {
-            $variable = $event->sender;
-            $variable->set('sproutEmail', SproutEmailVariable::class);
-            $variable->set('sproutFields', SproutFieldsVariable::class);
-            $variable->set('sproutImport', SproutImportVariable::class);
-        });
-
-        // Register Sprout Email Events
-        Event::on(Application::class, Application::EVENT_INIT, function() {
-            SproutBase::$app->notificationEvents->registerNotificationEmailEventHandlers();
-        });
-
-        // Register Sprout Email Mailers
-        Event::on(Mailers::class, Mailers::EVENT_REGISTER_MAILER_TYPES, function(RegisterMailersEvent $event) {
-            $event->mailers[] = new DefaultMailer();
-        });
-
-        // Register Sprout Email Templates
-        Event::on(EmailTemplates::class, EmailTemplates::EVENT_REGISTER_EMAIL_TEMPLATES, function(RegisterComponentTypesEvent $event) {
-            $event->types[] = BasicTemplates::class;
         });
 
         parent::init();

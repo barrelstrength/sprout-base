@@ -7,9 +7,9 @@
 
 namespace barrelstrength\sproutbase\services;
 
-use barrelstrength\sproutbase\app\email\services\Mailers;
-use barrelstrength\sproutbase\app\email\services\NotificationEmailEvents;
-use barrelstrength\sproutbase\app\email\services\NotificationEmails;
+use barrelstrength\sproutbaseemail\services\Mailers;
+use barrelstrength\sproutbaseemail\services\NotificationEmailEvents;
+use barrelstrength\sproutbaseemail\services\NotificationEmails;
 use barrelstrength\sproutbase\app\fields\services\EmailDropdown;
 use barrelstrength\sproutbase\app\import\services\FieldImporter;
 use barrelstrength\sproutbase\app\import\services\Seed;
@@ -29,7 +29,7 @@ use barrelstrength\sproutbase\app\fields\services\Email;
 use barrelstrength\sproutbase\app\fields\services\Address;
 use barrelstrength\sproutbase\app\import\services\Importers;
 use craft\base\Component;
-use barrelstrength\sproutbase\app\email\services\EmailTemplates as SproutEmail;
+use barrelstrength\sproutbaseemail\services\EmailTemplates as SproutEmail;
 
 class App extends Component
 {

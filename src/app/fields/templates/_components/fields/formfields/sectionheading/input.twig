@@ -1,5 +1,0 @@
-{% if field.output == "html" or field.output == "richText" %}
-    {{ field.notes  | raw }}
-{% else %}
-    {{ field.notes | markdown }}
-{% endif %}
