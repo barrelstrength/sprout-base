@@ -110,7 +110,7 @@ if (typeof Craft.SproutBase === typeof undefined) {
         },
 
         deleteSelectedGroup: function() {
-            if (confirm(Craft.t('sprout-base', settings.deleteGroupConfirmMessage))) {
+            if (confirm(Craft.t('sprout-base-settings', settings.deleteGroupConfirmMessage))) {
                 var data = {
                     id: this.$selectedGroup.data('id')
                 };
@@ -120,7 +120,7 @@ if (typeof Craft.SproutBase === typeof undefined) {
                         location.href = Craft.getUrl(settings.deleteGroupOnSuccessUrl);
                     }
                     else {
-                        alert(Craft.t('sprout-base', settings.deleteGroupOnErrorMessage));
+                        alert(Craft.t('sprout-base-settings', settings.deleteGroupOnErrorMessage));
                     }
                 }, this));
             }

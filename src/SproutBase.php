@@ -9,7 +9,6 @@ namespace barrelstrength\sproutbase;
 
 use barrelstrength\sproutbase\base\BaseSproutTrait;
 use barrelstrength\sproutbase\controllers\SettingsController;
-use craft\web\twig\variables\CraftVariable;
 use yii\base\Event;
 use \yii\base\Module;
 use craft\web\View;
@@ -61,7 +60,7 @@ class SproutBase extends Module
         // Set some things early in case there are any settings, and the settings model's
         // init() method needs to call Craft::t() or Plugin::getInstance().
 
-        $this->handle = 'sprout-base';
+        $this->handle = 'sprout-base-settings';
         $this->t9nCategory = ArrayHelper::remove($config, 't9nCategory', $this->t9nCategory ?? strtolower($this->handle));
         $this->sourceLanguage = ArrayHelper::remove($config, 'sourceLanguage', $this->sourceLanguage);
 

@@ -14,5 +14,8 @@
  * http://www.yiiframework.com/doc-2.0/guide-tutorial-i18n.html
  */
 return [
-
+    'Couldn’t save settings.' => 'Couldn’t save settings.',
+    'Settings' => 'Settings',
+    'Settings saved.' => 'Settings saved.',
+    'Save' => 'Save',
 ];
