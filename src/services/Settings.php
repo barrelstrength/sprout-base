@@ -8,8 +8,8 @@
 namespace barrelstrength\sproutbase\services;
 
 use Craft;
+use craft\base\Model;
 use craft\base\Plugin;
-use craft\helpers\Json;
 use yii\base\Component;
 
 
@@ -19,9 +19,9 @@ class Settings extends Component
      * @param $plugin Plugin
      * @param $settings
      *
-     * @return \craft\base\Model
+     * @return Model
      */
-    public function saveSettings($plugin, $settings)
+    public function saveSettings($plugin, $settings): Model
     {
         // The existing settings
         $pluginSettings = $plugin->getSettings();

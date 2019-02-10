@@ -7,6 +7,7 @@
 
 namespace barrelstrength\sproutbase\controllers;
 
+use barrelstrength\sproutbase\base\SproutSettingsInterface;
 use barrelstrength\sproutbase\SproutBase;
 use Craft;
 use craft\base\Plugin;
@@ -82,13 +83,16 @@ class SettingsController extends BaseController
             throw new InvalidPluginException($this->plugin->handle);
         }
 
+        /** @var SproutSettingsInterface $settings */
+        $settings = $this->plugin->getSettings();
+        $settingsNav = $settings->getSettingsNavItems();
+
         // @todo - is there a better way to do this?
         // This was added to support the Sprout Import, SEO Redirect tool
         //
         // Make sure we retain any params set in another controller on this request
         // by handing them to the settings layer as a variable. In the template,
         // they can be accessed as params.paramName
-        $settingsNav = $this->plugin->getSettings()->getSettingsNavItems();
         $variables = $settingsNav[$this->selectedSidebarItem]['variables'] ?? [];
 
         $variables['plugin'] = $this->plugin;
@@ -102,10 +106,9 @@ class SettingsController extends BaseController
     /**
      * Saves plugin settings
      *
-     * @return null|\yii\web\Response
+     * @return Response|null
      * @throws BadRequestHttpException
      * @throws \craft\errors\MissingComponentException
-     * @throws \yii\db\Exception
      */
     public function actionSaveSettings()
     {
@@ -117,7 +120,7 @@ class SettingsController extends BaseController
         $settings = SproutBase::$app->settings->saveSettings($this->plugin, $postSettings);
 
         if ($settings->hasErrors()) {
-            Craft::$app->getSession()->setError(Craft::t('sprout-base', 'Couldn’t save settings.'));
+            Craft::$app->getSession()->setError(Craft::t('sprout-base-settings', 'Couldn’t save settings.'));
 
             Craft::$app->getUrlManager()->setRouteParams([
                 'settings' => $settings
@@ -126,7 +129,7 @@ class SettingsController extends BaseController
             return null;
         }
 
-        Craft::$app->getSession()->setNotice(Craft::t('sprout-base', 'Settings saved.'));
+        Craft::$app->getSession()->setNotice(Craft::t('sprout-base-settings', 'Settings saved.'));
 
         return $this->redirectToPostedUrl();
     }
