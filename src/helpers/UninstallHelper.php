@@ -95,7 +95,7 @@ class UninstallHelper
      * @todo - do we need this?
      *       Removing it caused an issue in another plugin. Investigate.
      */
-    public function uninstall()
+    public function uninstall(): bool
     {
 //        foreach ($this->pluginsToUninstall as $plugin) {
 //             Check to see if an Uninstall Class exists
