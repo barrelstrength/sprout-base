@@ -24,11 +24,6 @@ class SproutBase extends Module
     use BaseSproutTrait;
 
     /**
-     * @var string
-     */
-    public $handle;
-
-    /**
      * @var App
      */
     public static $app;
@@ -39,6 +34,11 @@ class SproutBase extends Module
      * @var string
      */
     public static $pluginHandle = 'sprout-base';
+
+    /**
+     * @var string
+     */
+    public $translationCategory = 'sprout-base-settings';
 
     /**
      * @var string|null The translation category that this module translation messages should use. Defaults to the lowercase plugin handle.
@@ -60,8 +60,7 @@ class SproutBase extends Module
         // Set some things early in case there are any settings, and the settings model's
         // init() method needs to call Craft::t() or Plugin::getInstance().
 
-        $this->handle = 'sprout-base-settings';
-        $this->t9nCategory = ArrayHelper::remove($config, 't9nCategory', $this->t9nCategory ?? strtolower($this->handle));
+        $this->t9nCategory = ArrayHelper::remove($config, 't9nCategory', $this->t9nCategory ?? strtolower($this->translationCategory));
         $this->sourceLanguage = ArrayHelper::remove($config, 'sourceLanguage', $this->sourceLanguage);
 
         if (($basePath = ArrayHelper::remove($config, 'basePath')) !== null) {

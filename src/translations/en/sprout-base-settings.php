@@ -15,7 +15,7 @@
  */
 return [
     'Couldn’t save settings.' => 'Couldn’t save settings.',
-    'Settings' => 'Settings',
     'Settings saved.' => 'Settings saved.',
     'Save' => 'Save',
+    'Settings' => 'Settings'
 ];
