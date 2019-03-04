@@ -90,7 +90,7 @@ class SproutBase extends Module
         self::$app = new App();
 
         Craft::setAlias('@sproutbase', $this->getBasePath());
-        Craft::setAlias('@sproutbaselib', dirname(__DIR__, 2).'/sprout-base/lib');
+        Craft::setAlias('@sproutbaselib', dirname(__DIR__, 1).'/lib');
         Craft::setAlias('@sproutbaseicons', $this->getBasePath().'/web/assets/icons');
 
         // Setup Controllers
