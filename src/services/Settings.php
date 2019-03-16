@@ -10,11 +10,56 @@ namespace barrelstrength\sproutbase\services;
 use Craft;
 use craft\base\Model;
 use craft\base\Plugin;
+use craft\elements\User;
+use craft\helpers\StringHelper;
 use yii\base\Component;
+use yii\web\ForbiddenHttpException;
 
 
 class Settings extends Component
 {
+    /**
+     * Get a list of shared permissions
+     *
+     * @example
+     * Via Sprout Reports
+     * [
+     *    'sproutReports-viewReports' => 'sproutReports-viewReports',
+     *    'sproutReports-editReports' => 'sproutReports-editReports',
+     * ]
+     *
+     * Via Sprout Forms
+     * [
+     *    'sproutReports-viewReports' => 'sproutForms-viewReports',
+     *    'sproutReports-editReports' => 'sproutForms-editReports',
+     * ]
+     *
+     * Once retrieved:
+     * SproutBase::$app->settings->getSharedPermissions($permissionNames, 'sprout-reports', $currentPluginHandle);
+     *
+     * Access permissions using array syntax and the primary plugin permission name:
+     * $this->requirePermission($this->permissions['sproutReports-viewReports']);
+     *
+     * @param array  $permissionNames
+     * @param string $basePluginHandle
+     * @param string $currentPluginHandle
+     *
+     * @return array
+     */
+    public function getSharedPermissions(array $permissionNames, string $basePluginHandle, string $currentPluginHandle): array
+    {
+        $permissions = [];
+
+        foreach ($permissionNames as $permissionName) {
+            $basePluginPermissionName = StringHelper::toCamelCase($basePluginHandle).'-'.$permissionName;
+            $currentPluginPermissionName = StringHelper::toCamelCase($currentPluginHandle).'-'.$permissionName;
+
+            $permissions[$basePluginPermissionName] = $currentPluginPermissionName;
+        }
+
+        return $permissions;
+    }
+
     /**
      * @param $plugin Plugin
      * @param $settings
@@ -49,5 +94,4 @@ class Settings extends Component
 
         return $pluginSettings;
     }
-
 }
