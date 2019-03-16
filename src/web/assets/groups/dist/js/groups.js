@@ -71,8 +71,7 @@ if (typeof Craft.SproutBase === typeof undefined) {
                 Craft.postActionRequest(settings.newGroupAction, data, $.proxy(function(response) {
                     if (response.success) {
                         location.href = Craft.getUrl(settings.newGroupOnSuccessUrlBase);
-                    }
-                    else {
+                    } else {
                         var errors = this.flattenErrors(response.errors);
                         alert(Craft.t('sproutBase', settings.newGroupOnErrorMessage) + "\n\n" + errors.join("\n"));
                     }
@@ -95,8 +94,7 @@ if (typeof Craft.SproutBase === typeof undefined) {
                     if (response.success) {
                         this.$selectedGroup.text(response.group.name);
                         Craft.cp.displayNotice(Craft.t('sproutBase', (settings.renameGroupOnSuccessMessage)));
-                    }
-                    else {
+                    } else {
                         var errors = this.flattenErrors(response.errors);
                         alert(Craft.t('sproutBase', settings.renameGroupOnErrorMessage) + "\n\n" + errors.join("\n"));
                     }
@@ -118,8 +116,7 @@ if (typeof Craft.SproutBase === typeof undefined) {
                 Craft.postActionRequest(settings.deleteGroupAction, data, $.proxy(function(response) {
                     if (response.success) {
                         location.href = Craft.getUrl(settings.deleteGroupOnSuccessUrl);
-                    }
-                    else {
+                    } else {
                         alert(Craft.t('sprout-base-settings', settings.deleteGroupOnErrorMessage));
                     }
                 }, this));
@@ -131,8 +128,7 @@ if (typeof Craft.SproutBase === typeof undefined) {
 
             if (this.$selectedGroup.data('key') === '*') {
                 $(this.$groupSettingsBtn).addClass('hidden');
-            }
-            else {
+            } else {
                 $(this.$groupSettingsBtn).removeClass('hidden');
             }
         },
