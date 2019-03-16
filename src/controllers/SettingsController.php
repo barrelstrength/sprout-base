@@ -12,7 +12,7 @@ use barrelstrength\sproutbase\SproutBase;
 use Craft;
 use craft\base\Plugin;
 use craft\errors\InvalidPluginException;
-use craft\web\Controller as BaseController;
+use craft\web\Controller;
 use yii\web\BadRequestHttpException;
 use yii\web\Response;
 
@@ -33,7 +33,7 @@ use yii\web\Response;
  *
  * 4. Defining all settings in the pluginname/models/Settings.php file
  */
-class SettingsController extends BaseController
+class SettingsController extends Controller
 {
     /**
      * The active Plugin class
@@ -59,10 +59,13 @@ class SettingsController extends BaseController
     public $selectedSidebarItem;
 
     /**
-     * @inheritdoc
+     * @throws \yii\web\ForbiddenHttpException
      */
     public function init()
     {
+        // All Settings actions require an admin
+        $this->requireAdmin();
+
         $pluginHandle = Craft::$app->getRequest()->getSegment(1);
 
         $this->settingsSection = Craft::$app->getRequest()->getSegment(3);
