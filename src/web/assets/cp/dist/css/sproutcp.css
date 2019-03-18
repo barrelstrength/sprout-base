@@ -63,10 +63,25 @@
     width: 60%;
 }
 
+/* Editions */
+.btn.sprout-upgrade-to-pro {
+    background: #47b649;
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#47b649), to(#46b348));
+    background-image: linear-gradient(#47b649, #46b348);
+    color:white;
+    display:flex;
+    font-weight: bold;
+}
+.btn.sprout-upgrade-to-pro span {
+    display:inline-block;
+    margin-left:5px;
+    vertical-align:middle;
+    width:16px;
+}
+
 /*
  * Complex sidebar touches
  */
-
 #main-container #main #main-content #details .meta.read-only.sprout-meta-heading:first-child {
     margin-top: 14px;
 }
