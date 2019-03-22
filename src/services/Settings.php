@@ -7,19 +7,61 @@
 
 namespace barrelstrength\sproutbase\services;
 
+use barrelstrength\sproutbase\base\SharedPermissionsInterface;
 use Craft;
 use craft\base\Model;
 use craft\base\Plugin;
-use craft\elements\User;
 use craft\helpers\StringHelper;
 use yii\base\Component;
-use yii\web\ForbiddenHttpException;
-
 
 class Settings extends Component
 {
     /**
-     * Get a list of shared permissions
+     * Due to the module-based architecture of the Sprout plugin suite in many cases
+     * modules handle checks for settings and permissions that may exist in multiple
+     * plugins. This method helps determine the specific plugin making the request.
+     *
+     * Web requests are supported by default where possible. In some cases,
+     * such as via ajax requests and console commands, an action may have to
+     * specifically identify which plugin it is coming from.
+     *
+     * 1. Check if the pluginHandle is provided
+     * 2. Check the POST request for a pluginHandle attribute
+     * 3. Try to grab the plugin-handle from the first segment of the URL
+     *
+     * @param string|null $pluginHandle
+     *
+     * @return mixed|string|null
+     */
+    public function getPluginHandle(string $pluginHandle = null) {
+
+        if ($pluginHandle !== null) {
+            return $pluginHandle;
+        }
+
+        return Craft::$app->request->getParam('pluginHandle') ?? Craft::$app->request->getSegment(1);
+    }
+
+    /**
+     * @param string|array $pluginHandle
+     *
+     * @return Model|null
+     */
+    public function getPluginSettings(string $pluginHandle = null)
+    {
+        $currentPluginHandle = $this->getPluginHandle($pluginHandle);
+
+        if ($plugin = Craft::$app->getPlugins()->getPlugin($currentPluginHandle)) {
+            return $plugin->getSettings();
+        }
+
+        return null;
+    }
+
+    /**
+     * Get a list of shared permissions and determine which plugin we should be checking permissions for.
+     * Because we have a module-based architecture often the classes determining permissions are outside
+     * of a given plugin or shared by multiple plugins. This method helps resolve all that.
      *
      * @example
      * Via Sprout Reports
@@ -34,20 +76,23 @@ class Settings extends Component
      *    'sproutReports-editReports' => 'sproutForms-editReports',
      * ]
      *
-     * Once retrieved:
-     * SproutBase::$app->settings->getSharedPermissions($permissionNames, 'sprout-reports', $currentPluginHandle);
+     * To use:
+     * use barrelstrength\sproutbase\services\Settings as SproutBaseSettingsService;
+     * $this->permissions = SproutBase::$app->settings->getSharedPermissions(new Settings(), 'sprout-reports');
      *
      * Access permissions using array syntax and the primary plugin permission name:
      * $this->requirePermission($this->permissions['sproutReports-viewReports']);
      *
-     * @param array  $permissionNames
-     * @param string $basePluginHandle
-     * @param string $currentPluginHandle
+     * @param SharedPermissionsInterface $settings
+     * @param string                     $basePluginHandle
+     * @param string                     $pluginHandle
      *
      * @return array
      */
-    public function getSharedPermissions(array $permissionNames, string $basePluginHandle, string $currentPluginHandle): array
+    public function getPluginPermissions(SharedPermissionsInterface $settings, string $basePluginHandle, string $pluginHandle = null): array
     {
+        $currentPluginHandle = $this->getPluginHandle($pluginHandle);
+        $permissionNames = $settings->getSharedPermissions();
         $permissions = [];
 
         foreach ($permissionNames as $permissionName) {
