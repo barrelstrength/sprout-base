@@ -8,10 +8,12 @@
 namespace barrelstrength\sproutbase\services;
 
 use barrelstrength\sproutbase\base\SharedPermissionsInterface;
+use barrelstrength\sproutbase\base\SproutSettingsInterface;
 use Craft;
 use craft\base\Model;
 use craft\base\Plugin;
 use craft\helpers\StringHelper;
+use craft\services\Plugins;
 use yii\base\Component;
 
 class Settings extends Component
@@ -138,5 +140,43 @@ class Settings extends Component
         Craft::$app->getPlugins()->savePluginSettings($plugin, $pluginSettings->getAttributes());
 
         return $pluginSettings;
+    }
+
+    /**
+     * Save plugin settings shared between two or more Sprout Plugins
+     *
+     * @param $pluginHandle
+     * @param string $settingsModel
+     * @param $postSettings
+     * @return Model
+     * @throws \yii\base\ErrorException
+     * @throws \yii\base\Exception
+     * @throws \yii\base\NotSupportedException
+     * @throws \yii\web\ServerErrorHttpException
+     */
+    public function saveSettingsViaProjectConfig($pluginHandle, string $settingsModel, $postSettings): Model
+    {
+        // The existing settings
+        $projectConfig = Craft::$app->getProjectConfig();
+        $sproutSettings = $projectConfig->get('plugins.'.$pluginHandle.'.settings');
+        /** @var Model $settings */
+        $settings = new $settingsModel;
+        $settings->setAttributes($sproutSettings, false);
+        $settings->setAttributes($postSettings, false);
+
+        // Set sprout scenario validation on the settings model
+        $scenario = $settings['validationScenario'] ?? null;
+
+        if ($scenario) {
+            $settings->setScenario($scenario);
+        }
+
+        if (!$settings->validate()) {
+            return $settings;
+        }
+
+        $projectConfig->set(Plugins::CONFIG_PLUGINS_KEY.'.'.$pluginHandle.'.settings', $settings->toArray());
+
+        return $settings;
     }
 }

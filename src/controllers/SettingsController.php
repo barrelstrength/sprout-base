@@ -89,6 +89,7 @@ class SettingsController extends Controller
         /** @var SproutSettingsInterface $settings */
         $settings = $this->plugin->getSettings();
         $settingsNav = $settings->getSettingsNavItems();
+        $settings = $settingsNav[$this->selectedSidebarItem]['settingsModel'] ?? $settings;
 
         // @todo - is there a better way to do this?
         // This was added to support the Sprout Import, SEO Redirect tool
@@ -103,24 +104,39 @@ class SettingsController extends Controller
 
         $variables = array_merge($variables, Craft::$app->getUrlManager()->getRouteParams());
 
+        $variables['settings'] = $settings;
+        $variables['settingsNav'] = $settingsNav ?? null;
+
         return $this->renderTemplate('sprout-base/_settings/index', $variables);
     }
 
     /**
-     * Saves plugin settings
-     *
      * @return Response|null
      * @throws BadRequestHttpException
      * @throws \craft\errors\MissingComponentException
+     * @throws \yii\base\ErrorException
+     * @throws \yii\base\Exception
+     * @throws \yii\base\NotSupportedException
+     * @throws \yii\web\ServerErrorHttpException
      */
     public function actionSaveSettings()
     {
         $this->requirePostRequest();
 
         // the submitted settings
+        $settingsModel = null;
         $postSettings = Craft::$app->getRequest()->getBodyParam('settings');
+        $pluginHandle = $postSettings['mainPluginHandle'] ?? null;
 
-        $settings = SproutBase::$app->settings->saveSettings($this->plugin, $postSettings);
+        if ($pluginHandle){
+            $settingsModel =  Craft::$app->getPlugins()->getPlugin($pluginHandle)->getSettings();
+        }
+
+        if ($settingsModel && $pluginHandle){
+            $settings = SproutBase::$app->settings->saveSettingsViaProjectConfig($pluginHandle, $settingsModel, $postSettings);
+        }else{
+            $settings = SproutBase::$app->settings->saveSettings($this->plugin, $postSettings);
+        }
 
         if ($settings->hasErrors()) {
             Craft::$app->getSession()->setError(Craft::t('sprout-base-settings', 'Couldn’t save settings.'));
