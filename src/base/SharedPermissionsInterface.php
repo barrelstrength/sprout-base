@@ -18,5 +18,5 @@ interface SharedPermissionsInterface
      * This is the main plugin to store the shared settings
      * @return string
      */
-    public function getMainPluginHandle(): string;
+    public function getProjectConfigHandle(): string;
 }

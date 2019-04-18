@@ -10,6 +10,7 @@ namespace barrelstrength\sproutbase\controllers;
 use barrelstrength\sproutbase\base\SproutSettingsInterface;
 use barrelstrength\sproutbase\SproutBase;
 use Craft;
+use craft\base\Model;
 use craft\base\Plugin;
 use craft\errors\InvalidPluginException;
 use craft\web\Controller;
@@ -80,7 +81,7 @@ class SettingsController extends Controller
      * @return Response
      * @throws InvalidPluginException
      */
-    public function actionEditSettings(): Response
+    public function actionEditSettings($projectConfigHandle = null, $projectConfigSettingsType = null): Response
     {
         if (!$this->plugin) {
             throw new InvalidPluginException($this->plugin->handle);
@@ -89,7 +90,11 @@ class SettingsController extends Controller
         /** @var SproutSettingsInterface $settings */
         $settings = $this->plugin->getSettings();
         $settingsNav = $settings->getSettingsNavItems();
-        $settings = $settingsNav[$this->selectedSidebarItem]['settingsModel'] ?? $settings;
+        $variables['projectConfigSettingsType'] = $projectConfigSettingsType;
+
+        if (!is_null($projectConfigHandle) && !is_null($projectConfigSettingsType)){
+            $settings = $this->getSharedSettings($projectConfigSettingsType, $projectConfigHandle);
+        }
 
         // @todo - is there a better way to do this?
         // This was added to support the Sprout Import, SEO Redirect tool
@@ -126,14 +131,12 @@ class SettingsController extends Controller
         // the submitted settings
         $settingsModel = null;
         $postSettings = Craft::$app->getRequest()->getBodyParam('settings');
-        $pluginHandle = $postSettings['mainPluginHandle'] ?? null;
+        $pluginHandle = $postSettings['projectConfigHandle'] ?? null;
+        $projectConfigSettingsType = $postSettings['projectConfigSettingsType'] ?? null;
 
-        if ($pluginHandle){
-            $settingsModel =  Craft::$app->getPlugins()->getPlugin($pluginHandle)->getSettings();
-        }
-
-        if ($settingsModel && $pluginHandle){
-            $settings = SproutBase::$app->settings->saveSettingsViaProjectConfig($pluginHandle, $settingsModel, $postSettings);
+        if (!is_null($projectConfigSettingsType) && !is_null($pluginHandle)){
+            // Save settings when a plugin may not be installed
+            $settings = SproutBase::$app->settings->saveSettingsViaProjectConfig($pluginHandle, $projectConfigSettingsType, $postSettings);
         }else{
             $settings = SproutBase::$app->settings->saveSettings($this->plugin, $postSettings);
         }
@@ -151,5 +154,25 @@ class SettingsController extends Controller
         Craft::$app->getSession()->setNotice(Craft::t('sprout-base-settings', 'Settings saved.'));
 
         return $this->redirectToPostedUrl();
+    }
+
+    /**
+     * @param $model
+     * @param $pluginHandle
+     * @return Model
+     */
+    private function getSharedSettings($model, $pluginHandle)
+    {
+        $projectConfig = Craft::$app->getProjectConfig();
+        $sproutRedirectsSettings = $projectConfig->get('plugins.'.$pluginHandle.'.settings');
+
+        /** @var Model $settings */
+        $settings = new $model();
+
+        if ($sproutRedirectsSettings){
+            $settings->setAttributes($sproutRedirectsSettings, false);
+        }
+
+        return $settings;
     }
 }
