@@ -213,7 +213,7 @@ class Settings extends Component
         $settings->setAttributes($settingsArray, false);
         $settingsAsJson = json_encode($settings->toArray());
 
-        Craft::$app->db->createCommand()->update('{{%sproutbase_settings}}',
+        Craft::$app->db->createCommand()->update('{{%sprout_settings}}',
             ['settings' => $settingsAsJson],
             ['model' => $settingsModel]
         )->execute();
@@ -229,7 +229,7 @@ class Settings extends Component
     {
         $query = (new Query())
             ->select(['settings'])
-            ->from(['{{%sproutbase_settings}}'])
+            ->from(['{{%sprout_settings}}'])
             ->where(['model' => $settingsModel])
             ->one();
 

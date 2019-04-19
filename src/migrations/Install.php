@@ -17,7 +17,7 @@ class Install extends Migration
      */
     public function safeUp(): bool
     {
-        $settingsTable = '{{%sproutbase_settings}}';
+        $settingsTable = '{{%sprout_settings}}';
 
         if (!$this->db->tableExists($settingsTable)) {
             $this->createTable($settingsTable, [
