@@ -13,10 +13,4 @@ interface SharedPermissionsInterface
      * @return array
      */
     public function getSharedPermissions(): array;
-
-    /**
-     * This is the main plugin to store the shared settings
-     * @return string
-     */
-    public function getProjectConfigHandle(): string;
 }

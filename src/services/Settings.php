@@ -12,6 +12,7 @@ use barrelstrength\sproutbase\base\SproutSettingsInterface;
 use Craft;
 use craft\base\Model;
 use craft\base\Plugin;
+use craft\db\Query;
 use craft\helpers\StringHelper;
 use craft\services\Plugins;
 use yii\base\Component;
@@ -178,5 +179,60 @@ class Settings extends Component
         $projectConfig->set(Plugins::CONFIG_PLUGINS_KEY.'.'.$pluginHandle.'.settings', $settings->toArray());
 
         return $settings;
+    }
+
+    /**
+     * @param string $settingsModel
+     * @return Model
+     */
+    public function getBaseSettings(string $settingsModel): Model
+    {
+        $query = $this->getBaseSettingsQuery($settingsModel);
+
+        $settingsJson = $query['settings'] ?? null;
+
+        $settings = new  $settingsModel();
+
+        if ($settingsJson){
+            $settingsArray = json_decode($settingsJson, true);
+            $settings->setAttributes($settingsArray, false);
+        }
+
+        return $settings;
+    }
+
+    /**
+     * @param array $settingsArray
+     * @param $settingsModel
+     * @return mixed
+     * @throws \yii\db\Exception
+     */
+    public function saveBaseSettings(array $settingsArray, $settingsModel)
+    {
+        $settings = $this->getBaseSettings($settingsModel);
+        $settings->setAttributes($settingsArray, false);
+        $settingsAsJson = json_encode($settings->toArray());
+
+        Craft::$app->db->createCommand()->update('{{%sproutbase_settings}}',
+            ['settings' => $settingsAsJson],
+            ['model' => $settingsModel]
+        )->execute();
+
+        return $settings;
+    }
+
+    /**
+     * @param $settingsModel
+     * @return array|bool
+     */
+    private function getBaseSettingsQuery($settingsModel)
+    {
+        $query = (new Query())
+            ->select(['settings'])
+            ->from(['{{%sproutbase_settings}}'])
+            ->where(['model' => $settingsModel])
+            ->one();
+
+        return $query;
     }
 }

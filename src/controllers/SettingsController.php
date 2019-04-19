@@ -81,7 +81,7 @@ class SettingsController extends Controller
      * @return Response
      * @throws InvalidPluginException
      */
-    public function actionEditSettings($projectConfigHandle = null, $projectConfigSettingsType = null): Response
+    public function actionEditSettings($sproutBaseSettingsType = null): Response
     {
         if (!$this->plugin) {
             throw new InvalidPluginException($this->plugin->handle);
@@ -90,10 +90,10 @@ class SettingsController extends Controller
         /** @var SproutSettingsInterface $settings */
         $settings = $this->plugin->getSettings();
         $settingsNav = $settings->getSettingsNavItems();
-        $variables['projectConfigSettingsType'] = $projectConfigSettingsType;
+        $variables['sproutBaseSettingsType'] = $sproutBaseSettingsType;
 
-        if (!is_null($projectConfigHandle) && !is_null($projectConfigSettingsType)){
-            $settings = $this->getSharedSettings($projectConfigSettingsType, $projectConfigHandle);
+        if (!is_null($sproutBaseSettingsType)){
+            $settings = SproutBase::$app->settings->getBaseSettings($sproutBaseSettingsType);
         }
 
         // @todo - is there a better way to do this?
@@ -131,12 +131,11 @@ class SettingsController extends Controller
         // the submitted settings
         $settingsModel = null;
         $postSettings = Craft::$app->getRequest()->getBodyParam('settings');
-        $pluginHandle = $postSettings['projectConfigHandle'] ?? null;
-        $projectConfigSettingsType = $postSettings['projectConfigSettingsType'] ?? null;
+        $sproutBaseSettingsType = $postSettings['sproutBaseSettingsType'] ?? null;
 
-        if (!is_null($projectConfigSettingsType) && !is_null($pluginHandle)){
+        if (!is_null($sproutBaseSettingsType)){
             // Save settings when a plugin may not be installed
-            $settings = SproutBase::$app->settings->saveSettingsViaProjectConfig($pluginHandle, $projectConfigSettingsType, $postSettings);
+            $settings = SproutBase::$app->settings->saveBaseSettings($postSettings, $sproutBaseSettingsType);
         }else{
             $settings = SproutBase::$app->settings->saveSettings($this->plugin, $postSettings);
         }
@@ -154,25 +153,5 @@ class SettingsController extends Controller
         Craft::$app->getSession()->setNotice(Craft::t('sprout-base-settings', 'Settings saved.'));
 
         return $this->redirectToPostedUrl();
-    }
-
-    /**
-     * @param $model
-     * @param $pluginHandle
-     * @return Model
-     */
-    private function getSharedSettings($model, $pluginHandle)
-    {
-        $projectConfig = Craft::$app->getProjectConfig();
-        $sproutRedirectsSettings = $projectConfig->get('plugins.'.$pluginHandle.'.settings');
-
-        /** @var Model $settings */
-        $settings = new $model();
-
-        if ($sproutRedirectsSettings){
-            $settings->setAttributes($sproutRedirectsSettings, false);
-        }
-
-        return $settings;
     }
 }
