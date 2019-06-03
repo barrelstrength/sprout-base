@@ -76,11 +76,11 @@ class SettingsController extends Controller
     }
 
     /**
-     * Prepare plugin settings for output
-     *
-     * @return Response
-     * @throws InvalidPluginException
-     */
+ * Prepare plugin settings for output
+ *
+ * @return Response
+ * @throws InvalidPluginException
+ */
     public function actionEditSettings($sproutBaseSettingsType = null): Response
     {
         if (!$this->plugin) {
@@ -153,5 +153,21 @@ class SettingsController extends Controller
         Craft::$app->getSession()->setNotice(Craft::t('sprout-base-settings', 'Settings saved.'));
 
         return $this->redirectToPostedUrl();
+    }
+
+    /**
+     * Advertise a Pro edition of a plugin
+     *
+     * @param $template
+     * @return Response
+     * @throws \Exception
+     */
+    public function actionAdvertise($template, $title): Response
+    {
+        if (!$template) {
+            throw new \Exception("Wrong template");
+        }
+
+        return $this->renderTemplate($template, ['title' => $title]);
     }
 }
