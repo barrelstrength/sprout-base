@@ -8,7 +8,7 @@
 
     <div class="sprout-mediabox-outer">
         <div class="sprout-mediabox-inner"
-             {% if alignItems %}style="align-items: {{ alignItems }};"{% endif %}>
+            {% if alignItems %}style="align-items: {{ alignItems }};"{% endif %}>
             {% if resourcePath %}
                 <div class="sprout-mediathumb">
                     {{ svg(resourcePath) }}
@@ -33,4 +33,51 @@
         </a>
     </div>
 {% endmacro %}
+
+{% macro featureHeader(settings) %}
+    {% set heading = settings.heading ?? null %}
+    {% set message = settings.message ?? null %}
+    {% set primaryButtonText = settings.primaryButtonText ?? null %}
+    {% set primaryButtonLink = settings.primaryButtonLink ?? null %}
+    {% set secondaryButtonText = settings.secondaryButtonText ?? null %}
+    {% set secondaryButtonLink = settings.secondaryButtonLink ?? null %}
+
+    <header>
+        <h1>{{ settings.heading }}</h1>
+
+        {% if message %}
+            <p>{{ message|replace(
+                    '[pro]', '<span class="sprout-pro">Pro</span>'
+                )|markdown }}</p>
+        {% endif %}
+
+        <div class="buttons">
+            {% if primaryButtonText and primaryButtonLink %}
+                <a class="btn submit" href="{{ primaryButtonLink }}">
+                    <span class="get-started-icon">{{ svg('@sproutbase/web/assets/cp/dist/images/sprout-icon-mask.svg') }}</span> {{ primaryButtonText }}
+                </a>
+            {% endif %}
+            {% if secondaryButtonText and secondaryButtonLink %}
+                <a class="btn" data-icon="world" href="{{ secondaryButtonText }}">{{ secondaryButtonText }}</a>
+            {% endif %}
+        </div>
+    </header>
+
+{% endmacro %}
+
+{% macro featureImage(settings) %}
+    {% set imageUrl = settings.imageUrl ?? null %}
+    {% set altText = settings.altText ?? null %}
+
+    <div class="feature-image">
+        <img src="{{ imageUrl }}" alt="{{ altText }}"/>
+    </div>
+{% endmacro %}
+
+{% macro featureVideo(vimeoVideoId) %}
+    <div class="feature-video">
+        <iframe id="video" class="video" data-vimeo-id="{{ vimeoVideoId }}" src="https://player.vimeo.com/video/{{ vimeoVideoId }}" width="870" height="489" allow="autoplay; fullscreen" allowfullscreen></iframe>
+    </div>
+{% endmacro %}
+
 

@@ -1,0 +1,11 @@
+{% extends "_layouts/cp" %}
+
+{% do view.registerAssetBundle("barrelstrength\\sproutbase\\web\\assets\\landing\\LandingAsset") %}
+
+{% block content %}
+
+    <div class="sprout-top-bar">
+        {{ svg('@sproutbase/web/assets/cp/dist/images/sprout-icon.svg') }}
+    </div>
+
+{% endblock %}
