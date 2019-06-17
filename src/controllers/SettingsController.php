@@ -14,6 +14,7 @@ use craft\base\Model;
 use craft\base\Plugin;
 use craft\errors\InvalidPluginException;
 use craft\web\Controller;
+use Exception;
 use yii\web\BadRequestHttpException;
 use yii\web\Response;
 
@@ -153,21 +154,5 @@ class SettingsController extends Controller
         Craft::$app->getSession()->setNotice(Craft::t('sprout-base-settings', 'Settings saved.'));
 
         return $this->redirectToPostedUrl();
-    }
-
-    /**
-     * Advertise a Pro edition of a plugin
-     *
-     * @param $template
-     * @return Response
-     * @throws \Exception
-     */
-    public function actionAdvertise($template, $title): Response
-    {
-        if (!$template) {
-            throw new \Exception("Wrong template");
-        }
-
-        return $this->renderTemplate($template, ['title' => $title]);
     }
 }
