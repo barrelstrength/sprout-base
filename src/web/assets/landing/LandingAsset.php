@@ -7,6 +7,7 @@
 
 namespace barrelstrength\sproutbase\web\assets\landing;
 
+use barrelstrength\sproutbase\web\assets\cp\CpAsset as SproutCpAsset;
 use craft\web\AssetBundle;
 use craft\web\assets\cp\CpAsset as CraftCpAsset;
 
@@ -20,7 +21,8 @@ class LandingAsset extends AssetBundle
         $this->sourcePath = '@sproutbase/web/assets/landing/dist';
 
         $this->depends = [
-            CraftCpAsset::class
+            CraftCpAsset::class,
+            SproutCpAsset::class
         ];
 
         $this->css = [
