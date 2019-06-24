@@ -28,7 +28,7 @@
 
 {% macro upgradeToProButton(settings) %}
     <div class="btngroup submit first">
-        <a href="{{ settings.url }}" class="btn sprout-upgrade-to-pro">
+        <a href="{{ settings.url }}" class="btn sprout-upgrade-to-pro" title="{{ settings.title ?? "Upgrade to Pro"|t('sprout-base') }}">
             {{ "Upgrade to Pro"|t('sprout-redirects') }} <span>{{ svg('@sproutbase/web/assets/cp/dist/images/sprout-icon-mask.svg') }}</span>
         </a>
     </div>
