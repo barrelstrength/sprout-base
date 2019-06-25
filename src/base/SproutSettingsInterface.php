@@ -12,18 +12,18 @@ interface SproutSettingsInterface
     /**
      * Define plugin settings pages within the plugin tab in the Control Panel
      *
+     * @return array
      * @example
-     * 'settingsHeading' => [
+     *   'settingsHeading' => [
      *   'heading' => Craft::t('sprout-forms', 'Settings'),
-     * ],
-     * 'general' => [
+     *   ],
+     *   'general' => [
      *   'label' => Craft::t('sprout-forms', 'General'),
      *   'url' => 'sprout-forms/settings/general',
      *   'selected' => 'general',
      *   'template' => 'sprout-forms/settings/general'
-     * ],
+     *   ],
      *
-     * @return array
      */
     public function getSettingsNavItems(): array;
 }

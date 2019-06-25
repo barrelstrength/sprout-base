@@ -3,9 +3,6 @@
 namespace barrelstrength\sproutbase\migrations;
 
 use craft\db\Migration;
-use craft\db\Query;
-use barrelstrength\sproutbasereports\migrations\m180307_042132_craft3_schema_changes as SproutReportsCraft2toCraft3Migration;
-use barrelstrength\sproutbasereports\migrations\Install as SproutBaseReportsInstall;
 
 /**
  * Install migration.

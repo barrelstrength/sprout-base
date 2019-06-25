@@ -1,9 +1,9 @@
 
-.sprout-landing .sprout-top-bar {
+.sprout-top-bar {
     text-align: center;
 }
 
-.sprout-landing .sprout-top-bar svg {
+.sprout-top-bar svg {
     height: 60px;
     width: 60px;
 }
@@ -46,12 +46,14 @@
     max-height: 489px;
     max-width: 870px;
 }
+
 .sprout-landing .feature-video {
     position: relative;
     padding-bottom: 50%;
     height: 0;
     overflow: hidden;
 }
+
 .sprout-landing .feature-video iframe {
     border: none;
     position: absolute;
@@ -60,9 +62,11 @@
     width: 100%;
     height: 100%;
 }
+
 .sprout-landing .feature-image {
     padding: 10px;
 }
+
 .sprout-landing .feature-image img {
     border-radius: 5px;
     width: 100%;

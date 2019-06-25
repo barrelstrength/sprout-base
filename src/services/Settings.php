@@ -8,7 +8,6 @@
 namespace barrelstrength\sproutbase\services;
 
 use barrelstrength\sproutbase\base\SharedPermissionsInterface;
-use barrelstrength\sproutbase\base\SproutSettingsInterface;
 use Craft;
 use craft\base\Model;
 use craft\base\Plugin;
@@ -16,6 +15,10 @@ use craft\db\Query;
 use craft\helpers\StringHelper;
 use craft\services\Plugins;
 use yii\base\Component;
+use yii\base\ErrorException;
+use yii\base\Exception;
+use yii\base\NotSupportedException;
+use yii\web\ServerErrorHttpException;
 
 class Settings extends Component
 {
@@ -36,7 +39,8 @@ class Settings extends Component
      *
      * @return mixed|string|null
      */
-    public function getPluginHandle(string $pluginHandle = null) {
+    public function getPluginHandle(string $pluginHandle = null)
+    {
 
         if ($pluginHandle !== null) {
             return $pluginHandle;
@@ -66,12 +70,17 @@ class Settings extends Component
      * Because we have a module-based architecture often the classes determining permissions are outside
      * of a given plugin or shared by multiple plugins. This method helps resolve all that.
      *
+     * @param SharedPermissionsInterface $settings
+     * @param string                     $basePluginHandle
+     * @param string                     $pluginHandle
+     *
+     * @return array
      * @example
-     * Via Sprout Reports
-     * [
+     *    Via Sprout Reports
+     *    [
      *    'sproutReports-viewReports' => 'sproutReports-viewReports',
      *    'sproutReports-editReports' => 'sproutReports-editReports',
-     * ]
+     *    ]
      *
      * Via Sprout Forms
      * [
@@ -86,11 +95,6 @@ class Settings extends Component
      * Access permissions using array syntax and the primary plugin permission name:
      * $this->requirePermission($this->permissions['sproutReports-viewReports']);
      *
-     * @param SharedPermissionsInterface $settings
-     * @param string                     $basePluginHandle
-     * @param string                     $pluginHandle
-     *
-     * @return array
      */
     public function getPluginPermissions(SharedPermissionsInterface $settings, string $basePluginHandle, string $pluginHandle = null): array
     {
@@ -146,14 +150,15 @@ class Settings extends Component
     /**
      * Save plugin settings shared between two or more Sprout Plugins
      *
-     * @param $pluginHandle
+     * @param        $pluginHandle
      * @param string $settingsModel
-     * @param $postSettings
+     * @param        $postSettings
+     *
      * @return Model
-     * @throws \yii\base\ErrorException
-     * @throws \yii\base\Exception
-     * @throws \yii\base\NotSupportedException
-     * @throws \yii\web\ServerErrorHttpException
+     * @throws ErrorException
+     * @throws Exception
+     * @throws NotSupportedException
+     * @throws ServerErrorHttpException
      */
     public function saveSettingsViaProjectConfig($pluginHandle, string $settingsModel, $postSettings): Model
     {
@@ -182,18 +187,20 @@ class Settings extends Component
     }
 
     /**
-     * @param string $settingsModel
+     * @param string $settingsClassName
+     *
      * @return Model
      */
-    public function getBaseSettings(string $settingsModel): Model
+    public function getBaseSettings(string $settingsClassName): Model
     {
-        $query = $this->getBaseSettingsQuery($settingsModel);
+        $query = $this->getBaseSettingsQuery($settingsClassName);
 
         $settingsJson = $query['settings'] ?? null;
 
-        $settings = new  $settingsModel();
+        /** @var Model $settings */
+        $settings = new $settingsClassName();
 
-        if ($settingsJson){
+        if ($settingsJson) {
             $settingsArray = json_decode($settingsJson, true);
             $settings->setAttributes($settingsArray, false);
         }
@@ -203,7 +210,8 @@ class Settings extends Component
 
     /**
      * @param array $settingsArray
-     * @param $settingsModel
+     * @param       $settingsModel
+     *
      * @return mixed
      * @throws \yii\db\Exception
      */
@@ -223,6 +231,7 @@ class Settings extends Component
 
     /**
      * @param $settingsModel
+     *
      * @return array|bool
      */
     private function getBaseSettingsQuery($settingsModel)

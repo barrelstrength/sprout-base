@@ -11,13 +11,13 @@ use barrelstrength\sproutbase\base\SproutEditionsInterface;
 use barrelstrength\sproutbase\base\SproutSettingsInterface;
 use barrelstrength\sproutbase\SproutBase;
 use Craft;
-use craft\base\Model;
 use craft\base\Plugin;
 use craft\errors\InvalidPluginException;
 use craft\errors\MissingComponentException;
 use craft\web\Controller;
-use Exception;
+use yii\base\Exception;
 use yii\web\BadRequestHttpException;
+use yii\web\ForbiddenHttpException;
 use yii\web\Response;
 
 /**
@@ -63,7 +63,7 @@ class SettingsController extends Controller
     public $selectedSidebarItem;
 
     /**
-     * @throws \yii\web\ForbiddenHttpException
+     * @throws ForbiddenHttpException
      */
     public function init()
     {
@@ -89,6 +89,8 @@ class SettingsController extends Controller
      * by handing them to the settings layer as a variable. In the template,
      * they can be accessed as params.paramName. This was added to support Sprout Forms
      * Entry Statuses and Sprout Import/SEO Redirect tool
+     *
+     * @param null $sproutBaseSettingsType
      *
      * @return Response
      * @throws InvalidPluginException
@@ -130,7 +132,7 @@ class SettingsController extends Controller
      * @return Response|null
      * @throws BadRequestHttpException
      * @throws MissingComponentException
-     * @throws \yii\base\Exception
+     * @throws Exception
      */
     public function actionSaveSettings()
     {
