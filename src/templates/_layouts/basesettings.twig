@@ -1,6 +1,9 @@
 {% requireAdmin %}
 
 {% extends "_layouts/cp" %}
+{% import 'sprout-base/_includes/sproutcp' as sprout %}
+
+{% do view.registerAssetBundle("barrelstrength\\sproutbase\\web\\assets\\cp\\CpAsset") %}
 
 {% set selectedSubnavItem = 'settings' %}
 
@@ -47,6 +50,12 @@
         <div class="buttons">
             <input class="btn submit" type="submit"
                    value="{{ 'Save'|t('sprout-base-settings') }}">
+
+            {% if upgradeLink %}
+                {{ sprout.upgradeToProButton({
+                    url: upgradeLink
+                }) }}
+            {% endif %}
         </div>
 
     {% endif %}

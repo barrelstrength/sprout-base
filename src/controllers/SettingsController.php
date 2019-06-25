@@ -7,12 +7,14 @@
 
 namespace barrelstrength\sproutbase\controllers;
 
+use barrelstrength\sproutbase\base\SproutEditionsInterface;
 use barrelstrength\sproutbase\base\SproutSettingsInterface;
 use barrelstrength\sproutbase\SproutBase;
 use Craft;
 use craft\base\Model;
 use craft\base\Plugin;
 use craft\errors\InvalidPluginException;
+use craft\errors\MissingComponentException;
 use craft\web\Controller;
 use Exception;
 use yii\web\BadRequestHttpException;
@@ -40,7 +42,7 @@ class SettingsController extends Controller
     /**
      * The active Plugin class
      *
-     * @var Plugin
+     * @var Plugin|SproutEditionsInterface
      */
     public $plugin;
 
@@ -77,11 +79,20 @@ class SettingsController extends Controller
     }
 
     /**
- * Prepare plugin settings for output
- *
- * @return Response
- * @throws InvalidPluginException
- */
+     * Prepare plugin settings for output
+     *
+     * We merge multiple arrays for variables in our template:
+     * - $settingsNav[$this->selectedSidebarItem]['variables']
+     * - Craft::$app->getUrlManager()->getRouteParams()
+     *
+     * This makes sure we retain any params set in another controller on this request
+     * by handing them to the settings layer as a variable. In the template,
+     * they can be accessed as params.paramName. This was added to support Sprout Forms
+     * Entry Statuses and Sprout Import/SEO Redirect tool
+     *
+     * @return Response
+     * @throws InvalidPluginException
+     */
     public function actionEditSettings($sproutBaseSettingsType = null): Response
     {
         if (!$this->plugin) {
@@ -91,39 +102,35 @@ class SettingsController extends Controller
         /** @var SproutSettingsInterface $settings */
         $settings = $this->plugin->getSettings();
         $settingsNav = $settings->getSettingsNavItems();
-        $variables['sproutBaseSettingsType'] = $sproutBaseSettingsType;
 
-        if (!is_null($sproutBaseSettingsType)){
+        if ($sproutBaseSettingsType !== null) {
             $settings = SproutBase::$app->settings->getBaseSettings($sproutBaseSettingsType);
         }
 
-        // @todo - is there a better way to do this?
-        // This was added to support the Sprout Import, SEO Redirect tool
-        //
-        // Make sure we retain any params set in another controller on this request
-        // by handing them to the settings layer as a variable. In the template,
-        // they can be accessed as params.paramName
-        $variables = $settingsNav[$this->selectedSidebarItem]['variables'] ?? [];
+        $hasUpgradeLink = method_exists($this->plugin, 'getUpgradeUrl');
+        $upgradeLink = $hasUpgradeLink ? $this->plugin->getUpgradeUrl() : null;
 
-        $variables['plugin'] = $this->plugin;
-        $variables['selectedSidebarItem'] = $this->selectedSidebarItem;
+        $sectionVariables = $settingsNav[$this->selectedSidebarItem]['variables'] ?? [];
 
-        $variables = array_merge($variables, Craft::$app->getUrlManager()->getRouteParams());
-
-        $variables['settings'] = $settings;
-        $variables['settingsNav'] = $settingsNav ?? null;
-
-        return $this->renderTemplate('sprout-base/_settings/index', $variables);
+        return $this->renderTemplate('sprout-base/_settings/index', array_merge(
+                [
+                    'plugin' => $this->plugin,
+                    'settings' => $settings,
+                    'settingsNav' => $settingsNav ?? null,
+                    'selectedSidebarItem' => $this->selectedSidebarItem,
+                    'sproutBaseSettingsType' => $sproutBaseSettingsType,
+                    'upgradeLink' => $upgradeLink
+                ],
+                $sectionVariables,
+                Craft::$app->getUrlManager()->getRouteParams())
+        );
     }
 
     /**
      * @return Response|null
      * @throws BadRequestHttpException
-     * @throws \craft\errors\MissingComponentException
-     * @throws \yii\base\ErrorException
+     * @throws MissingComponentException
      * @throws \yii\base\Exception
-     * @throws \yii\base\NotSupportedException
-     * @throws \yii\web\ServerErrorHttpException
      */
     public function actionSaveSettings()
     {
@@ -134,10 +141,10 @@ class SettingsController extends Controller
         $postSettings = Craft::$app->getRequest()->getBodyParam('settings');
         $sproutBaseSettingsType = $postSettings['sproutBaseSettingsType'] ?? null;
 
-        if (!is_null($sproutBaseSettingsType)){
+        if ($sproutBaseSettingsType !== null) {
             // Save settings when a plugin may not be installed
             $settings = SproutBase::$app->settings->saveBaseSettings($postSettings, $sproutBaseSettingsType);
-        }else{
+        } else {
             $settings = SproutBase::$app->settings->saveSettings($this->plugin, $postSettings);
         }
 
