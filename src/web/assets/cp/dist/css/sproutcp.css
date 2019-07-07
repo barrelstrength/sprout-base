@@ -107,6 +107,7 @@
     display: flex;
     align-items: center;
     border-radius: .25rem;
+    margin-top: 10px;
 }
 .sprout-upgrade-to-pro-callout a {
     color: white;
