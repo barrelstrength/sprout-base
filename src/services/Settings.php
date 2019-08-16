@@ -33,9 +33,11 @@ class Settings extends Component
      *
      * 1. Check if the pluginHandle is explicitly provided
      * 2. Check GET and POST request for a `pluginHandle` attribute
+     * 3. Fall back to the first segment of the URL
      *
-     * We don't check `getSegment` as it can be inaccurate if used in action requests, etc.
-     * Explicitly provide the plugin handle in the request or blow up
+     * The first segment of the URL may be inaccurate if used in action requests, etc.
+     * However, it's useful for actions loading templates. Explicitly provide the
+     * plugin handle in the request where possible via #1 or #2
      *
      * @param string|null $pluginHandle
      *
@@ -47,7 +49,7 @@ class Settings extends Component
             return $pluginHandle;
         }
 
-        return Craft::$app->request->getParam('pluginHandle');
+        return Craft::$app->getRequest()->getParam('pluginHandle') ?? Craft::$app->getRequest()->getSegment(1);
     }
 
     /**
