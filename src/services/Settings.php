@@ -31,22 +31,23 @@ class Settings extends Component
      * such as via ajax requests and console commands, an action may have to
      * specifically identify which plugin it is coming from.
      *
-     * 1. Check if the pluginHandle is provided
-     * 2. Check the POST request for a pluginHandle attribute
-     * 3. Try to grab the plugin-handle from the first segment of the URL
+     * 1. Check if the pluginHandle is explicitly provided
+     * 2. Check GET and POST request for a `pluginHandle` attribute
+     *
+     * We don't check `getSegment` as it can be inaccurate if used in action requests, etc.
+     * Explicitly provide the plugin handle in the request or blow up
      *
      * @param string|null $pluginHandle
      *
-     * @return mixed|string|null
+     * @return mixed|string
      */
     public function getPluginHandle(string $pluginHandle = null)
     {
-
         if ($pluginHandle !== null) {
             return $pluginHandle;
         }
 
-        return Craft::$app->request->getParam('pluginHandle') ?? Craft::$app->request->getSegment(1);
+        return Craft::$app->request->getParam('pluginHandle');
     }
 
     /**
