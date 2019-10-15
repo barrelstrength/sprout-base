@@ -17,11 +17,17 @@ class App extends Component
     public $settings;
 
     /**
+     * @var Utilities
+     */
+    public $utilities;
+
+    /**
      * @inheritdoc
      */
     public function init()
     {
         // Sprout Base
         $this->settings = new Settings();
+        $this->utilities = new Utilities();
     }
 }
