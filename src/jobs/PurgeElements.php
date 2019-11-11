@@ -20,10 +20,10 @@ use yii\queue\Queue;
  */
 class PurgeElements extends BaseJob
 {
+    public $elementType;
     public $siteId;
     public $idsToDelete;
     public $idsToExclude;
-    public $elementType;
 
     /**
      * Returns the default description for this job.
@@ -32,7 +32,7 @@ class PurgeElements extends BaseJob
      */
     protected function defaultDescription(): string
     {
-        return Craft::t('sprout-base', 'Deleting oldest '.$this->elementType);
+        return Craft::t('sprout-base-settings', 'Deleting oldest '.$this->elementType);
     }
 
     /**

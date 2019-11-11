@@ -14,18 +14,12 @@ use yii\base\Component;
 
 class Utilities extends Component
 {
-    public function purgeElements($elementType, $idsToDelete, $delay = null, $siteId = null, $idsToExclude = null)
+    public function purgeElements(PurgeElements $purgeElementsJob, $delay = null)
     {
-        $purgeElements = new PurgeElements();
-        $purgeElements->idsToDelete = $idsToDelete;
-        $purgeElements->idsToExclude = $idsToExclude;
-        $purgeElements->siteId = $siteId;
-        $purgeElements->elementType = $elementType;
-
-        if ($delay){
-            Craft::$app->getQueue()->delay($delay)->push($purgeElements);
-        }else{
-            Craft::$app->getQueue()->push($purgeElements);
+        if ($delay) {
+            Craft::$app->getQueue()->delay($delay)->push($purgeElementsJob);
+        } else {
+            Craft::$app->getQueue()->push($purgeElementsJob);
         }
     }
 }
