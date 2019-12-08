@@ -8,7 +8,7 @@ if (typeof Craft.SproutBase === typeof undefined) {
     Craft.SproutBase = {};
 }
 
-(function($) {
+(function() {
 
     Craft.SproutBase.GroupsAdmin = Garnish.Base.extend({
 
@@ -126,7 +126,7 @@ if (typeof Craft.SproutBase === typeof undefined) {
         toggleGroupSettingsSelector: function() {
             this.$selectedGroup = this.$groups.find('a.sel:first');
 
-            if (this.$selectedGroup.data('key') === '*' || this.$selectedGroup.data('key') === 'mailingList') {
+            if (this.$selectedGroup.data('key') === '*' || this.$selectedGroup.data('readonly')) {
                 $(this.$groupSettingsBtn).addClass('hidden');
             } else {
                 $(this.$groupSettingsBtn).removeClass('hidden');
@@ -144,4 +144,4 @@ if (typeof Craft.SproutBase === typeof undefined) {
         }
     });
 
-})(jQuery);
+})();
