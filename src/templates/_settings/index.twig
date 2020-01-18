@@ -10,17 +10,27 @@
 
     {% endif %}
 
-    {% namespace (settingsForm ? 'settings' : '') %}
-
+    {% set templateHtml %}
         {# Display the selected settings template #}
         {% include [
             selectedSettingsInfo.template
             ] %}
+    {% endset %}
 
-    {% endnamespace %}
+    {% if settingsForm %}
+        {% namespace 'settings' %}
+            {{ templateHtml }}
+        {% endnamespace %}
+    {% else %}
+        {{ templateHtml }}
+    {% endif %}
 
     {% if settingsForm %}
         </div>
     {% endif %}
+
+{% endblock %}
+
+{% block settingsJs %}
 
 {% endblock %}
