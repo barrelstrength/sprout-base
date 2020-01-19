@@ -1,7 +1,7 @@
-/*!
- * Manage our groups
- *
- * Based off the Craft fields.js file
+/* global Craft */
+
+/**
+ * Manage groups based off the Craft fields.js file
  */
 
 if (typeof Craft.SproutBase === typeof undefined) {
@@ -36,11 +36,11 @@ if (typeof Craft.SproutBase === typeof undefined) {
 
       if (this.$groupSettingsBtn.length) {
 
-        var menuBtn = this.$groupSettingsBtn.data('menubtn');
+        const menuBtn = this.$groupSettingsBtn.data('menubtn');
 
         menuBtn.settings.onOptionSelect = $.proxy(function(elem) {
 
-          var $elem = $(elem);
+          const $elem = $(elem);
 
           if ($elem.hasClass('disabled')) {
             return;
@@ -61,10 +61,10 @@ if (typeof Craft.SproutBase === typeof undefined) {
     },
 
     addNewGroup: function() {
-      var name = this.promptForGroupName('');
+      const name = this.promptForGroupName('');
 
       if (name) {
-        var data = {
+        const data = {
           name: name
         };
 
@@ -72,7 +72,7 @@ if (typeof Craft.SproutBase === typeof undefined) {
           if (response.success) {
             location.href = Craft.getUrl(settings.newGroupOnSuccessUrlBase);
           } else {
-            var errors = this.flattenErrors(response.errors);
+            const errors = this.flattenErrors(response.errors);
             alert(Craft.t('sproutBase', settings.newGroupOnErrorMessage) + "\n\n" + errors.join("\n"));
           }
 
@@ -81,11 +81,11 @@ if (typeof Craft.SproutBase === typeof undefined) {
     },
 
     renameSelectedGroup: function() {
-      var oldName = this.$selectedGroup.text(),
+      const oldName = this.$selectedGroup.text(),
         newName = this.promptForGroupName(oldName);
 
       if (newName && newName !== oldName) {
-        var data = {
+        const data = {
           id: this.$selectedGroup.data('id'),
           name: newName
         };
@@ -95,7 +95,7 @@ if (typeof Craft.SproutBase === typeof undefined) {
             this.$selectedGroup.text(response.group.name);
             Craft.cp.displayNotice(Craft.t('sproutBase', (settings.renameGroupOnSuccessMessage)));
           } else {
-            var errors = this.flattenErrors(response.errors);
+            const errors = this.flattenErrors(response.errors);
             alert(Craft.t('sproutBase', settings.renameGroupOnErrorMessage) + "\n\n" + errors.join("\n"));
           }
 
@@ -109,7 +109,7 @@ if (typeof Craft.SproutBase === typeof undefined) {
 
     deleteSelectedGroup: function() {
       if (confirm(Craft.t('sprout-base-settings', settings.deleteGroupConfirmMessage))) {
-        var data = {
+        const data = {
           id: this.$selectedGroup.data('id')
         };
 
@@ -134,9 +134,9 @@ if (typeof Craft.SproutBase === typeof undefined) {
     },
 
     flattenErrors: function(responseErrors) {
-      var errors = [];
+      let errors = [];
 
-      for (var attribute in responseErrors) {
+      for (let attribute in responseErrors) {
         errors = errors.concat(response.errors[attribute]);
       }
 

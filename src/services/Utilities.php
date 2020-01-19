@@ -9,7 +9,6 @@ namespace barrelstrength\sproutbase\services;
 
 use barrelstrength\sproutbase\jobs\PurgeElements;
 use Craft;
-use craft\base\Element;
 use yii\base\Component;
 
 class Utilities extends Component
