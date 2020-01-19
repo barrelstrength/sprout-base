@@ -8,9 +8,6 @@ mix
     'src/web/assets/landing/src/scss/landing.scss',
     'src/web/assets/landing/dist/css/landing.css')
   .js([
-    'src/web/assets/cp/src/js/sproutbase.js'
-  ], 'src/web/assets/cp/dist/js/sproutbase.js')
-  .js([
     'src/web/assets/groups/src/js/groups.js'
   ], 'src/web/assets/groups/dist/js/groups.js')
   .copy('src/web/assets/cp/src/images',

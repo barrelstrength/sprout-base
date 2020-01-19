@@ -1,6 +1,5 @@
 {
-    "/src/web/assets/cp/dist/js/sproutbase.js": "/src/web/assets/cp/dist/js/sproutbase.js",
+    "/src/web/assets/groups/dist/js/groups.js": "/src/web/assets/groups/dist/js/groups.js",
     "/src/web/assets/cp/dist/css/sproutcp.css": "/src/web/assets/cp/dist/css/sproutcp.css",
-    "/src/web/assets/landing/dist/css/landing.css": "/src/web/assets/landing/dist/css/landing.css",
-    "/src/web/assets/groups/dist/js/groups.js": "/src/web/assets/groups/dist/js/groups.js"
+    "/src/web/assets/landing/dist/css/landing.css": "/src/web/assets/landing/dist/css/landing.css"
 }

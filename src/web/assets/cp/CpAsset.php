@@ -27,10 +27,6 @@ class CpAsset extends AssetBundle
             'css/sproutcp.css',
         ];
 
-        $this->js = [
-            'js/sproutbase.js'
-        ];
-
         parent::init();
     }
 }
