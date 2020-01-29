@@ -73,7 +73,7 @@ if (typeof Craft.SproutBase === typeof undefined) {
             location.href = Craft.getUrl(settings.newGroupOnSuccessUrlBase);
           } else {
             const errors = this.flattenErrors(response.errors);
-            alert(Craft.t('sproutBase', settings.newGroupOnErrorMessage) + "\n\n" + errors.join("\n"));
+            alert(Craft.t('sprout-base-settings', settings.newGroupOnErrorMessage) + "\n\n" + errors.join("\n"));
           }
 
         }, this));
@@ -93,10 +93,10 @@ if (typeof Craft.SproutBase === typeof undefined) {
         Craft.postActionRequest(settings.renameGroupAction, data, $.proxy(function(response) {
           if (response.success) {
             this.$selectedGroup.text(response.group.name);
-            Craft.cp.displayNotice(Craft.t('sproutBase', (settings.renameGroupOnSuccessMessage)));
+            Craft.cp.displayNotice(Craft.t('sprout-base-settings', (settings.renameGroupOnSuccessMessage)));
           } else {
             const errors = this.flattenErrors(response.errors);
-            alert(Craft.t('sproutBase', settings.renameGroupOnErrorMessage) + "\n\n" + errors.join("\n"));
+            alert(Craft.t('sprout-base-settings', settings.renameGroupOnErrorMessage) + "\n\n" + errors.join("\n"));
           }
 
         }, this));
@@ -104,7 +104,7 @@ if (typeof Craft.SproutBase === typeof undefined) {
     },
 
     promptForGroupName: function(oldName) {
-      return prompt(Craft.t('sproutBase', settings.promptForGroupNameMessage), oldName);
+      return prompt(Craft.t('sprout-base-settings', settings.promptForGroupNameMessage), oldName);
     },
 
     deleteSelectedGroup: function() {
