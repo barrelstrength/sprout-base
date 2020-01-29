@@ -10,19 +10,18 @@
 
     {% endif %}
 
-    {% set templateHtml %}
-        {# Display the selected settings template #}
+    {# Note: Must us include for the template below.
+             Autosuggest Vue behavior doesn't work if set as variable output #}
+    {% if settingsForm %}
+        {% namespace 'settings' %}
+            {% include [
+                selectedSettingsInfo.template
+                ] %}
+        {% endnamespace %}
+    {% else %}
         {% include [
             selectedSettingsInfo.template
             ] %}
-    {% endset %}
-
-    {% if settingsForm %}
-        {% namespace 'settings' %}
-            {{ templateHtml }}
-        {% endnamespace %}
-    {% else %}
-        {{ templateHtml }}
     {% endif %}
 
     {% if settingsForm %}
