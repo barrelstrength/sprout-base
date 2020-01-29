@@ -12,5 +12,6 @@ use yii\base\Event;
 class BeforeSaveSettingsEvent extends Event
 {
     public $plugin;
+
     public $settings;
 }

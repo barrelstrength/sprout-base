@@ -9,16 +9,15 @@ namespace barrelstrength\sproutbase;
 
 use barrelstrength\sproutbase\base\BaseSproutTrait;
 use barrelstrength\sproutbase\controllers\SettingsController;
-use yii\base\Event;
-use yii\base\InvalidConfigException;
-use \yii\base\Module;
-use craft\web\View;
+use barrelstrength\sproutbase\services\App;
+use Craft;
 use craft\events\RegisterTemplateRootsEvent;
 use craft\helpers\ArrayHelper;
 use craft\i18n\PhpMessageSource;
-use Craft;
-
-use barrelstrength\sproutbase\services\App;
+use craft\web\View;
+use yii\base\Event;
+use yii\base\InvalidConfigException;
+use yii\base\Module;
 
 class SproutBase extends Module
 {

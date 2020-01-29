@@ -233,6 +233,22 @@ class Settings extends Component
     }
 
     /**
+     * Check if a plugin is a specific Edition
+     *
+     * @param $pluginHandle
+     * @param $edition
+     *
+     * @return bool
+     */
+    public function isEdition($pluginHandle, $edition): bool
+    {
+        /** @var Plugin $plugin */
+        $plugin = Craft::$app->plugins->getPlugin($pluginHandle);
+
+        return $plugin !== null ? $plugin->is($edition) : false;
+    }
+
+    /**
      * @param $settingsModel
      *
      * @return array|bool
@@ -246,20 +262,5 @@ class Settings extends Component
             ->one();
 
         return $query;
-    }
-
-    /**
-     * Check if a plugin is a specific Edition
-     *
-     * @param $pluginHandle
-     * @param $edition
-     *
-     * @return bool
-     */
-    public function isEdition($pluginHandle, $edition): bool
-    {
-        /** @var Plugin $plugin */
-        $plugin = Craft::$app->plugins->getPlugin($pluginHandle);
-        return $plugin !== null ? $plugin->is($edition) : false;
     }
 }

@@ -36,6 +36,7 @@ class Install extends Migration
     public function safeDown(): bool
     {
         echo "Install cannot be reverted.\n";
+
         return false;
     }
 }

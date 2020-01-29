@@ -8,9 +8,8 @@
 namespace barrelstrength\sproutbase\jobs;
 
 use barrelstrength\sproutbase\SproutBase;
-use craft\queue\BaseJob;
 use Craft;
-
+use craft\queue\BaseJob;
 use craft\queue\QueueInterface;
 use Throwable;
 use yii\queue\Queue;
@@ -21,19 +20,12 @@ use yii\queue\Queue;
 class PurgeElements extends BaseJob
 {
     public $elementType;
-    public $siteId;
-    public $idsToDelete;
-    public $idsToExclude;
 
-    /**
-     * Returns the default description for this job.
-     *
-     * @return string
-     */
-    protected function defaultDescription(): string
-    {
-        return Craft::t('sprout-base-settings', 'Deleting oldest '.$this->elementType);
-    }
+    public $siteId;
+
+    public $idsToDelete;
+
+    public $idsToExclude;
 
     /**
      * @param QueueInterface|Queue $queue
@@ -57,5 +49,15 @@ class PurgeElements extends BaseJob
         }
 
         return true;
+    }
+
+    /**
+     * Returns the default description for this job.
+     *
+     * @return string
+     */
+    protected function defaultDescription(): string
+    {
+        return Craft::t('sprout-base-settings', 'Deleting oldest '.$this->elementType);
     }
 }

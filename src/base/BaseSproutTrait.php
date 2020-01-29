@@ -11,21 +11,6 @@ use Craft;
 
 trait BaseSproutTrait
 {
-    public function getPlugin()
-    {
-        $pluginClass = get_class($this);
-
-        $pluginHandle = Craft::$app->getPlugins()->getPluginHandleByClass($pluginClass);
-
-        $plugin = null;
-
-        if ($pluginHandle) {
-            $plugin = Craft::$app->getPlugins()->getPlugin($pluginHandle);
-        }
-
-        return $plugin;
-    }
-
     /**
      * Logs an error message using the pluginHandle as the category
      *
@@ -69,5 +54,20 @@ trait BaseSproutTrait
         }
 
         Craft::info($message, static::$pluginHandle);
+    }
+
+    public function getPlugin()
+    {
+        $pluginClass = get_class($this);
+
+        $pluginHandle = Craft::$app->getPlugins()->getPluginHandleByClass($pluginClass);
+
+        $plugin = null;
+
+        if ($pluginHandle) {
+            $plugin = Craft::$app->getPlugins()->getPlugin($pluginHandle);
+        }
+
+        return $plugin;
     }
 }
