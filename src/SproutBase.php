@@ -10,6 +10,7 @@ namespace barrelstrength\sproutbase;
 use barrelstrength\sproutbase\base\BaseSproutTrait;
 use barrelstrength\sproutbase\controllers\SettingsController;
 use yii\base\Event;
+use yii\base\InvalidConfigException;
 use \yii\base\Module;
 use craft\web\View;
 use craft\events\RegisterTemplateRootsEvent;
@@ -85,9 +86,18 @@ class SproutBase extends Module
         parent::__construct($id, $parent, $config);
     }
 
+    /**
+     * @throws InvalidConfigException
+     */
     public function init()
     {
-        self::$app = new App();
+        parent::init();
+
+        $this->setComponents([
+            'app' => App::class
+        ]);
+
+        self::$app = $this->get('app');
 
         Craft::setAlias('@sproutbase', $this->getBasePath());
         Craft::setAlias('@sproutbaseicons', $this->getBasePath().'/web/assets/icons');
@@ -107,7 +117,5 @@ class SproutBase extends Module
         Event::on(View::class, View::EVENT_REGISTER_CP_TEMPLATE_ROOTS, function(RegisterTemplateRootsEvent $e) {
             $e->roots['sprout-base'] = $this->getBasePath().DIRECTORY_SEPARATOR.'templates';
         });
-
-        parent::init();
     }
 }
