@@ -1,4 +1,29 @@
 
+/* Override Default Craft Header */
+.sprout-landing-page #global-header,
+.sprout-landing-page header#header h1 {
+    display: none !important;
+}
+
+@media only screen and (min-width: 1223px) {
+    .sprout-landing-page header#header {
+        background-color: rgb(71, 182, 73) !important;
+        height: 5px !important;
+        padding: 0 !important;
+    }
+}
+
+.sprout-landing-page #global-header,
+.sprout-landing-page #header-container {
+    margin: 0;
+}
+.sprout-landing-page #main-content {
+    padding: 0;
+}
+.sprout-landing-page #content {
+    border-radius: 0;
+}
+
 .sprout-top-bar {
     text-align: center;
 }
