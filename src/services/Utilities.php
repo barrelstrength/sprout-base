@@ -39,7 +39,6 @@ class Utilities extends Component
         nth = index + 1;
         cssSelector = "#nav-{$pluginHandle} .subnav li:nth-child("+nth+") a:after";
         additionalCss = '<style>'+cssSelector+' { font-family: "Craft"; content: "circlerarr"; margin-left: 5px; }</style>';
-        console.log(additionalCss);
         $('head').append(additionalCss);
         return false;
         }
