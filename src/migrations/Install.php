@@ -2,6 +2,7 @@
 
 namespace barrelstrength\sproutbase\migrations;
 
+use barrelstrength\sproutbase\records\Settings as SproutBaseSettingsRecord;
 use craft\db\Migration;
 
 /**
@@ -35,8 +36,8 @@ class Install extends Migration
      */
     public function safeDown(): bool
     {
-        echo "Install cannot be reverted.\n";
+        $this->dropTableIfExists(SproutBaseSettingsRecord::tableName());
 
-        return false;
+        return true;
     }
 }
