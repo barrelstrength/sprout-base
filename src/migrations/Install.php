@@ -15,10 +15,8 @@ class Install extends Migration
      */
     public function safeUp(): bool
     {
-        $settingsTable = '{{%sprout_settings}}';
-
-        if (!$this->db->tableExists($settingsTable)) {
-            $this->createTable($settingsTable, [
+        if (!$this->db->tableExists(SproutBaseSettingsRecord::tableName())) {
+            $this->createTable(SproutBaseSettingsRecord::tableName(), [
                 'id' => $this->primaryKey(),
                 'model' => $this->string(),
                 'settings' => $this->text(),

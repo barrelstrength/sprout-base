@@ -8,6 +8,7 @@
 namespace barrelstrength\sproutbase\services;
 
 use barrelstrength\sproutbase\base\SharedPermissionsInterface;
+use barrelstrength\sproutbase\records\Settings as SproutBaseSettingsRecord;
 use Craft;
 use craft\base\Model;
 use craft\base\Plugin;
@@ -223,7 +224,7 @@ class Settings extends Component
         $settings->setAttributes($settingsArray, false);
         $settingsAsJson = json_encode($settings->toArray());
 
-        Craft::$app->db->createCommand()->update('{{%sprout_settings}}',
+        Craft::$app->db->createCommand()->update(SproutBaseSettingsRecord::tableName(),
             ['settings' => $settingsAsJson],
             ['model' => $settingsModel]
         )->execute();
@@ -256,7 +257,7 @@ class Settings extends Component
     {
         $settingsJson = (new Query())
             ->select(['settings'])
-            ->from(['{{%sprout_settings}}'])
+            ->from([SproutBaseSettingsRecord::tableName()])
             ->where(['model' => $settingsModel])
             ->scalar();
 
