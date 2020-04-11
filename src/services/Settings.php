@@ -191,24 +191,23 @@ class Settings extends Component
 
     /**
      * @param string $settingsClassName
+     * @param string $pluginHandle
      *
      * @return Model
      */
-    public function getBaseSettings(string $settingsClassName): Model
+    public function getBaseSettings(string $settingsClassName, string $pluginHandle = ''): Model
     {
-        $query = $this->getBaseSettingsQuery($settingsClassName);
+        $settingsArray = $this->getBaseSettingsAsArray($settingsClassName);
 
-        $settingsJson = $query['settings'] ?? null;
+        /** @var Model $settingModel */
+        $settingModel = new $settingsClassName();
 
-        /** @var Model $settings */
-        $settings = new $settingsClassName();
+        $configArray = Craft::$app->getConfig()->getConfigFromFile($pluginHandle);
 
-        if ($settingsJson) {
-            $settingsArray = json_decode($settingsJson, true);
-            $settings->setAttributes($settingsArray, false);
-        }
+        // Merge config file overrides and give them priority
+        $settingModel->setAttributes(array_merge($settingsArray, $configArray), false);
 
-        return $settings;
+        return $settingModel;
     }
 
     /**
@@ -251,16 +250,20 @@ class Settings extends Component
     /**
      * @param $settingsModel
      *
-     * @return array|bool
+     * @return array
      */
-    private function getBaseSettingsQuery($settingsModel)
+    private function getBaseSettingsAsArray($settingsModel): array
     {
-        $query = (new Query())
+        $settingsJson = (new Query())
             ->select(['settings'])
             ->from(['{{%sprout_settings}}'])
             ->where(['model' => $settingsModel])
-            ->one();
+            ->scalar();
 
-        return $query;
+        if ($settingsJson) {
+            $settingsArray = json_decode($settingsJson, true);
+        }
+
+        return $settingsArray ?? [];
     }
 }
