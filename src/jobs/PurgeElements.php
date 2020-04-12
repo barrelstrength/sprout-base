@@ -44,7 +44,7 @@ class PurgeElements extends BaseJob
             $element = Craft::$app->elements->getElementById($id, $this->elementType, $this->siteId);
 
             if ($element && !Craft::$app->elements->deleteElement($element, true)) {
-                SproutBase::error('Unable to delete the '.$this->elementType.' element type using ID:'.$id);
+                Craft::error('Unable to delete the '.$this->elementType.' element type using ID:'.$id, __METHOD__);
             }
         }
 

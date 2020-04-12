@@ -7,7 +7,6 @@
 
 namespace barrelstrength\sproutbase;
 
-use barrelstrength\sproutbase\base\BaseSproutTrait;
 use barrelstrength\sproutbase\controllers\SettingsController;
 use barrelstrength\sproutbase\services\App;
 use Craft;
@@ -21,19 +20,10 @@ use yii\base\Module;
 
 class SproutBase extends Module
 {
-    use BaseSproutTrait;
-
     /**
      * @var App
      */
     public static $app;
-
-    /**
-     * Identify our plugin for BaseSproutTrait
-     *
-     * @var string
-     */
-    public static $pluginHandle = 'sprout-base';
 
     /**
      * @var string
