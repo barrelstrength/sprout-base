@@ -54,22 +54,6 @@ class Settings extends Component
     }
 
     /**
-     * @param string|array $pluginHandle
-     *
-     * @return Model|null
-     */
-    public function getPluginSettings(string $pluginHandle = null)
-    {
-        $currentPluginHandle = $this->getPluginHandle($pluginHandle);
-
-        if ($plugin = Craft::$app->getPlugins()->getPlugin($currentPluginHandle)) {
-            return $plugin->getSettings();
-        }
-
-        return null;
-    }
-
-    /**
      * Get a list of shared permissions and determine which plugin we should be checking permissions for.
      * Because we have a module-based architecture often the classes determining permissions are outside
      * of a given plugin or shared by multiple plugins. This method helps resolve all that.
