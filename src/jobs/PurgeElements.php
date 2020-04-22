@@ -7,7 +7,6 @@
 
 namespace barrelstrength\sproutbase\jobs;
 
-use barrelstrength\sproutbase\SproutBase;
 use Craft;
 use craft\queue\BaseJob;
 use craft\queue\QueueInterface;
