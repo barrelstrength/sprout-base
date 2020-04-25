@@ -62,6 +62,8 @@ class SettingsController extends Controller
      */
     public $selectedSidebarItem;
 
+    public $configFileName;
+
     /**
      * @throws ForbiddenHttpException
      */
@@ -69,6 +71,9 @@ class SettingsController extends Controller
     {
         // All Settings actions require an admin
         $this->requireAdmin();
+
+        $routeParams = Craft::$app->getUrlManager()->getRouteParams();
+        $this->configFileName = $routeParams['configFileName'] ?? null;
 
         $pluginHandle = Craft::$app->getRequest()->getSegment(1);
 
@@ -97,6 +102,7 @@ class SettingsController extends Controller
      */
     public function actionEditSettings($sproutBaseSettingsType = null): Response
     {
+
         if (!$this->plugin) {
             throw new InvalidPluginException($this->plugin->handle);
         }
@@ -106,7 +112,7 @@ class SettingsController extends Controller
         $settingsNav = $settings->getSettingsNavItems();
 
         if ($sproutBaseSettingsType !== null) {
-            $settings = SproutBase::$app->settings->getBaseSettings($sproutBaseSettingsType);
+            $settings = SproutBase::$app->settings->getBaseSettings($sproutBaseSettingsType, $this->configFileName);
         }
 
         $hasUpgradeLink = method_exists($this->plugin, 'getUpgradeUrl');
