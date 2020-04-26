@@ -49,7 +49,7 @@ class SettingsController extends Controller
     /**
      * The section of the settings area that is being edited
      *
-     * <plugin-name>/settings/<settingsSection>
+     * <pluginName:.*>/settings/<settingsSection:.*>
      *
      * @var string
      */
@@ -62,7 +62,16 @@ class SettingsController extends Controller
      */
     public $selectedSidebarItem;
 
-    public $configFileName;
+    /**
+     * The config file to use for overrides.
+     *
+     * When sharing modules, a module settings model may use the same
+     * config file for two different plugins. For example, sprout-base-reports
+     * uses the 'sprout-reports'.php config file in both Reports and Forms.
+     *
+     * @var string
+     */
+    public $configFilename;
 
     /**
      * @throws ForbiddenHttpException
@@ -73,12 +82,11 @@ class SettingsController extends Controller
         $this->requireAdmin();
 
         $routeParams = Craft::$app->getUrlManager()->getRouteParams();
-        $this->configFileName = $routeParams['configFileName'] ?? null;
+        $pluginHandle = $routeParams['pluginHandle'] ?? null;
 
-        $pluginHandle = Craft::$app->getRequest()->getSegment(1);
-
-        $this->settingsSection = Craft::$app->getRequest()->getSegment(3);
-        $this->selectedSidebarItem = $this->settingsSection ?? 'general';
+        $this->configFilename = $routeParams['configFilename'] ?? $pluginHandle;
+        $this->settingsSection = $routeParams['settingsSection'] ?? null;
+        $this->selectedSidebarItem = $routeParams['settingsSection']  ?? 'general';
 
         $this->plugin = Craft::$app->getPlugins()->getPlugin($pluginHandle);
     }
@@ -112,7 +120,7 @@ class SettingsController extends Controller
         $settingsNav = $settings->getSettingsNavItems();
 
         if ($sproutBaseSettingsType !== null) {
-            $settings = SproutBase::$app->settings->getBaseSettings($sproutBaseSettingsType, $this->configFileName);
+            $settings = SproutBase::$app->settings->getBaseSettings($sproutBaseSettingsType, $this->configFilename);
         }
 
         $hasUpgradeLink = method_exists($this->plugin, 'getUpgradeUrl');
