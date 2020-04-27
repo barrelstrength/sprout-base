@@ -49,11 +49,11 @@ class SettingsController extends Controller
     /**
      * The section of the settings area that is being edited
      *
-     * <pluginName:.*>/settings/<settingsSection:.*>
+     * <pluginName:.*>/settings/<settingsSectionHandle:.*>
      *
      * @var string
      */
-    public $settingsSection;
+    public $settingsSectionHandle;
 
     /**
      * The selected settings tab
@@ -82,11 +82,13 @@ class SettingsController extends Controller
         $this->requireAdmin();
 
         $routeParams = Craft::$app->getUrlManager()->getRouteParams();
-        $pluginHandle = $routeParams['pluginHandle'] ?? null;
+        $pluginHandle = $routeParams['pluginHandle']
+            ?? Craft::$app->getRequest()->getSegment(1);
 
         $this->configFilename = $routeParams['configFilename'] ?? $pluginHandle;
-        $this->settingsSection = $routeParams['settingsSection'] ?? null;
-        $this->selectedSidebarItem = $routeParams['settingsSection']  ?? 'general';
+        $this->settingsSectionHandle = $routeParams['settingsSectionHandle']
+            ?? Craft::$app->getRequest()->getSegment(3);
+        $this->selectedSidebarItem = $this->settingsSectionHandle ?? 'general';
 
         $this->plugin = Craft::$app->getPlugins()->getPlugin($pluginHandle);
     }
