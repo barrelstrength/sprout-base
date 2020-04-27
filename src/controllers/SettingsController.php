@@ -112,7 +112,6 @@ class SettingsController extends Controller
      */
     public function actionEditSettings($sproutBaseSettingsType = null): Response
     {
-
         if (!$this->plugin) {
             throw new InvalidPluginException($this->plugin->handle);
         }
@@ -125,6 +124,8 @@ class SettingsController extends Controller
             $settings = SproutBase::$app->settings->getBaseSettings($sproutBaseSettingsType, $this->configFilename);
         }
 
+        $config = Craft::$app->getConfig()->getConfigFromFile($this->configFilename);
+
         $hasUpgradeLink = method_exists($this->plugin, 'getUpgradeUrl');
         $upgradeLink = $hasUpgradeLink ? $this->plugin->getUpgradeUrl() : null;
 
@@ -134,6 +135,7 @@ class SettingsController extends Controller
                 [
                     'plugin' => $this->plugin,
                     'settings' => $settings,
+                    'config' => $config,
                     'settingsNav' => $settingsNav ?? null,
                     'selectedSidebarItem' => $this->selectedSidebarItem,
                     'sproutBaseSettingsType' => $sproutBaseSettingsType,
