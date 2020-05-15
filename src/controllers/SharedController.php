@@ -92,7 +92,9 @@ abstract class SharedController extends Controller
 
         $routeParams = Craft::$app->getUrlManager()->getRouteParams();
 
-        $this->pluginHandle = $routeParams['pluginHandle'] ?? $this->getDefaultPluginHandle();
+        $this->pluginHandle = $routeParams['pluginHandle']
+            ?? Craft::$app->getRequest()->getBodyParam('pluginHandle')
+            ?? $this->getDefaultPluginHandle();
         $this->viewContext = $routeParams['viewContext'] ?? $this->getDefaultViewContext();
         $this->pluginSection = $routeParams['pluginSection'] ?? null;
 
