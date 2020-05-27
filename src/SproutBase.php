@@ -10,14 +10,21 @@ namespace barrelstrength\sproutbase;
 use barrelstrength\sproutbase\controllers\SettingsController;
 use barrelstrength\sproutbase\services\App;
 use Craft;
+use craft\events\RegisterCpSettingsEvent;
 use craft\events\RegisterTemplateRootsEvent;
+use craft\events\RegisterUrlRulesEvent;
 use craft\helpers\ArrayHelper;
 use craft\i18n\PhpMessageSource;
+use craft\web\twig\variables\Cp;
+use craft\web\UrlManager;
 use craft\web\View;
 use yii\base\Event;
 use yii\base\InvalidConfigException;
 use yii\base\Module;
 
+/**
+ * @property string[] $cpUrlRules
+ */
 class SproutBase extends Module
 {
     /**
@@ -103,6 +110,10 @@ class SproutBase extends Module
             ];
         }
 
+        Event::on(UrlManager::class, UrlManager::EVENT_REGISTER_CP_URL_RULES, function(RegisterUrlRulesEvent $event) {
+            $event->rules = array_merge($event->rules, $this->getCpUrlRules());
+        });
+
         // Setup Template Roots
         Event::on(View::class, View::EVENT_REGISTER_CP_TEMPLATE_ROOTS, function(RegisterTemplateRootsEvent $e) {
             $e->roots['sprout-base'] = $this->getBasePath().DIRECTORY_SEPARATOR.'templates';
@@ -164,5 +175,12 @@ class SproutBase extends Module
         });
     }
 
+    public function getCpUrlRules()
+    {
+        return [
+            // Settings
+            'sprout/settings/<settingsSectionHandle:.*>' =>
+                'sprout/settings/edit-settings-new',
+        ];
     }
 }
