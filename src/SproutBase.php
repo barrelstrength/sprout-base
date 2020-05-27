@@ -107,5 +107,62 @@ class SproutBase extends Module
         Event::on(View::class, View::EVENT_REGISTER_CP_TEMPLATE_ROOTS, function(RegisterTemplateRootsEvent $e) {
             $e->roots['sprout-base'] = $this->getBasePath().DIRECTORY_SEPARATOR.'templates';
         });
+
+        Event::on(Cp::class, Cp::EVENT_REGISTER_CP_SETTINGS, static function(RegisterCpSettingsEvent $event) {
+            $event->settings['Sprout Settings'] = [
+                'campaigns' => [
+                    'url' => 'sprout/settings/campaigns',
+                    'icon' => '@sprouticons/campaigns/icon.svg',
+                    'label' => 'Campaigns'
+                ],
+                'email' => [
+                    'url' => 'sprout/settings/email',
+                    'icon' => '@sprouticons/email/icon.svg',
+                    'label' => 'Notifications'
+                ],
+                'fields' => [
+                    'url' => 'sprout/settings/fields',
+                    'icon' => '@sprouticons/fields/icon.svg',
+                    'label' => 'Fields'
+                ],
+                'forms' => [
+                    'url' => 'sprout/settings/forms',
+                    'icon' => '@sprouticons/forms/icon.svg',
+                    'label' => 'Forms'
+                ],
+                'lists' => [
+                    'url' => 'sprout/settings/lists',
+                    'icon' => '@sprouticons/lists/icon.svg',
+                    'label' => 'Lists'
+                ],
+                'redirects' => [
+                    'url' => 'sprout/settings/redirects',
+                    'icon' => '@sprouticons/redirects/icon.svg',
+                    'label' => 'Redirects'
+                ],
+                'reports' => [
+                    'url' => 'sprout/settings/reports',
+                    'icon' => '@sprouticons/reports/icon.svg',
+                    'label' => 'Reports'
+                ],
+                'sent-email' => [
+                    'url' => 'sprout/settings/sent-email',
+                    'icon' => '@sprouticons/sent-email/icon.svg',
+                    'label' => 'Sent Email'
+                ],
+                'seo' => [
+                    'url' => 'sprout/settings/seo',
+                    'icon' => '@sprouticons/seo/icon.svg',
+                    'label' => 'SEO'
+                ],
+                'sitemaps' => [
+                    'url' => 'sprout/settings/sitemaps',
+                    'icon' => '@sprouticons/sitemaps/icon.svg',
+                    'label' => 'Sitemaps'
+                ]
+            ];
+        });
+    }
+
     }
 }
