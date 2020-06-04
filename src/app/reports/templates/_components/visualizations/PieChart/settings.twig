@@ -1,0 +1,21 @@
+{% import "_includes/forms" as forms %}
+
+{{ forms.textField({
+    label: "Label Column"|t('sprout'),
+    instructions: "Set the column from the report to be used as the labels in the visualization"|t('sprout'),
+    id: 'visualizationLabelColumn',
+    class: 'code',
+    name: 'labelColumn',
+    value: settings.labelColumn
+}) }}
+
+{{ forms.textField({
+    label: "Data Column"|t('sprout'),
+    instructions: "Set the column from the report to be used as the data series in the visualization"|t('sprout'),
+    id: 'visualizationDataColumn',
+    class: 'code',
+    name: 'dataColumns[]',
+    value: settings.dataColumns[0]
+}) }}
+
+

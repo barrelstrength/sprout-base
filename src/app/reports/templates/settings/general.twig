@@ -1,0 +1,54 @@
+{% import "_includes/forms" as forms %}
+
+{% macro configWarning(setting) -%}
+    {{ "This is being overridden by the {setting} config setting."|t('sprout', {
+        setting: setting
+    })|raw }}
+{%- endmacro %}
+
+{% from _self import configWarning %}
+
+{% if not currentUser.admin %}
+    {% redirect 'sprout-reports' %}
+{% endif %}
+
+{{ forms.textField({
+    label: "Plugin Name"|t('sprout'),
+    instructions: "Intuitive, human-readable plugin name for the end user."|t('sprout'),
+    id: 'pluginNameOverride',
+    name: 'pluginNameOverride',
+    value: settings.pluginNameOverride,
+    autofocus: true,
+    first: true,
+    errors: '',
+    warning: config.pluginNameOverride is defined ? configWarning('pluginNameOverride')
+}) }}
+
+{{ forms.selectField({
+    label: "Default Results to Display"|t('sprout'),
+    instructions: "Set the number of results to initially display when a report is run."|t('sprout'),
+    name: 'defaultPageLength',
+    placeholder: '10',
+    options: [
+        { label: '10', value: '10' },
+        { label: '25', value: '25' },
+        { label: '50', value: '50' },
+        { label: '100', value: '100' },
+        { label: '250', value: '250' }
+    ],
+    value: settings.defaultPageLength,
+    warning: config.defaultPageLength is defined ? configWarning('defaultPageLength')
+}) }}
+
+{{ forms.selectField({
+    label: "Default Export Delimiter"|t('sprout'),
+    instructions: "Set the default export delimiter setting when creating new reports."|t('sprout'),
+    name: 'defaultExportDelimiter',
+    placeholder: ',',
+    options: [
+        { label: 'Comma', value: ',' },
+        { label: 'Semi-colon', value: ';' }
+    ],
+    value: settings.defaultExportDelimiter,
+    warning: config.defaultExportDelimiter is defined ? configWarning('defaultExportDelimiter')
+}) }}

@@ -1,0 +1,51 @@
+{% if field.output == "html" or field.output == "richText" %}
+    {{ field.notes | raw }}
+{% else %}
+    {{ field.notes | markdown }}
+{% endif %}
+
+{% css %}
+
+    {{ selectedStyleCss }}
+
+    .sproutnotes-togglebtn {
+    position: absolute;
+    right:0;
+    color: rgba(0, 0, 0, 0.25);
+    }
+
+{% endcss %}
+
+{% js %}
+
+    var notesToggleStatus = localStorage.getItem('{{ id }}-field');
+
+    if (notesToggleStatus == 'hidden') {
+    $('#' + '{{ id }}-field' + ' .input').css('display', 'none');
+    }
+
+    var headingDiv = $('#' + '{{ id }}-field' + ' .heading label');
+
+    $(headingDiv).append('<a href="#" class="sproutnotes-togglebtn icon menubtn"></a>');
+
+    $('#' + '{{ id }}-field' + ' label').on('click', function() {
+
+    $('#' + '{{ id }}-field' + ' .input').slideToggle('fast', function(test) {
+
+    var visibility = $('#' + '{{ id }}-field' + ' .input:hidden');
+
+    if (visibility.length == 0) {
+    localStorage.setItem('{{ id }}-field', 'visible');
+    }
+    else {
+    localStorage.setItem('{{ id }}-field', 'hidden');
+    }
+    });
+    });
+
+    {% if (field.hideLabel) %}
+        $('#' + '{{ id }}-field' + ' .heading').remove();
+        $('#' + '{{ id }}-field' + ' .input').css('display', 'block');
+    {% endif %}
+
+{% endjs %}

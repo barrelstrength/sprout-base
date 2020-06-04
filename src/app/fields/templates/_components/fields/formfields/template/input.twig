@@ -1,0 +1,28 @@
+{% import "_includes/forms" as forms %}
+
+{% if field.inputStyle == 'dropdown' %}
+
+    {{ forms.select({
+        id: id,
+        name: name,
+        options: templateDropdownOptions,
+        value: value is defined ? value : ''
+    }) }}
+
+{% else %}
+
+    {% if field.suggestedTemplates == 'all' %}
+        {% set templateSuggestions = craft.cp.getTemplateSuggestions() %}
+    {% endif %}
+
+    {{ forms.autosuggest({
+        id: id,
+        name: name,
+        suggestions: templateSuggestions,
+        value: value is defined ? value : '',
+        placeholder: 'Search for your template…'
+    }) }}
+
+{% endif %}
+
+

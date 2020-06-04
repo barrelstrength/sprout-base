@@ -1,0 +1,22 @@
+{% import "_includes/forms" as forms %}
+
+{% macro configWarning(setting) -%}
+    {{ "This is being overridden by the {setting} config setting."|t('sprout-forms-google-recaptcha', {
+        setting: setting
+    })|raw }}
+{%- endmacro %}
+
+{% from _self import configWarning %}
+
+{{ forms.textField({
+    label: "Plugin Name"|t('sprout'),
+    instructions: "Intuitive, human-readable plugin name for the end user."|t('sprout'),
+    id: 'pluginNameOverride',
+    name: 'pluginNameOverride',
+    value: settings.pluginNameOverride,
+    placeholder: 'Sprout Sent Email',
+    autofocus: true,
+    first: true,
+    errors: '',
+    warning: config.pluginNameOverride is defined ? configWarning('pluginNameOverride')
+}) }}

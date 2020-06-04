@@ -1,0 +1,46 @@
+{% import "_includes/forms" as forms %}
+
+<div class="visualization-filters">
+
+    <div class="field">
+        <div class="heading">
+            <label>Report From</label>
+        </div>
+        <div class="input">
+            {{ forms.date({
+                id: 'reportDateFrom',
+                name: 'reportDateFrom',
+                placeholder: 'from'
+            }) }}
+        </div>
+    </div>
+    <div class="field">
+        <div class="heading">
+            <label>Report To</label>
+        </div>
+        <div class="input">
+            {{ forms.date({
+                id: 'reportDateTo',
+                name: 'reportDateTo',
+            }) }}
+        </div>
+    </div>
+
+</div>
+
+<div id="chart"></div>
+
+{% js on ready %}
+
+    var chart = new SproutReportsViz('timeSeriesChart', {
+      chartSelector: '#chart',
+      labels: {{ visualization.getLabels()|json_encode()|raw }},
+      dataSeries: {{ visualization.getTimeSeries()|json_encode()|raw }},
+      options: {{ options|json_encode()|raw }},
+      startDate: {{ visualization.getStartDate()|raw }},
+      endDate: {{ visualization.getEndDate()|raw }},
+    });
+
+    chart.create();
+
+{% endjs %}

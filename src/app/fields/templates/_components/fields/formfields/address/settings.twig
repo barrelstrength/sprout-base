@@ -1,0 +1,40 @@
+{% import "_includes/forms" as forms %}
+
+{{ forms.selectField({
+    label: "Select Language"|t('sprout'),
+    instructions: "Choose the language to display the list of countries."|t('sprout'),
+    id: 'defaultLanguage',
+    name: 'defaultLanguage',
+    options: languages,
+    value: field.defaultLanguage
+}) }}
+
+{{ forms.selectField({
+    label: "Default Country"|t('sprout'),
+    instructions: "Choose a default country input."|t('sprout'),
+    id: 'defaultCountry',
+    name: 'defaultCountry',
+    options: countries,
+    value: field.defaultCountry
+}) }}
+
+{{ forms.lightswitchField({
+    label: "Show country dropdown"|t,
+    instructions: 'Disable this setting to use the Default Country when saving the address field.'|t('sprout'),
+    id: 'showCountryDropdown',
+    name: 'showCountryDropdown',
+    on: field.showCountryDropdown,
+    toggle: 'sprout-address-highlight-countries'
+}) }}
+
+<div id="sprout-address-highlight-countries" class="sprout-address-highlight-countries {% if not field.showCountryDropdown %} hidden{% endif %}">
+    {{ forms.checkboxSelectField({
+        label: "Highlight Countries"|t('sprout'),
+        instructions: "Select the countries to highlight at the top of the Country dropdown list."|t('sprout'),
+        name: "highlightCountries",
+        options: countries,
+        values: field.highlightCountries
+    }) }}
+</div>
+
+{% do view.registerAssetBundle("barrelstrength\\sproutbase\\app\\fields\\web\\assets\\address\\AddressFieldAsset") %}

@@ -1,0 +1,13 @@
+{% import "_includes/forms" as forms %}
+
+{% set fieldClass = fieldClass ?? name %}
+{% set class = class ?? name %}
+
+{{ forms.selectField({
+    label: label,
+    fieldClass: fieldClass,
+    class: class,
+    options: options,
+    name: name ~ '[' ~ inputName ~ ']',
+    value: value
+}) }}

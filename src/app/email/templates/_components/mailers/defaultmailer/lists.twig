@@ -1,0 +1,15 @@
+{% import "_includes/forms" as forms %}
+
+{{ forms.elementSelectField({
+    label: "Mailing Lists <span class='info'>Select one or more Mailing List.</span>"|t('sprout'),
+    id: 'listIds',
+    name: 'listIds',
+    elementType: 'barrelstrength\\sproutbasereports\\elements\\Report',
+    selectionLabel: "Add List"|t('sprout'),
+    sources: 'mailingListModal',
+    criteria: {
+        emailColumn: ':notempty:',
+        viewContext: 'sprout-reports'
+    },
+    elements: selectedElements
+}) }}

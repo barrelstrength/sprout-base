@@ -1,0 +1,50 @@
+{% import "_includes/forms" as forms %}
+
+{{ forms.textareaField({
+    label: 'Field Format'|t('sprout'),
+    name: 'fieldFormat',
+    instructions: 'What the auto-generated field value should look like. You can include tags that output element properties, such as {myCustomField}.'|t('sprout'),
+    placeholder: 'Reference the Element you are saving using the `object` variable:
+Object syntax: {{ object.title }}
+Shorthand syntax: {title}'|t('sprout'),
+    value: field.fieldFormat,
+    rows: 10,
+    class: 'code'
+}) }}
+
+{{ forms.lightswitchField({
+    label: "Show Field"|t('sprout'),
+    instructions: "Display this field in the field layout."|t('sprout'),
+    id: 'showField',
+    name: 'showField',
+    on: field.showField,
+    toggle: 'sproutfields-predefined-display-settings'
+}) }}
+
+<div id="sproutfields-predefined-display-settings" {% if not field.showField %}class="hidden"{% endif %}>
+
+    {{ forms.selectField({
+        label: 'Output Format'|t('sprout'),
+        instructions: "The format to use when displaying the Predefined Field value in the field layout."|t('sprout'),
+        id: "outputFormat",
+        name: 'outputFormat',
+        options: {
+            singleLine: 'Plain Text'|t('sprout'),
+            textarea: 'Textarea'|t('sprout'),
+            html: 'HTML'|t('sprout')
+        },
+        value: field.outputFormat
+    }) }}
+
+    {{ forms.lightswitchField({
+        label: "Render dynamically in field layout"|t('sprout'),
+        instructions: "Process the Predefined Field value dynamically in the field layout. Enabling this setting will process the value defined by Field Format each time the Field Layout is loaded."|t('sprout'),
+        id: 'renderDynamically',
+        name: 'renderDynamically',
+        on: field.renderDynamically,
+        warning: "Enable this setting with caution. Adding additional processing when loading a field layout can have side effects on performance and usability."|t('sprout'),
+    }) }}
+
+</div>
+
+<br>

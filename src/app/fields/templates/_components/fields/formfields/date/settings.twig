@@ -1,0 +1,32 @@
+{% import "_includes/forms" as forms %}
+
+{{ forms.radioGroupField({
+    id: 'dateTime',
+    name: 'dateTime',
+    options: options,
+    value: value
+}) }}
+
+{{ forms.textField({
+    label: 'Minimum Date'|t('sprout'),
+    instructions: "The minimum date allowed for the date field. Leave blank for no minimum. Format must be YYYY-MM-DD. You can reference the current date with the <code>now</code> tag: <code>{{ now|date('Y-m-d') }}</code>"|t('sprout'),
+    name: 'minimumDate',
+    placeholder: 'YYYY-MM-DD',
+    value: field.minimumDate
+}) }}
+
+{{ forms.textField({
+    label: 'Maximum Date'|t('sprout'),
+    instructions: "The maximum date allowed for the date field. Leave blank for no maximum. Format must be YYYY-MM-DD. You can reference the current date with the <code>now</code> tag: <code>{{ now|date_modify('+1 month')|date('Y-m-d') }}</code>"|t('sprout'),
+    name: 'maximumDate',
+    placeholder: 'YYYY-MM-DD',
+    value: field.maximumDate
+}) }}
+
+{{ forms.selectField({
+    label: "Minute Increment"|t('sprout'),
+    id: 'minuteIncrement',
+    name: 'minuteIncrement',
+    options: incrementOptions,
+    value: field.minuteIncrement ? field.minuteIncrement : 30,
+}) }}

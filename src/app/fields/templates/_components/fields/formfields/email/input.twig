@@ -1,0 +1,25 @@
+{% import "_includes/forms" as forms %}
+
+{{ forms.text({
+    id: id,
+    name: name,
+    value: value is defined ? value : '',
+    placeholder: placeholder ?? null,
+}) }}
+
+<span class="sprout-email-button {{ id }}">
+    <a href="" target="_blank">{{ svg('@sproutbaseicons/envelope.svg') }}</a>
+</span>
+
+{% do view.registerAssetBundle("barrelstrength\\sproutbase\\app\\fields\\web\\assets\\email\\EmailFieldAsset") %}
+
+{# Element may be null for Quick Entry widget #}
+{% js %}
+    (function() {
+    new SproutEmailField("{{ namespaceInputId }}", "{{ id }}", "{{ element.id ?? null }}", "{{ name }}", "{{ fieldContext }}");
+
+    $('input#{{ namespaceInputId }}').on('input', function() {
+    new SproutEmailField("{{ namespaceInputId }}", "{{ id }}", "{{ element.id ?? null }}", "{{ name }}", "{{ fieldContext }}");
+    });
+    })();
+{% endjs %}

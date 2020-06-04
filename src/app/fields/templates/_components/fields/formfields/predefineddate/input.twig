@@ -1,0 +1,22 @@
+{% import "_includes/forms" as forms %}
+
+{# dateTimeField doesn't support readonly behavior, so we use text #}
+{{ forms.textField({
+    id: name,
+    name: name,
+    placeholder: field.fieldFormat,
+    value: value is defined ? value|date('Y-m-d h:i:s') : '',
+    readonly: true
+}) }}
+
+{% css %}
+    {% if field.showField %}
+        #fields-{{ name }}-field input {
+        color: #aaa;
+        }
+    {% else %}
+        #fields-{{ name }}-field {
+        display:none;
+        }
+    {% endif %}
+{% endcss %}

@@ -1,0 +1,35 @@
+{% extends "sprout-base/_layouts/base-settings" %}
+
+{% block actionButton %}
+
+    <div class="buttons">
+        <input class="btn submit" type="submit"
+            value="{{ 'Save'|t('sprout') }}">
+
+{#        {% if upgradeLink %}#}
+{#            {{ sprout.upgradeToProButton({#}
+{#                url: upgradeLink#}
+{#            }) }}#}
+{#        {% endif %}#}
+    </div>
+
+{% endblock %}
+
+{% block content %}
+
+    <input type="hidden" name="action" value="{{ actionUrl }}">
+    <input type="hidden" name="redirect" value="{{ redirectUrl|hash }}">
+    <input type="hidden" name="settingsSection" value="{{ settingsSectionHandle }}">
+
+    <div id="settings-cp">
+
+        {% namespace 'settings' %}
+            {% include currentSubsection.template %}
+        {% endnamespace %}
+
+    </div>
+
+{% endblock %}
+
+{% block settingsJs %}
+{% endblock %}

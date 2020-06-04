@@ -1,0 +1,26 @@
+{% import "_includes/forms" as forms %}
+
+{% if field.showDate %}
+    {{ forms.text({
+        type: 'date',
+        name: name ~ '[date]',
+        value: value|date('Y-m-d'),
+        placeholder: ' ',
+        min: field.minimumDate,
+        max: field.maximumDate,
+        size: 20
+    }) }}
+{% endif %}
+
+{% if field.showTime %}
+    {{ forms.select({
+        options: timeOptions,
+        name: name ~ '[time]',
+        value: value|date('h:i:s')
+    }) }}
+{% endif %}
+
+<input
+    type="hidden"
+    {%- if name %} name="{{ name }}[timezone]"{% endif %}
+    value="{{ craft.app.getTimeZone() }}">

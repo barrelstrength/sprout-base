@@ -1,0 +1,15 @@
+{% if visualization %}
+    {{ visualization.getVisualizationHtml({
+        chart:{
+            height:300,
+            toolbar: {
+                show:false
+            }
+        }
+    })|raw }}
+    <a href="{{ reportIndexUrl }}">{{ "View report"|t('sprout') }}</a>
+{% else %}
+    {{ "Visualization not found"|t('sprout') }}
+{% endif %}
+
+{% do view.registerAssetBundle("barrelstrength\\sproutbase\\app\\reports\\web\\assets\\reports\\SproutReportsAsset") %}

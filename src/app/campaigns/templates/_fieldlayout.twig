@@ -1,0 +1,52 @@
+{% from "_includes/forms" import textField %}
+{% from "_includes/forms" import textareaField %}
+
+{% if campaignEmail.getErrors('subjectLine') %}
+
+    {% set subjectLineError = ['Subject Line cannot be blank.'|t('sprout')] %}
+{% endif %}
+
+{% if not campaignType.hasAdvancedTitles %}
+
+    {{ textField({
+        label: "Subject Line"|t('sprout'),
+        id: 'subjectLine',
+        name: 'subjectLine',
+        value: campaignEmail.subjectLine,
+        errors: (subjectLineError is defined ? subjectLineError : null),
+        first: true,
+        autofocus: true,
+        required: true,
+        maxlength: 255
+    }) }}
+
+{% endif %}
+
+{% if campaignType.getFieldLayout().getTabs()|length %}
+    <div>
+        {% for tab in campaignType.getFieldLayout().getTabs() %}
+            <div id="tab{{ loop.index }}" {% if not loop.first %} class="hidden" {% endif %}>
+
+                {% include "_includes/fields" with {
+                    fields: tab.getFields(),
+                    element: campaignEmail,
+                    static: (static is defined ? static : false)
+                } only %}
+            </div>
+        {% endfor %}
+    </div>
+
+{% else %}
+
+    {{ textareaField({
+        label: "Body"|t('sprout'),
+        id: 'defaultBody',
+        name: 'defaultBody',
+        value: campaignEmail.defaultBody,
+        errors:  campaignEmail is defined ? campaignEmail.getErrors('defaultBody') : null,
+        autofocus: true,
+        rows: 15
+    }) }}
+
+{% endif %}
+

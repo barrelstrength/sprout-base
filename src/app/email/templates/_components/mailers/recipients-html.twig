@@ -1,0 +1,29 @@
+{% import "_includes/forms" as forms %}
+
+{{ forms.textField({
+    label: "From Name <span class='info'>The person or business sending the email</span>"|t('sprout'),
+    name: 'sproutEmail[fromName]',
+    value: campaignEmail.fromName ?? campaignEmail.defaultFromName,
+    errors: (campaignEmail is defined ? campaignEmail.getErrors('fromName') :
+    null),
+    first: true,
+    required: true
+}) }}
+
+{{ forms.textField({
+    name: 'sproutEmail[fromEmail]',
+    value: campaignEmail.fromEmail ?? campaignEmail.defaultFromEmail,
+    label: "From Email <span class='info'>The email address of the person or business sending the email</span>"|t('sprout'),
+    errors: (campaignEmail is defined ? campaignEmail.getErrors('fromEmail') :
+    null),
+    required: true
+}) }}
+
+{{ forms.textField({
+    name: 'sproutEmail[replyToEmail]',
+    value: campaignEmail.replyToEmail ?? campaignEmail.defaultReplyToEmail,
+    label: "Reply To <span class='info'>The email address which will be used if any recipients reply to your email</span>"|t('sprout'),
+    errors: (campaignEmail is defined ? campaignEmail.getErrors('replyToEmail')
+    : null),
+    required: true
+}) }}

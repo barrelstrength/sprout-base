@@ -1,0 +1,136 @@
+{% requirePermission 'sprout:reports:editDataSources' %}
+
+{% extends "sprout-base-reports/_layouts/base" %}
+{% import "_includes/forms" as forms %}
+
+{% set title  = "Data Sources"|t('sprout') %}
+
+{% set selectedSubnavItem = 'datasources' %}
+
+{% block content %}
+    <div class="tableview">
+        <table class="data fullwidth">
+            <thead>
+            <tr>
+                <th scope="col" data-attribute="datasource">{{ "Data Source"|t('sprout') }}</th>
+                <th scope="col" data-attribute="description">{{ "Description"|t('sprout') }}</th>
+                <th scope="col" data-attribute="totalReports">{{ "Reports"|t('sprout') }}</th>
+                <th scope="col" data-attribute="allowNew">{{ "Allow New?"|t('sprout') }}
+                    <span class="info">{{ "Allow users to create a new Report from this Data Source from the New Report dropdown. If disabled, any existing Reports using this Data Source will still be visible to all users in the list of Reports. Users with the 'Edit Data Sources' permission can always create a new Report from this page. "|t('sprout') }}</span>
+                </th>
+
+                {% if currentUser.can('sproutReports-editReports') %}
+                    <th class="thin"></th>
+                {% endif %}
+            </tr>
+            </thead>
+            <tbody>
+
+            {% for id, dataSource in installedDataSources %}
+                <tr>
+                    <td><strong>{{ dataSource.displayName() }}</strong></td>
+                    <td>{{ dataSource.getDescription()|markdown }}</td>
+
+                    <td>{{ dataSource.getReportCount() }}</td>
+                    <td data-type="{{ className(dataSource) }}">
+                        {{ forms.lightswitchField({
+                            id: dataSource.id,
+                            on: dataSource.allowNew,
+                            name: 'allowNew',
+                            small: true
+                        }) }}
+                    </td>
+
+                    {% if currentUser.can('sproutReports-editReports') %}
+                        <td>
+                            {% if className(dataSource) == 'barrelstrength\\sproutbasereports\\datasources\\MissingDataSource' %}
+                                <form method="post" accept-charset="UTF-8">
+                                    {{ csrfInput() }}
+                                    {{ redirectInput('sprout/reports/data-sources') }}
+                                    <input type="hidden" name="action" value="sprout/data-sources/delete-data-source">
+                                    <input type="hidden" name="dataSourceId" value="{{ dataSource.id }}">
+                                    <input class="btn small" type="submit" value="{{ "Remove"|t('sprout') }}">
+                                </form>
+                            {% else %}
+                                {# We only display the Data Sources page to Sprout Reports,
+                                   so we know the URL and don't have to use getUrl dynamically
+                                   across Data Source Types #}
+                                <a href="{{ cpUrl('sprout/reports/' ~ dataSource.id ~ '/new') }}"
+                                    class="btn small">{{ "New Report"|t('sprout') }}</a>
+                            {% endif %}
+                        </td>
+                    {% endif %}
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        {% if uninstalledDataSources|length %}
+            <br>
+            <br>
+            <h3 style="text-transform: uppercase;">{{ "Uninstalled"|t('sprout') }}</h3>
+
+            <table class="data fullwidth">
+                <thead>
+                <tr>
+                    <th scope="col" data-attribute="datasource">{{ "Data Source"|t('sprout') }}</th>
+                    <th scope="col" data-attribute="description">{{ "Description"|t('sprout') }}</th>
+                    {% if currentUser.can('sproutReports-editReports') %}
+                        <th class="thin"></th>
+                    {% endif %}
+                </tr>
+                </thead>
+                <tbody>
+                {% for id, dataSource in uninstalledDataSources %}
+                    {% set dataSource = create(dataSource) %}
+                    <tr>
+                        <td><strong>{{ dataSource.displayName() }}</strong></td>
+                        <td>{{ dataSource.getDescription()|markdown }}</td>
+                        <td>
+                            <span class="light">{{ dataSource.getPlugin().name }}</span>
+                        </td>
+                        {% if currentUser.can('sproutReports-editReports') %}
+                            <td>
+                                <form method="post" accept-charset="UTF-8">
+                                    {{ csrfInput() }}
+                                    {{ redirectInput('sprout/reports/data-sources') }}
+                                    <input type="hidden" name="action" value="sprout/data-sources/install-data-source">
+                                    <input type="hidden" name="type" value="{{ className(dataSource) }}">
+                                    <input class="btn small" type="submit" value="{{ "Install"|t('sprout') }}">
+                                </form>
+                            </td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+    </div>
+
+    <div class="grid">
+        <div class="item">
+            {{ parent() }}
+        </div>
+    </div>
+
+{% endblock %}
+
+{% js on ready %}
+
+    $('.lightswitch').change(function() {
+
+    var allowNew = $(this).find("[name='allowNew']").val();
+    var dataSourceType = $(this).closest('td').data('type');
+
+    Craft.postActionRequest('sprout/data-sources/save-data-source', {
+    dataSourceType: dataSourceType,
+    allowNew: allowNew
+    }, function(response) {
+    if (response)
+    {
+    Craft.cp.displayNotice(Craft.t('sprout', 'Data Source saved.'));
+    }
+    });
+    })
+
+{% endjs %}

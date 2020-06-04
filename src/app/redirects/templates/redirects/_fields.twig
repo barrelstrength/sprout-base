@@ -1,0 +1,44 @@
+{% import "_includes/forms" as forms %}
+
+{{ forms.textField({
+    label: "Old URL"|t('sprout'),
+    instructions: "The relative path of the old location. The Base URL will be appended for you."|t('sprout'),
+    id: 'oldUrl',
+    name: 'oldUrl',
+    value: redirect.oldUrl,
+    errors: redirect.getErrors('oldUrl'),
+    first: true,
+    autofocus: true,
+    required: true
+}) }}
+
+{{ forms.textField({
+    label: "New URL"|t('sprout'),
+    instructions: "The relative path of the new location. Leave blank to redirect to the home page of this site. The Base URL will be appended for you."|t('sprout'),
+    id: 'newUrl',
+    name: 'newUrl',
+    value: redirect.newUrl,
+    errors: redirect.getErrors('newUrl'),
+    placeholder: "/"|t('sprout')
+}) }}
+
+{{ forms.selectField({
+    label: 'Method'|t('sprout'),
+    id: 'method',
+    name: 'method',
+    value: (redirect.method != "" ? redirect.method : '302'),
+    options: methodOptions,
+    errors: redirect.getErrors('method'),
+    required: true
+}) }}
+
+{{ forms.selectField({
+    label: "Match Strategy"|t('sprout'),
+    instructions: "The method used when checking if a 404 matches a Redirect's Old URL path. Select 'Regular Expression' for advanced pattern matching. "|t('sprout'),
+    name: 'matchStrategy',
+    options: [
+        { value: 'exactMatch', label: 'Exact Match' },
+        { value: 'regExMatch', label: 'Regular Expression' },
+    ],
+    value: redirect.matchStrategy
+}) }}

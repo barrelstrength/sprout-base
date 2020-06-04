@@ -1,0 +1,34 @@
+{% import "_includes/forms" as forms %}
+
+{% set options = craft.sproutFields.getCountries() %}
+
+{{ forms.selectField({
+    name: 'country',
+    instructions: "This country will display as selected when the field loads for the first time."|t('sprout'),
+    label: 'Default Country'|t('sprout'),
+    options: options,
+    value: field.country
+}) }}
+
+{{ forms.lightswitchField({
+    label: "Limit to single country"|t('sprout'),
+    instructions: "Only accept numbers from your Default Country"|t('sprout'),
+    name: 'limitToSingleCountry',
+    on: field.limitToSingleCountry
+}) }}
+
+{{ forms.textField({
+    label: "Placeholder Text"|t('sprout'),
+    instructions: "The text that will be shown if the field doesn’t have a value."|t('sprout'),
+    id: 'placeholder',
+    name: 'placeholder',
+    value: field.placeholder
+}) }}
+
+{{ forms.textField({
+    label: 'Error Message'|t('sprout'),
+    instructions: 'Display this error message when a phone number is invalid.'|t('sprout'),
+    name: 'customPatternErrorMessage',
+    placeholder: 'Phone number must match the format: ##########'|t('sprout'),
+    value: field.customPatternErrorMessage
+}) }}

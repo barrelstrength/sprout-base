@@ -1,0 +1,43 @@
+{% import "_includes/forms" as forms %}
+
+{% set title = 'Mailers' %}
+
+{% set mailers = craft.app.getModule('sprout').app.mailers.getRegisteredMailers() %}
+
+{% set mailerTableHtml %}
+
+    {% for mailer in mailers %}
+
+        {% if loop.first %}
+            <table id="mailers" class="data fullwidth">
+            <thead>
+            <th>{{ "Mailer"|t('sprout') }}</th>
+            <th>{{ "Settings"|t('sprout') }}</th>
+            <th>{{ "Description"|t('sprout') }}</th>
+            </thead>
+        {% endif %}
+
+        <tr>
+            <td>
+                {{ mailer.displayName() }}
+            </td>
+            <td>
+                {% if mailer.getCpSettingsUrl() != null %}
+                    <a href="{{ mailer.getCpSettingsUrl() }}"
+                        title="{{ mailer.displayName() }}">{{ "Settings"|t('sprout') }}</a>
+                {% endif %}
+            </td>
+            <td>{{ mailer.getDescription()|md }}</td>
+        </tr>
+
+        {% if loop.last %}
+            </table>
+        {% endif %}
+
+    {% endfor %}
+
+{% endset %}
+
+{% if mailerTableHtml is defined %}
+    {{ mailerTableHtml }}
+{% endif %}

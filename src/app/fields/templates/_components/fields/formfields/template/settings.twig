@@ -1,0 +1,38 @@
+{% import "_includes/forms" as forms %}
+
+{{ forms.selectField({
+    label: 'Input Style'|t('sprout'),
+    instructions: 'The field type that will displayed in the field layout to content authors. The Autosuggest Field displays an open-ended input with search and template hints while a user types. The Dropdown Field displays all available options as a list.'|t('sprout'),
+    id: 'inputStyle',
+    name: 'inputStyle',
+    options: [
+        { value: 'autosuggest', label: 'Autosuggest Field'|t('sprout') },
+        { value: 'dropdown', label: 'Dropdown Field'|t('sprout') },
+    ],
+    value: field.inputStyle
+}) }}
+
+{{ forms.selectField({
+    label: 'Suggested Templates'|t('sprout'),
+    instructions: 'The templates a user will see as hints using the Autosuggest Field or as options using the Dropdown Field.'|t('sprout'),
+    id: 'suggestedTemplates',
+    name: 'suggestedTemplates',
+    options: [
+        { value: 'all', label: 'All Templates'|t('sprout') },
+        { value: 'folder', label: 'Templates within a specific folder'|t('sprout') }
+    ],
+    value: field.suggestedTemplates,
+    toggle: true,
+    targetPrefix: 'suggested-template-',
+}) }}
+
+<div id="suggested-template-folder"{% if field.suggestedTemplates != 'folder' %} class="hidden"{% endif %}>
+    {{ forms.selectField({
+        label: 'Limit suggestions to template folder'|t('sprout'),
+        instructions: 'Limits the Suggested Templates shown to the templates within this folder.'|t('sprout'),
+        id: 'templateFolder',
+        name: 'templateFolder',
+        options: templateDirectoryOptions,
+        value: field.templateFolder
+    }) }}
+</div>

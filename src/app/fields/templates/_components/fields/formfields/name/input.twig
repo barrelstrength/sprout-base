@@ -1,0 +1,127 @@
+{% import "_includes/forms" as forms %}
+
+{% if field.displayMultipleFields %}
+
+    {% set nameInput %}
+
+        <div class="sprout-name-input-wrapper">
+
+            {% if field.displayPrefix %}
+                <div class="sprout-name-input sprout-name-input-prefix">
+                    {{ forms.textField({
+                        label: 'Prefix'|t('sprout'),
+                        name: name ~ '[name][prefix]',
+                        value: value.prefix ?? ''
+                    }) }}
+                </div>
+            {% endif %}
+
+            <div class="sprout-name-input sprout-name-input-firstname">
+                {{ forms.textField({
+                    label: 'First'|t('sprout'),
+                    name: name ~ '[name][firstName]',
+                    value: value.firstName ?? ''
+                }) }}
+            </div>
+
+            {% if field.displayMiddleName %}
+                <div class="sprout-name-input sprout-name-input-middlename">
+                    {{ forms.textField({
+                        label: 'Middle'|t('sprout'),
+                        name: name ~ '[name][middleName]',
+                        value: value.middleName ?? ''
+                    }) }}
+                </div>
+            {% endif %}
+
+            <div class="sprout-name-input sprout-name-input-lastname">
+                {{ forms.textField({
+                    label: 'Last'|t('sprout'),
+                    name: name ~ '[name][lastName]',
+                    value: value.lastName ?? ''
+                }) }}
+            </div>
+
+            {% if field.displaySuffix %}
+                <div class="sprout-name-input sprout-name-input-suffix">
+                    {{ forms.textField({
+                        label: 'Suffix'|t('sprout'),
+                        name: name ~ '[name][suffix]',
+                        value: value.suffix ?? ''
+                    }) }}
+                </div>
+            {% endif %}
+        </div>
+    {% endset %}
+
+    {{ forms.field({
+    }, nameInput) }}
+
+{% else %}
+
+    {{ forms.text({
+        name: name ~ '[name][fullNameShort]',
+        value: value is not null ? value.getFullName() : ''
+    }) }}
+
+{% endif %}
+
+<style>
+    .sprout-name-input-wrapper {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+    .sprout-name-input {
+        flex-grow: 1;
+        margin-right: 10px;
+        width: 26%;
+    }
+
+    #fields-{{ id }}-field .field {
+        margin-bottom: 0;
+    }
+
+    .sprout-name-input .heading > label {
+        font-weight: normal;
+    }
+
+    .sprout-name-input:last-of-type {
+        margin-right: 0;
+    }
+
+    .sprout-name-input-prefix,
+    .sprout-name-input-suffix {
+        width: 11%;
+    }
+
+    @media (max-width: 600px) {
+        .sprout-name-input-wrapper {
+            flex-direction: column;
+        }
+
+        .sprout-name-input {
+            flex-grow: 1;
+            margin-left: 0;
+            margin-top: 10px;
+            width: 100%;
+        }
+
+        .sprout-name-input .heading,
+        .sprout-name-input .input {
+            float: left;
+        }
+
+        .sprout-name-input .heading {
+            padding-top: 6px;
+            padding-right: 2%;
+            text-align: right;
+            width: 20%;
+        }
+
+        .sprout-name-input .input {
+            width: 78%;
+        }
+    }
+</style>

@@ -1,0 +1,88 @@
+{% import "_includes/forms" as forms %}
+{% set name = (namespaceInputName is not defined) ? 'address' : namespaceInputName %}
+{% set addressBox = (namespaceInputId is not defined) ? 'sproutaddressinfo-box' : 'sproutaddressinfo-box-' ~ namespaceInputId %}
+{% set showAddressOnInitialLoad = addressId is defined and addressId ? true : showAddressOnInitialLoad ?? false %}
+{% set formFieldHtmlActionUrl = formFieldHtmlActionUrl ?? null %}
+{% set addressJson = addressJson ?? null %}
+
+{% set addressInput %}
+    <div class="{{ addressBox }}"
+        {% if addressId is defined and addressId %}
+            data-address-id='{{ addressId }}'
+        {% endif %}
+
+        {% if fieldId is defined and fieldId %}
+            data-field-id='{{ fieldId }}'
+        {% endif %}
+
+        {% if defaultCountryCode is defined and defaultCountryCode %}
+            data-default-country-code='{{ defaultCountryCode }}'
+        {% endif %}
+
+        {% if showCountryDropdown is defined and showCountryDropdown %}
+            data-show-country-dropdown='{{ showCountryDropdown }}'
+        {% endif %}
+
+        {% if showAddressOnInitialLoad %}
+            data-show-address-on-initial-load='{{ showAddressOnInitialLoad }}'
+        {% endif %}
+
+        {% if formFieldHtmlActionUrl %}
+            data-form-field-html-action-url='{{ formFieldHtmlActionUrl }}'
+        {% endif %}
+
+        {% if addressJson %}
+            data-address-json='{{ addressJson }}'
+        {% endif %}
+    >
+        <div class='address-add-button hidden'>
+            <a class='btn add icon dashed sprout-address-edit'
+                href='#'>{{ "Add Address"|t('sprout') }}</a>
+        </div>
+        <div class='address-edit-buttons hidden'>
+            <a class='small btn right icon sprout-address-edit clear-button'
+                href='#'>{{ "Clear"|t('sprout') }}</a>
+            <a class='small btn right icon sprout-address-edit update-button'
+                href='#'>{{ "Edit"|t('sprout') }}</a>
+        </div>
+        <div class='address-format hidden'>
+            {{ addressDisplayHtml }}
+        </div>
+        <div class='sproutfields-address-formfields hidden'>
+            {{ countryInputHtml }}
+            {{ addressFormHtml }}
+        </div>
+    </div>
+
+{% endset %}
+
+{{ forms.field({
+}, addressInput) }}
+
+{% do view.registerAssetBundle("barrelstrength\\sproutbase\\app\\fields\\web\\assets\\address\\AddressFieldAsset") %}
+
+{% css %}
+    /**
+    * Address Field
+    */
+    .{{ addressBox }} {
+    display: inline-flex;
+    justify-content: flex-start;
+    }
+    .{{ addressBox }} .address-add-button {
+    order: 1;
+    }
+    .{{ addressBox }} .address-edit-buttons {
+    order: 3;
+    }
+    .{{ addressBox }} .address-format {
+    order: 2;
+    padding-right: 20px;
+    }
+{% endcss %}
+
+{% js %}
+    (function() {
+    new Craft.SproutBase.AddressBox($('.{{ addressBox }}'), { namespace: '{{ name }}' })
+    })();
+{% endjs %}

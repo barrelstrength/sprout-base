@@ -1,0 +1,61 @@
+{% import "_includes/forms" as forms %}
+
+<div class="body">
+
+    {% if success is defined and success %}
+
+        <h1>{{ 'Success'|t('sprout') }}</h1>
+
+        <table class="data fullwidth">
+            <tbody>
+            <tr>
+                <td><strong>{{ 'Subject'|t('sprout') }}</strong></td>
+                <td class="title">{{ email.title }}</td>
+            </tr>
+            <tr>
+                <td><strong>{{ 'Message'|t('sprout') }}</strong></td>
+                <td>
+                    <em>{{ message is defined ? message : 'Your campaign was sent successfully.'|t('sprout') }}</em>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+    {% else %}
+
+        <h1>{{ 'Error'|t('sprout') }}</h1>
+
+        <table class="data fullwidth">
+            <tbody>
+            <tr>
+                <td><strong>{{ 'Subject'|t('sprout') }}</strong></td>
+                <td class="title">{{ email.title }}</td>
+            </tr>
+            <tr>
+                <td><strong>{{ 'Message'|t('sprout') }}</strong></td>
+                <td>
+                    <p><em>{{ message is defined ? message : 'An error occurred while sending your campaign. Please review the Craft logs for more info.'|t('sprout') }}</em></p>
+
+                    {% if email.getErrors()|length %}
+                        {% if email.getErrors() is iterable %}
+                            {% for error in email.getErrors() %}
+                                {{ forms.errorList(error) }}
+                            {% endfor %}
+                        {% else %}
+                            {{ forms.errorList(email.getErrors()) }}
+                        {% endif %}
+                    {% endif %}
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+    {% endif %}
+
+</div>
+
+<div class="footer">
+    <div class="buttons right">
+        <button id="close" class="btn">{{ 'Done'|t('sprout') }}</button>
+    </div>
+</div>

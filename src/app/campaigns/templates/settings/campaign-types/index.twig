@@ -1,0 +1,75 @@
+{% import "_includes/forms" as forms %}
+
+{% set sproutBaseApp = craft.app.getModule('sprout').app %}
+
+{% set campaignTypes = sproutBaseApp.campaignTypes.getCampaignTypes() %}
+{% if campaignTypes|length %}
+
+    {% for campaignType in campaignTypes %}
+        {% if loop.first %}
+
+            <table id="campaigntypes" class="data fullwidth">
+            <thead>
+            <th width="25%">
+                {{ "Campaign Type"|t('sprout') }}
+                <span class="info">
+    <p>{{ "Create multiple Campaign Types with unique fields, layouts, and email service provider integrations."|t('sprout') }}</p>
+  </span>
+            </th>
+            <th width="20%">{{ "Handle"|t('sprout') }}</th>
+            <th width="20%">{{ "Mailer"|t('sprout') }}</th>
+            <th class="thin"></th>
+            </thead>
+        {% endif %}
+        <tr data-id="{{ campaignType.id }}" data-name="{{ campaignType.name }}">
+            <td>
+                <a href="{{ url('sprout/settings/campaigns/campaign-types/edit/' ~ campaignType.id ) }}">{{ campaignType.name }}</a>
+            </td>
+            <td>
+                <code>{{ campaignType.handle }}</code>
+            </td>
+            <td>
+                {{ campaignType.getMailer().getName() }}
+            </td>
+            <td colspan="3" class="thin">
+                <a class="delete icon"
+                    title='{{ "Delete"|t(' sprout-campaign') }}'></a>
+            </td>
+        </tr>
+        {% if loop.last %}
+            </table>
+        {% endif %}
+
+    {% endfor %}
+
+    <div class="buttons">
+        <a class="btn submit add icon"
+            href="{{ url('sprout/settings/campaigns/campaign-types/edit/new') }}">{{ "New
+        Campaign"|t('sprout') }}</a>
+    </div>
+
+{% else %}
+
+    <div>
+
+        <h2>{{ "Create your first Campaign"|t('sprout') }}</h2>
+
+        <p>{{ "Campaigns are a great way to leverage the power of Craft to manage
+        your content and the benefits of a dedicated
+        email program to manage your email."|t('sprout') }}</p>
+
+        <div class="buttons">
+            <a class="btn submit icon"
+                href="{{ url('sprout/settings/campaigns/campaign-types/edit/new') }}">{{ "Create a
+            Campaign"|t('sprout') }} &raquo;</a>
+        </div>
+
+    </div>
+{% endif %}
+{% js %}
+    new Craft.AdminTable({
+    tableSelector: '#campaigntypes',
+    noObjectsSelector: '#nocampaigntypes',
+    deleteAction: 'sprout-base-campaigns/campaign-type/delete-campaign-type'
+    });
+{% endjs %}

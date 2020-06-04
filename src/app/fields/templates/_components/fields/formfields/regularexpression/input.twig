@@ -1,0 +1,21 @@
+{% import "_includes/forms" as forms %}
+
+{# Setup our field #}
+{{ forms.text({
+    id: name,
+    name: name,
+    value: value is defined ? value : '',
+    placeholder: field.placeholder,
+}) }}
+
+<span class="sprout-regularexpression-button {{ id }}"></span>
+
+{% do view.registerAssetBundle("barrelstrength\\sproutbase\\app\\fields\\web\\assets\\regularexpression\\RegularExpressionFieldAsset") %}
+
+{% js %}
+
+    (function() {
+    new SproutRegularExpressionField("{{ id }}", "{{ name }}", "{{ fieldContext }}");
+    })();
+
+{% endjs %}

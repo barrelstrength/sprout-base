@@ -1,0 +1,108 @@
+{% import "_includes/forms" as forms %}
+
+{% macro configWarning(setting) -%}
+    {{ "This is being overridden by the {setting} config setting."|t('sprout-forms-google-recaptcha', {
+        setting: setting
+    })|raw }}
+{%- endmacro %}
+
+{% from _self import configWarning %}
+
+{{ forms.lightswitchField({
+    label: "Enable Redirects"|t('sprout'),
+    instructions: "Process Redirect rules and log 404 requests."|t('sprout'),
+    name: 'enableRedirects',
+    on: settings.enableRedirects ? true : false,
+    onLabel: "Enable"|t('sprout'),
+    first: true,
+    warning: config.enableRedirects is defined ? configWarning('enableRedirects')
+}) }}
+
+{{ forms.lightswitchField({
+    label: "Log 404 Redirects"|t('sprout'),
+    instructions: "Log 'Page Not Found' errors as 404 Redirects. 404 Redirects will appear on the Redirects tab as a disabled 404 Redirect Element and can be updated to 301 or 302 Redirects."|t('sprout'),
+    name: 'enable404RedirectLog',
+    toggle: 'settings-total-404redirects',
+    on: settings.enable404RedirectLog ? true : false,
+    onLabel: "Enable"|t('sprout'),
+    warning: config.enable404RedirectLog is defined ? configWarning('enable404RedirectLog')
+}) }}
+
+<div id="settings-total-404redirects"
+    class="{% if not settings.enable404RedirectLog %} hidden {% endif %}">
+
+    {{ forms.selectField({
+        label: "Redirect Match Strategy"|t('sprout'),
+        name: 'redirectMatchStrategy',
+        instructions: "How to match 404 requests with Redirect records already captured in the database. Defaults to matching the entire URL including query strings. Selecting 'without query strings' will remove all parameters from the request URL before searching for a match."|t('sprout'),
+        options: [
+            { value: 'urlWithQueryStrings', label: 'URL (with query strings)' },
+            { value: 'urlWithoutQueryStrings', label: 'URL (without query strings)' },
+        ],
+        value: settings.redirectMatchStrategy,
+        warning: config.redirectMatchStrategy is defined ? configWarning('redirectMatchStrategy')
+    }) }}
+
+    {{ forms.selectField({
+        label: "Query String Strategy"|t('sprout'),
+        name: 'queryStringStrategy',
+        instructions: "How to treat query strings after processing a redirect. 'Remove query strings' will remove the query string from the incoming URL entirely. 'Append query strings' will add any query string from the incoming URL to the New Url."|t('sprout'),
+        options: [
+            { value: 'removeQueryStrings', label: 'Remove query strings' },
+            { value: 'appendQueryStrings', label: 'Append query strings' },
+        ],
+        value: settings.queryStringStrategy,
+        warning: config.queryStringStrategy is defined ? configWarning('queryStringStrategy')
+    }) }}
+
+    {{ forms.lightswitchField({
+        label: "Track Remote IP"|t('sprout'),
+        instructions: "Enable to capture the IP Address used when a 404 request is saved. IP Addresses may be considered personal information."|t('sprout'),
+        name: 'trackRemoteIp',
+        on: settings.trackRemoteIp ? true : false,
+        onLabel: "Enable"|t('sprout'),
+        warning: config.trackRemoteIp is defined ? configWarning('trackRemoteIp')
+    }) }}
+
+    {{ forms.textField({
+        label: "404 Redirect Limit"|t('sprout'),
+        instructions: "The target number of 404 Redirects that will be stored in the database per-site, after the cleanup task runs. When the limit is reached, the least recently updated 404 Redirects will be deleted from the Redirects stored for that site."|t('sprout'),
+        name: 'total404Redirects',
+        size:'10',
+        placeholder: '250',
+        value: settings.total404Redirects,
+        errors: settings.getErrors('total404Redirects'),
+        warning: config.total404Redirects is defined ? configWarning('total404Redirects')
+    }) }}
+
+    {{ forms.selectField({
+        label: "Cleanup Probability"|t('sprout'),
+        id: 'cleanup-probability',
+        name: 'cleanupProbability',
+        instructions: "The probability that the 404 Redirect cleanup task will run each web request. A lower probability will trigger a cleanup task less often and the number of 404 Redirects stored in the database may be higher than the 404 Redirect Limit target until the cleanup task is triggered."|t('sprout'),
+        options: [
+            { value: '0', label: 'None' },
+            { value: '100000', label: '1 in 10'},
+            { value: '10000', label: '1 in 100' },
+            { value: '1000', label: '1 in 1,000' },
+            { value: '100', label: '1 in 10,000' },
+            { value: '10', label: '1 in 100,000' },
+            { value: '1', label: '1 in 1,000,000' }
+        ],
+        value: settings.cleanupProbability,
+        warning: config.cleanupProbability is defined ? configWarning('cleanupProbability')
+    }) }}
+
+    {{ forms.textareaField({
+        label: "Excluded URL Patterns"|t('sprout'),
+        instructions: "Add any regular expression patterns you wish to exclude from the Redirect log. Add each pattern on a new line. Comments can be added by starting a line with the hash # character"|t('sprout'),
+        class: 'nicetext',
+        name: 'excludedUrlPatterns',
+        value: settings.excludedUrlPatterns,
+        placeholder: "# Exclude all CSS and JS files
+\\.(css|js)$"|t('sprout'),
+        errors: settings.getErrors('excludedUrlPatterns'),
+        rows: 4,
+        warning: config.excludedUrlPatterns is defined ? configWarning('excludedUrlPatterns')
+    }) }}
+</div>

@@ -1,0 +1,67 @@
+/*
+ * @link      https://sprout.barrelstrengthdesign.com/
+ * @copyright Copyright (c) Barrel Strength Design LLC
+ * @license   http://sprout.barrelstrengthdesign.com/license
+ */
+
+/* Sections & Sitemap
+------------------------------------------------------------ */
+.btn .disabled {
+    background-color: grey;
+    color: black;
+    cursor: none;
+}
+
+.no-link {
+    padding-left: 10px;
+}
+
+.sitemap-custom-url:focus {
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    outline: none;
+    padding: 6px 4px;
+}
+
+.sitemap-custom-url {
+    background: #ffffff;
+    border: none;
+    display: inline-block;
+    margin-left: -4px;
+    overflow: hidden;
+    padding: 7px 5px;
+    width: 85%;
+}
+
+.sitemap-settings {
+    margin-top: 30px;
+}
+
+.sitemap-settings:first-of-type {
+    margin-top: 0;
+}
+
+.sitemap-settings:last-of-type {
+    margin-bottom: 30px;
+}
+
+.sproutseo-section-header {
+    background-color: #cccccc;
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#ffffff), to(#f9fafa));
+    background-image: linear-gradient(#ffffff, #f9fafa);
+    -webkit-box-shadow: 0 2px 1px -2px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 2px 1px -2px rgba(0, 0, 0, 0.2);
+    margin: -24px -24px 20px;
+    padding: 24px;
+}
+
+.sitemap-settings {
+    margin-top: 30px;
+}
+
+.sitemap-settings:first-of-type {
+    margin-top: 0;
+}
+
+.sitemap-settings:last-of-type {
+    margin-bottom: 30px;
+}

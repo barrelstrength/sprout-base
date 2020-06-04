@@ -1,0 +1,45 @@
+{% import "_includes/forms" as forms %}
+
+{{ forms.textField({
+    label: "Time Column"|t('sprout'),
+    instructions: "Set the column from the report to be used as the time (x axis) in the visualization"|t('sprout'),
+    id: 'visualizationLabelColumn',
+    class: 'code',
+    name: 'labelColumn',
+    value: settings.labelColumn
+}) }}
+
+{{ forms.textField({
+    label: "Data Column"|t('sprout'),
+    instructions: "Set the column from the report to be used as the data series in the visualization"|t('sprout'),
+    id: 'visualizationDataColumn',
+    class: 'code',
+    name: 'dataColumns[]',
+    value: settings.dataColumns[0]
+}) }}
+
+{{ forms.selectField({
+    label: 'Aggregate Function',
+    instructions: 'Select an aggregate function to apply to the data column values',
+    id: 'visualizationAggregate',
+    name: 'aggregate',
+    value: settings.aggregate,
+    options: craft.sproutReports.getVisualizationAggregates()
+}) }}
+
+{{ forms.selectField({
+    label: 'Aggregate Decimal places',
+    instructions: 'Decimal places for number returned from aggregate function',
+    id: 'visualizationAggregate',
+    name: 'decimals',
+    options: [
+      {value: 0, label: 0},
+      {value: 1, label: 1},
+      {value: 2, label: 2},
+      {value: 3, label: 3}
+    ]
+}) }}
+
+
+
+

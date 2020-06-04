@@ -1,0 +1,139 @@
+{% extends "_layouts/cp" %}
+{% import 'sprout-base/_includes/sproutcp' as sprout %}
+
+{% set title  = report.name %}
+{% set bodyClass = 'sprout-reports-content' %}
+{% set selectedSubnavItem = craft.app.request.getSegment(2) %}
+{% if dataSource is defined %}
+    {% set settingsHtml = dataSource.getSettingsHtml() %}
+{% endif %}
+
+{% set crumbs = [
+    { label: 'Reports'|t('sprout'), url: reportIndexUrl }
+] %}
+
+{% if currentUser.can(editReportsPermission) %}
+    {% set crumbs = crumbs|merge([{
+        label: "Edit "|t('sprout') ~ report.name,
+        url: report.getCpEditUrl()
+    }]) %}
+{% endif %}
+
+{% block actionButton %}
+
+    <form method="post" accept-charset="UTF-8">
+        {{ csrfInput() }}
+        <input type="hidden" name="action" value="sprout/reports/export-report">
+        <input type="hidden" name="reportId" value="{{ report.id }}">
+
+        <button id="btn-download-csv" class="btn" type="submit">
+            {{ "Export"|t('sprout') }}
+        </button>
+    </form>
+
+    {% if currentUser.can(editReportsPermission) %}
+        <a id="modify-settings-icon" class="btn" data-icon="settings"></a>
+    {% endif %}
+
+{% endblock %}
+
+{% block content %}
+
+    {% if settingsHtml %}
+
+        <div id="modify-settings-panel" style="display:none;">
+
+            <form id="report-settings" method="post" accept-charset="UTF-8">
+                {{ csrfInput() }}
+                {{ redirectInput(redirectUrl) }}
+                <input type="hidden" name="action"
+                    value="sprout/reports/update-report">
+                <input type="hidden" name="reportId" value="{{ report.id }}">
+
+                {{ settingsHtml | raw }}
+
+                <div class="button">
+                    <div class="btngroup">
+                        <input type="submit" class="btn submit"
+                            value="{{ 'Run report'|t('sprout') }}">
+                    </div>
+                </div>
+
+            </form>
+
+            <hr>
+
+        </div>
+
+    {% endif %}
+
+    <div class="tableview sproutreports">
+        {% if values is defined and values is iterable and values|length %}
+
+            {% if visualization %}
+                {{ visualization.getVisualizationHtml()|raw }}
+            {% endif %}
+
+            <div class="tablecontent">
+                <table id="sprout-results" class="data fullwidth nowrap" style="opacity:0;">
+                    <thead>
+                    <tr>
+                        {% for label in labels %}
+                            <th>
+                                <div {% if loop.index == "1" %}class="first"{% endif %}>
+                                    <h3>{{ label }}</h3></div>
+                            </th>
+                        {% endfor %}
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for value in values %}
+                        <tr>
+                            {% for property in value %}
+                                <td>
+                                    {%- if report.allowHtml -%}
+                                        {{- property|raw|nl2br -}}
+                                    {%- else -%}
+                                        {{- property -}}
+                                    {%- endif -%}
+                                </td>
+                            {% endfor %}
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+        {% else %}
+
+            {% set boxBody %}
+                <p>{{ "This segment currently has no results. Check your segment settings and ensure you have content for the segment you are trying to run. To quickly edit the segment settings, click on the gear icon in the upper right."|t('sprout')|raw }}</p>
+            {% endset %}
+
+            {{ sprout.mediaBox({
+                heading: "No results found"|t('sprout'),
+                body: boxBody,
+                resourcePath: '@sproutbase/app/reports/web/assets/reports/dist/images/icon.svg'
+            }) }}
+
+        {% endif %}
+    </div>
+
+{% endblock %}
+
+{% do view.registerAssetBundle("barrelstrength\\sproutbase\\config\\web\\assets\\cp\\CpAsset") %}
+{% do view.registerAssetBundle("barrelstrength\\sproutbase\\app\\reports\\web\\assets\\datatables\\DataTablesAsset") %}
+{% do view.registerAssetBundle("barrelstrength\\sproutbase\\app\\reports\\web\\assets\\apexcharts\\ApexChartsAsset") %}
+{% do view.registerAssetBundle("barrelstrength\\sproutbase\\app\\reports\\web\\assets\\reports\\SproutReportsAsset") %}
+
+{% js on ready %}
+    new SproutReportsDataTables({
+    allowHtml: {{ report.allowHtml ? 'true' : 'false' }},
+    defaultPageLength: {{ settings.defaultPageLength ?? '10' }},
+    sortOrder: '{{ report.sortOrder }}',
+    sortColumnPosition: '{{ sortColumnPosition }}'
+    });
+
+    new ReportSettingsToggleButton();
+{% endjs %}
+

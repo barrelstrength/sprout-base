@@ -1,0 +1,70 @@
+.sprout-address-body .text,
+.sprout-address-body .select {
+    padding: 0;
+}
+
+.sprout-address-modal {
+    height: auto !important;
+    min-height: 0 !important;
+    min-width: 380px !important;
+    overflow: visible;
+}
+
+.modal .sprout-address-body {
+    border-radius: 5px 5px 0 0;
+    padding: 0;
+}
+
+.sprout-address-body .meta {
+    background-color: #ffffff;
+}
+
+.sprout-address-body .meta .field .heading {
+    border-right: 1px solid #eeeeee;
+    padding: 22px 0 16px;
+}
+
+.sproutaddressinfo-box {
+    display: inline-flex;
+    justify-content: flex-start;
+}
+
+.sproutaddressinfo-box .address-add-button {
+    order: 1;
+}
+
+.sproutaddressinfo-box .address-edit-buttons {
+    order: 3;
+}
+
+.sproutaddressinfo-box .address-format {
+    order: 2;
+    padding-right: 20px;
+}
+
+.sprout-address-body .text,
+.sprout-address-body .select {
+    padding: 0;
+}
+
+.sprout-address-modal {
+    overflow: visible
+}
+
+.modal .sprout-address-body {
+    padding: 0;
+}
+
+.clear-button {
+    display: block;
+    margin-left: 5px;
+}
+
+// Settings
+
+.sprout-address-highlight-countries .input {
+    border: 1px solid #ccc;
+    height: 300px;
+    overflow: auto;
+    padding: 10px;
+}

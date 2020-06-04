@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="{{ currentSite.language }}">
+<head>
+    <title>{{ email.subjectLine }} - {{ siteName }}</title>
+</head>
+<body>
+
+{% if email.defaultBody|length %}
+    <p>{{ email.defaultBody|markdown }}</p>
+{% endif %}
+
+</body>
+</html>

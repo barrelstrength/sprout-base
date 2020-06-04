@@ -1,0 +1,31 @@
+.field.mailing-lists .heading,
+.field.event-options .heading,
+.field.mailing-lists .input,
+.field.event-options .input {
+    align-self: flex-start;
+    padding-top: .4em;
+}
+
+.field.event-options > .input {
+    max-height: 280px;
+    overflow-y: auto;
+    padding-bottom: 20px;
+    padding-left: 1px;
+    padding-top: 20px;
+}
+
+.sentemail-btngroup .btn {
+    outline: none;
+}
+
+.status.sent, .status.ready {
+    background-color: #27ae60;
+}
+
+.status.scheduled {
+    background-color: #0d99f2;
+}
+
+.status.failed {
+    background-color: #d0021b;
+}

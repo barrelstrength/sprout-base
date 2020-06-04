@@ -1,0 +1,40 @@
+{% import "_includes/forms" as forms %}
+
+{{ forms.textField({
+    label: "Label Column"|t('sprout'),
+    instructions: "Set the column from the report to be used as the labels in the visualization"|t('sprout'),
+    id: 'visualizationLabelColumn',
+    class: 'code',
+    name: 'labelColumn',
+    value: settings.labelColumn
+}) }}
+
+<div class="field" id="visualizationDataColumns">
+    <div class="heading">
+        <label class="" for="types-craft-fields-Table-columns">Data Columns</label>
+        <div class="instructions"><p>Define the columns from the report to be used as data in the visualization.</p></div>
+    </div>
+    <div class="input ltr">
+        <table class="editable fullwidth">
+            <thead>
+            <th>Data Columns</th>
+            <th></th>
+            </thead>
+            <tbody>
+
+            {% for dataColumn in settings.dataColumns %}
+                <tr>
+                    <td class="singleline-cell textual">
+                        <textarea name="dataColumns[]" style="height:30px;">{{ dataColumn }}</textarea>
+                    </td>
+                    <td class="thin action"><a class="delete icon js-remove-data-series" title="Delete"></a></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <div class="btn add icon js-add-data-series">Add a row</div>
+    </div>
+</div>
+
+
+

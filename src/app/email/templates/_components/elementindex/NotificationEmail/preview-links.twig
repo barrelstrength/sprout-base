@@ -1,0 +1,5 @@
+{% set emailUrl = cpUrl('sprout/email/preview/' ~ email.id) %}
+
+<a href="{{ emailUrl }}" title="{{ email.title }}"
+    data-preview-url="{{ emailUrl }}" class="email-preview" data-icon="view"></a>
+

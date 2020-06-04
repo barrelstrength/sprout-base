@@ -1,0 +1,14 @@
+<div id="chart"></div>
+
+{% js on ready %}
+
+    var chart = new SproutReportsViz('barChart', {
+    chartSelector: '#chart',
+    labels: {{ visualization.getLabels()|json_encode()|raw }},
+    dataSeries: {{ visualization.getDataSeries()|json_encode()|raw }},
+    options: {{ options|json_encode()|raw }},
+    });
+
+    chart.create();
+
+{% endjs %}

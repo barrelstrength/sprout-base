@@ -1,0 +1,20 @@
+{% extends "sprout-base/_layouts/base-settings" %}
+
+{% block actionButton %}
+
+    {% set actionButtonTemplate = currentSubsection.actionButtonTemplate ?? null %}
+
+    {% if actionButtonTemplate %}
+        {% include actionButtonTemplate %}
+    {% endif %}
+
+{% endblock %}
+
+{% block content %}
+
+    {% include currentSubsection.template %}
+
+{% endblock %}
+
+{# Why do we empty this out? #}
+{% block settingsJs %}{% endblock %}

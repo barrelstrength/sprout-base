@@ -1,0 +1,22 @@
+{% import "_includes/forms" as forms %}
+
+{{ forms.textareaField({
+    label: 'Field Format'|t('sprout'),
+    name: 'fieldFormat',
+    instructions: 'The auto-generated date value. Format Date in the proper Date format: `Y-m-d h:i:s`.'|t('sprout'),
+    placeholder: 'Custom Date Field: {dateField|date(\'Y-m-d h:i:s\')}
+First Matrix Block: {matrixField.one().startDateField|date(\'Y-m-d h:i:s\')}
+Last Matrix Block: {matrixField.orderBy(\'dateCreated desc\').one().endDateField|date(\'Y-m-d h:i:s\')}'|t('sprout'),
+    value: field.fieldFormat,
+    rows: 3,
+    class: 'code'
+}) }}
+
+{{ forms.lightswitchField({
+    label: "Show Field"|t('sprout'),
+    instructions: "Display this field in the field layout."|t('sprout'),
+    id: 'showField',
+    name: 'showField',
+    on: field.showField,
+    toggle: 'sproutfields-predefined-display-settings'
+}) }}
