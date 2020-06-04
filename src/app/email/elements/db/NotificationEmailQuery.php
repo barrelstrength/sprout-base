@@ -2,8 +2,6 @@
 
 namespace barrelstrength\sproutbase\app\email\elements\db;
 
-use barrelstrength\sproutbase\app\email\services\NotificationEmails;
-use Craft;
 use craft\base\Element;
 use craft\elements\db\ElementQuery;
 use craft\errors\MissingComponentException;

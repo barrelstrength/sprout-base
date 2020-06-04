@@ -7,13 +7,13 @@
 
 namespace barrelstrength\sproutbase\app\reports\migrations;
 
-use barrelstrength\sproutbase\migrations\Install as SproutBaseInstall;
-use barrelstrength\sproutbase\records\Settings as SproutBaseSettingsRecord;
 use barrelstrength\sproutbase\app\reports\elements\Report;
 use barrelstrength\sproutbase\app\reports\models\Settings as SproutBaseReportsSettings;
 use barrelstrength\sproutbase\app\reports\records\DataSource as DataSourceRecord;
 use barrelstrength\sproutbase\app\reports\records\Report as ReportRecord;
 use barrelstrength\sproutbase\app\reports\records\ReportGroup as ReportGroupRecord;
+use barrelstrength\sproutbase\migrations\Install as SproutBaseInstall;
+use barrelstrength\sproutbase\records\Settings as SproutBaseSettingsRecord;
 use craft\db\Migration;
 use craft\db\Query;
 use craft\db\Table;

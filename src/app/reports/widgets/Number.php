@@ -7,8 +7,8 @@
 
 namespace barrelstrength\sproutbase\app\reports\widgets;
 
-use barrelstrength\sproutbase\SproutBase;
 use barrelstrength\sproutbase\app\reports\elements\Report;
+use barrelstrength\sproutbase\SproutBase;
 use Craft;
 use craft\base\Widget;
 use Twig\Error\LoaderError;

@@ -7,11 +7,11 @@
 
 namespace barrelstrength\sproutbase\app\reports\elements;
 
-use barrelstrength\sproutbase\SproutBase;
 use barrelstrength\sproutbase\app\reports\base\DataSource;
 use barrelstrength\sproutbase\app\reports\elements\actions\DeleteReport;
 use barrelstrength\sproutbase\app\reports\elements\db\ReportQuery;
 use barrelstrength\sproutbase\app\reports\records\Report as ReportRecord;
+use barrelstrength\sproutbase\SproutBase;
 use Craft;
 use craft\base\Element;
 use craft\elements\db\ElementQueryInterface;
@@ -220,38 +220,38 @@ class Report extends Element
         // @todo - sort out how viewContext and mailingLists get resolved now...
 //        if ($viewContext === DataSource::DEFAULT_VIEW_CONTEXT || $viewContext === 'mailingListModal') {
 
-            $sources[] = [
-                'key' => 'mailingList',
-                'label' => Craft::t('sprout', 'All mailing lists'),
-                'data' => [
-                    'readonly' => true
-                ],
-                'criteria' => [
-                    'emailColumn' => ':notempty:'
-                ]
-            ];
+        $sources[] = [
+            'key' => 'mailingList',
+            'label' => Craft::t('sprout', 'All mailing lists'),
+            'data' => [
+                'readonly' => true
+            ],
+            'criteria' => [
+                'emailColumn' => ':notempty:'
+            ]
+        ];
 //        }
 
         // @todo - migration, consider conditionally displaying based on PRO plugins existing
-            $groups = SproutBase::$app->reportGroups->getReportGroups();
+        $groups = SproutBase::$app->reportGroups->getReportGroups();
 
-            if ($groups) {
+        if ($groups) {
+
+            $sources[] = [
+                'heading' => Craft::t('sprout', 'Group')
+            ];
+
+            foreach ($groups as $group) {
+                $key = 'group:'.$group->id;
 
                 $sources[] = [
-                    'heading' => Craft::t('sprout', 'Group')
+                    'key' => $key,
+                    'label' => Craft::t('sprout', $group->name),
+                    'data' => ['id' => $group->id],
+                    'criteria' => ['groupId' => $group->id]
                 ];
-
-                foreach ($groups as $group) {
-                    $key = 'group:'.$group->id;
-
-                    $sources[] = [
-                        'key' => $key,
-                        'label' => Craft::t('sprout', $group->name),
-                        'data' => ['id' => $group->id],
-                        'criteria' => ['groupId' => $group->id]
-                    ];
-                }
             }
+        }
 
 
         return $sources;
@@ -339,7 +339,7 @@ class Report extends Element
         }
 
         if ($attribute === 'download') {
-            return '<a href="'.UrlHelper::actionUrl('sprout-base-reports/reports/export-report', [
+            return '<a href="'.UrlHelper::actionUrl('sprout/reports/export-report', [
                     'reportId' => $this->id
                 ]).'" class="btn small">'.Craft::t('sprout', 'Export').'</a>';
         }

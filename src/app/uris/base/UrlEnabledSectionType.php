@@ -131,19 +131,19 @@ abstract class UrlEnabledSectionType
      * Return the variable name that is used by the Element for this URL-Enabled section
      * when providing the Element data to the page with a URL.
      *
+     * @return string
      * @example An Entry is made available to a page as `entry`.
      *          A Category is made available to a page as `category`.
      *
-     * @return string
      */
     abstract public function getMatchedElementVariable(): string;
 
     /**
      * Returns the value to add to the database query to ensure that entries being received have a published status.
      *
+     * @return null
      * @example An Entry requires a status of Entry::STATUS_LIVE to be published.
      *
-     * @return null
      */
     public function getElementLiveStatus()
     {

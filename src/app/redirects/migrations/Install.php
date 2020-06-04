@@ -7,9 +7,9 @@
 
 namespace barrelstrength\sproutbase\app\redirects\migrations;
 
-use barrelstrength\sproutbase\migrations\Install as SproutBaseInstall;
 use barrelstrength\sproutbase\app\redirects\elements\Redirect;
 use barrelstrength\sproutbase\app\redirects\records\Redirect as RedirectRecord;
+use barrelstrength\sproutbase\migrations\Install as SproutBaseInstall;
 use Craft;
 use craft\db\Migration;
 use craft\db\Query;

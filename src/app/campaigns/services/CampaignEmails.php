@@ -2,10 +2,10 @@
 
 namespace barrelstrength\sproutbase\app\campaigns\services;
 
-use barrelstrength\sproutbase\app\email\base\Mailer;
 use barrelstrength\sproutbase\app\campaigns\base\CampaignEmailSenderInterface;
 use barrelstrength\sproutbase\app\campaigns\elements\CampaignEmail;
 use barrelstrength\sproutbase\app\campaigns\records\CampaignEmail as CampaignEmailRecord;
+use barrelstrength\sproutbase\app\email\base\Mailer;
 use Craft;
 use craft\base\Component;
 use craft\helpers\DateTimeHelper;

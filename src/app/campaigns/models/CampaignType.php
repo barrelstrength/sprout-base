@@ -2,11 +2,11 @@
 
 namespace barrelstrength\sproutbase\app\campaigns\models;
 
+use barrelstrength\sproutbase\app\campaigns\elements\CampaignEmail;
+use barrelstrength\sproutbase\app\campaigns\records\CampaignType as CampaignTypeRecord;
 use barrelstrength\sproutbase\app\email\base\Mailer;
 use barrelstrength\sproutbase\app\email\base\SenderTrait;
 use barrelstrength\sproutbase\SproutBase;
-use barrelstrength\sproutbase\app\campaigns\elements\CampaignEmail;
-use barrelstrength\sproutbase\app\campaigns\records\CampaignType as CampaignTypeRecord;
 use craft\base\Field;
 use craft\base\Model;
 use craft\behaviors\FieldLayoutBehavior;

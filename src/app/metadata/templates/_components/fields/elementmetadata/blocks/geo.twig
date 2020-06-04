@@ -1,0 +1,34 @@
+{% import "_includes/forms" as forms %}
+{% import "sprout-base-metadata/_includes/sproutseo" as sprout %}
+
+<div class="sproutseo-box-geo">
+
+    {{ forms.textField({
+        label: "Region"|t('sprout'),
+        instructions: 'The geo.region expects codes for <a href="http://geotags.com/iso3166/countries.html" target="_blank">Country Names and Subdivisions</a>. The <a href="http://geotags.com/geo/DMS3.html" target="_blank">GeoTag Generator</a> can help pick appropriate codes.'|t('sprout'),
+        name: field.handle~"[metadata][region]",
+        value: meta.region
+    }) }}
+
+    {{ forms.textField({
+        label: "Placename"|t('sprout'),
+        instructions: 'The Placename field is typically used for city, county, and state names.'|t('sprout'),
+        name: field.handle~"[metadata][placename]",
+        value: meta.placename
+    }) }}
+
+    {{ forms.textField({
+        label: "Latitude"|t('sprout'),
+        name: field.handle~"[metadata][latitude]",
+        value: meta.latitude,
+        placeholder: '38.403440'
+    }) }}
+
+    {{ forms.textField({
+        label: "Longitude"|t('sprout'),
+        name: field.handle~"[metadata][longitude]",
+        value: meta.longitude,
+        placeholder: '-122.823676'
+    }) }}
+
+</div>

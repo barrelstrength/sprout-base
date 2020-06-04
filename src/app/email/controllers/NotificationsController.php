@@ -2,8 +2,6 @@
 
 namespace barrelstrength\sproutbase\app\email\controllers;
 
-use barrelstrength\sproutbase\app\email\services\NotificationEmails;
-use barrelstrength\sproutbase\SproutBase;
 use barrelstrength\sproutbase\app\email\base\Mailer;
 use barrelstrength\sproutbase\app\email\base\NotificationEmailSenderInterface;
 use barrelstrength\sproutbase\app\email\base\NotificationEvent;
@@ -11,6 +9,7 @@ use barrelstrength\sproutbase\app\email\elements\NotificationEmail;
 use barrelstrength\sproutbase\app\email\emailtemplates\BasicTemplates;
 use barrelstrength\sproutbase\app\email\mailers\DefaultMailer;
 use barrelstrength\sproutbase\app\email\models\ModalResponse;
+use barrelstrength\sproutbase\SproutBase;
 use Craft;
 use craft\base\Plugin;
 use craft\base\PluginInterface;

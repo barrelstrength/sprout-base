@@ -1,8 +1,8 @@
 <?php
 /**
- * @link https://sprout.barrelstrengthdesign.com
+ * @link      https://sprout.barrelstrengthdesign.com
  * @copyright Copyright (c) Barrel Strength Design LLC
- * @license https://craftcms.github.io/license
+ * @license   https://craftcms.github.io/license
  */
 
 namespace barrelstrength\sproutbase\config\services;
@@ -22,6 +22,10 @@ use barrelstrength\sproutbase\app\fields\services\Phone;
 use barrelstrength\sproutbase\app\fields\services\RegularExpression;
 use barrelstrength\sproutbase\app\fields\services\Url;
 use barrelstrength\sproutbase\app\fields\services\Utilities as FieldUtilities;
+use barrelstrength\sproutbase\app\metadata\services\ElementMetadata;
+use barrelstrength\sproutbase\app\metadata\services\GlobalMetadata;
+use barrelstrength\sproutbase\app\metadata\services\Optimize;
+use barrelstrength\sproutbase\app\metadata\services\Schema;
 use barrelstrength\sproutbase\app\redirects\services\Redirects;
 use barrelstrength\sproutbase\app\reports\services\DataSources;
 use barrelstrength\sproutbase\app\reports\services\Exports;
@@ -37,6 +41,26 @@ use craft\base\Component;
 
 class App extends Component
 {
+    /**
+     * @var Optimize
+     */
+    public $optimize;
+
+    /**
+     * @var GlobalMetadata
+     */
+    public $globalMetadata;
+
+    /**
+     * @var ElementMetadata
+     */
+    public $elementMetadata;
+
+    /**
+     * @var Schema
+     */
+    public $schema;
+
     /**
      * @var CampaignEmails
      */
@@ -141,6 +165,7 @@ class App extends Component
      * @var EmailTemplates
      */
     public $emailTemplates;
+
     /**
      * @var SentEmails
      */
@@ -186,6 +211,12 @@ class App extends Component
      */
     public function init()
     {
+        // Metadata
+        $this->optimize = new Optimize();
+        $this->globalMetadata = new GlobalMetadata();
+        $this->elementMetadata = new ElementMetadata();
+        $this->schema = new Schema();
+
         // Campaigns
         $this->campaignTypes = new CampaignTypes();
         $this->campaignEmails = new CampaignEmails();

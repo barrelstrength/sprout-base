@@ -7,8 +7,8 @@
 
 namespace barrelstrength\sproutbase\app\redirects\controllers;
 
-use barrelstrength\sproutbase\SproutBase;
 use barrelstrength\sproutbase\app\redirects\elements\Redirect;
+use barrelstrength\sproutbase\SproutBase;
 use Craft;
 use craft\errors\SiteNotFoundException;
 use craft\helpers\UrlHelper;
@@ -23,7 +23,7 @@ use yii\web\Response;
 class RedirectsController extends Controller
 {
     /**
-     * @param null   $siteHandle
+     * @param null $siteHandle
      *
      * @return Response
      * @throws SiteNotFoundException

@@ -12,6 +12,7 @@ use Craft;
 use craft\base\Component;
 use craft\base\ElementInterface;
 use craft\errors\ElementNotFoundException;
+use craft\helpers\App;
 use craft\helpers\ElementHelper;
 use craft\models\FieldLayout;
 use Exception;
@@ -218,7 +219,7 @@ class NotificationEmails extends Component
         $notificationEmail->subjectLine = $subjectLine;
         $notificationEmail->slug = $handle;
 
-        $systemEmailSettings = \craft\helpers\App::mailSettings();
+        $systemEmailSettings = App::mailSettings();
 
         // @todo - add override settings to Sprout Email
         $notificationEmail->fromName = $systemEmailSettings->fromName;

@@ -9,8 +9,6 @@ namespace barrelstrength\sproutbase\app\reports\base;
 
 use barrelstrength\sproutbase\app\reports\elements\Report;
 use barrelstrength\sproutbase\SproutBase;
-use Craft;
-use craft\base\Plugin;
 use craft\base\SavableComponent;
 use craft\helpers\UrlHelper;
 

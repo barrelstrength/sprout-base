@@ -20,8 +20,8 @@ use yii\base\Component;
 
 /**
  *
- * @property array                                                            $matchedElementVariables
- * @property \barrelstrength\sproutbase\app\uris\base\UrlEnabledSectionType[] $registeredUrlEnabledSectionsEvent
+ * @property array                   $matchedElementVariables
+ * @property UrlEnabledSectionType[] $registeredUrlEnabledSectionsEvent
  */
 class UrlEnabledSections extends Component
 {

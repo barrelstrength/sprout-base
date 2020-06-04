@@ -22,6 +22,8 @@ use barrelstrength\sproutbase\app\email\web\twig\variables\SproutEmailVariable;
 use barrelstrength\sproutbase\app\fields\controllers\AddressController;
 use barrelstrength\sproutbase\app\fields\controllers\FieldsController;
 use barrelstrength\sproutbase\app\fields\web\twig\variables\SproutFieldsVariable;
+use barrelstrength\sproutbase\app\metadata\controllers\GlobalMetadataController;
+use barrelstrength\sproutbase\app\metadata\web\twig\variables\SproutSeoVariable;
 use barrelstrength\sproutbase\app\redirects\controllers\RedirectsController;
 use barrelstrength\sproutbase\app\reports\controllers\DataSourcesController;
 use barrelstrength\sproutbase\app\reports\controllers\ReportsController;
@@ -44,7 +46,7 @@ use barrelstrength\sproutbase\config\configs\GeneralConfig;
 use barrelstrength\sproutbase\config\configs\RedirectsConfig;
 use barrelstrength\sproutbase\config\configs\ReportsConfig;
 use barrelstrength\sproutbase\config\configs\SentEmailConfig;
-use barrelstrength\sproutbase\config\configs\SeoConfig;
+use barrelstrength\sproutbase\config\configs\MetadataConfig;
 use barrelstrength\sproutbase\config\configs\SitemapsConfig;
 use barrelstrength\sproutbase\config\controllers\SettingsController;
 use barrelstrength\sproutbase\config\services\App;
@@ -165,6 +167,7 @@ class SproutBase extends Module
             $this->controllerNamespace = 'sproutbase\\config\\controllers';
 
             $this->controllerMap = [
+                'global-metadata' => GlobalMetadataController::class,
                 'campaign-email' => CampaignEmailController::class,
                 'campaign-type' => CampaignTypeController::class,
                 'copy-paste' => CopyPasteMailer::class,
@@ -201,7 +204,7 @@ class SproutBase extends Module
             $event->types[] = RedirectsConfig::class;
             $event->types[] = ReportsConfig::class;
             $event->types[] = SentEmailConfig::class;
-            $event->types[] = SeoConfig::class;
+            $event->types[] = MetadataConfig::class;
             $event->types[] = SitemapsConfig::class;
             $event->types[] = GeneralConfig::class;
 //
@@ -244,6 +247,7 @@ class SproutBase extends Module
             $e->roots['sprout-base-fields'] = $this->getBasePath().DIRECTORY_SEPARATOR.'app'.DIRECTORY_SEPARATOR.'fields'.DIRECTORY_SEPARATOR.'templates';
             $e->roots['sprout-base-reports'] = $this->getBasePath().DIRECTORY_SEPARATOR.'app'.DIRECTORY_SEPARATOR.'reports'.DIRECTORY_SEPARATOR.'templates';
             $e->roots['sprout-base-campaigns'] = $this->getBasePath().DIRECTORY_SEPARATOR.'app'.DIRECTORY_SEPARATOR.'campaigns'.DIRECTORY_SEPARATOR.'templates';
+            $e->roots['sprout-base-metadata'] = $this->getBasePath().DIRECTORY_SEPARATOR.'app'.DIRECTORY_SEPARATOR.'metadata'.DIRECTORY_SEPARATOR.'templates';
         });
 
         Event::on(CraftVariable::class, CraftVariable::EVENT_INIT, static function(Event $event) {
@@ -251,6 +255,7 @@ class SproutBase extends Module
             $event->sender->set('sproutEmail', SproutEmailVariable::class);
             $event->sender->set('sproutFields', SproutFieldsVariable::class);
             $event->sender->set('sproutReports', SproutReportsVariable::class);
+            $event->sender->set('sproutSeo', SproutSeoVariable::class);
             $event->sender->set('sproutSitemap', SproutSitemapVariable::class);
         });
     }

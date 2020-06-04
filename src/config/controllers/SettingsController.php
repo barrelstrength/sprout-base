@@ -1,22 +1,15 @@
 <?php
 /**
- * @link https://sprout.barrelstrengthdesign.com
+ * @link      https://sprout.barrelstrengthdesign.com
  * @copyright Copyright (c) Barrel Strength Design LLC
- * @license https://craftcms.github.io/license
+ * @license   https://craftcms.github.io/license
  */
 
 namespace barrelstrength\sproutbase\config\controllers;
 
-use barrelstrength\sproutbase\config\base\EditionsInterface;
 use barrelstrength\sproutbase\config\base\Settings;
-use barrelstrength\sproutbase\config\configs\EmailConfig;
-use barrelstrength\sproutbase\config\services\Config;
 use barrelstrength\sproutbase\SproutBase;
-use barrelstrength\sproutfields\SproutFields;
-use barrelstrength\sproutseo\SproutSeo;
 use Craft;
-use craft\base\Plugin;
-use craft\errors\InvalidPluginException;
 use craft\errors\MissingComponentException;
 use craft\helpers\UrlHelper;
 use craft\web\Controller;
@@ -24,7 +17,6 @@ use ReflectionException;
 use yii\base\ErrorException;
 use yii\base\Exception;
 use yii\web\BadRequestHttpException;
-use yii\web\ForbiddenHttpException;
 use yii\web\Response;
 
 /**
@@ -69,8 +61,7 @@ class SettingsController extends Controller
         $settingsTarget = 'sprout',
         $settingsSectionHandle = null,
         $settingsSubSectionHandle = null
-    ): Response
-    {
+    ): Response {
 //        $hasUpgradeLink = method_exists($this->plugin, 'getUpgradeUrl');
 //        $upgradeLink = $hasUpgradeLink ? $this->plugin->getUpgradeUrl() : null;
 
@@ -83,7 +74,7 @@ class SettingsController extends Controller
 
         $subNav = [];
         foreach ($settings as $setting) {
-            
+
             $settingsNavItem = $setting->getSettingsNavItem();
             $settingsSubNavItems = $settingsNavItem['subnav'] ?? [];
 
@@ -95,8 +86,7 @@ class SettingsController extends Controller
                 'heading' => $settingsNavItem['label'],
             ];
 
-            foreach ($settingsSubNavItems as $subNavKey => $settingsSubNavItem)
-            {
+            foreach ($settingsSubNavItems as $subNavKey => $settingsSubNavItem) {
                 $subNav[$subNavKey] = $settingsSubNavItem;
             }
         }

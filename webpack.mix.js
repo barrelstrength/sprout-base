@@ -158,6 +158,22 @@ mix
     'src/app/sitemaps/web/assets/sitemaps/src/js/sitemaps.js',
   ], 'src/app/sitemaps/web/assets/sitemaps/dist/js/sitemaps.js');
 
+// SEO
+mix
+  .sass(
+    'src/web/assets/seo/src/scss/sproutseo.scss',
+    'src/web/assets/seo/dist/css/sproutseo.css',
+  )
+  .js([
+    'src/app/metadata/web/assets/seo/src/js/editable-table.js',
+    'src/app/metadata/web/assets/seo/src/js/general.js',
+    'src/app/metadata/web/assets/seo/src/js/meta-details-toggle.js',
+    'src/app/metadata/web/assets/seo/src/js/schema.js',
+    'src/app/metadata/web/assets/seo/src/js/website-identity.js'
+  ], 'src/app/metadata/web/assets/seo/dist/js/sproutseo.js')
+  .copy('src/app/metadata/web/assets/seo/src/images',
+    'src/app/metadata/web/assets/seo/dist/images');
+
 // Full API
 // mix.js(src, output);
 // mix.react(src, output); <-- Identical to mix.js(), but registers React Babel compilation.

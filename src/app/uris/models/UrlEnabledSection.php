@@ -8,10 +8,10 @@
 namespace barrelstrength\sproutbase\app\uris\models;
 
 use barrelstrength\sproutbase\app\uris\base\UrlEnabledSectionType;
+use Craft;
 use craft\base\Element;
 use craft\base\Model;
 use craft\db\Query;
-use Craft;
 use craft\errors\SiteNotFoundException;
 
 /**
@@ -159,7 +159,7 @@ class UrlEnabledSection extends Model
         foreach ($fieldLayoutObjects as $fieldLayoutObject) {
             $fieldLayout = $fieldLayoutObject->getFieldLayout();
 
-            if ($fieldLayout->id == $fieldLayoutId){
+            if ($fieldLayout->id == $fieldLayoutId) {
                 return true;
             }
         }

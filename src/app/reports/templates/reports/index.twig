@@ -41,28 +41,28 @@
 
     {{ parent() }}
 
-{# @todo - migration, update restriction to depend on any "Pro" plugin.. #}
-{#    {% if viewContext == 'sprout-reports' %}#}
-        <div class="buttons">
-            <div id="newgroupbtn"
-                class="btn add icon">{{ "New Group"|t('sprout') }}</div>
+    {# @todo - migration, update restriction to depend on any "Pro" plugin.. #}
+    {#    {% if viewContext == 'sprout-reports' %}#}
+    <div class="buttons">
+        <div id="newgroupbtn"
+            class="btn add icon">{{ "New Group"|t('sprout') }}</div>
 
-            {% if groupId is defined %}
-                <div id="groupsettingsbtn" class="btn settings icon menubtn"
-                    title="{{ 'Settings' }}"></div>
-                <div class="menu">
-                    <ul>
-                        <li><a data-action="rename"
-                                role="button">{{ "Rename selected group"|t('sprout') }}</a>
-                        </li>
-                        <li><a data-action="delete"
-                                role="button">{{ "Delete selected group"|t('sprout') }}</a>
-                        </li>
-                    </ul>
-                </div>
-            {% endif %}
-        </div>
-{#    {% endif %}#}
+        {% if groupId is defined %}
+            <div id="groupsettingsbtn" class="btn settings icon menubtn"
+                title="{{ 'Settings' }}"></div>
+            <div class="menu">
+                <ul>
+                    <li><a data-action="rename"
+                            role="button">{{ "Rename selected group"|t('sprout') }}</a>
+                    </li>
+                    <li><a data-action="delete"
+                            role="button">{{ "Delete selected group"|t('sprout') }}</a>
+                    </li>
+                </ul>
+            </div>
+        {% endif %}
+    </div>
+    {#    {% endif %}#}
 
 {% endblock %}
 

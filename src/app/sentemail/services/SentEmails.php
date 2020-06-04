@@ -7,10 +7,10 @@
 
 namespace barrelstrength\sproutbase\app\sentemail\services;
 
-use barrelstrength\sproutbase\helpers\jobs\PurgeElements;
-use barrelstrength\sproutbase\SproutBase;
 use barrelstrength\sproutbase\app\sentemail\elements\SentEmail;
 use barrelstrength\sproutbase\app\sentemail\models\SentEmailInfoTable;
+use barrelstrength\sproutbase\helpers\jobs\PurgeElements;
+use barrelstrength\sproutbase\SproutBase;
 use Craft;
 use craft\base\Component;
 use craft\base\Plugin;
@@ -22,6 +22,7 @@ use craft\mail\Message;
 use craft\mail\transportadapters\BaseTransportAdapter;
 use craft\mail\transportadapters\Smtp;
 use Exception;
+use ReflectionException;
 use Throwable;
 use Twig\Error\LoaderError;
 use Twig\Error\SyntaxError;
@@ -263,7 +264,7 @@ class SentEmails extends Component
      *
      * @return bool
      * @throws SiteNotFoundException
-     * @throws \ReflectionException
+     * @throws ReflectionException
      */
     public function cleanUpSentEmails($force = false): bool
     {

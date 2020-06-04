@@ -32,11 +32,12 @@
                         </li>
                     {% endif %}
 
-                    {% set addAnotherUrl="sprout-campaigns/" ~ campaignType.id ~ "/new" %}
+                    {% set addAnotherUrl="sprout/campaigns/" ~ campaignType.id ~ "/new" %}
 
-                    <li><a class="formsubmit"
-                            data-redirect="{{ addAnotherUrl|hash }}">
-                            {{ "Save and add another"|t('sprout') }}</a>
+                    <li>
+                        <a class="formsubmit" data-redirect="{{ addAnotherUrl|hash }}">
+                            {{ "Save and add another"|t('sprout') }}
+                        </a>
                     </li>
                     {% if campaignEmail.id is not null %}
                         <hr>
@@ -44,7 +45,7 @@
                             <li><a class="formsubmit error"
                                     data-action="sprout/campaign-email/delete-campaign-email"
                                     data-confirm="{{ 'Are you sure you want to delete this email?'|t('sprout') }}"
-                                    data-redirect="{{ "sprout-campaign"|hash }}">{{ "Delete"|t('sprout') }}</a>
+                                    data-redirect="{{ "sprout/campaigns"|hash }}">{{ "Delete"|t('sprout') }}</a>
                             </li>
                         </ul>
                     {% endif %}

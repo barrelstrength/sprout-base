@@ -1,8 +1,8 @@
 <?php
 /**
- * @link https://sprout.barrelstrengthdesign.com
+ * @link      https://sprout.barrelstrengthdesign.com
  * @copyright Copyright (c) Barrel Strength Design LLC
- * @license https://craftcms.github.io/license
+ * @license   https://craftcms.github.io/license
  */
 
 namespace barrelstrength\sproutbase\config\configs;
@@ -21,7 +21,7 @@ class FieldsConfig extends Config
     public function getSettingsNavItem(): array
     {
         return [
-            'label' => Craft::t('sprout','Fields'),
+            'label' => Craft::t('sprout', 'Fields'),
             'url' => 'sprout/settings/fields',
             'icon' => '@sproutbaseicons/plugins/fields/icon.svg',
         ];

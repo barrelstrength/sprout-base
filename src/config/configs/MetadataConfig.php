@@ -1,8 +1,8 @@
 <?php
 /**
- * @link https://sprout.barrelstrengthdesign.com
+ * @link      https://sprout.barrelstrengthdesign.com
  * @copyright Copyright (c) Barrel Strength Design LLC
- * @license https://craftcms.github.io/license
+ * @license   https://craftcms.github.io/license
  */
 
 namespace barrelstrength\sproutbase\config\configs;
@@ -11,7 +11,7 @@ use barrelstrength\sproutbase\config\base\Config;
 use barrelstrength\sproutbase\config\models\settings\SeoSettings;
 use Craft;
 
-class SeoConfig extends Config
+class MetadataConfig extends Config
 {
     public function createSettingsModel()
     {
@@ -22,12 +22,12 @@ class SeoConfig extends Config
     {
         return [
             'label' => Craft::t('sprout', 'SEO'),
-            'url' => 'sprout/seo',
+            'url' => 'sprout/metadata/globals',
             'icon' => '@sproutbaseicons/plugins/seo/icon-mask.svg',
             'subnav' => [
                 'reports' => [
                     'label' => Craft::t('sprout', 'Globals'),
-                    'url' => 'sprout/seo/globals'
+                    'url' => 'sprout/metadata/globals'
                 ]
             ]
         ];
@@ -49,18 +49,18 @@ class SeoConfig extends Config
     {
         return [
             // Globals
-            'sprout/seo/globals/<selectedTabHandle:.*>/<siteHandle:.*>' =>
-                'sprout-seo/global-metadata/edit-global-metadata',
-            'sprout/seo/globals/<selectedTabHandle:.*>' =>
-                'sprout-seo/global-metadata/edit-global-metadata',
-            'sprout/seo/globals' => [
-                'route' => 'sprout-seo/global-metadata/edit-global-metadata',
+            'sprout/metadata/globals/<selectedTabHandle:.*>/<siteHandle:.*>' =>
+                'sprout/global-metadata/edit-global-metadata',
+            'sprout/metadata/globals/<selectedTabHandle:.*>' =>
+                'sprout/global-metadata/edit-global-metadata',
+            'sprout/metadata/globals' => [
+                'route' => 'sprout/global-metadata/edit-global-metadata',
                 'params' => [
                     'selectedTabHandle' => 'website-identity'
                 ]
             ],
-            'sprout/seo' => [
-                'route' => 'sprout-seo/global-metadata/edit-global-metadata',
+            'sprout/metadata' => [
+                'route' => 'sprout/global-metadata/edit-global-metadata',
                 'params' => [
                     'selectedTabHandle' => 'website-identity'
                 ]

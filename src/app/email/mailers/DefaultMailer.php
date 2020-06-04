@@ -2,7 +2,6 @@
 
 namespace barrelstrength\sproutbase\app\email\mailers;
 
-use barrelstrength\sproutbase\SproutBase;
 use barrelstrength\sproutbase\app\campaigns\elements\CampaignEmail;
 use barrelstrength\sproutbase\app\email\base\EmailElement;
 use barrelstrength\sproutbase\app\email\base\Mailer;
@@ -11,6 +10,7 @@ use barrelstrength\sproutbase\app\email\elements\NotificationEmail;
 use barrelstrength\sproutbase\app\reports\elements\Report;
 use barrelstrength\sproutbase\app\reports\records\Report as ReportRecord;
 use barrelstrength\sproutbase\app\sentemail\services\SentEmails;
+use barrelstrength\sproutbase\SproutBase;
 use barrelstrength\sproutforms\fields\formfields\FileUpload;
 use Craft;
 use craft\base\Element;

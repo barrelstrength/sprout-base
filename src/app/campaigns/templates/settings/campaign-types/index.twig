@@ -32,8 +32,7 @@
                 {{ campaignType.getMailer().getName() }}
             </td>
             <td colspan="3" class="thin">
-                <a class="delete icon"
-                    title='{{ "Delete"|t(' sprout-campaign') }}'></a>
+                <a class="delete icon" title='{{ "Delete"|t(' sprout') }}'></a>
             </td>
         </tr>
         {% if loop.last %}
@@ -70,6 +69,6 @@
     new Craft.AdminTable({
     tableSelector: '#campaigntypes',
     noObjectsSelector: '#nocampaigntypes',
-    deleteAction: 'sprout-base-campaigns/campaign-type/delete-campaign-type'
+    deleteAction: 'sprout/campaign-type/delete-campaign-type'
     });
 {% endjs %}

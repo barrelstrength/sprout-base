@@ -12,7 +12,7 @@ use yii\db\ActiveQuery;
 
 /**
  *
- * @property \yii\db\ActiveQuery $reports
+ * @property ActiveQuery $reports
  */
 class ReportGroup extends ActiveRecord
 {

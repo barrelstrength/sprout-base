@@ -25,7 +25,7 @@ SproutRegularExpressionField = Garnish.Base.extend({
       };
 
       // Query the controller so the regex validation is all done through PHP.
-      Craft.postActionRequest('sprout-base-fields/fields/validate-regular-expression', data, function(response) {
+      Craft.postActionRequest('sprout/fields/validate-regular-expression', data, function(response) {
         if (response.success) {
           $(sproutRegularExpressionClass).addClass('fade');
         } else {

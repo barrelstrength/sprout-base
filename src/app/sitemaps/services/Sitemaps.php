@@ -9,10 +9,10 @@ namespace barrelstrength\sproutbase\app\sitemaps\services;
 
 use barrelstrength\sproutbase\app\sitemaps\models\SitemapSection;
 use barrelstrength\sproutbase\app\sitemaps\records\SitemapSection as SitemapSectionRecord;
-use barrelstrength\sproutbase\SproutBase;
 use barrelstrength\sproutbase\app\uris\base\UrlEnabledSectionType;
 use barrelstrength\sproutbase\app\uris\models\UrlEnabledSection;
 use barrelstrength\sproutbase\app\uris\sectiontypes\NoSection;
+use barrelstrength\sproutbase\SproutBase;
 use Craft;
 use craft\base\Element;
 use craft\db\Query;

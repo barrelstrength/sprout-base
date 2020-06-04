@@ -10,9 +10,6 @@ namespace barrelstrength\sproutbase\config\configs;
 use barrelstrength\sproutbase\app\forms\migrations\Install;
 use barrelstrength\sproutbase\config\base\Config;
 use barrelstrength\sproutbase\config\models\settings\FormsSettings;
-use barrelstrength\sproutforms\formtemplates\AccessibleTemplates;
-use barrelstrength\sproutforms\integrations\sproutemail\emailtemplates\basic\BasicSproutFormsNotification;
-use barrelstrength\sproutforms\SproutForms;
 use Craft;
 
 class FormsConfig extends Config

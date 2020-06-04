@@ -7,11 +7,11 @@
 
 namespace barrelstrength\sproutbase\app\sentemail\migrations;
 
-use barrelstrength\sproutbase\records\Settings as SproutBaseSettingsRecord;
 use barrelstrength\sproutbase\app\sentemail\elements\SentEmail;
 use barrelstrength\sproutbase\app\sentemail\models\Settings;
 use barrelstrength\sproutbase\app\sentemail\models\Settings as SproutSentEmailSettings;
 use barrelstrength\sproutbase\app\sentemail\records\SentEmail as SentEmailRecord;
+use barrelstrength\sproutbase\records\Settings as SproutBaseSettingsRecord;
 use craft\db\Migration;
 use craft\db\Query;
 use craft\db\Table;

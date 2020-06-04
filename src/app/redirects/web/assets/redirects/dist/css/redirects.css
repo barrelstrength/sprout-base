@@ -1,1 +1,3 @@
-.sprout-redirects-index table thead th[data-attribute=oldUrl]{min-width:180px}
+.sprout-redirects-index table thead th[data-attribute=oldUrl] {
+    min-width: 180px
+}

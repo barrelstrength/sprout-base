@@ -1,8 +1,8 @@
 <?php
 /**
- * @link https://sprout.barrelstrengthdesign.com
+ * @link      https://sprout.barrelstrengthdesign.com
  * @copyright Copyright (c) Barrel Strength Design LLC
- * @license https://craftcms.github.io/license
+ * @license   https://craftcms.github.io/license
  */
 
 namespace barrelstrength\sproutbase\config\configs;
@@ -12,6 +12,7 @@ use barrelstrength\sproutbase\config\base\Config;
 use barrelstrength\sproutbase\config\models\settings\SitemapsSettings;
 use barrelstrength\sproutbase\SproutBase;
 use Craft;
+use ReflectionException;
 
 class SitemapsConfig extends Config
 {
@@ -77,7 +78,7 @@ class SitemapsConfig extends Config
      * - sitemap-custom-pages.xml
      *
      * @return array
-     * @throws \ReflectionException
+     * @throws ReflectionException
      */
     public function getSiteUrlRules(): array
     {

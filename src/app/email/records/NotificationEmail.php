@@ -8,7 +8,7 @@ use yii\db\ActiveQueryInterface;
 
 /**
  *
- * @property \yii\db\ActiveQueryInterface $element
+ * @property ActiveQueryInterface $element
  */
 class NotificationEmail extends ActiveRecord
 {

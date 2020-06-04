@@ -9,8 +9,8 @@ namespace barrelstrength\sproutbase\app\uris\sectiontypes;
 
 use barrelstrength\sproutbase\app\uris\base\UrlEnabledSectionType;
 use barrelstrength\sproutbase\app\uris\models\UrlEnabledSection;
-use craft\commerce\elements\Product as ProductElement;
 use Craft;
+use craft\commerce\elements\Product as ProductElement;
 use craft\commerce\services\ProductTypes;
 use craft\queue\jobs\ResaveElements;
 

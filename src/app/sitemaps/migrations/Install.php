@@ -7,10 +7,10 @@
 
 namespace barrelstrength\sproutbase\app\sitemaps\migrations;
 
-use barrelstrength\sproutbase\migrations\Install as SproutBaseInstall;
-use barrelstrength\sproutbase\records\Settings as SproutBaseSettingsRecord;
 use barrelstrength\sproutbase\app\sitemaps\models\Settings as SproutSitemapSettings;
 use barrelstrength\sproutbase\app\sitemaps\records\SitemapSection as SitemapSectionRecord;
+use barrelstrength\sproutbase\migrations\Install as SproutBaseInstall;
+use barrelstrength\sproutbase\records\Settings as SproutBaseSettingsRecord;
 use Craft;
 use craft\db\Migration;
 use craft\db\Query;

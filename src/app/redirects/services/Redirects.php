@@ -24,6 +24,7 @@ use craft\helpers\Db;
 use craft\helpers\UrlHelper;
 use craft\models\Site;
 use DateTime;
+use ReflectionException;
 use Throwable;
 use Twig\Error\RuntimeError as TwigRuntimeError;
 use yii\base\Component;
@@ -328,7 +329,7 @@ class Redirects extends Component
      * This service allows find the structure id from the sprout seo settings
      *
      * @return mixed|null
-     * @throws \ReflectionException
+     * @throws ReflectionException
      */
     public function getStructureId()
     {
@@ -520,7 +521,7 @@ class Redirects extends Component
      * @param null  $siteId
      * @param bool  $force
      *
-     * @throws \ReflectionException
+     * @throws ReflectionException
      */
     public function purge404s($excludedIds = [], $siteId = null, $force = false)
     {

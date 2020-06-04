@@ -50,11 +50,12 @@ class Visualizations extends Component
 
     public function getAggregates(): array
     {
-      $aggregates = [];
-      $aggregates[] = ['label' => 'None', 'value' => ''];
-      $aggregates[] = ['label' => 'Sum', 'value' => 'sum'];
-      $aggregates[] = ['label' => 'Count', 'value' => 'count'];
-      $aggregates[] = ['label' => 'Average', 'value' => 'average'];
-      return $aggregates;
+        $aggregates = [];
+        $aggregates[] = ['label' => 'None', 'value' => ''];
+        $aggregates[] = ['label' => 'Sum', 'value' => 'sum'];
+        $aggregates[] = ['label' => 'Count', 'value' => 'count'];
+        $aggregates[] = ['label' => 'Average', 'value' => 'average'];
+
+        return $aggregates;
     }
 }

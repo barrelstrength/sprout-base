@@ -9,10 +9,10 @@ namespace barrelstrength\sproutbase\app\uris\sectiontypes;
 
 use barrelstrength\sproutbase\app\uris\base\UrlEnabledSectionType;
 use barrelstrength\sproutbase\app\uris\models\UrlEnabledSection;
+use Craft;
 use craft\elements\Category as CategoryElement;
 use craft\models\CategoryGroup;
 use craft\queue\jobs\ResaveElements;
-use Craft;
 
 class Category extends UrlEnabledSectionType
 {

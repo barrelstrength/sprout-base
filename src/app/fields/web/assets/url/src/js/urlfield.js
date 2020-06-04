@@ -26,7 +26,7 @@ SproutUrlField = Garnish.Base.extend({
       };
 
       // Query the controller so the regex validation is all done through PHP.
-      Craft.postActionRequest('sprout-base-fields/fields/validate-url', data, function(response) {
+      Craft.postActionRequest('sprout/fields/validate-url', data, function(response) {
         if (response.success) {
           $(sproutUrlButtonClass).addClass('fade');
           $(sproutUrlButtonClass + ' a').attr("href", data.value);

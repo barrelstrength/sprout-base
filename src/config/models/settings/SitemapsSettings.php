@@ -8,7 +8,6 @@
 namespace barrelstrength\sproutbase\config\models\settings;
 
 use barrelstrength\sproutbase\config\base\Settings;
-use barrelstrength\sproutbase\SproutBase;
 use Craft;
 
 class SitemapsSettings extends Settings

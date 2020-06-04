@@ -17,7 +17,7 @@ use yii\web\Response;
 
 /**
  *
- * @property \craft\base\FieldInterface|null|\craft\base\Field $fieldModel
+ * @property FieldInterface|null|Field $fieldModel
  */
 class FieldsController extends BaseController
 {

@@ -42,7 +42,7 @@ SproutPhoneField = Garnish.Base.extend({
     });
 
     function validatePhoneNumber(currentPhoneField, data) {
-      Craft.postActionRequest('sprout-base-fields/fields/validate-phone', data, function(response) {
+      Craft.postActionRequest('sprout/fields/validate-phone', data, function(response) {
         if (response.success) {
           $(sproutPhoneFieldButtonClass).addClass('fade');
           $(sproutPhoneFieldButtonClass + ' a').attr("href", "tel:" + data.phone);

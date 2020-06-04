@@ -7,7 +7,6 @@
 
 namespace barrelstrength\sproutbase\app\reports\controllers;
 
-use barrelstrength\sproutbase\app\reports\base\DataSource;
 use barrelstrength\sproutbase\app\reports\base\Visualization;
 use barrelstrength\sproutbase\app\reports\elements\Report;
 use barrelstrength\sproutbase\app\reports\models\ReportGroup;
@@ -16,9 +15,9 @@ use Craft;
 use craft\errors\ElementNotFoundException;
 use craft\errors\MissingComponentException;
 use craft\helpers\Json;
-use craft\helpers\UrlHelper;
 use craft\web\Controller;
 use craft\web\Request;
+use ReflectionException;
 use Throwable;
 use yii\base\Exception;
 use yii\db\StaleObjectException;
@@ -83,7 +82,7 @@ class ReportsController extends Controller
      * @return Response
      * @throws ForbiddenHttpException
      * @throws NotFoundHttpException
-     * @throws \ReflectionException
+     * @throws ReflectionException
      */
     public function actionResultsIndexTemplate(Report $report = null, int $reportId = null): Response
     {
@@ -161,7 +160,7 @@ class ReportsController extends Controller
      * @throws ForbiddenHttpException
      * @throws NotFoundHttpException
      * @throws MissingComponentException
-     * @throws \ReflectionException
+     * @throws ReflectionException
      */
     public function actionEditReportTemplate(string $dataSourceId = null, Report $report = null, int $reportId = null): Response
     {

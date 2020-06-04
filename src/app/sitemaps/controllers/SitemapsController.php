@@ -13,6 +13,7 @@ use barrelstrength\sproutbase\SproutBase;
 use Craft;
 use craft\errors\SiteNotFoundException;
 use craft\web\Controller;
+use ReflectionException;
 use Throwable;
 use yii\db\Exception;
 use yii\web\BadRequestHttpException;
@@ -31,7 +32,7 @@ class SitemapsController extends Controller
      * @throws ForbiddenHttpException
      * @throws NotFoundHttpException
      * @throws SiteNotFoundException
-     * @throws \ReflectionException
+     * @throws ReflectionException
      */
     public function actionSitemapIndexTemplate(string $siteHandle = null): Response
     {

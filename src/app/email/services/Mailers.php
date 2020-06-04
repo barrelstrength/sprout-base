@@ -10,7 +10,7 @@ use yii\base\Exception;
 
 /**
  *
- * @property \barrelstrength\sproutbase\app\email\base\Mailer[] $registeredMailers
+ * @property Mailer[] $registeredMailers
  */
 class Mailers extends Component
 {

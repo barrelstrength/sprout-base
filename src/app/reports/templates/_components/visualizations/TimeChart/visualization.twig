@@ -33,12 +33,12 @@
 {% js on ready %}
 
     var chart = new SproutReportsViz('timeSeriesChart', {
-      chartSelector: '#chart',
-      labels: {{ visualization.getLabels()|json_encode()|raw }},
-      dataSeries: {{ visualization.getTimeSeries()|json_encode()|raw }},
-      options: {{ options|json_encode()|raw }},
-      startDate: {{ visualization.getStartDate()|raw }},
-      endDate: {{ visualization.getEndDate()|raw }},
+    chartSelector: '#chart',
+    labels: {{ visualization.getLabels()|json_encode()|raw }},
+    dataSeries: {{ visualization.getTimeSeries()|json_encode()|raw }},
+    options: {{ options|json_encode()|raw }},
+    startDate: {{ visualization.getStartDate()|raw }},
+    endDate: {{ visualization.getEndDate()|raw }},
     });
 
     chart.create();

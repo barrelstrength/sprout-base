@@ -1,28 +1,33 @@
 {
-  "name": "barrelstrength/sprout-base",
-  "description": "Common libraries for Sprout Plugins for Craft CMS",
-  "version": "7.0.0",
-  "type": "yii-module",
-  "license": "proprietary",
-  "authors": [
-    {
-      "name": "Barrel Strength",
-      "homepage": "https://www.barrelstrengthdesign.com/"
+    "name": "barrelstrength/sprout-base",
+    "description": "Common libraries for Sprout Plugins for Craft CMS",
+    "version": "7.0.0",
+    "type": "yii-module",
+    "license": "proprietary",
+    "authors": [
+        {
+            "name": "Barrel Strength",
+            "homepage": "https://www.barrelstrengthdesign.com/"
+        }
+    ],
+    "support": {
+        "email": "sprout@barrelstrengthdesign.com",
+        "issues": "https://github.com/barrelstrength/sprout-base/issues?state=open",
+        "source": "https://github.com/barrelstrength/sprout-base",
+        "docs": "https://github.com/barrelstrength/sprout-base",
+        "rss": "https://github.com/barrelstrength/sprout-base/commits/v2.atom"
+    },
+    "require": {
+        "craftcms/cms": "^3.1.0",
+        "php-science/textrank": "^1.0.4",
+        "league/html-to-markdown": "^4.6.2",
+        "commerceguys/addressing": "^1.0.6",
+        "giggsey/libphonenumber-for-php": "^8.12.4",
+        "league/csv": "^8.2.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "barrelstrength\\sproutbase\\": "src/"
+        }
     }
-  ],
-  "support": {
-    "email": "sprout@barrelstrengthdesign.com",
-    "issues": "https://github.com/barrelstrength/sprout-base/issues?state=open",
-    "source": "https://github.com/barrelstrength/sprout-base",
-    "docs": "https://github.com/barrelstrength/sprout-base",
-    "rss": "https://github.com/barrelstrength/sprout-base/commits/v2.atom"
-  },
-  "require": {
-    "craftcms/cms": "^3.1.0"
-  },
-  "autoload": {
-    "psr-4": {
-      "barrelstrength\\sproutbase\\": "src/"
-    }
-  }
 }

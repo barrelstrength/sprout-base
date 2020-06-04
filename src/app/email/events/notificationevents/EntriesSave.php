@@ -224,7 +224,7 @@ class EntriesSave extends NotificationEvent
         }
 
         // If any section ids were checked, make sure the entry belongs in one of them
-        if (is_array($this->sectionIds) AND !in_array($elementId, $this->sectionIds, false)) {
+        if (is_array($this->sectionIds) and !in_array($elementId, $this->sectionIds, false)) {
             $this->addError('event', Craft::t('sprout', 'Saved Entry Element does not match any selected Sections.'));
         }
     }

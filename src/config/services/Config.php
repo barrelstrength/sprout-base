@@ -12,11 +12,8 @@ use barrelstrength\sproutbase\config\base\SproutCentralInterface;
 use barrelstrength\sproutbase\SproutBase;
 use Craft;
 use craft\base\Plugin;
-use craft\base\PluginInterface;
-use craft\events\RegisterComponentTypesEvent;
 use craft\services\Plugins;
 use yii\base\Component;
-use yii\base\ExitException;
 
 class Config extends Component
 {
@@ -78,26 +75,6 @@ class Config extends Component
         }
 
         return $configs;
-    }
-
-    private function getDependenciesInUse($pluginHandle): array
-    {
-        $plugins = $this->getSproutCentralPlugins();
-
-        $configDependencies = [];
-        foreach ($plugins as $key => $plugin) {
-            // Exclude the plugin called in this method
-            if ($plugin->getHandle() === $pluginHandle) {
-                continue;
-            }
-
-            $configTypes = $plugin::getSproutConfigs();
-            foreach ($configTypes as $configType) {
-                $configDependencies[] = $configType;
-            }
-        }
-
-        return array_unique($configDependencies);
     }
 
     /**
@@ -270,5 +247,25 @@ class Config extends Component
         $plugin = Craft::$app->plugins->getPlugin($pluginHandle);
 
         return $plugin !== null ? $plugin->is($edition) : false;
+    }
+
+    private function getDependenciesInUse($pluginHandle): array
+    {
+        $plugins = $this->getSproutCentralPlugins();
+
+        $configDependencies = [];
+        foreach ($plugins as $key => $plugin) {
+            // Exclude the plugin called in this method
+            if ($plugin->getHandle() === $pluginHandle) {
+                continue;
+            }
+
+            $configTypes = $plugin::getSproutConfigs();
+            foreach ($configTypes as $configType) {
+                $configDependencies[] = $configType;
+            }
+        }
+
+        return array_unique($configDependencies);
     }
 }

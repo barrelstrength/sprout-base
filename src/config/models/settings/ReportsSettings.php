@@ -7,9 +7,7 @@
 
 namespace barrelstrength\sproutbase\config\models\settings;
 
-use barrelstrength\sproutbase\config\base\Config;
 use barrelstrength\sproutbase\config\base\Settings;
-use barrelstrength\sproutbase\SproutBase;
 use Craft;
 
 class ReportsSettings extends Settings

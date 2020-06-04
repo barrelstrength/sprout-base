@@ -7,11 +7,8 @@
 
 namespace barrelstrength\sproutbase\app\reports\elements\db;
 
-use barrelstrength\sproutbase\app\reports\base\DataSource;
 use barrelstrength\sproutbase\app\reports\records\DataSource as DataSourceRecord;
-use Craft;
 use craft\elements\db\ElementQuery;
-use craft\errors\MissingComponentException;
 use craft\helpers\Db;
 
 class ReportQuery extends ElementQuery

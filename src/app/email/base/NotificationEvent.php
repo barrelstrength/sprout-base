@@ -3,7 +3,6 @@
 namespace barrelstrength\sproutbase\app\email\base;
 
 use barrelstrength\sproutbase\app\email\elements\NotificationEmail;
-use barrelstrength\sproutbase\app\email\services\NotificationEmails;
 use craft\base\SavableComponent;
 use yii\base\Event;
 

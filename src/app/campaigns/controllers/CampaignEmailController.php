@@ -2,13 +2,13 @@
 
 namespace barrelstrength\sproutbase\app\campaigns\controllers;
 
-use barrelstrength\sproutbase\SproutBase;
-use barrelstrength\sproutbase\app\email\base\Mailer;
-use barrelstrength\sproutbase\app\email\mailers\DefaultMailer;
-use barrelstrength\sproutbase\app\email\models\ModalResponse;
 use barrelstrength\sproutbase\app\campaigns\base\CampaignEmailSenderInterface;
 use barrelstrength\sproutbase\app\campaigns\elements\CampaignEmail;
 use barrelstrength\sproutbase\app\campaigns\models\CampaignType;
+use barrelstrength\sproutbase\app\email\base\Mailer;
+use barrelstrength\sproutbase\app\email\mailers\DefaultMailer;
+use barrelstrength\sproutbase\app\email\models\ModalResponse;
+use barrelstrength\sproutbase\SproutBase;
 use Craft;
 use craft\base\ElementInterface;
 use craft\helpers\ElementHelper;

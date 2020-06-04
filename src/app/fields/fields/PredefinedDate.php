@@ -95,7 +95,7 @@ class PredefinedDate extends BasePredefinedField
             $formatter = Craft::$app->getFormatter();
 
             /** @var DateTime $value */
-            return '<span title="' . $formatter->asDatetime($value, Locale::LENGTH_SHORT) . '">' . $formatter->asTimestamp($value, Locale::LENGTH_FULL) . '</span>';
+            return '<span title="'.$formatter->asDatetime($value, Locale::LENGTH_SHORT).'">'.$formatter->asTimestamp($value, Locale::LENGTH_FULL).'</span>';
         }
 
         return '';

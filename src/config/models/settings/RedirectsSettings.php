@@ -1,15 +1,13 @@
 <?php
 /**
- * @link https://sprout.barrelstrengthdesign.com
+ * @link      https://sprout.barrelstrengthdesign.com
  * @copyright Copyright (c) Barrel Strength Design LLC
- * @license https://craftcms.github.io/license
+ * @license   https://craftcms.github.io/license
  */
 
 namespace barrelstrength\sproutbase\config\models\settings;
 
-use barrelstrength\sproutbase\config\base\Config;
 use barrelstrength\sproutbase\config\base\Settings;
-use barrelstrength\sproutbase\SproutBase;
 use Craft;
 
 class RedirectsSettings extends Settings
@@ -67,7 +65,7 @@ class RedirectsSettings extends Settings
     public function getSettingsNavItem(): array
     {
         return [
-            'label' => Craft::t('sprout','Redirects'),
+            'label' => Craft::t('sprout', 'Redirects'),
             'url' => 'sprout/settings/redirects',
             'icon' => '@sproutbaseicons/plugins/redirects/icon.svg',
             'subnav' => [

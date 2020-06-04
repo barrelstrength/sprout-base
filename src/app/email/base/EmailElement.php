@@ -9,6 +9,7 @@ use barrelstrength\sproutbase\SproutBase;
 use Craft;
 use craft\base\Element;
 use craft\base\Field;
+use ReflectionException;
 
 abstract class EmailElement extends Element
 {
@@ -149,7 +150,7 @@ abstract class EmailElement extends Element
 
     /**
      * @return EmailTemplates|BasicTemplates|CustomTemplates
-     * @throws \ReflectionException
+     * @throws ReflectionException
      */
     public function getEmailTemplates()
     {

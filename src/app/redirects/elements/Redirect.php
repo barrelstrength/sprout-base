@@ -7,7 +7,6 @@
 
 namespace barrelstrength\sproutbase\app\redirects\elements;
 
-use barrelstrength\sproutbase\SproutBase;
 use barrelstrength\sproutbase\app\redirects\elements\actions\ChangePermanentMethod;
 use barrelstrength\sproutbase\app\redirects\elements\actions\ChangeTemporaryMethod;
 use barrelstrength\sproutbase\app\redirects\elements\actions\ExcludeUrl;
@@ -16,6 +15,7 @@ use barrelstrength\sproutbase\app\redirects\elements\actions\SetStatus;
 use barrelstrength\sproutbase\app\redirects\elements\db\RedirectQuery;
 use barrelstrength\sproutbase\app\redirects\enums\RedirectMethods;
 use barrelstrength\sproutbase\app\redirects\records\Redirect as RedirectRecord;
+use barrelstrength\sproutbase\SproutBase;
 use Craft;
 use craft\base\Element;
 use craft\elements\actions\Edit;
@@ -24,6 +24,7 @@ use craft\errors\MissingComponentException;
 use craft\errors\SiteNotFoundException;
 use craft\helpers\UrlHelper;
 use DateTime;
+use ReflectionException;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
@@ -403,7 +404,7 @@ class Redirect extends Element
     /**
      * @inheritdoc
      * @throws Exception if reasons
-     * @throws \ReflectionException
+     * @throws ReflectionException
      */
     public function afterSave(bool $isNew)
     {

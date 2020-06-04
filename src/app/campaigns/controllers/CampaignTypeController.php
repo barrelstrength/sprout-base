@@ -2,11 +2,11 @@
 
 namespace barrelstrength\sproutbase\app\campaigns\controllers;
 
+use barrelstrength\sproutbase\app\campaigns\elements\CampaignEmail;
+use barrelstrength\sproutbase\app\campaigns\models\CampaignType;
 use barrelstrength\sproutbase\app\email\base\Mailer;
 use barrelstrength\sproutbase\app\email\mailers\DefaultMailer;
 use barrelstrength\sproutbase\SproutBase;
-use barrelstrength\sproutbase\app\campaigns\elements\CampaignEmail;
-use barrelstrength\sproutbase\app\campaigns\models\CampaignType;
 use Craft;
 use craft\errors\MissingComponentException;
 use craft\errors\SiteNotFoundException;

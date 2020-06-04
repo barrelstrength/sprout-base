@@ -9,10 +9,12 @@ namespace barrelstrength\sproutbase\app\uris\sectiontypes;
 
 use barrelstrength\sproutbase\app\uris\base\UrlEnabledSectionType;
 use barrelstrength\sproutbase\app\uris\models\UrlEnabledSection;
+use Craft;
+use craft\base\Model;
 use craft\elements\Entry as EntryElement;
+use craft\models\EntryType;
 use craft\models\Section;
 use craft\queue\jobs\ResaveElements;
-use Craft;
 
 class Entry extends UrlEnabledSectionType
 {
@@ -53,7 +55,7 @@ class Entry extends UrlEnabledSectionType
     /**
      * @param $id
      *
-     * @return array|\craft\base\Model|\craft\models\EntryType[]|null
+     * @return array|Model|EntryType[]|null
      */
     public function getFieldLayoutSettingsObject($id)
     {

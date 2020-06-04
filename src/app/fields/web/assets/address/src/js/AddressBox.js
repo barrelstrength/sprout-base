@@ -123,7 +123,7 @@ if (typeof Craft.SproutBase === typeof undefined) {
        * @param {string} response.addressFormHtml
        * @param {Array} response.errors
        */
-      Craft.postActionRequest('sprout-base-fields/fields-address/get-address-display-html', data, $.proxy(function(response) {
+      Craft.postActionRequest('sprout/fields-address/get-address-display-html', data, $.proxy(function(response) {
         if (response.result === true) {
           this.$addressBox.find('.address-format').html(response.html);
           self.$addressForm.empty();
@@ -157,7 +157,7 @@ if (typeof Craft.SproutBase === typeof undefined) {
       let defaultCountryCode = this.$addressBox.data('defaultCountryCode');
       let addressJson = this.$addressBox.data('addressJson');
 
-      let actionUrl = 'sprout-base-fields/fields-address/get-address-form-fields-html';
+      let actionUrl = 'sprout/fields-address/get-address-form-fields-html';
       let formFieldHtmlActionUrl = this.$addressBox.data('formFieldHtmlActionUrl');
 
       // Give integrations like Sprout SEO a chance to retrieve the address in a different way
@@ -242,7 +242,7 @@ if (typeof Craft.SproutBase === typeof undefined) {
        * @param {JSON} response[].geo
        * @param {Array} response.errors
        */
-      Craft.postActionRequest('sprout-base-fields/fields-address/query-address-coordinates-from-google-maps', data, $.proxy(function(response) {
+      Craft.postActionRequest('sprout/fields-address/query-address-coordinates-from-google-maps', data, $.proxy(function(response) {
         if (response.result === true) {
           const latitude = response.geo.latitude;
           const longitude = response.geo.longitude;
