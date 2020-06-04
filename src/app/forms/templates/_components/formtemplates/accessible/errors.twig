@@ -1,0 +1,7 @@
+{% if errors -%}
+    <ul class="errors">
+        {% for error in errors %}
+            <li>{{ error|t('site') }}</li>
+        {% endfor %}
+    </ul>
+{% endif -%}

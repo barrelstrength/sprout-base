@@ -22,6 +22,14 @@ use barrelstrength\sproutbase\app\fields\services\Phone;
 use barrelstrength\sproutbase\app\fields\services\RegularExpression;
 use barrelstrength\sproutbase\app\fields\services\Url;
 use barrelstrength\sproutbase\app\fields\services\Utilities as FieldUtilities;
+use barrelstrength\sproutbase\app\forms\services\Entries;
+use barrelstrength\sproutbase\app\forms\services\EntryStatuses;
+use barrelstrength\sproutbase\app\forms\services\Fields;
+use barrelstrength\sproutbase\app\forms\services\Forms;
+use barrelstrength\sproutbase\app\forms\services\FrontEndFields;
+use barrelstrength\sproutbase\app\forms\services\Groups;
+use barrelstrength\sproutbase\app\forms\services\Integrations;
+use barrelstrength\sproutbase\app\forms\services\Rules;
 use barrelstrength\sproutbase\app\metadata\services\ElementMetadata;
 use barrelstrength\sproutbase\app\metadata\services\GlobalMetadata;
 use barrelstrength\sproutbase\app\metadata\services\Optimize;
@@ -41,6 +49,46 @@ use craft\base\Component;
 
 class App extends Component
 {
+    /**
+     * @var Groups
+     */
+    public $groups;
+
+    /**
+     * @var Forms
+     */
+    public $forms;
+
+    /**
+     * @var Fields
+     */
+    public $fields;
+
+    /**
+     * @var Entries
+     */
+    public $entries;
+
+    /**
+     * @var EntryStatuses
+     */
+    public $entryStatuses;
+
+    /**
+     * @var FrontEndFields
+     */
+    public $frontEndFields;
+
+    /**
+     * @var Integrations
+     */
+    public $integrations;
+
+    /**
+     * @var Rules
+     */
+    public $rules;
+
     /**
      * @var Optimize
      */
@@ -211,6 +259,16 @@ class App extends Component
      */
     public function init()
     {
+        // Forms
+        $this->groups = new Groups();
+        $this->forms = new Forms();
+        $this->fields = new Fields();
+        $this->entries = new Entries();
+        $this->entryStatuses = new EntryStatuses();
+        $this->frontEndFields = new FrontEndFields();
+        $this->integrations = new Integrations();
+        $this->rules = new Rules();
+
         // Metadata
         $this->optimize = new Optimize();
         $this->globalMetadata = new GlobalMetadata();

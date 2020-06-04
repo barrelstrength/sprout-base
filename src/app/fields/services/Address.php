@@ -14,7 +14,7 @@ use barrelstrength\sproutbase\app\fields\models\Address as AddressModel;
 use barrelstrength\sproutbase\app\fields\records\Address as AddressRecord;
 use barrelstrength\sproutbase\app\fields\services\Address as AddressService;
 use barrelstrength\sproutbase\SproutBase;
-use barrelstrength\sproutforms\base\FormField;
+use barrelstrength\sproutbase\app\forms\base\FormField;
 use CommerceGuys\Addressing\Country\CountryRepository;
 use Craft;
 use craft\base\Component;

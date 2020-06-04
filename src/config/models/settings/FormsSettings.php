@@ -8,8 +8,8 @@
 namespace barrelstrength\sproutbase\config\models\settings;
 
 use barrelstrength\sproutbase\config\base\Settings;
-use barrelstrength\sproutforms\formtemplates\AccessibleTemplates;
-use barrelstrength\sproutforms\SproutForms;
+use barrelstrength\sproutbase\app\forms\formtemplates\AccessibleTemplates;
+use barrelstrength\sproutbase\app\forms\SproutForms;
 use Craft;
 
 class FormsSettings extends Settings
@@ -71,7 +71,7 @@ class FormsSettings extends Settings
                     'template' => 'sprout-forms/settings/entrystatuses',
                     'actionButtonTemplate' => 'sprout-forms/settings/entrystatuses/_actionStatusButton',
                     'variables' => [
-                        'entryStatuses' => SproutForms::$app->entryStatuses->getAllEntryStatuses()
+                        'entryStatuses' => SproutBase::$app->entryStatuses->getAllEntryStatuses()
                     ]
                 ]
             ]

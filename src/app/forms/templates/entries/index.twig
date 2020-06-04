@@ -1,0 +1,21 @@
+{% requirePermission "sprout:forms:viewEntries" %}
+
+{% extends "sprout-base-forms/_layouts/elementindex" %}
+{% import 'sprout-base/_includes/sproutcp' as sprout %}
+
+{% set title = "Entries"|t('sprout') %}
+{% set elementType = 'barrelstrength\\sproutbase\\app\\forms\\elements\\Entry' %}
+{% set isPro = craft.app.getModule('sprout-forms').is('pro') %}
+
+{% do view.registerAssetBundle("barrelstrength\\sproutbase\\app\\forms\\web\\assets\\cp\\SproutEntriesIndexAsset") %}
+
+{% block actionButton %}
+    {% if not isPro %}
+        <div class="buttons">
+            {{ sprout.upgradeToProButton({
+                url: cpUrl('sprout/upgrade/forms'),
+                title: "Upgrade to Sprout Forms PRO to manage Unlimited Forms"|t('sprout')
+            }) }}
+        </div>
+    {% endif %}
+{% endblock %}

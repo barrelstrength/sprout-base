@@ -1,19 +1,26 @@
 const mix = require('laravel-mix');
 
+require('laravel-mix-polyfill');
+
+/**
+ * @param {Object} mix
+ * @param {method} mix.sass
+ * @param {method} mix.polyfill
+ */
 mix
 
   // base
   .sass(
-    'src/common/web/assets/cp/src/scss/sproutcp.scss',
-    'src/common/web/assets/cp/dist/css/sproutcp.css')
+    'src/config/web/assets/cp/src/scss/sproutcp.scss',
+    'src/config/web/assets/cp/dist/css/sproutcp.css')
   .sass(
-    'src/common/web/assets/landing/src/scss/landing.scss',
-    'src/common/web/assets/landing/dist/css/landing.css')
+    'src/config/web/assets/landing/src/scss/landing.scss',
+    'src/config/web/assets/landing/dist/css/landing.css')
   .js([
-    'src/common/web/assets/groups/src/js/groups.js'
+    'src/config/web/assets/groups/src/js/groups.js'
   ], 'src/web/assets/groups/dist/js/groups.js')
-  .copy('common/src/web/assets/cp/src/images',
-    'src/common/web/assets/cp/dist/images');
+  .copy('src/config/web/assets/cp/src/images',
+    'src/config/web/assets/cp/dist/images');
 
 // fields
 if (mix.inProduction()) {
@@ -109,11 +116,11 @@ mix
 // sent email
 mix
   .sass(
-    'src/app/sent-email/web/assets/sentemail/src/scss/sent-email.scss',
-    'src/app/sent-email/web/assets/sentemail/dist/css/sent-email.css',
+    'src/app/sentemail/web/assets/sentemail/src/scss/sent-email.scss',
+    'src/app/sentemail/web/assets/sentemail/dist/css/sent-email.css',
   )
-  .copy('src/app/sent-email/web/assets/sentemail/src/images',
-    'src/app/sent-email/web/assets/sentemail/dist/images');
+  .copy('src/app/sentemail/web/assets/sentemail/src/images',
+    'src/app/sentemail/web/assets/sentemail/dist/images');
 
 // email
 mix
@@ -161,8 +168,8 @@ mix
 // SEO
 mix
   .sass(
-    'src/web/assets/seo/src/scss/sproutseo.scss',
-    'src/web/assets/seo/dist/css/sproutseo.css',
+    'src/app/metadata/web/assets/seo/src/scss/sproutseo.scss',
+    'src/app/metadata/web/assets/seo/dist/css/sproutseo.css',
   )
   .js([
     'src/app/metadata/web/assets/seo/src/js/editable-table.js',
@@ -173,6 +180,52 @@ mix
   ], 'src/app/metadata/web/assets/seo/dist/js/sproutseo.js')
   .copy('src/app/metadata/web/assets/seo/src/images',
     'src/app/metadata/web/assets/seo/dist/images');
+
+mix
+  // Forms
+  .js([
+    'src/app/forms/web/assets/cp/src/js/editable-table.js',
+    'src/app/forms/web/assets/cp/src/js/form-settings.js',
+    'src/app/forms/web/assets/cp/src/js/field-layout-editor.js',
+    'src/app/forms/web/assets/cp/src/js/field-modal.js',
+    'src/app/forms/web/assets/cp/src/js/integration-modal.js',
+    'src/app/forms/web/assets/cp/src/js/integrations.js',
+    'src/app/forms/web/assets/cp/src/js/rule-modal.js',
+  ], 'src/app/forms/web/assets/cp/dist/js/sproutforms-cp.js')
+
+  // Entries Index
+  .js([
+    'src/app/forms/web/assets/cp/src/js/entries-index.js',
+    'src/app/forms/web/assets/cp/src/js/entries-table-view.js',
+  ], 'src/app/forms/web/assets/cp/dist/js/sprout-entries-index.js')
+  .sass('src/app/forms/web/assets/cp/src/scss/charts.scss',
+    'src/app/forms/web/assets/cp/dist/css/sproutforms-charts.css')
+  .sass('src/app/forms/web/assets/cp/src/scss/forms-ui.scss',
+    'src/app/forms/web/assets/cp/dist/css/sproutforms-forms-ui.css')
+  .sass('src/app/forms/web/assets/cp/src/scss/cp.scss',
+    'src/app/forms/web/assets/cp/dist/css/sproutforms-cp.css')
+  .copy('src/app/forms/web/assets/cp/src/images',
+    'src/app/forms/web/assets/cp/dist/images')
+
+  // Form Templates
+  .js([
+    'src/app/forms/web/assets/formtemplates/src/js/accessibility.js',
+  ], 'src/app/forms/web/assets/formtemplates/dist/js/accessibility.js')
+  .js([
+    'src/app/forms/web/assets/formtemplates/src/js/addressfield.js',
+  ], 'src/app/forms/web/assets/formtemplates/dist/js/addressfield.js')
+  .js([
+    'src/app/forms/web/assets/formtemplates/src/js/disable-submit-button.js',
+  ], 'src/app/forms/web/assets/formtemplates/dist/js/disable-submit-button.js')
+  .js([
+    'src/app/forms/web/assets/formtemplates/src/js/rules.js',
+  ], 'src/app/forms/web/assets/formtemplates/dist/js/rules.js')
+  .js([
+    'src/app/forms/web/assets/formtemplates/src/js/submit-handler.js',
+  ], 'src/app/forms/web/assets/formtemplates/dist/js/submit-handler.js')
+  .polyfill({
+    targets: '> 0.5%, last 2 versions, Firefox ESR'
+  });
 
 // Full API
 // mix.js(src, output);

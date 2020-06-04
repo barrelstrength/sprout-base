@@ -1,0 +1,15 @@
+{% import 'sprout-base/_includes/sproutcp' as sprout %}
+
+<div class="buttons">
+    <a id="newentrystatus"
+        href="{{ url('sprout/settings/forms/entry-statuses/new') }}"
+        class="btn submit add icon">
+        {{ "New Entry Status"|t('sprout') }}
+    </a>
+
+    {% if upgradeLink is defined and upgradeLink %}
+        {{ sprout.upgradeToProButton({
+            url: upgradeLink
+        }) }}
+    {% endif %}
+</div>

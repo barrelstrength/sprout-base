@@ -1,0 +1,23 @@
+{% import "_includes/forms" as forms %}
+
+{{ forms.textField({
+    label: 'Invisible Field Value'|t('sprout'),
+    name: 'value',
+    instructions: 'Value to set when the field is saved/sent. Craft Object Syntax is supported.'|t('sprout'),
+    placeholder: '{{ object.entry.id is defined ? object.entry.id : null }}',
+    value: field.value
+}) }}
+
+{{ forms.lightswitchField ({
+    label: "Allow edits"|t('sprout'),
+    instructions: "Allow admin users to edit the submitted field value."|t('sprout'),
+    name: 'allowEdits',
+    on: field.allowEdits,
+}) }}
+
+{{ forms.lightswitchField ({
+    label: "Hide submitted value"|t('sprout'),
+    instructions: "Don't display the submitted field value."|t('sprout'),
+    name: 'hideValue',
+    on: field.hideValue,
+}) }}

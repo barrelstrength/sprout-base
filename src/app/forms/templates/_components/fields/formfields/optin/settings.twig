@@ -1,0 +1,37 @@
+{% import "_includes/forms" as forms %}
+
+{{ forms.textareaField({
+    label: "Opt-in Message"|t('sprout'),
+    instructions: "The text that will display to the user. \\*\\***bold**\\*\\* \\__italic_\\_ \\[Link Name\\]\\(URL)"|t('sprout'),
+    id: 'opt-in-message',
+    name: 'optInMessage',
+    value: field.optInMessage,
+    placeholder: 'Agree to [terms](https:://example.com/terms)?'|t('sprout'),
+    required: true,
+    errors: field.getErrors('optInMessage')
+}) }}
+
+{{ forms.lightswitchField ({
+    label: "Selected by default"|t('sprout'),
+    instructions: "Set the default value of the checkbox to be selected. Note: this effectively makes the opt-in field an 'opt-out' field. Be nice!"|t('sprout'),
+    name: 'selectedByDefault',
+    on: field.selectedByDefault
+}) }}
+
+{{ forms.textField({
+    label: "Value When Selected"|t('sprout'),
+    instructions: "The value to display to indicate when a user has selected to opt-in."|t('sprout'),
+    id: 'optInValueWhenTrue',
+    name: 'optInValueWhenTrue',
+    value: field.optInValueWhenTrue,
+    placeholder: 'Yes'|t('sprout'),
+}) }}
+
+{{ forms.textField({
+    label: "Value When Not Selected"|t('sprout'),
+    instructions: "The value to display to indicate when a user has not chosen to opt-in."|t('sprout'),
+    id: 'optInValueWhenFalse',
+    name: 'optInValueWhenFalse',
+    value: field.optInValueWhenFalse,
+    placeholder: 'No'|t('sprout'),
+}) }}

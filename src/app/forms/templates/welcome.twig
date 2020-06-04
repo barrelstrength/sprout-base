@@ -1,0 +1,29 @@
+{% extends "sprout-base/_layouts/base-landing" %}
+{% import 'sprout-base/_includes/sproutcp' as sprout %}
+
+{% set title = "Welcome to Sprout Forms"|t('sprout') %}
+{% set bodyClass = 'sprout-landing-page' %}
+{% set assetUrl = view.getAssetManager().getPublishedUrl('@sproutbase/app/forms/web/assets/cp/dist', true) -%}
+
+{% block content %}
+
+    <div class="sprout-landing">
+
+        {{ parent() }}
+
+        {{ sprout.featureHeader({
+            heading: "Simple, Beautiful Forms. 100% control."|t('sprout'),
+            message: "Sprout Forms makes it easy for content authors to manage complex forms while also giving a wonderful amount of control to designers and developers."|t('sprout'),
+            primaryButtonText: "Get Started"|t('sprout'),
+            primaryButtonLink: cpUrl('sprout/forms'),
+            secondaryButtonText: "Read the Docs"|t('sprout'),
+            secondaryButtonLink: "https://sprout.barrelstrengthdesign.com/docs/forms"
+        }) }}
+
+        {{ sprout.featureImage({
+            imageUrl: assetUrl ~ '/images/feature-formbuilder-toboldlygo.png',
+            altText: 'Sprout Forms Form Builder for Craft CMS'|t('sprout')
+        }) }}
+
+    </div>
+{% endblock %}

@@ -75,20 +75,20 @@ class FormsConfig extends Config
     public function getCpUrlRules(): array
     {
         return [
+//            'sprout/forms' =>
+//                'sprout/forms/forms-default-section',
             'sprout/forms' =>
-                'sprout-forms/forms/forms-default-section',
-            'sprout/forms' =>
-                'sprout-forms/forms/forms-index-template',
+                'sprout/forms/forms-index-template',
             'sprout/forms/new' =>
-                'sprout-forms/forms/edit-form-template',
+                'sprout/forms/edit-form-template',
             'sprout/forms/edit/<formId:\d+>' =>
-                'sprout-forms/forms/edit-form-template',
+                'sprout/forms/edit-form-template',
             'sprout/forms/edit/<formId:\d+>/settings/<settingsSectionHandle:.*>' =>
-                'sprout-forms/forms/edit-settings-template',
-            'sprout/entries' =>
-                'sprout-forms/entries/entries-index-template',
-            'sprout/entries/edit/<entryId:\d+>' =>
-                'sprout-forms/entries/edit-entry-template',
+                'sprout/forms/edit-settings-template',
+            'sprout/forms/entries' =>
+                'sprout/entries/entries-index-template',
+            'sprout/forms/entries/edit/<entryId:\d+>' =>
+                'sprout/entries/edit-entry-template',
 //            'sprout/settings/(general|advanced)' =>
 //                'sprout-forms/settings/settings-index-template',
 

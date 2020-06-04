@@ -22,6 +22,13 @@ use barrelstrength\sproutbase\app\email\web\twig\variables\SproutEmailVariable;
 use barrelstrength\sproutbase\app\fields\controllers\AddressController;
 use barrelstrength\sproutbase\app\fields\controllers\FieldsController;
 use barrelstrength\sproutbase\app\fields\web\twig\variables\SproutFieldsVariable;
+use barrelstrength\sproutbase\app\forms\controllers\ChartsController;
+use barrelstrength\sproutbase\app\forms\controllers\EntriesController;
+use barrelstrength\sproutbase\app\forms\controllers\EntryStatusesController;
+use barrelstrength\sproutbase\app\forms\controllers\FormsController;
+use barrelstrength\sproutbase\app\forms\controllers\GroupsController;
+use barrelstrength\sproutbase\app\forms\controllers\IntegrationsController;
+use barrelstrength\sproutbase\app\forms\controllers\RulesController;
 use barrelstrength\sproutbase\app\metadata\controllers\GlobalMetadataController;
 use barrelstrength\sproutbase\app\metadata\web\twig\variables\SproutSeoVariable;
 use barrelstrength\sproutbase\app\redirects\controllers\RedirectsController;
@@ -167,6 +174,14 @@ class SproutBase extends Module
             $this->controllerNamespace = 'sproutbase\\config\\controllers';
 
             $this->controllerMap = [
+                'charts' => ChartsController::class,
+                'entries' => EntriesController::class,
+                'entry-statuses' => EntryStatusesController::class,
+                'form-fields' => \barrelstrength\sproutbase\app\forms\controllers\FieldsController::class,
+                'forms' => FormsController::class,
+                'groups' => GroupsController::class,
+                'integrations' => IntegrationsController::class,
+                'rules' => RulesController::class,
                 'global-metadata' => GlobalMetadataController::class,
                 'campaign-email' => CampaignEmailController::class,
                 'campaign-type' => CampaignTypeController::class,
@@ -248,6 +263,7 @@ class SproutBase extends Module
             $e->roots['sprout-base-reports'] = $this->getBasePath().DIRECTORY_SEPARATOR.'app'.DIRECTORY_SEPARATOR.'reports'.DIRECTORY_SEPARATOR.'templates';
             $e->roots['sprout-base-campaigns'] = $this->getBasePath().DIRECTORY_SEPARATOR.'app'.DIRECTORY_SEPARATOR.'campaigns'.DIRECTORY_SEPARATOR.'templates';
             $e->roots['sprout-base-metadata'] = $this->getBasePath().DIRECTORY_SEPARATOR.'app'.DIRECTORY_SEPARATOR.'metadata'.DIRECTORY_SEPARATOR.'templates';
+            $e->roots['sprout-base-forms'] = $this->getBasePath().DIRECTORY_SEPARATOR.'app'.DIRECTORY_SEPARATOR.'forms'.DIRECTORY_SEPARATOR.'templates';
         });
 
         Event::on(CraftVariable::class, CraftVariable::EVENT_INIT, static function(Event $event) {

@@ -62,7 +62,7 @@ class Number extends Widget
      */
     public static function icon()
     {
-        return Craft::getAlias('@barrelstrength/sproutreports/icon-mask.svg');
+        return Craft::getAlias('@sproutbase/app/forms/icon-mask.svg');
     }
 
     /**

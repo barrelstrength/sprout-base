@@ -11,7 +11,7 @@ use barrelstrength\sproutbase\app\reports\elements\Report;
 use barrelstrength\sproutbase\app\reports\records\Report as ReportRecord;
 use barrelstrength\sproutbase\app\sentemail\services\SentEmails;
 use barrelstrength\sproutbase\SproutBase;
-use barrelstrength\sproutforms\fields\formfields\FileUpload;
+use barrelstrength\sproutbase\app\forms\fields\formfields\FileUpload;
 use Craft;
 use craft\base\Element;
 use craft\base\LocalVolumeInterface;

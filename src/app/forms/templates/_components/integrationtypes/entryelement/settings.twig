@@ -1,0 +1,66 @@
+{% import "_includes/forms" as forms %}
+
+{{ forms.selectField({
+    first: true,
+    required: true,
+    label: "Entry Type <span class='info'>Create an entry on this section</span>"|t('sprout'),
+    id: 'entryTypeId',
+    name: 'entryTypeId',
+    options: sectionsOptions,
+    value: integration.entryTypeId
+}) }}
+
+{{ forms.elementSelectField({
+    label: "Default Author"|t('sprout'),
+    instructions: "This author will be used for new Entries where no author is defined."|t('sprout'),
+    id: 'defaultAuthorId',
+    name: 'defaultAuthorId',
+    required: true,
+    elementType: integration.getUserElementType(),
+    selectionLabel: "Choose"|t('sprout'),
+    limit: 1,
+    elements: [integration.getAuthor()]
+}) }}
+
+{{ forms.lightswitchField({
+    label: "Set Author to Logged in User"|t('sprout'),
+    instructions: "Set the author of new Entries to the logged in user. Uses the Default Author if no user is logged in."|t('sprout'),
+    id: 'setAuthorToLoggedInUser',
+    name: 'setAuthorToLoggedInUser',
+    toggle: 'settings-save-author',
+    on: integration.setAuthorToLoggedInUser,
+    onLabel: "Enable"|t('sprout'),
+}) }}
+
+{{ forms.editableTableField({
+    label: "Field Mapping"|t('sprout'),
+    id: 'fieldMapping',
+    name: 'fieldMapping',
+    minRows: integration.fieldMapping|length,
+    maxRows: integration.fieldMapping|length,
+    cols: {
+        sourceFormField: {
+            type: 'singleline',
+            heading: "Form Field"|t('sprout'),
+            class: 'formField',
+        },
+        targetIntegrationField: {
+            type: 'select',
+            heading: "Entry Field"|t('sprout'),
+            placeholder: "Leave blank and no data will be mapped"|t('sprout'),
+            class: 'targetFields',
+            options: []
+        }
+    },
+    rows: integration.fieldMapping,
+    errors: []|unique
+}) }}
+
+{% js on ready %}
+    new SproutFormsIntegration({
+    integrationType: "{{ className(integration)|e('js') }}",
+    updateTargetFieldsOnChange: [
+    '#settings-barrelstrength-sproutforms-integrationtypes-EntryElementIntegration-entryTypeId'
+    ]
+    });
+{% endjs %}
