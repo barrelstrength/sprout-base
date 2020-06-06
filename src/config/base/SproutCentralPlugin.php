@@ -63,7 +63,8 @@ abstract class SproutCentralPlugin extends Plugin
 
         $urlRules = [];
         foreach ($configTypes as $configType) {
-            $rules = $configType->getSiteUrlRules();
+            $config = new $configType();
+            $rules = $config->getSiteUrlRules();
             foreach ($rules as $route => $details) {
                 $urlRules[$route] = $details;
             }
