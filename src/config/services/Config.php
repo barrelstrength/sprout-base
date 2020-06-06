@@ -66,7 +66,7 @@ class Config extends Component
                 continue;
             }
 
-            $configTypes = $plugin::getSproutConfigs();
+            $configTypes = $plugin->getSproutConfigs();
 
             foreach ($configTypes as $configType) {
                 $sproutConfig = new $configType();
@@ -96,9 +96,9 @@ class Config extends Component
         return false;
     }
 
-    public function runInstallMigrations(SproutCentralInterface $plugin)
+    public function runInstallMigrations(SproutCentralPlugin $plugin)
     {
-        $sproutConfigTypes = $plugin::getSproutConfigs();
+        $sproutConfigTypes = $plugin->getSproutConfigs();
 
         foreach ($sproutConfigTypes as $sproutConfigType) {
 
@@ -117,11 +117,11 @@ class Config extends Component
      * Runs all Install::safeDown() migrations for
      * Sprout Central plugins that are not in use
      *
-     * @param SproutCentralInterface $plugin
+     * @param SproutCentralPlugin $plugin
      */
-    public function runUninstallMigrations(SproutCentralInterface $plugin)
+    public function runUninstallMigrations(SproutCentralPlugin $plugin)
     {
-        $sproutConfigTypes = $plugin::getSproutConfigs();
+        $sproutConfigTypes = $plugin->getSproutConfigs();
 
         foreach ($sproutConfigTypes as $sproutConfigType) {
             $isDependencyInUse = SproutBase::$app->config->isDependencyInUse('sprout-seo', $sproutConfigType);
@@ -208,10 +208,10 @@ class Config extends Component
     {
         $plugins = Craft::$app->getPlugins()->getAllPlugins();
 
-        // Filter out all plugins that don't implement DependencyInterface
+        // Filter out all plugins that don't extend SproutCentralPlugin
         // and exclude the plugin calling this method
         $sproutPluginKeys = array_keys(array_filter($plugins, static function($plugin) {
-            return $plugin instanceof SproutCentralInterface;
+            return $plugin instanceof SproutCentralPlugin;
         }));
 
         $defaultSproutCpNavItems = array_filter($cpNavItems, static function($navItem) use ($sproutPluginKeys) {
@@ -260,7 +260,7 @@ class Config extends Component
                 continue;
             }
 
-            $configTypes = $plugin::getSproutConfigs();
+            $configTypes = $plugin->getSproutConfigs();
             foreach ($configTypes as $configType) {
                 $configDependencies[] = $configType;
             }

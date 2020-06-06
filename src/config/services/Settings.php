@@ -33,6 +33,7 @@ class Settings extends Component
     public function getSettings($includeFileConfigSettings = true)
     {
         $configTypes = SproutBase::$app->config->getConfigs();
+
         $settings = [];
 
         foreach ($configTypes as $configType) {

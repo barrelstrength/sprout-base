@@ -45,34 +45,22 @@ use barrelstrength\sproutbase\app\sentemail\controllers\SentEmailController;
 use barrelstrength\sproutbase\app\sitemaps\controllers\SitemapsController;
 use barrelstrength\sproutbase\app\sitemaps\controllers\XmlSitemapController;
 use barrelstrength\sproutbase\app\sitemaps\web\twig\variables\SproutSitemapVariable;
-use barrelstrength\sproutbase\config\configs\CampaignsConfig;
-use barrelstrength\sproutbase\config\configs\EmailConfig;
-use barrelstrength\sproutbase\config\configs\FieldsConfig;
-use barrelstrength\sproutbase\config\configs\FormsConfig;
-use barrelstrength\sproutbase\config\configs\GeneralConfig;
-use barrelstrength\sproutbase\config\configs\RedirectsConfig;
-use barrelstrength\sproutbase\config\configs\ReportsConfig;
-use barrelstrength\sproutbase\config\configs\SentEmailConfig;
-use barrelstrength\sproutbase\config\configs\MetadataConfig;
-use barrelstrength\sproutbase\config\configs\SitemapsConfig;
 use barrelstrength\sproutbase\config\controllers\SettingsController;
 use barrelstrength\sproutbase\config\services\App;
-use barrelstrength\sproutbase\config\services\Config;
 use Craft;
 use craft\events\RegisterComponentTypesEvent;
 use craft\events\RegisterCpNavItemsEvent;
 use craft\events\RegisterCpSettingsEvent;
 use craft\events\RegisterTemplateRootsEvent;
-use craft\events\RegisterUrlRulesEvent;
 use craft\events\RegisterUserPermissionsEvent;
 use craft\helpers\ArrayHelper;
 use craft\i18n\PhpMessageSource;
 use craft\services\Dashboard;
+use craft\services\Plugins;
 use craft\services\UserPermissions;
 use craft\web\Application;
 use craft\web\twig\variables\Cp;
 use craft\web\twig\variables\CraftVariable;
-use craft\web\UrlManager;
 use craft\web\View;
 use yii\base\Event;
 use yii\base\InvalidConfigException;
@@ -201,60 +189,11 @@ class SproutBase extends Module
         }
     }
 
-    public function initConfigEvents()
-    {
-        Event::on(Config::class, Config::EVENT_REGISTER_SPROUT_CONFIG, static function(RegisterComponentTypesEvent $event) {
-
-//            $enabledSproutConfigClasses = self::$app->config->getSproutConfigs();
-//
-//            foreach ($enabledSproutConfigClasses as $sproutConfigClass) {
-//                $event->types[] = $sproutConfigClass;
-//            }
-
-            $event->types[] = CampaignsConfig::class;
-            $event->types[] = FieldsConfig::class;
-            $event->types[] = FormsConfig::class;
-//            $event->types[] = ListsSettings::class;
-            $event->types[] = EmailConfig::class;
-            $event->types[] = RedirectsConfig::class;
-            $event->types[] = ReportsConfig::class;
-            $event->types[] = SentEmailConfig::class;
-            $event->types[] = MetadataConfig::class;
-            $event->types[] = SitemapsConfig::class;
-            $event->types[] = GeneralConfig::class;
-//
-//            \Craft::dd($event);
-        });
-
-        Event::on(Cp::class, Cp::EVENT_REGISTER_CP_NAV_ITEMS, static function(RegisterCpNavItemsEvent $event) {
-            $sproutNavItems = SproutBase::$app->config->buildSproutNavItems();
-            $event->navItems = SproutBase::$app->config->updateCpNavItems($event->navItems, $sproutNavItems);
-        });
-
-        Event::on(Cp::class, Cp::EVENT_REGISTER_CP_SETTINGS, static function(RegisterCpSettingsEvent $event) {
-            if ($settingsPages = self::$app->config->getSproutCpSettings()) {
-                $event->settings['Sprout Settings'] = $settingsPages;
-            }
-        });
-
-        Event::on(UserPermissions::class, UserPermissions::EVENT_REGISTER_PERMISSIONS, function(RegisterUserPermissionsEvent $event) {
-            $event->permissions['Sprout Settings'] = $this->getUserPermissions();
-        });
-
-        Event::on(UrlManager::class, UrlManager::EVENT_REGISTER_CP_URL_RULES, function(RegisterUrlRulesEvent $event) {
-            $event->rules = array_merge($event->rules, $this->getCpUrlRules());
-        });
-
-        Event::on(UrlManager::class, UrlManager::EVENT_REGISTER_SITE_URL_RULES, function(RegisterUrlRulesEvent $event) {
-            $event->rules = array_merge($event->rules, $this->getSiteUrlRules());
-        });
-    }
-
     public function initTemplateEvents()
     {
         // Setup Template Roots
         Event::on(View::class, View::EVENT_REGISTER_CP_TEMPLATE_ROOTS, function(RegisterTemplateRootsEvent $e) {
-            $e->roots['sprout-base'] = $this->getBasePath().DIRECTORY_SEPARATOR.'config'.DIRECTORY_SEPARATOR.'templates';
+            $e->roots['sprout-base-config'] = $this->getBasePath().DIRECTORY_SEPARATOR.'config'.DIRECTORY_SEPARATOR.'templates';
             $e->roots['sprout-base-sitemaps'] = $this->getBasePath().DIRECTORY_SEPARATOR.'app'.DIRECTORY_SEPARATOR.'sitemaps'.DIRECTORY_SEPARATOR.'templates';
             $e->roots['sprout-base-redirects'] = $this->getBasePath().DIRECTORY_SEPARATOR.'app'.DIRECTORY_SEPARATOR.'redirects'.DIRECTORY_SEPARATOR.'templates';
             $e->roots['sprout-base-sent-email'] = $this->getBasePath().DIRECTORY_SEPARATOR.'app'.DIRECTORY_SEPARATOR.'sentemail'.DIRECTORY_SEPARATOR.'templates';
@@ -317,6 +256,20 @@ class SproutBase extends Module
         });
     }
 
+    public function initConfigEvents()
+    {
+        Event::on(Cp::class, Cp::EVENT_REGISTER_CP_NAV_ITEMS, static function(RegisterCpNavItemsEvent $event) {
+            $sproutNavItems = SproutBase::$app->config->buildSproutNavItems();
+            $event->navItems = SproutBase::$app->config->updateCpNavItems($event->navItems, $sproutNavItems);
+        });
+
+        Event::on(Cp::class, Cp::EVENT_REGISTER_CP_SETTINGS, static function(RegisterCpSettingsEvent $event) {
+            if ($settingsPages = self::$app->config->getSproutCpSettings()) {
+                $event->settings['Sprout Settings'] = $settingsPages;
+            }
+        });
+    }
+
     /**
      * @return array
      */
@@ -340,34 +293,5 @@ class SproutBase extends Module
 
         return $permissions;
     }
-
-    private function getCpUrlRules(): array
-    {
-        $configTypes = self::$app->config->getConfigs();
-
-        $urlRules = [];
-        foreach ($configTypes as $configType) {
-            $rules = $configType->getCpUrlRules();
-            foreach ($rules as $route => $details) {
-                $urlRules[$route] = $details;
-            }
-        }
-
-        return $urlRules;
-    }
-
-    private function getSiteUrlRules(): array
-    {
-        $configTypes = self::$app->config->getConfigs();
-
-        $urlRules = [];
-        foreach ($configTypes as $configType) {
-            $rules = $configType->getSiteUrlRules();
-            foreach ($rules as $route => $details) {
-                $urlRules[$route] = $details;
-            }
-        }
-
-        return $urlRules;
     }
 }
