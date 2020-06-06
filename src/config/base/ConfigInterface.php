@@ -11,27 +11,9 @@ use craft\db\Migration;
 
 interface ConfigInterface
 {
-    const SPROUT_BASE = 'sprout-base';
-    const SPROUT_BASE_EMAIL = 'sprout-base-email';
-    const SPROUT_BASE_FIELDS = 'sprout-base-fields';
-    const SPROUT_BASE_IMPORT = 'sprout-base-import';
-
-    //    const SPROUT_SETTINGS = 'settings';
-//    const SPROUT_CAMPAIGNS = 'campaigns';
-//    const SPROUT_EMAIL = 'email';
-//    const SPROUT_FIELDS = 'fields';
-//    const SPROUT_IMPORT = 'import';
-//    const SPROUT_REDIRECTS = 'redirects';
-//    const SPROUT_REPORTS = 'reports';
-//    const SPROUT_SENT_EMAIL = 'sent-email';
-//    const SPROUT_SITEMAPS = 'sitemaps';
-//    const SPROUT_URIS = 'uris';
-//
-    const SPROUT_BASE_REDIRECTS = 'sprout-base-redirects';
-    const SPROUT_BASE_REPORTS = 'sprout-base-reports';
-    const SPROUT_BASE_SENT_EMAIL = 'sprout-base-sent-email';
-    const SPROUT_BASE_SITEMAPS = 'sprout-base-sitemaps';
-    const SPROUT_BASE_URIS = 'sprout-base-uris';
+    const EDITION_LITE = 'lite';
+    const EDITION_STANDARD = 'standard';
+    const EDITION_PRO = 'pro';
 
     /**
      * The short name we use to refer to this module
@@ -49,29 +31,61 @@ interface ConfigInterface
      */
     public function getKey(): string;
 
-    public function getUserPermissions(): array;
-
-    public function getCpUrlRules(): array;
-
     /**
+     * Returns an instance of this modules Settings model
+     *
      * @return Settings|null
      */
     public function createSettingsModel();
 
     /**
+     * Returns an instance of this modules Install migration
+     *
      * @return Migration|null
      */
     public function createInstallMigration();
 
     /**
-     * @return array
+     * Returns any CP Nav Items this module supports
      *
-     * @todo - update this to be called getSchemaDependencies?
-     *         as the goal is primarily to keep from uninstalling
-     *         schema when it's still in use
+     * @return array
+     */
+    public function getCpNavItem(): array;
+
+    /**
+     * Returns any CP URL Rules this module supports
+     *
+     * @return array
+     */
+    public function getCpUrlRules(): array;
+
+    /**
+     * Returns any Site URL Rules this module supports
+     *
+     * @return array
+     */
+    public function getSiteUrlRules(): array;
+
+    /**
+     * Returns any User Permissions this module supports
+     *
+     * @return array
+     */
+    public function getUserPermissions(): array;
+
+    /**
      * Returns a list of plugin dependencies to facilitate
      * actions on install and uninstall
      *
+     * @return array
      */
     public function getSproutDependencies(): array;
+
+    /**
+     * Returns an array of settings that will be added to the
+     * Config model to be used in managing logic within a module
+     *
+     * @return array
+     */
+    public function getConfigSettings(): array;
 }

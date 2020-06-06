@@ -270,16 +270,16 @@ class SproutBase extends Module
      */
     public function getUserPermissions(): array
     {
-        $settings = self::$app->settings->getSettings();
+        $configTypes = self::$app->config->getConfigs();
 
         $permissions = [];
-        foreach ($settings as $setting) {
+        foreach ($configTypes as $configType) {
             // Don't worry about it if no permissions exist
-            if (!method_exists($setting, 'getUserPermissions')) {
+            if (!method_exists($configType, 'getUserPermissions')) {
                 continue;
             }
 
-            foreach ($setting->getUserPermissions() as $permissionName => $permissionArray) {
+            foreach ($configType->getUserPermissions() as $permissionName => $permissionArray) {
                 $permissions[$permissionName] = $permissionArray;
             }
         }
@@ -287,6 +287,5 @@ class SproutBase extends Module
         ksort($permissions, SORT_NATURAL);
 
         return $permissions;
-    }
     }
 }

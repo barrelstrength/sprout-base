@@ -8,7 +8,7 @@
 namespace barrelstrength\sproutbase\config\services;
 
 use barrelstrength\sproutbase\config\base\ConfigInterface;
-use barrelstrength\sproutbase\config\base\SproutCentralInterface;
+use barrelstrength\sproutbase\config\base\SproutCentralPlugin;
 use barrelstrength\sproutbase\SproutBase;
 use Craft;
 use craft\base\Plugin;
@@ -23,46 +23,66 @@ class Config extends Component
     const CONFIG_SPROUT_KEY = Plugins::CONFIG_PLUGINS_KEY.'.sprout';
 
     /**
-     * @return SproutCentralInterface[]
+     * @var ConfigInterface[]
+     */
+    protected $_configs = [];
+
+    /**
+     * @var bool Whether Configs have been loaded yet for this request
+     */
+    private $_configsLoaded = false;
+
+    /**
+     * @var bool Whether Configs are in the middle of being loaded
+     */
+    private $_configsLoading = false;
+
+    /**
+     * @return SproutCentralPlugin[]
      */
     public function getSproutCentralPlugins(): array
     {
         $plugins = Craft::$app->getPlugins()->getAllPlugins();
 
-        // All Sprout plugins with shared settings implement SproutCentralInterface
+        // All Sprout plugins with shared settings extend SproutCentralPlugin
         $sproutCentralPlugins = array_filter($plugins, static function($plugin) {
-            return $plugin instanceof SproutCentralInterface;
+            return $plugin instanceof SproutCentralPlugin;
         });
 
         return $sproutCentralPlugins;
     }
 
     /**
-     * @param bool  $enabledOnly
-     * @param array $excludedPluginHandles
-     *
      * @return ConfigInterface[]
      */
-    public function getConfigs($enabledOnly = true, $excludedPluginHandles = []): array
+    public function getConfigs(): array
     {
-        $plugins = $this->getSproutCentralPlugins();
+        $this->loadConfigs();
 
-        // Make sure we have an array, if only one handle is given
-        if (!is_array($excludedPluginHandles)) {
-            $excludedPluginHandles = [$excludedPluginHandles];
+        return $this->_configs;
+    }
+
+    public function getConfig(string $handle)
+    {
+        $this->loadConfigs();
+
+        return $this->_configs[$handle] ?? null;
+    }
+
+    public function loadConfigs()
+    {
+        if ($this->_configsLoaded === true || $this->_configsLoading === true) {
+            return;
         }
 
-        $configs = [];
+        $this->_configsLoading = true;
+
+        $plugins = $this->getSproutCentralPlugins();
 
         foreach ($plugins as $plugin) {
-            // Enabled?
-            $isPluginEnabled = Craft::$app->getPlugins()->isPluginEnabled($plugin->handle);
-            if ($enabledOnly && !$isPluginEnabled) {
-                continue;
-            }
 
-            // Exclude?
-            if (in_array($plugin->getHandle(), $excludedPluginHandles, true)) {
+            $isPluginEnabled = Craft::$app->getPlugins()->isPluginEnabled($plugin->handle);
+            if (!$isPluginEnabled) {
                 continue;
             }
 
@@ -70,11 +90,27 @@ class Config extends Component
 
             foreach ($configTypes as $configType) {
                 $sproutConfig = new $configType();
-                $configs[$sproutConfig->getKey()] = $sproutConfig;
+
+                // Assumes we only have two editions in any given plugin
+                if ($sproutConfig->getEdition() !== 'pro') {
+                    $sproutConfig->setEdition($plugin->edition);
+                }
+
+                $configSettings = $sproutConfig->getConfigSettings();
+
+                $configSettingsArray = [];
+                foreach ($configSettings as $settingName => $settings) {
+                    $configSettingsArray[$settingName] = $settings;
+                }
+
+                $sproutConfig->addSettings($configSettingsArray);
+
+                $this->_configs[$sproutConfig->getKey()] = $sproutConfig;
             }
         }
 
-        return $configs;
+        $this->_configsLoading = false;
+        $this->_configsLoaded = true;
     }
 
     /**

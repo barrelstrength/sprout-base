@@ -84,13 +84,7 @@ class ReportsConfig extends Config
                 'sprout/data-sources/data-sources-index-template'
         ];
     }
-
-    public function getIsPro()
     {
-        $isSproutFormsPro = SproutBase::$app->config->isEdition('sprout-forms', 'pro');
-        $isSproutReportsPro = SproutBase::$app->config->isEdition('sprout-reports', 'pro');
-
-        return $isSproutFormsPro || $isSproutReportsPro;
     }
 }
 

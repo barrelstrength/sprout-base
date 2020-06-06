@@ -13,6 +13,30 @@ use ReflectionException;
 
 abstract class Config implements ConfigInterface
 {
+    protected $_edition = 'lite';
+
+    protected $_settings;
+
+    public function getEdition(): string
+    {
+        return $this->_edition;
+    }
+
+    public function setEdition($value)
+    {
+        $this->_edition = $value;
+    }
+
+    public function getSettings(): array
+    {
+        return $this->_settings;
+    }
+
+    public function addSettings($settings)
+    {
+        $this->_settings = $settings;
+    }
+
     /**
      * @return string
      * @throws ReflectionException
@@ -56,6 +80,11 @@ abstract class Config implements ConfigInterface
     }
 
     public function getSproutDependencies(): array
+    {
+        return [];
+    }
+
+    public function getConfigSettings(): array
     {
         return [];
     }
