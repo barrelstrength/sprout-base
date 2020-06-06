@@ -85,7 +85,7 @@ class Config extends Component
      *
      * @return bool
      */
-    public function dependencyInUse($pluginHandle, string $configType): bool
+    public function isDependencyInUse($pluginHandle, string $configType): bool
     {
         $dependenciesInUse = $this->getDependenciesInUse($pluginHandle);
 
@@ -124,9 +124,9 @@ class Config extends Component
         $sproutConfigTypes = $plugin::getSproutConfigs();
 
         foreach ($sproutConfigTypes as $sproutConfigType) {
-            $dependencyInUse = SproutBase::$app->config->dependencyInUse('sprout-seo', $sproutConfigType);
+            $isDependencyInUse = SproutBase::$app->config->isDependencyInUse('sprout-seo', $sproutConfigType);
 
-            if ($dependencyInUse) {
+            if ($isDependencyInUse) {
                 continue;
             }
 
