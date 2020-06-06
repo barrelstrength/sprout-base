@@ -40,12 +40,12 @@ class GeneralSettings extends Settings
                 'navigation' => [
                     'label' => Craft::t('sprout', 'Navigation'),
                     'url' => 'sprout/settings/general/navigation',
-                    'template' => 'sprout-base/_settings/navigation'
+                    'template' => 'sprout-base-config/_settings/navigation'
                 ],
                 'welcome' => [
                     'label' => Craft::t('sprout', 'Welcome'),
                     'url' => 'sprout/settings/general/welcome',
-                    'template' => 'sprout-base/_settings/welcome'
+                    'template' => 'sprout-base-config/_settings/welcome'
                 ],
             ]
         ];

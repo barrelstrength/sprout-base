@@ -43,7 +43,7 @@ class Exports extends Component
         $variables['labels'] = $labels;
         $variables['values'] = $values;
 
-        return Craft::$app->getView()->renderTemplate('sprout-base/results/index', $variables);
+        return Craft::$app->getView()->renderTemplate('sprout-base-config/results/index', $variables);
     }
 
     /**

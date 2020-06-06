@@ -83,7 +83,7 @@ class DefaultMailer extends Mailer implements NotificationEmailSenderInterface
         /** @noinspection NullCoalescingOperatorCanBeUsedInspection */
         $settings = isset($settings['settings']) ? $settings['settings'] : $this->getSettings();
 
-        $html = Craft::$app->getView()->renderTemplate('sprout-base/_integrations/sproutemail/mailers/defaultmailer/settings', [
+        $html = Craft::$app->getView()->renderTemplate('sprout-base-config/_integrations/sproutemail/mailers/defaultmailer/settings', [
             'settings' => $settings
         ]);
 

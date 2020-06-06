@@ -111,8 +111,8 @@ class SettingsController extends Controller
         // then we assume this is a custom template page that just uses the
         // settings navigation and handles form behavior on its own
         $settingsTemplate = $settingsTarget === 'sprout'
-            ? 'sprout-base/_layouts/settings'
-            : 'sprout-base/_layouts/settings-wrapper';
+            ? 'sprout-base-config/_layouts/settings'
+            : 'sprout-base-config/_layouts/settings-wrapper';
 
         return $this->renderTemplate($settingsTemplate, array_merge([
             'settings' => $currentSettings,

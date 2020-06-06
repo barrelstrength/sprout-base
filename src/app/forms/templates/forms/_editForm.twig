@@ -1,7 +1,7 @@
 {% requirePermission "sprout:forms:editForms" %}
 
 {% extends "sprout-base-forms/_layouts/base" %}
-{% import 'sprout-base/_includes/sproutcp' as sprout %}
+{% import 'sprout-base-config/_includes/sproutcp' as sprout %}
 
 {% set isPro = craft.app.getModule('sprout-forms').is('pro') %}
 
@@ -87,17 +87,17 @@
 
 {% block tabs %}
     {# Override tabs using formTabs to ensure the first tab always displays #}
-    {% include 'sprout-base-forms/_includes/tabs' with {
+    {% include "sprout-base-forms/_includes/tabs" with {
         formTabs: formTabs
     } %}
 {% endblock %}
 
 {% block content %}
-    {% include 'sprout-base-forms/forms/_editFormContent' %}
+    {% include "sprout-base-forms/forms/_editFormContent" %}
 {% endblock %}
 
 {% block details %}
-    {% include 'sprout-base-forms/forms/_sidebar/settings' %}
+    {% include "sprout-base-forms/forms/_sidebar/settings" %}
 
     {% hook 'cp.sproutForms.forms.edit.details' %}
 {% endblock %}
