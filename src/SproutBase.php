@@ -47,6 +47,8 @@ use barrelstrength\sproutbase\app\sitemaps\controllers\XmlSitemapController;
 use barrelstrength\sproutbase\app\sitemaps\web\twig\variables\SproutSitemapVariable;
 use barrelstrength\sproutbase\config\controllers\SettingsController;
 use barrelstrength\sproutbase\config\services\App;
+use barrelstrength\sproutbase\config\web\twig\Extension;
+use barrelstrength\sproutbase\config\web\twig\variables\SproutVariable;
 use Craft;
 use craft\events\RegisterComponentTypesEvent;
 use craft\events\RegisterCpNavItemsEvent;
@@ -205,14 +207,7 @@ class SproutBase extends Module
             $e->roots['sprout-base-forms'] = $this->getBasePath().DIRECTORY_SEPARATOR.'app'.DIRECTORY_SEPARATOR.'forms'.DIRECTORY_SEPARATOR.'templates';
         });
 
-        Event::on(CraftVariable::class, CraftVariable::EVENT_INIT, static function(Event $event) {
-            $event->sender->set('sproutCampaigns', SproutCampaignsVariable::class);
-            $event->sender->set('sproutEmail', SproutEmailVariable::class);
-            $event->sender->set('sproutFields', SproutFieldsVariable::class);
-            $event->sender->set('sproutReports', SproutReportsVariable::class);
-            $event->sender->set('sproutSeo', SproutSeoVariable::class);
-            $event->sender->set('sproutSitemap', SproutSitemapVariable::class);
-        });
+        Craft::$app->view->registerTwigExtension(new Extension());
     }
 
     public function initEmailEvents()
