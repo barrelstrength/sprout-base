@@ -10,7 +10,6 @@ namespace barrelstrength\sproutbase;
 use barrelstrength\sproutbase\app\campaigns\controllers\CampaignEmailController;
 use barrelstrength\sproutbase\app\campaigns\controllers\CampaignTypeController;
 use barrelstrength\sproutbase\app\campaigns\mailers\CopyPasteMailer;
-use barrelstrength\sproutbase\app\campaigns\web\twig\variables\SproutCampaignsVariable;
 use barrelstrength\sproutbase\app\email\controllers\MailersController;
 use barrelstrength\sproutbase\app\email\controllers\NotificationsController;
 use barrelstrength\sproutbase\app\email\emailtemplates\BasicTemplates;
@@ -18,10 +17,8 @@ use barrelstrength\sproutbase\app\email\events\RegisterMailersEvent;
 use barrelstrength\sproutbase\app\email\mailers\DefaultMailer;
 use barrelstrength\sproutbase\app\email\services\EmailTemplates;
 use barrelstrength\sproutbase\app\email\services\Mailers;
-use barrelstrength\sproutbase\app\email\web\twig\variables\SproutEmailVariable;
 use barrelstrength\sproutbase\app\fields\controllers\AddressController;
 use barrelstrength\sproutbase\app\fields\controllers\FieldsController;
-use barrelstrength\sproutbase\app\fields\web\twig\variables\SproutFieldsVariable;
 use barrelstrength\sproutbase\app\forms\controllers\ChartsController;
 use barrelstrength\sproutbase\app\forms\controllers\EntriesController;
 use barrelstrength\sproutbase\app\forms\controllers\EntryStatusesController;
@@ -30,7 +27,6 @@ use barrelstrength\sproutbase\app\forms\controllers\GroupsController;
 use barrelstrength\sproutbase\app\forms\controllers\IntegrationsController;
 use barrelstrength\sproutbase\app\forms\controllers\RulesController;
 use barrelstrength\sproutbase\app\metadata\controllers\GlobalMetadataController;
-use barrelstrength\sproutbase\app\metadata\web\twig\variables\SproutSeoVariable;
 use barrelstrength\sproutbase\app\redirects\controllers\RedirectsController;
 use barrelstrength\sproutbase\app\reports\controllers\DataSourcesController;
 use barrelstrength\sproutbase\app\reports\controllers\ReportsController;
@@ -38,17 +34,14 @@ use barrelstrength\sproutbase\app\reports\datasources\CustomQuery;
 use barrelstrength\sproutbase\app\reports\datasources\CustomTwigTemplate;
 use barrelstrength\sproutbase\app\reports\datasources\Users;
 use barrelstrength\sproutbase\app\reports\services\DataSources;
-use barrelstrength\sproutbase\app\reports\web\twig\variables\SproutReportsVariable;
 use barrelstrength\sproutbase\app\reports\widgets\Number;
 use barrelstrength\sproutbase\app\reports\widgets\Visualization;
 use barrelstrength\sproutbase\app\sentemail\controllers\SentEmailController;
 use barrelstrength\sproutbase\app\sitemaps\controllers\SitemapsController;
 use barrelstrength\sproutbase\app\sitemaps\controllers\XmlSitemapController;
-use barrelstrength\sproutbase\app\sitemaps\web\twig\variables\SproutSitemapVariable;
 use barrelstrength\sproutbase\config\controllers\SettingsController;
 use barrelstrength\sproutbase\config\services\App;
 use barrelstrength\sproutbase\config\web\twig\Extension;
-use barrelstrength\sproutbase\config\web\twig\variables\SproutVariable;
 use Craft;
 use craft\events\RegisterComponentTypesEvent;
 use craft\events\RegisterCpNavItemsEvent;
@@ -58,11 +51,9 @@ use craft\events\RegisterUserPermissionsEvent;
 use craft\helpers\ArrayHelper;
 use craft\i18n\PhpMessageSource;
 use craft\services\Dashboard;
-use craft\services\Plugins;
 use craft\services\UserPermissions;
 use craft\web\Application;
 use craft\web\twig\variables\Cp;
-use craft\web\twig\variables\CraftVariable;
 use craft\web\View;
 use yii\base\Event;
 use yii\base\InvalidConfigException;
@@ -145,10 +136,11 @@ class SproutBase extends Module
         self::$app = $this->get('app');
 
         $this->initMappings();
-        $this->initConfigEvents();
+        $this->initPermissions();
         $this->initTemplateEvents();
         $this->initEmailEvents();
         $this->initReportEvents();
+        $this->initConfigEvents();
     }
 
     public function initMappings()
@@ -189,6 +181,13 @@ class SproutBase extends Module
                 'settings' => SettingsController::class,
             ];
         }
+    }
+
+    public function initPermissions()
+    {
+        Event::on(UserPermissions::class, UserPermissions::EVENT_REGISTER_PERMISSIONS, function(RegisterUserPermissionsEvent $event) {
+            $event->permissions['Sprout Settings'] = $this->getUserPermissions();
+        });
     }
 
     public function initTemplateEvents()
