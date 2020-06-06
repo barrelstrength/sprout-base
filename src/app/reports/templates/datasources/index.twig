@@ -43,7 +43,7 @@
 
                     {% if currentUser.can('sproutReports-editReports') %}
                         <td>
-                            {% if className(dataSource) == 'barrelstrength\\sproutbasereports\\datasources\\MissingDataSource' %}
+                            {% if className(dataSource) == 'barrelstrength\\sproutbase\\app\\reports\\datasources\\MissingDataSource' %}
                                 <form method="post" accept-charset="UTF-8">
                                     {{ csrfInput() }}
                                     {{ redirectInput('sprout/reports/data-sources') }}
@@ -86,9 +86,6 @@
                     <tr>
                         <td><strong>{{ dataSource.displayName() }}</strong></td>
                         <td>{{ dataSource.getDescription()|markdown }}</td>
-                        <td>
-                            <span class="light">{{ dataSource.getPlugin().name }}</span>
-                        </td>
                         {% if currentUser.can('sproutReports-editReports') %}
                             <td>
                                 <form method="post" accept-charset="UTF-8">

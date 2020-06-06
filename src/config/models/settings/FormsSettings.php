@@ -10,6 +10,7 @@ namespace barrelstrength\sproutbase\config\models\settings;
 use barrelstrength\sproutbase\config\base\Settings;
 use barrelstrength\sproutbase\app\forms\formtemplates\AccessibleTemplates;
 use barrelstrength\sproutbase\app\forms\SproutForms;
+use barrelstrength\sproutbase\SproutBase;
 use Craft;
 
 class FormsSettings extends Settings
@@ -55,20 +56,20 @@ class FormsSettings extends Settings
                 'forms' => [
                     'label' => Craft::t('sprout', 'Forms'),
                     'url' => 'sprout/settings/forms',
-                    'template' => 'sprout-forms/settings/general',
+                    'template' => 'sprout-base-forms/settings/general',
                 ],
                 'spam-protection' => [
                     'label' => Craft::t('sprout', 'Spam Protection'),
                     'url' => 'sprout/settings/forms/spam-protection',
-                    'template' => 'sprout-forms/settings/spam-protection',
+                    'template' => 'sprout-base-forms/settings/spam-protection',
                     'variables' => [
                         'spamRedirectBehaviorOptions' => $this->getSpamRedirectBehaviorsAsOptions()
                     ]
                 ],
                 'entry-statuses' => [
                     'label' => Craft::t('sprout', 'Entry Statuses'),
-                    'url' => 'sprout-forms/settings/forms/entry-statuses',
-                    'template' => 'sprout-forms/settings/entrystatuses',
+                    'url' => 'sprout/settings/forms/entry-statuses',
+                    'template' => 'sprout-base-forms/settings/entrystatuses',
                     'actionButtonTemplate' => 'sprout-forms/settings/entrystatuses/_actionStatusButton',
                     'variables' => [
                         'entryStatuses' => SproutBase::$app->entryStatuses->getAllEntryStatuses()
