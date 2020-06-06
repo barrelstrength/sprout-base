@@ -165,7 +165,7 @@ class SproutBase extends Module
                 'charts' => ChartsController::class,
                 'entries' => EntriesController::class,
                 'entry-statuses' => EntryStatusesController::class,
-                'form-fields' => \barrelstrength\sproutbase\app\forms\controllers\FieldsController::class,
+                'form-fields' => FieldsController::class,
                 'forms' => FormsController::class,
                 'groups' => GroupsController::class,
                 'integrations' => IntegrationsController::class,
