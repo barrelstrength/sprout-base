@@ -40,7 +40,7 @@ class CampaignsSettings extends Settings
             'icon' => '@sproutbaseicons/plugins/campaigns/icon.svg',
             'subnav' => [
                 'campaign-types' => [
-                    'label' => Craft::t('sprout', 'Campaigns DB DRIVEN'),
+                    'label' => Craft::t('sprout', 'Campaign Types'),
                     'url' => 'sprout/settings/campaigns/campaign-types',
                     'template' => 'sprout-base-campaigns/settings/campaign-types'
                 ]
