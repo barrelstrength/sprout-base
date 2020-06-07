@@ -206,6 +206,9 @@ class Config extends Component
     public function addConfigSettingsToProjectConfig(BaseConfig $config)
     {
         if ($settings = $config->createSettingsModel()) {
+
+            $settings->beforeAddDefaultSettings();
+
             $projectConfigSettingsKey = self::CONFIG_SPROUT_KEY.'.'.$config->getKey();
             $newSettings = ProjectConfigHelper::packAssociativeArrays($settings->toArray());
 

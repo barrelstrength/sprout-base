@@ -9,6 +9,7 @@ namespace barrelstrength\sproutbase\config\models\settings;
 
 use barrelstrength\sproutbase\config\base\Settings;
 use Craft;
+use craft\errors\SiteNotFoundException;
 
 class SitemapsSettings extends Settings
 {
@@ -56,6 +57,15 @@ class SitemapsSettings extends Settings
                 ]
             ]
         ];
+    }
+
+    /**
+     * @throws SiteNotFoundException
+     */
+    protected function beforeAddDefaultSettings()
+    {
+        $site = Craft::$app->getSites()->getPrimarySite();
+        $this->siteSettings[$site->id] = $site->id;
     }
 }
 
