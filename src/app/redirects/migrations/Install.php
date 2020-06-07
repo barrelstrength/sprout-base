@@ -9,8 +9,6 @@ namespace barrelstrength\sproutbase\app\redirects\migrations;
 
 use barrelstrength\sproutbase\app\redirects\elements\Redirect;
 use barrelstrength\sproutbase\app\redirects\records\Redirect as RedirectRecord;
-use barrelstrength\sproutbase\migrations\Install as SproutBaseInstall;
-use Craft;
 use craft\db\Migration;
 use craft\db\Query;
 use craft\db\Table;
@@ -105,11 +103,6 @@ class Install extends Migration
      */
     protected function createTables()
     {
-        $migration = new SproutBaseInstall();
-        ob_start();
-        $migration->safeUp();
-        ob_end_clean();
-
         if (!$this->db->tableExists(RedirectRecord::tableName())) {
             $this->createTable(RedirectRecord::tableName(), [
                 'id' => $this->primaryKey(),

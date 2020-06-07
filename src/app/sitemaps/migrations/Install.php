@@ -7,103 +7,18 @@
 
 namespace barrelstrength\sproutbase\app\sitemaps\migrations;
 
-use barrelstrength\sproutbase\app\sitemaps\models\Settings as SproutSitemapSettings;
 use barrelstrength\sproutbase\app\sitemaps\records\SitemapSection as SitemapSectionRecord;
-use barrelstrength\sproutbase\migrations\Install as SproutBaseInstall;
-use barrelstrength\sproutbase\records\Settings as SproutBaseSettingsRecord;
-use Craft;
 use craft\db\Migration;
-use craft\db\Query;
 use craft\db\Table;
-use craft\errors\SiteNotFoundException;
 use Throwable;
-use yii\base\Exception;
 
-/**
- *
- * @property SproutSitemapSettings $sproutSitemapSettingsModel
- */
 class Install extends Migration
 {
     /**
-     * @var string The database driver to use
-     */
-    public $driver;
-
-    /**
      * @return bool
-     * @throws Throwable
-     * @throws SiteNotFoundException
      */
     public function safeUp(): bool
     {
-        $this->createTables();
-        $this->insertDefaultSettings();
-
-        return true;
-    }
-
-    /**
-     * @return bool|void
-     * @throws Throwable
-     */
-    public function safeDown()
-    {
-        // Delete Sitemap Table
-        $this->dropTableIfExists(SitemapSectionRecord::tableName());
-        $this->removeSharedSettings();
-    }
-
-    /**
-     * @throws SiteNotFoundException
-     * @throws Exception
-     */
-    public function insertDefaultSettings()
-    {
-        $settingsRow = (new Query())
-            ->select(['*'])
-            ->from([SproutBaseSettingsRecord::tableName()])
-            ->where(['model' => SproutSitemapSettings::class])
-            ->one();
-
-        if ($settingsRow === null) {
-
-            $settings = new SproutSitemapSettings();
-
-            $site = Craft::$app->getSites()->getPrimarySite();
-            $settings->siteSettings[$site->id] = $site->id;
-
-            $settingsArray = [
-                'model' => SproutSitemapSettings::class,
-                'settings' => json_encode($settings->toArray())
-            ];
-
-            $this->insert(SproutBaseSettingsRecord::tableName(), $settingsArray);
-        }
-    }
-
-    public function removeSharedSettings()
-    {
-        $settingsExist = (new Query())
-            ->select(['*'])
-            ->from([SproutBaseSettingsRecord::tableName()])
-            ->where(['model' => SproutSitemapSettings::class])
-            ->exists();
-
-        if ($settingsExist) {
-            $this->delete(SproutBaseSettingsRecord::tableName(), [
-                'model' => SproutSitemapSettings::class
-            ]);
-        }
-    }
-
-    protected function createTables()
-    {
-        $migration = new SproutBaseInstall();
-        ob_start();
-        $migration->safeUp();
-        ob_end_clean();
-
         if (!$this->db->tableExists(SitemapSectionRecord::tableName())) {
             $this->createTable(SitemapSectionRecord::tableName(), [
                 'id' => $this->primaryKey(),
@@ -120,18 +35,19 @@ class Install extends Migration
                 'uid' => $this->uid(),
             ]);
 
-            $this->createIndexes();
-            $this->addForeignKeys();
+            $this->createIndex(null, SitemapSectionRecord::tableName(), ['siteId']);
+            $this->addForeignKey(null, SitemapSectionRecord::tableName(), ['siteId'], Table::SITES, ['id'], 'CASCADE', 'CASCADE');
         }
+
+        return true;
     }
 
-    protected function createIndexes()
+    /**
+     * @return bool|void
+     * @throws Throwable
+     */
+    public function safeDown()
     {
-        $this->createIndex(null, SitemapSectionRecord::tableName(), ['siteId']);
-    }
-
-    protected function addForeignKeys()
-    {
-        $this->addForeignKey(null, SitemapSectionRecord::tableName(), ['siteId'], Table::SITES, ['id'], 'CASCADE', 'CASCADE');
+        $this->dropTableIfExists(SitemapSectionRecord::tableName());
     }
 }

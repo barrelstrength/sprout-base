@@ -8,8 +8,6 @@
 namespace barrelstrength\sproutbase\app\metadata\migrations;
 
 use barrelstrength\sproutbase\app\metadata\records\GlobalMetadata as GlobalMetadataRecord;
-use barrelstrength\sproutbase\app\metadata\SproutSeo;
-use barrelstrength\sproutbase\migrations\Install as SproutBaseInstall;
 use barrelstrength\sproutbase\SproutBase;
 use Craft;
 use craft\db\Migration;
@@ -54,11 +52,6 @@ class Install extends Migration
      */
     protected function createTables()
     {
-        $migration = new SproutBaseInstall();
-        ob_start();
-        $migration->safeUp();
-        ob_end_clean();
-
         if (!$this->db->tableExists(GlobalMetadataRecord::tableName())) {
             $this->createTable(GlobalMetadataRecord::tableName(), [
                 'id' => $this->primaryKey(),
