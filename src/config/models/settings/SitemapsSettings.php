@@ -13,11 +13,6 @@ use Craft;
 class SitemapsSettings extends Settings
 {
     /**
-     * @var string
-     */
-    public $pluginNameOverride = '';
-
-    /**
      * @var bool
      */
     public $enableCustomSections = false;
