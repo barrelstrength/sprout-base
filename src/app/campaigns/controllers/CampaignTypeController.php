@@ -28,7 +28,7 @@ class CampaignTypeController extends Controller
      * @return Response
      * @throws \Exception
      */
-    public function actionCampaignSettings($campaignTypeId, CampaignType $campaignType = null): Response
+    public function actionEditCampaignType($campaignTypeId, CampaignType $campaignType = null): Response
     {
         if ($campaignTypeId && $campaignType === null) {
 
@@ -61,7 +61,7 @@ class CampaignTypeController extends Controller
         unset($mailerOptions[DefaultMailer::class]);
 
         // Load our template
-        return $this->renderTemplate('sprout-base-campaigns/settings/campaigntypes/_edit', [
+        return $this->renderTemplate('sprout-base-campaigns/settings/campaign-types/_edit', [
             'mailers' => $mailerOptions,
             'campaignTypeId' => $campaignTypeId,
             'campaignType' => $campaignType

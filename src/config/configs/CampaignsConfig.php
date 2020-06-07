@@ -51,6 +51,11 @@ class CampaignsConfig extends Config
             'sprout/campaigns' =>
                 'sprout/campaign-email/campaign-email-index-template',
 
+            // DB Settings
+            'sprout/settings/<settingsSectionHandle:campaigns>/<settingsSubSectionHandle:campaign-types>/edit/<campaignTypeId:\d+>' => [
+                'route' => 'sprout/campaign-type/edit-campaign-type'
+            ],
+
             // @todo - migration break out into 'messages' module that
             //         handles messages and previewing them
             'sprout/email/preview/<emailId:\d+>' => [
