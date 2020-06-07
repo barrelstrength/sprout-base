@@ -5,7 +5,7 @@
 
 {% do view.registerAssetBundle("barrelstrength\\sproutbase\\app\\metadata\\web\\assets\\seo\\SproutSeoAsset") %}
 
-{% set socialProfileOptions = craft.sproutSeo.getFinalOptions('social', 'profileName', globals) %}
+{% set socialProfileOptions = sprout.seo.getFinalOptions('social', 'profileName', globals) %}
 
 {% set cols = [
     {

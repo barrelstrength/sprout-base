@@ -65,7 +65,7 @@ class Optimize extends Component
     public $prioritizedMetadataModel;
 
     /**
-     * Any values provided via {% do craft.sproutSeo.meta({}) %} that will take
+     * Any values provided via {% do sprout.seo.meta({}) %} that will take
      * priority over metadata defined in globals or field settings
      *
      * @var array $templateMetadata

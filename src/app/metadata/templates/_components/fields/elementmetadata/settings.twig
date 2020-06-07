@@ -16,7 +16,7 @@
         }) }}
     {% endif %}
 
-    {% set optimizedTitleOptions = craft.sproutSeo.getOptimizedTitleOptions(settings) %}
+    {% set optimizedTitleOptions = sprout.seo.getOptimizedTitleOptions(settings) %}
     {% set mainEntityValues = {'schemaTypeId': settings.schemaTypeId, 'schemaOverrideTypeId': settings.schemaOverrideTypeId} %}
 
     {{ forms.field({
@@ -32,7 +32,7 @@
         otherPlaceholderText: 'Custom title pattern. Twig code allowed, i.e. {title} - {customField}'|t('sprout')
     })) }}
 
-    {% set optimizedDescriptionOptions = craft.sproutSeo.getOptimizedDescriptionOptions(settings) %}
+    {% set optimizedDescriptionOptions = sprout.seo.getOptimizedDescriptionOptions(settings) %}
 
     <div class="field">
         <div class="heading">
@@ -55,7 +55,7 @@
     </div>
 
 
-    {% set optimizedKeywordOptions = craft.sproutSeo.getKeywordsOptions() %}
+    {% set optimizedKeywordOptions = sprout.seo.getKeywordsOptions() %}
 
     {{ forms.selectField({
         label: "Meta Keywords"|t('sprout'),
@@ -66,7 +66,7 @@
         value: settings.optimizedKeywordsField is defined ? settings.optimizedKeywordsField : 'manually',
     }) }}
 
-    {% set optimizedImageOptions = craft.sproutSeo.getOptimizedAssetsOptions(settings) %}
+    {% set optimizedImageOptions = sprout.seo.getOptimizedAssetsOptions(settings) %}
 
     <div class="field">
         <div class="heading">

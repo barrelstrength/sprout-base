@@ -6,7 +6,7 @@
 {% do view.registerAssetBundle("barrelstrength\\sproutbase\\app\\metadata\\web\\assets\\seo\\SproutSeoAsset") %}
 
 {% set settings         = globals.settings %}
-{% set transformOptions = craft.sproutSeo.getTransforms() %}
+{% set transformOptions = sprout.seo.getTransforms() %}
 
 {% block content %}
 

@@ -4,10 +4,10 @@
 {% import "sprout-base-metadata/_includes/sproutseo" as sprout %}
 
 {% set imageElement      = null %}
-{% set elementType       = craft.sproutSeo.getAssetElementType %}
-{% set organizationItems = craft.sproutSeo.getOrganizationOptions() %}
+{% set elementType       = sprout.seo.getAssetElementType %}
+{% set organizationItems = sprout.seo.getOrganizationOptions() %}
 {% set websiteIdentity   = globals.identity %}
-{% set maxDescriptionLength = craft.sproutSeo.getDescriptionLength() %}
+{% set maxDescriptionLength = sprout.seo.getDescriptionLength() %}
 
 {% set websiteIdentityTypes = [
     { label: "Organization", value: "Organization" },
@@ -18,12 +18,12 @@
 
 {% for item in organizationItems %}
     {% set websiteIdentityOptions = websiteIdentityOptions|merge({
-        (item.name) : craft.sproutSeo.getJsonName(item.name)
+        (item.name) : sprout.seo.getJsonName(item.name)
     }) %}
 {% endfor %}
 
 {% if websiteIdentity.image is defined and websiteIdentity.image %}
-    {% set image = craft.sproutSeo.getElementById(websiteIdentity.image) %}
+    {% set image = sprout.seo.getElementById(websiteIdentity.image) %}
     {% set imageElement = image %}
 {% endif %}
 
@@ -305,7 +305,7 @@
                 id : "foundingDate",
                 instructions: 'The date that this organization was founded.'|t('sprout'),
                 name: 'sproutseo[globals][identity][foundingDate]',
-                value: websiteIdentity['foundingDate']['date'] is defined ? craft.sproutSeo.getDate(websiteIdentity.foundingDate) : null,
+                value: websiteIdentity['foundingDate']['date'] is defined ? sprout.seo.getDate(websiteIdentity.foundingDate) : null,
                 errors: '',
                 required: false
             }) }}
@@ -316,7 +316,7 @@
             <div id="localbusiness"
                 {% if not globals.isLocalBusiness() %}class="hidden"{% endif %}>
 
-                {% set priceRangeOptions = craft.sproutSeo.getPriceRangeOptions(currentSite) %}
+                {% set priceRangeOptions = sprout.seo.getPriceRangeOptions(currentSite) %}
 
                 <div class="field">
                     <div class="heading">
@@ -389,7 +389,7 @@
         {# These fields should only display when 'Person' is selected #}
         <div class="person-info {% if globals.getWebsiteIdentityType() == 'Organization' %}hidden{% endif %}">
 
-            {% set genderOptions = craft.sproutSeo.getGenderOptions(currentSite) %}
+            {% set genderOptions = sprout.seo.getGenderOptions(currentSite) %}
 
             {{ forms.field({
                 label: "Gender"|t('sprout') ~ sprout.infoIcon({

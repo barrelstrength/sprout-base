@@ -5,7 +5,7 @@
 
 {% do view.registerAssetBundle("barrelstrength\\sproutbase\\app\\metadata\\web\\assets\\seo\\SproutSeoAsset") %}
 
-{% set contactOptions = craft.sproutSeo.getFinalOptions('contacts', 'contactType', globals) %}
+{% set contactOptions = sprout.seo.getFinalOptions('contacts', 'contactType', globals) %}
 
 {% set cols = [
     {
