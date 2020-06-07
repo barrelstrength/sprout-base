@@ -7,13 +7,20 @@
 
 namespace barrelstrength\sproutbase\config\services;
 
+use barrelstrength\sproutbase\config\base\Config as BaseConfig;
 use barrelstrength\sproutbase\config\base\ConfigInterface;
 use barrelstrength\sproutbase\config\base\SproutCentralPlugin;
 use barrelstrength\sproutbase\SproutBase;
 use Craft;
 use craft\base\Plugin;
+use craft\helpers\ProjectConfig as ProjectConfigHelper;
 use craft\services\Plugins;
+use ReflectionException;
 use yii\base\Component;
+use yii\base\ErrorException;
+use yii\base\Exception;
+use yii\base\NotSupportedException;
+use yii\web\ServerErrorHttpException;
 
 class Config extends Component
 {
@@ -132,28 +139,38 @@ class Config extends Component
         return false;
     }
 
+    /**
+     * @param SproutCentralPlugin $plugin
+     *
+     * @throws ErrorException
+     * @throws Exception
+     * @throws NotSupportedException
+     * @throws ReflectionException
+     * @throws ServerErrorHttpException
+     */
     public function runInstallMigrations(SproutCentralPlugin $plugin)
     {
         $sproutConfigTypes = $plugin->getSproutConfigs();
 
         foreach ($sproutConfigTypes as $sproutConfigType) {
 
-            $config = new $sproutConfigType();
-
             // Run the safeUp method if our module has an Install migration
-            if ($migration = $config->createInstallMigration()) {
+            if ($migration = $sproutConfigType->createInstallMigration()) {
                 ob_start();
                 $migration->safeUp();
                 ob_end_clean();
             }
+
+            $this->addConfigSettingsToProjectConfig($sproutConfigType);
         }
     }
 
     /**
-     * Runs all Install::safeDown() migrations for
-     * Sprout Central plugins that are not in use
+     * Runs all Install::safeDown() migrations for Sprout Central plugins
      *
      * @param SproutCentralPlugin $plugin
+     *
+     * @throws ReflectionException
      */
     public function runUninstallMigrations(SproutCentralPlugin $plugin)
     {
@@ -166,15 +183,46 @@ class Config extends Component
                 continue;
             }
 
-            $config = new $sproutConfigType();
-
             // Run the safeDown method if our module has an Install migration
-            if ($migration = $config->createInstallMigration()) {
+            if ($migration = $sproutConfigType->createInstallMigration()) {
                 ob_start();
                 $migration->safeDown();
                 ob_end_clean();
             }
+
+            $this->removeConfigSettingsToProjectConfig($sproutConfigType);
         }
+    }
+
+    /**
+     * @param BaseConfig $config
+     *
+     * @throws ReflectionException
+     * @throws ErrorException
+     * @throws Exception
+     * @throws NotSupportedException
+     * @throws ServerErrorHttpException
+     */
+    public function addConfigSettingsToProjectConfig(BaseConfig $config)
+    {
+        if ($settings = $config->createSettingsModel()) {
+            $projectConfigSettingsKey = self::CONFIG_SPROUT_KEY.'.'.$config->getKey();
+            $newSettings = ProjectConfigHelper::packAssociativeArrays($settings->toArray());
+
+            Craft::$app->getProjectConfig()->set($projectConfigSettingsKey, $newSettings, "Added default Sprout Settings for “{$settings->getKey()}”");
+        }
+    }
+
+    /**
+     * @param BaseConfig $config
+     *
+     * @throws ReflectionException
+     */
+    public function removeConfigSettingsToProjectConfig(BaseConfig $config)
+    {
+        $projectConfigSettingsKey = self::CONFIG_SPROUT_KEY.'.'.$config->getKey();
+
+        Craft::$app->getProjectConfig()->remove($projectConfigSettingsKey);
     }
 
     public function getSproutCpSettings(): array
