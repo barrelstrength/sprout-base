@@ -10,12 +10,12 @@ namespace barrelstrength\sproutbase\config\models\settings;
 use barrelstrength\sproutbase\config\base\Settings;
 use Craft;
 
-class SeoSettings extends Settings
+class MetadataSettings extends Settings
 {
     /**
      * @var string
      */
-    public $pluginNameOverride = '';
+    public $displayName = '';
 
     /**
      * @var bool
@@ -41,17 +41,6 @@ class SeoSettings extends Settings
      * @var int
      */
     public $maxMetaDescriptionLength = 160;
-
-    /**
-     * @deprecated
-     *
-     * This field is required on the Sprout SEO Settings model
-     * for the migration m190415_000000_adds_sprout_redirects_migration
-     * so that the structureId setting gets properly migrated.
-     *
-     * General usage of this setting has moved to the SproutBaseRedirects Settings model.
-     */
-//    public $structureId;
 
     public function getSettingsNavItem(): array
     {

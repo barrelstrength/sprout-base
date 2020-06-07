@@ -178,7 +178,7 @@ return [
     'Mailer not found: {mailer}' => 'Mailer not found: {mailer}',
     'New Status' => 'New Status',
     'From Email' => 'From Email',
-    'Intuitive, human-readable plugin name for the end user.' => 'Intuitive, human-readable plugin name for the end user.',
+    'Intuitive, human-readable name used in Control Panel navigation and breadcrumbs.' => 'Intuitive, human-readable name used in Control Panel navigation and breadcrumbs.',
     'Reply To <span class=\'info\'>The email address which will be used if any recipients reply to your email</span>' => 'Reply To <span class=\'info\'>The email address which will be used if any recipients reply to your email</span>',
     'Unable to create Notification Email' => 'Unable to create Notification Email',
     'The default “Reply To” email address Sprout Email will use

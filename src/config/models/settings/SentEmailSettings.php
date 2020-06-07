@@ -13,6 +13,11 @@ use Craft;
 class SentEmailSettings extends Settings
 {
     /**
+     * @var string
+     */
+    public $displayName = '';
+
+    /**
      * @var bool
      */
     public $enableSentEmails = false;

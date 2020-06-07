@@ -8,14 +8,14 @@
 namespace barrelstrength\sproutbase\config\configs;
 
 use barrelstrength\sproutbase\config\base\Config;
-use barrelstrength\sproutbase\config\models\settings\SeoSettings;
+use barrelstrength\sproutbase\config\models\settings\MetadataSettings;
 use Craft;
 
 class MetadataConfig extends Config
 {
     public function createSettingsModel()
     {
-        return new SeoSettings();
+        return new MetadataSettings();
     }
 
     public function getCpNavItem(): array

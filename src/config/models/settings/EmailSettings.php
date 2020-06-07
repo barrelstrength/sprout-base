@@ -16,7 +16,7 @@ class EmailSettings extends Settings
     /**
      * @var string
      */
-    public $pluginNameOverride = '';
+    public $displayName = '';
 
     /**
      * @var bool

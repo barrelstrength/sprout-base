@@ -10,49 +10,39 @@ namespace barrelstrength\sproutbase\app\email\migrations;
 use barrelstrength\sproutbase\app\email\elements\NotificationEmail;
 use barrelstrength\sproutbase\app\email\records\NotificationEmail as NotificationEmailRecord;
 use craft\db\Migration;
-use craft\db\Query;
 use craft\db\Table;
 
 class Install extends Migration
 {
-    /**
-     * @inheritdoc
-     */
     public function safeUp()
     {
-        $notificationTableName = NotificationEmailRecord::tableName();
+        if (!$this->getDb()->tableExists(NotificationEmailRecord::tableName())) {
+            $this->createTable(NotificationEmailRecord::tableName(), [
+                'id' => $this->primaryKey(),
+                'titleFormat' => $this->string(),
+                'emailTemplateId' => $this->string(),
+                'eventId' => $this->string(),
+                'settings' => $this->text(),
+                'sendRule' => $this->text(),
+                'subjectLine' => $this->string()->notNull(),
+                'defaultBody' => $this->text(),
+                'recipients' => $this->text(),
+                'cc' => $this->text(),
+                'bcc' => $this->text(),
+                'listSettings' => $this->text(),
+                'fromName' => $this->string(),
+                'fromEmail' => $this->string(),
+                'replyToEmail' => $this->string(),
+                'sendMethod' => $this->string(),
+                'enableFileAttachments' => $this->boolean(),
+                'dateCreated' => $this->dateTime(),
+                'dateUpdated' => $this->dateTime(),
+                'fieldLayoutId' => $this->integer(),
+                'uid' => $this->uid()
+            ]);
 
-        if (!$this->getDb()->tableExists($notificationTableName)) {
-            $this->createTable($notificationTableName,
-                [
-                    'id' => $this->primaryKey(),
-                    'titleFormat' => $this->string(),
-                    'emailTemplateId' => $this->string(),
-                    'eventId' => $this->string(),
-                    'settings' => $this->text(),
-                    'sendRule' => $this->text(),
-                    'subjectLine' => $this->string()->notNull(),
-                    'defaultBody' => $this->text(),
-                    'recipients' => $this->text(),
-                    'cc' => $this->text(),
-                    'bcc' => $this->text(),
-                    'listSettings' => $this->text(),
-                    'fromName' => $this->string(),
-                    'fromEmail' => $this->string(),
-                    'replyToEmail' => $this->string(),
-                    'sendMethod' => $this->string(),
-                    'enableFileAttachments' => $this->boolean(),
-                    'dateCreated' => $this->dateTime(),
-                    'dateUpdated' => $this->dateTime(),
-                    'fieldLayoutId' => $this->integer(),
-                    'uid' => $this->uid()
-                ]
-            );
-
-            $this->addForeignKey(null, $notificationTableName, ['id'], Table::ELEMENTS, ['id'], 'CASCADE');
+            $this->addForeignKey(null, NotificationEmailRecord::tableName(), ['id'], Table::ELEMENTS, ['id'], 'CASCADE');
         }
-
-        $this->insertDefaultSettings();
     }
 
     public function safeDown()
@@ -61,42 +51,5 @@ class Install extends Migration
         $this->delete(Table::ELEMENTS, ['type' => NotificationEmail::class]);
 
         $this->dropTableIfExists(NotificationEmailRecord::tableName());
-        $this->removeSharedSettings();
-    }
-
-    public function insertDefaultSettings()
-    {
-        $settingsRow = (new Query())
-            ->select(['*'])
-            ->from([SproutBaseSettingsRecord::tableName()])
-            ->where(['model' => SproutBaseEmailSettings::class])
-            ->one();
-
-        if ($settingsRow === null) {
-
-            $settings = new SproutBaseEmailSettings();
-
-            $settingsArray = [
-                'model' => SproutBaseEmailSettings::class,
-                'settings' => json_encode($settings->toArray())
-            ];
-
-            $this->insert(SproutBaseSettingsRecord::tableName(), $settingsArray);
-        }
-    }
-
-    public function removeSharedSettings()
-    {
-        $settingsExist = (new Query())
-            ->select(['*'])
-            ->from([SproutBaseSettingsRecord::tableName()])
-            ->where(['model' => SproutBaseEmailSettings::class])
-            ->exists();
-
-        if ($settingsExist) {
-            $this->delete(SproutBaseSettingsRecord::tableName(), [
-                'model' => SproutBaseEmailSettings::class
-            ]);
-        }
     }
 }

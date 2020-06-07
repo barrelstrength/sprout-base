@@ -14,6 +14,11 @@ use craft\errors\SiteNotFoundException;
 class SitemapsSettings extends Settings
 {
     /**
+     * @var string
+     */
+    public $displayName = '';
+
+    /**
      * @var bool
      */
     public $enableCustomSections = false;

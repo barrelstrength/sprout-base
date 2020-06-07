@@ -19,23 +19,6 @@ use yii\base\Exception;
 use yii\web\BadRequestHttpException;
 use yii\web\Response;
 
-/**
- * Manage plugin settings from a custom plugin settings area on the Plugin tab
- *
- * Using the Sprout Base settings controller requires:
- *
- * 1. Adding two routes to a plugin:
- * 'sprout-seo/settings' => 'sprout/settings/edit-settings',
- * 'sprout-seo/settings/<settingsSectionHandle:.*>' => 'sprout/settings/edit-settings'
- *
- * 2. Submitting your settings form to Sprout Base
- * <input type="hidden" name="action" value="sprout/settings/save-settings">
- *
- * 3. Ensuring all settings are included in a settings array of the submitted form
- * <input type="text" name="settings[pluginNameOverride]" value="">
- *
- * 4. Defining all settings in the pluginname/models/Settings.php file
- */
 class SettingsController extends Controller
 {
     const SETTINGS_TARGET_PROJECT_CONFIG = 'project-config';

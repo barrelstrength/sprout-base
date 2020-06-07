@@ -40,7 +40,7 @@ return [
     'Redirects' => 'Redirects',
     'Navigation' => 'Navigation',
     'View Reports' => 'View Reports',
-    'Intuitive, human-readable plugin name for the end user. This alternate name will appear in place of the default plugin name in the sidebar navigation and breadcrumbs.' => 'Intuitive, human-readable plugin name for the end user. This alternate name will appear in place of the default plugin name in the sidebar navigation and breadcrumbs.',
+    'Intuitive, human-readable name used in Control Panel navigation and breadcrumbs. This alternate name will appear in place of the default plugin name in the sidebar navigation and breadcrumbs.' => 'Intuitive, human-readable name used in Control Panel navigation and breadcrumbs. This alternate name will appear in place of the default plugin name in the sidebar navigation and breadcrumbs.',
     'Sprout Settings' => 'Sprout Settings',
     'Reports' => 'Reports',
     'Campaigns' => 'Campaigns',

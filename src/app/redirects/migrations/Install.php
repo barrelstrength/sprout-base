@@ -17,91 +17,13 @@ use craft\models\Structure;
 use Throwable;
 use yii\base\Exception;
 
-/**
- *
- * @property SproutRedirectsSettings $sproutRedirectsSettingsModel
- * @property null|int                $structureId
- */
 class Install extends Migration
 {
-    /**
-     * @var string The database driver to use
-     */
-    public $driver;
-
     /**
      * @return bool
      * @throws Throwable
      */
     public function safeUp(): bool
-    {
-        $this->createTables();
-        $this->insertDefaultSettings();
-
-        return true;
-    }
-
-    /**
-     * @return bool
-     */
-    public function safeDown(): bool
-    {
-        // Delete Redirect Elements
-        $this->delete(Table::ELEMENTS, ['type' => Redirect::class]);
-
-        // Delete Redirect Table
-        $this->dropTableIfExists(RedirectRecord::tableName());
-
-        // Delete Redirect Settings
-        $this->removeSharedSettings();
-
-        return true;
-    }
-
-    /**
-     * @throws StructureNotFoundException
-     * @throws Exception
-     */
-    public function insertDefaultSettings()
-    {
-        $settingsRow = (new Query())
-            ->select(['*'])
-            ->from([SproutBaseSettingsRecord::tableName()])
-            ->where(['model' => SproutRedirectsSettings::class])
-            ->one();
-
-        if ($settingsRow === null) {
-
-            $settings = new SproutRedirectsSettings();
-            $settings->structureId = $this->createStructureId();
-
-            $settingsArray = [
-                'model' => SproutRedirectsSettings::class,
-                'settings' => json_encode($settings->toArray())
-            ];
-
-            $this->insert(SproutBaseSettingsRecord::tableName(), $settingsArray);
-        }
-    }
-
-    public function removeSharedSettings()
-    {
-        $settingsExist = (new Query())
-            ->select(['*'])
-            ->from([SproutBaseSettingsRecord::tableName()])
-            ->where(['model' => SproutRedirectsSettings::class])
-            ->exists();
-
-        if ($settingsExist) {
-            $this->delete(SproutBaseSettingsRecord::tableName(), [
-                'model' => SproutRedirectsSettings::class
-            ]);
-        }
-    }
-
-    /**
-     */
-    protected function createTables()
     {
         if (!$this->db->tableExists(RedirectRecord::tableName())) {
             $this->createTable(RedirectRecord::tableName(), [
@@ -120,37 +42,21 @@ class Install extends Migration
                 'uid' => $this->uid(),
             ]);
 
-            $this->createIndexes();
-            $this->addForeignKeys();
+            $this->createIndex(null, RedirectRecord::tableName(), 'id');
+
+            $this->addForeignKey(null, RedirectRecord::tableName(), 'id', Table::ELEMENTS, 'id', 'CASCADE');
         }
     }
 
-    protected function createIndexes()
-    {
-        $this->createIndex(null, RedirectRecord::tableName(), 'id');
-    }
-
-    protected function addForeignKeys()
-    {
-        $this->addForeignKey(
-            null,
-            RedirectRecord::tableName(), 'id',
-            Table::ELEMENTS, 'id', 'CASCADE'
-        );
-    }
-
     /**
-     * @return int|null
-     * @throws StructureNotFoundException
+     * @return bool
      */
-    private function createStructureId()
+    public function safeDown(): bool
     {
-        $maxLevels = 1;
-        $structure = new Structure();
-        $structure->maxLevels = $maxLevels;
-        Craft::$app->structures->saveStructure($structure);
+        // Delete Redirect Elements
+        $this->delete(Table::ELEMENTS, ['type' => Redirect::class]);
 
-        return $structure->id;
+        // Delete Redirect Table
+        $this->dropTableIfExists(RedirectRecord::tableName());
     }
-
 }

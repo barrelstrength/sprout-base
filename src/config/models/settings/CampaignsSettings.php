@@ -15,7 +15,7 @@ class CampaignsSettings extends Settings
     /**
      * @var string
      */
-    public $pluginNameOverride = '';
+    public $displayName = '';
 
     /**
      * @var bool
@@ -23,7 +23,7 @@ class CampaignsSettings extends Settings
     public $enableCampaignEmails = false;
 
     /**
-     * @var null
+     * @var int
      */
     public $emailTemplateId;
 

@@ -12,16 +12,16 @@
 {% set isProBadge = not isPro ? ' <span class="sprout-pro">PRO</span>' : '' %}
 
 {{ forms.textField({
-    label: "Plugin Name"|t('sprout'),
-    instructions: "Intuitive, human-readable plugin name for the end user."|t('sprout'),
-    id: 'pluginNameOverride',
-    name: 'pluginNameOverride',
-    value: settings.pluginNameOverride,
+    label: "Display Name"|t('sprout'),
+    instructions: "Intuitive, human-readable name used in Control Panel navigation and breadcrumbs."|t('sprout'),
+    id: 'displayName',
+    name: 'displayName',
+    value: settings.displayName,
     placeholder: 'Sprout SEO',
     autofocus: true,
     first: true,
     errors: '',
-    warning: config.pluginNameOverride is defined ? configWarning('pluginNameOverride')
+    warning: config.displayName is defined ? configWarning('displayName')
 }) }}
 
 {{ forms.textField({

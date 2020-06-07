@@ -12,9 +12,6 @@ use craft\db\Migration;
 
 class Install extends Migration
 {
-    /**
-     * @inheritdoc
-     */
     public function safeUp()
     {
         if (!$this->getDb()->tableExists(AddressRecord::tableName())) {

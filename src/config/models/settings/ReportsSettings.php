@@ -15,7 +15,7 @@ class ReportsSettings extends Settings
     /**
      * @var string
      */
-    public $pluginNameOverride = '';
+    public $displayName = '';
 
     /**
      * @var string

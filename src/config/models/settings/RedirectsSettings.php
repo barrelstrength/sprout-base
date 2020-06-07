@@ -9,13 +9,15 @@ namespace barrelstrength\sproutbase\config\models\settings;
 
 use barrelstrength\sproutbase\config\base\Settings;
 use Craft;
+use craft\errors\StructureNotFoundException;
+use craft\models\Structure;
 
 class RedirectsSettings extends Settings
 {
     /**
      * @var string
      */
-    public $pluginNameOverride = '';
+    public $displayName = '';
 
     /**
      * @var string
@@ -76,6 +78,29 @@ class RedirectsSettings extends Settings
                 ]
             ]
         ];
+    }
+
+    /**
+     * @return void|null
+     * @throws StructureNotFoundException
+     */
+    public function beforeAddDefaultSettings()
+    {
+        $this->structureId = $this->createStructureId();
+    }
+
+    /**
+     * @return int|null
+     * @throws StructureNotFoundException
+     */
+    private function createStructureId()
+    {
+        $maxLevels = 1;
+        $structure = new Structure();
+        $structure->maxLevels = $maxLevels;
+        Craft::$app->structures->saveStructure($structure);
+
+        return $structure->id;
     }
 }
 

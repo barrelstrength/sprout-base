@@ -34,7 +34,7 @@ return [
     'Name <span class=\'info\'>The field label displayed to your users.</span>' => 'Name <span class=\'info\'>The field label displayed to your users.</span>',
     'Add an integration using the dropdown below.' => 'Add an integration using the dropdown below.',
     'Default Country' => 'Default Country',
-    'Intuitive, human-readable plugin name for the end user.' => 'Intuitive, human-readable plugin name for the end user.',
+    'Intuitive, human-readable name used in Control Panel navigation and breadcrumbs.' => 'Intuitive, human-readable name used in Control Panel navigation and breadcrumbs.',
     'Value to set when the field is saved/sent. Craft Object Syntax is supported.' => 'Value to set when the field is saved/sent. Craft Object Syntax is supported.',
     'When the rules above are true, show or hide this field.' => 'When the rules above are true, show or hide this field.',
     'Add a form' => 'Add a form',

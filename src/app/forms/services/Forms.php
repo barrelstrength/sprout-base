@@ -14,7 +14,6 @@ use barrelstrength\sproutbase\app\forms\elements\Form as FormElement;
 use barrelstrength\sproutbase\app\forms\errors\FormTemplatesDirectoryNotFoundException;
 use barrelstrength\sproutbase\app\forms\formtemplates\AccessibleTemplates;
 use barrelstrength\sproutbase\app\forms\formtemplates\CustomTemplates;
-use barrelstrength\sproutbase\app\forms\migrations\CreateFormContentTable;
 use barrelstrength\sproutbase\app\forms\records\Form as FormRecord;
 use barrelstrength\sproutbase\app\forms\records\Integration as IntegrationRecord;
 use barrelstrength\sproutbase\app\forms\rules\FieldRule;
@@ -31,14 +30,6 @@ use yii\base\Component;
 use yii\base\Exception;
 use yii\base\InvalidConfigException;
 
-/**
- *
- * @property array   $allEnabledCaptchas
- * @property array   $allCaptchas
- * @property array   $allFormTemplateTypes
- * @property array[] $allFormTemplates
- * @property array[] $allCaptchaTypes
- */
 class Forms extends Component
 {
     const EVENT_REGISTER_CAPTCHAS = 'registerSproutFormsCaptchas';

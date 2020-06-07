@@ -7,9 +7,12 @@
 
 namespace barrelstrength\sproutbase\config\models\settings;
 
-use barrelstrength\sproutbase\config\base\Settings;
+use barrelstrength\sproutbase\app\forms\captchas\DuplicateCaptcha;
+use barrelstrength\sproutbase\app\forms\captchas\HoneypotCaptcha;
+use barrelstrength\sproutbase\app\forms\captchas\JavascriptCaptcha;
 use barrelstrength\sproutbase\app\forms\formtemplates\AccessibleTemplates;
 use barrelstrength\sproutbase\app\forms\SproutForms;
+use barrelstrength\sproutbase\config\base\Settings;
 use barrelstrength\sproutbase\SproutBase;
 use Craft;
 
@@ -18,7 +21,7 @@ class FormsSettings extends Settings
     const SPAM_REDIRECT_BEHAVIOR_NORMAL = 'redirectAsNormal';
     const SPAM_REDIRECT_BEHAVIOR_BACK_TO_FORM = 'redirectBackToForm';
 
-    public $pluginNameOverride = '';
+    public $displayName = '';
 
     public $defaultSection = 'entries';
 
@@ -104,5 +107,22 @@ class FormsSettings extends Settings
 //
 //        return $rules;
 //    }
+
+    public function beforeAddDefaultSettings()
+    {
+        $this->captchaSettings = [
+            DuplicateCaptcha::class => [
+                'enabled' => 0
+            ],
+            JavascriptCaptcha::class => [
+                'enabled' => 1
+            ],
+            HoneypotCaptcha::class => [
+                'enabled' => 0,
+                'honeypotFieldName' => 'sprout-forms-hc',
+                'honeypotScreenReaderMessage' => 'Leave this field blank'
+            ],
+        ];
+    }
 }
 
