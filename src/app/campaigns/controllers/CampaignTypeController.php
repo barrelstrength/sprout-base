@@ -105,7 +105,7 @@ class CampaignTypeController extends Controller
 
         Craft::$app->getSession()->setNotice(Craft::t('sprout', 'Campaign saved.'));
 
-        $url = UrlHelper::cpUrl('sprout/settings/campaigns/campaigntypes/edit/'.$campaignType->id);
+        $url = UrlHelper::cpUrl('sprout/settings/campaigns/campaign-types/edit/'.$campaignType->id);
 
         return $this->redirect($url);
     }
