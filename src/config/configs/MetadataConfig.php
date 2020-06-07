@@ -25,7 +25,7 @@ class MetadataConfig extends Config
             'url' => 'sprout/metadata/globals',
             'icon' => '@sproutbaseicons/plugins/seo/icon-mask.svg',
             'subnav' => [
-                'reports' => [
+                'globals' => [
                     'label' => Craft::t('sprout', 'Globals'),
                     'url' => 'sprout/metadata/globals'
                 ]
