@@ -13,11 +13,6 @@ use Craft;
 class SentEmailSettings extends Settings
 {
     /**
-     * @var string
-     */
-    public $pluginNameOverride = '';
-
-    /**
      * @var bool
      */
     public $enableSentEmails = false;
