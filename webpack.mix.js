@@ -18,7 +18,7 @@ mix
     'src/config/web/assets/landing/dist/css/landing.css')
   .js([
     'src/config/web/assets/groups/src/js/groups.js'
-  ], 'src/web/assets/groups/dist/js/groups.js')
+  ], 'src/config/web/assets/groups/dist/js/groups.js')
   .copy('src/config/web/assets/cp/src/images',
     'src/config/web/assets/cp/dist/images');
 

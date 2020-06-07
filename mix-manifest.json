@@ -18,7 +18,7 @@
     "/src/app/redirects/web/assets/redirects/dist/js/redirectindex.js": "/src/app/redirects/web/assets/redirects/dist/js/redirectindex.js",
     "/src/app/reports/web/assets/reports/dist/js/reports.js": "/src/app/reports/web/assets/reports/dist/js/reports.js",
     "/src/app/sitemaps/web/assets/sitemaps/dist/js/sitemaps.js": "/src/app/sitemaps/web/assets/sitemaps/dist/js/sitemaps.js",
-    "/src/web/assets/groups/dist/js/groups.js": "/src/web/assets/groups/dist/js/groups.js",
+    "/src/config/web/assets/groups/dist/js/groups.js": "/src/config/web/assets/groups/dist/js/groups.js",
     "/src/config/web/assets/cp/dist/css/sproutcp.css": "/src/config/web/assets/cp/dist/css/sproutcp.css",
     "/src/config/web/assets/landing/dist/css/landing.css": "/src/config/web/assets/landing/dist/css/landing.css",
     "/src/app/fields/web/assets/address/dist/css/addressfield.css": "/src/app/fields/web/assets/address/dist/css/addressfield.css",
