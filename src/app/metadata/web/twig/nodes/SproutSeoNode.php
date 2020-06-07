@@ -7,7 +7,7 @@
 
 namespace barrelstrength\sproutbase\app\metadata\web\twig\nodes;
 
-use barrelstrength\sproutbase\app\metadata\SproutSeo;
+use barrelstrength\sproutbase\SproutBase;
 use Twig\Compiler;
 use Twig\Node\Node as TwigNode;
 
@@ -25,7 +25,7 @@ class SproutSeoNode extends TwigNode
         if ($action == 'optimize') {
             $compiler
                 ->addDebugInfo($this)
-                ->write('echo '.SproutSeo::class."::\$app->optimize->getMetadataViaContext(\$context);\n\n");
+                ->write('echo '.SproutBase::class."::\$app->optimize->getMetadataViaContext(\$context);\n\n");
         }
     }
 }

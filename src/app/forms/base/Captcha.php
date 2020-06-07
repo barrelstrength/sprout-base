@@ -7,11 +7,10 @@
 
 namespace barrelstrength\sproutbase\app\forms\base;
 
-use barrelstrength\sproutbase\SproutBase;
 use barrelstrength\sproutbase\app\forms\elements\Form;
 use barrelstrength\sproutbase\app\forms\events\OnBeforeValidateEntryEvent;
+use barrelstrength\sproutbase\SproutBase;
 use craft\base\Model;
-use ReflectionException;
 
 /**
  * Class Captcha
@@ -66,7 +65,6 @@ abstract class Captcha extends Model
      * Returns any values saved as settings for this captcha
      *
      * @return array|null
-     * @throws ReflectionException
      */
     public function getSettings()
     {

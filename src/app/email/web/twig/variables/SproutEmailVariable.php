@@ -9,7 +9,6 @@ use barrelstrength\sproutbase\app\sentemail\elements\SentEmail;
 use barrelstrength\sproutbase\SproutBase;
 use Craft;
 use craft\helpers\UrlHelper;
-use ReflectionException;
 use yii\base\Exception;
 
 class SproutEmailVariable
@@ -52,7 +51,6 @@ class SproutEmailVariable
      * @param null $notificationEmail
      *
      * @return array
-     * @throws ReflectionException
      */
     public function getEmailTemplateOptions($notificationEmail = null): array
     {

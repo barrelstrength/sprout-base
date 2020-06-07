@@ -7,12 +7,12 @@
 
 namespace barrelstrength\sproutbase\app\forms\integrations\sproutreports\datasources;
 
-use barrelstrength\sproutbase\app\reports\base\DataSource;
-use barrelstrength\sproutbase\app\reports\elements\Report;
 use barrelstrength\sproutbase\app\forms\elements\Form;
 use barrelstrength\sproutbase\app\forms\records\EntriesSpamLog as EntriesSpamLogRecord;
 use barrelstrength\sproutbase\app\forms\records\Entry as EntryRecord;
 use barrelstrength\sproutbase\app\forms\records\Form as FormRecord;
+use barrelstrength\sproutbase\app\reports\base\DataSource;
+use barrelstrength\sproutbase\app\reports\elements\Report;
 use barrelstrength\sproutbase\SproutBase;
 use Craft;
 use craft\db\Query;

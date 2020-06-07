@@ -50,8 +50,11 @@ class Name extends Field implements PreviewableFieldInterface
     }
 
     /**
-     * @inheritdoc
-     *\
+     * @return string|null
+     * @throws Exception
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
      */
     public function getSettingsHtml()
     {

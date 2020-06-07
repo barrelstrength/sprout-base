@@ -14,14 +14,17 @@ use barrelstrength\sproutbase\app\forms\elements\Form as FormElement;
 use barrelstrength\sproutbase\app\forms\errors\FormTemplatesDirectoryNotFoundException;
 use barrelstrength\sproutbase\app\forms\formtemplates\AccessibleTemplates;
 use barrelstrength\sproutbase\app\forms\formtemplates\CustomTemplates;
+use barrelstrength\sproutbase\app\forms\migrations\CreateFormContentTable;
 use barrelstrength\sproutbase\app\forms\records\Form as FormRecord;
 use barrelstrength\sproutbase\app\forms\records\Integration as IntegrationRecord;
 use barrelstrength\sproutbase\app\forms\rules\FieldRule;
 use barrelstrength\sproutbase\SproutBase;
+use barrelstrength\sproutforms\SproutForms;
 use Craft;
 use craft\base\ElementInterface;
 use craft\base\Field;
 use craft\db\Query;
+use craft\errors\MissingComponentException;
 use craft\events\RegisterComponentTypesEvent;
 use craft\helpers\MigrationHelper;
 use craft\helpers\StringHelper;
@@ -30,6 +33,14 @@ use yii\base\Component;
 use yii\base\Exception;
 use yii\base\InvalidConfigException;
 
+/**
+ *
+ * @property array   $allEnabledCaptchas
+ * @property array   $allCaptchas
+ * @property array   $allFormTemplateTypes
+ * @property array[] $allFormTemplates
+ * @property array[] $allCaptchaTypes
+ */
 class Forms extends Component
 {
     const EVENT_REGISTER_CAPTCHAS = 'registerSproutFormsCaptchas';
@@ -462,10 +473,12 @@ class Forms extends Component
     /**
      * IF a field is deleted remove it from the rules
      *
-     * @param string      $oldHandle
-     * @param string      $newHandle
-     * @param FormElement $form
+     * @param $oldHandle
+     * @param $newHandle
+     * @param $form
      *
+     * @throws InvalidConfigException
+     * @throws MissingComponentException
      */
     public function updateFieldOnFieldRules($oldHandle, $newHandle, $form)
     {
@@ -496,10 +509,12 @@ class Forms extends Component
     /**
      * IF a field is updated, update the integrations
      *
-     * @param string      $oldHandle
-     * @param string      $newHandle
-     * @param FormElement $form
+     * @param $oldHandle
+     * @param $newHandle
+     * @param $form
      *
+     * @throws InvalidConfigException
+     * @throws MissingComponentException
      */
     public function updateFieldOnIntegrations($oldHandle, $newHandle, $form)
     {
@@ -793,7 +808,7 @@ class Forms extends Component
     /**
      * Returns all available Captcha classes
      *
-     * @return array[]
+     * @return array
      */
     public function getAllCaptchaTypes(): array
     {
@@ -881,7 +896,7 @@ class Forms extends Component
      */
     public function canCreateForm(): bool
     {
-        $isPro = SproutBase::$app->config->isEdition('sprout-forms', \barrelstrength\sproutforms\SproutForms::EDITION_PRO);
+        $isPro = SproutBase::$app->config->isEdition('sprout-forms', SproutForms::EDITION_PRO);
 
         if (!$isPro) {
             $forms = $this->getAllForms();

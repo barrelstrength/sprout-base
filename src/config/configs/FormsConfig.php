@@ -20,11 +20,11 @@ class FormsConfig extends Config
         return new FormsSettings();
     }
 
-//    public function createInstallMigration()
-//    {
-//        return new Install();
-//    }
-//
+    public function createInstallMigration()
+    {
+        return new Install();
+    }
+
     public function getCpNavItem(): array
     {
         return [

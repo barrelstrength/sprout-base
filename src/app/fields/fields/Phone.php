@@ -14,6 +14,10 @@ use craft\base\Element;
 use craft\base\ElementInterface;
 use craft\base\Field;
 use craft\base\PreviewableFieldInterface;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Error\SyntaxError;
+use yii\base\Exception;
 
 /**
  *
@@ -84,8 +88,11 @@ class Phone extends Field implements PreviewableFieldInterface
     }
 
     /**
-     * @inheritdoc
-     *
+     * @return string|null
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
+     * @throws Exception
      */
     public function getSettingsHtml()
     {
@@ -93,12 +100,14 @@ class Phone extends Field implements PreviewableFieldInterface
     }
 
     /**
-     * @inheritdoc
-     *
-     * @param                       $value
+     * @param mixed                 $value
      * @param ElementInterface|null $element
      *
      * @return string
+     * @throws Exception
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
      */
     public function getInputHtml($value, ElementInterface $element = null): string
     {

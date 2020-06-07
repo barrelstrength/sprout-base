@@ -9,9 +9,9 @@ namespace barrelstrength\sproutbase\app\metadata\fields;
 
 use barrelstrength\sproutbase\app\fields\web\assets\selectother\SelectOtherFieldAsset;
 use barrelstrength\sproutbase\app\metadata\models\Metadata;
-use barrelstrength\sproutbase\app\metadata\SproutSeo;
 use barrelstrength\sproutbase\app\metadata\web\assets\seo\SproutSeoAsset;
 use barrelstrength\sproutbase\app\metadata\web\assets\tageditor\TagEditorAsset;
+use barrelstrength\sproutbase\config\base\Config;
 use barrelstrength\sproutbase\SproutBase;
 use Craft;
 use craft\base\Element;
@@ -151,7 +151,6 @@ class ElementMetadata extends Field
      *
      * @return array|mixed|string|null
      * @throws Exception
-     * @throws InvalidConfigException
      * @throws Throwable
      */
     public function serializeValue($value, ElementInterface $element = null)
@@ -182,7 +181,7 @@ class ElementMetadata extends Field
         Craft::$app->getView()->registerAssetBundle(SproutSeoAsset::class);
         Craft::$app->getView()->registerAssetBundle(SelectOtherFieldAsset::class);
 
-        $isPro = SproutBase::$app->config->isEdition('sprout-seo', SproutSeo::EDITION_PRO);
+        $isPro = SproutBase::$app->config->isEdition('sprout-seo', Config::EDITION_PRO);
 
         return Craft::$app->view->renderTemplate('sprout-base-metadata/_components/fields/elementmetadata/settings', [
             'fieldId' => $this->id,
@@ -242,7 +241,7 @@ class ElementMetadata extends Field
      */
     public function defineRules(): array
     {
-        $isPro = SproutBase::$app->config->isEdition('sprout-seo', SproutSeo::EDITION_PRO);
+        $isPro = SproutBase::$app->config->isEdition('sprout-seo', Config::EDITION_PRO);
         $metadataFieldCount = (int)SproutBase::$app->elementMetadata->getMetadataFieldCount();
 
         $theFirstMetadataField = !$this->id && $metadataFieldCount === 0;
@@ -305,6 +304,7 @@ class ElementMetadata extends Field
     /**
      * @param bool $isNew
      *
+     * @throws SiteNotFoundException
      */
     public function afterSave(bool $isNew)
     {

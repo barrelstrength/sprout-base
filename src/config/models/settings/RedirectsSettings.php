@@ -12,6 +12,10 @@ use Craft;
 use craft\errors\StructureNotFoundException;
 use craft\models\Structure;
 
+/**
+ *
+ * @property array $settingsNavItem
+ */
 class RedirectsSettings extends Settings
 {
     /**

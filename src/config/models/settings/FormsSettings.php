@@ -11,11 +11,15 @@ use barrelstrength\sproutbase\app\forms\captchas\DuplicateCaptcha;
 use barrelstrength\sproutbase\app\forms\captchas\HoneypotCaptcha;
 use barrelstrength\sproutbase\app\forms\captchas\JavascriptCaptcha;
 use barrelstrength\sproutbase\app\forms\formtemplates\AccessibleTemplates;
-use barrelstrength\sproutbase\app\forms\SproutForms;
 use barrelstrength\sproutbase\config\base\Settings;
 use barrelstrength\sproutbase\SproutBase;
 use Craft;
 
+/**
+ *
+ * @property array            $settingsNavItem
+ * @property array|string[][] $spamRedirectBehaviorsAsOptions
+ */
 class FormsSettings extends Settings
 {
     const SPAM_REDIRECT_BEHAVIOR_NORMAL = 'redirectAsNormal';

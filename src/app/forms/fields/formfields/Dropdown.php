@@ -119,10 +119,7 @@ class Dropdown extends CraftDropdownField
         ];
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function getCompatibleConditions()
+    public function getCompatibleConditions(): array
     {
         return [
             new IsCondition(),

@@ -15,7 +15,6 @@ use barrelstrength\sproutbase\SproutBase;
 use Craft;
 use craft\base\Element;
 use craft\elements\db\ElementQueryInterface;
-use craft\errors\MissingComponentException;
 use craft\helpers\Json;
 use craft\helpers\UrlHelper;
 use craft\validators\HandleValidator;
@@ -30,6 +29,12 @@ use Twig\Error\SyntaxError;
 use yii\base\InvalidConfigException;
 use yii\web\NotFoundHttpException;
 
+/**
+ *
+ * @property string          $resultsError
+ * @property DataSource|null $dataSource
+ * @property mixed           $startEndDate
+ */
 class Report extends Element
 {
     const DELIMITER_COMMA = ',';
@@ -328,7 +333,6 @@ class Report extends Element
      * @param string $attribute
      *
      * @return string
-     * @throws MissingComponentException
      */
     public function getTableAttributeHtml(string $attribute): string
     {

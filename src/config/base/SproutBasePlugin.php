@@ -12,10 +12,16 @@ use craft\events\RegisterUrlRulesEvent;
 use craft\web\UrlManager;
 use yii\base\Event;
 
-abstract class SproutCentralPlugin extends Plugin
+/**
+ *
+ * @property array             $cpUrlRules
+ * @property ConfigInterface[] $sproutConfigs
+ * @property array             $siteUrlRules
+ */
+abstract class SproutBasePlugin extends Plugin
 {
     /**
-     * Events that need to call SproutCentralPlugin::getSproutConfigs()
+     * Events that need to call SproutBasePlugin::getSproutConfigs()
      * before all plugins are loaded should be added here
      */
     public function init()
@@ -28,6 +34,7 @@ abstract class SproutCentralPlugin extends Plugin
             $event->rules = array_merge($event->rules, $this->getSiteUrlRules());
         });
     }
+
     /**
      * Implement this interface on all plugins so
      * we can easily sort out all Sprout plugins

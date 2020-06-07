@@ -18,11 +18,9 @@ use craft\db\Query;
 use craft\errors\SiteNotFoundException;
 use craft\events\FieldLayoutEvent;
 use craft\models\FieldLayout;
-use ReflectionException;
 use Throwable;
 use yii\base\Component;
 use yii\base\Exception;
-use yii\base\InvalidConfigException;
 
 /**
  *
@@ -288,7 +286,6 @@ class ElementMetadata extends Component
 
     /**
      * @return int
-     * @throws ReflectionException
      */
     public function getDescriptionLength(): int
     {

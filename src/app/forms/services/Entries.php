@@ -7,8 +7,6 @@
 
 namespace barrelstrength\sproutbase\app\forms\services;
 
-use barrelstrength\sproutbase\helpers\jobs\PurgeElements;
-use barrelstrength\sproutbase\SproutBase;
 use barrelstrength\sproutbase\app\forms\base\Captcha;
 use barrelstrength\sproutbase\app\forms\elements\Entry;
 use barrelstrength\sproutbase\app\forms\elements\Entry as EntryElement;
@@ -19,6 +17,8 @@ use barrelstrength\sproutbase\app\forms\jobs\ResaveEntries;
 use barrelstrength\sproutbase\app\forms\models\EntryStatus;
 use barrelstrength\sproutbase\app\forms\records\EntriesSpamLog as EntriesSpamLogRecord;
 use barrelstrength\sproutbase\app\forms\records\Entry as EntryRecord;
+use barrelstrength\sproutbase\helpers\jobs\PurgeElements;
+use barrelstrength\sproutbase\SproutBase;
 use Craft;
 use craft\helpers\Json;
 use Throwable;

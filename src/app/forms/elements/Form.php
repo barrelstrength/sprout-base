@@ -86,26 +86,16 @@ class Form extends Element
 
     private $_fields;
 
-
-    /**
-     * @inheritdoc
-     */
     public static function displayName(): string
     {
         return Craft::t('sprout', 'Form');
     }
 
-    /**
-     * @return string
-     */
     public static function pluralDisplayName(): string
     {
         return Craft::t('sprout', 'Forms');
     }
 
-    /**
-     * @inheritdoc
-     */
     public static function refHandle()
     {
         return 'form';
@@ -121,9 +111,6 @@ class Form extends Element
         return new FormQuery(static::class);
     }
 
-    /**
-     * @inheritdoc
-     */
     protected static function defineSources(string $context = null): array
     {
         $sources = [
@@ -149,9 +136,6 @@ class Form extends Element
         return $sources;
     }
 
-    /**
-     * @inheritdoc
-     */
     protected static function defineActions(string $source = null): array
     {
         $actions = [];
@@ -164,9 +148,6 @@ class Form extends Element
         return $actions;
     }
 
-    /**
-     * @inheritdoc
-     */
     protected static function defineSearchableAttributes(): array
     {
         return ['name', 'handle'];
@@ -186,9 +167,6 @@ class Form extends Element
         return $attributes;
     }
 
-    /**
-     * @inheritdoc
-     */
     protected static function defineTableAttributes(): array
     {
         $attributes['name'] = ['label' => Craft::t('sprout', 'Name')];
@@ -205,10 +183,7 @@ class Form extends Element
         return ['name', 'handle', 'numberOfFields', 'totalEntries', 'formSettings'];
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function behaviors()
+    public function behaviors(): array
     {
         return array_merge(parent::behaviors(), [
             'fieldLayout' => [
@@ -328,6 +303,7 @@ class Form extends Element
         if ($this->_fields === null) {
             $this->_fields = [];
 
+            /** @var FormField[] $fields */
             $fields = $this->getFieldLayout()->getFields();
 
             foreach ($fields as $field) {
@@ -358,7 +334,8 @@ class Form extends Element
     /**
      * @param null $cssClasses
      *
-     * @return array
+     * @return array|array[]
+     * @throws FormTemplatesDirectoryNotFoundException
      */
     public function getClassesOptions($cssClasses = null): array
     {

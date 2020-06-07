@@ -12,7 +12,6 @@ use barrelstrength\sproutbase\config\base\Config;
 use barrelstrength\sproutbase\config\models\settings\SitemapsSettings;
 use barrelstrength\sproutbase\SproutBase;
 use Craft;
-use ReflectionException;
 
 class SitemapsConfig extends Config
 {
@@ -78,7 +77,6 @@ class SitemapsConfig extends Config
      * - sitemap-custom-pages.xml
      *
      * @return array
-     * @throws ReflectionException
      */
     public function getSiteUrlRules(): array
     {

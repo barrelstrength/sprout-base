@@ -11,7 +11,7 @@ use barrelstrength\sproutbase\app\fields\models\Address;
 use barrelstrength\sproutbase\app\fields\models\Address as AddressModel;
 use barrelstrength\sproutbase\app\fields\services\AddressFormatter;
 use barrelstrength\sproutbase\app\metadata\models\Globals;
-use barrelstrength\sproutbase\app\metadata\SproutSeo;
+use barrelstrength\sproutbase\config\base\Config;
 use barrelstrength\sproutbase\SproutBase;
 use Craft;
 use craft\errors\SiteNotFoundException;
@@ -19,7 +19,6 @@ use craft\helpers\DateTimeHelper;
 use craft\helpers\Json;
 use craft\helpers\Template;
 use craft\web\Controller;
-use ReflectionException;
 use Throwable;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
@@ -47,7 +46,6 @@ class GlobalMetadataController extends Controller
      * @throws SyntaxError
      * @throws SiteNotFoundException
      * @throws Exception
-     * @throws ReflectionException
      */
     public function actionEditGlobalMetadata(string $selectedTabHandle, string $siteHandle = null, Globals $globals = null): Response
     {
@@ -104,7 +102,7 @@ class GlobalMetadataController extends Controller
         $countryInputHtml = $addressFormatter->getCountryInputHtml();
         $addressFormHtml = $addressFormatter->getAddressFormHtml();
 
-        $isPro = SproutBase::$app->config->isEdition('sprout-seo', SproutSeo::EDITION_PRO);
+        $isPro = SproutBase::$app->config->isEdition('sprout-seo', Config::EDITION_PRO);
 
         $addressJson = $address ? Json::encode($address) : null;
 

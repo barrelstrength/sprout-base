@@ -12,7 +12,6 @@ use barrelstrength\sproutbase\app\reports\elements\Report;
 use barrelstrength\sproutbase\SproutBase;
 use Craft;
 use craft\base\Widget;
-use craft\errors\MissingComponentException;
 use craft\helpers\UrlHelper;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
@@ -87,7 +86,6 @@ class Visualization extends Widget
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
-     * @throws MissingComponentException
      */
     public function getBodyHtml()
     {

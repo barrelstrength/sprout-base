@@ -7,7 +7,6 @@
 
 namespace barrelstrength\sproutbase\app\forms\web\twig\variables;
 
-use barrelstrength\sproutbase\SproutBase;
 use barrelstrength\sproutbase\app\forms\base\Condition;
 use barrelstrength\sproutbase\app\forms\base\FormField;
 use barrelstrength\sproutbase\app\forms\elements\db\EntryQuery;
@@ -16,8 +15,10 @@ use barrelstrength\sproutbase\app\forms\elements\Entry as EntryElement;
 use barrelstrength\sproutbase\app\forms\elements\Form;
 use barrelstrength\sproutbase\app\forms\formtemplates\AccessibleTemplates;
 use barrelstrength\sproutbase\app\forms\services\Forms;
+use barrelstrength\sproutbase\SproutBase;
 use Craft;
 use craft\base\ElementInterface;
+use craft\errors\ElementNotFoundException;
 use craft\errors\MissingComponentException;
 use craft\helpers\Template as TemplateHelper;
 use ReflectionException;
@@ -34,28 +35,6 @@ use yii\web\BadRequestHttpException;
  */
 class SproutFormsVariable
 {
-    /**
-     * @return string
-     */
-    public function getName(): string
-    {
-        /** @var Forms $plugin */
-        $plugin = Craft::$app->plugins->getPlugin('sprout-forms');
-
-        return $plugin->name;
-    }
-
-    /**
-     * @return string
-     */
-    public function getVersion(): string
-    {
-        /** @var Forms $plugin */
-        $plugin = Craft::$app->plugins->getPlugin('sprout-forms');
-
-        return $plugin->getVersion();
-    }
-
     /**
      * Returns a complete form for display in template
      *
@@ -310,7 +289,7 @@ class SproutFormsVariable
      */
     public function setEntry(Form $form, Entry $entry)
     {
-       SproutBase::$app->entries->setEntry($form, $entry);
+        SproutBase::$app->entries->setEntry($form, $entry);
     }
 
     /**
@@ -320,6 +299,7 @@ class SproutFormsVariable
      *
      * @return array|ElementInterface|null
      * @throws MissingComponentException
+     * @throws ElementNotFoundException
      */
     public function getLastEntry($formId = null)
     {
@@ -372,7 +352,7 @@ class SproutFormsVariable
         $currentStep = $settings['currentStep'] ?? null;
         $totalSteps = $settings['totalSteps'] ?? null;
 
-        if (!$currentStep OR !$totalSteps) {
+        if (!$currentStep or !$totalSteps) {
             return;
         }
 

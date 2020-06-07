@@ -28,7 +28,6 @@ class Settings extends Component
      * @param bool $includeFileConfigSettings
      *
      * @return SettingsInterface|SettingsInterface[]
-     * @throws ReflectionException
      */
     public function getSettings($includeFileConfigSettings = true)
     {
@@ -54,7 +53,6 @@ class Settings extends Component
      * @param bool $includeFileConfigSettings
      *
      * @return SettingsInterface|SettingsInterface[]
-     * @throws ReflectionException
      */
     public function getSettingsByKey($handle, $includeFileConfigSettings = true)
     {
@@ -107,7 +105,6 @@ class Settings extends Component
      * @param bool            $includeFileConfigSettings
      *
      * @return SettingsInterface|null
-     * @throws ReflectionException
      */
     protected function mergeSettings(ConfigInterface $configType, bool $includeFileConfigSettings)
     {

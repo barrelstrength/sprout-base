@@ -41,7 +41,6 @@ class SettingsController extends Controller
      * @param null   $settingsSubSectionHandle
      *
      * @return Response
-     * @throws ReflectionException
      */
     public function actionEditSettings(
         $settingsTarget = self::SETTINGS_TARGET_PROJECT_CONFIG,

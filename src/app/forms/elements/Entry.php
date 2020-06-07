@@ -7,7 +7,6 @@
 
 namespace barrelstrength\sproutbase\app\forms\elements;
 
-use barrelstrength\sproutbase\SproutBase;
 use barrelstrength\sproutbase\app\forms\base\Captcha;
 use barrelstrength\sproutbase\app\forms\elements\actions\MarkAsDefaultStatus;
 use barrelstrength\sproutbase\app\forms\elements\actions\MarkAsSpam;
@@ -16,6 +15,7 @@ use barrelstrength\sproutbase\app\forms\models\EntriesSpamLog;
 use barrelstrength\sproutbase\app\forms\models\EntryStatus;
 use barrelstrength\sproutbase\app\forms\records\EntriesSpamLog as EntriesSpamLogRecord;
 use barrelstrength\sproutbase\app\forms\records\Entry as EntryRecord;
+use barrelstrength\sproutbase\SproutBase;
 use Craft;
 use craft\base\Element;
 use craft\db\Query;

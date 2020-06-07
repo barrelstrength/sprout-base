@@ -19,7 +19,12 @@ use Craft;
 use craft\base\ElementInterface;
 use craft\base\Field;
 use craft\base\PreviewableFieldInterface;
+use craft\errors\SiteNotFoundException;
 use Throwable;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Error\SyntaxError;
+use yii\base\Exception;
 
 /**
  * Class Address
@@ -68,6 +73,11 @@ class Address extends Field implements PreviewableFieldInterface
 
     /**
      * @return string|null
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
+     * @throws SiteNotFoundException
+     * @throws Exception
      */
     public function getSettingsHtml()
     {
@@ -75,10 +85,14 @@ class Address extends Field implements PreviewableFieldInterface
     }
 
     /**
-     * @param                       $value
+     * @param mixed                 $value
      * @param ElementInterface|null $element
      *
      * @return string
+     * @throws Exception
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
      */
     public function getInputHtml($value, ElementInterface $element = null): string
     {

@@ -13,7 +13,6 @@ use Craft;
 use craft\behaviors\FieldLayoutBehavior;
 use craft\elements\actions\SetStatus;
 use craft\elements\db\ElementQueryInterface;
-use craft\errors\MissingComponentException;
 use craft\helpers\Json;
 use craft\helpers\UrlHelper;
 use Egulias\EmailValidator\EmailValidator;
@@ -247,7 +246,6 @@ class NotificationEmail extends EmailElement
 
     /**
      * @return string|null
-     * @throws MissingComponentException
      */
     public function getCpEditUrl()
     {
@@ -361,7 +359,6 @@ class NotificationEmail extends EmailElement
     /**
      * @@inheritdoc
      *
-     * @throws Exception
      */
     public function getUriFormat()
     {
@@ -417,10 +414,7 @@ class NotificationEmail extends EmailElement
         return true;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function behaviors()
+    public function behaviors(): array
     {
         return array_merge(parent::behaviors(), [
             'fieldLayout' => [

@@ -17,7 +17,6 @@ use craft\errors\MissingComponentException;
 use craft\helpers\Json;
 use craft\web\Controller;
 use craft\web\Request;
-use ReflectionException;
 use Throwable;
 use yii\base\Exception;
 use yii\db\StaleObjectException;
@@ -82,7 +81,6 @@ class ReportsController extends Controller
      * @return Response
      * @throws ForbiddenHttpException
      * @throws NotFoundHttpException
-     * @throws ReflectionException
      */
     public function actionResultsIndexTemplate(Report $report = null, int $reportId = null): Response
     {
@@ -159,8 +157,6 @@ class ReportsController extends Controller
      * @return Response
      * @throws ForbiddenHttpException
      * @throws NotFoundHttpException
-     * @throws MissingComponentException
-     * @throws ReflectionException
      */
     public function actionEditReportTemplate(string $dataSourceId = null, Report $report = null, int $reportId = null): Response
     {

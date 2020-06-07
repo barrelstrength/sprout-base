@@ -4,13 +4,11 @@ namespace barrelstrength\sproutbase\app\email\elements\db;
 
 use craft\base\Element;
 use craft\elements\db\ElementQuery;
-use craft\errors\MissingComponentException;
 
 class NotificationEmailQuery extends ElementQuery
 {
     /**
      * @return bool
-     * @throws MissingComponentException
      */
     protected function beforePrepare(): bool
     {

@@ -29,6 +29,8 @@ use yii\web\IdentityInterface;
  * @property IdentityInterface|User|null|false $author
  * @property array                             $defaultAttributes
  * @property array                             $elementIntegrationFieldOptions
+ * @property array                             $targetIntegrationFieldsAsMappingOptions
+ * @property mixed                             $settingsHtml
  * @property array                             $sectionsAsOptions
  */
 class EntryElementIntegration extends ElementIntegration

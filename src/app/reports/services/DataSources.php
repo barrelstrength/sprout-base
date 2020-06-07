@@ -27,9 +27,10 @@ use yii\base\InvalidConfigException;
  *
  * @package Craft
  *
- * @property array    $allDataSources
- * @property mixed    $dataSourcePlugins
- * @property string[] $allDataSourceTypes
+ * @property array        $allDataSources
+ * @property mixed        $dataSourcePlugins
+ * @property DataSource[] $installedDataSources
+ * @property string[]     $allDataSourceTypes
  */
 class DataSources extends Component
 {

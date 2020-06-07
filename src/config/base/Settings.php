@@ -12,6 +12,11 @@ use craft\helpers\StringHelper;
 use ReflectionClass;
 use ReflectionException;
 
+/**
+ *
+ * @property array  $settingsNavItem
+ * @property string $key
+ */
 abstract class Settings extends Model implements SettingsInterface
 {
     /**

@@ -1,7 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
-    <title>Sprout Campaigns</title>
-    <g id="Layer_2" data-name="Layer 2">
-        <g id="Sprout_Sent_Email" data-name="Sprout Sent Email">
+    <g>
+        <g>
             <path style="fill:#47b649"
                   d="M40.92,55.62c0,3.65,1.83,6.3,5.48,6.3,4.81,0,9.21-6.14,10.12-11.28l1.74-9.38a14.67,14.67,0,0,0-4.15-.58C46.81,40.68,40.92,47.57,40.92,55.62Z"/>
             <path style="fill:#47b649"

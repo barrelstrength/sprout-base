@@ -9,8 +9,16 @@ use barrelstrength\sproutbase\SproutBase;
 use Craft;
 use craft\base\Element;
 use craft\base\Field;
-use ReflectionException;
 
+/**
+ *
+ * @property bool                                                                                                                                                                                                   $isTest
+ * @property null|object                                                                                                                                                                                            $eventObject
+ * @property string                                                                                                                                                                                                 $emailTemplateId
+ * @property \barrelstrength\sproutbase\app\email\base\Mailer                                                                                                                                                       $mailer
+ * @property array                                                                                                                                                                                                  $fieldLayoutTabs
+ * @property \barrelstrength\sproutbase\app\email\base\EmailTemplates|\barrelstrength\sproutbase\app\email\emailtemplates\CustomTemplates|string|\barrelstrength\sproutbase\app\email\emailtemplates\BasicTemplates $emailTemplates
+ */
 abstract class EmailElement extends Element
 {
     const ENABLED = 'enabled';
@@ -150,7 +158,6 @@ abstract class EmailElement extends Element
 
     /**
      * @return EmailTemplates|BasicTemplates|CustomTemplates
-     * @throws ReflectionException
      */
     public function getEmailTemplates()
     {

@@ -7,9 +7,10 @@
 
 namespace barrelstrength\sproutbase\app\forms\elements\db;
 
-use barrelstrength\sproutbase\SproutBase;
 use barrelstrength\sproutbase\app\forms\models\FormGroup;
 use barrelstrength\sproutbase\app\forms\records\FormGroup as FormGroupRecord;
+use barrelstrength\sproutbase\SproutBase;
+use barrelstrength\sproutforms\SproutForms;
 use craft\db\Query;
 use craft\elements\db\ElementQuery;
 use craft\helpers\Db;
@@ -248,7 +249,7 @@ class FormQuery extends ElementQuery
             $this->subQuery->andWhere(Db::parseParam('sproutforms_forms.name', $this->name));
         }
 
-        $isPro = SproutBase::$app->config->isEdition('sprout-forms', \barrelstrength\sproutforms\SproutForms::EDITION_PRO);
+        $isPro = SproutBase::$app->config->isEdition('sprout-forms', SproutForms::EDITION_PRO);
 
         // Limit Sprout Forms Lite to a single form
         if (!$isPro) {

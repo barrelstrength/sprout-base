@@ -150,9 +150,9 @@ trait FormFieldTrait
     /**
      * The HTML to render when a Form is output using the displayForm, displayTab, or displayField tags
      *
-     * @param mixed                                      $value
+     * @param mixed $value
      * @param Entry $entry
-     * @param array                                      $renderingOptions
+     * @param array $renderingOptions
      *
      * @return Markup
      */

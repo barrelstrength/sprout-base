@@ -106,8 +106,11 @@ class Email extends FormField implements PreviewableFieldInterface
     }
 
     /**
-     * @inheritdoc
-     *
+     * @return string|null
+     * @throws Exception
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
      */
     public function getSettingsHtml()
     {
@@ -115,12 +118,14 @@ class Email extends FormField implements PreviewableFieldInterface
     }
 
     /**
-     * @inheritdoc
-     *
-     * @param                       $value
+     * @param mixed                 $value
      * @param ElementInterface|null $element
      *
      * @return string
+     * @throws Exception
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
      */
     public function getInputHtml($value, ElementInterface $element = null): string
     {

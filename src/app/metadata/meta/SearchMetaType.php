@@ -176,6 +176,7 @@ class SearchMetaType extends MetaType
 
     /**
      * @return mixed|string|null
+     * @throws InvalidConfigException
      */
     public function getKeywords()
     {

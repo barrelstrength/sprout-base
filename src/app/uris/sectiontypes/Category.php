@@ -69,7 +69,7 @@ class Category extends UrlEnabledSectionType
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getElementType()
     {

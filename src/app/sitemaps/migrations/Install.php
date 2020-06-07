@@ -15,9 +15,9 @@ use Throwable;
 class Install extends Migration
 {
     /**
-     * @return bool
+     * @return bool|void
      */
-    public function safeUp(): bool
+    public function safeUp()
     {
         if (!$this->db->tableExists(SitemapSectionRecord::tableName())) {
             $this->createTable(SitemapSectionRecord::tableName(), [
@@ -38,8 +38,6 @@ class Install extends Migration
             $this->createIndex(null, SitemapSectionRecord::tableName(), ['siteId']);
             $this->addForeignKey(null, SitemapSectionRecord::tableName(), ['siteId'], Table::SITES, ['id'], 'CASCADE', 'CASCADE');
         }
-
-        return true;
     }
 
     /**

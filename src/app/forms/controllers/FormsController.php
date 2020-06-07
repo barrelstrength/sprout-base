@@ -20,7 +20,6 @@ use craft\helpers\Json;
 use craft\helpers\UrlHelper;
 use craft\records\FieldLayoutTab as FieldLayoutTabRecord;
 use craft\web\Controller as BaseController;
-use ReflectionException;
 use Throwable;
 use yii\base\Exception;
 use yii\base\InvalidConfigException;
@@ -38,7 +37,6 @@ class FormsController extends BaseController
 {
     /**
      * @return \craft\web\Response|\yii\console\Response
-     * @throws ReflectionException
      */
     public function actionFormsDefaultSection()
     {
@@ -84,7 +82,7 @@ class FormsController extends BaseController
         /** @var SproutForms $plugin */
         $plugin = Craft::$app->plugins->getPlugin('sprout-forms');
 
-        $isPro = SproutBase::$app->config->isEdition('sprout-forms', \barrelstrength\sproutforms\SproutForms::EDITION_PRO);
+        $isPro = SproutBase::$app->config->isEdition('sprout-forms', SproutForms::EDITION_PRO);
 
         return $this->renderTemplate('sprout-base-forms/forms/_settings/'.$settingsSectionHandle, [
             'form' => $form,
@@ -328,7 +326,9 @@ class FormsController extends BaseController
      *
      * @return Response
      * @throws BadRequestHttpException
+     * @throws ElementNotFoundException
      * @throws ForbiddenHttpException
+     * @throws InvalidConfigException
      */
     public function actionAddFormTab(): Response
     {

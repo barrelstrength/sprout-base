@@ -47,17 +47,11 @@ class MultipleChoice extends CraftRadioButtons
      */
     public $cssClasses;
 
-    /**
-     * @inheritdoc
-     */
     public static function displayName(): string
     {
         return Craft::t('sprout', 'Multiple Choice');
     }
 
-    /**
-     * @return bool
-     */
     public function hasMultipleLabels(): bool
     {
         return true;
@@ -72,8 +66,6 @@ class MultipleChoice extends CraftRadioButtons
     }
 
     /**
-     * @inheritdoc
-     *
      * @return string
      * @throws LoaderError
      * @throws RuntimeError
@@ -90,16 +82,15 @@ class MultipleChoice extends CraftRadioButtons
     }
 
     /**
-     * @inheritdoc
-     *
      * @param            $value
+     * @param Entry      $entry
      * @param array|null $renderingOptions
      *
      * @return Markup
+     * @throws Exception
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
-     * @throws Exception
      */
     public function getFrontEndInputHtml($value, Entry $entry, array $renderingOptions = null): Markup
     {
@@ -116,9 +107,6 @@ class MultipleChoice extends CraftRadioButtons
         return TemplateHelper::raw($rendered);
     }
 
-    /**
-     * @inheritdoc
-     */
     public function getCompatibleCraftFieldTypes(): array
     {
         return [
@@ -126,10 +114,7 @@ class MultipleChoice extends CraftRadioButtons
         ];
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function getCompatibleConditions()
+    public function getCompatibleConditions(): array
     {
         return [
             new IsCondition(),
@@ -143,9 +128,6 @@ class MultipleChoice extends CraftRadioButtons
         ];
     }
 
-    /**
-     * @inheritdoc
-     */
     protected function optionsSettingLabel(): string
     {
         return Craft::t('sprout', 'Multiple Choice Options');

@@ -11,8 +11,6 @@ use barrelstrength\sproutbase\app\forms\elements\Form;
 use barrelstrength\sproutbase\app\forms\fields\formfields\Number;
 use barrelstrength\sproutbase\app\forms\fields\formfields\OptIn;
 use barrelstrength\sproutbase\app\forms\fields\formfields\SingleLine;
-craft.app.getModule('sprout');
-
 use barrelstrength\sproutbase\SproutBase;
 use Craft;
 use craft\base\SavableComponent;
@@ -23,22 +21,14 @@ use craft\fields\PlainText as CraftPlainText;
 use yii\base\InvalidConfigException;
 
 /**
- * Class IntegrationType
  *
- * @package Craft
- *
- * @property string $fieldMappingSettingsHtml
- * @property void   $settingsHtml
- * @property array  $sourceFormFields
- * @property void   $customSourceFormFields
- * @property Form   $form
- * @property array  $sendRuleOptions
- * @property array  $targetIntegrationFields
- * @property array  $targetIntegrationFieldsAsMappingOptions
- * @property array  $targetIntegrationFieldValues
- * @property array  $indexedFieldMapping
- * @property array  $defaultSourceMappingAttributes
- * @property string $type
+ * @property null|string   $fieldMappingSettingsHtml
+ * @property array         $indexedFieldMapping
+ * @property array         $targetIntegrationFieldValues
+ * @property array         $sendRuleOptions
+ * @property array         $targetIntegrationFieldsAsMappingOptions
+ * @property array         $sourceFormFields
+ * @property array[]|array $defaultSourceMappingAttributes
  */
 abstract class Integration extends SavableComponent implements IntegrationInterface
 {

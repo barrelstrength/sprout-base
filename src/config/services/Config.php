@@ -7,9 +7,8 @@
 
 namespace barrelstrength\sproutbase\config\services;
 
-use barrelstrength\sproutbase\config\base\Config as BaseConfig;
 use barrelstrength\sproutbase\config\base\ConfigInterface;
-use barrelstrength\sproutbase\config\base\SproutCentralPlugin;
+use barrelstrength\sproutbase\config\base\SproutBasePlugin;
 use barrelstrength\sproutbase\SproutBase;
 use Craft;
 use craft\base\Plugin;
@@ -22,6 +21,12 @@ use yii\base\Exception;
 use yii\base\NotSupportedException;
 use yii\web\ServerErrorHttpException;
 
+/**
+ *
+ * @property \barrelstrength\sproutbase\config\base\ConfigInterface[]  $configs
+ * @property \barrelstrength\sproutbase\config\base\SproutBasePlugin[] $sproutBasePlugins
+ * @property array                                                     $sproutCpSettings
+ */
 class Config extends Component
 {
     const EVENT_REGISTER_SPROUT_CONFIG = 'registerSproutConfig';
@@ -45,15 +50,15 @@ class Config extends Component
     private $_configsLoading = false;
 
     /**
-     * @return SproutCentralPlugin[]
+     * @return SproutBasePlugin[]
      */
-    public function getSproutCentralPlugins(): array
+    public function getSproutBasePlugins(): array
     {
         $plugins = Craft::$app->getPlugins()->getAllPlugins();
 
-        // All Sprout plugins with shared settings extend SproutCentralPlugin
+        // All Sprout plugins with shared settings extend SproutBasePlugin
         $sproutCentralPlugins = array_filter($plugins, static function($plugin) {
-            return $plugin instanceof SproutCentralPlugin;
+            return $plugin instanceof SproutBasePlugin;
         });
 
         return $sproutCentralPlugins;
@@ -84,7 +89,7 @@ class Config extends Component
 
         $this->_configsLoading = true;
 
-        $plugins = $this->getSproutCentralPlugins();
+        $plugins = $this->getSproutBasePlugins();
 
         foreach ($plugins as $plugin) {
 
@@ -140,15 +145,14 @@ class Config extends Component
     }
 
     /**
-     * @param SproutCentralPlugin $plugin
+     * @param SproutBasePlugin $plugin
      *
      * @throws ErrorException
      * @throws Exception
      * @throws NotSupportedException
-     * @throws ReflectionException
      * @throws ServerErrorHttpException
      */
-    public function runInstallMigrations(SproutCentralPlugin $plugin)
+    public function runInstallMigrations(SproutBasePlugin $plugin)
     {
         $sproutConfigTypes = $plugin->getSproutConfigs();
 
@@ -168,11 +172,10 @@ class Config extends Component
     /**
      * Runs all Install::safeDown() migrations for Sprout Central plugins
      *
-     * @param SproutCentralPlugin $plugin
+     * @param SproutBasePlugin $plugin
      *
-     * @throws ReflectionException
      */
-    public function runUninstallMigrations(SproutCentralPlugin $plugin)
+    public function runUninstallMigrations(SproutBasePlugin $plugin)
     {
         $sproutConfigTypes = $plugin->getSproutConfigs();
 
@@ -195,15 +198,14 @@ class Config extends Component
     }
 
     /**
-     * @param BaseConfig $config
+     * @param ConfigInterface $config
      *
-     * @throws ReflectionException
      * @throws ErrorException
      * @throws Exception
      * @throws NotSupportedException
      * @throws ServerErrorHttpException
      */
-    public function addConfigSettingsToProjectConfig(BaseConfig $config)
+    public function addConfigSettingsToProjectConfig(ConfigInterface $config)
     {
         if ($settings = $config->createSettingsModel()) {
 
@@ -217,11 +219,9 @@ class Config extends Component
     }
 
     /**
-     * @param BaseConfig $config
-     *
-     * @throws ReflectionException
+     * @param ConfigInterface $config
      */
-    public function removeConfigSettingsToProjectConfig(BaseConfig $config)
+    public function removeConfigSettingsToProjectConfig(ConfigInterface $config)
     {
         $projectConfigSettingsKey = self::CONFIG_SPROUT_KEY.'.'.$config->getKey();
 
@@ -295,10 +295,10 @@ class Config extends Component
     {
         $plugins = Craft::$app->getPlugins()->getAllPlugins();
 
-        // Filter out all plugins that don't extend SproutCentralPlugin
+        // Filter out all plugins that don't extend SproutBasePlugin
         // and exclude the plugin calling this method
         $sproutPluginKeys = array_keys(array_filter($plugins, static function($plugin) {
-            return $plugin instanceof SproutCentralPlugin;
+            return $plugin instanceof SproutBasePlugin;
         }));
 
         $defaultSproutCpNavItems = array_filter($cpNavItems, static function($navItem) use ($sproutPluginKeys) {
@@ -338,7 +338,7 @@ class Config extends Component
 
     private function getDependenciesInUse($pluginHandle): array
     {
-        $plugins = $this->getSproutCentralPlugins();
+        $plugins = $this->getSproutBasePlugins();
 
         $configDependencies = [];
         foreach ($plugins as $key => $plugin) {

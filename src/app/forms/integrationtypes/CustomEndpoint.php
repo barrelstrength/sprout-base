@@ -23,6 +23,8 @@ use yii\base\Exception;
  * data saved to the database after a forwarded request is editable
  * in Craft as normal, but will not trigger any further calls to
  * the third-party endpoint.
+ *
+ * @property mixed $settingsHtml
  */
 class CustomEndpoint extends Integration
 {

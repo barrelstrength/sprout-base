@@ -68,33 +68,21 @@ class Entry extends UrlEnabledSectionType
         return $section->getEntryTypes();
     }
 
-    /**
-     * @return string
-     */
     public function getElementTableName(): string
     {
         return 'entries';
     }
 
-    /**
-     * @return string
-     */
-    public function getElementType()
+    public function getElementType(): string
     {
         return EntryElement::class;
     }
 
-    /**
-     * @inheritdoc
-     */
     public function getElementLiveStatus()
     {
         return EntryElement::STATUS_LIVE;
     }
 
-    /**
-     * @return string
-     */
     public function getMatchedElementVariable(): string
     {
         return 'entry';
@@ -124,17 +112,11 @@ class Entry extends UrlEnabledSectionType
         return $urlEnabledSections;
     }
 
-    /**
-     * @return string
-     */
     public function getTableName(): string
     {
         return 'sections_sites';
     }
 
-    /**
-     * @inheritdoc
-     */
     public function resaveElements($elementGroupId = null): bool
     {
         if (!$elementGroupId) {

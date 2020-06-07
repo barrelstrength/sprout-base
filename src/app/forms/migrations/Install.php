@@ -5,14 +5,13 @@
  * @license   https://craftcms.github.io/license
  */
 
-namespace barrelstrength\sproutforms\migrations;
+namespace barrelstrength\sproutbase\app\forms\migrations;
 
 use barrelstrength\sproutbase\app\forms\elements\Entry;
 use barrelstrength\sproutbase\app\forms\elements\Form;
 use barrelstrength\sproutbase\app\forms\integrations\sproutreports\datasources\EntriesDataSource;
 use barrelstrength\sproutbase\app\forms\integrations\sproutreports\datasources\IntegrationLogDataSource;
 use barrelstrength\sproutbase\app\forms\integrations\sproutreports\datasources\SpamLogDataSource;
-use barrelstrength\sproutbase\app\forms\models\Settings;
 use barrelstrength\sproutbase\app\forms\records\EntriesSpamLog as EntriesSpamLogRecord;
 use barrelstrength\sproutbase\app\forms\records\Entry as EntryRecord;
 use barrelstrength\sproutbase\app\forms\records\EntryStatus as EntryStatusRecord;
@@ -24,23 +23,14 @@ use barrelstrength\sproutbase\app\forms\records\Rules as RulesRecord;
 use barrelstrength\sproutbase\SproutBase;
 use craft\db\Migration;
 use craft\db\Table;
-use yii\base\ErrorException;
-use yii\base\NotSupportedException;
 use yii\db\Exception;
-use yii\web\ServerErrorHttpException;
 
 class Install extends Migration
 {
     /**
-     * @inheritdoc
-     *
-     * @throws ErrorException
-     * @throws \yii\base\Exception
-     * @throws NotSupportedException
-     * @throws Exception
-     * @throws ServerErrorHttpException
+     * @return bool|void
      */
-    public function safeUp(): bool
+    public function safeUp()
     {
         // Install Sprout Forms
         $this->createTables();
@@ -50,10 +40,10 @@ class Install extends Migration
     }
 
     /**
-     * @inheritdoc
+     * @return bool|void
      * @throws Exception
      */
-    public function safeDown(): bool
+    public function safeDown()
     {
         SproutBase::$app->dataSources->deleteReportsByType(EntriesDataSource::class);
         SproutBase::$app->dataSources->deleteReportsByType(IntegrationLogDataSource::class);
@@ -139,10 +129,10 @@ class Install extends Migration
             'name' => $this->string()->notNull(),
             'handle' => $this->string()->notNull(),
             'color' => $this->enum('color', [
-                    'green', 'orange', 'red', 'blue',
-                    'yellow', 'pink', 'purple', 'turquoise',
-                    'light', 'grey', 'black'
-                ])->notNull()->defaultValue('blue'),
+                'green', 'orange', 'red', 'blue',
+                'yellow', 'pink', 'purple', 'turquoise',
+                'light', 'grey', 'black'
+            ])->notNull()->defaultValue('blue'),
             'sortOrder' => $this->smallInteger()->unsigned(),
             'isDefault' => $this->boolean(),
             'dateCreated' => $this->dateTime()->notNull(),
@@ -183,8 +173,8 @@ class Install extends Migration
             'integrationId' => $this->integer()->notNull(),
             'success' => $this->boolean()->defaultValue(false),
             'status' => $this->enum('status', [
-                    'pending', 'notsent', 'completed'
-                ])->notNull()->defaultValue('pending'),
+                'pending', 'notsent', 'completed'
+            ])->notNull()->defaultValue('pending'),
             'message' => $this->text(),
             'dateCreated' => $this->dateTime()->notNull(),
             'dateUpdated' => $this->dateTime()->notNull(),

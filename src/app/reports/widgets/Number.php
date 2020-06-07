@@ -107,6 +107,7 @@ class Number extends Widget
      */
     public function getBodyHtml(): string
     {
+        /** @var Report $report */
         $report = Craft::$app->elements->getElementById($this->reportId, Report::class);
 
         if ($report) {

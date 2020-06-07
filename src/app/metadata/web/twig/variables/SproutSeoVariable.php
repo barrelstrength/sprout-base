@@ -8,7 +8,6 @@
 namespace barrelstrength\sproutbase\app\metadata\web\twig\variables;
 
 use barrelstrength\sproutbase\app\metadata\models\Globals;
-use barrelstrength\sproutbase\app\metadata\SproutSeo;
 use barrelstrength\sproutbase\SproutBase;
 use Craft;
 use craft\base\ElementInterface;
@@ -20,7 +19,6 @@ use craft\fields\PlainText;
 use craft\models\Site;
 use DateTime;
 use DateTimeZone;
-use ReflectionException;
 use yii\base\Exception;
 
 class SproutSeoVariable
@@ -463,7 +461,6 @@ class SproutSeoVariable
      * @param null   $settings
      *
      * @return array
-     * @throws ReflectionException
      */
     public function getOptimizedOptions($type = PlainText::class, $handle = null, $settings = null): array
     {
@@ -519,7 +516,6 @@ class SproutSeoVariable
      * @param string $type
      *
      * @return array
-     * @throws ReflectionException
      */
     public function getKeywordsOptions($type = PlainText::class): array
     {
@@ -555,7 +551,6 @@ class SproutSeoVariable
      * @param $settings
      *
      * @return array
-     * @throws ReflectionException
      */
     public function getOptimizedTitleOptions($settings): array
     {
@@ -568,7 +563,6 @@ class SproutSeoVariable
      * @param $settings
      *
      * @return array
-     * @throws ReflectionException
      */
     public function getOptimizedDescriptionOptions($settings): array
     {
@@ -581,7 +575,6 @@ class SproutSeoVariable
      * @param $settings
      *
      * @return array
-     * @throws ReflectionException
      */
     public function getOptimizedAssetsOptions($settings): array
     {
@@ -701,26 +694,10 @@ class SproutSeoVariable
 
     /**
      * @return int
-     * @throws ReflectionException
      */
     public function getDescriptionLength(): int
     {
         return SproutBase::$app->elementMetadata->getDescriptionLength();
-    }
-
-    /**
-     * @return bool
-     */
-    public function getIsPro(): bool
-    {
-        /** @var SproutSeo $plugin */
-        $plugin = SproutSeo::getInstance();
-
-        if ($plugin->is(SproutSeo::EDITION_PRO)) {
-            return true;
-        }
-
-        return false;
     }
 
     /**

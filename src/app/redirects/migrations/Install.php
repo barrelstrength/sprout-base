@@ -10,20 +10,14 @@ namespace barrelstrength\sproutbase\app\redirects\migrations;
 use barrelstrength\sproutbase\app\redirects\elements\Redirect;
 use barrelstrength\sproutbase\app\redirects\records\Redirect as RedirectRecord;
 use craft\db\Migration;
-use craft\db\Query;
 use craft\db\Table;
-use craft\errors\StructureNotFoundException;
-use craft\models\Structure;
-use Throwable;
-use yii\base\Exception;
 
 class Install extends Migration
 {
     /**
-     * @return bool
-     * @throws Throwable
+     * @return bool|void
      */
-    public function safeUp(): bool
+    public function safeUp()
     {
         if (!$this->db->tableExists(RedirectRecord::tableName())) {
             $this->createTable(RedirectRecord::tableName(), [
@@ -49,9 +43,9 @@ class Install extends Migration
     }
 
     /**
-     * @return bool
+     * @return bool|void
      */
-    public function safeDown(): bool
+    public function safeDown()
     {
         // Delete Redirect Elements
         $this->delete(Table::ELEMENTS, ['type' => Redirect::class]);

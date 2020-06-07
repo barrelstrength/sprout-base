@@ -7,9 +7,9 @@
 
 namespace barrelstrength\sproutbase\app\forms\fields\formfields;
 
-use barrelstrength\sproutbase\SproutBase;
 use barrelstrength\sproutbase\app\forms\base\FormField;
 use barrelstrength\sproutbase\app\forms\elements\Entry;
+use barrelstrength\sproutbase\SproutBase;
 use Craft;
 use craft\base\Element;
 use craft\base\ElementInterface;

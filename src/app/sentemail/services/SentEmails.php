@@ -22,7 +22,6 @@ use craft\mail\Message;
 use craft\mail\transportadapters\BaseTransportAdapter;
 use craft\mail\transportadapters\Smtp;
 use Exception;
-use ReflectionException;
 use Throwable;
 use Twig\Error\LoaderError;
 use Twig\Error\SyntaxError;
@@ -264,7 +263,6 @@ class SentEmails extends Component
      *
      * @return bool
      * @throws SiteNotFoundException
-     * @throws ReflectionException
      */
     public function cleanUpSentEmails($force = false): bool
     {

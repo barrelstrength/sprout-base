@@ -7,12 +7,12 @@
 
 namespace barrelstrength\sproutbase\app\forms\integrations\sproutreports\datasources;
 
-use barrelstrength\sproutbase\app\reports\base\DataSource;
-use barrelstrength\sproutbase\app\reports\elements\Report;
 use barrelstrength\sproutbase\app\forms\elements\Entry;
 use barrelstrength\sproutbase\app\forms\elements\Form;
 use barrelstrength\sproutbase\app\forms\records\Entry as EntryRecord;
 use barrelstrength\sproutbase\app\forms\records\EntryStatus as EntryStatusRecord;
+use barrelstrength\sproutbase\app\reports\base\DataSource;
+use barrelstrength\sproutbase\app\reports\elements\Report;
 use barrelstrength\sproutbase\SproutBase;
 use Craft;
 use craft\db\Query;
@@ -185,7 +185,7 @@ class EntriesDataSource extends DataSource
                     }
                 } else if (is_array($field)) {
                     $value = Json::encode($field);
-                } else if (is_string($field) OR $field === null) {
+                } else if (is_string($field) or $field === null) {
                     $value = $field;
                 } else {
                     $value = Craft::t('sprout', 'Unsupported Field');

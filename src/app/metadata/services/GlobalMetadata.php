@@ -7,7 +7,6 @@
 
 namespace barrelstrength\sproutbase\app\metadata\services;
 
-use barrelstrength\sproutbase\app\metadata\migrations\InsertDefaultGlobalsBySite;
 use barrelstrength\sproutbase\app\metadata\models\Globals;
 use barrelstrength\sproutbase\app\metadata\records\GlobalMetadata as GlobalMetadataRecord;
 use Craft;

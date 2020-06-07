@@ -73,17 +73,11 @@ class Product extends UrlEnabledSectionType
         return 'commerce_products';
     }
 
-    /**
-     * @return string
-     */
     public function getElementType()
     {
         return ProductElement::class;
     }
 
-    /**
-     * @return string
-     */
     public function getMatchedElementVariable(): string
     {
         return 'product';
@@ -115,9 +109,6 @@ class Product extends UrlEnabledSectionType
         return $urlEnabledSections;
     }
 
-    /**
-     * @return string
-     */
     public function getTableName(): string
     {
         return 'commerce_producttypes_sites';

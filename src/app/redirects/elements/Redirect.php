@@ -20,11 +20,9 @@ use Craft;
 use craft\base\Element;
 use craft\elements\actions\Edit;
 use craft\elements\db\ElementQueryInterface;
-use craft\errors\MissingComponentException;
 use craft\errors\SiteNotFoundException;
 use craft\helpers\UrlHelper;
 use DateTime;
-use ReflectionException;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
@@ -326,7 +324,6 @@ class Redirect extends Element
 
     /**
      * @return string|null
-     * @throws MissingComponentException
      * @throws SiteNotFoundException
      * @throws InvalidConfigException
      */
@@ -404,7 +401,6 @@ class Redirect extends Element
     /**
      * @inheritdoc
      * @throws Exception if reasons
-     * @throws ReflectionException
      */
     public function afterSave(bool $isNew)
     {

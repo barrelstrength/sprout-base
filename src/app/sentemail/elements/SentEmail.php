@@ -16,7 +16,6 @@ use barrelstrength\sproutbase\SproutBase;
 use Craft;
 use craft\base\Element;
 use craft\elements\db\ElementQueryInterface;
-use craft\errors\MissingComponentException;
 use craft\helpers\Json;
 use craft\helpers\UrlHelper;
 use DateTime;
@@ -243,7 +242,6 @@ class SentEmail extends Element
      * @param string $attribute
      *
      * @return string
-     * @throws MissingComponentException
      */
     public function getTableAttributeHtml(string $attribute): string
     {

@@ -11,6 +11,10 @@ use barrelstrength\sproutbase\config\base\Settings;
 use Craft;
 use craft\errors\SiteNotFoundException;
 
+/**
+ *
+ * @property array $settingsNavItem
+ */
 class SitemapsSettings extends Settings
 {
     /**

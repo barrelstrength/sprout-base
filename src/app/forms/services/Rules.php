@@ -167,7 +167,8 @@ class Rules extends Component
      * @throws Throwable
      * @throws StaleObjectException
      */
-    public function deleteRule(Rule $rule) {
+    public function deleteRule(Rule $rule)
+    {
         $ruleRecord = RulesRecord::findOne($rule->id);
 
         if ($ruleRecord) {

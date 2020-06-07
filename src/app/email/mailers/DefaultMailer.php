@@ -7,11 +7,11 @@ use barrelstrength\sproutbase\app\email\base\EmailElement;
 use barrelstrength\sproutbase\app\email\base\Mailer;
 use barrelstrength\sproutbase\app\email\base\NotificationEmailSenderInterface;
 use barrelstrength\sproutbase\app\email\elements\NotificationEmail;
+use barrelstrength\sproutbase\app\forms\fields\formfields\FileUpload;
 use barrelstrength\sproutbase\app\reports\elements\Report;
 use barrelstrength\sproutbase\app\reports\records\Report as ReportRecord;
 use barrelstrength\sproutbase\app\sentemail\services\SentEmails;
 use barrelstrength\sproutbase\SproutBase;
-use barrelstrength\sproutbase\app\forms\fields\formfields\FileUpload;
 use Craft;
 use craft\base\Element;
 use craft\base\LocalVolumeInterface;
@@ -122,7 +122,7 @@ class DefaultMailer extends Mailer implements NotificationEmailSenderInterface
             $object->getFieldLayout()) {
 
             foreach ($object->getFieldLayout()->getFields() as $field) {
-                if (get_class($field) === FileUpload::class || get_class($field) === Assets::class) {
+                if ($field instanceof FileUpload || $field instanceof Assets) {
                     $query = $object->{$field->handle};
 
                     if ($query instanceof AssetQuery) {
@@ -210,30 +210,6 @@ class DefaultMailer extends Mailer implements NotificationEmailSenderInterface
         $this->sendEmail($campaignEmail, $message, $recipients);
 
         return true;
-    }
-
-    /**
-     * @inheritdoc
-     *
-     */
-    public function getPrepareModalHtml(EmailElement $email): string
-    {
-        if (!empty($email->recipients)) {
-            $recipients = $email->recipients;
-        }
-
-        if (empty($recipients)) {
-            $recipients = Craft::$app->getUser()->getIdentity()->email;
-        }
-
-        if (empty($email->getEmailTemplateId())) {
-            $email->addError('emailTemplateId', Craft::t('sprout', 'No email template setting found.'));
-        }
-
-        return Craft::$app->getView()->renderTemplate('sprout-base-email/_modals/prepare-email-snapshot', [
-            'email' => $email,
-            'recipients' => $recipients
-        ]);
     }
 
     /**
@@ -373,6 +349,13 @@ class DefaultMailer extends Mailer implements NotificationEmailSenderInterface
         return FileHelper::normalizePath($path);
     }
 
+    /**
+     * @param EmailElement $emailElement
+     * @param Message      $message
+     * @param              $recipients
+     *
+     * @return EmailElement
+     */
     private function sendEmail(EmailElement $emailElement, Message $message, $recipients)
     {
         $processedRecipients = [];

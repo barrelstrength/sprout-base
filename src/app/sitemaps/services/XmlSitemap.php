@@ -20,7 +20,6 @@ use craft\errors\SiteNotFoundException;
 use craft\helpers\UrlHelper;
 use craft\models\Site;
 use DateTime;
-use ReflectionException;
 use yii\base\Component;
 use yii\base\Exception;
 
@@ -251,7 +250,6 @@ class XmlSitemap extends Component
      *
      * @return array|Site[]
      * @throws SiteNotFoundException
-     * @throws ReflectionException
      */
     public function getCurrentSitemapSites(): array
     {
@@ -366,7 +364,6 @@ class XmlSitemap extends Component
      * @param int $total
      *
      * @return int
-     * @throws ReflectionException
      */
     public function getTotalElementsPerSitemap($total = 500): int
     {

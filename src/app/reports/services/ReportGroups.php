@@ -10,17 +10,12 @@ use Exception;
 use InvalidArgumentException;
 use Throwable;
 use yii\base\Component;
-use yii\db\ActiveRecord;
 use yii\db\StaleObjectException;
 use yii\web\NotFoundHttpException;
 
 /**
- * Class ReportGroups
  *
- * @package barrelstrength\sproutreports\services
- *
- * @property array                $reportGroups
- * @property array|ActiveRecord[] $allReportGroups
+ * @property array $reportGroups
  */
 class ReportGroups extends Component
 {

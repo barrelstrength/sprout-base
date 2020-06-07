@@ -16,12 +16,14 @@ use Craft;
 use craft\base\Element;
 use craft\base\ElementInterface;
 use craft\base\PreviewableFieldInterface;
+use craft\errors\SiteNotFoundException;
 use craft\helpers\Template as TemplateHelper;
 use Throwable;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
 use Twig\Markup;
+use yii\base\Exception;
 
 /**
  *
@@ -76,6 +78,11 @@ class Address extends FormField implements PreviewableFieldInterface
 
     /**
      * @return string|null
+     * @throws Exception
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
+     * @throws SiteNotFoundException
      */
     public function getSettingsHtml()
     {
@@ -83,10 +90,14 @@ class Address extends FormField implements PreviewableFieldInterface
     }
 
     /**
-     * @param                       $value
+     * @param mixed                 $value
      * @param ElementInterface|null $element
      *
      * @return string
+     * @throws Exception
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
      */
     public function getInputHtml($value, ElementInterface $element = null): string
     {
@@ -121,7 +132,7 @@ class Address extends FormField implements PreviewableFieldInterface
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
-     * @throws \yii\base\Exception
+     * @throws Exception
      */
     public function getExampleInputHtml(): string
     {
@@ -141,7 +152,7 @@ class Address extends FormField implements PreviewableFieldInterface
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
-     * @throws \yii\base\Exception
+     * @throws Exception
      */
     public function getFrontEndInputHtml($value, Entry $entry, array $renderingOptions = null): Markup
     {

@@ -16,10 +16,7 @@ class CreateFormContentTable extends Migration
      */
     public $tableName;
 
-    /**
-     * @return bool
-     */
-    public function safeUp(): bool
+    public function safeUp()
     {
         $this->createTable($this->tableName, [
             'id' => $this->primaryKey(),

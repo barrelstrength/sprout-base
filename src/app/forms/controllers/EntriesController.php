@@ -7,13 +7,13 @@
 
 namespace barrelstrength\sproutbase\app\forms\controllers;
 
-use barrelstrength\sproutbase\SproutBase;
 use barrelstrength\sproutbase\app\forms\elements\Entry;
 use barrelstrength\sproutbase\app\forms\elements\Entry as EntryElement;
 use barrelstrength\sproutbase\app\forms\elements\Form as FormElement;
 use barrelstrength\sproutbase\app\forms\events\OnBeforePopulateEntryEvent;
 use barrelstrength\sproutbase\app\forms\events\OnBeforeValidateEntryEvent;
-use barrelstrength\sproutbase\app\forms\models\Settings;
+use barrelstrength\sproutbase\config\models\settings\FormsSettings;
+use barrelstrength\sproutbase\SproutBase;
 use Craft;
 use craft\errors\ElementNotFoundException;
 use craft\errors\MissingComponentException;
@@ -183,6 +183,7 @@ class EntriesController extends BaseController
         $formHandle = $request->getRequiredBodyParam('handle');
         $this->form = $this->form == null ? SproutBase::$app->forms->getFormByHandle($formHandle) : $this->form;
 
+        /** @var FormsSettings $settings */
         $settings = SproutBase::$app->settings->getSettingsByKey('forms');
 
         if ($this->form === null) {
@@ -450,18 +451,18 @@ class EntriesController extends BaseController
     }
 
     /**
-     * @param EntryElement $entry
-     * @param Settings     $settings
+     * @param EntryElement  $entry
+     * @param FormsSettings $settings
      *
      * @return bool
      */
-    private function isSpamAndHasRedirectBehavior(Entry $entry, Settings $settings): bool
+    private function isSpamAndHasRedirectBehavior(Entry $entry, FormsSettings $settings): bool
     {
         if (!$entry->hasCaptchaErrors()) {
             return false;
         }
 
-        if ($settings->spamRedirectBehavior === Settings::SPAM_REDIRECT_BEHAVIOR_NORMAL) {
+        if ($settings->spamRedirectBehavior === FormsSettings::SPAM_REDIRECT_BEHAVIOR_NORMAL) {
             return false;
         }
 

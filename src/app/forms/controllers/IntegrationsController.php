@@ -15,6 +15,9 @@ use Craft;
 use craft\errors\MissingComponentException;
 use craft\web\Controller as BaseController;
 use Throwable;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Error\SyntaxError;
 use yii\base\Exception;
 use yii\base\InvalidConfigException;
 use yii\web\BadRequestHttpException;
@@ -109,9 +112,9 @@ class IntegrationsController extends BaseController
      * @throws BadRequestHttpException
      * @throws Exception
      * @throws InvalidConfigException
-     * @throws \Twig\Error\LoaderError
-     * @throws \Twig\Error\RuntimeError
-     * @throws \Twig\Error\SyntaxError
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
      * @throws MissingComponentException
      */
     public function actionEditIntegration(): Response

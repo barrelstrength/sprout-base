@@ -10,7 +10,6 @@ namespace barrelstrength\sproutbase\app\forms\captchas;
 use barrelstrength\sproutbase\app\forms\base\Captcha;
 use barrelstrength\sproutbase\app\forms\events\OnBeforeValidateEntryEvent;
 use Craft;
-use ReflectionException;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
@@ -77,7 +76,7 @@ class HoneypotCaptcha extends Captcha
     }
 
     /**
-     * @inheritdoc
+     * @return string
      */
     public function getCaptchaHtml(): string
     {
@@ -96,7 +95,9 @@ class HoneypotCaptcha extends Captcha
     }
 
     /**
-     * @inheritdoc
+     * @param OnBeforeValidateEntryEvent $event
+     *
+     * @return bool
      */
     public function verifySubmission(OnBeforeValidateEntryEvent $event): bool
     {
@@ -126,7 +127,6 @@ class HoneypotCaptcha extends Captcha
 
     /**
      * @return string
-     * @throws ReflectionException
      */
     public function getHoneypotFieldName(): string
     {
@@ -137,7 +137,6 @@ class HoneypotCaptcha extends Captcha
 
     /**
      * @return string
-     * @throws ReflectionException
      */
     public function getHoneypotScreenReaderMessage(): string
     {

@@ -11,6 +11,10 @@ use barrelstrength\sproutbase\app\email\emailtemplates\BasicTemplates;
 use barrelstrength\sproutbase\config\base\Settings;
 use Craft;
 
+/**
+ *
+ * @property array $settingsNavItem
+ */
 class EmailSettings extends Settings
 {
     /**

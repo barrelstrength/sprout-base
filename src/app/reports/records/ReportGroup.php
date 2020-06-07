@@ -11,6 +11,8 @@ use craft\db\ActiveRecord;
 use yii\db\ActiveQuery;
 
 /**
+ * @property int $id
+ * @property string $name
  *
  * @property ActiveQuery $reports
  */

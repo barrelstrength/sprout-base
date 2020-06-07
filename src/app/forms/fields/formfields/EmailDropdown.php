@@ -305,10 +305,7 @@ class EmailDropdown extends CraftDropdownField
         ];
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function getCompatibleConditions()
+    public function getCompatibleConditions(): array
     {
         return [
             new IsCondition(),

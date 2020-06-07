@@ -12,6 +12,7 @@ use Throwable;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
+use yii\base\InvalidConfigException;
 use yii\db\Schema;
 
 /**
@@ -88,6 +89,7 @@ class PredefinedDate extends BasePredefinedField
 
     /**
      * @inheritdoc
+     * @throws InvalidConfigException
      */
     public function getTableAttributeHtml($value, ElementInterface $element): string
     {

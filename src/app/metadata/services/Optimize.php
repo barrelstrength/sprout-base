@@ -14,7 +14,7 @@ use barrelstrength\sproutbase\app\metadata\schema\WebsiteIdentityOrganizationSch
 use barrelstrength\sproutbase\app\metadata\schema\WebsiteIdentityPersonSchema;
 use barrelstrength\sproutbase\app\metadata\schema\WebsiteIdentityPlaceSchema;
 use barrelstrength\sproutbase\app\metadata\schema\WebsiteIdentityWebsiteSchema;
-use barrelstrength\sproutbase\app\metadata\SproutSeo;
+use barrelstrength\sproutbase\config\base\Config;
 use barrelstrength\sproutbase\SproutBase;
 use Craft;
 use craft\base\Element;
@@ -191,7 +191,7 @@ class Optimize extends Component
             $elementMetadataAttributes = SproutBase::$app->elementMetadata->getRawMetadataFromElement($this->element);
         }
 
-        $isPro = SproutBase::$app->config->isEdition('sprout-seo', SproutSeo::EDITION_PRO);
+        $isPro = SproutBase::$app->config->isEdition('sprout-seo', Config::EDITION_PRO);
 
         // Only allow Template Overrides if using Pro Edition
         if ($isPro && $this->templateMetadata) {

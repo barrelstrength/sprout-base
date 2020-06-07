@@ -290,7 +290,7 @@ abstract class Visualization extends Component implements VisualizationInterface
         return $dataSeries;
     }
 
-    private function timeSort($a, $b)
+    private function timeSort($a, $b): int
     {
         if ($a['x'] == $b['x']) {
             return 0;

@@ -95,7 +95,7 @@ class Phone extends Component
      * @param                       $value
      * @param ElementInterface|null $element
      *
-     * @return PhoneModel|null
+     * @return array|PhoneModel|string
      */
     public function normalizeValue(FieldInterface $field, $value, ElementInterface $element = null)
     {

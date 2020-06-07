@@ -13,8 +13,8 @@ use barrelstrength\sproutbase\app\fields\helpers\CountryRepositoryHelper;
 use barrelstrength\sproutbase\app\fields\models\Address as AddressModel;
 use barrelstrength\sproutbase\app\fields\records\Address as AddressRecord;
 use barrelstrength\sproutbase\app\fields\services\Address as AddressService;
-use barrelstrength\sproutbase\SproutBase;
 use barrelstrength\sproutbase\app\forms\base\FormField;
+use barrelstrength\sproutbase\SproutBase;
 use CommerceGuys\Addressing\Country\CountryRepository;
 use Craft;
 use craft\base\Component;
@@ -112,7 +112,6 @@ class Address extends Component
             $address->id = $record->id;
 
             $this->deleteUnusedAddresses();
-
             $this->afterSaveAddress($address, $element);
 
             $transaction->commit();

@@ -25,7 +25,7 @@ class Name extends Component
     /**
      * @param $value
      *
-     * @return NameModel|null
+     * @return array|NameModel
      */
     public function normalizeValue($value)
     {

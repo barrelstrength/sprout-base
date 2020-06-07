@@ -189,7 +189,7 @@ class Sitemaps extends Component
         $sitemapSectionRecord->changeFrequency = $sitemapSection->changeFrequency;
         $sitemapSectionRecord->enabled = $sitemapSection->enabled ?? 0;
 
-        $transaction = Craft::$app->db->beginTransaction();
+        $transaction = Craft::$app->getDb()->beginTransaction();
 
         try {
             $sitemapSectionRecord->save(false);
