@@ -84,7 +84,5 @@ class ReportsConfig extends Config
                 'sprout/data-sources/data-sources-index-template'
         ];
     }
-    {
-    }
 }
 
