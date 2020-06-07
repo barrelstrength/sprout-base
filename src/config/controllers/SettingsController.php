@@ -38,6 +38,9 @@ use yii\web\Response;
  */
 class SettingsController extends Controller
 {
+    const SETTINGS_TARGET_PROJECT_CONFIG = 'project-config';
+    const SETTINGS_TARGET_DB = 'db';
+
     /**
      * Send user to the Sprout hello page if they are messing
      * with the URL and we don't know what to do
@@ -58,7 +61,7 @@ class SettingsController extends Controller
      * @throws ReflectionException
      */
     public function actionEditSettings(
-        $settingsTarget = 'sprout',
+        $settingsTarget = self::SETTINGS_TARGET_PROJECT_CONFIG,
         $settingsSectionHandle = null,
         $settingsSubSectionHandle = null
     ): Response {
@@ -91,6 +94,7 @@ class SettingsController extends Controller
             }
         }
 
+
         $currentSettings = $settings[$settingsSectionHandle] ?? [];
 
         // We grab the config settings a second time for configWarning messages
@@ -107,12 +111,12 @@ class SettingsController extends Controller
         // Throw error if not found?
         $currentSubsection = $subNav[$currentSubSectionHandle];
 
-        // If the first segment in the URL targets something other than 'sprout'
-        // then we assume this is a custom template page that just uses the
-        // settings navigation and handles form behavior on its own
-        $settingsTemplate = $settingsTarget === 'sprout'
-            ? 'sprout-base-config/_layouts/settings'
-            : 'sprout-base-config/_layouts/settings-wrapper';
+        // The settingsTarget defaults to 'project-config'
+        // Plugins should pass a settingsTarget of 'db' if they
+        // wish to manage their settings on their own
+        $settingsTemplate = $settingsTarget === 'db'
+            ? 'sprout-base-config/_layouts/settings-wrapper'
+            : 'sprout-base-config/_layouts/settings';
 
         return $this->renderTemplate($settingsTemplate, array_merge([
             'settings' => $currentSettings,

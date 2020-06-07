@@ -9,6 +9,7 @@ namespace barrelstrength\sproutbase\config\configs;
 
 use barrelstrength\sproutbase\app\forms\migrations\Install;
 use barrelstrength\sproutbase\config\base\Config;
+use barrelstrength\sproutbase\config\controllers\SettingsController;
 use barrelstrength\sproutbase\config\models\settings\FormsSettings;
 use Craft;
 
@@ -89,25 +90,28 @@ class FormsConfig extends Config
                 'sprout/entries/entries-index-template',
             'sprout/forms/entries/edit/<entryId:\d+>' =>
                 'sprout/entries/edit-entry-template',
-//            'sprout/settings/(general|advanced)' =>
-//                'sprout-forms/settings/settings-index-template',
-
             'sprout/forms/<groupId:\d+>' =>
                 'sprout-forms/forms',
 
-            // NEW Settings
-            '<settingsTarget:sprout-forms>/settings/<settingsSectionHandle:forms>/<settingsSubSectionHandle:entry-statuses>' =>
-                'sprout/settings/edit-settings',
-            '<settingsTarget:sprout-forms>/settings/<settingsSectionHandle:forms>/<settingsSubSectionHandle:entry-statuses>/new' =>
-                'sprout-forms/entry-statuses/edit',
-            '<settingsTarget:sprout-forms>/settings/<settingsSectionHandle:forms>/<settingsSubSectionHandle:entry-statuses>/<entryStatusId:\d+>' =>
-                'sprout-forms/entry-statuses/edit',
-
-            // Settings
-//            'sprout-forms/settings/<settingsSectionHandle:.*>' =>
-//                'sprout/settings/edit-settings',
-//            'sprout-forms/settings' =>
-//                'sprout/settings/edit-settings'
+            // DB Settings
+            'sprout/settings/<settingsSectionHandle:forms>/<settingsSubSectionHandle:entry-statuses>' => [
+                'route' => 'sprout/settings/edit-settings',
+                'params' => [
+                    'settingsTarget' => SettingsController::SETTINGS_TARGET_DB
+                ]
+            ],
+            'sprout/settings/<settingsSectionHandle:forms>/<settingsSubSectionHandle:entry-statuses>/new' => [
+                'route' => 'sprout-forms/entry-statuses/edit',
+                'params' => [
+                    'settingsTarget' => SettingsController::SETTINGS_TARGET_DB
+                ]
+            ],
+            'sprout/settings/<settingsSectionHandle:forms>/<settingsSubSectionHandle:entry-statuses>/<entryStatusId:\d+>' => [
+                'route' => 'sprout-forms/entry-statuses/edit',
+                'params' => [
+                    'settingsTarget' => SettingsController::SETTINGS_TARGET_DB
+                ]
+            ]
         ];
     }
 }
