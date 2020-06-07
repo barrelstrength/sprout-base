@@ -30,10 +30,9 @@ class GeneralConfig extends Config
     public function getCpUrlRules(): array
     {
         return [
-            '<settingsTarget:sprout>/settings/<settingsSectionHandle:.*>/<settingsSubSectionHandle:.*>' =>
+            'sprout/settings/<settingsSectionHandle:[^\/]+>/<settingsSubSectionHandle:[^\/]+\/?>' =>
                 'sprout/settings/edit-settings',
-
-            '<settingsTarget:sprout>/settings/<settingsSectionHandle:.*>' =>
+            'sprout/settings/<settingsSectionHandle:[^\/]+\/?>' =>
                 'sprout/settings/edit-settings',
             'sprout/settings' =>
                 'sprout/settings/hello',

@@ -46,15 +46,15 @@ class RedirectsConfig extends Config
     {
         return [
             // Redirects
-            'sprout/redirects/edit/<redirectId:\d+>/<siteHandle:.*>' =>
+            'sprout/redirects/edit/<redirectId:\d+>/<siteHandle:[^\/]+\/?>' =>
                 'sprout/redirects/edit-redirect-template',
             'sprout/redirects/edit/<redirectId:\d+>' =>
                 'sprout/redirects/edit-redirect-template',
-            'sprout/redirects/new/<siteHandle:.*>' =>
+            'sprout/redirects/new/<siteHandle:[^\/]+\/?>' =>
                 'sprout/redirects/edit-redirect-template',
             'sprout/redirects/new' =>
                 'sprout/redirects/edit-redirect-template',
-            'sprout/redirects/<siteHandle:.*>' =>
+            'sprout/redirects/<siteHandle:[^\/]+\/?>' =>
                 'sprout/redirects/redirects-index-template',
             'sprout/redirects' =>
                 'sprout/redirects/redirects-index-template'

@@ -63,7 +63,7 @@ class ListsConfig extends Config
                 'sprout-lists/subscribers/edit-subscriber-template',
             'sprout-lists/subscribers/edit/<id:\d+>' =>
                 'sprout-lists/subscribers/edit-subscriber-template',
-            'sprout-lists/subscribers/<listHandle:.*>' => [
+            'sprout-lists/subscribers/<listHandle:[^\/]+\/?>' => [
                 'template' => 'sprout-lists/subscribers'
             ],
             'sprout-lists/subscribers' =>

@@ -83,7 +83,7 @@ class FormsConfig extends Config
                 'sprout/forms/edit-form-template',
             'sprout/forms/edit/<formId:\d+>' =>
                 'sprout/forms/edit-form-template',
-            'sprout/forms/edit/<formId:\d+>/settings/<settingsSectionHandle:.*>' =>
+            'sprout/forms/edit/<formId:\d+>/settings/<settingsSectionHandle:[^\/]+\/?>' =>
                 'sprout/forms/edit-settings-template',
             'sprout/forms/entries' =>
                 'sprout/entries/entries-index-template',

@@ -49,9 +49,9 @@ class MetadataConfig extends Config
     {
         return [
             // Globals
-            'sprout/metadata/globals/<selectedTabHandle:.*>/<siteHandle:.*>' =>
+            'sprout/metadata/globals/<selectedTabHandle:[^\/]+>/<siteHandle:[^\/]+\/?>' =>
                 'sprout/global-metadata/edit-global-metadata',
-            'sprout/metadata/globals/<selectedTabHandle:.*>' =>
+            'sprout/metadata/globals/<selectedTabHandle:[^\/]+\/?>' =>
                 'sprout/global-metadata/edit-global-metadata',
             'sprout/metadata/globals' => [
                 'route' => 'sprout/global-metadata/edit-global-metadata',
