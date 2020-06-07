@@ -118,13 +118,13 @@ class Settings extends Component
 
         if ($settingsModel !== null) {
             $defaultSettings = $settingsModel->getAttributes() ?? [];
-            $projectConfigSettings = $allProjectConfigSettings[$settingsModel->getKey()] ?? [];
+            $projectConfigSettings = $allProjectConfigSettings[$configType->getKey()] ?? [];
 
             $mergedSettings = array_merge($defaultSettings, $projectConfigSettings);
 
             if ($includeFileConfigSettings) {
                 $allFileConfigSettings = Craft::$app->getConfig()->getConfigFromFile('sprout');
-                $fileConfigSettings = $allFileConfigSettings[$settingsModel->getKey()] ?? [];
+                $fileConfigSettings = $allFileConfigSettings[$configType->getKey()] ?? [];
 
                 $mergedSettings = array_merge($mergedSettings, $fileConfigSettings);
             }

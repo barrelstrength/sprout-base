@@ -209,7 +209,7 @@ class Config extends Component
             $projectConfigSettingsKey = self::CONFIG_SPROUT_KEY.'.'.$config->getKey();
             $newSettings = ProjectConfigHelper::packAssociativeArrays($settings->toArray());
 
-            Craft::$app->getProjectConfig()->set($projectConfigSettingsKey, $newSettings, "Added default Sprout Settings for “{$settings->getKey()}”");
+            Craft::$app->getProjectConfig()->set($projectConfigSettingsKey, $newSettings, "Added default Sprout Settings for “{$config->getKey()}”");
         }
     }
 
