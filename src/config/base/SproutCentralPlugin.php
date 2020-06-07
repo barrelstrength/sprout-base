@@ -72,22 +72,5 @@ abstract class SproutCentralPlugin extends Plugin
 
         return $urlRules;
     }
-
-
-    private function initConfigSettings()
-    {
-        $configTypes = SproutBase::$app->config->getConfigs();
-
-        foreach ($configTypes as $configType) {
-
-//            $configSettings = $configType->getConfigSettings();
-//            \Craft::dd($configType->getKey());
-//            foreach ($configSettings as $settingName => $settings) {
-////                $urlRules[$settingName] = $settings;
-//            }
-        }
-//        \Craft::dd($urlRules);
-    }
-
 }
 
