@@ -9,6 +9,7 @@ namespace barrelstrength\sproutbase\config\configs;
 
 use barrelstrength\sproutbase\config\base\Config;
 use barrelstrength\sproutbase\config\models\settings\CampaignsSettings;
+use barrelstrength\sproutbase\migrations\campaigns\Install;
 use Craft;
 
 class CampaignsConfig extends Config
@@ -21,6 +22,11 @@ class CampaignsConfig extends Config
     public function createSettingsModel()
     {
         return new CampaignsSettings();
+    }
+
+    public function createInstallMigration()
+    {
+        return new Install();
     }
 
     public function getCpNavItem(): array

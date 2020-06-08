@@ -142,8 +142,6 @@ class SproutBase extends Module
         $this->initEmailEvents();
         $this->initReportEvents();
         $this->initConfigEvents();
-
-//        $dog = new Url
     }
 
     public function initMappings()

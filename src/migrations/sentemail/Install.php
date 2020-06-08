@@ -1,11 +1,11 @@
 <?php
 /**
- * @link      https://sprout.barrelstrengthdesign.com/
+ * @link https://sprout.barrelstrengthdesign.com
  * @copyright Copyright (c) Barrel Strength Design LLC
- * @license   http://sprout.barrelstrengthdesign.com/license
+ * @license https://craftcms.github.io/license
  */
 
-namespace barrelstrength\sproutbase\app\sentemail\migrations;
+namespace barrelstrength\sproutbase\migrations\sentemail;
 
 use barrelstrength\sproutbase\app\sentemail\elements\SentEmail;
 use barrelstrength\sproutbase\app\sentemail\records\SentEmail as SentEmailRecord;

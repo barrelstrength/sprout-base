@@ -7,7 +7,7 @@
 
 namespace barrelstrength\sproutbase\config\configs;
 
-use barrelstrength\sproutbase\app\forms\migrations\Install;
+use barrelstrength\sproutbase\migrations\forms\Install;
 use barrelstrength\sproutbase\config\base\Config;
 use barrelstrength\sproutbase\config\controllers\SettingsController;
 use barrelstrength\sproutbase\config\models\settings\FormsSettings;

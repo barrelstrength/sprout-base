@@ -7,7 +7,7 @@
 
 namespace barrelstrength\sproutbase\config\configs;
 
-use barrelstrength\sproutbase\app\reports\migrations\Install;
+use barrelstrength\sproutbase\migrations\reports\Install;
 use barrelstrength\sproutbase\config\base\Config;
 use barrelstrength\sproutbase\config\models\settings\ReportsSettings;
 use Craft;

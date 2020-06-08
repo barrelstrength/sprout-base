@@ -1,11 +1,11 @@
 <?php
 /**
- * @link      https://sprout.barrelstrengthdesign.com/
+ * @link https://sprout.barrelstrengthdesign.com
  * @copyright Copyright (c) Barrel Strength Design LLC
- * @license   http://sprout.barrelstrengthdesign.com/license
+ * @license https://craftcms.github.io/license
  */
 
-namespace barrelstrength\sproutbase\app\campaigns\migrations;
+namespace barrelstrength\sproutbase\migrations\campaigns;
 
 use barrelstrength\sproutbase\app\campaigns\elements\CampaignEmail;
 use barrelstrength\sproutbase\app\campaigns\records\CampaignEmail as CampaignEmailRecord;

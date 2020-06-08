@@ -7,7 +7,7 @@
 
 namespace barrelstrength\sproutbase\config\configs;
 
-use barrelstrength\sproutbase\app\sitemaps\migrations\Install;
+use barrelstrength\sproutbase\migrations\sitemaps\Install;
 use barrelstrength\sproutbase\config\base\Config;
 use barrelstrength\sproutbase\config\models\settings\SitemapsSettings;
 use barrelstrength\sproutbase\SproutBase;

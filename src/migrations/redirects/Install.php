@@ -1,11 +1,11 @@
 <?php
 /**
- * @link      https://sprout.barrelstrengthdesign.com/
+ * @link https://sprout.barrelstrengthdesign.com
  * @copyright Copyright (c) Barrel Strength Design LLC
- * @license   http://sprout.barrelstrengthdesign.com/license
+ * @license https://craftcms.github.io/license
  */
 
-namespace barrelstrength\sproutbase\app\redirects\migrations;
+namespace barrelstrength\sproutbase\migrations\redirects;
 
 use barrelstrength\sproutbase\app\redirects\elements\Redirect;
 use barrelstrength\sproutbase\app\redirects\records\Redirect as RedirectRecord;

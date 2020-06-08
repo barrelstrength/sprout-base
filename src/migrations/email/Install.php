@@ -1,11 +1,11 @@
 <?php
 /**
- * @link      https://sprout.barrelstrengthdesign.com
+ * @link https://sprout.barrelstrengthdesign.com
  * @copyright Copyright (c) Barrel Strength Design LLC
- * @license   https://craftcms.github.io/license
+ * @license https://craftcms.github.io/license
  */
 
-namespace barrelstrength\sproutbase\app\email\migrations;
+namespace barrelstrength\sproutbase\migrations\email;
 
 use barrelstrength\sproutbase\app\email\elements\NotificationEmail;
 use barrelstrength\sproutbase\app\email\records\NotificationEmail as NotificationEmailRecord;

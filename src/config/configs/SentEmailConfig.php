@@ -7,7 +7,7 @@
 
 namespace barrelstrength\sproutbase\config\configs;
 
-use barrelstrength\sproutbase\app\sentemail\migrations\Install;
+use barrelstrength\sproutbase\migrations\sentemail\Install;
 use barrelstrength\sproutbase\config\base\Config;
 use barrelstrength\sproutbase\config\models\settings\SentEmailSettings;
 use Craft;

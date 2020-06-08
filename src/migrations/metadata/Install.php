@@ -1,11 +1,11 @@
 <?php
 /**
- * @link      https://sprout.barrelstrengthdesign.com
+ * @link https://sprout.barrelstrengthdesign.com
  * @copyright Copyright (c) Barrel Strength Design LLC
- * @license   https://craftcms.github.io/license
+ * @license https://craftcms.github.io/license
  */
 
-namespace barrelstrength\sproutbase\app\metadata\migrations;
+namespace barrelstrength\sproutbase\migrations\metadata;
 
 use barrelstrength\sproutbase\app\metadata\records\GlobalMetadata as GlobalMetadataRecord;
 use Craft;

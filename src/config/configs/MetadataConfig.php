@@ -9,6 +9,7 @@ namespace barrelstrength\sproutbase\config\configs;
 
 use barrelstrength\sproutbase\config\base\Config;
 use barrelstrength\sproutbase\config\models\settings\MetadataSettings;
+use barrelstrength\sproutbase\migrations\metadata\Install;
 use Craft;
 
 class MetadataConfig extends Config
@@ -21,6 +22,11 @@ class MetadataConfig extends Config
     public function createSettingsModel()
     {
         return new MetadataSettings();
+    }
+
+    public function createInstallMigration()
+    {
+        return new Install();
     }
 
     public function getCpNavItem(): array

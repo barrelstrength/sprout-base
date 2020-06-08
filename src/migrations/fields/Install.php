@@ -1,11 +1,11 @@
 <?php
 /**
- * @link      https://sprout.barrelstrengthdesign.com/
+ * @link https://sprout.barrelstrengthdesign.com
  * @copyright Copyright (c) Barrel Strength Design LLC
- * @license   http://sprout.barrelstrengthdesign.com/license
+ * @license https://craftcms.github.io/license
  */
 
-namespace barrelstrength\sproutbase\app\fields\migrations;
+namespace barrelstrength\sproutbase\migrations\fields;
 
 use barrelstrength\sproutbase\app\fields\records\Address as AddressRecord;
 use craft\db\Migration;
