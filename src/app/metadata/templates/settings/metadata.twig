@@ -12,19 +12,6 @@
 {% set isProBadge = not isPro ? ' <span class="sprout-pro">PRO</span>' : '' %}
 
 {{ forms.textField({
-    label: "Display Name"|t('sprout'),
-    instructions: "Intuitive, human-readable name used in Control Panel navigation and breadcrumbs."|t('sprout'),
-    id: 'displayName',
-    name: 'displayName',
-    value: settings.displayName,
-    placeholder: 'Sprout SEO',
-    autofocus: true,
-    first: true,
-    errors: '',
-    warning: config.displayName is defined ? configWarning('displayName')
-}) }}
-
-{{ forms.textField({
     label: "Meta Description Length"|t('sprout'),
     instructions: "The maximum number of characters to allow for Meta Description fields."|t('sprout'),
     name: 'maxMetaDescriptionLength',

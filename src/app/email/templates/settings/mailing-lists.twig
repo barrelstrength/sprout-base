@@ -1,5 +1,5 @@
 {% import "_includes/forms" as forms %}
-{% import 'sprout-base-config/_includes/sproutcp' as sprout %}
+{% import 'sprout-base-config/_includes/sproutcp' as sproutCp %}
 
 {% set boxBody %}
     <p>{{ "Use Sprout Email alongside <a href='{pluginStoreUrl}'>Sprout Reports</a> to send Notification Emails to custom Mailing Lists. Build dynamic and targeted Mailing Lists and Segments using all the power of the custom reporting engine in Sprout Reports."|t('sprout', {
@@ -7,7 +7,7 @@
         })|raw }}</p>
 {% endset %}
 
-{{ sprout.mediaBox({
+{{ sproutCp.mediaBox({
     heading: "Mailing Lists"|t('sprout'),
     body: boxBody,
     resourcePath: '@sproutbase/config/web/assets/cp/dist/images/sprout-icon.svg',

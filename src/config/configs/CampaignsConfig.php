@@ -13,6 +13,11 @@ use Craft;
 
 class CampaignsConfig extends Config
 {
+    public static function displayName(): string
+    {
+        return Craft::t('sprout', 'Campaigns');
+    }
+
     public function createSettingsModel()
     {
         return new CampaignsSettings();
@@ -22,8 +27,7 @@ class CampaignsConfig extends Config
     {
         return [
             'label' => Craft::t('sprout', 'Campaigns'),
-            'url' => 'sprout/campaigns',
-            'icon' => '@sproutbaseicons/plugins/campaigns/icon-mask.svg'
+            'url' => 'sprout/campaigns'
         ];
     }
 

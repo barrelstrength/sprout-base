@@ -1,17 +1,17 @@
 {% import "_includes/forms" as forms %}
 {% import "sprout-base-fields/_includes/forms" as sproutFields %}
-{% import 'sprout-base-config/_includes/sproutcp' as sprout %}
+{% import 'sprout-base-config/_includes/sproutcp' as sproutCp %}
 
 {% do view.registerAssetBundle("barrelstrength\\sproutbase\\config\\web\\assets\\cp\\CpAsset") %}
 
-{% set metadataFieldCount = craft.app.getModule('sprout-seo').app.elementMetadata.getMetadataFieldCount() %}
+{% set metadataFieldCount = craft.app.getModule('sprout').app.elementMetadata.getMetadataFieldCount() %}
 {% set noMetadataFieldsExist = not fieldId and metadataFieldCount == 0 %}
 {% set thisIsTheOneMetadataField = fieldId and metadataFieldCount == 1 %}
 
 {% if isPro or noMetadataFieldsExist or thisIsTheOneMetadataField %}
 
     {% if not isPro and not(noMetadataFieldsExist or thisIsTheOneMetadataField) %}
-        {{ sprout.upgradeToProCallout({
+        {{ sproutCp.upgradeToProCallout({
             message: '<a href="'~cpUrl('sprout/upgrade/seo')~'">Upgrade to PRO</a> to enable multiple Metadata field mappings, manage redirects, and generate sitemaps.'
         }) }}
     {% endif %}
@@ -241,7 +241,7 @@
     {% endcss %}
 {% else %}
 
-    {{ sprout.upgradeToProCallout({
+    {{ sproutCp.upgradeToProCallout({
         message: '<a href="'~cpUrl('sprout/upgrade/seo')~'">Upgrade to PRO</a> to add additional Metadata field mappings, manage redirects, and generate sitemaps.'
     }) }}
 

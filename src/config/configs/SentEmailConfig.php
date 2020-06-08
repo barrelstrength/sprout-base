@@ -14,6 +14,11 @@ use Craft;
 
 class SentEmailConfig extends Config
 {
+    public static function displayName(): string
+    {
+        return Craft::t('sprout', 'Sent Email');
+    }
+
     public function createSettingsModel()
     {
         return new SentEmailSettings();
@@ -29,7 +34,6 @@ class SentEmailConfig extends Config
         return [
             'label' => Craft::t('sprout', 'Sent Email'),
             'url' => 'sprout/sent-email',
-            'icon' => '@sproutbaseicons/plugins/sent-email/icon-mask.svg',
             'subnav' => [
                 'reports' => [
                     'label' => Craft::t('sprout', 'Sent Emails'),

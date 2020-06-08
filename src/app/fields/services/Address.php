@@ -59,7 +59,7 @@ class Address extends Component
 
         // If we don't have an address model, delete the old address associated with this field
         if (!$address instanceof AddressModel) {
-            Craft::$app->db->createCommand()
+            Craft::$app->getDb()->createCommand()
                 ->delete(AddressRecord::tableName(), [
                     'elementId' => $element->id,
                     'siteId' => $element->siteId,

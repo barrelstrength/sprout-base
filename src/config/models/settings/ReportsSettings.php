@@ -34,15 +34,9 @@ class ReportsSettings extends Settings
     public function getSettingsNavItem(): array
     {
         return [
-            'label' => Craft::t('sprout', 'Reports'),
-            'url' => 'sprout/settings/reports',
-            'icon' => '@sproutbaseicons/plugins/reports/icon.svg',
-            'subnav' => [
-                'reports' => [
-                    'label' => Craft::t('sprout', 'Reports'),
-                    'url' => 'sprout/settings/reports',
-                    'template' => 'sprout-base-reports/settings/general'
-                ]
+            'reports' => [
+                'label' => Craft::t('sprout', 'Reports'),
+                'template' => 'sprout-base-reports/settings/reports'
             ]
         ];
     }

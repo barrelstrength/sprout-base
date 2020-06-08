@@ -15,6 +15,11 @@ use Craft;
 
 class FormsConfig extends Config
 {
+    public static function displayName(): string
+    {
+        return Craft::t('sprout', 'Forms');
+    }
+
     public function createSettingsModel()
     {
         return new FormsSettings();
@@ -30,7 +35,6 @@ class FormsConfig extends Config
         return [
             'label' => Craft::t('sprout', 'Forms'),
             'url' => 'sprout/forms',
-            'icon' => '@sproutbaseicons/plugins/forms/icon-mask.svg',
             'subnav' => [
                 'forms' => [
                     'label' => Craft::t('sprout', 'Forms'),
@@ -84,7 +88,7 @@ class FormsConfig extends Config
                 'sprout/forms/edit-form-template',
             'sprout/forms/edit/<formId:\d+>' =>
                 'sprout/forms/edit-form-template',
-            'sprout/forms/edit/<formId:\d+>/settings/<settingsSectionHandle:[^\/]+\/?>' =>
+            'sprout/forms/edit/<formId:\d+>/settings/<settingsSectionHandle:[^\/]+>' =>
                 'sprout/forms/edit-settings-template',
             'sprout/forms/entries' =>
                 'sprout/entries/entries-index-template',
@@ -94,20 +98,14 @@ class FormsConfig extends Config
                 'sprout-forms/forms',
 
             // DB Settings
-            'sprout/settings/<settingsSectionHandle:forms>/<settingsSubSectionHandle:entry-statuses>' => [
-                'route' => 'sprout/settings/edit-settings',
-                'params' => [
-                    'settingsTarget' => SettingsController::SETTINGS_TARGET_DB
-                ]
-            ],
             'sprout/settings/<settingsSectionHandle:forms>/<settingsSubSectionHandle:entry-statuses>/new' => [
-                'route' => 'sprout-forms/entry-statuses/edit',
+                'route' => 'sprout/entry-statuses/edit',
                 'params' => [
                     'settingsTarget' => SettingsController::SETTINGS_TARGET_DB
                 ]
             ],
             'sprout/settings/<settingsSectionHandle:forms>/<settingsSubSectionHandle:entry-statuses>/<entryStatusId:\d+>' => [
-                'route' => 'sprout-forms/entry-statuses/edit',
+                'route' => 'sprout/entry-statuses/edit',
                 'params' => [
                     'settingsTarget' => SettingsController::SETTINGS_TARGET_DB
                 ]

@@ -1,7 +1,7 @@
 {% requireAdmin %}
 
 {% extends "_layouts/cp" %}
-{% import 'sprout-base-config/_includes/sproutcp' as sprout %}
+{% import 'sprout-base-config/_includes/sproutcp' as sproutCp %}
 
 {% do view.registerAssetBundle("barrelstrength\\sproutbase\\config\\web\\assets\\cp\\CpAsset") %}
 
@@ -15,12 +15,20 @@
 {#{% set subnav = navItem.subnav %}#}
 {#{% set currentSubsection = navItem.subnav[currentSubSectionHandle] %}#}
 
-
 {% set redirectUrl = currentSubsection['url'] ?? craft.app.request.url %}
 {% set actionUrl = currentSubsection['actionUrl'] ?? 'sprout/settings/save-settings' %}
 {#{% set settingsForm = navItems[currentSubSectionHandle]['settingsForm'] ?? true %}#}
 
 {% set fullPageForm = true %}
+
+{% block contextMenu %}
+    {% if craft.app.getIsMultiSite() %}
+        {% include "_elements/sitemenu" with {
+            selectedSiteId: currentSite.id,
+            urlFormat: craft.app.request.pathInfo~"?site={handle}"
+        } %}
+    {% endif %}
+{% endblock %}
 
 {% set sidebar %}
     <nav>

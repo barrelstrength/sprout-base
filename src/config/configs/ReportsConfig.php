@@ -14,6 +14,11 @@ use Craft;
 
 class ReportsConfig extends Config
 {
+    public static function displayName(): string
+    {
+        return Craft::t('sprout', 'Reports');
+    }
+
     public function createSettingsModel()
     {
         return new ReportsSettings();
@@ -29,7 +34,6 @@ class ReportsConfig extends Config
         return [
             'label' => Craft::t('sprout', 'Reports'),
             'url' => 'sprout/reports',
-            'icon' => '@sproutbaseicons/plugins/reports/icon-mask.svg',
             'subnav' => [
                 'reports' => [
                     'label' => Craft::t('sprout', 'Reports'),

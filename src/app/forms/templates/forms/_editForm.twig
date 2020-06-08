@@ -1,7 +1,7 @@
 {% requirePermission "sprout:forms:editForms" %}
 
 {% extends "sprout-base-forms/_layouts/base" %}
-{% import 'sprout-base-config/_includes/sproutcp' as sprout %}
+{% import 'sprout-base-config/_includes/sproutcp' as sproutCp %}
 
 {% set isPro = craft.app.getModule('sprout-forms').is('pro') %}
 
@@ -77,7 +77,7 @@
         </div>
 
         {% if not isPro %}
-            {{ sprout.upgradeToProButton({
+            {{ sproutCp.upgradeToProButton({
                 url: cpUrl('sprout/upgrade/forms'),
                 title: "Upgrade to Sprout Forms PRO to manage Unlimited Forms"|t('sprout')
             }) }}

@@ -2,16 +2,22 @@
 
 {% block actionButton %}
 
-    <div class="buttons">
-        <input class="btn submit" type="submit"
-            value="{{ 'Save'|t('sprout') }}">
+    {% set actionButtonTemplate = currentSubsection.actionButtonTemplate ?? null %}
 
-        {#        {% if upgradeLink %}#}
-        {#            {{ sprout.upgradeToProButton({#}
-        {#                url: upgradeLink#}
-        {#            }) }}#}
-        {#        {% endif %}#}
-    </div>
+    {% if actionButtonTemplate %}
+        {% include actionButtonTemplate %}
+    {% else %}
+        <div class="buttons">
+            <input class="btn submit" type="submit"
+                value="{{ 'Save'|t('sprout') }}">
+
+            {#        {% if upgradeLink %}#}
+            {#            {{ sproutCp.upgradeToProButton({#}
+            {#                url: upgradeLink#}
+            {#            }) }}#}
+            {#        {% endif %}#}
+        </div>
+    {% endif %}
 
 {% endblock %}
 
@@ -29,7 +35,4 @@
 
     </div>
 
-{% endblock %}
-
-{% block settingsJs %}
 {% endblock %}

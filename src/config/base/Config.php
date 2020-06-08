@@ -7,11 +7,12 @@
 
 namespace barrelstrength\sproutbase\config\base;
 
+use craft\base\Component;
 use craft\helpers\StringHelper;
 use ReflectionClass;
 use ReflectionException;
 
-abstract class Config implements ConfigInterface
+abstract class Config extends Component implements ConfigInterface
 {
     protected $_edition = 'lite';
 
@@ -35,6 +36,11 @@ abstract class Config implements ConfigInterface
     public function addSettings($settings)
     {
         $this->_settings = $settings;
+    }
+
+    public function showCpDisplaySettings(): bool
+    {
+        return true;
     }
 
     /**

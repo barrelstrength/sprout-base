@@ -9,7 +9,7 @@ namespace barrelstrength\sproutbase\app\sentemail\services;
 
 use barrelstrength\sproutbase\app\sentemail\elements\SentEmail;
 use barrelstrength\sproutbase\app\sentemail\models\SentEmailInfoTable;
-use barrelstrength\sproutbase\helpers\jobs\PurgeElements;
+use barrelstrength\sproutbase\jobs\PurgeElements;
 use barrelstrength\sproutbase\SproutBase;
 use Craft;
 use craft\base\Component;

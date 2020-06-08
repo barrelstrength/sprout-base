@@ -39,16 +39,9 @@ class SentEmailSettings extends Settings
     public function getSettingsNavItem(): array
     {
         return [
-            'label' => Craft::t('sprout', 'Sent Email'),
-            'url' => 'sprout/settings/sent-email',
-            'icon' => '@sproutbaseicons/plugins/sent-email/icon.svg',
-            'subnav' => [
-                'sent-email' => [
-                    'label' => Craft::t('sprout', 'Sent Email'),
-                    'url' => 'sprout/settings/sent-email',
-                    'selected' => 'sent-email',
-                    'template' => 'sprout-base-sent-email/settings/sent-email'
-                ]
+            'sent-email' => [
+                'label' => Craft::t('sprout', 'Sent Email'),
+                'template' => 'sprout-base-sent-email/settings/sent-email'
             ]
         ];
     }

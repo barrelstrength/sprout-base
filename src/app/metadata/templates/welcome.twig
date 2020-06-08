@@ -11,7 +11,7 @@
 
         {{ parent() }}
 
-        {{ sprout.featureHeader({
+        {{ sproutCp.featureHeader({
             heading: "Smart, content-driven SEO"|t('sprout'),
             message: "Sprout SEO makes it seamless to manage metadata for Search, Structured Data, and Social Sharing to ensure your content is findable and sharable."|t('sprout'),
             primaryButtonText: "Get Started"|t('sprout'),
@@ -20,7 +20,7 @@
             secondaryButtonLink: "https://sprout.barrelstrengthdesign.com/docs/seo"
         }) }}
 
-        {{ sprout.featureImage({
+        {{ sproutCp.featureImage({
             imageUrl: assetUrl ~ '/images/sproutseo-feature.png',
             altText: 'Content-focused SEO for Craft CMS'|t('sprout')
         }) }}

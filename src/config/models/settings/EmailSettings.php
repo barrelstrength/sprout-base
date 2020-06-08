@@ -40,20 +40,13 @@ class EmailSettings extends Settings
     public function getSettingsNavItem(): array
     {
         return [
-            'label' => Craft::t('sprout', 'Email'),
-            'url' => 'sprout/settings/email',
-            'icon' => '@sproutbaseicons/plugins/email/icon.svg',
-            'subnav' => [
-                'mailers' => [
-                    'label' => Craft::t('sprout', 'Mailers'),
-                    'url' => 'sprout/settings/email/mailers',
-                    'template' => 'sprout-base-email/settings/mailers'
-                ],
-                'notifications' => [
-                    'label' => Craft::t('sprout', 'Notifications'),
-                    'url' => 'sprout/settings/email/notifications',
-                    'template' => 'sprout-base-email/settings/notifications'
-                ]
+            'mailers' => [
+                'label' => Craft::t('sprout', 'Mailers'),
+                'template' => 'sprout-base-email/settings/mailers'
+            ],
+            'notifications' => [
+                'label' => Craft::t('sprout', 'Notifications'),
+                'template' => 'sprout-base-email/settings/notifications'
             ]
         ];
     }

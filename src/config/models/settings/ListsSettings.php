@@ -20,14 +20,5 @@ class ListsSettings extends Settings
      * @var string
      */
     public $displayName = '';
-
-    public function getSettingsNavItem(): array
-    {
-        return [
-            'label' => Craft::t('sprout', 'Lists'),
-            'url' => 'sprout/settings/lists',
-            'icon' => '@sproutbaseicons/plugins/lists/icon.svg',
-        ];
-    }
 }
 

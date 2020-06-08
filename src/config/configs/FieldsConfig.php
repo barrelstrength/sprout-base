@@ -13,6 +13,16 @@ use Craft;
 
 class FieldsConfig extends Config
 {
+    public static function displayName(): string
+    {
+        return Craft::t('sprout', 'Fields');
+    }
+
+    public function showCpDisplaySettings(): bool
+    {
+        return false;
+    }
+
     public function createInstallMigration()
     {
         return new Install();

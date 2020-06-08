@@ -7,10 +7,12 @@
 
 namespace barrelstrength\sproutbase\config\controllers;
 
+use barrelstrength\sproutbase\config\base\Config;
 use barrelstrength\sproutbase\config\base\Settings;
 use barrelstrength\sproutbase\SproutBase;
 use Craft;
 use craft\errors\MissingComponentException;
+use craft\errors\SiteNotFoundException;
 use craft\helpers\UrlHelper;
 use craft\web\Controller;
 use ReflectionException;
@@ -32,66 +34,85 @@ class SettingsController extends Controller
      */
     public function actionHello(): Response
     {
-        return $this->redirect(UrlHelper::cpUrl('sprout/settings/general'));
+        return $this->redirect(UrlHelper::cpUrl('sprout/settings/control-panel/welcome'));
     }
 
     /**
      * @param string $settingsTarget
+     * @param null   $siteHandle
      * @param null   $settingsSectionHandle
      * @param null   $settingsSubSectionHandle
      *
      * @return Response
+     * @throws SiteNotFoundException
+     * @throws ReflectionException
      */
     public function actionEditSettings(
         $settingsTarget = self::SETTINGS_TARGET_PROJECT_CONFIG,
+        $siteHandle = null,
         $settingsSectionHandle = null,
         $settingsSubSectionHandle = null
     ): Response {
 //        $hasUpgradeLink = method_exists($this->plugin, 'getUpgradeUrl');
 //        $upgradeLink = $hasUpgradeLink ? $this->plugin->getUpgradeUrl() : null;
 
-        $settings = SproutBase::$app->settings->getSettings(false);
+        $currentSite = !empty($siteHandle)
+            ? Craft::$app->getSites()->getSiteByHandle($siteHandle)
+            : Craft::$app->getSites()->getPrimarySite();
 
-        // Place general settings at end
-        $generalSettings['general'] = $settings['general'];
-        unset($settings['general']);
-        $settings = array_merge($generalSettings, $settings);
+        $sproutConfigs = SproutBase::$app->config->getConfigs();
+
+        /** @var Config $currentSproutConfig */
+        $currentSproutConfig = $sproutConfigs[$settingsSectionHandle];
+
+        $settings = SproutBase::$app->settings->getSettings(false);
+        $currentSettings = $settings[$currentSproutConfig->getKey()] ?? [];
+
+        // CP settings go first
+        $cpSettings['control-panel'] = $settings['control-panel'];
+        unset($settings['control-panel']);
+        $settings = array_merge($cpSettings, $settings);
 
         $subNav = [];
-        foreach ($settings as $setting) {
+        foreach ($settings as $settingsKey => $setting) {
+
+            $setting->setCurrentSite($currentSite);
 
             $settingsNavItem = $setting->getSettingsNavItem();
-            $settingsSubNavItems = $settingsNavItem['subnav'] ?? [];
+            $settingsSubNavItems = $settingsNavItem ?? [];
 
             if (!$settingsSubNavItems) {
                 continue;
             }
 
+            $matchingSproutConfig = $sproutConfigs[$settingsKey];
             $subNav[] = [
-                'heading' => $settingsNavItem['label'],
+                'heading' => $matchingSproutConfig::displayName(),
             ];
 
             foreach ($settingsSubNavItems as $subNavKey => $settingsSubNavItem) {
+                $settingsSubNavItem['url'] = 'sprout/settings/'.$settingsKey.'/'.$subNavKey;
                 $subNav[$subNavKey] = $settingsSubNavItem;
             }
         }
 
-
-        $currentSettings = $settings[$settingsSectionHandle] ?? [];
-
         // We grab the config settings a second time for configWarning messages
-        $config = Craft::$app->getConfig()->getConfigFromFile('sprout');
-        $currentConfig = $config[$settingsSectionHandle] ?? [];
+        $fileConfig = Craft::$app->getConfig()->getConfigFromFile('sprout');
+        $currentFileConfig = $fileConfig[$settingsSectionHandle] ?? [];
 
         $navItem = $currentSettings->getSettingsNavItem();
-        $defaultSubSectionHandle = key($navItem['subnav']);
+        $defaultSubSectionHandle = key($navItem);
         $currentSubSectionHandle = $settingsSubSectionHandle ?? $defaultSubSectionHandle;
 
-        $subSection = $navItem['subnav'][$currentSubSectionHandle];
+        $subSection = $navItem[$currentSubSectionHandle];
         $dynamicVariables = $subSection['variables'] ?? [];
 
         // Throw error if not found?
         $currentSubsection = $subNav[$currentSubSectionHandle];
+
+        if (isset($currentSubsection['settingsTarget'])) {
+            $settingsTarget = $currentSubsection['settingsTarget'];
+        }
 
         // The settingsTarget defaults to 'project-config'
         // Plugins should pass a settingsTarget of 'db' if they
@@ -101,8 +122,9 @@ class SettingsController extends Controller
             : 'sprout-base-config/_layouts/settings';
 
         return $this->renderTemplate($settingsTemplate, array_merge([
+            'currentSite' => $currentSite,
             'settings' => $currentSettings,
-            'config' => $currentConfig,
+            'config' => $currentFileConfig,
 //            'navItem' => $navItem ?? null,
 
             'subnav' => $subNav,

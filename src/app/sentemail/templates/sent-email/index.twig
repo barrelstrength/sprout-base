@@ -1,5 +1,5 @@
 {% extends "sprout-base-sent-email/_layouts/elementindex" %}
-{% import 'sprout-base-config/_includes/sproutcp' as sprout %}
+{% import 'sprout-base-config/_includes/sproutcp' as sproutCp %}
 
 {% do view.registerAssetBundle("barrelstrength\\sproutbase\\config\\web\\assets\\cp\\CpAsset") %}
 
@@ -10,7 +10,7 @@
 
     {% if not isPro %}
         <div class="buttons">
-            {{ sprout.upgradeToProButton({
+            {{ sproutCp.upgradeToProButton({
                 url: cpUrl('sprout/upgrade/sent-email'),
                 title: "Upgrade to Sprout Sent Email PRO to manage Resend Emails"|t('sprout')
             }) }}

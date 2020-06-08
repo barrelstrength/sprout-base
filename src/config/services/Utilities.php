@@ -7,7 +7,7 @@
 
 namespace barrelstrength\sproutbase\config\services;
 
-use barrelstrength\sproutbase\helpers\jobs\PurgeElements;
+use barrelstrength\sproutbase\jobs\PurgeElements;
 use Craft;
 use yii\base\Component;
 

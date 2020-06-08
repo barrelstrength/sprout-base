@@ -17,7 +17,7 @@ use barrelstrength\sproutbase\app\forms\jobs\ResaveEntries;
 use barrelstrength\sproutbase\app\forms\models\EntryStatus;
 use barrelstrength\sproutbase\app\forms\records\EntriesSpamLog as EntriesSpamLogRecord;
 use barrelstrength\sproutbase\app\forms\records\Entry as EntryRecord;
-use barrelstrength\sproutbase\helpers\jobs\PurgeElements;
+use barrelstrength\sproutbase\jobs\PurgeElements;
 use barrelstrength\sproutbase\SproutBase;
 use Craft;
 use craft\helpers\Json;

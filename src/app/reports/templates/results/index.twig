@@ -1,5 +1,5 @@
 {% extends "_layouts/cp" %}
-{% import 'sprout-base-config/_includes/sproutcp' as sprout %}
+{% import 'sprout-base-config/_includes/sproutcp' as sproutCp %}
 
 {% set title  = report.name %}
 {% set bodyClass = 'sprout-reports-content' %}
@@ -110,7 +110,7 @@
                 <p>{{ "This segment currently has no results. Check your segment settings and ensure you have content for the segment you are trying to run. To quickly edit the segment settings, click on the gear icon in the upper right."|t('sprout')|raw }}</p>
             {% endset %}
 
-            {{ sprout.mediaBox({
+            {{ sproutCp.mediaBox({
                 heading: "No results found"|t('sprout'),
                 body: boxBody,
                 resourcePath: '@sproutbase/app/reports/web/assets/reports/dist/images/icon.svg'

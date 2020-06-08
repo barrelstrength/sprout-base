@@ -11,7 +11,7 @@ use barrelstrength\sproutbase\app\redirects\elements\Redirect;
 use barrelstrength\sproutbase\app\redirects\enums\RedirectMethods;
 use barrelstrength\sproutbase\app\redirects\records\Redirect as RedirectRecord;
 use barrelstrength\sproutbase\config\models\settings\RedirectsSettings;
-use barrelstrength\sproutbase\helpers\jobs\PurgeElements;
+use barrelstrength\sproutbase\jobs\PurgeElements;
 use barrelstrength\sproutbase\SproutBase;
 use Craft;
 use craft\db\Query;

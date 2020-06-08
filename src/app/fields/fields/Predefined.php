@@ -1,8 +1,8 @@
 <?php
 
-namespace barrelstrength\sproutbase\app\fields;
+namespace barrelstrength\sproutbase\app\fields\fields;
 
-use barrelstrength\sproutbase\app\fields\data\PredefinedFieldData;
+use barrelstrength\sproutbase\app\fields\fields\data\PredefinedFieldData;
 use Craft;
 use craft\base\ElementInterface;
 use Throwable;

@@ -55,15 +55,15 @@ class SitemapsSettings extends Settings
     public function getSettingsNavItem(): array
     {
         return [
-            'label' => Craft::t('sprout', 'Sitemaps'),
-            'url' => 'sprout/settings/sitemaps',
-            'icon' => '@sproutbaseicons/plugins/sitemaps/icon.svg',
-            'subnav' => [
-                'sitemaps' => [
-                    'label' => Craft::t('sprout', 'Sitemaps'),
-                    'url' => 'sprout/settings/sitemaps',
-                    'template' => 'sprout-base-sitemaps/settings/sitemaps'
-                ]
+            'sitemaps' => [
+                'label' => Craft::t('sprout', 'Sitemaps'),
+                'template' => 'sprout-base-sitemaps/settings/sitemaps',
+                'multisite' => true
+            ],
+            'sitemaps2' => [
+                'label' => Craft::t('sprout', 'Multi-lingual Sitemaps'),
+                'template' => 'sprout-base-sitemaps/settings/sitemaps',
+                'multisite' => false
             ]
         ];
     }

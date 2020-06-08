@@ -13,6 +13,11 @@ use Craft;
 
 class MetadataConfig extends Config
 {
+    public static function displayName(): string
+    {
+        return Craft::t('sprout', 'Metadata');
+    }
+
     public function createSettingsModel()
     {
         return new MetadataSettings();
@@ -23,7 +28,6 @@ class MetadataConfig extends Config
         return [
             'label' => Craft::t('sprout', 'SEO'),
             'url' => 'sprout/metadata/globals',
-            'icon' => '@sproutbaseicons/plugins/seo/icon-mask.svg',
             'subnav' => [
                 'globals' => [
                     'label' => Craft::t('sprout', 'Globals'),
@@ -49,9 +53,9 @@ class MetadataConfig extends Config
     {
         return [
             // Globals
-            'sprout/metadata/globals/<selectedTabHandle:[^\/]+>/<siteHandle:[^\/]+\/?>' =>
+            'sprout/metadata/globals/<selectedTabHandle:[^\/]+>/<siteHandle:[^\/]+>' =>
                 'sprout/global-metadata/edit-global-metadata',
-            'sprout/metadata/globals/<selectedTabHandle:[^\/]+\/?>' =>
+            'sprout/metadata/globals/<selectedTabHandle:[^\/]+>' =>
                 'sprout/global-metadata/edit-global-metadata',
             'sprout/metadata/globals' => [
                 'route' => 'sprout/global-metadata/edit-global-metadata',

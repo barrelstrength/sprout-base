@@ -202,7 +202,7 @@ class Schema extends Component
      *
      * @return array[][]
      */
-    public function getSchemaSubtypes($schemas): array
+    public function getSchemaSubtypes($schemas)
     {
         $values = null;
 

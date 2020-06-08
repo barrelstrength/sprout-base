@@ -1,6 +1,6 @@
 <?php
 
-namespace barrelstrength\sproutbase\app\fields;
+namespace barrelstrength\sproutbase\app\fields\fields;
 
 use Craft;
 use craft\base\ElementInterface;

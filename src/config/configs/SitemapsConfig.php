@@ -15,6 +15,11 @@ use Craft;
 
 class SitemapsConfig extends Config
 {
+    public static function displayName(): string
+    {
+        return Craft::t('sprout', 'Sitemaps');
+    }
+
     public function createSettingsModel()
     {
         return new SitemapsSettings();
@@ -29,8 +34,7 @@ class SitemapsConfig extends Config
     {
         return [
             'label' => Craft::t('sprout', 'Sitemaps'),
-            'url' => 'sprout/sitemaps',
-            'icon' => '@sproutbaseicons/plugins/sitemaps/icon-mask.svg'
+            'url' => 'sprout/sitemaps'
         ];
     }
 
@@ -47,11 +51,11 @@ class SitemapsConfig extends Config
     {
         return [
             // Sitemaps
-            'sprout/sitemaps/sitemaps/edit/<sitemapSectionId:\d+>/<siteHandle:[^\/]+\/?>' =>
+            'sprout/sitemaps/sitemaps/edit/<sitemapSectionId:\d+>/<siteHandle:[^\/]+>' =>
                 'sprout/sitemaps/sitemap-edit-template',
-            'sprout/sitemaps/sitemaps/new/<siteHandle:[^\/]+\/?>' =>
+            'sprout/sitemaps/sitemaps/new/<siteHandle:[^\/]+>' =>
                 'sprout/sitemaps/sitemap-edit-template',
-            'sprout/sitemaps/sitemaps/<siteHandle:[^\/]+\/?>' =>
+            'sprout/sitemaps/sitemaps/<siteHandle:[^\/]+>' =>
                 'sprout/sitemaps/sitemap-index-template',
             'sprout/sitemaps/sitemaps' =>
                 'sprout/sitemaps/sitemap-index-template',

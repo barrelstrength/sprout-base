@@ -2,7 +2,7 @@
 
 namespace barrelstrength\sproutbase\app\email\models;
 
-use barrelstrength\sproutbase\app\fields\Email;
+use barrelstrength\sproutbase\app\fields\fields\Email;
 use Craft;
 use craft\base\Model;
 use Twig\Error\LoaderError;

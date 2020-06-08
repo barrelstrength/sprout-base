@@ -14,6 +14,11 @@ use Craft;
 
 class EmailConfig extends Config
 {
+    public static function displayName(): string
+    {
+        return Craft::t('sprout', 'Email');
+    }
+
     public function createSettingsModel()
     {
         return new EmailSettings();
@@ -29,7 +34,6 @@ class EmailConfig extends Config
         return [
             'label' => Craft::t('sprout', 'Email'),
             'url' => 'sprout/notifications',
-            'icon' => '@sproutbaseicons/plugins/email/icon-mask.svg',
             'subnav' => [
                 'notifications' => [
                     'label' => Craft::t('sprout', 'Notifications'),

@@ -12,6 +12,7 @@ use barrelstrength\sproutbase\app\forms\captchas\HoneypotCaptcha;
 use barrelstrength\sproutbase\app\forms\captchas\JavascriptCaptcha;
 use barrelstrength\sproutbase\app\forms\formtemplates\AccessibleTemplates;
 use barrelstrength\sproutbase\config\base\Settings;
+use barrelstrength\sproutbase\config\controllers\SettingsController;
 use barrelstrength\sproutbase\SproutBase;
 use Craft;
 
@@ -56,31 +57,24 @@ class FormsSettings extends Settings
     public function getSettingsNavItem(): array
     {
         return [
-            'label' => Craft::t('sprout', 'Forms'),
-            'url' => 'sprout/settings/forms',
-            'icon' => '@sproutbaseicons/plugins/forms/icon.svg',
-            'subnav' => [
-                'forms' => [
-                    'label' => Craft::t('sprout', 'Forms'),
-                    'url' => 'sprout/settings/forms',
-                    'template' => 'sprout-base-forms/settings/general',
-                ],
-                'spam-protection' => [
-                    'label' => Craft::t('sprout', 'Spam Protection'),
-                    'url' => 'sprout/settings/forms/spam-protection',
-                    'template' => 'sprout-base-forms/settings/spam-protection',
-                    'variables' => [
-                        'spamRedirectBehaviorOptions' => $this->getSpamRedirectBehaviorsAsOptions()
-                    ]
-                ],
-                'entry-statuses' => [
-                    'label' => Craft::t('sprout', 'Entry Statuses'),
-                    'url' => 'sprout/settings/forms/entry-statuses',
-                    'template' => 'sprout-base-forms/settings/entrystatuses',
-                    'actionButtonTemplate' => 'sprout-forms/settings/entrystatuses/_actionStatusButton',
-                    'variables' => [
-                        'entryStatuses' => SproutBase::$app->entryStatuses->getAllEntryStatuses()
-                    ]
+            'forms' => [
+                'label' => Craft::t('sprout', 'Forms'),
+                'template' => 'sprout-base-forms/settings/forms',
+            ],
+            'spam-protection' => [
+                'label' => Craft::t('sprout', 'Spam Protection'),
+                'template' => 'sprout-base-forms/settings/spam-protection',
+                'variables' => [
+                    'spamRedirectBehaviorOptions' => $this->getSpamRedirectBehaviorsAsOptions()
+                ]
+            ],
+            'entry-statuses' => [
+                'label' => Craft::t('sprout', 'Entry Statuses'),
+                'template' => 'sprout-base-forms/settings/entrystatuses',
+                'settingsTarget' => SettingsController::SETTINGS_TARGET_DB,
+                'actionButtonTemplate' => 'sprout-base-forms/settings/entrystatuses/_actionStatusButton',
+                'variables' => [
+                    'entryStatuses' => SproutBase::$app->entryStatuses->getAllEntryStatuses()
                 ]
             ]
         ];

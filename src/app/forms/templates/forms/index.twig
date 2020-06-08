@@ -1,7 +1,7 @@
 {% requirePermission "sprout:forms:editForms" %}
 
 {% extends "sprout-base-forms/_layouts/elementindex" %}
-{% import 'sprout-base-config/_includes/sproutcp' as sprout %}
+{% import 'sprout-base-config/_includes/sproutcp' as sproutCp %}
 {% set title = "Forms"|t('sprout') %}
 {% set elementType = 'barrelstrength\\sproutbase\\app\\forms\\elements\\Form' %}
 {% set canCreateForm = craft.app.getModule('sprout').app.forms.canCreateForm() %}
@@ -16,7 +16,7 @@
             href="{{ cpUrl('sprout/forms/new') }}">{{ "New Form"|t('sprout') }}</a>
 
         {% if not isPro %}
-            {{ sprout.upgradeToProButton({
+            {{ sproutCp.upgradeToProButton({
                 url: cpUrl('sprout/upgrade/forms'),
                 title: "Upgrade to Sprout Forms PRO to manage Unlimited Forms"|t('sprout')
             }) }}

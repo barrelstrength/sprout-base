@@ -41,6 +41,7 @@ use barrelstrength\sproutbase\app\sitemaps\controllers\SitemapsController;
 use barrelstrength\sproutbase\app\sitemaps\controllers\XmlSitemapController;
 use barrelstrength\sproutbase\config\controllers\SettingsController;
 use barrelstrength\sproutbase\config\services\App;
+use barrelstrength\sproutbase\config\services\Config;
 use barrelstrength\sproutbase\config\web\twig\Extension;
 use Craft;
 use craft\events\RegisterComponentTypesEvent;
@@ -141,6 +142,8 @@ class SproutBase extends Module
         $this->initEmailEvents();
         $this->initReportEvents();
         $this->initConfigEvents();
+
+//        $dog = new Url
     }
 
     public function initMappings()

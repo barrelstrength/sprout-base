@@ -1,5 +1,5 @@
 {% import "_includes/forms" as forms %}
-{% import 'sprout-base-config/_includes/sproutcp' as sprout %}
+{% import 'sprout-base-config/_includes/sproutcp' as sproutCp %}
 
 {% do view.registerAssetBundle("barrelstrength\\sproutbase\\config\\web\\assets\\cp\\CpAsset") %}
 
@@ -46,7 +46,7 @@
         {% endif %}
 
         {% if not isPro %}
-            {{ sprout.upgradeToProCallout({
+            {{ sproutCp.upgradeToProCallout({
                 message: '<a href="'~cpUrl('sprout/upgrade/sent-email')~'">Upgrade to PRO</a> to resend email to users.'
             }) }}
         {% endif %}

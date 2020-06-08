@@ -1,5 +1,5 @@
 {% import "_includes/forms" as forms %}
-{% import 'sprout-base-config/_includes/sproutcp' as sprout %}
+{% import 'sprout-base-config/_includes/sproutcp' as sproutCp %}
 
 {% set dateRange = options.dateRange is defined ? options.dateRange : 'customRange' %}
 
@@ -46,7 +46,7 @@
         <p>{{ "Create your first form and return to customize this report. Once you create a form, you'll be able to select this report's form and data range."|t('sprout')|raw }}</p>
     {% endset %}
 
-    {{ sprout.mediaBox({
+    {{ sproutCp.mediaBox({
         heading: "One more step"|t('sprout'),
         body: boxBody,
         resourcePath: '@sproutbase/web/assets/sproutreports/dist/images/icon.svg'

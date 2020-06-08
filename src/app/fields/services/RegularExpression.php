@@ -7,7 +7,7 @@
 
 namespace barrelstrength\sproutbase\app\fields\services;
 
-use barrelstrength\sproutbase\app\fields\RegularExpression as RegularExpressionField;
+use barrelstrength\sproutbase\app\fields\fields\RegularExpression as RegularExpressionField;
 use barrelstrength\sproutbase\app\fields\web\assets\regularexpression\RegularExpressionFieldAsset;
 use barrelstrength\sproutbase\SproutBase;
 use Craft;

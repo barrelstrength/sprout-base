@@ -23,9 +23,9 @@ use yii\web\ServerErrorHttpException;
 
 /**
  *
- * @property \barrelstrength\sproutbase\config\base\ConfigInterface[]  $configs
- * @property \barrelstrength\sproutbase\config\base\SproutBasePlugin[] $sproutBasePlugins
- * @property array                                                     $sproutCpSettings
+ * @property ConfigInterface[]  $configs
+ * @property SproutBasePlugin[] $sproutBasePlugins
+ * @property array              $sproutCpSettings
  */
 class Config extends Component
 {
@@ -35,7 +35,7 @@ class Config extends Component
     const CONFIG_SPROUT_KEY = Plugins::CONFIG_PLUGINS_KEY.'.sprout';
 
     /**
-     * @var ConfigInterface[]
+     * @var array
      */
     protected $_configs = [];
 
@@ -65,7 +65,7 @@ class Config extends Component
     }
 
     /**
-     * @return ConfigInterface[]
+     * @return array
      */
     public function getConfigs(): array
     {
@@ -242,14 +242,14 @@ class Config extends Component
 
             $navItem = $settings->getSettingsNavItem();
 
-            if (!isset($navItem['subnav']) || count($navItem['subnav']) === 0) {
+            if (count($navItem) === 0) {
                 continue;
             }
 
             $settingsPages[] = [
-                'label' => $navItem['label'],
-                'url' => $navItem['url'],
-                'icon' => $navItem['icon'],
+                'label' => $configType::displayName(),
+                'url' => 'sprout/settings/'.$configType->getKey(),
+                'icon' => '@sproutbaseicons/modules/'.$configType->getKey().'/icon.svg',
             ];
         }
 
@@ -272,7 +272,7 @@ class Config extends Component
             $cpNavItems[$key] = [
                 'label' => $navItem['label'],
                 'url' => $navItem['url'],
-                'icon' => $navItem['icon'],
+                'icon' => Craft::getAlias('@sproutbaseicons/modules/'.$configType->getKey().'/icon-mask.svg'),
             ];
 
             if (!isset($navItem['subnav']) || count($navItem['subnav']) === 0) {

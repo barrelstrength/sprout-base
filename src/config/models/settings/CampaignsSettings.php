@@ -39,15 +39,9 @@ class CampaignsSettings extends Settings
     public function getSettingsNavItem(): array
     {
         return [
-            'label' => Craft::t('sprout', 'Campaigns'),
-            'url' => 'sprout/settings/campaigns/campaign-types',
-            'icon' => '@sproutbaseicons/plugins/campaigns/icon.svg',
-            'subnav' => [
-                'campaign-types' => [
-                    'label' => Craft::t('sprout', 'Campaign Types'),
-                    'url' => 'sprout/settings/campaigns/campaign-types',
-                    'template' => 'sprout-base-campaigns/settings/campaign-types'
-                ]
+            'campaign-types' => [
+                'label' => Craft::t('sprout', 'Campaign Types'),
+                'template' => 'sprout-base-campaigns/settings/campaign-types'
             ]
         ];
     }

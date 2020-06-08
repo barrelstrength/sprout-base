@@ -5,7 +5,7 @@
  * @license   http://sprout.barrelstrengthdesign.com/license
  */
 
-namespace barrelstrength\sproutbase\helpers\jobs;
+namespace barrelstrength\sproutbase\jobs;
 
 use Craft;
 use craft\queue\BaseJob;
@@ -13,9 +13,6 @@ use craft\queue\QueueInterface;
 use Throwable;
 use yii\queue\Queue;
 
-/**
- * PurgeElements job
- */
 class PurgeElements extends BaseJob
 {
     public $elementType;

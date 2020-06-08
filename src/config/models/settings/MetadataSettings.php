@@ -49,15 +49,9 @@ class MetadataSettings extends Settings
     public function getSettingsNavItem(): array
     {
         return [
-            'label' => Craft::t('sprout', 'SEO'),
-            'url' => 'sprout/settings/seo',
-            'icon' => '@sproutbaseicons/plugins/seo/icon.svg',
-            'subnav' => [
-                'meta' => [
-                    'label' => Craft::t('sprout', 'Metadata'),
-                    'url' => 'sprout/settings/seo/meta',
-                    'template' => 'sprout-seo/settings/general'
-                ]
+            'meta' => [
+                'label' => Craft::t('sprout', 'Metadata'),
+                'template' => 'sprout-base-metadata/settings/metadata'
             ]
         ];
     }

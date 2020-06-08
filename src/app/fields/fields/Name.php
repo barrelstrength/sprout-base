@@ -5,7 +5,7 @@
  * @license   https://craftcms.github.io/license
  */
 
-namespace barrelstrength\sproutbase\app\fields;
+namespace barrelstrength\sproutbase\app\fields\fields;
 
 use barrelstrength\sproutbase\app\fields\models\Name as NameModel;
 use barrelstrength\sproutbase\SproutBase;

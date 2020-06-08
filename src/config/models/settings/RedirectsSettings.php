@@ -71,15 +71,9 @@ class RedirectsSettings extends Settings
     public function getSettingsNavItem(): array
     {
         return [
-            'label' => Craft::t('sprout', 'Redirects'),
-            'url' => 'sprout/settings/redirects',
-            'icon' => '@sproutbaseicons/plugins/redirects/icon.svg',
-            'subnav' => [
-                'redirects' => [
-                    'label' => Craft::t('sprout', 'Redirects'),
-                    'url' => 'sprout/settings/redirects',
-                    'template' => 'sprout-base-redirects/settings/redirects'
-                ]
+            'redirects' => [
+                'label' => Craft::t('sprout', 'Redirects'),
+                'template' => 'sprout-base-redirects/settings/redirects'
             ]
         ];
     }

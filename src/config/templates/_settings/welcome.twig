@@ -1,5 +1,5 @@
 {% import "_includes/forms" as forms %}
-{% import 'sprout-base-config/_includes/sproutcp' as sprout %}
+{% import 'sprout-base-config/_includes/sproutcp' as sproutCp %}
 
 {% set boxBody %}
     <p>{{ "The Sprout Plugins are a premium suite of plugins designed for businesses who want to use Craft CMS as the core of their content management and digital marketing workflows."|t('sprout') }}</p>
@@ -7,7 +7,7 @@
     <p>{{ "Book a free 1/2 hour [coaching session](https://sprout.barrelstrengthdesign.com/docs/support/training.html) to learn more about Forms, SEO, Email, Reports, or how to get the most out of any Sprout plugin."|t('sprout')|markdown|raw }}</p>
 {% endset %}
 
-{{ sprout.mediaBox({
+{{ sproutCp.mediaBox({
     heading: "Nice to see you."|t('sprout'),
     body: boxBody,
     resourcePath: '@sproutbase/config/web/assets/cp/dist/images/sprout-icon.svg',
