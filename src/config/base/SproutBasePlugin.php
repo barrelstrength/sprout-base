@@ -43,15 +43,15 @@ abstract class SproutBasePlugin extends Plugin
      *
      * @return ConfigInterface[]
      */
-    public function getSproutConfigs(): array
+    public static function getSproutConfigs(): array
     {
         return [];
     }
 
     private function getCpUrlRules(): array
     {
-        $configTypes = $this->getSproutConfigs();
-
+        $configTypes = static::getSproutConfigs();
+        
         $urlRules = [];
         foreach ($configTypes as $configType) {
             $config = new $configType();
@@ -66,7 +66,7 @@ abstract class SproutBasePlugin extends Plugin
 
     private function getSiteUrlRules(): array
     {
-        $configTypes = $this->getSproutConfigs();
+        $configTypes = static::getSproutConfigs();
 
         $urlRules = [];
         foreach ($configTypes as $configType) {
