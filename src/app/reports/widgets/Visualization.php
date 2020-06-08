@@ -57,7 +57,7 @@ class Visualization extends Widget
      */
     public function getSettingsHtml()
     {
-        return Craft::$app->getView()->renderTemplate('sprout-base-reports/_components/widgets/Visualizations/settings.twig',
+        return Craft::$app->getView()->renderTemplate('sprout/reports/_components/widgets/Visualizations/settings.twig',
             [
                 'widget' => $this,
                 'reports' => SproutBase::$app->reports->getAllReports(),
@@ -123,7 +123,7 @@ class Visualization extends Widget
             $reportIndexUrl = '';
         }
 
-        return Craft::$app->getView()->renderTemplate('sprout-base-reports/_components/widgets/Visualizations/body', [
+        return Craft::$app->getView()->renderTemplate('sprout/reports/_components/widgets/Visualizations/body', [
             'title' => 'report title',
             'visualization' => $visualization,
             'reportIndexUrl' => $reportIndexUrl

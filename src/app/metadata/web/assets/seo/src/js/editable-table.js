@@ -171,8 +171,8 @@ Craft.SproutSeo.EditableTable = Garnish.Base.extend(
         rowHtml += '</td>';
       }
 
-      rowHtml += '<td class="thin action"><a class="move icon" title="' + Craft.t('sprout-base-fields', 'Reorder') + '"></a></td>' +
-        '<td class="thin action"><a class="delete icon" title="' + Craft.t('sprout-base-fields', 'Delete') + '"></a></td>' +
+      rowHtml += '<td class="thin action"><a class="move icon" title="' + Craft.t('sprout', 'Reorder') + '"></a></td>' +
+        '<td class="thin action"><a class="delete icon" title="' + Craft.t('sprout', 'Delete') + '"></a></td>' +
         '</tr>';
 
       return rowHtml;

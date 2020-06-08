@@ -31,7 +31,7 @@ class LineChartVisualization extends Visualization
      */
     public function getSettingsHtml(array $settings): string
     {
-        return Craft::$app->getView()->renderTemplate('sprout-base-reports/_components/visualizations/LineChart/settings', [
+        return Craft::$app->getView()->renderTemplate('sprout/reports/_components/visualizations/LineChart/settings', [
             'settings' => $settings
         ]);
     }
@@ -47,7 +47,7 @@ class LineChartVisualization extends Visualization
      */
     public function getVisualizationHtml(array $options = []): string
     {
-        return Craft::$app->getView()->renderTemplate('sprout-base-reports/_components/visualizations/LineChart/visualization', [
+        return Craft::$app->getView()->renderTemplate('sprout/reports/_components/visualizations/LineChart/visualization', [
             'visualization' => $this,
             'options' => $options,
         ]);

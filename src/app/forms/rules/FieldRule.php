@@ -46,7 +46,7 @@ class FieldRule extends Rule
      */
     public function getSettingsHtml()
     {
-        return Craft::$app->getView()->renderTemplate('sprout-base-forms/_components/rules/fieldrule/settings',
+        return Craft::$app->getView()->renderTemplate('sprout/forms/_components/rules/fieldrule/settings',
             [
                 'fieldRule' => $this
             ]

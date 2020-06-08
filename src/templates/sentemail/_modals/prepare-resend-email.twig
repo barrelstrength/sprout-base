@@ -1,0 +1,70 @@
+{% import "_includes/forms" as forms %}
+{% import "sprout/config/_includes/sproutcp" as sproutCp %}
+
+{% do view.registerAssetBundle("barrelstrength\\sproutbase\\config\\web\\assets\\cp\\CpAsset") %}
+
+<div class="body">
+    <h1>{{ "Resend Email"|t('sprout') }}</h1>
+
+    <div class="sproutemail-preparemodalbody">
+
+        <table class="fullwidth">
+            <tbody>
+            <tr>
+                <td><strong>{{ "Subject"|t('sprout') }}</strong></td>
+                <td class="title">{{ sentEmail.title }}</td>
+            </tr>
+
+            <tr>
+                <td><strong>{{ "Recipients"|t('sprout') }}</strong></td>
+                <td>
+
+                    {% set baseUrl = craft.app.request.serverName %}
+                    {% set placeholderEmails = 'email@' ~ baseUrl ~ ', email2@'
+                        ~ baseUrl %}
+
+                    {{ forms.textarea({
+                        id: "recipients",
+                        name: "recipients",
+                        class: "code",
+                        placeholder: placeholderEmails,
+                        value: sentEmail.toEmail
+                    }) }}
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+        {% if errors is defined and errors is not empty %}
+            <div>
+                <ul class="error bullets">
+                    {% for error in errors %}
+                        <li>{{ error | raw }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+
+        {% if not isPro %}
+            {{ sproutCp.upgradeToProCallout({
+                message: '<a href="'~cpUrl('sprout/upgrade/sent-email')~'">Upgrade to PRO</a> to resend email to users.'
+            }) }}
+        {% endif %}
+
+    </div>
+</div>
+
+<div class="footer">
+    <div class="buttons right">
+        <button id="close" class="btn">{{ "Cancel"|t('sprout') }}</button>
+
+        <button
+            {% if errors is defined and errors is not empty or not isPro %} disabled
+                style="opacity: 0.25;" {% endif %}
+            data-action="sprout/sent-email/resend-email"
+            data-email-id="{{ sentEmail.id }}"
+            class="btn submit actions">
+            {{ "Resend Email"|t('sprout') }}
+        </button>
+    </div>
+</div>

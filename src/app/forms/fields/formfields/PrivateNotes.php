@@ -84,7 +84,7 @@ class PrivateNotes extends FormField
      */
     public function getInputHtml($value, ElementInterface $element = null): string
     {
-        return Craft::$app->getView()->renderTemplate('sprout-base-fields/_components/fields/formfields/privatenotes/input',
+        return Craft::$app->getView()->renderTemplate('sprout/fields/_components/fields/formfields/privatenotes/input',
             [
                 'name' => $this->handle,
                 'value' => $value,
@@ -104,7 +104,7 @@ class PrivateNotes extends FormField
      */
     public function getExampleInputHtml(): string
     {
-        return Craft::$app->getView()->renderTemplate('sprout-base-forms/_components/fields/formfields/privatenotes/example',
+        return Craft::$app->getView()->renderTemplate('sprout/forms/_components/fields/formfields/privatenotes/example',
             [
                 'field' => $this
             ]

@@ -118,8 +118,8 @@ class SettingsController extends Controller
         // Plugins should pass a settingsTarget of 'db' if they
         // wish to manage their settings on their own
         $settingsTemplate = $settingsTarget === 'db'
-            ? 'sprout-base-config/_layouts/settings-wrapper'
-            : 'sprout-base-config/_layouts/settings';
+            ? 'sprout/config/_layouts/settings-wrapper'
+            : 'sprout/config/_layouts/settings';
 
         return $this->renderTemplate($settingsTemplate, array_merge([
             'currentSite' => $currentSite,

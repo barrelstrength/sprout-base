@@ -79,7 +79,7 @@ trait ModalWorkflowTrait
             $email->addError('emailTemplateId', Craft::t('sprout', 'No email template setting found.'));
         }
 
-        return Craft::$app->getView()->renderTemplate('sprout-base-email/_modals/prepare-email-snapshot', [
+        return Craft::$app->getView()->renderTemplate('sprout/email/_modals/prepare-email-snapshot', [
             'email' => $email,
             'recipients' => $recipients
         ]);

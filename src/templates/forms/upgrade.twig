@@ -1,0 +1,31 @@
+{% extends "sprout/config/_layouts/base-landing" %}
+{% import "sprout/config/_includes/sproutcp" as sproutCp %}
+
+{% set title = "Upgrade to Sprout Forms Pro"|t('sprout') %}
+{% set bodyClass = 'sprout-landing-page' %}
+{% set assetUrl = view.getAssetManager().getPublishedUrl('@sproutbase/app/forms/web/assets/cp/dist', true) -%}
+{% set pluginStoreLink = currentUser.admin ? cpUrl('plugin-store/sprout-forms') : 'https://plugins.craftcms.com/sprout-forms' %}
+
+{% block content %}
+
+    <div class="sprout-landing">
+
+        {{ parent() }}
+
+        {{ sproutCp.featureHeader({
+            heading: "Unlimited Forms. Unlimited Freedom."|t('sprout'),
+            message: "Sprout Forms [pro] gives you the freedom to create as many forms as you need &mdash; professional contact forms, landing pages, applications, CRM and email marketing integrations, and more."|t('sprout'),
+            primaryButtonText: "Upgrade Now"|t('sprout'),
+            primaryButtonLink: pluginStoreLink,
+            secondaryButtonText: "Learn More"|t('sprout'),
+            secondaryButtonLink: "https://sprout.barrelstrengthdesign.com/docs/forms"
+        }) }}
+
+        {{ sproutCp.featureImage({
+            imageUrl: assetUrl ~ '/images/feature-formbuilder-toboldlygo.png',
+            altText: 'Sprout Forms Form Builder for Craft CMS'|t('sprout')
+        }) }}
+
+    </div>
+
+{% endblock %}

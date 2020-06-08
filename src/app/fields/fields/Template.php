@@ -77,7 +77,7 @@ class Template extends Field implements PreviewableFieldInterface
     {
         $templateDirectoryOptions = $this->getTemplateDirectories();
 
-        return Craft::$app->getView()->renderTemplate('sprout-base-fields/_components/fields/formfields/template/settings',
+        return Craft::$app->getView()->renderTemplate('sprout/fields/_components/fields/formfields/template/settings',
             [
                 'field' => $this,
                 'templateDirectoryOptions' => $templateDirectoryOptions
@@ -114,7 +114,7 @@ class Template extends Field implements PreviewableFieldInterface
             $templateSuggestions = $this->getTemplateOptions($this->inputStyle, $this->templateFolder);
         }
 
-        return Craft::$app->getView()->renderTemplate('sprout-base-fields/_components/fields/formfields/template/input',
+        return Craft::$app->getView()->renderTemplate('sprout/fields/_components/fields/formfields/template/input',
             [
                 'namespaceInputId' => $namespaceInputId,
                 'id' => $inputId,

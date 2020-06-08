@@ -63,7 +63,7 @@ class Predefined extends BasePredefinedField
      */
     public function getSettingsHtml()
     {
-        return Craft::$app->getView()->renderTemplate('sprout-base-fields/_components/fields/formfields/predefined/settings',
+        return Craft::$app->getView()->renderTemplate('sprout/fields/_components/fields/formfields/predefined/settings',
             [
                 'field' => $this
             ]);
@@ -112,7 +112,7 @@ class Predefined extends BasePredefinedField
             $value = Craft::$app->view->renderObjectTemplate($this->fieldFormat, $element);
         }
 
-        return Craft::$app->getView()->renderTemplate('sprout-base-fields/_components/fields/formfields/predefined/input',
+        return Craft::$app->getView()->renderTemplate('sprout/fields/_components/fields/formfields/predefined/input',
             [
                 'field' => $this,
                 'id' => $this->handle,

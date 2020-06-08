@@ -36,7 +36,7 @@ class ReportsSettings extends Settings
         return [
             'reports' => [
                 'label' => Craft::t('sprout', 'Reports'),
-                'template' => 'sprout-base-reports/settings/reports'
+                'template' => 'sprout/reports/settings/reports'
             ]
         ];
     }

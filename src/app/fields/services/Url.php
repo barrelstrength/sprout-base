@@ -32,7 +32,7 @@ class Url extends Component
     public function getSettingsHtml(Field $field): string
     {
         return Craft::$app->getView()->renderTemplate(
-            'sprout-base-fields/_components/fields/formfields/url/settings',
+            'sprout/fields/_components/fields/formfields/url/settings',
             [
                 'field' => $field,
             ]
@@ -59,7 +59,7 @@ class Url extends Component
 
         $fieldContext = SproutBase::$app->fieldUtilities->getFieldContext($field, $element);
 
-        return Craft::$app->getView()->renderTemplate('sprout-base-fields/_components/fields/formfields/url/input', [
+        return Craft::$app->getView()->renderTemplate('sprout/fields/_components/fields/formfields/url/input', [
                 'namespaceInputId' => $namespaceInputId,
                 'id' => $inputId,
                 'name' => $name,

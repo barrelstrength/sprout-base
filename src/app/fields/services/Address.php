@@ -331,7 +331,7 @@ class Address extends Component
         }
 
         return Craft::$app->getView()->renderTemplate(
-            'sprout-base-fields/_components/fields/formfields/address/settings', [
+            'sprout/fields/_components/fields/formfields/address/settings', [
                 'field' => $field,
                 'countries' => $countries,
                 'languages' => $availableLocales
@@ -427,7 +427,7 @@ class Address extends Component
         $addressFormHtml = $addressFormatter->getAddressFormHtml();
 
         return Craft::$app->getView()->renderTemplate(
-            'sprout-base-fields/_components/fields/formfields/address/input', [
+            'sprout/fields/_components/fields/formfields/address/input', [
                 'namespaceInputId' => $namespaceInputId,
                 'namespaceInputName' => $namespaceInputName,
                 'field' => $field,

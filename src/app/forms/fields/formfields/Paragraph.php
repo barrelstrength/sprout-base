@@ -142,7 +142,7 @@ class Paragraph extends FormField implements PreviewableFieldInterface
      */
     public function getSettingsHtml()
     {
-        $rendered = Craft::$app->getView()->renderTemplate('sprout-base-forms/_components/fields/formfields/paragraph/settings', [
+        $rendered = Craft::$app->getView()->renderTemplate('sprout/forms/_components/fields/formfields/paragraph/settings', [
             'field' => $this,
         ]);
 
@@ -166,7 +166,7 @@ class Paragraph extends FormField implements PreviewableFieldInterface
      */
     public function getInputHtml($value, ElementInterface $element = null): string
     {
-        return Craft::$app->getView()->renderTemplate('sprout-base-fields/_components/fields/formfields/paragraph/input',
+        return Craft::$app->getView()->renderTemplate('sprout/fields/_components/fields/formfields/paragraph/input',
             [
                 'name' => $this->handle,
                 'value' => $value,
@@ -185,7 +185,7 @@ class Paragraph extends FormField implements PreviewableFieldInterface
      */
     public function getExampleInputHtml(): string
     {
-        return Craft::$app->getView()->renderTemplate('sprout-base-forms/_components/fields/formfields/paragraph/example',
+        return Craft::$app->getView()->renderTemplate('sprout/forms/_components/fields/formfields/paragraph/example',
             [
                 'field' => $this
             ]

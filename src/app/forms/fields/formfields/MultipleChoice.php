@@ -74,7 +74,7 @@ class MultipleChoice extends CraftRadioButtons
      */
     public function getExampleInputHtml(): string
     {
-        return Craft::$app->getView()->renderTemplate('sprout-base-forms/_components/fields/formfields/multiplechoice/example',
+        return Craft::$app->getView()->renderTemplate('sprout/forms/_components/fields/formfields/multiplechoice/example',
             [
                 'field' => $this
             ]

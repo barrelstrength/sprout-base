@@ -63,7 +63,7 @@ class CampaignsConfig extends Config
             // @todo - migration break out into 'messages' module that
             //         handles messages and previewing them
             'sprout/email/preview/<emailId:\d+>' => [
-                'template' => 'sprout-base-email/_special/preview'
+                'template' => 'sprout/email/_special/preview'
             ]
         ];
     }

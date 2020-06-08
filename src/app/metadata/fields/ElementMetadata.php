@@ -183,7 +183,7 @@ class ElementMetadata extends Field
 
         $isPro = SproutBase::$app->config->isEdition('sprout-seo', Config::EDITION_PRO);
 
-        return Craft::$app->view->renderTemplate('sprout-base-metadata/_components/fields/elementmetadata/settings', [
+        return Craft::$app->view->renderTemplate('sprout/metadata/_components/fields/elementmetadata/settings', [
             'fieldId' => $this->id,
             'settings' => $this->getAttributes(),
             'field' => $this,
@@ -224,7 +224,7 @@ class ElementMetadata extends Field
         Craft::$app->getView()->registerAssetBundle(SproutSeoAsset::class);
         Craft::$app->getView()->registerAssetBundle(TagEditorAsset::class);
 
-        return Craft::$app->view->renderTemplate('sprout-base-metadata/_components/fields/elementmetadata/input', [
+        return Craft::$app->view->renderTemplate('sprout/metadata/_components/fields/elementmetadata/input', [
             'field' => $this,
             'name' => $name,
             'namespaceInputName' => $namespaceInputName,

@@ -36,7 +36,7 @@ class DataSourcesController extends Controller
         // Get Data Sources that are registered but are not installed
         $uninstalledDataSources = array_diff($dataSourceTypes, array_keys($installedDataSources));
 
-        return $this->renderTemplate('sprout-base-reports/datasources/index', [
+        return $this->renderTemplate('sprout/reports/datasources/index', [
             'installedDataSources' => $installedDataSources,
             'uninstalledDataSources' => $uninstalledDataSources
         ]);

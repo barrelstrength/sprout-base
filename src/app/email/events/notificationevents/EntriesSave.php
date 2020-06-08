@@ -97,7 +97,7 @@ class EntriesSave extends NotificationEvent
             $this->availableSections = $this->getAllSections();
         }
 
-        return Craft::$app->getView()->renderTemplate('sprout-base-email/_components/events/save-entry', [
+        return Craft::$app->getView()->renderTemplate('sprout/email/_components/events/save-entry', [
             'event' => $this
         ]);
     }

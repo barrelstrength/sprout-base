@@ -1,0 +1,174 @@
+{% requireAdmin %}
+
+{% import "_includes/forms" as forms %}
+{% import "sprout/fields/_includes/forms" as sproutFields %}
+
+{% macro configWarning(setting) -%}
+    {{ "This is being overridden by the {setting} config setting."|t('sprout-forms-google-recaptcha', {
+        setting: setting
+    })|raw }}
+{%- endmacro %}
+
+{% from _self import configWarning %}
+
+{% set pluginsService = craft.app.getPlugins() %}
+
+{{ forms.editableTableField({
+    label: "Control Panel Settings"|t('sprout'),
+    instructions: "Choose which Sprout features will display and what they should be named."|t('sprout'),
+    id: 'modules',
+    name: 'modules',
+    cols: {
+        heading: {
+            type: 'heading',
+            heading: "Feature"|t('sprout'),
+            thin: true
+        },
+        enabled: {
+            type: 'heading',
+            thin: true
+        },
+        displayName: {
+            type: 'singleline',
+            heading: "Alternate Display Name"|t('sprout'),
+            info: "Alternate name that will be used to display this module in Control Panel navigation."|t('sprout')
+        }
+    }|filter,
+    rows: cpSettingsRows,
+    fullWidth: true,
+    staticRows: true,
+    errors: []|unique
+}) }}
+
+
+
+
+
+
+
+
+
+{% set sproutCampaignsIsInstalled = pluginsService.getPlugin('sprout-campaigns') %}
+{% set sproutFormsIsInstalled = pluginsService.getPlugin('sprout-forms') %}
+{% set sproutListsIsInstalled = pluginsService.getPlugin('sprout-lists') %}
+{% set sproutEmailIsInstalled = pluginsService.getPlugin('sprout-email') %}
+{% set sproutRedirectsIsInstalled = pluginsService.getPlugin('sprout-redirects') %}
+{% set sproutReportsIsInstalled = pluginsService.getPlugin('sprout-reports') %}
+{% set sproutSentEmailIsInstalled = pluginsService.getPlugin('sprout-sent-email') %}
+{% set sproutSeoIsInstalled = pluginsService.getPlugin('sprout-seo') %}
+{% set sproutSitemapsIsInstalled = pluginsService.getPlugin('sprout-sitemaps') %}
+
+{#<input type="hidden" name="validationScenario" value="general">#}
+
+{#public $campaignsPluginName = '';#}
+{#public $emailPluginName = '';#}
+{#public $formsPluginName = '';#}
+{#public $listsPluginName = '';#}
+{#public $reportsPluginName = '';#}
+{#public $redirectsPluginName = '';#}
+{#public $seoPluginName = '';#}
+{#public $sitemapPluginName = '';#}
+
+{#<h2>{{ "Navigation"|t('sprout') }}</h2>#}
+{#<p>{{ "Intuitive, human-readable name used in Control Panel navigation and breadcrumbs. This alternate name will appear in place of the default plugin name in the sidebar navigation and breadcrumbs."|t('sprout') }}</p>#}
+
+{#{% if sproutCampaignsIsInstalled %}#}
+{#    {{ forms.textField({#}
+{#        label: "Sprout Campaigns"|t('sprout-forms'),#}
+{#        name: 'campaignsPluginName',#}
+{#        value: settings.campaignsPluginName,#}
+{#        placeholder: config.campaignsPluginName is defined ? config.campaignsPluginName : settings.campaignsPluginName ?: 'Sprout Campaigns',#}
+{#        autofocus: true,#}
+{#        first: true,#}
+{#        errors: '',#}
+{#        warning: config.campaignsPluginName is defined ? configWarning('campaignsPluginName')#}
+{#    }) }}#}
+{#{% endif %}#}
+
+{#{% if sproutFormsIsInstalled %}#}
+{#    {{ forms.textField({#}
+{#        label: "Sprout Forms"|t('sprout-forms'),#}
+{#        name: 'formsPluginName',#}
+{#        value: settings.formsPluginName,#}
+{#        placeholder: config.formsPluginName is defined ? config.formsPluginName : settings.formsPluginName ?: 'Sprout Forms',#}
+{#        errors: '',#}
+{#        warning: config.formsPluginName is defined ? configWarning('formsPluginName')#}
+{#    }) }}#}
+{#{% endif %}#}
+
+{#{% if sproutEmailIsInstalled %}#}
+{#    {{ forms.textField({#}
+{#        label: "Sprout Email"|t('sprout-forms'),#}
+{#        name: 'emailPluginName',#}
+{#        value: settings.emailPluginName,#}
+{#        placeholder: config.emailPluginName is defined ? config.emailPluginName : settings.emailPluginName ?: 'Sprout Email',#}
+{#        errors: '',#}
+{#        warning: config.emailPluginName is defined ? configWarning('emailPluginName')#}
+{#    }) }}#}
+{#{% endif %}#}
+
+{#{% if sproutListsIsInstalled %}#}
+{#    {{ forms.textField({#}
+{#        label: "Sprout Lists"|t('sprout-forms'),#}
+{#        name: 'listsPluginName',#}
+{#        value: settings.listsPluginName,#}
+{#        placeholder: config.listsPluginName is defined ? config.listsPluginName : settings.listsPluginName ?: 'Sprout Lists',#}
+{#        errors: '',#}
+{#        warning: config.listsPluginName is defined ? configWarning('listsPluginName')#}
+{#    }) }}#}
+{#{% endif %}#}
+
+{#{% if sproutRedirectsIsInstalled %}#}
+{#    {{ forms.textField({#}
+{#        label: "Sprout Redirects"|t('sprout-forms'),#}
+{#        name: 'redirectsPluginName',#}
+{#        value: settings.redirectsPluginName,#}
+{#        placeholder: config.redirectsPluginName is defined ? config.redirectsPluginName : settings.redirectsPluginName ?: 'Sprout Redirects',#}
+{#        errors: '',#}
+{#        warning: config.redirectsPluginName is defined ? configWarning('redirectsPluginName')#}
+{#    }) }}#}
+{#{% endif %}#}
+
+{#{% if sproutReportsIsInstalled %}#}
+{#    {{ forms.textField({#}
+{#        label: "Sprout Reports"|t('sprout-forms'),#}
+{#        name: 'reportsPluginName',#}
+{#        value: settings.reportsPluginName,#}
+{#        placeholder: config.reportsPluginName is defined ? config.reportsPluginName : settings.reportsPluginName ?: 'Sprout Reports',#}
+{#        errors: '',#}
+{#        warning: config.reportsPluginName is defined ? configWarning('reportsPluginName')#}
+{#    }) }}#}
+{#{% endif %}#}
+
+{#{% if sproutSentEmailIsInstalled %}#}
+{#    {{ forms.textField({#}
+{#        label: "Sprout Sent Email"|t('sprout-forms'),#}
+{#        name: 'sentEmailPluginName',#}
+{#        value: settings.sentEmailPluginName,#}
+{#        placeholder: config.sentEmailPluginName is defined ? config.sentEmailPluginName : settings.sentEmailPluginName ?: 'Sprout Sent Email',#}
+{#        errors: '',#}
+{#        warning: config.sentEmailPluginName is defined ? configWarning('sentEmailPluginName')#}
+{#    }) }}#}
+{#{% endif %}#}
+
+{#{% if sproutSeoIsInstalled %}#}
+{#    {{ forms.textField({#}
+{#        label: "Sprout SEO"|t('sprout-forms'),#}
+{#        name: 'seoPluginName',#}
+{#        value: settings.seoPluginName,#}
+{#        placeholder: config.seoPluginName is defined ? config.seoPluginName : settings.seoPluginName ?: 'Sprout SEO',#}
+{#        errors: '',#}
+{#        warning: config.seoPluginName is defined ? configWarning('seoPluginName')#}
+{#    }) }}#}
+{#{% endif %}#}
+
+{#{% if sproutSitemapsIsInstalled %}#}
+{#    {{ forms.textField({#}
+{#        label: "Sprout Sitemaps"|t('sprout-forms'),#}
+{#        name: 'sitemapsPluginName',#}
+{#        value: settings.sitemapsPluginName,#}
+{#        placeholder: config.sitemapsPluginName is defined ? config.sitemapsPluginName : settings.sitemapsPluginName ?: 'Sprout Sitemaps',#}
+{#        errors: '',#}
+{#        warning: config.sitemapsPluginName is defined ? configWarning('sitemapsPluginName')#}
+{#    }) }}#}
+{#{% endif %}#}

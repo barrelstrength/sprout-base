@@ -44,7 +44,7 @@ class RedirectsController extends Controller
             throw new ForbiddenHttpException('Something went wrong');
         }
 
-        return $this->renderTemplate('sprout-base-redirects/redirects/index', [
+        return $this->renderTemplate('sprout/redirects/redirects/index', [
             'currentSite' => $currentSite,
             'isPro' => SproutBase::$app->redirects->canCreateRedirects()
         ]);
@@ -124,7 +124,7 @@ class RedirectsController extends Controller
         $sproutRedirectsIsPro = SproutBase::$app->config->isEdition('sprout-redirects', 'pro');
         $sproutSeoIsPro = SproutBase::$app->config->isEdition('sprout-seo', 'pro');
 
-        return $this->renderTemplate('sprout-base-redirects/redirects/_edit', [
+        return $this->renderTemplate('sprout/redirects/redirects/_edit', [
             'currentSite' => $currentSite,
             'redirect' => $redirect,
             'methodOptions' => $methodOptions,

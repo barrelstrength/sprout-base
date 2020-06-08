@@ -92,7 +92,7 @@ class RecentEntries extends Widget
         }
         $query->limit = $this->limit;
 
-        return Craft::$app->getView()->renderTemplate('sprout-base-forms/_components/widgets/RecentEntries/body', [
+        return Craft::$app->getView()->renderTemplate('sprout/forms/_components/widgets/RecentEntries/body', [
             'entries' => $query->all(),
             'widget' => $this
         ]);
@@ -121,7 +121,7 @@ class RecentEntries extends Widget
             }
         }
 
-        return Craft::$app->getView()->renderTemplate('sprout-base-forms/_components/widgets/RecentEntries/settings', [
+        return Craft::$app->getView()->renderTemplate('sprout/forms/_components/widgets/RecentEntries/settings', [
             'sproutForms' => $forms,
             'widget' => $this
         ]);

@@ -10,7 +10,7 @@
  * For better consistency, use along with the sproutcp.html macro library.
  *
  * To use:
- * {% import 'pluginname/_includes/sproutcp' as sprout %}
+ * {% import "pluginname/_includes/sproutcp" as sproutCp %}
  * {% includeCssResource "pluginname/css/sproutcp.css" %}
  */
 

@@ -162,7 +162,7 @@ class Users extends DataSource
         $settingsErrors = $this->report->getErrors('settings');
         $settingsErrors = array_shift($settingsErrors);
 
-        return Craft::$app->getView()->renderTemplate('sprout-base-reports/_components/datasources/Users/settings', [
+        return Craft::$app->getView()->renderTemplate('sprout/reports/_components/datasources/Users/settings', [
             'userGroupSettings' => $userGroupSettings,
             'settings' => count($settings) ? $settings : $this->report->getSettings(),
             'errors' => $settingsErrors

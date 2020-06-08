@@ -51,7 +51,7 @@ class MetadataSettings extends Settings
         return [
             'meta' => [
                 'label' => Craft::t('sprout', 'Metadata'),
-                'template' => 'sprout-base-metadata/settings/metadata'
+                'template' => 'sprout/metadata/settings/metadata'
             ]
         ];
     }

@@ -47,7 +47,7 @@ class PredefinedDate extends BasePredefinedField
      */
     public function getSettingsHtml()
     {
-        return Craft::$app->getView()->renderTemplate('sprout-base-fields/_components/fields/formfields/predefineddate/settings',
+        return Craft::$app->getView()->renderTemplate('sprout/fields/_components/fields/formfields/predefineddate/settings',
             [
                 'field' => $this
             ]);
@@ -79,7 +79,7 @@ class PredefinedDate extends BasePredefinedField
      */
     public function getInputHtml($value, ElementInterface $element = null): string
     {
-        return Craft::$app->getView()->renderTemplate('sprout-base-fields/_components/fields/formfields/predefineddate/input',
+        return Craft::$app->getView()->renderTemplate('sprout/fields/_components/fields/formfields/predefineddate/input',
             [
                 'field' => $this,
                 'name' => $this->handle,

@@ -41,7 +41,7 @@ class SentEmailController extends Controller
     {
         $this->requirePermission('sprout:sentEmail:viewSentEmail');
 
-        return $this->renderTemplate('sprout-base-sent-email/sent-email/index', [
+        return $this->renderTemplate('sprout/sent-email/sent-email/index', [
             'isPro' => SproutBase::$app->settings->isPro()
         ]);
     }
@@ -70,7 +70,7 @@ class SentEmailController extends Controller
 
         if (!$recipients) {
             return $this->asJson(
-                ModalResponse::createErrorModalResponse('sprout-base-email/_modals/response', [
+                ModalResponse::createErrorModalResponse('sprout/email/_modals/response', [
                     'email' => $sentEmail,
                     'message' => Craft::t('sprout', 'A recipient email address is required')
                 ])
@@ -102,7 +102,7 @@ class SentEmailController extends Controller
             }
 
             return $this->asJson(
-                ModalResponse::createErrorModalResponse('sprout-base-email/_modals/response', [
+                ModalResponse::createErrorModalResponse('sprout/email/_modals/response', [
                     'email' => $sentEmail,
                     'message' => Craft::t('sprout', 'Invalid email address(es) provided: {invalidEmails}', [
                         'invalidEmails' => implode(', ', $invalidEmails)
@@ -167,7 +167,7 @@ class SentEmailController extends Controller
 
             if (!empty($processedRecipients)) {
                 $response = ModalResponse::createModalResponse(
-                    'sprout-base-email/_modals/response',
+                    'sprout/email/_modals/response',
                     [
                         'email' => $sentEmail,
                         'message' => Craft::t('sprout', 'Email sent successfully.')
@@ -179,7 +179,7 @@ class SentEmailController extends Controller
 
             return true;
         } catch (\Exception $e) {
-            $response = ModalResponse::createErrorModalResponse('sprout-base-email/_modals/response', [
+            $response = ModalResponse::createErrorModalResponse('sprout/email/_modals/response', [
                 'email' => $sentEmail,
                 'message' => Craft::t('sprout', $e->getMessage()),
             ]);
@@ -207,8 +207,7 @@ class SentEmailController extends Controller
         $emailId = Craft::$app->getRequest()->getBodyParam('emailId');
         $sentEmail = Craft::$app->elements->getElementById($emailId, SentEmail::class);
 
-        $content = Craft::$app->getView()->renderTemplate(
-            'sprout-base-sent-email/_modals/prepare-resend-email', [
+        $content = Craft::$app->getView()->renderTemplate('sprout/sent-email/_modals/prepare-resend-email', [
             'sentEmail' => $sentEmail,
             'isPro' => SproutBase::$app->settings->isPro()
         ]);
@@ -241,8 +240,7 @@ class SentEmailController extends Controller
         /** @var $sentEmail SentEmail */
         $sentEmail = Craft::$app->elements->getElementById($sentEmailId, SentEmail::class);
 
-        $content = Craft::$app->getView()->renderTemplate(
-            'sprout-base-sent-email/_modals/info-table', [
+        $content = Craft::$app->getView()->renderTemplate('sprout/sent-email/_modals/info-table', [
             'info' => $sentEmail->getInfo()
         ]);
 
@@ -265,7 +263,7 @@ class SentEmailController extends Controller
 
         $email = Craft::$app->getElements()->getElementById($emailId, SentEmail::class);
 
-        return $this->renderTemplate('sprout-base-sent-email/_preview/preview-body', [
+        return $this->renderTemplate('sprout/sent-email/_preview/preview-body', [
             'email' => $email,
             'emailId' => $emailId
         ]);

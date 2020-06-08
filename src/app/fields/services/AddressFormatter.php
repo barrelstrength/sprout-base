@@ -69,7 +69,7 @@ class AddressFormatter
      *
      * @var string
      */
-    private $baseAddressFieldPath = 'sprout-base-fields/_components/fields/formfields/';
+    private $baseAddressFieldPath = 'sprout/fields/_components/fields/formfields/';
 
     /**
      * @return mixed

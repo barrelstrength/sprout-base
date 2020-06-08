@@ -41,7 +41,7 @@ class CampaignsSettings extends Settings
         return [
             'campaign-types' => [
                 'label' => Craft::t('sprout', 'Campaign Types'),
-                'template' => 'sprout-base-campaigns/settings/campaign-types'
+                'template' => 'sprout/campaigns/settings/campaign-types'
             ]
         ];
     }

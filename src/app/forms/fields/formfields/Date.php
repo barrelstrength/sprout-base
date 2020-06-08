@@ -143,7 +143,7 @@ class Date extends FormField implements PreviewableFieldInterface
      */
     public function getExampleInputHtml(): string
     {
-        return Craft::$app->getView()->renderTemplate('sprout-base-forms/_components/fields/formfields/date/example',
+        return Craft::$app->getView()->renderTemplate('sprout/forms/_components/fields/formfields/date/example',
             [
                 'field' => $this
             ]
@@ -183,7 +183,7 @@ class Date extends FormField implements PreviewableFieldInterface
         $options = [15, 30, 60];
         $options = array_combine($options, $options);
 
-        return Craft::$app->getView()->renderTemplate('sprout-base-fields/_components/fields/formfields/date/settings',
+        return Craft::$app->getView()->renderTemplate('sprout/fields/_components/fields/formfields/date/settings',
             [
                 'options' => [
                     [
@@ -229,7 +229,7 @@ class Date extends FormField implements PreviewableFieldInterface
             $this->maximumDate = Craft::$app->getView()->renderString($this->maximumDate);
         }
 
-        $rendered = Craft::$app->getView()->renderTemplate('sprout-base-fields/_components/fields/formfields/date/input',
+        $rendered = Craft::$app->getView()->renderTemplate('sprout/fields/_components/fields/formfields/date/input',
             [
                 'name' => $this->handle,
                 'value' => $value,

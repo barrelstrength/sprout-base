@@ -107,7 +107,7 @@ class GlobalMetadataController extends Controller
         $addressJson = $address ? Json::encode($address) : null;
 
         // Render the template!
-        return $this->renderTemplate('sprout-base-metadata/globals/'.$selectedTabHandle, [
+        return $this->renderTemplate('sprout/metadata/globals/'.$selectedTabHandle, [
             'globals' => $globals,
             'settings' => SproutBase::$app->settings->getSettingsByKey('metadata'),
             'currentSite' => $currentSite,

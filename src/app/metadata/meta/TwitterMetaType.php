@@ -317,7 +317,7 @@ class TwitterMetaType extends MetaType
      */
     public function getSettingsHtml(Field $field): string
     {
-        return Craft::$app->getView()->renderTemplate('sprout-base-metadata/_components/fields/elementmetadata/blocks/twitter-card', [
+        return Craft::$app->getView()->renderTemplate('sprout/metadata/_components/fields/elementmetadata/blocks/twitter-card', [
             'meta' => $this,
             'field' => $field
         ]);

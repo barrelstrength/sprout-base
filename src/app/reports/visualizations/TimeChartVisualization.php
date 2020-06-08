@@ -31,7 +31,7 @@ class TimeChartVisualization extends Visualization
      */
     public function getSettingsHtml(array $settings): string
     {
-        return Craft::$app->getView()->renderTemplate('sprout-base-reports/_components/visualizations/TimeChart/settings', [
+        return Craft::$app->getView()->renderTemplate('sprout/reports/_components/visualizations/TimeChart/settings', [
             'settings' => $settings
         ]);
     }
@@ -47,7 +47,7 @@ class TimeChartVisualization extends Visualization
      */
     public function getVisualizationHtml(array $options = []): string
     {
-        return Craft::$app->getView()->renderTemplate('sprout-base-reports/_components/visualizations/TimeChart/visualization', [
+        return Craft::$app->getView()->renderTemplate('sprout/reports/_components/visualizations/TimeChart/visualization', [
             'visualization' => $this,
             'options' => $options,
         ]);

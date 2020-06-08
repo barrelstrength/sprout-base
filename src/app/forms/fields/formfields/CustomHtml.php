@@ -97,7 +97,7 @@ class CustomHtml extends FormField implements PreviewableFieldInterface
      */
     public function getSettingsHtml()
     {
-        return Craft::$app->getView()->renderTemplate('sprout-base-forms/_components/fields/formfields/customhtml/settings',
+        return Craft::$app->getView()->renderTemplate('sprout/forms/_components/fields/formfields/customhtml/settings',
             [
                 'field' => $this
             ]
@@ -118,7 +118,7 @@ class CustomHtml extends FormField implements PreviewableFieldInterface
      */
     public function getInputHtml($value, ElementInterface $element = null): string
     {
-        return Craft::$app->getView()->renderTemplate('sprout-base-fields/_components/fields/formfields/customhtml/input',
+        return Craft::$app->getView()->renderTemplate('sprout/fields/_components/fields/formfields/customhtml/input',
             [
                 'id' => $this->handle,
                 'name' => $this->handle,
@@ -138,7 +138,7 @@ class CustomHtml extends FormField implements PreviewableFieldInterface
      */
     public function getExampleInputHtml(): string
     {
-        return Craft::$app->getView()->renderTemplate('sprout-base-forms/_components/fields/formfields/customhtml/example',
+        return Craft::$app->getView()->renderTemplate('sprout/forms/_components/fields/formfields/customhtml/example',
             [
                 'field' => $this
             ]

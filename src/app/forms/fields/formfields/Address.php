@@ -136,7 +136,7 @@ class Address extends FormField implements PreviewableFieldInterface
      */
     public function getExampleInputHtml(): string
     {
-        return Craft::$app->getView()->renderTemplate('sprout-base-forms/_components/fields/formfields/address/example',
+        return Craft::$app->getView()->renderTemplate('sprout/forms/_components/fields/formfields/address/example',
             [
                 'field' => $this
             ]

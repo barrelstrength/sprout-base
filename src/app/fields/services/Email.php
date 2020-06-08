@@ -34,7 +34,7 @@ class Email extends Component
      */
     public function getSettingsHtml($field): string
     {
-        return Craft::$app->getView()->renderTemplate('sprout-base-fields/_components/fields/formfields/email/settings',
+        return Craft::$app->getView()->renderTemplate('sprout/fields/_components/fields/formfields/email/settings',
             [
                 'field' => $field
             ]);
@@ -61,7 +61,7 @@ class Email extends Component
 
         $fieldContext = SproutBase::$app->fieldUtilities->getFieldContext($field, $element);
 
-        return Craft::$app->getView()->renderTemplate('sprout-base-fields/_components/fields/formfields/email/input',
+        return Craft::$app->getView()->renderTemplate('sprout/fields/_components/fields/formfields/email/input',
             [
                 'namespaceInputId' => $namespaceInputId,
                 'id' => $inputId,

@@ -1,0 +1,32 @@
+{% extends "sprout/email/_layouts/elementindex" %}
+{% import "sprout/config/_includes/sproutcp" as sproutCp %}
+
+{% do view.registerAssetBundle("barrelstrength\\sproutbase\\config\\web\\assets\\cp\\CpAsset") %}
+
+{% set title = "Notification Email"|t('sprout') %}
+{% set elementType = 'barrelstrength\\sproutbase\\app\\email\\elements\\NotificationEmail' %}
+
+{% block actionButton %}
+
+    <div class="buttons">
+        <a class="btn submit add icon"
+            href="{{ cpUrl('sprout/notifications/edit/new') }}">
+            {{ "New Notification"|t('sprout') }}
+        </a>
+
+        {% if not isPro %}
+            {{ sproutCp.upgradeToProButton({
+                url: cpUrl('sprout/upgrade/notifications'),
+                title: "Upgrade to Sprout Sent Email PRO to manage Resend Emails"|t('sprout')
+            }) }}
+        {% endif %}
+    </div>
+{% endblock %}
+
+{% block content %}
+
+    {{ parent() }}
+
+    {% include "sprout/email/_modals/base" %}
+
+{% endblock %}

@@ -49,7 +49,7 @@ class FileUpload extends CraftAssets
     /**
      * @var string Template to use for settings rendering
      */
-    protected $settingsTemplate = 'sprout-base-forms/_components/fields/formfields/fileupload/settings';
+    protected $settingsTemplate = 'sprout/forms/_components/fields/formfields/fileupload/settings';
 
     /**
      * @inheritdoc
@@ -105,7 +105,7 @@ class FileUpload extends CraftAssets
      */
     public function getExampleInputHtml(): string
     {
-        return Craft::$app->getView()->renderTemplate('sprout-base-forms/_components/fields/formfields/fileupload/example',
+        return Craft::$app->getView()->renderTemplate('sprout/forms/_components/fields/formfields/fileupload/example',
             [
                 'field' => $this
             ]

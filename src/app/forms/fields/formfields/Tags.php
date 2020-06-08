@@ -37,7 +37,7 @@ class Tags extends CraftTags
     /**
      * @var string Template to use for settings rendering
      */
-    protected $settingsTemplate = 'sprout-base-forms/_components/fields/formfields/elementfieldsettings';
+    protected $settingsTemplate = 'sprout/forms/_components/fields/formfields/elementfieldsettings';
 
     /**
      * @return string
@@ -58,7 +58,7 @@ class Tags extends CraftTags
      */
     public function getExampleInputHtml(): string
     {
-        return Craft::$app->getView()->renderTemplate('sprout-base-forms/_components/fields/formfields/tags/example',
+        return Craft::$app->getView()->renderTemplate('sprout/forms/_components/fields/formfields/tags/example',
             [
                 'field' => $this
             ]

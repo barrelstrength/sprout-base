@@ -62,7 +62,7 @@ class EntryElementIntegration extends ElementIntegration
     {
         $sections = $this->getSectionsAsOptions();
 
-        return Craft::$app->getView()->renderTemplate('sprout-base-forms/_components/integrationtypes/entryelement/settings',
+        return Craft::$app->getView()->renderTemplate('sprout/forms/_components/integrationtypes/entryelement/settings',
             [
                 'integration' => $this,
                 'sectionsOptions' => $sections

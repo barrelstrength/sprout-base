@@ -94,7 +94,7 @@ class Name extends Component
     public function getSettingsHtml(FieldInterface $field): string
     {
         return Craft::$app->getView()->renderTemplate(
-            'sprout-base-fields/_components/fields/formfields/name/settings',
+            'sprout/fields/_components/fields/formfields/name/settings',
             [
                 'field' => $field,
             ]);
@@ -122,7 +122,7 @@ class Name extends Component
         $fieldContext = SproutBase::$app->fieldUtilities->getFieldContext($field, $element);
 
         return Craft::$app->getView()->renderTemplate(
-            'sprout-base-fields/_components/fields/formfields/name/input',
+            'sprout/fields/_components/fields/formfields/name/input',
             [
                 'namespaceInputId' => $namespaceInputId,
                 'id' => $inputId,

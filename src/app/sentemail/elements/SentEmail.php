@@ -260,7 +260,7 @@ class SentEmail extends Element
             case 'resend':
 
                 return '<a class="prepare btn small formsubmit" 
-                                data-action="sprout-base-sent-email/sent-email/get-resend-modal" 
+                                data-action="sprout/sent-email/get-resend-modal" 
                                 data-email-id="'.$this->id.'">'.
                     Craft::t('sprout', 'Prepare').
                     '</a>';
@@ -270,7 +270,7 @@ class SentEmail extends Element
             case 'info':
 
                 return '<a class="prepare btn small formsubmit"
-                                data-action="sprout-base-sent-email/sent-email/get-info-html" 
+                                data-action="sprout/sent-email/get-info-html" 
                                 data-email-id="'.$this->id.'" 
                                 data-type="'.get_class($this).'"
                                 data-id="'.$this->id.'"

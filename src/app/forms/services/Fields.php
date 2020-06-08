@@ -510,7 +510,7 @@ class Fields extends Component
         $data['fieldClass'] = $data['field'] ? get_class($data['field']) : null;
         $view = Craft::$app->getView();
 
-        $html = $view->renderTemplate('sprout-base-forms/forms/_editFieldModal', $data);
+        $html = $view->renderTemplate('sprout/forms/forms/_editFieldModal', $data);
         $js = $view->getBodyHtml();
         $css = $view->getHeadHtml();
 

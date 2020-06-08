@@ -148,7 +148,7 @@ class Number extends FormField implements PreviewableFieldInterface
      */
     public function getSettingsHtml()
     {
-        $rendered = Craft::$app->getView()->renderTemplate('sprout-base-forms/_components/fields/formfields/number/settings',
+        $rendered = Craft::$app->getView()->renderTemplate('sprout/forms/_components/fields/formfields/number/settings',
             [
                 'field' => $this,
             ]
@@ -197,7 +197,7 @@ class Number extends FormField implements PreviewableFieldInterface
      */
     public function getExampleInputHtml(): string
     {
-        return Craft::$app->getView()->renderTemplate('sprout-base-forms/_components/fields/formfields/number/example',
+        return Craft::$app->getView()->renderTemplate('sprout/forms/_components/fields/formfields/number/example',
             [
                 'field' => $this
             ]

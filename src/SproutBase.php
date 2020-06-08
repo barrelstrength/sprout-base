@@ -197,16 +197,7 @@ class SproutBase extends Module
     {
         // Setup Template Roots
         Event::on(View::class, View::EVENT_REGISTER_CP_TEMPLATE_ROOTS, function(RegisterTemplateRootsEvent $e) {
-            $e->roots['sprout-base-config'] = $this->getBasePath().DIRECTORY_SEPARATOR.'config'.DIRECTORY_SEPARATOR.'templates';
-            $e->roots['sprout-base-sitemaps'] = $this->getBasePath().DIRECTORY_SEPARATOR.'app'.DIRECTORY_SEPARATOR.'sitemaps'.DIRECTORY_SEPARATOR.'templates';
-            $e->roots['sprout-base-redirects'] = $this->getBasePath().DIRECTORY_SEPARATOR.'app'.DIRECTORY_SEPARATOR.'redirects'.DIRECTORY_SEPARATOR.'templates';
-            $e->roots['sprout-base-sent-email'] = $this->getBasePath().DIRECTORY_SEPARATOR.'app'.DIRECTORY_SEPARATOR.'sentemail'.DIRECTORY_SEPARATOR.'templates';
-            $e->roots['sprout-base-email'] = $this->getBasePath().DIRECTORY_SEPARATOR.'app'.DIRECTORY_SEPARATOR.'email'.DIRECTORY_SEPARATOR.'templates';
-            $e->roots['sprout-base-fields'] = $this->getBasePath().DIRECTORY_SEPARATOR.'app'.DIRECTORY_SEPARATOR.'fields'.DIRECTORY_SEPARATOR.'templates';
-            $e->roots['sprout-base-reports'] = $this->getBasePath().DIRECTORY_SEPARATOR.'app'.DIRECTORY_SEPARATOR.'reports'.DIRECTORY_SEPARATOR.'templates';
-            $e->roots['sprout-base-campaigns'] = $this->getBasePath().DIRECTORY_SEPARATOR.'app'.DIRECTORY_SEPARATOR.'campaigns'.DIRECTORY_SEPARATOR.'templates';
-            $e->roots['sprout-base-metadata'] = $this->getBasePath().DIRECTORY_SEPARATOR.'app'.DIRECTORY_SEPARATOR.'metadata'.DIRECTORY_SEPARATOR.'templates';
-            $e->roots['sprout-base-forms'] = $this->getBasePath().DIRECTORY_SEPARATOR.'app'.DIRECTORY_SEPARATOR.'forms'.DIRECTORY_SEPARATOR.'templates';
+            $e->roots['sprout'] = $this->getBasePath().DIRECTORY_SEPARATOR.'templates';
         });
 
         Craft::$app->view->registerTwigExtension(new Extension());

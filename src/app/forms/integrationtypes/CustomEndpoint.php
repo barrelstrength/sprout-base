@@ -53,7 +53,7 @@ class CustomEndpoint extends Integration
      */
     public function getSettingsHtml()
     {
-        return Craft::$app->getView()->renderTemplate('sprout-base-forms/_components/integrationtypes/customendpoint/settings',
+        return Craft::$app->getView()->renderTemplate('sprout/forms/_components/integrationtypes/customendpoint/settings',
             [
                 'integration' => $this
             ]

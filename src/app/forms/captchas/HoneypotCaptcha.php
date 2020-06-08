@@ -66,7 +66,7 @@ class HoneypotCaptcha extends Captcha
     {
         $settings = $this->getSettings();
 
-        $html = Craft::$app->getView()->renderTemplate('sprout-base-forms/_components/captchas/honeypot/settings', [
+        $html = Craft::$app->getView()->renderTemplate('sprout/forms/_components/captchas/honeypot/settings', [
             'captcha' => $this,
             'settings' => $settings,
             'defaultFieldName' => self::HONEYPOT_CAPTCHA_INPUT_KEY

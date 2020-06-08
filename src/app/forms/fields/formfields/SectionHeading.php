@@ -128,7 +128,7 @@ class SectionHeading extends FormField
             'html' => 'HTML'
         ];
 
-        return $view->renderTemplate('sprout-base-forms/_components/fields/formfields/sectionheading/settings',
+        return $view->renderTemplate('sprout/forms/_components/fields/formfields/sectionheading/settings',
             [
                 'id' => $namespaceInputId,
                 'name' => $name,
@@ -160,7 +160,7 @@ class SectionHeading extends FormField
             $this->notes = '';
         }
 
-        return Craft::$app->getView()->renderTemplate('sprout-base-fields/_components/fields/formfields/sectionheading/input',
+        return Craft::$app->getView()->renderTemplate('sprout/fields/_components/fields/formfields/sectionheading/input',
             [
                 'id' => $namespaceInputId,
                 'name' => $name,
@@ -180,7 +180,7 @@ class SectionHeading extends FormField
      */
     public function getExampleInputHtml(): string
     {
-        return Craft::$app->getView()->renderTemplate('sprout-base-forms/_components/fields/formfields/sectionheading/example',
+        return Craft::$app->getView()->renderTemplate('sprout/forms/_components/fields/formfields/sectionheading/example',
             [
                 'field' => $this
             ]

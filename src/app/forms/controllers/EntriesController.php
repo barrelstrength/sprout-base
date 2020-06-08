@@ -74,7 +74,7 @@ class EntriesController extends BaseController
             return Craft::$app->getResponse()->redirect(UrlHelper::cpUrl('sprout/forms'));
         }
 
-        return $this->renderTemplate('sprout-base-forms/entries/index');
+        return $this->renderTemplate('sprout/forms/entries/index');
     }
 
     /**
@@ -125,7 +125,7 @@ class EntriesController extends BaseController
         if (!$saveData) {
             Craft::$app->getSession()->setError(Craft::t('sprout', "Unable to edit entry. Enable the 'Save Data' for this form to view, edit, or delete content."));
 
-            return $this->renderTemplate('sprout-base-forms/entries');
+            return $this->renderTemplate('sprout/forms/entries');
         }
 
         $entryStatus = SproutBase::$app->entryStatuses->getEntryStatusById($entry->statusId);
@@ -157,7 +157,7 @@ class EntriesController extends BaseController
         $variables['tabs'] = $tabs;
         $variables['fieldLayoutTabs'] = $fieldLayoutTabs;
 
-        return $this->renderTemplate('sprout-base-forms/entries/_edit', $variables);
+        return $this->renderTemplate('sprout/forms/entries/_edit', $variables);
     }
 
     /**

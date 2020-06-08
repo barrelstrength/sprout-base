@@ -72,7 +72,7 @@ class CustomQuery extends DataSource
         $settingsErrors = $this->report->getErrors('settings');
         $settingsErrors = array_shift($settingsErrors);
 
-        return Craft::$app->getView()->renderTemplate('sprout-base-reports/_components/datasources/CustomQuery/settings', [
+        return Craft::$app->getView()->renderTemplate('sprout/reports/_components/datasources/CustomQuery/settings', [
             'settings' => count($settings) ? $settings : $this->report->getSettings(),
             'errors' => $settingsErrors
         ]);

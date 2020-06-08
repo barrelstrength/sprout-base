@@ -43,7 +43,7 @@ class Phone extends Component
     public function getSettingsHtml(FieldInterface $field): string
     {
         return Craft::$app->getView()->renderTemplate(
-            'sprout-base-fields/_components/fields/formfields/phone/settings',
+            'sprout/fields/_components/fields/formfields/phone/settings',
             [
                 'field' => $field,
             ]
@@ -75,7 +75,7 @@ class Phone extends Component
         $val = $value['phone'] ?? null;
 
         return Craft::$app->getView()->renderTemplate(
-            'sprout-base-fields/_components/fields/formfields/phone/input',
+            'sprout/fields/_components/fields/formfields/phone/input',
             [
                 'namespaceInputId' => $namespaceInputId,
                 'namespaceCountryId' => $namespaceCountryId,

@@ -219,7 +219,7 @@ class Rules extends Component
     {
         $view = Craft::$app->getView();
 
-        $html = $view->renderTemplate('sprout-base-forms/forms/_editRuleModal', [
+        $html = $view->renderTemplate('sprout/forms/forms/_editRuleModal', [
             'rule' => $rule,
         ]);
 

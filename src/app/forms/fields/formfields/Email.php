@@ -90,7 +90,7 @@ class Email extends FormField implements PreviewableFieldInterface
      */
     public function getExampleInputHtml(): string
     {
-        return Craft::$app->getView()->renderTemplate('sprout-base-forms/_components/fields/formfields/email/example',
+        return Craft::$app->getView()->renderTemplate('sprout/forms/_components/fields/formfields/email/example',
             [
                 'field' => $this
             ]
@@ -206,7 +206,7 @@ class Email extends FormField implements PreviewableFieldInterface
         $isValid = SproutBase::$app->emailField->validateUniqueEmail($value, $this, $element);
 
         if (!$isValid) {
-            $message = Craft::t('sprout-base-fields', $this->name.' must be a unique email.');
+            $message = Craft::t('sprout', $this->name.' must be a unique email.');
             $element->addError($this->handle, $message);
         }
     }

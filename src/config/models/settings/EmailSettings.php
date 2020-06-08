@@ -42,11 +42,11 @@ class EmailSettings extends Settings
         return [
             'mailers' => [
                 'label' => Craft::t('sprout', 'Mailers'),
-                'template' => 'sprout-base-email/settings/mailers'
+                'template' => 'sprout/email/settings/mailers'
             ],
             'notifications' => [
                 'label' => Craft::t('sprout', 'Notifications'),
-                'template' => 'sprout-base-email/settings/notifications'
+                'template' => 'sprout/email/settings/notifications'
             ]
         ];
     }

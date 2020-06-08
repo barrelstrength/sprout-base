@@ -176,7 +176,7 @@ class GeoMetaType extends MetaType
      */
     public function getSettingsHtml(Field $field): string
     {
-        return Craft::$app->getView()->renderTemplate('sprout-base-metadata/_components/fields/elementmetadata/blocks/geo', [
+        return Craft::$app->getView()->renderTemplate('sprout/metadata/_components/fields/elementmetadata/blocks/geo', [
             'meta' => $this,
             'field' => $field
         ]);

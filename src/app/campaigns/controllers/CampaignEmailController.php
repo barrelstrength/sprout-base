@@ -46,7 +46,7 @@ class CampaignEmailController extends Controller
     {
 //        $this->requirePermission('sprout:sentEmail:viewSentEmail');
 
-        return $this->renderTemplate('sprout-base-campaigns/campaigns/index', [
+        return $this->renderTemplate('sprout/campaigns/campaigns/index', [
 //            'isPro' => SproutBase::$app->settings->isPro()
         ]);
     }
@@ -101,7 +101,7 @@ class CampaignEmailController extends Controller
 
         $tabs = count($campaignEmail->getFieldLayoutTabs()) ? $campaignEmail->getFieldLayoutTabs() : $tabs;
 
-        return $this->renderTemplate('sprout-base-campaigns/campaigns/_edit', [
+        return $this->renderTemplate('sprout/campaigns/campaigns/_edit', [
             'campaignEmail' => $campaignEmail,
             'emailId' => $emailId,
             'campaignTypeId' => $campaignTypeId,
@@ -197,7 +197,7 @@ class CampaignEmailController extends Controller
                 }
 
                 return $this->asJson(
-                    ModalResponse::createErrorModalResponse('sprout-base-email/_modals/response', [
+                    ModalResponse::createErrorModalResponse('sprout/email/_modals/response', [
                         'email' => $campaignEmail,
                         'campaign' => $campaignType,
                         'message' => Craft::t('sprout', $errorMessage),
@@ -206,7 +206,7 @@ class CampaignEmailController extends Controller
             } catch (\Exception $e) {
 
                 return $this->asJson(
-                    ModalResponse::createErrorModalResponse('sprout-base-email/_modals/response', [
+                    ModalResponse::createErrorModalResponse('sprout/email/_modals/response', [
                         'email' => $campaignEmail,
                         'campaign' => $campaignType,
                         'message' => Craft::t('sprout', $e->getMessage()),
@@ -216,7 +216,7 @@ class CampaignEmailController extends Controller
         }
 
         return $this->asJson(
-            ModalResponse::createErrorModalResponse('sprout-base-email/_modals/response', [
+            ModalResponse::createErrorModalResponse('sprout/email/_modals/response', [
                 'email' => $campaignEmail,
                 'campaign' => $campaignType,
                 'message' => Craft::t('sprout', 'The campaign email you are trying to send is missing.'),
@@ -247,7 +247,7 @@ class CampaignEmailController extends Controller
             $campaignType = SproutBase::$app->campaignTypes->getCampaignTypeById($campaignEmail->campaignTypeId);
         }
 
-        $html = Craft::$app->getView()->renderTemplate('sprout-base-campaigns/_modals/campaigns/prepare-test-email', [
+        $html = Craft::$app->getView()->renderTemplate('sprout/campaigns/_modals/campaigns/prepare-test-email', [
             'campaignEmail' => $campaignEmail,
             'campaignType' => $campaignType
         ]);
@@ -282,7 +282,7 @@ class CampaignEmailController extends Controller
             $campaignType = SproutBase::$app->campaignTypes->getCampaignTypeById($campaignEmail->campaignTypeId);
         }
 
-        $html = Craft::$app->getView()->renderTemplate('sprout-base-campaigns/_modals/campaigns/prepare-scheduled-email', [
+        $html = Craft::$app->getView()->renderTemplate('sprout/campaigns/_modals/campaigns/prepare-scheduled-email', [
             'campaignEmail' => $campaignEmail,
             'campaignType' => $campaignType
         ]);
@@ -377,7 +377,7 @@ class CampaignEmailController extends Controller
             }
 
             return $this->asJson(
-                ModalResponse::createErrorModalResponse('sprout-base-email/_modals/response', [
+                ModalResponse::createErrorModalResponse('sprout/email/_modals/response', [
                     'email' => $campaignEmail,
                     'message' => Craft::t('sprout', 'Recipient email addresses do not validate: {invalidEmails}', [
                         'invalidEmails' => implode(', ', $invalidEmails)
@@ -393,7 +393,7 @@ class CampaignEmailController extends Controller
 
             if (!$mailer->sendTestCampaignEmail($campaignEmail)) {
                 return $this->asJson(
-                    ModalResponse::createErrorModalResponse('sprout-base-email/_modals/response', [
+                    ModalResponse::createErrorModalResponse('sprout/email/_modals/response', [
                         'email' => $campaignEmail,
                         'message' => Craft::t('sprout', 'Unable to send Test Campaign Email')
                     ])
@@ -401,14 +401,14 @@ class CampaignEmailController extends Controller
             }
 
             return $this->asJson(
-                ModalResponse::createModalResponse('sprout-base-email/_modals/response', [
+                ModalResponse::createModalResponse('sprout/email/_modals/response', [
                     'email' => $campaignEmail,
                     'message' => Craft::t('sprout', 'Test Campaign Email sent.')
                 ])
             );
         } catch (\Exception $e) {
             return $this->asJson(
-                ModalResponse::createErrorModalResponse('sprout-base-email/_modals/response', [
+                ModalResponse::createErrorModalResponse('sprout/email/_modals/response', [
                     'email' => $campaignEmail,
                     'campaign' => $campaignEmail->getCampaignType(),
                     'message' => Craft::t('sprout', $e->getMessage()),
@@ -442,7 +442,7 @@ class CampaignEmailController extends Controller
         ];
 
         // Create the token and redirect to the entry URL with the token in place
-        $token = Craft::$app->getTokens()->createToken(['sprout-base-campaigns/campaign-email/view-shared-campaign-email', $params]);
+        $token = Craft::$app->getTokens()->createToken(['sprout/campaign-email/view-shared-campaign-email', $params]);
 
         $emailUrl = '';
         if ($campaignEmail->getUrl() !== null) {
@@ -465,7 +465,7 @@ class CampaignEmailController extends Controller
     {
         Craft::$app->getView()->registerAssetBundle(CpAsset::class);
 
-        return $this->renderTemplate('sprout-base-email/_special/preview', [
+        return $this->renderTemplate('sprout/email/_special/preview', [
             'emailType' => $emailType,
             'emailId' => $emailId
         ]);

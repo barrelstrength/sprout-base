@@ -37,7 +37,7 @@ class Users extends CraftUsers
     /**
      * @var string Template to use for settings rendering
      */
-    protected $settingsTemplate = 'sprout-base-forms/_components/fields/formfields/users/settings';
+    protected $settingsTemplate = 'sprout/forms/_components/fields/formfields/users/settings';
 
     /**
      * @return string
@@ -58,7 +58,7 @@ class Users extends CraftUsers
      */
     public function getExampleInputHtml(): string
     {
-        return Craft::$app->getView()->renderTemplate('sprout-base-forms/_components/fields/formfields/users/example',
+        return Craft::$app->getView()->renderTemplate('sprout/forms/_components/fields/formfields/users/example',
             [
                 'field' => $this
             ]

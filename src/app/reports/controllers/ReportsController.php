@@ -63,7 +63,7 @@ class ReportsController extends Controller
 
         $currentUser = Craft::$app->getUser()->getIdentity();
 
-        return $this->renderTemplate('sprout-base-reports/reports/index', [
+        return $this->renderTemplate('sprout/reports/reports/index', [
             'dataSources' => $dataSources,
             'groupId' => $groupId,
             'reports' => $reports,
@@ -133,7 +133,7 @@ class ReportsController extends Controller
 
         $currentUser = Craft::$app->getUser()->getIdentity();
 
-        return $this->renderTemplate('sprout-base-reports/results/index', [
+        return $this->renderTemplate('sprout/reports/results/index', [
             'report' => $report,
             'visualization' => $visualization,
             'dataSource' => $dataSource,
@@ -271,7 +271,7 @@ class ReportsController extends Controller
 
         $currentUser = Craft::$app->getUser()->getIdentity();
 
-        return $this->renderTemplate('sprout-base-reports/reports/_edit', [
+        return $this->renderTemplate('sprout/reports/reports/_edit', [
             'report' => $reportElement,
             'dataSource' => $dataSource,
             'reportIndexUrl' => $reportIndexUrl,

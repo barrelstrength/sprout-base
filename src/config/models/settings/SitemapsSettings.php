@@ -57,12 +57,12 @@ class SitemapsSettings extends Settings
         return [
             'sitemaps' => [
                 'label' => Craft::t('sprout', 'Sitemaps'),
-                'template' => 'sprout-base-sitemaps/settings/sitemaps',
+                'template' => 'sprout/sitemaps/settings/sitemaps',
                 'multisite' => true
             ],
             'sitemaps2' => [
                 'label' => Craft::t('sprout', 'Multi-lingual Sitemaps'),
-                'template' => 'sprout-base-sitemaps/settings/sitemaps',
+                'template' => 'sprout/sitemaps/settings/sitemaps',
                 'multisite' => false
             ]
         ];

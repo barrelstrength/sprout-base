@@ -90,9 +90,9 @@ class SitemapsConfig extends Config
         if ($settings->enableDynamicSitemaps) {
             return [
                 'sitemap-<sitemapKey:.*>-<pageNumber:\d+>.xml' =>
-                    'sprout-base-sitemaps/xml-sitemap/render-xml-sitemap',
+                    'sprout/xml-sitemap/render-xml-sitemap',
                 'sitemap-?<sitemapKey:.*>.xml' =>
-                    'sprout-base-sitemaps/xml-sitemap/render-xml-sitemap',
+                    'sprout/xml-sitemap/render-xml-sitemap',
             ];
         }
 

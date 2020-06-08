@@ -90,7 +90,7 @@ class SaveEntryEvent extends NotificationEvent
             $this->availableForms = $this->getAllForms();
         }
 
-        return Craft::$app->getView()->renderTemplate('sprout-base-forms/_integrations/sproutemail/events/notificationevents/SaveEntryEvent/settings', [
+        return Craft::$app->getView()->renderTemplate('sprout/forms/_integrations/sproutemail/events/notificationevents/SaveEntryEvent/settings', [
             'event' => $this
         ]);
     }

@@ -217,7 +217,7 @@ class Integrations extends Component
     {
         $view = Craft::$app->getView();
 
-        $html = $view->renderTemplate('sprout-base-forms/forms/_editIntegrationModal', [
+        $html = $view->renderTemplate('sprout/forms/forms/_editIntegrationModal', [
             'integration' => $integration,
         ]);
 

@@ -61,7 +61,7 @@ class FormsController extends BaseController
     {
         $this->requirePermission('sprout:forms:editForms');
 
-        return $this->renderTemplate('sprout-base-forms/forms');
+        return $this->renderTemplate('sprout/forms/forms');
     }
 
     /**
@@ -84,7 +84,7 @@ class FormsController extends BaseController
 
         $isPro = SproutBase::$app->config->isEdition('sprout-forms', SproutForms::EDITION_PRO);
 
-        return $this->renderTemplate('sprout-base-forms/forms/_settings/'.$settingsSectionHandle, [
+        return $this->renderTemplate('sprout/forms/forms/_settings/'.$settingsSectionHandle, [
             'form' => $form,
             'groups' => SproutBase::$app->groups->getAllFormGroups(),
             'groupId' => $form->groupId ?? null,
@@ -226,7 +226,7 @@ class FormsController extends BaseController
 
         $tabs = SproutBase::$app->forms->getTabsForFieldLayout($form);
 
-        return $this->renderTemplate('sprout-base-forms/forms/_editForm', [
+        return $this->renderTemplate('sprout/forms/forms/_editForm', [
             'form' => $form,
             'formTabs' => $tabs,
             'continueEditingUrl' => 'sprout/forms/edit/{id}'
@@ -497,7 +497,7 @@ class FormsController extends BaseController
             'tabs' => $tabs
         ]) : null;
 
-        $contentHtml = $view->renderTemplate('sprout-base-forms/forms/_editFormContent', [
+        $contentHtml = $view->renderTemplate('sprout/forms/forms/_editFormContent', [
             'form' => $form,
             'fieldLayout' => $form->getFieldLayout()
         ]);

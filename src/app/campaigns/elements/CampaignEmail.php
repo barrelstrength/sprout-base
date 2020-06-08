@@ -369,7 +369,7 @@ class CampaignEmail extends EmailElement
         if ($attribute === 'send') {
             $mailer = $campaignType->getMailer();
 
-            return Craft::$app->getView()->renderTemplate('sprout-base-campaigns/_components/elementindex/campaignemail/prepare-link', [
+            return Craft::$app->getView()->renderTemplate('sprout/campaigns/_components/elementindex/campaignemail/prepare-link', [
                 'campaignEmail' => $this,
                 'campaignType' => $campaignType,
                 'mailer' => $mailer
@@ -377,7 +377,7 @@ class CampaignEmail extends EmailElement
         }
 
         if ($attribute === 'preview') {
-            return Craft::$app->getView()->renderTemplate('sprout-base-campaigns/_components/elementindex/campaignemail/preview-links', [
+            return Craft::$app->getView()->renderTemplate('sprout/campaigns/_components/elementindex/campaignemail/preview-links', [
                 'email' => $this,
                 'campaignType' => $campaignType,
                 'type' => 'html'

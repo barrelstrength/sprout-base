@@ -85,7 +85,7 @@ class Invisible extends FormField implements PreviewableFieldInterface
      */
     public function getSettingsHtml()
     {
-        return Craft::$app->getView()->renderTemplate('sprout-base-forms/_components/fields/formfields/invisible/settings',
+        return Craft::$app->getView()->renderTemplate('sprout/forms/_components/fields/formfields/invisible/settings',
             [
                 'field' => $this,
             ]
@@ -110,7 +110,7 @@ class Invisible extends FormField implements PreviewableFieldInterface
         $inputId = Craft::$app->getView()->formatInputId($name);
         $namespaceInputId = Craft::$app->getView()->namespaceInputId($inputId);
 
-        return Craft::$app->getView()->renderTemplate('sprout-base-fields/_components/fields/formfields/invisible/input',
+        return Craft::$app->getView()->renderTemplate('sprout/fields/_components/fields/formfields/invisible/input',
             [
                 'id' => $namespaceInputId,
                 'name' => $name,
@@ -131,7 +131,7 @@ class Invisible extends FormField implements PreviewableFieldInterface
      */
     public function getExampleInputHtml(): string
     {
-        return Craft::$app->getView()->renderTemplate('sprout-base-forms/_components/fields/formfields/invisible/example',
+        return Craft::$app->getView()->renderTemplate('sprout/forms/_components/fields/formfields/invisible/example',
             [
                 'field' => $this
             ]

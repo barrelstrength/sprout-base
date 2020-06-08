@@ -178,7 +178,7 @@ class EmailDropdown extends CraftDropdownField
 
         $options = $this->options;
 
-        return Craft::$app->getView()->renderTemplate('sprout-base-fields/_components/fields/formfields/emaildropdown/input',
+        return Craft::$app->getView()->renderTemplate('sprout/fields/_components/fields/formfields/emaildropdown/input',
             [
                 'name' => $name,
                 'value' => $value,
@@ -198,7 +198,7 @@ class EmailDropdown extends CraftDropdownField
      */
     public function getExampleInputHtml(): string
     {
-        return Craft::$app->getView()->renderTemplate('sprout-base-forms/_components/fields/formfields/emaildropdown/example',
+        return Craft::$app->getView()->renderTemplate('sprout/forms/_components/fields/formfields/emaildropdown/example',
             [
                 'field' => $this
             ]

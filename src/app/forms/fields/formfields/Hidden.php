@@ -82,7 +82,7 @@ class Hidden extends FormField implements PreviewableFieldInterface
      */
     public function getSettingsHtml()
     {
-        return Craft::$app->getView()->renderTemplate('sprout-base-forms/_components/fields/formfields/hidden/settings',
+        return Craft::$app->getView()->renderTemplate('sprout/forms/_components/fields/formfields/hidden/settings',
             [
                 'field' => $this,
             ]);
@@ -102,7 +102,7 @@ class Hidden extends FormField implements PreviewableFieldInterface
      */
     public function getInputHtml($value, ElementInterface $element = null): string
     {
-        return Craft::$app->getView()->renderTemplate('sprout-base-fields/_components/fields/formfields/hidden/input',
+        return Craft::$app->getView()->renderTemplate('sprout/fields/_components/fields/formfields/hidden/input',
             [
                 'id' => $this->handle,
                 'name' => $this->handle,
@@ -122,7 +122,7 @@ class Hidden extends FormField implements PreviewableFieldInterface
      */
     public function getExampleInputHtml(): string
     {
-        return Craft::$app->getView()->renderTemplate('sprout-base-forms/_components/fields/formfields/hidden/example',
+        return Craft::$app->getView()->renderTemplate('sprout/forms/_components/fields/formfields/hidden/example',
             [
                 'field' => $this
             ]

@@ -59,20 +59,20 @@ class FormsSettings extends Settings
         return [
             'forms' => [
                 'label' => Craft::t('sprout', 'Forms'),
-                'template' => 'sprout-base-forms/settings/forms',
+                'template' => 'sprout/forms/settings/forms',
             ],
             'spam-protection' => [
                 'label' => Craft::t('sprout', 'Spam Protection'),
-                'template' => 'sprout-base-forms/settings/spam-protection',
+                'template' => 'sprout/forms/settings/spam-protection',
                 'variables' => [
                     'spamRedirectBehaviorOptions' => $this->getSpamRedirectBehaviorsAsOptions()
                 ]
             ],
             'entry-statuses' => [
                 'label' => Craft::t('sprout', 'Entry Statuses'),
-                'template' => 'sprout-base-forms/settings/entrystatuses',
+                'template' => 'sprout/forms/settings/entrystatuses',
                 'settingsTarget' => SettingsController::SETTINGS_TARGET_DB,
-                'actionButtonTemplate' => 'sprout-base-forms/settings/entrystatuses/_actionStatusButton',
+                'actionButtonTemplate' => 'sprout/forms/settings/entrystatuses/_actionStatusButton',
                 'variables' => [
                     'entryStatuses' => SproutBase::$app->entryStatuses->getAllEntryStatuses()
                 ]

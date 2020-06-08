@@ -123,7 +123,7 @@ class OptIn extends FormField implements PreviewableFieldInterface
      */
     public function getSettingsHtml()
     {
-        return Craft::$app->getView()->renderTemplate('sprout-base-forms/_components/fields/formfields/optin/settings',
+        return Craft::$app->getView()->renderTemplate('sprout/forms/_components/fields/formfields/optin/settings',
             [
                 'field' => $this,
             ]);
@@ -147,7 +147,7 @@ class OptIn extends FormField implements PreviewableFieldInterface
         $inputId = Craft::$app->getView()->formatInputId($name);
         $namespaceInputId = Craft::$app->getView()->namespaceInputId($inputId);
 
-        return Craft::$app->getView()->renderTemplate('sprout-base-fields/_components/fields/formfields/optin/input',
+        return Craft::$app->getView()->renderTemplate('sprout/fields/_components/fields/formfields/optin/input',
             [
                 'name' => $this->handle,
                 'namespaceInputId' => $namespaceInputId,
@@ -168,7 +168,7 @@ class OptIn extends FormField implements PreviewableFieldInterface
      */
     public function getExampleInputHtml(): string
     {
-        return Craft::$app->getView()->renderTemplate('sprout-base-forms/_components/fields/formfields/optin/example',
+        return Craft::$app->getView()->renderTemplate('sprout/forms/_components/fields/formfields/optin/example',
             [
                 'field' => $this
             ]

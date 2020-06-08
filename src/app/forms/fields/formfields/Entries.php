@@ -37,7 +37,7 @@ class Entries extends CraftEntries
     /**
      * @var string Template to use for settings rendering
      */
-    protected $settingsTemplate = 'sprout-base-forms/_components/fields/formfields/elementfieldsettings';
+    protected $settingsTemplate = 'sprout/forms/_components/fields/formfields/elementfieldsettings';
 
     /**
      * @return string
@@ -58,7 +58,7 @@ class Entries extends CraftEntries
      */
     public function getExampleInputHtml(): string
     {
-        return Craft::$app->getView()->renderTemplate('sprout-base-forms/_components/fields/formfields/entries/example',
+        return Craft::$app->getView()->renderTemplate('sprout/forms/_components/fields/formfields/entries/example',
             [
                 'field' => $this
             ]

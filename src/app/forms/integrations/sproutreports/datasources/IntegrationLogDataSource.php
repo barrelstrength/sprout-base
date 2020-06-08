@@ -159,7 +159,7 @@ class IntegrationLogDataSource extends DataSource
 
         $dateRanges = SproutBase::$app->reports->getDateRanges(false);
 
-        return Craft::$app->getView()->renderTemplate('sprout-base-forms/_integrations/sproutreports/datasources/IntegrationLogDataSource/settings', [
+        return Craft::$app->getView()->renderTemplate('sprout/forms/_integrations/sproutreports/datasources/IntegrationLogDataSource/settings', [
             'formOptions' => $formOptions,
             'defaultStartDate' => new DateTime($defaultStartDate),
             'defaultEndDate' => new DateTime($defaultEndDate),

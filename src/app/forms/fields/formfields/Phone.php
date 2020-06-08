@@ -126,7 +126,7 @@ class Phone extends FormField implements PreviewableFieldInterface
      */
     public function getExampleInputHtml(): string
     {
-        return Craft::$app->getView()->renderTemplate('sprout-base-forms/_components/fields/formfields/phone/example',
+        return Craft::$app->getView()->renderTemplate('sprout/forms/_components/fields/formfields/phone/example',
             [
                 'field' => $this
             ]

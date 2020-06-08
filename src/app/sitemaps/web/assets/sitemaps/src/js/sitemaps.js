@@ -50,7 +50,7 @@ class SproutSeoSitemapIndex {
       "pluginHandle": $($row).data('pluginHandle')
     };
 
-    Craft.postActionRequest('sprout-base-sitemaps/sitemaps/save-sitemap-section', data, $.proxy(function(response, textStatus) {
+    Craft.postActionRequest('sprout/sitemaps/save-sitemap-section', data, $.proxy(function(response, textStatus) {
       if (textStatus === 'success') {
         if (response.success) {
 
@@ -111,7 +111,7 @@ class SproutSeoSitemapIndex {
       id: customPageId
     };
 
-    Craft.postActionRequest('sprout-base-sitemaps/sitemaps/delete-sitemap-by-id', data, $.proxy(function(response, textStatus) {
+    Craft.postActionRequest('sprout/sitemaps/delete-sitemap-by-id', data, $.proxy(function(response, textStatus) {
       if (response.success) {
         row.remove();
       }

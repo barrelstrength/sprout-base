@@ -352,7 +352,7 @@ class Redirect extends Element
     {
         $methodOptions = SproutBase::$app->redirects->getMethods();
 
-        $html = Craft::$app->view->renderTemplate('sprout-base-redirects/redirects/_editor', [
+        $html = Craft::$app->view->renderTemplate('sprout/redirects/redirects/_editor', [
             'redirect' => $this,
             'methodOptions' => $methodOptions
         ]);

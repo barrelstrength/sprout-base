@@ -1,0 +1,49 @@
+{% extends "sprout/redirects/_layouts/elementindex" %}
+{% import "sprout/config/_includes/sproutcp" as sproutCp %}
+
+{% set elementType = 'barrelstrength\\sproutbase\\app\\redirects\\elements\\Redirect' %}
+{% set title = "Redirects" %}
+{% set bodyClass = 'sprout-redirects-index' %}
+
+{% do view.registerAssetBundle("barrelstrength\\sproutbase\\config\\web\\assets\\cp\\CpAsset") %}
+{% do view.registerAssetBundle("barrelstrength\\sproutbase\\app\\redirects\\web\\assets\\redirects\\RedirectsAsset") %}
+
+{% block actionButton %}
+    <div class="buttons">
+        <a class="btn submit add icon {% if not isPro %}sprout-disabled{% endif %}" id="sprout-base-redirects-new-button"
+            href="{{ url('sprout/redirects/new/' ~ currentSite.handle) }}">{{ "New Redirect"|t }}</a>
+
+        {% if not isPro %}
+            {{ sproutCp.upgradeToProButton({
+                url: cpUrl('sprout/upgrade/redirects'),
+                title: "Upgrade to Sprout Redirects PRO to manage Unlimited Redirects"|t('sprout')
+            }) }}
+        {% endif %}
+    </div>
+{% endblock %}
+
+{% css %}
+    .element.small.hasstatus
+    {
+    word-break: break-all;
+    hyphens: auto;
+    }
+{% endcss %}
+
+{% js %}
+    {% if not isPro %}
+        $('#sprout-base-redirects-new-button').click(function(e){
+        e.preventDefault();
+        })
+    {% endif %}
+
+
+
+{% endjs %}
+
+{% block initJs %}
+
+    {{ parent() }}
+
+    new RedirectEditLinkSwitcher();
+{% endblock %}
