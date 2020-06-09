@@ -51,7 +51,7 @@ class Checkboxes extends CraftCheckboxesField
      */
     public function getSvgIconPath(): string
     {
-        return '@sproutbaseicons/check-square.svg';
+        return '@sproutbaseassets/icons/check-square.svg';
     }
 
     /**

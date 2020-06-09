@@ -1,6 +1,6 @@
 {% extends "_layouts/cp" %}
 
-{% do view.registerAssetBundle("barrelstrength\\sproutbase\\app\\redirects\\web\\assets\\redirects\\RedirectsAsset") %}
+{% do view.registerAssetBundle("barrelstrength\\sproutbase\\web\\assetbundles\\redirects\\RedirectsAsset") %}
 
 {% set selectedSubnavItem = craft.app.request.getSegment(2) ? craft.app.request.getSegment(2) : 'defaults' %}
 

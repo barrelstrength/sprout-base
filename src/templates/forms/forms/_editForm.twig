@@ -102,6 +102,7 @@
     {% hook 'cp.sproutForms.forms.edit.details' %}
 {% endblock %}
 
+{% do view.registerAssetBundle("barrelstrength\\sproutbase\\web\\assetbundles\\forms\\FormsAsset") %}
 {% do view.registerAssetBundle("craft\\web\\assets\\fields\\FieldsAsset") %}
 
 {% do view.registerJs("new SproutFormsFieldLayoutEditor("~form.id~");") %}

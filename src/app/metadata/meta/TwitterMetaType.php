@@ -303,7 +303,7 @@ class TwitterMetaType extends MetaType
 
     public function getIconPath(): string
     {
-        return '@sproutbaseicons/twitter.svg';
+        return '@sproutbaseassets/icons/twitter.svg';
     }
 
     /**

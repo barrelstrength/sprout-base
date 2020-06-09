@@ -7,7 +7,7 @@
 
 namespace barrelstrength\sproutbase\app\fields\fields;
 
-use barrelstrength\sproutbase\app\fields\web\assets\quill\QuillAsset;
+use barrelstrength\sproutbase\web\assetbundles\quill\QuillAsset;
 use Craft;
 use craft\base\ElementInterface;
 use craft\base\Field;

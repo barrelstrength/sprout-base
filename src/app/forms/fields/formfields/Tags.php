@@ -44,7 +44,7 @@ class Tags extends CraftTags
      */
     public function getSvgIconPath(): string
     {
-        return '@sproutbaseicons/tags.svg';
+        return '@sproutbaseassets/icons/tags.svg';
     }
 
     /**

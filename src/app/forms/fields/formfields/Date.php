@@ -155,7 +155,7 @@ class Date extends FormField implements PreviewableFieldInterface
      */
     public function getSvgIconPath(): string
     {
-        return '@sproutbaseicons/calendar.svg';
+        return '@sproutbaseassets/icons/calendar.svg';
     }
 
     /**

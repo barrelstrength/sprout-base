@@ -73,7 +73,7 @@ class EmailDropdown extends CraftDropdownField
      */
     public function getSvgIconPath(): string
     {
-        return '@sproutbaseicons/share.svg';
+        return '@sproutbaseassets/icons/share.svg';
     }
 
     public function normalizeValue($value, ElementInterface $element = null)

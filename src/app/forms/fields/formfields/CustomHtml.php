@@ -84,7 +84,7 @@ class CustomHtml extends FormField implements PreviewableFieldInterface
      */
     public function getSvgIconPath(): string
     {
-        return '@sproutbaseicons/code.svg';
+        return '@sproutbaseassets/icons/code.svg';
     }
 
     /**

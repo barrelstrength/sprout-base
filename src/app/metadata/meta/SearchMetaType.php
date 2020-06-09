@@ -205,7 +205,7 @@ class SearchMetaType extends MetaType
 
     public function getIconPath(): string
     {
-        return '@sproutbaseicons/search.svg';
+        return '@sproutbaseassets/icons/search.svg';
     }
 
     public function showMetaDetailsTab(): bool

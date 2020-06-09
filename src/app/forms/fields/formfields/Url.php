@@ -68,7 +68,7 @@ class Url extends FormField implements PreviewableFieldInterface
      */
     public function getSvgIconPath(): string
     {
-        return '@sproutbaseicons/chain.svg';
+        return '@sproutbaseassets/icons/chain.svg';
     }
 
     /**

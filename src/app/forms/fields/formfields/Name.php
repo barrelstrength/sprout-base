@@ -90,7 +90,7 @@ class Name extends FormField implements PreviewableFieldInterface
      */
     public function getSvgIconPath(): string
     {
-        return '@sproutbaseicons/user.svg';
+        return '@sproutbaseassets/icons/user.svg';
     }
 
     /**

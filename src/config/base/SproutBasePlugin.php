@@ -51,7 +51,7 @@ abstract class SproutBasePlugin extends Plugin
     private function getCpUrlRules(): array
     {
         $configTypes = static::getSproutConfigs();
-        
+
         $urlRules = [];
         foreach ($configTypes as $configType) {
             $config = new $configType();

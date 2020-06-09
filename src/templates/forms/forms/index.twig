@@ -8,7 +8,7 @@
 {% set isPro = craft.app.getModule('sprout-forms').is('pro') %}
 
 {% set groupId = null %}
-{% set groups = craft.sproutForms.getAllFormGroups('id') %}
+{% set groups = sprout.forms.getAllFormGroups('id') %}
 
 {% block actionButton %}
     <div class="buttons">
@@ -52,8 +52,8 @@
 
 {% endblock %}
 
-{% do view.registerAssetBundle("barrelstrength\\sproutbase\\config\\web\\assets\\cp\\CpAsset") %}
-{% do view.registerAssetBundle("barrelstrength\\sproutbase\\config\\web\\assets\\groups\\GroupsAsset") %}
+{% do view.registerAssetBundle("barrelstrength\\sproutbase\\web\\assetbundles\\sproutcp\\SproutCpAsset") %}
+{% do view.registerAssetBundle("barrelstrength\\sproutbase\\web\\assetbundles\\groups\\GroupsAsset") %}
 
 {% js %}
     {% if not canCreateForm %}

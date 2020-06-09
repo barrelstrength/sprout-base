@@ -1,0 +1,129 @@
+
+#btn-download-csv {
+    font-size: 14px;
+}
+
+///* BASE STYLES
+//-----------------------------------*/
+
+.tablecontent tr {
+    height: 50px;
+    max-height: 50px;
+    overflow: hidden;
+}
+
+.tablecontent thead tr {
+    height: 12px;
+}
+
+.tablecontent td,
+.tablecontent th {
+    min-width: 180px;
+}
+
+.tablecontent td {
+    border-right: 1px solid #eeeeee;
+}
+
+.tablecontent tr td:last-child {
+    border-right: 0 solid transparent;
+}
+
+///* RESULTS DATA
+//-----------------------------------*/
+
+.tableview.sproutreports {
+    height: auto;
+    overflow: hidden;
+}
+
+.dataTables_scroll th.sorting_asc,
+.dataTables_scroll th.sorting_desc {
+    background-attachment: initial;
+    background-clip: initial;
+    background-color: rgb(242, 242, 242);
+    background-image: url('../../../images/reports/listview_sort_2x.png');
+    background-origin: initial;
+    background-position: 100% 7px;
+    background-repeat: no-repeat;
+    background-size: 26px;
+}
+
+.dataTables_scroll th.sorting_desc {
+    background-position: 100% -24px;
+}
+
+.dataTables_scroll tr th:focus {
+    outline: none;
+}
+
+.sproutreports .tablecontent tr th:first-child,
+.sproutreports .tablecontent tr td:first-child {
+    padding-left: 10px;
+}
+
+//
+///* Adjust margin/padding */
+.sprout-results-header #sprout-results_filter input {
+    width: 260px;
+}
+
+.sprout-results-header {
+    margin-bottom: 24px;
+}
+
+/* Prepare header stuff */
+.sprout-results-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.sprout-results-header #sprout-results_length {
+    flex-grow: 1;
+}
+
+#sprout-results_length,
+#sprout-results_info {
+    font-size: 14px;
+}
+
+#sprout-results_info {
+    margin-right: 14px;
+    margin-top: 1px;
+    padding: 7px;
+}
+
+.sprout-results-header #sprout-results_filter {
+    text-align: right;
+}
+
+#sprout-results_filter.texticon.clearable .text {
+    padding-right: 7px !important;
+}
+
+#sprout-results_paginate {
+    font-size: 16px;
+    line-height: 1.5;
+    margin-top: -8px;
+    padding-top: 5px;
+    text-transform: uppercase;
+}
+
+.paginate_button {
+    border: 1px solid #eee;
+    margin-right: 7px;
+    outline: none;
+}
+
+.paginate_button.page-link {
+    padding: 6px 15px 10px;
+}
+
+.paginate_button.previous {
+    //margin-left: 0;
+}
+
+.paginate_button.current {
+    font-weight: bold;
+}

@@ -111,7 +111,7 @@ class Number extends FormField implements PreviewableFieldInterface
      */
     public function getSvgIconPath(): string
     {
-        return '@sproutbaseicons/hashtag.svg';
+        return '@sproutbaseassets/icons/hashtag.svg';
     }
 
     /**

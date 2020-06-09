@@ -9,220 +9,185 @@ require('laravel-mix-polyfill');
  */
 mix
 
-  // base
-  .sass(
-    'src/config/web/assets/cp/src/scss/sproutcp.scss',
-    'src/config/web/assets/cp/dist/css/sproutcp.css')
-  .sass(
-    'src/config/web/assets/landing/src/scss/landing.scss',
-    'src/config/web/assets/landing/dist/css/landing.css')
+  // General Resources
   .js([
-    'src/config/web/assets/groups/src/js/groups.js'
-  ], 'src/config/web/assets/groups/dist/js/groups.js')
-  .copy('src/config/web/assets/cp/src/images',
-    'src/config/web/assets/cp/dist/images');
+    'src/web/assets/src/js/sproutcp/Groups.js'
+  ], 'src/web/assetbundles/groups/dist/js/Groups.js')
+  .sass(
+    'src/web/assets/src/scss/sproutcp/sprout-cp.scss',
+    'src/web/assetbundles/sproutcp/dist/css/sprout-cp.css')
+  .sass(
+    'src/web/assets/src/scss/sproutcp/landing.scss',
+    'src/web/assetbundles/landing/dist/css/landing.css')
 
-// fields
-if (mix.inProduction()) {
-  // we can import this file directly from node_modules but then
-  // scss variables fail to autocomplete. So, we import this file
-  // from a location that is available to the plugin, but only
-  // want to copy it once.
-  mix.copy(
-    'node_modules/craftcms-sass/src/_mixins.scss',
-    'lib/craftcms-sass/_mixins.scss'
-  );
-}
-
-// fields
-mix
-  // Address
+  // Address Field
   .js([
-      'src/app/fields/web/assets/address/src/js/AddressBox.js',
-      'src/app/fields/web/assets/address/src/js/EditAddressModal.js'
+      'src/web/assets/src/js/fields/AddressBox.js',
+      'src/web/assets/src/js/fields/EditAddressModal.js'
     ],
-    'src/app/fields/web/assets/address/dist/js/addressfield.js')
+    'src/web/assetbundles/addressfield/dist/js/AddressField.js')
   .sass(
-    'src/app/fields/web/assets/address/src/scss/addressfield.scss',
-    'src/app/fields/web/assets/address/dist/css/addressfield.css'
-  )
+    'src/web/assets/src/scss/fields/address-field.scss',
+    'src/web/assetbundles/addressfield/dist/css/address-field.css')
+
+  // Email Field
+  .js([
+    'src/web/assets/src/js/fields/EmailField.js'
+  ], 'src/web/assetbundles/emailfield/dist/js/EmailField.js')
+  .sass(
+    'src/web/assets/src/scss/fields/email-field.scss',
+    'src/web/assetbundles/emailfield/dist/css/email-field.css')
+
+  // Phone Field
+  .js([
+    'src/web/assets/src/js/fields/PhoneField.js'
+  ], 'src/web/assetbundles/phonefield/dist/js/PhoneField.js')
+  .sass(
+    'src/web/assets/src/scss/fields/phone-field.scss',
+    'src/web/assetbundles/phonefield/dist/css/phone-field.css')
+
+  // Regular Expression Field
+  .js([
+    'src/web/assets/src/js/fields/RegularExpressionField.js'
+  ], 'src/web/assetbundles/regularexpressionfield/dist/js/RegularExpressionField.js')
+
+  // Select Other Field
+  .js([
+    'src/web/assets/src/js/fields/SelectOtherField.js'
+  ], 'src/web/assetbundles/selectotherfield/dist/js/SelectOtherField.js')
+  .sass(
+    'src/web/assets/src/scss/fields/select-other-field.scss',
+    'src/web/assetbundles/selectotherfield/dist/css/select-other-field.css')
+
+  // URL Field
+  .js([
+    'src/web/assets/src/js/fields/UrlField.js'
+  ], 'src/web/assetbundles/urlfield/dist/js/UrlField.js')
+  .sass(
+    'src/web/assets/src/scss/fields/url-field.scss',
+    'src/web/assetbundles/urlfield/dist/css/url-field.css')
+
+  // Reports
+  .js([
+    'src/web/assets/src/js/reports/Reports.js',
+    'src/web/assets/src/js/reports/Visualizations.js',
+    'src/web/assets/src/js/reports/VisualizationSettings.js'
+  ], 'src/web/assetbundles/reports/dist/js/Reports.js')
+  .sass(
+    'src/web/assets/src/scss/reports/reports.scss',
+    'src/web/assetbundles/reports/dist/css/reports.css')
+  .sass(
+    'src/web/assets/src/scss/reports/visualizations.scss',
+    'src/web/assetbundles/reports/dist/css/visualizations.css')
+
+  // Sent Email
+  .sass(
+    'src/web/assets/src/scss/sentemail/sent-email.scss',
+    'src/web/assetbundles/sentemail/dist/css/sent-email.css')
 
   // Email
   .js([
-    'src/app/fields/web/assets/email/src/js/emailfield.js'
-  ], 'src/app/fields/web/assets/email/dist/js/emailfield.js')
-  .sass(
-    'src/app/fields/web/assets/email/src/scss/emailfield.scss',
-    'src/app/fields/web/assets/email/dist/css/emailfield.css'
-  )
-
-  // Phone
+    'src/web/assets/src/js/email/NotificationEvent.js'
+  ], 'src/web/assetbundles/email/dist/js/NotificationEvent.js')
   .js([
-    'src/app/fields/web/assets/phone/src/js/phonefield.js'
-  ], 'src/app/fields/web/assets/phone/dist/js/phonefield.js')
+    'src/web/assets/src/js/email/SproutModal.js'
+  ], 'src/web/assetbundles/email/dist/js/SproutModal.js')
   .sass(
-    'src/app/fields/web/assets/phone/src/scss/phonefield.scss',
-    'src/app/fields/web/assets/phone/dist/css/phonefield.css'
-  )
+    'src/web/assets/src/scss/email/charts-explorer.scss',
+    'src/web/assetbundles/email/dist/css/charts-explorer.css')
+  .sass(
+    'src/web/assets/src/scss/email/modal.scss',
+    'src/web/assetbundles/email/dist/css/modal.css')
+  .sass(
+    'src/web/assets/src/scss/email/sproutemail.scss',
+    'src/web/assetbundles/email/dist/css/sproutemail.css')
 
-  // Regular Expression
+  // Redirects
   .js([
-    'src/app/fields/web/assets/regularexpression/src/js/regularexpressionfield.js'
-  ], 'src/app/fields/web/assets/regularexpression/dist/js/regularexpressionfield.js')
+    'src/web/assets/src/js/redirects/RedirectIndex.js'
+  ], 'src/web/assetbundles/redirects/dist/js/RedirectIndex.js')
+  .sass(
+    'src/web/assets/src/scss/redirects/redirects.scss',
+    'src/web/assetbundles/redirects/dist/css/redirects.css')
 
-  // Select Other
+  // Sitemaps
   .js([
-    'src/app/fields/web/assets/selectother/src/js/SelectOtherField.js'
-  ], 'src/app/fields/web/assets/selectother/dist/js/selectotherfield.js')
+    'src/web/assets/src/js/sitemaps/Sitemaps.js',
+    'src/web/assets/src/js/sitemaps/SitemapSettings.js',
+  ], 'src/web/assetbundles/sitemaps/dist/js/Sitemaps.js')
   .sass(
-    'src/app/fields/web/assets/selectother/src/scss/select-other.scss',
-    'src/app/fields/web/assets/selectother/dist/css/select-other.css'
-  )
-
-  // URL
-  .js([
-    'src/app/fields/web/assets/url/src/js/urlfield.js'
-  ], 'src/app/fields/web/assets/url/dist/js/urlfield.js')
-  .sass(
-    'src/app/fields/web/assets/url/src/scss/urlfield.scss',
-    'src/app/fields/web/assets/url/dist/css/urlfield.css'
-  );
-
-// reports
-mix
-  .sass(
-    'src/app/reports/web/assets/reports/src/scss/reports.scss',
-    'src/app/reports/web/assets/reports/dist/css/reports.css',
-  )
-  .sass(
-    'src/app/reports/web/assets/reports/src/scss/visualizations.scss',
-    'src/app/reports/web/assets/reports/dist/css/visualizations.css',
-  )
-  .options({
-    processCssUrls: false
-  })
-  .js([
-    'src/app/reports/web/assets/reports/src/js/reports.js',
-    'src/app/reports/web/assets/reports/src/js/visualizations.js',
-    'src/app/reports/web/assets/reports/src/js/visualization-settings.js'
-  ], 'src/app/reports/web/assets/reports/dist/js/reports.js')
-  .copy('src/app/reports/web/assets/reports/src/images',
-    'src/app/reports/web/assets/reports/dist/images')
-  .copy('node_modules/apexcharts/dist',
-    'lib/apexcharts')
-  .copy('node_modules/datatables.net/js',
-    'lib/datatables.net');
-
-// sent email
-mix
-  .sass(
-    'src/app/sentemail/web/assets/sentemail/src/scss/sent-email.scss',
-    'src/app/sentemail/web/assets/sentemail/dist/css/sent-email.css',
-  )
-  .copy('src/app/sentemail/web/assets/sentemail/src/images',
-    'src/app/sentemail/web/assets/sentemail/dist/images');
-
-// email
-mix
-  .sass(
-    'src/app/email/web/assets/email/src/scss/charts-explorer.scss',
-    'src/app/email/web/assets/email/dist/css/charts-explorer.css')
-  .sass(
-    'src/app/email/web/assets/email/src/scss/modal.scss',
-    'src/app/email/web/assets/email/dist/css/modal.css')
-  .sass(
-    'src/app/email/web/assets/email/src/scss/sproutemail.scss',
-    'src/app/email/web/assets/email/dist/css/sproutemail.css')
-  .js([
-    'src/app/email/web/assets/email/src/js/notification.js'
-  ], 'src/app/email/web/assets/email/dist/js/notification.js')
-  .js([
-    'src/app/email/web/assets/email/src/js/sprout-modal.js'
-  ], 'src/app/email/web/assets/email/dist/js/sprout-modal.js')
-  .copy('src/app/email/web/assets/email/src/images',
-    'src/app/email/web/assets/email/dist/images');
-
-// redirects
-mix
-  .sass(
-    'src/app/redirects/web/assets/redirects/src/scss/redirects.scss',
-    'src/app/redirects/web/assets/redirects/dist/css/redirects.css',
-  )
-  .copy('src/app/redirects/web/assets/redirects/src/images',
-    'src/app/redirects/web/assets/redirects/dist/images')
-  .js([
-    'src/app/redirects/web/assets/redirects/src/js/redirectindex.js'
-  ], 'src/app/redirects/web/assets/redirects/dist/js/redirectindex.js');
-
-// sitemaps
-mix
-  .sass(
-    'src/app/sitemaps/web/assets/sitemaps/src/scss/sitemaps.scss',
-    'src/app/sitemaps/web/assets/sitemaps/dist/css/sitemaps.css',
-  )
-  .js([
-    'src/app/sitemaps/web/assets/sitemaps/src/js/settings.js',
-    'src/app/sitemaps/web/assets/sitemaps/src/js/sitemaps.js',
-  ], 'src/app/sitemaps/web/assets/sitemaps/dist/js/sitemaps.js');
+    'src/web/assets/src/scss/sitemaps/sitemaps.scss',
+    'src/web/assetbundles/sitemaps/dist/css/sitemaps.css')
 
 // SEO
-mix
-  .sass(
-    'src/app/metadata/web/assets/seo/src/scss/sproutseo.scss',
-    'src/app/metadata/web/assets/seo/dist/css/sproutseo.css',
-  )
   .js([
-    'src/app/metadata/web/assets/seo/src/js/editable-table.js',
-    'src/app/metadata/web/assets/seo/src/js/general.js',
-    'src/app/metadata/web/assets/seo/src/js/meta-details-toggle.js',
-    'src/app/metadata/web/assets/seo/src/js/schema.js',
-    'src/app/metadata/web/assets/seo/src/js/website-identity.js'
-  ], 'src/app/metadata/web/assets/seo/dist/js/sproutseo.js')
-  .copy('src/app/metadata/web/assets/seo/src/images',
-    'src/app/metadata/web/assets/seo/dist/images');
+    'src/web/assets/src/js/metadata/EditableTable.js',
+    'src/web/assets/src/js/metadata/General.js',
+    'src/web/assets/src/js/metadata/MetaDetailsToggle.js',
+    'src/web/assets/src/js/metadata/Schema.js',
+    'src/web/assets/src/js/metadata/WebsiteIdentity.js'
+  ], 'src/web/assetbundles/metadata/dist/js/Metadata.js')
+  .sass(
+    'src/web/assets/src/scss/metadata/metadata.scss',
+    'src/web/assetbundles/metadata/dist/css/metadata.css')
 
-mix
   // Forms
   .js([
-    'src/app/forms/web/assets/cp/src/js/editable-table.js',
-    'src/app/forms/web/assets/cp/src/js/form-settings.js',
-    'src/app/forms/web/assets/cp/src/js/field-layout-editor.js',
-    'src/app/forms/web/assets/cp/src/js/field-modal.js',
-    'src/app/forms/web/assets/cp/src/js/integration-modal.js',
-    'src/app/forms/web/assets/cp/src/js/integrations.js',
-    'src/app/forms/web/assets/cp/src/js/rule-modal.js',
-  ], 'src/app/forms/web/assets/cp/dist/js/sproutforms-cp.js')
+    'src/web/assets/src/js/forms/EditableTable.js',
+    'src/web/assets/src/js/forms/FormSettings.js',
+    'src/web/assets/src/js/forms/FieldLayoutEditor.js',
+    'src/web/assets/src/js/forms/FieldModal.js',
+    'src/web/assets/src/js/forms/IntegrationModal.js',
+    'src/web/assets/src/js/forms/Integrations.js',
+    'src/web/assets/src/js/forms/RuleModal.js',
+  ], 'src/web/assetbundles/forms/dist/js/Forms.js')
+  .sass('src/web/assets/src/scss/forms/forms-ui.scss',
+    'src/web/assetbundles/forms/dist/css/forms-ui.css')
+  .sass('src/web/assets/src/scss/forms/forms.scss',
+    'src/web/assetbundles/forms/dist/css/forms.css')
 
-  // Entries Index
+  // Form Entries
   .js([
-    'src/app/forms/web/assets/cp/src/js/entries-index.js',
-    'src/app/forms/web/assets/cp/src/js/entries-table-view.js',
-  ], 'src/app/forms/web/assets/cp/dist/js/sprout-entries-index.js')
-  .sass('src/app/forms/web/assets/cp/src/scss/charts.scss',
-    'src/app/forms/web/assets/cp/dist/css/sproutforms-charts.css')
-  .sass('src/app/forms/web/assets/cp/src/scss/forms-ui.scss',
-    'src/app/forms/web/assets/cp/dist/css/sproutforms-forms-ui.css')
-  .sass('src/app/forms/web/assets/cp/src/scss/cp.scss',
-    'src/app/forms/web/assets/cp/dist/css/sproutforms-cp.css')
-  .copy('src/app/forms/web/assets/cp/src/images',
-    'src/app/forms/web/assets/cp/dist/images')
+    'src/web/assets/src/js/formentries/EntriesIndex.js',
+    'src/web/assets/src/js/formentries/EntriesTableView.js',
+  ], 'src/web/assetbundles/formentries/dist/js/FormEntriesIndex.js')
+  .sass('src/web/assets/src/scss/formentries/charts.scss',
+    'src/web/assetbundles/formentries/dist/css/charts.css')
 
   // Form Templates
   .js([
-    'src/app/forms/web/assets/formtemplates/src/js/accessibility.js',
-  ], 'src/app/forms/web/assets/formtemplates/dist/js/accessibility.js')
+    'src/web/assets/src/js/formtemplates/Accessibility.js',
+  ], 'src/web/public/formtemplates/dist/js/Accessibility.js')
   .js([
-    'src/app/forms/web/assets/formtemplates/src/js/addressfield.js',
-  ], 'src/app/forms/web/assets/formtemplates/dist/js/addressfield.js')
+    'src/web/assets/src/js/formtemplates/AddressField.js',
+  ], 'src/web/public/formtemplates/dist/js/AddressField.js')
   .js([
-    'src/app/forms/web/assets/formtemplates/src/js/disable-submit-button.js',
-  ], 'src/app/forms/web/assets/formtemplates/dist/js/disable-submit-button.js')
+    'src/web/assets/src/js/formtemplates/DisableSubmitButton.js',
+  ], 'src/web/public/formtemplates/dist/js/DisableSubmitButton.js')
   .js([
-    'src/app/forms/web/assets/formtemplates/src/js/rules.js',
-  ], 'src/app/forms/web/assets/formtemplates/dist/js/rules.js')
+    'src/web/assets/src/js/formtemplates/Rules.js',
+  ], 'src/web/public/formtemplates/dist/js/Rules.js')
   .js([
-    'src/app/forms/web/assets/formtemplates/src/js/submit-handler.js',
-  ], 'src/app/forms/web/assets/formtemplates/dist/js/submit-handler.js')
+    'src/web/assets/src/js/formtemplates/SubmitHandler.js',
+  ], 'src/web/public/formtemplates/dist/js/SubmitHandler.js')
+
+  // Move assets to a location where they can referenced in asset bundles
+  // A bit overkill to do this every time, but so goes for now.
+  .copy('node_modules/apexcharts/dist',
+    'lib/apexcharts')
+  .copy('node_modules/datatables.net/js',
+    'lib/datatables.net')
+  .copy('node_modules/craftcms-sass/src/_mixins.scss',
+    'lib/craftcms-sass/_mixins.scss')
+  .copy('src/web/assets/images/reports',
+    'src/web/assetbundles/reports/dist/images')
+
+  // Make CSS URL references work
+  .options({
+    processCssUrls: false
+  })
+
+  // Improve compatibility for front-end form resources
   .polyfill({
     targets: '> 0.5%, last 2 versions, Firefox ESR'
   });

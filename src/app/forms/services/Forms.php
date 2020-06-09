@@ -90,8 +90,8 @@ class Forms extends Component
      * @param array $variables
      *
      * @example
-     * {% do craft.sproutForms.addFieldVariables({ entryTitle: entry.title }) %}
-     * {{ craft.sproutForms.displayForm('contact') }}
+     * {% do sprout.forms.addFieldVariables({ entryTitle: entry.title }) %}
+     * {{ sprout.forms.displayForm('contact') }}
      *
      */
     public static function addFieldVariables(array $variables)

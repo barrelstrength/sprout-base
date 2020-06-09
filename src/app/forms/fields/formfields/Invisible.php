@@ -72,7 +72,7 @@ class Invisible extends FormField implements PreviewableFieldInterface
      */
     public function getSvgIconPath(): string
     {
-        return '@sproutbaseicons/eye-slash.svg';
+        return '@sproutbaseassets/icons/eye-slash.svg';
     }
 
     /**

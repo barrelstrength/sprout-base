@@ -69,7 +69,7 @@ class Hidden extends FormField implements PreviewableFieldInterface
      */
     public function getSvgIconPath(): string
     {
-        return '@sproutbaseicons/user-secret.svg';
+        return '@sproutbaseassets/icons/user-secret.svg';
     }
 
     /**

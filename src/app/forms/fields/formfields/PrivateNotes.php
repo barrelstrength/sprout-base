@@ -67,7 +67,7 @@ class PrivateNotes extends FormField
      */
     public function getSvgIconPath(): string
     {
-        return '@sproutbaseicons/sticky-note.svg';
+        return '@sproutbaseassets/icons/sticky-note.svg';
     }
 
     /**

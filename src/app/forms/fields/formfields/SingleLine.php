@@ -121,7 +121,7 @@ class SingleLine extends FormField implements PreviewableFieldInterface
      */
     public function getSvgIconPath(): string
     {
-        return '@sproutbaseicons/font.svg';
+        return '@sproutbaseassets/icons/font.svg';
     }
 
     /**

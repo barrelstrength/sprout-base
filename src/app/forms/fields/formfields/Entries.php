@@ -44,7 +44,7 @@ class Entries extends CraftEntries
      */
     public function getSvgIconPath(): string
     {
-        return '@sproutbaseicons/newspaper-o.svg';
+        return '@sproutbaseassets/icons/newspaper-o.svg';
     }
 
     /**

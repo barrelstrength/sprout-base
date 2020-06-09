@@ -2,7 +2,7 @@
 {% import "sprout/config/_includes/sproutcp" as sproutCp %}
 {% import "_includes/forms" as forms %}
 
-{% do view.registerAssetBundle("barrelstrength\\sproutbase\\config\\web\\assets\\cp\\CpAsset") %}
+{% do view.registerAssetBundle("barrelstrength\\sproutbase\\web\\assetbundles\\sproutcp\\SproutCpAsset") %}
 
 {% set canCreateForm = craft.app.getModule('sprout').app.forms.canCreateForm() %}
 

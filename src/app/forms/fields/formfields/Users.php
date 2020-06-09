@@ -44,7 +44,7 @@ class Users extends CraftUsers
      */
     public function getSvgIconPath(): string
     {
-        return '@sproutbaseicons/users.svg';
+        return '@sproutbaseassets/icons/users.svg';
     }
 
     /**

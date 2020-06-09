@@ -43,7 +43,7 @@ class Categories extends CraftCategories
      */
     public function getSvgIconPath(): string
     {
-        return '@sproutbaseicons/folder-open.svg';
+        return '@sproutbaseassets/icons/folder-open.svg';
     }
 
     /**

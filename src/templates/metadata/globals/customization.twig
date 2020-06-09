@@ -3,7 +3,7 @@
 {% import "sprout/fields/_includes/forms" as sproutFields %}
 {% import "sprout/metadata/_includes/sproutseo" as sproutMetaCp %}
 
-{% do view.registerAssetBundle("barrelstrength\\sproutbase\\app\\metadata\\web\\assets\\seo\\SproutSeoAsset") %}
+{% do view.registerAssetBundle("barrelstrength\\sproutbase\\web\\assetbundles\\metadata\\MetadataAsset") %}
 
 {% set settings         = globals.settings %}
 {% set transformOptions = sprout.seo.getTransforms() %}

@@ -24,12 +24,12 @@
             placeholder: field.placeholder ?? null
         }) }}
         <span class="sprout-phone-button {{ id }}">
-            <a href="" target="_blank">{{ svg('@sproutbaseicons/phone.svg') }}</a>
+            <a href="" target="_blank">{{ svg('@sproutbaseassets/icons/phone.svg') }}</a>
         </span>
     </div>
 </div>
 
-{% do view.registerAssetBundle("barrelstrength\\sproutbase\\app\\fields\\web\\assets\\phone\\PhoneFieldAsset") %}
+{% do view.registerAssetBundle("barrelstrength\\sproutbase\\web\\assetbundles\\phonefield\\PhoneFieldAsset") %}
 
 {% js %}
     (function() {

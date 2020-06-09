@@ -7,7 +7,7 @@ use barrelstrength\sproutbase\app\email\base\SenderTrait;
 use barrelstrength\sproutbase\app\email\elements\actions\DeleteNotification;
 use barrelstrength\sproutbase\app\email\elements\db\NotificationEmailQuery;
 use barrelstrength\sproutbase\app\email\records\NotificationEmail as NotificationEmailRecord;
-use barrelstrength\sproutbase\app\email\web\assets\email\EmailAsset;
+use barrelstrength\sproutbase\web\assetbundles\email\EmailAsset;
 use barrelstrength\sproutbase\SproutBase;
 use Craft;
 use craft\behaviors\FieldLayoutBehavior;

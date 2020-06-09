@@ -62,7 +62,7 @@ class MultipleChoice extends CraftRadioButtons
      */
     public function getSvgIconPath(): string
     {
-        return '@sproutbaseicons/dot-circle-o.svg';
+        return '@sproutbaseassets/icons/dot-circle-o.svg';
     }
 
     /**

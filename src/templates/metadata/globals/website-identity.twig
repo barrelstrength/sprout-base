@@ -418,7 +418,7 @@
 
 {% endblock %}
 
-{% do view.registerAssetBundle("barrelstrength\\sproutbase\\app\\metadata\\web\\assets\\seo\\SproutSeoAsset") %}
+{% do view.registerAssetBundle("barrelstrength\\sproutbase\\web\\assetbundles\\metadata\\MetadataAsset") %}
 
 {% js on ready %}
     Craft.SproutFields.initFields($("#content"));

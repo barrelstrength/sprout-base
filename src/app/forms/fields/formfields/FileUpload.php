@@ -91,7 +91,7 @@ class FileUpload extends CraftAssets
      */
     public function getSvgIconPath(): string
     {
-        return '@sproutbaseicons/cloud-upload.svg';
+        return '@sproutbaseassets/icons/cloud-upload.svg';
     }
 
     /**

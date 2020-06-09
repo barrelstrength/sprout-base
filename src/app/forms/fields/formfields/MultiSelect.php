@@ -48,7 +48,7 @@ class MultiSelect extends CraftMultiSelect
      */
     public function getSvgIconPath(): string
     {
-        return '@sproutbaseicons/bars.svg';
+        return '@sproutbaseassets/icons/bars.svg';
     }
 
     /**

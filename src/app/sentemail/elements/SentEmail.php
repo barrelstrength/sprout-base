@@ -7,7 +7,7 @@
 
 namespace barrelstrength\sproutbase\app\sentemail\elements;
 
-use barrelstrength\sproutbase\app\email\web\assets\email\EmailAsset;
+use barrelstrength\sproutbase\web\assetbundles\email\EmailAsset;
 use barrelstrength\sproutbase\app\sentemail\elements\actions\DeleteEmail;
 use barrelstrength\sproutbase\app\sentemail\elements\db\SentEmailQuery;
 use barrelstrength\sproutbase\app\sentemail\models\SentEmailInfoTable;

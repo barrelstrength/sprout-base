@@ -7,7 +7,7 @@
 {% set elementType = 'barrelstrength\\sproutbase\\app\\forms\\elements\\Entry' %}
 {% set isPro = craft.app.getModule('sprout-forms').is('pro') %}
 
-{% do view.registerAssetBundle("barrelstrength\\sproutbase\\app\\forms\\web\\assets\\cp\\SproutEntriesIndexAsset") %}
+{% do view.registerAssetBundle("barrelstrength\\sproutbase\\web\\assetbundles\\formentries\\FormEntriesAsset") %}
 
 {% block actionButton %}
     {% if not isPro %}

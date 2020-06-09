@@ -87,7 +87,7 @@ class RobotsMetaType extends MetaType
 
     public function getIconPath(): string
     {
-        return '@sproutbaseicons/search-minus.svg';
+        return '@sproutbaseassets/icons/search-minus.svg';
     }
 
     /**

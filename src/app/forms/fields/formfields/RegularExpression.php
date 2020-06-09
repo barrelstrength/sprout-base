@@ -64,7 +64,7 @@ class RegularExpression extends FormField implements PreviewableFieldInterface
      */
     public function getSvgIconPath(): string
     {
-        return '@sproutbaseicons/puzzle-piece.svg';
+        return '@sproutbaseassets/icons/puzzle-piece.svg';
     }
 
     /**

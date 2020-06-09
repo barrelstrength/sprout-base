@@ -73,7 +73,7 @@ class Address extends FormField implements PreviewableFieldInterface
      */
     public function getSvgIconPath(): string
     {
-        return '@sproutbaseicons/map-marker-alt.svg';
+        return '@sproutbaseassets/icons/map-marker-alt.svg';
     }
 
     /**

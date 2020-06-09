@@ -8,8 +8,8 @@
 namespace barrelstrength\sproutbase\app\fields\services;
 
 use barrelstrength\sproutbase\app\fields\fields\RegularExpression as RegularExpressionField;
-use barrelstrength\sproutbase\app\fields\web\assets\regularexpression\RegularExpressionFieldAsset;
 use barrelstrength\sproutbase\SproutBase;
+use barrelstrength\sproutbase\web\assetbundles\regularexpressionfield\RegularExpressionFieldAsset;
 use Craft;
 use craft\base\ElementInterface;
 use craft\base\Field;

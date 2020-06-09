@@ -7,7 +7,7 @@
 
 namespace barrelstrength\sproutbase\app\forms\fields\formfields;
 
-use barrelstrength\sproutbase\app\fields\web\assets\quill\QuillAsset;
+use barrelstrength\sproutbase\web\assetbundles\quill\QuillAsset;
 use barrelstrength\sproutbase\app\forms\base\FormField;
 use barrelstrength\sproutbase\app\forms\elements\Entry;
 use Craft;
@@ -98,7 +98,7 @@ class SectionHeading extends FormField
      */
     public function getSvgIconPath(): string
     {
-        return '@sproutbaseicons/header.svg';
+        return '@sproutbaseassets/icons/header.svg';
     }
 
     /**

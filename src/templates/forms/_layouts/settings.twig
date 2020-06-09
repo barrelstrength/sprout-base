@@ -1,6 +1,6 @@
 {% extends "_layouts/cp" %}
 
-{% do view.registerAssetBundle("barrelstrength\\sproutbase\\app\\forms\\web\\assets\\cp\\CpAsset") %}
+{% do view.registerAssetBundle("barrelstrength\\sproutbase\\web\\assetbundles\\sproutcp\\SproutCpAsset") %}
 
 {% set title  = "Settings"|t('sprout') %}
 {% set bodyClass = craft.app.request.getSegments()|slice(0, 3)|join(' ') %}

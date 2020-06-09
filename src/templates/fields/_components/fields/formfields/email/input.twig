@@ -8,10 +8,10 @@
 }) }}
 
 <span class="sprout-email-button {{ id }}">
-    <a href="" target="_blank">{{ svg('@sproutbaseicons/envelope.svg') }}</a>
+    <a href="" target="_blank">{{ svg('@sproutbaseassets/icons/envelope.svg') }}</a>
 </span>
 
-{% do view.registerAssetBundle("barrelstrength\\sproutbase\\app\\fields\\web\\assets\\email\\EmailFieldAsset") %}
+{% do view.registerAssetBundle("barrelstrength\\sproutbase\\web\\assetbundles\\emailfield\\EmailFieldAsset") %}
 
 {# Element may be null for Quick Entry widget #}
 {% js %}

@@ -5,8 +5,8 @@
 {% set title = "Redirects" %}
 {% set bodyClass = 'sprout-redirects-index' %}
 
-{% do view.registerAssetBundle("barrelstrength\\sproutbase\\config\\web\\assets\\cp\\CpAsset") %}
-{% do view.registerAssetBundle("barrelstrength\\sproutbase\\app\\redirects\\web\\assets\\redirects\\RedirectsAsset") %}
+{% do view.registerAssetBundle("barrelstrength\\sproutbase\\web\\assetbundles\\sproutcp\\SproutCpAsset") %}
+{% do view.registerAssetBundle("barrelstrength\\sproutbase\\web\\assetbundles\\redirects\\RedirectsAsset") %}
 
 {% block actionButton %}
     <div class="buttons">

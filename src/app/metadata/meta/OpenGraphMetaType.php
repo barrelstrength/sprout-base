@@ -173,7 +173,7 @@ class OpenGraphMetaType extends MetaType
 
     public function getIconPath(): string
     {
-        return '@sproutbaseicons/facebook-f.svg';
+        return '@sproutbaseassets/icons/facebook-f.svg';
     }
 
     /**

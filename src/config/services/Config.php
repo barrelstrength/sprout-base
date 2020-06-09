@@ -249,7 +249,7 @@ class Config extends Component
             $settingsPages[] = [
                 'label' => $configType::displayName(),
                 'url' => 'sprout/settings/'.$configType->getKey(),
-                'icon' => '@sproutbaseicons/modules/'.$configType->getKey().'/icon.svg',
+                'icon' => '@sproutbaseassetbundles/modules/'.$configType->getKey().'/icon.svg',
             ];
         }
 
@@ -272,7 +272,7 @@ class Config extends Component
             $cpNavItems[$key] = [
                 'label' => $navItem['label'],
                 'url' => $navItem['url'],
-                'icon' => Craft::getAlias('@sproutbaseicons/modules/'.$configType->getKey().'/icon-mask.svg'),
+                'icon' => Craft::getAlias('@sproutbaseassets/sprout/icons/'.$configType->getKey().'/icon-mask.svg'),
             ];
 
             if (!isset($navItem['subnav']) || count($navItem['subnav']) === 0) {

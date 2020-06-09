@@ -130,7 +130,7 @@ class Paragraph extends FormField implements PreviewableFieldInterface
      */
     public function getSvgIconPath(): string
     {
-        return '@sproutbaseicons/paragraph.svg';
+        return '@sproutbaseassets/icons/paragraph.svg';
     }
 
     /**

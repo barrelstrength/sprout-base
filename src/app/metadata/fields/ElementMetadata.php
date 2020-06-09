@@ -7,12 +7,12 @@
 
 namespace barrelstrength\sproutbase\app\metadata\fields;
 
-use barrelstrength\sproutbase\app\fields\web\assets\selectother\SelectOtherFieldAsset;
 use barrelstrength\sproutbase\app\metadata\models\Metadata;
-use barrelstrength\sproutbase\app\metadata\web\assets\seo\SproutSeoAsset;
-use barrelstrength\sproutbase\app\metadata\web\assets\tageditor\TagEditorAsset;
 use barrelstrength\sproutbase\config\base\Config;
 use barrelstrength\sproutbase\SproutBase;
+use barrelstrength\sproutbase\web\assetbundles\metadata\MetadataAsset;
+use barrelstrength\sproutbase\web\assetbundles\selectotherfield\SelectOtherFieldAsset;
+use barrelstrength\sproutbase\web\assetbundles\tageditor\TagEditorAsset;
 use Craft;
 use craft\base\Element;
 use craft\base\ElementInterface;
@@ -178,7 +178,7 @@ class ElementMetadata extends Field
         $schemas = SproutBase::$app->schema->getSchemaOptions();
         $schemaSubtypes = SproutBase::$app->schema->getSchemaSubtypes($schemas);
 
-        Craft::$app->getView()->registerAssetBundle(SproutSeoAsset::class);
+        Craft::$app->getView()->registerAssetBundle(MetadataAsset::class);
         Craft::$app->getView()->registerAssetBundle(SelectOtherFieldAsset::class);
 
         $isPro = SproutBase::$app->config->isEdition('sprout-seo', Config::EDITION_PRO);
@@ -221,7 +221,7 @@ class ElementMetadata extends Field
 
         $settings = $this->getAttributes();
 
-        Craft::$app->getView()->registerAssetBundle(SproutSeoAsset::class);
+        Craft::$app->getView()->registerAssetBundle(MetadataAsset::class);
         Craft::$app->getView()->registerAssetBundle(TagEditorAsset::class);
 
         return Craft::$app->view->renderTemplate('sprout/metadata/_components/fields/elementmetadata/input', [

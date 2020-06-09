@@ -32,8 +32,7 @@ class FieldsConfig extends Config
     {
         return [
             'label' => Craft::t('sprout', 'Fields'),
-            'url' => 'sprout/settings/fields',
-            'icon' => '@sproutbaseicons/plugins/fields/icon.svg',
+            'url' => 'sprout/settings/fields'
         ];
     }
 }

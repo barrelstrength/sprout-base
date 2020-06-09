@@ -78,7 +78,7 @@ class Phone extends FormField implements PreviewableFieldInterface
      */
     public function getSvgIconPath(): string
     {
-        return '@sproutbaseicons/phone.svg';
+        return '@sproutbaseassets/icons/phone.svg';
     }
 
     /**

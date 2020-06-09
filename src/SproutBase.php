@@ -22,6 +22,7 @@ use barrelstrength\sproutbase\app\fields\controllers\FieldsController;
 use barrelstrength\sproutbase\app\forms\controllers\ChartsController;
 use barrelstrength\sproutbase\app\forms\controllers\EntriesController;
 use barrelstrength\sproutbase\app\forms\controllers\EntryStatusesController;
+use barrelstrength\sproutbase\app\forms\controllers\FormFieldsController;
 use barrelstrength\sproutbase\app\forms\controllers\FormsController;
 use barrelstrength\sproutbase\app\forms\controllers\GroupsController;
 use barrelstrength\sproutbase\app\forms\controllers\IntegrationsController;
@@ -41,8 +42,7 @@ use barrelstrength\sproutbase\app\sitemaps\controllers\SitemapsController;
 use barrelstrength\sproutbase\app\sitemaps\controllers\XmlSitemapController;
 use barrelstrength\sproutbase\config\controllers\SettingsController;
 use barrelstrength\sproutbase\config\services\App;
-use barrelstrength\sproutbase\config\services\Config;
-use barrelstrength\sproutbase\config\web\twig\Extension;
+use barrelstrength\sproutbase\web\twig\Extension;
 use Craft;
 use craft\events\RegisterComponentTypesEvent;
 use craft\events\RegisterCpNavItemsEvent;
@@ -62,10 +62,6 @@ use yii\base\Module;
 use yii\mail\BaseMailer;
 use yii\mail\MailEvent;
 
-/**
- * @property array    $userPermissions
- * @property string[] $cpUrlRules
- */
 class SproutBase extends Module
 {
     /**
@@ -147,7 +143,8 @@ class SproutBase extends Module
     public function initMappings()
     {
         Craft::setAlias('@sproutbase', $this->getBasePath());
-        Craft::setAlias('@sproutbaseicons', $this->getBasePath().'/config/web/assets/icons');
+        Craft::setAlias('@sproutbaseassets', $this->getBasePath().'/web/assets');
+        Craft::setAlias('@sproutbaseassetbundles', $this->getBasePath().'/web/assetbundles');
         Craft::setAlias('@sproutbaselib', dirname(__DIR__).'/lib');
 
         // Setup Controllers
@@ -160,7 +157,7 @@ class SproutBase extends Module
                 'charts' => ChartsController::class,
                 'entries' => EntriesController::class,
                 'entry-statuses' => EntryStatusesController::class,
-                'form-fields' => FieldsController::class,
+                'form-fields' => FormFieldsController::class,
                 'forms' => FormsController::class,
                 'groups' => GroupsController::class,
                 'integrations' => IntegrationsController::class,

@@ -61,7 +61,7 @@ class Dropdown extends CraftDropdownField
      */
     public function getSvgIconPath(): string
     {
-        return '@sproutbaseicons/chevron-circle-down.svg';
+        return '@sproutbaseassets/icons/chevron-circle-down.svg';
     }
 
     /**

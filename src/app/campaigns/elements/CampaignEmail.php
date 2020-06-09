@@ -8,7 +8,7 @@ use barrelstrength\sproutbase\app\campaigns\records\CampaignEmail as CampaignEma
 use barrelstrength\sproutbase\app\email\base\EmailElement;
 use barrelstrength\sproutbase\app\email\base\Mailer;
 use barrelstrength\sproutbase\app\email\mailers\DefaultMailer;
-use barrelstrength\sproutbase\app\email\web\assets\email\EmailAsset;
+use barrelstrength\sproutbase\web\assetbundles\email\EmailAsset;
 use barrelstrength\sproutbase\SproutBase;
 use Craft;
 use craft\base\Element;

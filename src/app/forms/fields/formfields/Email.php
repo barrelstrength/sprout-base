@@ -102,7 +102,7 @@ class Email extends FormField implements PreviewableFieldInterface
      */
     public function getSvgIconPath(): string
     {
-        return '@sproutbaseicons/envelope.svg';
+        return '@sproutbaseassets/icons/envelope.svg';
     }
 
     /**

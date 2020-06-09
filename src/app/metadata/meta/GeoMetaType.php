@@ -162,7 +162,7 @@ class GeoMetaType extends MetaType
 
     public function getIconPath(): string
     {
-        return '@sproutbaseicons/map-marker-alt.svg';
+        return '@sproutbaseassets/icons/map-marker-alt.svg';
     }
 
     /**

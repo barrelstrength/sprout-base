@@ -1,7 +1,7 @@
 {% extends "sprout/sent-email/_layouts/elementindex" %}
 {% import "sprout/config/_includes/sproutcp" as sproutCp %}
 
-{% do view.registerAssetBundle("barrelstrength\\sproutbase\\config\\web\\assets\\cp\\CpAsset") %}
+{% do view.registerAssetBundle("barrelstrength\\sproutbase\\web\\assetbundles\\sproutcp\\SproutCpAsset") %}
 
 {% set title = "Sent Email"|t('sprout') %}
 {% set elementType = 'barrelstrength\\sproutbase\\app\\sentemail\\elements\\SentEmail' %}

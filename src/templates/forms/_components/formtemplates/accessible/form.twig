@@ -1,4 +1,4 @@
-{% do craft.sproutForms.addFieldVariables({
+{% do sprout.forms.addFieldVariables({
     'craft': craft,
     'now': now,
     'currentSite': currentSite,
@@ -8,7 +8,7 @@
     'systemName': systemName
 }) -%}
 {%- set renderingOptions = renderingOptions is defined and renderingOptions is not empty ? renderingOptions : {} -%}
-{%- set lastEntry = craft.sproutForms.lastEntry(form.id) -%}
+{%- set lastEntry = sprout.forms.lastEntry(form.id) -%}
 {%- set globalErrorsEnabled = form.errorDisplayMethod in ['both', 'global'] ? true : false -%}
 {%- set errors      = entry.getErrors()|length ? entry.getErrors() : false -%}
 {%- set errorClass  = renderingOptions.errorClass is defined ? renderingOptions.errorClass : 'errors' -%}
@@ -62,7 +62,7 @@
 
     <div class="fields">
         {%- for tab in form.getFieldLayout().getTabs() %}
-            {{ craft.sproutForms.displayTab(form, tab.id, renderingOptions) }}
+            {{ sprout.forms.displayTab(form, tab.id, renderingOptions) }}
         {% endfor -%}
     </div>
 

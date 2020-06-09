@@ -9,10 +9,10 @@
 
 <span class="sprout-link-button {{ id }}">
     <a href=""
-        target="_blank">{{ svg('@sproutbaseicons/arrow-circle-right.svg') }}</a>
+        target="_blank">{{ svg('@sproutbaseassets/icons/arrow-circle-right.svg') }}</a>
 </span>
 
-{% do view.registerAssetBundle("barrelstrength\\sproutbase\\app\\fields\\web\\assets\\url\\UrlFieldAsset") %}
+{% do view.registerAssetBundle("barrelstrength\\sproutbase\\web\\assetbundles\\urlfield\\UrlFieldAsset") %}
 
 {# Element may be null for Quick Entry widget #}
 {% js %}
