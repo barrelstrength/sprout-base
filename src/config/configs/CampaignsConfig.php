@@ -19,6 +19,11 @@ class CampaignsConfig extends Config
         return Craft::t('sprout', 'Campaigns');
     }
 
+    public function getConfigGroup()
+    {
+        return new EmailConfig();
+    }
+
     public function createSettingsModel()
     {
         return new CampaignsSettings();

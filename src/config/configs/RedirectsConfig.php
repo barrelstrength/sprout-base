@@ -19,6 +19,11 @@ class RedirectsConfig extends Config
         return Craft::t('sprout', 'Redirects');
     }
 
+    public function getConfigGroup()
+    {
+        return new MetadataConfig();
+    }
+
     public function createSettingsModel()
     {
         return new RedirectsSettings();

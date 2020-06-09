@@ -55,6 +55,23 @@ abstract class Config extends Component implements ConfigInterface
         return StringHelper::toKebabCase($baseName);
     }
 
+    public static function groupName(): string
+    {
+        return static::displayName();
+    }
+
+    /**
+     * The heading that this config will be grouped under
+     * Defaults to itself. Other configs can use the same group heading
+     * if they want want their sub-navs to be merged with a given group.
+     *
+     * @return ConfigInterface|null
+     */
+    public function getConfigGroup()
+    {
+        return null;
+    }
+
     public function createSettingsModel()
     {
         return null;

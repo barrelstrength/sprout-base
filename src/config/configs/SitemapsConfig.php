@@ -20,6 +20,11 @@ class SitemapsConfig extends Config
         return Craft::t('sprout', 'Sitemaps');
     }
 
+    public function getConfigGroup()
+    {
+        return new MetadataConfig();
+    }
+
     public function createSettingsModel()
     {
         return new SitemapsSettings();

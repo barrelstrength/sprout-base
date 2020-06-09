@@ -19,6 +19,11 @@ class SentEmailConfig extends Config
         return Craft::t('sprout', 'Sent Email');
     }
 
+    public function getConfigGroup()
+    {
+        return new EmailConfig();
+    }
+
     public function createSettingsModel()
     {
         return new SentEmailSettings();

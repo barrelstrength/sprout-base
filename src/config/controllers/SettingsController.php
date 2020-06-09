@@ -14,6 +14,7 @@ use Craft;
 use craft\errors\MissingComponentException;
 use craft\errors\SiteNotFoundException;
 use craft\helpers\UrlHelper;
+use craft\models\Site;
 use craft\web\Controller;
 use ReflectionException;
 use yii\base\ErrorException;
@@ -73,28 +74,7 @@ class SettingsController extends Controller
         unset($settings['control-panel']);
         $settings = array_merge($cpSettings, $settings);
 
-        $subNav = [];
-        foreach ($settings as $settingsKey => $setting) {
-
-            $setting->setCurrentSite($currentSite);
-
-            $settingsNavItem = $setting->getSettingsNavItem();
-            $settingsSubNavItems = $settingsNavItem ?? [];
-
-            if (!$settingsSubNavItems) {
-                continue;
-            }
-
-            $matchingSproutConfig = $sproutConfigs[$settingsKey];
-            $subNav[] = [
-                'heading' => $matchingSproutConfig::displayName(),
-            ];
-
-            foreach ($settingsSubNavItems as $subNavKey => $settingsSubNavItem) {
-                $settingsSubNavItem['url'] = 'sprout/settings/'.$settingsKey.'/'.$subNavKey;
-                $subNav[$subNavKey] = $settingsSubNavItem;
-            }
-        }
+        $subNav = $this->buildSubNav($sproutConfigs, $settings, $currentSite);
 
         // We grab the config settings a second time for configWarning messages
         $fileConfig = Craft::$app->getConfig()->getConfigFromFile('sprout');
@@ -172,4 +152,62 @@ class SettingsController extends Controller
         return $this->redirectToPostedUrl();
     }
 
+    /**
+     * @param array $settings
+     * @param Site  $currentSite
+     * @param array $sproutConfigs
+     *
+     * @return array
+     */
+    protected function buildSubNav(
+        array $sproutConfigs,
+        array $settings,
+        Site $currentSite = null
+    ): array {
+        $subNavGroups = [];
+
+        // Loop through once to establish our groupings
+        foreach ($settings as $settingsKey => $setting) {
+
+            $setting->setCurrentSite($currentSite);
+
+            $settingsNavItem = $setting->getSettingsNavItem();
+            $settingsSubNavItems = $settingsNavItem ?? [];
+
+            if (!$settingsSubNavItems) {
+                continue;
+            }
+
+            /** @var Config $matchingSproutConfig */
+            $matchingSproutConfig = $sproutConfigs[$settingsKey];
+            $configGroup = $matchingSproutConfig->getConfigGroup();
+
+            $heading = $configGroup !== null
+                ? $configGroup::groupName()
+                : $matchingSproutConfig::groupName();
+
+            foreach ($settingsSubNavItems as $subNavKey => $settingsSubNavItem) {
+                $settingsSubNavItem['url'] = 'sprout/settings/'.$settingsKey.'/'.$subNavKey;
+
+                $subNavGroups[$heading][$subNavKey] = $settingsSubNavItem;
+            }
+        }
+
+        $subNav = [];
+
+        // Loop through again to use our groupings and build our nav
+        foreach ($subNavGroups as $heading => $subNavGroup) {
+            $subNav[] = [
+                'heading' => $heading
+            ];
+
+            ksort($subNavGroup);
+
+            foreach ($subNavGroup as $navKey => $navItem) {
+                $subNav[$navKey] = $navItem;
+            }
+        }
+
+        return $subNav;
+    }
 }

@@ -84,7 +84,7 @@ class ControlPanelSettings extends Settings
         }
 
         return [
-            'navigation' => [
+            'control-panel' => [
                 'label' => Craft::t('sprout', 'Control Panel'),
                 'template' => 'sprout/config/_settings/control-panel',
                 'variables' => [
