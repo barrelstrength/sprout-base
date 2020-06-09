@@ -249,7 +249,7 @@ class Config extends Component
             $settingsPages[] = [
                 'label' => $configType::displayName(),
                 'url' => 'sprout/settings/'.$configType->getKey(),
-                'icon' => '@sproutbaseassetbundles/modules/'.$configType->getKey().'/icon.svg',
+                'icon' => Craft::getAlias('@sproutbaseassets/sprout/icons/'.$configType->getKey().'/icon.svg'),
             ];
         }
 

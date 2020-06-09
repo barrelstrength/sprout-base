@@ -54,18 +54,19 @@ class SitemapsSettings extends Settings
 
     public function getSettingsNavItem(): array
     {
-        return [
-            'sitemaps' => [
-                'label' => Craft::t('sprout', 'Sitemaps'),
-                'template' => 'sprout/sitemaps/settings/sitemaps',
-                'multisite' => true
-            ],
-            'sitemaps2' => [
-                'label' => Craft::t('sprout', 'Multi-lingual Sitemaps'),
-                'template' => 'sprout/sitemaps/settings/sitemaps',
-                'multisite' => false
-            ]
+        $subNav['sitemaps'] = [
+            'label' => Craft::t('sprout', 'Sitemaps'),
+            'template' => 'sprout/sitemaps/settings/sitemaps'
         ];
+
+        if (Craft::$app->isMultiSite) {
+            $subNav['sitemap-sites'] = [
+                'label' => Craft::t('sprout', 'Sitemap Sites'),
+                'template' => 'sprout/sitemaps/settings/sitemap-sites'
+            ];
+        }
+
+        return $subNav;
     }
 
     /**

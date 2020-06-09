@@ -7,16 +7,30 @@
     {% if actionButtonTemplate %}
         {% include actionButtonTemplate %}
     {% else %}
-        <div class="buttons">
-            <input class="btn submit" type="submit"
-                value="{{ 'Save'|t('sprout') }}">
 
-            {#        {% if upgradeLink %}#}
-            {#            {{ sproutCp.upgradeToProButton({#}
-            {#                url: upgradeLink#}
-            {#            }) }}#}
-            {#        {% endif %}#}
+        <div class="btngroup submit">
+            <input type="submit" class="btn submit" value="{{ 'Save settings'|t('sprout') }}">
+            {% if craft.app.getIsMultiSite() and showMultiSiteSettings %}
+                <div class="btn submit menubtn"></div>
+                <div class="menu">
+                    <ul>
+                        <li>
+                            <a class="formsubmit"
+                                data-redirect="{{ ('...')|hash }}">{{ 'Save and copy settings to all sites'|t('sprout') }}
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            {% endif %}
         </div>
+
+
+        {#        {% if upgradeLink %}#}
+        {#            {{ sproutCp.upgradeToProButton({#}
+        {#                url: upgradeLink#}
+        {#            }) }}#}
+        {#        {% endif %}#}
+
     {% endif %}
 
 {% endblock %}

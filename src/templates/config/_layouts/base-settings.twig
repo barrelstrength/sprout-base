@@ -22,7 +22,7 @@
 {% set fullPageForm = true %}
 
 {% block contextMenu %}
-    {% if craft.app.getIsMultiSite() %}
+    {% if craft.app.getIsMultiSite() and showMultiSiteSettings %}
         {% include "_elements/sitemenu" with {
             selectedSiteId: currentSite.id,
             urlFormat: craft.app.request.pathInfo~"?site={handle}"

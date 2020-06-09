@@ -87,6 +87,7 @@ class ControlPanelSettings extends Settings
             'control-panel' => [
                 'label' => Craft::t('sprout', 'Control Panel'),
                 'template' => 'sprout/config/_settings/control-panel',
+                'multisite' => true,
                 'variables' => [
                     'cpSettingsRows' => $cpSettingsRows
                 ]

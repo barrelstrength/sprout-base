@@ -101,17 +101,19 @@ class SettingsController extends Controller
             ? 'sprout/config/_layouts/settings-wrapper'
             : 'sprout/config/_layouts/settings';
 
+        $showMultiSiteSettings = $currentSubsection['multisite'] ?? false;
+
         return $this->renderTemplate($settingsTemplate, array_merge([
             'currentSite' => $currentSite,
             'settings' => $currentSettings,
             'config' => $currentFileConfig,
-//            'navItem' => $navItem ?? null,
-
             'subnav' => $subNav,
             'currentSubsection' => $currentSubsection,
 
             'settingsSectionHandle' => $settingsSectionHandle,
             'currentSubSectionHandle' => $currentSubSectionHandle,
+            'showMultiSiteSettings' => $showMultiSiteSettings,
+
 //            'upgradeLink' => $upgradeLink
         ], $dynamicVariables));
     }

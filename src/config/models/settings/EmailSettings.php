@@ -46,7 +46,8 @@ class EmailSettings extends Settings
             ],
             'notifications' => [
                 'label' => Craft::t('sprout', 'Notifications'),
-                'template' => 'sprout/email/settings/notifications'
+                'template' => 'sprout/email/settings/notifications',
+                'multisite' => true
             ]
         ];
     }
