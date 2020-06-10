@@ -11,10 +11,6 @@ use barrelstrength\sproutbase\app\email\emailtemplates\BasicTemplates;
 use barrelstrength\sproutbase\config\base\Settings;
 use Craft;
 
-/**
- *
- * @property array $settingsNavItem
- */
 class EmailSettings extends Settings
 {
     /**
@@ -46,8 +42,7 @@ class EmailSettings extends Settings
             ],
             'notifications' => [
                 'label' => Craft::t('sprout', 'Notifications'),
-                'template' => 'sprout/email/settings/notifications',
-                'multisite' => true
+                'template' => 'sprout/email/settings/notifications'
             ]
         ];
     }

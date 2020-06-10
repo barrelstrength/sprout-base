@@ -21,7 +21,7 @@ use yii\base\Exception;
  */
 class ControlPanelSettings extends Settings
 {
-    public $cp;
+    public $modules;
 
 //    public $campaignsPluginName = '';
 //
@@ -74,10 +74,15 @@ class ControlPanelSettings extends Settings
                 'small' => true
             ]);
 
+
+            $infoHtml = $config->getDescription() !== ''
+                ? '&nbsp;<span class="info">'.$config->getDescription().'</span>'
+                : '';
+
             $cpSettingsRows[] = [
-                'heading' => $config::displayName().$headingInputHtml,
+                'heading' => $config::displayName().$headingInputHtml.$infoHtml,
                 'enabled' => $enabledInputHtml,
-                'displayName' => '',
+                'displayName' => ''
             ];
 
             $i++;

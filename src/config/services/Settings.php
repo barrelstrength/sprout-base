@@ -71,7 +71,7 @@ class Settings extends Component
      * @throws ReflectionException
      * @throws ServerErrorHttpException
      */
-    public function saveSettings(BaseSettings $settings): bool
+    public function saveSettings(BaseSettings $settings, $currentSite = null): bool
     {
         // Have namespace?
 //        $settings = $settings['settings'] ?? $settings;
@@ -85,8 +85,19 @@ class Settings extends Component
             return false;
         }
 
+        if (!$currentSite) {
+            $currentSite = Craft::$app->getSites()->getPrimarySite();
+        }
+
         $projectConfigSettingsKey = Config::CONFIG_SPROUT_KEY.'.'.$settings->getKey();
-        $newSettings = ProjectConfigHelper::packAssociativeArrays($settings->toArray());
+
+        $siteSettings[$currentSite->uid] = $settings->toArray();
+
+        // @todo - do we really want to use packAssociativeArrays for everything?
+        //         it's only meant for things that need to get ordered...
+        //         call a beforeSaveSettings method where a Config can do this if it wants?
+//        $newSettings = ProjectConfigHelper::packAssociativeArrays($siteSettings);
+        $newSettings = $siteSettings;
 
         Craft::$app->getProjectConfig()->set($projectConfigSettingsKey, $newSettings, "Update Sprout Settings for “{$settings->getKey()}”");
 

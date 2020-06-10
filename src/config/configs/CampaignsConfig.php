@@ -19,6 +19,11 @@ class CampaignsConfig extends Config
         return Craft::t('sprout', 'Campaigns');
     }
 
+    public function getDescription(): string
+    {
+        return Craft::t('sprout', 'Manage and send email marketing campaigns');
+    }
+
     public function getConfigGroup()
     {
         return new EmailConfig();

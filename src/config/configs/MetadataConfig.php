@@ -19,6 +19,11 @@ class MetadataConfig extends Config
         return Craft::t('sprout', 'Metadata');
     }
 
+    public function getDescription(): string
+    {
+        return Craft::t('sprout', 'Manage SEO metadata');
+    }
+
     public static function groupName(): string
     {
         return Craft::t('sprout', 'SEO');

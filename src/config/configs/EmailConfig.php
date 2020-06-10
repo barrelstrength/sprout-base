@@ -19,6 +19,11 @@ class EmailConfig extends Config
         return Craft::t('sprout', 'Email');
     }
 
+    public function getDescription(): string
+    {
+        return Craft::t('sprout', 'Manage and send notifications');
+    }
+
     public function createSettingsModel()
     {
         return new EmailSettings();

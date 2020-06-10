@@ -14,15 +14,16 @@
 {% set pluginsService = craft.app.getPlugins() %}
 
 {{ forms.editableTableField({
-    label: "Control Panel Settings"|t('sprout'),
-    instructions: "Choose which Sprout features will display and what they should be named."|t('sprout'),
+    label: "Sprout Modules"|t('sprout'),
+    instructions: "Sprout plugins are composed of one or more modules. Choose the Sprout modules to enable and what they should be named."|t('sprout'),
     id: 'modules',
     name: 'modules',
     cols: {
         heading: {
             type: 'heading',
-            heading: "Feature"|t('sprout'),
-            thin: true
+            heading: "Display Name"|t('sprout'),
+            thin: true,
+            info: 'Customize the Sprout features that are available and enabled. Additional access and permissions can be managed with Craft User Groups and permissions. Disabled features will only display here, and will no longer display in the control panel navigation and settings areas.'
         },
         enabled: {
             type: 'heading',
@@ -30,9 +31,9 @@
         },
         displayName: {
             type: 'singleline',
-            heading: "Alternate Display Name"|t('sprout'),
+            heading: "Alternate Name"|t('sprout'),
             info: "Alternate name that will be used to display this module in Control Panel navigation."|t('sprout')
-        }
+        },
     }|filter,
     rows: cpSettingsRows,
     fullWidth: true,
@@ -48,15 +49,15 @@
 
 
 
-{% set sproutCampaignsIsInstalled = pluginsService.getPlugin('sprout-campaigns') %}
-{% set sproutFormsIsInstalled = pluginsService.getPlugin('sprout-forms') %}
-{% set sproutListsIsInstalled = pluginsService.getPlugin('sprout-lists') %}
-{% set sproutEmailIsInstalled = pluginsService.getPlugin('sprout-email') %}
-{% set sproutRedirectsIsInstalled = pluginsService.getPlugin('sprout-redirects') %}
-{% set sproutReportsIsInstalled = pluginsService.getPlugin('sprout-reports') %}
-{% set sproutSentEmailIsInstalled = pluginsService.getPlugin('sprout-sent-email') %}
-{% set sproutSeoIsInstalled = pluginsService.getPlugin('sprout-seo') %}
-{% set sproutSitemapsIsInstalled = pluginsService.getPlugin('sprout-sitemaps') %}
+{#{% set sproutCampaignsIsInstalled = pluginsService.getPlugin('sprout-campaigns') %}#}
+{#{% set sproutFormsIsInstalled = pluginsService.getPlugin('sprout-forms') %}#}
+{#{% set sproutListsIsInstalled = pluginsService.getPlugin('sprout-lists') %}#}
+{#{% set sproutEmailIsInstalled = pluginsService.getPlugin('sprout-email') %}#}
+{#{% set sproutRedirectsIsInstalled = pluginsService.getPlugin('sprout-redirects') %}#}
+{#{% set sproutReportsIsInstalled = pluginsService.getPlugin('sprout-reports') %}#}
+{#{% set sproutSentEmailIsInstalled = pluginsService.getPlugin('sprout-sent-email') %}#}
+{#{% set sproutSeoIsInstalled = pluginsService.getPlugin('sprout-seo') %}#}
+{#{% set sproutSitemapsIsInstalled = pluginsService.getPlugin('sprout-sitemaps') %}#}
 
 {#<input type="hidden" name="validationScenario" value="general">#}
 

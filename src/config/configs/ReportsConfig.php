@@ -19,6 +19,11 @@ class ReportsConfig extends Config
         return Craft::t('sprout', 'Reports');
     }
 
+    public function getDescription(): string
+    {
+        return Craft::t('sprout', 'View and manage reports');
+    }
+
     public function createSettingsModel()
     {
         return new ReportsSettings();

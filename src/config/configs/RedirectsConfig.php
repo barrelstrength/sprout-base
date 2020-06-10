@@ -19,6 +19,11 @@ class RedirectsConfig extends Config
         return Craft::t('sprout', 'Redirects');
     }
 
+    public function getDescription(): string
+    {
+        return Craft::t('sprout', 'Manage redirects and track 404s');
+    }
+
     public function getConfigGroup()
     {
         return new MetadataConfig();

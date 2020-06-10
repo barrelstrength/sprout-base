@@ -20,6 +20,11 @@ class SitemapsConfig extends Config
         return Craft::t('sprout', 'Sitemaps');
     }
 
+    public function getDescription(): string
+    {
+        return Craft::t('sprout', 'Manage XML sitemaps');
+    }
+
     public function getConfigGroup()
     {
         return new MetadataConfig();

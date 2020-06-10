@@ -72,6 +72,11 @@ abstract class Config extends Component implements ConfigInterface
         return null;
     }
 
+    public function getDescription(): string
+    {
+        return '';
+    }
+
     public function createSettingsModel()
     {
         return null;

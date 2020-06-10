@@ -20,6 +20,11 @@ class FormsConfig extends Config
         return Craft::t('sprout', 'Forms');
     }
 
+    public function getDescription(): string
+    {
+        return Craft::t('sprout', 'Form builder and entry management');
+    }
+
     public function createSettingsModel()
     {
         return new FormsSettings();

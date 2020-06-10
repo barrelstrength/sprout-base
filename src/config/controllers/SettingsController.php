@@ -50,14 +50,15 @@ class SettingsController extends Controller
      */
     public function actionEditSettings(
         $settingsTarget = self::SETTINGS_TARGET_PROJECT_CONFIG,
-        $siteHandle = null,
         $settingsSectionHandle = null,
         $settingsSubSectionHandle = null
     ): Response {
 //        $hasUpgradeLink = method_exists($this->plugin, 'getUpgradeUrl');
 //        $upgradeLink = $hasUpgradeLink ? $this->plugin->getUpgradeUrl() : null;
 
-        $currentSite = !empty($siteHandle)
+        $siteHandle = Craft::$app->getRequest()->getQueryParam('site');
+
+        $currentSite = $siteHandle !== null
             ? Craft::$app->getSites()->getSiteByHandle($siteHandle)
             : Craft::$app->getSites()->getPrimarySite();
 
@@ -133,13 +134,18 @@ class SettingsController extends Controller
         // the submitted settings
         $settingsModel = null;
         $settingsSection = Craft::$app->getRequest()->getBodyParam('settingsSection');
+        $siteId = Craft::$app->getRequest()->getBodyParam('siteId');
         $postSettings = Craft::$app->getRequest()->getBodyParam('settings');
+
+        $currentSite = $siteId !== null
+            ? Craft::$app->getSites()->getSiteById($siteId)
+            : Craft::$app->getSites()->getPrimarySite();
 
         /** @var Settings $settingsModel */
         $settingsModel = SproutBase::$app->settings->getSettingsByKey($settingsSection, false);
         $settingsModel->setAttributes($postSettings, false);
 
-        if (!SproutBase::$app->settings->saveSettings($settingsModel)) {
+        if (!SproutBase::$app->settings->saveSettings($settingsModel, $currentSite)) {
             Craft::$app->getSession()->setError(Craft::t('sprout', 'Couldn’t save settings.'));
 
             Craft::$app->getUrlManager()->setRouteParams([

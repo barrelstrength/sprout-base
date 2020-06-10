@@ -19,6 +19,11 @@ class SentEmailConfig extends Config
         return Craft::t('sprout', 'Sent Email');
     }
 
+    public function getDescription(): string
+    {
+        return Craft::t('sprout', 'Track sent emails and resend messages');
+    }
+
     public function getConfigGroup()
     {
         return new EmailConfig();
