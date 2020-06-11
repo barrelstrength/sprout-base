@@ -19,11 +19,6 @@ class ReportsSettings extends Settings
     /**
      * @var string
      */
-    public $displayName = '';
-
-    /**
-     * @var string
-     */
     public $defaultPageLength = 10;
 
     /**

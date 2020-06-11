@@ -19,6 +19,7 @@ use craft\web\Controller;
 use ReflectionException;
 use yii\base\ErrorException;
 use yii\base\Exception;
+use yii\base\InvalidConfigException;
 use yii\web\BadRequestHttpException;
 use yii\web\Response;
 
@@ -40,13 +41,13 @@ class SettingsController extends Controller
 
     /**
      * @param string $settingsTarget
-     * @param null   $siteHandle
      * @param null   $settingsSectionHandle
      * @param null   $settingsSubSectionHandle
      *
      * @return Response
      * @throws SiteNotFoundException
      * @throws ReflectionException
+     * @throws InvalidConfigException
      */
     public function actionEditSettings(
         $settingsTarget = self::SETTINGS_TARGET_PROJECT_CONFIG,
@@ -58,9 +59,11 @@ class SettingsController extends Controller
 
         $siteHandle = Craft::$app->getRequest()->getQueryParam('site');
 
+        $primarySite = Craft::$app->getSites()->getPrimarySite();
         $currentSite = $siteHandle !== null
             ? Craft::$app->getSites()->getSiteByHandle($siteHandle)
-            : Craft::$app->getSites()->getPrimarySite();
+            : $primarySite;
+
 
         $sproutConfigs = SproutBase::$app->config->getConfigs();
 
@@ -68,6 +71,7 @@ class SettingsController extends Controller
         $currentSproutConfig = $sproutConfigs[$settingsSectionHandle];
 
         $settings = SproutBase::$app->settings->getSettings(false);
+
         $currentSettings = $settings[$currentSproutConfig->getKey()] ?? [];
 
         // CP settings go first
@@ -103,6 +107,17 @@ class SettingsController extends Controller
             : 'sprout/config/_layouts/settings';
 
         $showMultiSiteSettings = $currentSubsection['multisite'] ?? false;
+        $packAssociativeArrays = $currentSubsection['packAssociativeArrays'] ?? false;
+
+        $currentSiteParam = Craft::$app->getRequest()->getParam('site');
+
+        // Make sure we save things to the primary site, if settings don't support multisite
+        if (!$showMultiSiteSettings && $currentSiteParam !== $primarySite->handle) {
+            $cpUrl = UrlHelper::cpUrl(Craft::$app->getRequest()->getPathInfo(), [
+                'site' => $primarySite->handle
+            ]);
+            Craft::$app->getResponse()->redirect($cpUrl);
+        }
 
         return $this->renderTemplate($settingsTemplate, array_merge([
             'currentSite' => $currentSite,
@@ -114,6 +129,7 @@ class SettingsController extends Controller
             'settingsSectionHandle' => $settingsSectionHandle,
             'currentSubSectionHandle' => $currentSubSectionHandle,
             'showMultiSiteSettings' => $showMultiSiteSettings,
+            'packAssociativeArrays' => $packAssociativeArrays
 
 //            'upgradeLink' => $upgradeLink
         ], $dynamicVariables));
@@ -134,18 +150,15 @@ class SettingsController extends Controller
         // the submitted settings
         $settingsModel = null;
         $settingsSection = Craft::$app->getRequest()->getBodyParam('settingsSection');
+        $packAssociativeArrays = Craft::$app->getRequest()->getBodyParam('packAssociativeArrays');
         $siteId = Craft::$app->getRequest()->getBodyParam('siteId');
         $postSettings = Craft::$app->getRequest()->getBodyParam('settings');
-
-        $currentSite = $siteId !== null
-            ? Craft::$app->getSites()->getSiteById($siteId)
-            : Craft::$app->getSites()->getPrimarySite();
 
         /** @var Settings $settingsModel */
         $settingsModel = SproutBase::$app->settings->getSettingsByKey($settingsSection, false);
         $settingsModel->setAttributes($postSettings, false);
 
-        if (!SproutBase::$app->settings->saveSettings($settingsModel, $currentSite)) {
+        if (!SproutBase::$app->settings->saveSettings($settingsModel, $packAssociativeArrays)) {
             Craft::$app->getSession()->setError(Craft::t('sprout', 'Couldn’t save settings.'));
 
             Craft::$app->getUrlManager()->setRouteParams([

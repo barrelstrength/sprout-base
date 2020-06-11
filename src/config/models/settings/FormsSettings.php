@@ -26,8 +26,6 @@ class FormsSettings extends Settings
     const SPAM_REDIRECT_BEHAVIOR_NORMAL = 'redirectAsNormal';
     const SPAM_REDIRECT_BEHAVIOR_BACK_TO_FORM = 'redirectBackToForm';
 
-    public $displayName = '';
-
     public $defaultSection = 'entries';
 
     public $formTemplateId = AccessibleTemplates::class;

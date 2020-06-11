@@ -9,20 +9,12 @@
 
 {% from _self import configWarning %}
 
-{{ forms.lightswitchField({
-    label: "Enable Notifications?"|t('sprout'),
-    instructions: "Disable Notifications to remove them from the sidebar navigation and make them no longer accessible in the Control Panel."|t('sprout'),
-    name: 'enableNotificationEmails',
-    on: settings.enableNotificationEmails,
-    warning: config.enableNotificationEmails is defined ? configWarning('enableNotificationEmails'),
-    first: true
-}) }}
-
 {% set templateOptions = sprout.email.getEmailTemplateOptions() %}
 
 {{ forms.field({
     label: "Default Email Templates"|t('sprout'),
     required: true,
+    first: true,
     errors: (settings is defined ? settings.getErrors('emailTemplateId') :
     null),
     instructions: "The templates that will be used to display your Notification Emails. Add additional Email Templates via the Email Templates API or providing a custom path to your email templates folder."|t('sprout'),

@@ -21,17 +21,7 @@ class RedirectsSettings extends Settings
     /**
      * @var string
      */
-    public $displayName = '';
-
-    /**
-     * @var string
-     */
     public $structureId = '';
-
-    /**
-     * @var bool
-     */
-    public $enableRedirects = true;
 
     /**
      * @var bool

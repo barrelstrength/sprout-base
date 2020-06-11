@@ -17,11 +17,6 @@ use Craft;
 class MetadataSettings extends Settings
 {
     /**
-     * @var string
-     */
-    public $displayName = '';
-
-    /**
      * @var bool
      */
     public $displayFieldHandles = false;

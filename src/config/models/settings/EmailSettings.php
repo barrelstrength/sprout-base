@@ -14,16 +14,6 @@ use Craft;
 class EmailSettings extends Settings
 {
     /**
-     * @var string
-     */
-    public $displayName = '';
-
-    /**
-     * @var bool
-     */
-    public $enableNotificationEmails = true;
-
-    /**
      * @var null
      */
     public $emailTemplateId = BasicTemplates::class;

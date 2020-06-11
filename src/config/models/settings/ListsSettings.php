@@ -16,9 +16,6 @@ use Craft;
  */
 class ListsSettings extends Settings
 {
-    /**
-     * @var string
-     */
-    public $displayName = '';
+
 }
 

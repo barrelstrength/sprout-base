@@ -234,11 +234,12 @@ class Config extends Component
 
         $settingsPages = [];
         foreach ($configTypes as $configType) {
-            $settings = $configType->createSettingsModel();
+            $settings = SproutBase::$app->settings->getSettingsByKey($configType->getKey());
 
-            if (!$settings) {
+            if (!$settings || !$settings->getEnabledStatus()) {
                 continue;
             }
+
 
             $navItem = $settings->getSettingsNavItem();
 
@@ -246,8 +247,10 @@ class Config extends Component
                 continue;
             }
 
+            $label = $settings->getAlternateName() ?? $configType::displayName();
+
             $settingsPages[] = [
-                'label' => $configType::displayName(),
+                'label' => $label,
                 'url' => 'sprout/settings/'.$configType->getKey(),
                 'icon' => Craft::getAlias('@sproutbaseassets/sprout/icons/'.$configType->getKey().'/icon.svg'),
             ];
@@ -269,8 +272,16 @@ class Config extends Component
                 continue;
             }
 
+            $settings = SproutBase::$app->settings->getSettingsByKey($configType->getKey());
+
+            if (!$settings->getEnabledStatus()) {
+                continue;
+            }
+
+            $label = $settings->getAlternateName() ?? $navItem['label'];
+
             $cpNavItems[$key] = [
-                'label' => $navItem['label'],
+                'label' => $label,
                 'url' => $navItem['url'],
                 'icon' => Craft::getAlias('@sproutbaseassets/sprout/icons/'.$configType->getKey().'/icon-mask.svg'),
             ];

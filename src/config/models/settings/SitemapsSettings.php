@@ -18,19 +18,9 @@ use craft\errors\SiteNotFoundException;
 class SitemapsSettings extends Settings
 {
     /**
-     * @var string
-     */
-    public $displayName = '';
-
-    /**
      * @var bool
      */
     public $enableCustomSections = false;
-
-    /**
-     * @var bool
-     */
-    public $enableDynamicSitemaps = true;
 
     /**
      * @var bool
@@ -62,7 +52,8 @@ class SitemapsSettings extends Settings
         if (Craft::$app->isMultiSite) {
             $subNav['sitemap-sites'] = [
                 'label' => Craft::t('sprout', 'Sitemap Sites'),
-                'template' => 'sprout/sitemaps/settings/sitemap-sites'
+                'template' => 'sprout/sitemaps/settings/sitemap-sites',
+                'packAssociativeArrays' => true
             ];
         }
 

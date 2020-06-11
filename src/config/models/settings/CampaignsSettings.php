@@ -17,11 +17,6 @@ use Craft;
 class CampaignsSettings extends Settings
 {
     /**
-     * @var string
-     */
-    public $displayName = '';
-
-    /**
      * @var bool
      */
     public $enableCampaignEmails = false;

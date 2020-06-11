@@ -23,7 +23,7 @@
 {% endblock %}
 
 {% block actionButton %}
-    {% if not pluginSettings.enableDynamicSitemaps %}
+    {% if not pluginSettings.getEnabledStatus() %}
         <div><strong>{{ "Sitemap Disabled."|t('sprout') }}</strong> <a href="{{ cpUrl('sprout/settings/sitemaps') }}">{{ "Enable in Settings"|t('sprout') }}</a></div>
     {% endif %}
 {% endblock %}

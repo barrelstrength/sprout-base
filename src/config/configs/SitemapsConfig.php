@@ -12,6 +12,7 @@ use barrelstrength\sproutbase\config\base\Config;
 use barrelstrength\sproutbase\config\models\settings\SitemapsSettings;
 use barrelstrength\sproutbase\SproutBase;
 use Craft;
+use craft\errors\SiteNotFoundException;
 
 class SitemapsConfig extends Config
 {
@@ -91,13 +92,13 @@ class SitemapsConfig extends Config
      * - sitemap-custom-pages.xml
      *
      * @return array
+     * @throws SiteNotFoundException
      */
     public function getSiteUrlRules(): array
     {
-        // @todo - migration: probably need to update logic for SEO and Sitemaps support
         $settings = SproutBase::$app->settings->getSettingsByKey('sitemaps');
 
-        if ($settings->enableDynamicSitemaps) {
+        if ($settings->getEnabledStatus()) {
             return [
                 'sitemap-<sitemapKey:.*>-<pageNumber:\d+>.xml' =>
                     'sprout/xml-sitemap/render-xml-sitemap',

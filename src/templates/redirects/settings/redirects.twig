@@ -9,23 +9,14 @@
 {% from _self import configWarning %}
 
 {{ forms.lightswitchField({
-    label: "Enable Redirects"|t('sprout'),
-    instructions: "Process Redirect rules and log 404 requests."|t('sprout'),
-    name: 'enableRedirects',
-    on: settings.enableRedirects ? true : false,
-    onLabel: "Enable"|t('sprout'),
-    first: true,
-    warning: config.enableRedirects is defined ? configWarning('enableRedirects')
-}) }}
-
-{{ forms.lightswitchField({
     label: "Log 404 Redirects"|t('sprout'),
     instructions: "Log 'Page Not Found' errors as 404 Redirects. 404 Redirects will appear on the Redirects tab as a disabled 404 Redirect Element and can be updated to 301 or 302 Redirects."|t('sprout'),
     name: 'enable404RedirectLog',
     toggle: 'settings-total-404redirects',
     on: settings.enable404RedirectLog ? true : false,
     onLabel: "Enable"|t('sprout'),
-    warning: config.enable404RedirectLog is defined ? configWarning('enable404RedirectLog')
+    warning: config.enable404RedirectLog is defined ? configWarning('enable404RedirectLog'),
+    first: true
 }) }}
 
 <div id="settings-total-404redirects"

@@ -13,6 +13,10 @@
 
 {% set pluginsService = craft.app.getPlugins() %}
 
+{% set cpSettings = create('barrelstrength\\sproutbase\\config\\models\\settings\\ControlPanelSettings') %}
+
+{#{% do cpSettings.dog(cpSettingsRows, settings) %}#}
+
 {{ forms.editableTableField({
     label: "Sprout Modules"|t('sprout'),
     instructions: "Sprout plugins are composed of one or more modules. Choose the Sprout modules to enable and what they should be named."|t('sprout'),
@@ -29,7 +33,7 @@
             type: 'heading',
             thin: true
         },
-        displayName: {
+        alternateName: {
             type: 'singleline',
             heading: "Alternate Name"|t('sprout'),
             info: "Alternate name that will be used to display this module in Control Panel navigation."|t('sprout')

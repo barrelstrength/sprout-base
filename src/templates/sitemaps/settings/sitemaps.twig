@@ -8,17 +8,6 @@
 
 {% from _self import configWarning %}
 
-{{ forms.lightswitchField({
-    label: "Enable Sitemaps"|t,
-    instructions: "Output a dynamic XML sitemap of all pages in your URL-Enabled Sections."|t('sprout'),
-    name: 'enableDynamicSitemaps',
-    toggle: 'settings-total-elements',
-    on: settings.enableDynamicSitemaps,
-    onLabel: "Enable"|t,
-    first: true,
-    warning: config.enableDynamicSitemaps is defined ? configWarning('enableDynamicSitemaps')
-}) }}
-
 {{ forms.textField({
     label: "Total Elements Per Sitemap"|t('sprout'),
     instructions: "The number of items that display on each page of your sitemap. A lower number may be necessary for sitemaps with a large number of elements or limited server resources."|t('sprout'),
@@ -27,7 +16,8 @@
     size:'10',
     value: settings.totalElementsPerSitemap,
     errors: '',
-    warning: config.totalElementsPerSitemap is defined ? configWarning('totalElementsPerSitemap')
+    warning: config.totalElementsPerSitemap is defined ? configWarning('totalElementsPerSitemap'),
+    first: true
 }) }}
 
 {{ forms.lightswitchField({

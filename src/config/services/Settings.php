@@ -41,6 +41,33 @@ class Settings extends Component
             }
         }
 
+        $moduleSettings = $settings['control-panel']->modules;
+
+        // Update settings to be indexed by module key
+        $moduleKeys = array_column($moduleSettings, 'moduleKey');
+        $moduleSettings = array_combine($moduleKeys, $moduleSettings);
+
+        foreach ($settings as $moduleKey => $setting) {
+            if ($moduleKey === 'control-panel') {
+                continue;
+            }
+
+            // Update the settings to add alternateName and enabled settings
+            $currentModuleCpSettings = $moduleSettings[$moduleKey] ?? null;
+
+            if (!$currentModuleCpSettings) {
+                continue;
+            }
+
+            $alternateName = $currentModuleCpSettings['alternateName'] ?? null;
+            $enabledStatus = $currentModuleCpSettings['enabled'] ?? false;
+
+            $setting->setAlternateName($alternateName);
+            $setting->setEnabledStatus($enabledStatus);
+
+            $settings[$moduleKey] = $setting;
+        }
+
         ksort($settings, SORT_NATURAL);
 
         return $settings;
@@ -63,6 +90,7 @@ class Settings extends Component
 
     /**
      * @param BaseSettings $settings
+     * @param bool         $packAssociativeArrays
      *
      * @return bool
      * @throws ErrorException
@@ -71,7 +99,7 @@ class Settings extends Component
      * @throws ReflectionException
      * @throws ServerErrorHttpException
      */
-    public function saveSettings(BaseSettings $settings, $currentSite = null): bool
+    public function saveSettings(BaseSettings $settings, $packAssociativeArrays = false): bool
     {
         // Have namespace?
 //        $settings = $settings['settings'] ?? $settings;
@@ -85,19 +113,13 @@ class Settings extends Component
             return false;
         }
 
-        if (!$currentSite) {
-            $currentSite = Craft::$app->getSites()->getPrimarySite();
-        }
-
         $projectConfigSettingsKey = Config::CONFIG_SPROUT_KEY.'.'.$settings->getKey();
 
-        $siteSettings[$currentSite->uid] = $settings->toArray();
+        $siteSettings = $settings->toArray();
 
-        // @todo - do we really want to use packAssociativeArrays for everything?
-        //         it's only meant for things that need to get ordered...
-        //         call a beforeSaveSettings method where a Config can do this if it wants?
-//        $newSettings = ProjectConfigHelper::packAssociativeArrays($siteSettings);
-        $newSettings = $siteSettings;
+        $newSettings = $packAssociativeArrays
+            ? ProjectConfigHelper::packAssociativeArrays($siteSettings)
+            : $siteSettings;
 
         Craft::$app->getProjectConfig()->set($projectConfigSettingsKey, $newSettings, "Update Sprout Settings for “{$settings->getKey()}”");
 
