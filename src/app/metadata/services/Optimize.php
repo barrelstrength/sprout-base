@@ -27,6 +27,7 @@ use Twig\Error\SyntaxError;
 use yii\base\Component;
 use yii\base\Exception;
 use yii\base\InvalidConfigException;
+use yii\web\NotFoundHttpException;
 
 /**
  *
@@ -150,6 +151,10 @@ class Optimize extends Component
     public function getMetadata($site = null, $render = true, &$context = null)
     {
         $settings = SproutBase::$app->settings->getSettingsByKey('metadata');
+
+        if (!$settings->getIsEnabled()) {
+            return null;
+        }
 
         $this->globals = SproutBase::$app->globalMetadata->getGlobalMetadata($site);
         $this->prioritizedMetadataModel = $this->getPrioritizedMetadataModel();

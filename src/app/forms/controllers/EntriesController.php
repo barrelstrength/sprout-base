@@ -174,6 +174,13 @@ class EntriesController extends BaseController
     {
         $this->requirePostRequest();
 
+        /** @var FormsSettings $settings */
+        $settings = SproutBase::$app->settings->getSettingsByKey('forms');
+
+        if (!$settings->getIsEnabled()) {
+            throw new Exception('Form module not enabled');
+        }
+
         $request = Craft::$app->getRequest();
 
         if ($request->getIsCpRequest()) {
@@ -182,9 +189,6 @@ class EntriesController extends BaseController
 
         $formHandle = $request->getRequiredBodyParam('handle');
         $this->form = $this->form == null ? SproutBase::$app->forms->getFormByHandle($formHandle) : $this->form;
-
-        /** @var FormsSettings $settings */
-        $settings = SproutBase::$app->settings->getSettingsByKey('forms');
 
         if ($this->form === null) {
             throw new Exception('No form exists with the handle '.$formHandle);
