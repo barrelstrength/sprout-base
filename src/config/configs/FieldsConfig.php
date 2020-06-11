@@ -18,7 +18,7 @@ class FieldsConfig extends Config
         return Craft::t('sprout', 'Fields');
     }
 
-    public function showCpDisplaySettings(): bool
+    public function hasControlPanelSettings(): bool
     {
         return false;
     }

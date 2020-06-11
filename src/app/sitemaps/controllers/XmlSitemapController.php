@@ -43,7 +43,7 @@ class XmlSitemapController extends Controller
 
         $settings = SproutBase::$app->settings->getSettingsByKey('sitemaps');
 
-        if (!$settings->getEnabledStatus()) {
+        if (!$settings->getIsEnabled()) {
             throw new NotFoundHttpException('XML Sitemap not enabled.');
         }
 

@@ -193,7 +193,7 @@ class SentEmails extends Component
 
         $sentEmailSettings = SproutBase::$app->settings->getSettingsByKey('sent-email');
 
-        if (!$sentEmailSettings->getEnabledStatus()) {
+        if (!$sentEmailSettings->getIsEnabled()) {
             return false;
         }
 

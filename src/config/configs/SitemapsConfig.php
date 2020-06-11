@@ -98,7 +98,7 @@ class SitemapsConfig extends Config
     {
         $settings = SproutBase::$app->settings->getSettingsByKey('sitemaps');
 
-        if ($settings->getEnabledStatus()) {
+        if ($settings->getIsEnabled()) {
             return [
                 'sitemap-<sitemapKey:.*>-<pageNumber:\d+>.xml' =>
                     'sprout/xml-sitemap/render-xml-sitemap',

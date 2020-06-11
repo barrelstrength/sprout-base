@@ -32,6 +32,38 @@ interface ConfigInterface
     public function getKey(): string;
 
     /**
+     * Returns true if Config should display settings on the Control Panel settings page
+     *
+     * @return bool
+     */
+    public function hasControlPanelSettings(): bool;
+
+    /**
+     * Returns the name of the group that will be used to group settings for this config
+     *
+     * @return string
+     */
+    public static function groupName(): string;
+
+    /**
+     * Returns the Config that will be treated as the parent to this config
+     * when grouping items in the sidebar. Items can only have one parent.
+     *
+     * By default, a Config will be treated as it's own group. Multiple configs
+     * can return the same Config Group to have their sub-nav merged with a given group.
+     *
+     * @return ConfigInterface|null
+     */
+    public function getConfigGroup();
+
+    /**
+     * Returns a short description of the module to display in the settings area
+     *
+     * @return string
+     */
+    public function getDescription(): string;
+
+    /**
      * Returns an instance of this modules Settings model
      *
      * @return Settings|null

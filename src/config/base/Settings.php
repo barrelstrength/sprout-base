@@ -16,37 +16,46 @@ use ReflectionClass;
 use ReflectionException;
 
 /**
- *
  * @property array  $settingsNavItem
  * @property string $key
  */
 abstract class Settings extends Model implements SettingsInterface
 {
+    /**
+     * @var Site $_currentSite
+     */
     protected $_currentSite;
 
+    /**
+     * @var string
+     */
     protected $_alternateName;
 
-    protected $_enabledStatus;
+    /**
+     * @var bool
+     */
+    protected $_isEnabled;
 
     /**
      * @return Site
      * @throws SiteNotFoundException
      */
-    public function getCurrentSite()
+    public function getCurrentSite(): Site
     {
         return $this->_currentSite ?? Craft::$app->getSites()->getPrimarySite();
     }
 
     /**
-     * @param null $site
-     *
-     * @throws SiteNotFoundException
+     * @param Site $site
      */
-    public function setCurrentSite($site = null)
+    public function setCurrentSite(Site $site = null)
     {
-        $this->_currentSite = $site ?? Craft::$app->getSites()->getPrimarySite();
+        $this->_currentSite = $site;
     }
 
+    /**
+     * @return string|null
+     */
     public function getAlternateName()
     {
         if (!empty($this->_alternateName)) {
@@ -61,14 +70,14 @@ abstract class Settings extends Model implements SettingsInterface
         $this->_alternateName = $value;
     }
 
-    public function getEnabledStatus()
+    public function getIsEnabled()
     {
-        return $this->_enabledStatus;
+        return $this->_isEnabled;
     }
 
-    public function setEnabledStatus($value)
+    public function setIsEnabled($value)
     {
-        $this->_enabledStatus = (int) $value;
+        $this->_isEnabled = (int)$value;
     }
 
     /**

@@ -64,7 +64,6 @@ class SettingsController extends Controller
             ? Craft::$app->getSites()->getSiteByHandle($siteHandle)
             : $primarySite;
 
-
         $sproutConfigs = SproutBase::$app->config->getConfigs();
 
         /** @var Config $currentSproutConfig */
@@ -140,7 +139,6 @@ class SettingsController extends Controller
      * @throws BadRequestHttpException
      * @throws MissingComponentException
      * @throws Exception
-     * @throws ReflectionException
      * @throws ErrorException
      */
     public function actionSaveSettings()
@@ -151,7 +149,6 @@ class SettingsController extends Controller
         $settingsModel = null;
         $settingsSection = Craft::$app->getRequest()->getBodyParam('settingsSection');
         $packAssociativeArrays = Craft::$app->getRequest()->getBodyParam('packAssociativeArrays');
-        $siteId = Craft::$app->getRequest()->getBodyParam('siteId');
         $postSettings = Craft::$app->getRequest()->getBodyParam('settings');
 
         /** @var Settings $settingsModel */
@@ -179,12 +176,14 @@ class SettingsController extends Controller
      * @param array $sproutConfigs
      *
      * @return array
+     * @throws ReflectionException
      */
     protected function buildSubNav(
         array $sproutConfigs,
         array $settings,
         Site $currentSite = null
     ): array {
+
         $subNavGroups = [];
 
         // Loop through once to establish our groupings
@@ -201,8 +200,13 @@ class SettingsController extends Controller
 
             /** @var Config $matchingSproutConfig */
             $matchingSproutConfig = $sproutConfigs[$settingsKey];
-            $configGroup = $matchingSproutConfig->getConfigGroup();
 
+            if ($matchingSproutConfig->getKey() !== 'control-panel' &&
+                !$setting->getEnabledStatus()) {
+                continue;
+            }
+
+            $configGroup = $matchingSproutConfig->getConfigGroup();
             $heading = $configGroup !== null
                 ? $configGroup::groupName()
                 : $matchingSproutConfig::groupName();

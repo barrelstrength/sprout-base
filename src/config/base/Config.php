@@ -33,14 +33,9 @@ abstract class Config extends Component implements ConfigInterface
         return $this->_settings;
     }
 
-    public function addSettings($settings)
+    public function setSettings($settings)
     {
         $this->_settings = $settings;
-    }
-
-    public function showCpDisplaySettings(): bool
-    {
-        return true;
     }
 
     /**
@@ -55,18 +50,16 @@ abstract class Config extends Component implements ConfigInterface
         return StringHelper::toKebabCase($baseName);
     }
 
+    public function hasControlPanelSettings(): bool
+    {
+        return true;
+    }
+
     public static function groupName(): string
     {
         return static::displayName();
     }
 
-    /**
-     * The heading that this config will be grouped under
-     * Defaults to itself. Other configs can use the same group heading
-     * if they want want their sub-navs to be merged with a given group.
-     *
-     * @return ConfigInterface|null
-     */
     public function getConfigGroup()
     {
         return null;

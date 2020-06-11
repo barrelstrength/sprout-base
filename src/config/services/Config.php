@@ -115,7 +115,7 @@ class Config extends Component
                     $configSettingsArray[$settingName] = $settings;
                 }
 
-                $sproutConfig->addSettings($configSettingsArray);
+                $sproutConfig->setSettings($configSettingsArray);
 
                 $this->_configs[$sproutConfig->getKey()] = $sproutConfig;
             }
@@ -236,7 +236,7 @@ class Config extends Component
         foreach ($configTypes as $configType) {
             $settings = SproutBase::$app->settings->getSettingsByKey($configType->getKey());
 
-            if (!$settings || !$settings->getEnabledStatus()) {
+            if (!$settings || !$settings->getIsEnabled()) {
                 continue;
             }
 
@@ -274,7 +274,7 @@ class Config extends Component
 
             $settings = SproutBase::$app->settings->getSettingsByKey($configType->getKey());
 
-            if (!$settings->getEnabledStatus()) {
+            if (!$settings->getIsEnabled()) {
                 continue;
             }
 

@@ -67,7 +67,7 @@ class ControlPanelSettings extends Settings
 
         $i = 0;
         foreach ($configs as $config) {
-            if (!$config->showCpDisplaySettings()) {
+            if (!$config->hasControlPanelSettings()) {
                 continue;
             }
 

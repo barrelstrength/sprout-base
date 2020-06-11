@@ -63,7 +63,7 @@ class Settings extends Component
             $enabledStatus = $currentModuleCpSettings['enabled'] ?? false;
 
             $setting->setAlternateName($alternateName);
-            $setting->setEnabledStatus($enabledStatus);
+            $setting->setIsEnabled($enabledStatus);
 
             $settings[$moduleKey] = $setting;
         }
@@ -96,7 +96,6 @@ class Settings extends Component
      * @throws ErrorException
      * @throws Exception
      * @throws NotSupportedException
-     * @throws ReflectionException
      * @throws ServerErrorHttpException
      */
     public function saveSettings(BaseSettings $settings, $packAssociativeArrays = false): bool

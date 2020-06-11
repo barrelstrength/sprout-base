@@ -63,7 +63,7 @@ class Redirects extends Component
         /** @var RedirectsSettings $settings */
         $settings = SproutBase::$app->settings->getSettingsByKey('redirects');
 
-        $enableRedirects = $settings->getEnabledStatus() ? true : false;
+        $enableRedirects = $settings->getIsEnabled() ? true : false;
 
         // Only handle front-end site requests that are not live preview
         if (!$request->getIsSiteRequest() || $request->getIsLivePreview() || $this->processRedirect === false || $enableRedirects === false) {

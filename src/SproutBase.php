@@ -203,7 +203,7 @@ class SproutBase extends Module
         // Email Tracking
         Event::on(BaseMailer::class, BaseMailer::EVENT_AFTER_SEND, static function(MailEvent $event) {
             $sentEmailSettings = SproutBase::$app->settings->getSettingsByKey('sent-email');
-            if ($sentEmailSettings->getEnabledStatus()) {
+            if ($sentEmailSettings->getIsEnabled()) {
                 SproutBase::$app->sentEmails->logSentEmail($event);
             }
         });
