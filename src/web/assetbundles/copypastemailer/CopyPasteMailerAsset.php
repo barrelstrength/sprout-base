@@ -9,7 +9,7 @@ class CopyPasteMailerAsset extends AssetBundle
 {
     public function init()
     {
-        $this->sourcePath = '@sproutbaseassetbundles/copypaste/dist';
+        $this->sourcePath = '@sproutbaseassetbundles/copypastemailer/dist';
 
         $this->depends = [
             CpAsset::class,

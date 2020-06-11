@@ -1,5 +1,6 @@
 {
     "/src/web/assetbundles/addressfield/dist/js/AddressField.js": "/src/web/assetbundles/addressfield/dist/js/AddressField.js",
+    "/src/web/assetbundles/copypastemailer/dist/js/CopyPaste.js": "/src/web/assetbundles/copypastemailer/dist/js/CopyPaste.js",
     "/src/web/assetbundles/email/dist/js/NotificationEvent.js": "/src/web/assetbundles/email/dist/js/NotificationEvent.js",
     "/src/web/assetbundles/email/dist/js/SproutModal.js": "/src/web/assetbundles/email/dist/js/SproutModal.js",
     "/src/web/assetbundles/emailfield/dist/js/EmailField.js": "/src/web/assetbundles/emailfield/dist/js/EmailField.js",
@@ -15,7 +16,8 @@
     "/src/web/assetbundles/urlfield/dist/css/url-field.css": "/src/web/assetbundles/urlfield/dist/css/url-field.css",
     "/src/web/assetbundles/reports/dist/css/reports.css": "/src/web/assetbundles/reports/dist/css/reports.css",
     "/src/web/assetbundles/reports/dist/css/visualizations.css": "/src/web/assetbundles/reports/dist/css/visualizations.css",
-    "/src/web/assetbundles/sentemail/dist/css/sent-email.css": "/src/web/assetbundles/sentemail/dist/css/sent-email.css",
+    "/src/web/assetbundles/copypastemailer/dist/css/sent-email.css": "/src/web/assetbundles/copypastemailer/dist/css/sent-email.css",
+    "/src/web/assetbundles/copypastemailer/dist/css/copy-paste.css": "/src/web/assetbundles/copypastemailer/dist/css/copy-paste.css",
     "/src/web/assetbundles/email/dist/css/charts-explorer.css": "/src/web/assetbundles/email/dist/css/charts-explorer.css",
     "/src/web/assetbundles/email/dist/css/modal.css": "/src/web/assetbundles/email/dist/css/modal.css",
     "/src/web/assetbundles/email/dist/css/sproutemail.css": "/src/web/assetbundles/email/dist/css/sproutemail.css",

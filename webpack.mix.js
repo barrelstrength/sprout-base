@@ -83,7 +83,15 @@ mix
   // Sent Email
   .sass(
     'src/web/assets/src/scss/sentemail/sent-email.scss',
-    'src/web/assetbundles/sentemail/dist/css/sent-email.css')
+    'src/web/assetbundles/copypastemailer/dist/css/sent-email.css')
+
+  // Campaigns
+  .js([
+    'src/web/assets/src/js/campaigns/CopyPaste.js'
+  ], 'src/web/assetbundles/copypastemailer/dist/js/CopyPaste.js')
+  .sass(
+    'src/web/assets/src/scss/campaigns/copy-paste.scss',
+    'src/web/assetbundles/copypastemailer/dist/css/copy-paste.css')
 
   // Email
   .js([
