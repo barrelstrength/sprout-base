@@ -39,10 +39,6 @@ class CampaignEmailQuery extends ElementQuery
             $this->subQuery->andWhere(Db::parseParam('sproutemail_campaignemails.campaignTypeId', $this->campaignTypeId));
         }
 
-        if ($this->orderBy !== null && empty($this->orderBy)) {
-            $this->orderBy = 'sproutemail_campaignemails.dateCreated desc';
-        }
-
         return parent::beforePrepare();
     }
 }
