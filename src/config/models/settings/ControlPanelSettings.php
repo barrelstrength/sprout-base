@@ -11,6 +11,7 @@ use barrelstrength\sproutbase\config\base\Settings;
 use barrelstrength\sproutbase\config\controllers\SettingsController;
 use barrelstrength\sproutbase\SproutBase;
 use Craft;
+use ReflectionException;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
@@ -48,10 +49,11 @@ class ControlPanelSettings extends Settings
      * @throws RuntimeError
      * @throws SyntaxError
      * @throws Exception
+     * @throws ReflectionException
      */
     public function getSettingsNavItem(): array
     {
-        $configs = SproutBase::$app->config->getConfigs();
+        $configs = SproutBase::$app->config->getConfigs(false);
 
         $currentSite = $this->getCurrentSite();
 
@@ -119,11 +121,5 @@ class ControlPanelSettings extends Settings
             ]
         ];
     }
-
-//    public function dog($moduleDefaultSettings, $projectConfigSettings) {
-//        \Craft::dd($this->modules);
-//        \Craft::dd($projectConfigSettings);
-//        \Craft::dd('s');
-//    }
 }
 

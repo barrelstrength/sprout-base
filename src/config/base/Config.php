@@ -16,6 +16,9 @@ abstract class Config extends Component implements ConfigInterface
 {
     protected $_edition = 'lite';
 
+    /**
+     * @var Settings $_settings
+     */
     protected $_settings;
 
     public function getEdition(): string
@@ -28,12 +31,15 @@ abstract class Config extends Component implements ConfigInterface
         $this->_edition = $value;
     }
 
-    public function getSettings(): array
+    /**
+     * @return Settings|null
+     */
+    public function getSettings()
     {
         return $this->_settings;
     }
 
-    public function setSettings($settings)
+    public function setSettings(Settings $settings)
     {
         $this->_settings = $settings;
     }

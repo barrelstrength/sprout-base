@@ -12,12 +12,9 @@
 {% set selectedNavItem = 'settings' %}
 
 {% set title = "Sprout Settings"|t('sprout') %}
-{#{% set subnav = navItem.subnav %}#}
-{#{% set currentSubsection = navItem.subnav[currentSubSectionHandle] %}#}
 
 {% set redirectUrl = currentSubsection['url'] ?? craft.app.request.url %}
 {% set actionUrl = currentSubsection['actionUrl'] ?? 'sprout/settings/save-settings' %}
-{#{% set settingsForm = navItems[currentSubSectionHandle]['settingsForm'] ?? true %}#}
 
 {% set fullPageForm = true %}
 
@@ -39,7 +36,7 @@
                         <li class="heading"><span>{{ item.heading }}</span></li>
                     {% else %}
                         <li>
-                            <a href="{{ cpUrl(item.url, { 'site': currentSite.handle }) }}"
+                            <a href="{{ cpUrl(item.url) }}"
                                 {% if currentSubSectionHandle == itemKey %}class="sel"{% endif %}>
                                 {{ item.label }}
                             </a>

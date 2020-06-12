@@ -7,8 +7,8 @@
 
 namespace barrelstrength\sproutbase\config\controllers;
 
-use barrelstrength\sproutbase\config\base\Config;
-use barrelstrength\sproutbase\config\base\Settings;
+use barrelstrength\sproutbase\config\base\Config as BaseConfig;
+use barrelstrength\sproutbase\config\services\Config;
 use barrelstrength\sproutbase\SproutBase;
 use Craft;
 use craft\errors\MissingComponentException;
@@ -57,7 +57,6 @@ class SettingsController extends Controller
      * @return Response
      * @throws SiteNotFoundException
      * @throws ReflectionException
-     * @throws InvalidConfigException
      */
     public function actionEditSettings(
         $settingsTarget = self::SETTINGS_TARGET_PROJECT_CONFIG,
@@ -74,7 +73,7 @@ class SettingsController extends Controller
             ? Craft::$app->getSites()->getSiteByHandle($siteHandle)
             : $primarySite;
 
-        $sproutConfigs = SproutBase::$app->config->getConfigs();
+        $sproutConfigs = SproutBase::$app->config->getConfigs(false);
 
         /** @var Config $currentSproutConfig */
         $currentSproutConfig = $sproutConfigs[$settingsSectionHandle];
@@ -118,16 +117,6 @@ class SettingsController extends Controller
         $showMultiSiteSettings = $currentSubsection['multisite'] ?? false;
         $packAssociativeArrays = $currentSubsection['packAssociativeArrays'] ?? false;
 
-        $currentSiteParam = Craft::$app->getRequest()->getParam('site');
-
-        // Make sure we save things to the primary site, if settings don't support multisite
-        if (!$showMultiSiteSettings && $currentSiteParam !== $primarySite->handle) {
-            $cpUrl = UrlHelper::cpUrl(Craft::$app->getRequest()->getPathInfo(), [
-                'site' => $primarySite->handle
-            ]);
-            Craft::$app->getResponse()->redirect($cpUrl);
-        }
-
         return $this->renderTemplate($settingsTemplate, array_merge([
             'currentSite' => $currentSite,
             'settings' => $currentSettings,
@@ -150,26 +139,27 @@ class SettingsController extends Controller
      * @throws MissingComponentException
      * @throws Exception
      * @throws ErrorException
+     * @throws ReflectionException
      */
     public function actionSaveSettings()
     {
         $this->requirePostRequest();
 
-        // the submitted settings
-        $settingsModel = null;
         $settingsSection = Craft::$app->getRequest()->getBodyParam('settingsSection');
         $packAssociativeArrays = Craft::$app->getRequest()->getBodyParam('packAssociativeArrays');
         $postSettings = Craft::$app->getRequest()->getBodyParam('settings');
 
-        /** @var Settings $settingsModel */
-        $settingsModel = SproutBase::$app->settings->getSettingsByKey($settingsSection, false);
-        $settingsModel->setAttributes($postSettings, false);
+        $config = SproutBase::$app->config->getConfigByKey($settingsSection, false);
+        $projectConfigSettingsKey = Config::CONFIG_SPROUT_KEY.'.'.$config->getKey();
 
-        if (!SproutBase::$app->settings->saveSettings($settingsModel, $packAssociativeArrays)) {
+        $settings = SproutBase::$app->settings->getSettingsByKey($settingsSection, false);
+        $settings->setAttributes($postSettings, false);
+
+        if (!SproutBase::$app->settings->saveSettings($projectConfigSettingsKey, $settings, $packAssociativeArrays)) {
             Craft::$app->getSession()->setError(Craft::t('sprout', 'Couldn’t save settings.'));
 
             Craft::$app->getUrlManager()->setRouteParams([
-                'settings' => $settingsModel
+                'settings' => $settings
             ]);
 
             return null;
@@ -188,11 +178,7 @@ class SettingsController extends Controller
      * @return array
      * @throws ReflectionException
      */
-    protected function buildSubNav(
-        array $sproutConfigs,
-        array $settings,
-        Site $currentSite = null
-    ): array {
+    protected function buildSubNav(array $sproutConfigs, array $settings, Site $currentSite = null): array {
 
         $subNavGroups = [];
 
@@ -208,7 +194,7 @@ class SettingsController extends Controller
                 continue;
             }
 
-            /** @var Config $matchingSproutConfig */
+            /** @var BaseConfig $matchingSproutConfig */
             $matchingSproutConfig = $sproutConfigs[$settingsKey];
 
             if ($matchingSproutConfig->getKey() !== 'control-panel' &&

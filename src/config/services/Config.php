@@ -7,6 +7,7 @@
 
 namespace barrelstrength\sproutbase\config\services;
 
+use barrelstrength\sproutbase\config\base\Config as BaseConfig;
 use barrelstrength\sproutbase\config\base\ConfigInterface;
 use barrelstrength\sproutbase\config\base\SproutBasePlugin;
 use barrelstrength\sproutbase\SproutBase;
@@ -21,12 +22,6 @@ use yii\base\Exception;
 use yii\base\NotSupportedException;
 use yii\web\ServerErrorHttpException;
 
-/**
- *
- * @property ConfigInterface[]  $configs
- * @property SproutBasePlugin[] $sproutBasePlugins
- * @property array              $sproutCpSettings
- */
 class Config extends Component
 {
     const EVENT_REGISTER_SPROUT_CONFIG = 'registerSproutConfig';
@@ -39,15 +34,7 @@ class Config extends Component
      */
     protected $_configs = [];
 
-    /**
-     * @var bool Whether Configs have been loaded yet for this request
-     */
-    private $_configsLoaded = false;
-
-    /**
-     * @var bool Whether Configs are in the middle of being loaded
-     */
-    private $_configsLoading = false;
+    private $_configLoadStatus = 'not-loaded';
 
     /**
      * @return SproutBasePlugin[]
@@ -65,29 +52,58 @@ class Config extends Component
     }
 
     /**
-     * @return array
+     * @param bool $includeFileSettings
+     *
+     * @return array [
+     *     'campaigns' => CampaignsConfig(),
+     *     'control-panel' => ControlPanelConfig(),
+     *     'email' => EmailConfig(),
+     *     'fields' => FieldsConfig(),
+     *     'forms' => FormsConfig(),
+     *     'lists' => ListsConfig(),
+     *     'metadata' => MetadataConfig(),
+     *     'redirects' => RedirectsConfig(),
+     *     'reports' => ReportsConfig(),
+     *     'sent-email' => SentEmailConfig(),
+     *     'sitemaps' => SitemapsConfig()
+     * ]
+     * @throws ReflectionException
      */
-    public function getConfigs(): array
+    public function getConfigs($includeFileSettings = true): array
     {
-        $this->loadConfigs();
+        $this->initConfigs($includeFileSettings);
 
         return $this->_configs;
     }
 
-    public function getConfig(string $handle)
+    /**
+     * @param string $handle
+     * @param bool $includeFileSettings
+     *
+     * @return BaseConfig
+     * @throws ReflectionException
+     */
+    public function getConfigByKey(string $handle, $includeFileSettings = true): BaseConfig
     {
-        $this->loadConfigs();
+        $this->getConfigs($includeFileSettings);
 
-        return $this->_configs[$handle] ?? null;
+        return $this->_configs[$handle];
     }
 
-    public function loadConfigs()
+    /**
+     * @param bool $includeFileSettings
+     *
+     * @throws ReflectionException
+     */
+    private function initConfigs($includeFileSettings = true)
     {
-        if ($this->_configsLoaded === true || $this->_configsLoading === true) {
+        $this->prepareContext($includeFileSettings);
+
+        if ($this->_configLoadStatus === 'loaded' || $this->_configLoadStatus === 'loading') {
             return;
         }
 
-        $this->_configsLoading = true;
+        $this->_configLoadStatus = 'loading';
 
         $plugins = $this->getSproutBasePlugins();
 
@@ -101,28 +117,24 @@ class Config extends Component
             $configTypes = $plugin::getSproutConfigs();
 
             foreach ($configTypes as $configType) {
-                $sproutConfig = new $configType();
+                /** @var BaseConfig $config */
+                $config = new $configType();
 
                 // Assumes we only have two editions in any given plugin
-                if ($sproutConfig->getEdition() !== 'pro') {
-                    $sproutConfig->setEdition($plugin->edition);
+                // Takes highest edition if module used in multiple plugins
+                if ($config->getEdition() !== 'pro') {
+                    $config->setEdition($plugin->edition);
                 }
 
-                $configSettings = $sproutConfig->getConfigSettings();
-
-                $configSettingsArray = [];
-                foreach ($configSettings as $settingName => $settings) {
-                    $configSettingsArray[$settingName] = $settings;
+                if ($settings = SproutBase::$app->settings->getSettingsByConfig($config)) {
+                    $config->setSettings($settings);
                 }
 
-                $sproutConfig->setSettings($configSettingsArray);
-
-                $this->_configs[$sproutConfig->getKey()] = $sproutConfig;
+                $this->_configs[$config->getKey()] = $config;
             }
         }
 
-        $this->_configsLoading = false;
-        $this->_configsLoaded = true;
+        $this->_configLoadStatus = 'loaded';
     }
 
     /**
@@ -228,18 +240,29 @@ class Config extends Component
         Craft::$app->getProjectConfig()->remove($projectConfigSettingsKey);
     }
 
+    /**
+     * @return array
+     * @throws ReflectionException
+     */
     public function getSproutCpSettings(): array
     {
-        $configTypes = $this->getConfigs();
+        $configTypes = $this->getConfigs(false);
 
-        $settingsPages = [];
+        $cpConfig = $configTypes['control-panel'];
+
+        $settingsPages[] = [
+            'label' => $cpConfig::displayName(),
+            'url' => 'sprout/settings/'.$cpConfig->getKey(),
+            'icon' => Craft::getAlias('@sproutbaseassets/sprout/icons/'.$cpConfig->getKey().'/icon.svg'),
+        ];
+
         foreach ($configTypes as $configType) {
-            $settings = SproutBase::$app->settings->getSettingsByKey($configType->getKey());
+
+            $settings = $configType->getSettings();
 
             if (!$settings || !$settings->getIsEnabled()) {
                 continue;
             }
-
 
             $navItem = $settings->getSettingsNavItem();
 
@@ -247,7 +270,9 @@ class Config extends Component
                 continue;
             }
 
-            $label = $settings->getAlternateName() ?? $configType::displayName();
+            $label = !empty($settings->getAlternateName())
+                ? $settings->getAlternateName()
+                : $configType::displayName();
 
             $settingsPages[] = [
                 'label' => $label,
@@ -261,7 +286,7 @@ class Config extends Component
 
     public function buildSproutNavItems(): array
     {
-        $configTypes = $this->getConfigs();
+        $configTypes = $this->getConfigs(false);
 
         $cpNavItems = [];
         foreach ($configTypes as $key => $configType) {
@@ -278,7 +303,9 @@ class Config extends Component
                 continue;
             }
 
-            $label = $settings->getAlternateName() ?? $navItem['label'];
+            $label = !empty($settings->getAlternateName())
+                ? $settings->getAlternateName()
+                : $navItem['label'];
 
             $cpNavItems[$key] = [
                 'label' => $label,
@@ -365,5 +392,26 @@ class Config extends Component
         }
 
         return array_unique($configDependencies);
+    }
+
+    /**
+     * @param bool $includeFileSettings
+     */
+    private function prepareContext(bool $includeFileSettings)
+    {
+        $oldContext = SproutBase::$app->settings->context;
+
+        if ($includeFileSettings === false) {
+            $newContext = Settings::SETTINGS_CONTEXT_SETTINGS;
+        } else {
+            $newContext = Settings::SETTINGS_CONTEXT_APP;
+        }
+
+        if ($oldContext !== $newContext) {
+            SproutBase::$app->settings->context = $newContext;
+
+            // Rebuild the config array if a new context triggered
+            $this->_configLoadStatus = 'not-loaded';
+        }
     }
 }

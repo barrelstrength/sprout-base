@@ -29,12 +29,12 @@ abstract class Settings extends Model implements SettingsInterface
     /**
      * @var string
      */
-    protected $_alternateName;
+    protected $_alternateName = '';
 
     /**
      * @var bool
      */
-    protected $_isEnabled;
+    protected $_isEnabled = true;
 
     /**
      * @return Site
@@ -54,15 +54,15 @@ abstract class Settings extends Model implements SettingsInterface
     }
 
     /**
-     * @return string|null
+     * @return string
      */
-    public function getAlternateName()
+    public function getAlternateName(): string
     {
         if (!empty($this->_alternateName)) {
             return $this->_alternateName;
         }
 
-        return null;
+        return '';
     }
 
     public function setAlternateName($value)
@@ -78,18 +78,6 @@ abstract class Settings extends Model implements SettingsInterface
     public function setIsEnabled($value)
     {
         $this->_isEnabled = (int)$value;
-    }
-
-    /**
-     * @return string
-     * @throws ReflectionException
-     */
-    public function getKey(): string
-    {
-        $class = new ReflectionClass($this);
-        $baseName = preg_replace('/Settings$/', '', $class->getShortName());
-
-        return StringHelper::toKebabCase($baseName);
     }
 
     public function getSettingsNavItem(): array

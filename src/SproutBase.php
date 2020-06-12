@@ -56,6 +56,7 @@ use craft\services\UserPermissions;
 use craft\web\Application;
 use craft\web\twig\variables\Cp;
 use craft\web\View;
+use ReflectionException;
 use yii\base\Event;
 use yii\base\InvalidConfigException;
 use yii\base\Module;
@@ -255,10 +256,11 @@ class SproutBase extends Module
 
     /**
      * @return array
+     * @throws ReflectionException
      */
     public function getUserPermissions(): array
     {
-        $configTypes = self::$app->config->getConfigs();
+        $configTypes = self::$app->config->getConfigs(false);
 
         $permissions = [];
         foreach ($configTypes as $configType) {

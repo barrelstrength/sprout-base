@@ -7,9 +7,11 @@
 
 namespace barrelstrength\sproutbase\config\services;
 
+use barrelstrength\sproutbase\config\base\Config as BaseConfig;
 use barrelstrength\sproutbase\config\base\ConfigInterface;
 use barrelstrength\sproutbase\config\base\Settings as BaseSettings;
-use barrelstrength\sproutbase\config\base\SettingsInterface;
+use barrelstrength\sproutbase\config\configs\ControlPanelConfig;
+use barrelstrength\sproutbase\config\models\settings\ControlPanelSettings;
 use barrelstrength\sproutbase\SproutBase;
 use Craft;
 use craft\helpers\ProjectConfig as ProjectConfigHelper;
@@ -23,49 +25,85 @@ use yii\web\ServerErrorHttpException;
 class Settings extends Component
 {
     /**
-     * Gets settings as defined in project config
-     *
-     * @param bool $includeFileConfigSettings
-     *
-     * @return SettingsInterface|SettingsInterface[]
+     * App context will reconcile all levels of settings
+     * including the file-based config overrides
      */
-    public function getSettings($includeFileConfigSettings = true)
+    const SETTINGS_CONTEXT_APP = 'app';
+
+    /**
+     * Settings context will not retrieve file-based configs
+     * as the goal is to just update Project Config.
+     */
+    const SETTINGS_CONTEXT_SETTINGS = 'settings';
+
+    public $context = self::SETTINGS_CONTEXT_APP;
+
+    /**
+     * @var ControlPanelSettings
+     */
+    private $_controlPanelSettings;
+
+    private $_cpSettingsLoadStatus = 'not-loaded';
+
+    public function initControlPanelSettings()
     {
-        $configTypes = SproutBase::$app->config->getConfigs();
-
-        $settings = [];
-
-        foreach ($configTypes as $configType) {
-            if ($currentSettings = $this->mergeSettings($configType, $includeFileConfigSettings)) {
-                $settings[$configType->getKey()] = $currentSettings;
-            }
+        if ($this->_controlPanelSettings ||
+            $this->_cpSettingsLoadStatus === 'loaded' ||
+            $this->_cpSettingsLoadStatus === 'loading') {
+            return;
         }
 
-        $moduleSettings = $settings['control-panel']->modules;
+        $this->_cpSettingsLoadStatus = 'loading';
+
+        $cpConfig = new ControlPanelConfig();
+
+        /** @var ControlPanelSettings $cpSettings */
+        $cpSettings = $this->mergeSettings($cpConfig);
+
+        // Control Panel module has unique needs when returning settings
+        $moduleSettings = $cpSettings->modules;
 
         // Update settings to be indexed by module key
         $moduleKeys = array_column($moduleSettings, 'moduleKey');
         $moduleSettings = array_combine($moduleKeys, $moduleSettings);
 
-        foreach ($settings as $moduleKey => $setting) {
-            if ($moduleKey === 'control-panel') {
-                continue;
+        $cpSettings->modules = $moduleSettings;
+
+        $this->_controlPanelSettings = $cpSettings;
+
+        $this->_cpSettingsLoadStatus = 'loaded';
+    }
+
+    /**
+     * Gets settings as defined in project config
+     *
+     * @param bool $includeFileConfigSettings
+     *
+     * @return array [
+     *     'campaigns' => new CampaignsSetting,
+     *     'control-panel' => new ControlPanelSettings,
+     *     'email' => new EmailSettings,
+     *     'fields' => new FieldsSettings,
+     *     'forms' => new FormsSettings,
+     *     'lists' => new ListsSettings,
+     *     'metadata' => new MetadataSettings,
+     *     'redirects' => new RedirectsSettings,
+     *     'reports' => new ReportsSettings,
+     *     'sent-email' => new SentEmailSettings,
+     *     'sitemaps' => new SitemapsSettings
+     * ]
+     * @throws ReflectionException
+     */
+    public function getSettings($includeFileConfigSettings = true): array
+    {
+        $configTypes = SproutBase::$app->config->getConfigs($includeFileConfigSettings);
+
+        $settings = [];
+
+        foreach ($configTypes as $configType) {
+            if ($settingsModel = $configType->getSettings()) {
+                $settings[$configType->getKey()] = $settingsModel;
             }
-
-            // Update the settings to add alternateName and enabled settings
-            $currentModuleCpSettings = $moduleSettings[$moduleKey] ?? null;
-
-            if (!$currentModuleCpSettings) {
-                continue;
-            }
-
-            $alternateName = $currentModuleCpSettings['alternateName'] ?? null;
-            $enabledStatus = $currentModuleCpSettings['enabled'] ?? false;
-
-            $setting->setAlternateName($alternateName);
-            $setting->setIsEnabled($enabledStatus);
-
-            $settings[$moduleKey] = $setting;
         }
 
         ksort($settings, SORT_NATURAL);
@@ -73,24 +111,71 @@ class Settings extends Component
         return $settings;
     }
 
-    /**
-     * Gets current settings as defined in project config and config overrides
-     *
-     * @param null $handle
-     * @param bool $includeFileConfigSettings
-     *
-     * @return SettingsInterface|SettingsInterface[]
-     */
-    public function getSettingsByKey($handle, $includeFileConfigSettings = true)
+    public function getSettingsByConfig(BaseConfig $config)
     {
-        $settings = $this->getSettings($includeFileConfigSettings);
+        $this->initControlPanelSettings();
 
-        return $settings[$handle] ?? [];
+        $settings = $this->mergeSettings($config);
+
+        if (!$settings) {
+            return null;
+        }
+
+        // Update the settings to add alternateName and enabled settings
+        $cpSettings = $this->_controlPanelSettings ?? null;
+
+        if (!$cpSettings) {
+            return $settings;
+        }
+
+        $moduleSettings = $cpSettings->modules[$config->getKey()] ?? null;
+
+        $alternateName = !empty($moduleSettings['alternateName'])
+            ? $moduleSettings['alternateName']
+            : null;
+        $enabledStatus = !empty($moduleSettings['enabled'])
+            ? $moduleSettings['enabled']
+            : false;
+
+        $settings->setAlternateName($alternateName);
+        $settings->setIsEnabled($enabledStatus);
+
+        return $settings;
     }
 
     /**
+     * Gets current settings as defined in project config and config overrides
+     *
+     * @param $handle = [
+     *     'campaigns',
+     *     'control-panel',
+     *     'email'
+     *     'fields',
+     *     'forms',
+     *     'lists',
+     *     'metadata',
+     *     'redirects',
+     *     'reports',
+     *     'sent-email',
+     *     'sitemaps'
+     * ];
+     *
+     * @param bool $includeFileConfigSettings
+     *
+     * @return BaseSettings
+     * @throws ReflectionException
+     */
+    public function getSettingsByKey($handle, $includeFileConfigSettings = true): BaseSettings
+    {
+        $settings = $this->getSettings($includeFileConfigSettings);
+
+        return $settings[$handle];
+    }
+
+    /**
+     * @param string $key
      * @param BaseSettings $settings
-     * @param bool         $packAssociativeArrays
+     * @param bool $packAssociativeArrays
      *
      * @return bool
      * @throws ErrorException
@@ -98,21 +183,12 @@ class Settings extends Component
      * @throws NotSupportedException
      * @throws ServerErrorHttpException
      */
-    public function saveSettings(BaseSettings $settings, $packAssociativeArrays = false): bool
+    public function saveSettings(string $key, BaseSettings $settings, $packAssociativeArrays = false): bool
     {
-        // Have namespace?
-//        $settings = $settings['settings'] ?? $settings;
-        // Set sprout scenario validation on the settings model
-//        $scenario = $settings['validationScenario'] ?? null;
-
-        // Add settings to new SproutSettings model to validate
-        // We used this when validating a model in Sprout Forms where only
-        // one field was required and others may not exist in the post request.
-        if (!$settings->validate()) {
-            return false;
-        }
-
-        $projectConfigSettingsKey = Config::CONFIG_SPROUT_KEY.'.'.$settings->getKey();
+        // Consider how validation handles settings that may not be in the current post data
+//        if (!$settings->validate()) {
+//            return false;
+//        }
 
         $siteSettings = $settings->toArray();
 
@@ -120,7 +196,7 @@ class Settings extends Component
             ? ProjectConfigHelper::packAssociativeArrays($siteSettings)
             : $siteSettings;
 
-        Craft::$app->getProjectConfig()->set($projectConfigSettingsKey, $newSettings, "Update Sprout Settings for “{$settings->getKey()}”");
+        Craft::$app->getProjectConfig()->set($key, $newSettings, "Update Sprout Settings for “{$key}”");
 
         return true;
     }
@@ -134,11 +210,10 @@ class Settings extends Component
      * 3. Default settings from Settings model
      *
      * @param ConfigInterface $configType
-     * @param bool            $includeFileConfigSettings
      *
-     * @return SettingsInterface|null
+     * @return BaseSettings|null
      */
-    protected function mergeSettings(ConfigInterface $configType, bool $includeFileConfigSettings)
+    protected function mergeSettings(ConfigInterface $configType)
     {
         $projectConfigService = Craft::$app->getProjectConfig();
         $allProjectConfigSettings = $projectConfigService->get(Config::CONFIG_SPROUT_KEY) ?? [];
@@ -151,7 +226,7 @@ class Settings extends Component
 
             $mergedSettings = array_merge($defaultSettings, $projectConfigSettings);
 
-            if ($includeFileConfigSettings) {
+            if ($this->context === self::SETTINGS_CONTEXT_APP) {
                 $allFileConfigSettings = Craft::$app->getConfig()->getConfigFromFile('sprout');
                 $fileConfigSettings = $allFileConfigSettings[$configType->getKey()] ?? [];
 
