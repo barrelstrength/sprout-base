@@ -202,7 +202,7 @@ class SettingsController extends Controller
             $matchingSproutConfig = $sproutConfigs[$settingsKey];
 
             if ($matchingSproutConfig->getKey() !== 'control-panel' &&
-                !$setting->getEnabledStatus()) {
+                !$setting->getIsEnabled()) {
                 continue;
             }
 

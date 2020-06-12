@@ -98,7 +98,7 @@ class Config extends Component
                 continue;
             }
 
-            $configTypes = $plugin->getSproutConfigs();
+            $configTypes = $plugin::getSproutConfigs();
 
             foreach ($configTypes as $configType) {
                 $sproutConfig = new $configType();

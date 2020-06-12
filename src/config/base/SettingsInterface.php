@@ -12,7 +12,7 @@ namespace barrelstrength\sproutbase\config\base;
  *
  * @package barrelstrength\sproutbase\config\base
  *
- * @mixin Settings::getEnabledStatus()
+ * @mixin Settings::getIsEnabled()
  */
 interface SettingsInterface
 {
