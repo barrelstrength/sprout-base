@@ -262,9 +262,6 @@ class NotificationsController extends Controller
                 $notificationEmail->settings = Json::encode($eventSettings);
             }
 
-            /** @var Plugin $plugin */
-            $plugin = $this->getPlugin($event);
-
             $notificationEmail->setEventObject($event->getMockEventObject());
 
             if ($event->getSettingsHtml() === null || $event->getSettingsHtml() == '') {
@@ -587,26 +584,6 @@ class NotificationsController extends Controller
         }
 
         return $text;
-    }
-
-    /**
-     * @param NotificationEvent $event
-     *
-     * @return PluginInterface|null
-     */
-    private function getPlugin(NotificationEvent $event)
-    {
-        $pluginClass = get_class($event);
-
-        $pluginHandle = Craft::$app->getPlugins()->getPluginHandleByClass($pluginClass);
-
-        $plugin = null;
-
-        if ($pluginHandle) {
-            $plugin = Craft::$app->getPlugins()->getPlugin($pluginHandle);
-        }
-
-        return $plugin;
     }
 
     /**
