@@ -39,6 +39,16 @@ class SettingsController extends Controller
         return $this->redirect(UrlHelper::cpUrl('sprout/settings/control-panel/welcome'));
     }
 
+    public function actionWelcomeTemplate(string $pluginId): Response
+    {
+        return $this->renderTemplate('sprout/_welcome/'.$pluginId.'/welcome');
+    }
+
+    public function actionUpgradeTemplate(): Response
+    {
+        return $this->redirect(UrlHelper::cpUrl('sprout/settings/control-panel/welcome'));
+    }
+
     /**
      * @param string $settingsTarget
      * @param null   $settingsSectionHandle

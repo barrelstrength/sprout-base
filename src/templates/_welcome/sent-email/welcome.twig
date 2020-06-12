@@ -1,0 +1,30 @@
+{% extends "sprout/config/_layouts/base-landing" %}
+{% import "sprout/config/_includes/sproutcp" as sproutCp %}
+
+{% set title = "Welcome to Sprout Sent Email"|t('sprout-sent-email') %}
+{% set bodyClass = 'sprout-landing-page' %}
+{% set assetUrl = view.getAssetManager().getPublishedUrl('@sproutbaseassets/sprout/screenshots', true) -%}
+{% set pluginStoreLink = currentUser.admin ? cpUrl('plugin-store/sprout-sent-email') : 'https://plugins.craftcms.com/sprout-sent-email' %}
+{% block content %}
+
+    <div class="sprout-landing">
+
+        {{ parent() }}
+
+        {{ sproutCp.featureHeader({
+            heading: "Let me send that again."|t('sprout-sent-email'),
+            message: "Sprout Sent Email takes a snapshot of all emails sent from your website. Sent email tracking enables you to review what that was sent, confirm sent statuses, and resend email to your users."|t('sprout-sent-email'),
+            primaryButtonText: "Get Started"|t('sprout-sent-email'),
+            primaryButtonLink: cpUrl('sprout-sent-email/sent-email'),
+            secondaryButtonText: "Read the Docs"|t('sprout-sent-email'),
+            secondaryButtonLink: "https://sprout.barrelstrengthdesign.com/docs/sent-email"
+        }) }}
+
+        {{ sproutCp.featureImage({
+            imageUrl: assetUrl ~ '/sent-email/sprout-sent-email-feature.png',
+            altText: 'Sprout Sent Email for Craft CMS'|t('sprout-sent-email')
+        }) }}
+
+    </div>
+
+{% endblock %}

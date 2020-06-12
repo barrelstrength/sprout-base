@@ -88,11 +88,6 @@ class Report extends Element
     public $endDate;
 
     /**
-     * @var string Plugin Handle as defined in the Data Sources table
-     */
-    public $viewContext;
-
-    /**
      * Returns the element type name.
      *
      * @return string
@@ -193,24 +188,21 @@ class Report extends Element
     protected static function defineSources(string $context = null): array
     {
         $sources = [];
-        $viewContext = null;
 
-        // Just in case this gets run from the console for some reason,
-        // make sure we don't try to access the request
+        $mailingListModal = false;
+
+        // Just in case, skip console requests
         if (!Craft::$app->getRequest()->getIsConsoleRequest()) {
-            // Allow the Element Selector Modal requests
-            // to override the viewContext param set in the route
+            // Identify the Element Selector Modal for Mailing Lists
             // 'sources' is set as a config setting on the forms.elementSelect macro
-            $viewContext = Craft::$app->getRequest()->getParam('sources');
+            $elementSelectSource = Craft::$app->getRequest()->getParam('sources');
 
-            // Get the context from the URL, skip action requests
-            $segment = Craft::$app->getRequest()->getSegment(1);
-            if (!$viewContext && strpos($segment, 'sprout') === 0) {
-                $viewContext = $segment;
+            if ($elementSelectSource === 'mailingListModal') {
+                $mailingListModal = true;
             }
         }
 
-        if ($viewContext !== 'mailingListModal') {
+        if (!$mailingListModal) {
             $sources = [
                 [
                     'key' => '*',
@@ -221,9 +213,6 @@ class Report extends Element
                 ]
             ];
         }
-
-        // @todo - sort out how viewContext and mailingLists get resolved now...
-//        if ($viewContext === DataSource::DEFAULT_VIEW_CONTEXT || $viewContext === 'mailingListModal') {
 
         $sources[] = [
             'key' => 'mailingList',

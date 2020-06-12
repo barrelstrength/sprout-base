@@ -47,7 +47,13 @@ class ControlPanelConfig extends Config
             'sprout/settings' =>
                 'sprout/settings/hello',
             'sprout' =>
-                'sprout/settings/hello'
+                'sprout/settings/hello',
+
+            // Welcome and Upgrade
+            'sprout/welcome/<pluginId:[^\/]+>' =>
+                'sprout/settings/welcome-template',
+            'sprout/upgrade/<pluginId:[^\/]+>' =>
+                'sprout/settings/upgrade-template',
         ];
     }
 }

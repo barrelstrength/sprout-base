@@ -102,13 +102,6 @@ class DataSources extends Component
 
             $dataSourceType = $dataSource['type'];
 
-            // If the datasource isn't installed in Sprout Base Reports or our integration, don't include it
-            // @todo - migration, update restriction to not use viewContext
-            //          but registeredEvents instead...
-//            if (!in_array($dataSource['viewContext'], $allowedViewContexts, true)) {
-//                continue;
-//            }
-
             if (class_exists($dataSourceType)) {
                 $dataSources[$dataSourceType] = new $dataSourceType();
                 $dataSources[$dataSourceType]->id = $dataSource['id'];

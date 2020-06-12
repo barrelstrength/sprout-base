@@ -20,6 +20,7 @@ use barrelstrength\sproutbase\app\forms\records\FormGroup as FormGroupRecord;
 use barrelstrength\sproutbase\app\forms\records\Integration as IntegrationRecord;
 use barrelstrength\sproutbase\app\forms\records\IntegrationLog as IntegrationLogRecord;
 use barrelstrength\sproutbase\app\forms\records\Rules as RulesRecord;
+use barrelstrength\sproutbase\app\reports\base\DataSource;
 use barrelstrength\sproutbase\SproutBase;
 use craft\db\Migration;
 use craft\db\Table;
@@ -375,6 +376,19 @@ class Install extends Migration
                 'sortOrder' => $entryStatus['sortOrder'],
                 'isDefault' => $entryStatus['isDefault']
             ]);
+        }
+
+        // Add DataSource integrations so users don't have to install them manually
+        $dataSourceTypes = [
+            EntriesDataSource::class,
+            IntegrationLogDataSource::class,
+            SpamLogDataSource::class
+        ];
+
+        foreach ($dataSourceTypes as $dataSourceClass) {
+            /** @var DataSource $dataSource */
+            $dataSource = new $dataSourceClass();
+            SproutBase::$app->dataSources->saveDataSource($dataSource);
         }
     }
 }
