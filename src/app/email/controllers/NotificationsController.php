@@ -33,9 +33,12 @@ use yii\web\Response;
 
 class NotificationsController extends Controller
 {
-    // @todo - migration review - used to set in init()
-    // $this->isSproutEmailPro = SproutBase::$app->config->isEdition('sprout-email', 'pro');
     private $isSproutEmailPro;
+
+    public function init()
+    {
+        $this->isSproutEmailPro = SproutBase::$app->config->isEdition('sprout-email', Config::EDITION_PRO);
+    }
 
     /**
      * @return Response

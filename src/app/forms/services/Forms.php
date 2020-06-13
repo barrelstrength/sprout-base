@@ -14,6 +14,7 @@ use barrelstrength\sproutbase\app\forms\elements\Form as FormElement;
 use barrelstrength\sproutbase\app\forms\errors\FormTemplatesDirectoryNotFoundException;
 use barrelstrength\sproutbase\app\forms\formtemplates\AccessibleTemplates;
 use barrelstrength\sproutbase\app\forms\formtemplates\CustomTemplates;
+use barrelstrength\sproutbase\config\base\Config;
 use barrelstrength\sproutbase\migrations\forms\CreateFormContentTable;
 use barrelstrength\sproutbase\app\forms\records\Form as FormRecord;
 use barrelstrength\sproutbase\app\forms\records\Integration as IntegrationRecord;
@@ -896,7 +897,7 @@ class Forms extends Component
      */
     public function canCreateForm(): bool
     {
-        $isPro = SproutBase::$app->config->isEdition('sprout-forms', SproutForms::EDITION_PRO);
+        $isPro = SproutBase::$app->config->isEdition('sprout-forms', Config::EDITION_PRO);
 
         if (!$isPro) {
             $forms = $this->getAllForms();

@@ -8,6 +8,7 @@
 namespace barrelstrength\sproutbase\app\forms\controllers;
 
 use barrelstrength\sproutbase\app\forms\elements\Form;
+use barrelstrength\sproutbase\config\base\Config;
 use barrelstrength\sproutbase\SproutBase;
 use barrelstrength\sproutforms\SproutForms;
 use Craft;
@@ -61,7 +62,11 @@ class FormsController extends BaseController
     {
         $this->requirePermission('sprout:forms:editForms');
 
-        return $this->renderTemplate('sprout/forms/forms');
+        $isPro = SproutBase::$app->config->isEdition('sprout-forms', Config::EDITION_PRO);
+
+        return $this->renderTemplate('sprout/forms/forms', [
+            'isPro' => $isPro
+        ]);
     }
 
     /**
@@ -82,7 +87,7 @@ class FormsController extends BaseController
         /** @var SproutForms $plugin */
         $plugin = Craft::$app->plugins->getPlugin('sprout-forms');
 
-        $isPro = SproutBase::$app->config->isEdition('sprout-forms', SproutForms::EDITION_PRO);
+        $isPro = SproutBase::$app->config->isEdition('sprout-forms', Config::EDITION_PRO);
 
         return $this->renderTemplate('sprout/forms/forms/_settings/'.$settingsSectionHandle, [
             'form' => $form,
@@ -226,10 +231,13 @@ class FormsController extends BaseController
 
         $tabs = SproutBase::$app->forms->getTabsForFieldLayout($form);
 
+        $isPro = SproutBase::$app->config->isEdition('sprout-forms', Config::EDITION_PRO);
+
         return $this->renderTemplate('sprout/forms/forms/_editForm', [
             'form' => $form,
             'formTabs' => $tabs,
-            'continueEditingUrl' => 'sprout/forms/edit/{id}'
+            'continueEditingUrl' => 'sprout/forms/edit/{id}',
+            'isPro' => $isPro
         ]);
     }
 

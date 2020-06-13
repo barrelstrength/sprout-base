@@ -458,8 +458,8 @@ class Redirect extends Element
      */
     public function validateEdition($attribute)
     {
-        $sproutRedirectsIsPro = SproutBase::$app->config->isEdition('sprout-redirects', 'pro');
-        $sproutSeoIsPro = SproutBase::$app->config->isEdition('sprout-seo', 'pro');
+        $sproutRedirectsIsPro = SproutBase::$app->config->isEdition('sprout-redirects', Config::EDITION_PRO);
+        $sproutSeoIsPro = SproutBase::$app->config->isEdition('sprout-seo', Config::EDITION_PRO);
 
         if ((!$sproutSeoIsPro && !$sproutRedirectsIsPro) && (int)$this->method !== RedirectMethods::PageNotFound) {
 

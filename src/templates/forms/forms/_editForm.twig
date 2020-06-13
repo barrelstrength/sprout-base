@@ -3,8 +3,6 @@
 {% extends "sprout/forms/_layouts/base" %}
 {% import "sprout/config/_includes/sproutcp" as sproutCp %}
 
-{% set isPro = craft.app.getModule('sprout-forms').is('pro') %}
-
 {% set crumbs = [
     { label: "Forms"|t('sprout'), url: cpUrl('sprout/forms') }
 ] %}

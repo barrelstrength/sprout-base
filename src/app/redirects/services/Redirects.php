@@ -471,8 +471,8 @@ class Redirects extends Component
      */
     public function canCreateRedirects($plusTotal = 0): bool
     {
-        $sproutRedirectsIsPro = SproutBase::$app->config->isEdition('sprout-redirects', 'pro');
-        $sproutSeoIsPro = SproutBase::$app->config->isEdition('sprout-seo', 'pro');
+        $sproutRedirectsIsPro = SproutBase::$app->config->isEdition('sprout-redirects', Config::EDITION_PRO);
+        $sproutSeoIsPro = SproutBase::$app->config->isEdition('sprout-seo', Config::EDITION_PRO);
 
         if (!$sproutSeoIsPro && !$sproutRedirectsIsPro) {
             $count = SproutBase::$app->redirects->getTotalNon404Redirects();

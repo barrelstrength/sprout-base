@@ -8,7 +8,6 @@
 
 {% from _self import configWarning %}
 
-{% set isPro = craft.app.getModule('sprout-seo').is('pro') %}
 {% set isProBadge = not isPro ? ' <span class="sprout-pro">PRO</span>' : '' %}
 
 {{ forms.textField({

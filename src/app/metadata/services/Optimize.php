@@ -339,8 +339,11 @@ class Optimize extends Component
 
         Craft::$app->view->setTemplatesPath($sproutSeoTemplatesPath);
 
+        $isPro = SproutBase::$app->config->isEdition('sprout-seo', Config::EDITION_PRO);
+
         $output = Craft::$app->view->renderTemplate('templates/_special/metadata', [
-            'metadata' => $metadata
+            'metadata' => $metadata,
+            'isPro' => $isPro
         ]);
 
         Craft::$app->view->setTemplatesPath(Craft::$app->path->getSiteTemplatesPath());

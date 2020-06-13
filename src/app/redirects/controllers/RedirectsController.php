@@ -121,8 +121,8 @@ class RedirectsController extends Controller
             ]
         ];
 
-        $sproutRedirectsIsPro = SproutBase::$app->config->isEdition('sprout-redirects', 'pro');
-        $sproutSeoIsPro = SproutBase::$app->config->isEdition('sprout-seo', 'pro');
+        $sproutRedirectsIsPro = SproutBase::$app->config->isEdition('sprout-redirects', Config::EDITION_PRO);
+        $sproutSeoIsPro = SproutBase::$app->config->isEdition('sprout-seo', Config::EDITION_PRO);
 
         return $this->renderTemplate('sprout/redirects/redirects/_edit', [
             'currentSite' => $currentSite,
