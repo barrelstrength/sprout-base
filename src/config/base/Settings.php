@@ -10,13 +10,10 @@ namespace barrelstrength\sproutbase\config\base;
 use Craft;
 use craft\base\Model;
 use craft\errors\SiteNotFoundException;
-use craft\helpers\StringHelper;
 use craft\models\Site;
-use ReflectionClass;
-use ReflectionException;
 
 /**
- * @property array  $settingsNavItem
+ * @property array $settingsNavItem
  * @property string $key
  */
 abstract class Settings extends Model implements SettingsInterface

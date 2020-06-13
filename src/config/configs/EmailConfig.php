@@ -14,6 +14,11 @@ use Craft;
 
 class EmailConfig extends Config
 {
+    public function getKey(): string
+    {
+        return 'email';
+    }
+
     public static function displayName(): string
     {
         return Craft::t('sprout', 'Email');

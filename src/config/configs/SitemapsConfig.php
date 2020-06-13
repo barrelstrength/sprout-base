@@ -13,9 +13,15 @@ use barrelstrength\sproutbase\config\models\settings\SitemapsSettings;
 use barrelstrength\sproutbase\SproutBase;
 use Craft;
 use craft\errors\SiteNotFoundException;
+use craft\helpers\StringHelper;
 
 class SitemapsConfig extends Config
 {
+    public function getKey(): string
+    {
+        return 'sitemaps';
+    }
+
     public static function displayName(): string
     {
         return Craft::t('sprout', 'Sitemaps');

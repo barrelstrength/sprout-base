@@ -10,8 +10,7 @@
 
 {% block actionButton %}
     <div class="buttons">
-        <a class="btn submit add icon {% if not isPro %}sprout-disabled{% endif %}" id="sprout-base-redirects-new-button"
-            href="{{ url('sprout/redirects/new/' ~ currentSite.handle) }}">{{ "New Redirect"|t }}</a>
+        <a class="btn submit add icon {% if not isPro and canCreateRedirects %}sprout-disabled{% endif %}" id="sprout-base-redirects-new-button" href="{{ url('sprout/redirects/new/' ~ currentSite.handle) }}">{{ "New Redirect"|t }}</a>
 
         {% if not isPro %}
             {{ sproutCp.upgradeToProButton({
@@ -31,14 +30,11 @@
 {% endcss %}
 
 {% js %}
-    {% if not isPro %}
+    {% if not isPro and canCreateRedirects %}
         $('#sprout-base-redirects-new-button').click(function(e){
         e.preventDefault();
         })
     {% endif %}
-
-
-
 {% endjs %}
 
 {% block initJs %}

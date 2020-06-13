@@ -7,13 +7,19 @@
 
 namespace barrelstrength\sproutbase\config\configs;
 
-use barrelstrength\sproutbase\migrations\redirects\Install;
 use barrelstrength\sproutbase\config\base\Config;
 use barrelstrength\sproutbase\config\models\settings\RedirectsSettings;
+use barrelstrength\sproutbase\migrations\redirects\Install;
+use barrelstrength\sproutbase\SproutBase;
 use Craft;
 
 class RedirectsConfig extends Config
 {
+    public function getKey(): string
+    {
+        return 'redirects';
+    }
+
     public static function displayName(): string
     {
         return Craft::t('sprout', 'Redirects');
@@ -73,6 +79,16 @@ class RedirectsConfig extends Config
             'sprout/redirects' =>
                 'sprout/redirects/redirects-index-template'
         ];
+    }
+
+    public function setEdition()
+    {
+        $sproutRedirectsIsPro = SproutBase::$app->config->isPluginEdition('sprout-redirects', Config::EDITION_PRO);
+        $sproutSeoIsPro = SproutBase::$app->config->isPluginEdition('sprout-seo', Config::EDITION_PRO);
+
+        if ($sproutSeoIsPro || $sproutRedirectsIsPro) {
+            $this->_edition = Config::EDITION_PRO;
+        }
     }
 }
 

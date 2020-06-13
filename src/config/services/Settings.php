@@ -15,7 +15,6 @@ use barrelstrength\sproutbase\config\models\settings\ControlPanelSettings;
 use barrelstrength\sproutbase\SproutBase;
 use Craft;
 use craft\helpers\ProjectConfig as ProjectConfigHelper;
-use ReflectionException;
 use yii\base\Component;
 use yii\base\ErrorException;
 use yii\base\Exception;
@@ -92,7 +91,6 @@ class Settings extends Component
      *     'sent-email' => new SentEmailSettings,
      *     'sitemaps' => new SitemapsSettings
      * ]
-     * @throws ReflectionException
      */
     public function getSettings($includeFileConfigSettings = true): array
     {
@@ -163,7 +161,6 @@ class Settings extends Component
      * @param bool $includeFileConfigSettings
      *
      * @return BaseSettings
-     * @throws ReflectionException
      */
     public function getSettingsByKey($handle, $includeFileConfigSettings = true): BaseSettings
     {

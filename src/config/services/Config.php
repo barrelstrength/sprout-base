@@ -15,7 +15,6 @@ use Craft;
 use craft\base\Plugin;
 use craft\helpers\ProjectConfig as ProjectConfigHelper;
 use craft\services\Plugins;
-use ReflectionException;
 use yii\base\Component;
 use yii\base\ErrorException;
 use yii\base\Exception;
@@ -67,7 +66,6 @@ class Config extends Component
      *     'sent-email' => SentEmailConfig(),
      *     'sitemaps' => SitemapsConfig()
      * ]
-     * @throws ReflectionException
      */
     public function getConfigs($includeFileSettings = true): array
     {
@@ -81,7 +79,6 @@ class Config extends Component
      * @param bool $includeFileSettings
      *
      * @return BaseConfig
-     * @throws ReflectionException
      */
     public function getConfigByKey(string $handle, $includeFileSettings = true): BaseConfig
     {
@@ -92,8 +89,6 @@ class Config extends Component
 
     /**
      * @param bool $includeFileSettings
-     *
-     * @throws ReflectionException
      */
     private function initConfigs($includeFileSettings = true)
     {
@@ -122,9 +117,9 @@ class Config extends Component
 
                 // Assumes we only have two editions in any given plugin
                 // Takes highest edition if module used in multiple plugins
-                if ($config->getEdition() !== 'pro') {
-                    $config->setEdition($plugin->edition);
-                }
+//                if ($config->getEdition() !== 'pro') {
+                $config->setEdition();
+//                }
 
                 if ($settings = SproutBase::$app->settings->getSettingsByConfig($config)) {
                     $config->setSettings($settings);
@@ -242,7 +237,6 @@ class Config extends Component
 
     /**
      * @return array
-     * @throws ReflectionException
      */
     public function getSproutCpSettings(): array
     {
@@ -361,17 +355,37 @@ class Config extends Component
     /**
      * Check if a plugin is a specific Edition
      *
-     * @param $pluginHandle
-     * @param $edition
+     * @param $handle
+     * @param $targetEdition
      *
      * @return bool
      */
-    public function isEdition($pluginHandle, $edition): bool
+    public function isEdition($handle, $targetEdition): bool
+    {
+        $config = $this->getConfigByKey($handle);
+
+        if (!$config) {
+            return false;
+        }
+
+        $currentEdition = $config->getEdition();
+
+        return $currentEdition === $targetEdition;
+    }
+
+    public function isPluginEdition($pluginHandle, $edition): bool
     {
         /** @var Plugin $plugin */
         $plugin = Craft::$app->plugins->getPlugin($pluginHandle);
 
         return $plugin !== null ? $plugin->is($edition) : false;
+    }
+
+    public function getEdition($handle)
+    {
+        $config = $this->getConfigByKey($handle);
+
+        return $config->getEdition();
     }
 
     private function getDependenciesInUse($pluginHandle): array

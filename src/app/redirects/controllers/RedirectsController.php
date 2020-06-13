@@ -8,6 +8,7 @@
 namespace barrelstrength\sproutbase\app\redirects\controllers;
 
 use barrelstrength\sproutbase\app\redirects\elements\Redirect;
+use barrelstrength\sproutbase\config\base\Config;
 use barrelstrength\sproutbase\SproutBase;
 use Craft;
 use craft\errors\SiteNotFoundException;
@@ -41,12 +42,16 @@ class RedirectsController extends Controller
         $currentSite = Craft::$app->getSites()->getSiteByHandle($siteHandle);
 
         if (!$currentSite) {
-            throw new ForbiddenHttpException('Something went wrong');
+            throw new ForbiddenHttpException('Unable to find site');
         }
+
+        $isPro = SproutBase::$app->config->isEdition('redirects', Config::EDITION_PRO);
+        $canCreateRedirects = SproutBase::$app->redirects->canCreateRedirects();
 
         return $this->renderTemplate('sprout/redirects/redirects/index', [
             'currentSite' => $currentSite,
-            'isPro' => SproutBase::$app->redirects->canCreateRedirects()
+            'isPro' => $isPro,
+            'canCreateRedirects' => $canCreateRedirects
         ]);
     }
 
@@ -121,8 +126,7 @@ class RedirectsController extends Controller
             ]
         ];
 
-        $sproutRedirectsIsPro = SproutBase::$app->config->isEdition('sprout-redirects', Config::EDITION_PRO);
-        $sproutSeoIsPro = SproutBase::$app->config->isEdition('sprout-seo', Config::EDITION_PRO);
+        $isPro = SproutBase::$app->config->isEdition('redirects', Config::EDITION_PRO);
 
         return $this->renderTemplate('sprout/redirects/redirects/_edit', [
             'currentSite' => $currentSite,
@@ -132,7 +136,7 @@ class RedirectsController extends Controller
             'tabs' => $tabs,
             'continueEditingUrl' => $continueEditingUrl,
             'saveAsNewUrl' => $saveAsNewUrl,
-            'isPro' => $sproutSeoIsPro || $sproutRedirectsIsPro
+            'isPro' => $isPro
         ]);
     }
 

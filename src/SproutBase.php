@@ -256,7 +256,6 @@ class SproutBase extends Module
 
     /**
      * @return array
-     * @throws ReflectionException
      */
     public function getUserPermissions(): array
     {

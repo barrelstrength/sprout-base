@@ -13,6 +13,11 @@ use Craft;
 
 class ListsConfig extends Config
 {
+    public function getKey(): string
+    {
+        return 'lists';
+    }
+
     public static function displayName(): string
     {
         return Craft::t('sprout', 'Lists');

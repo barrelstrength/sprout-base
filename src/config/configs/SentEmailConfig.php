@@ -14,6 +14,11 @@ use Craft;
 
 class SentEmailConfig extends Config
 {
+    public function getKey(): string
+    {
+        return 'sent-email';
+    }
+
     public static function displayName(): string
     {
         return Craft::t('sprout', 'Sent Email');

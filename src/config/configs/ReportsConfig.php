@@ -14,6 +14,11 @@ use Craft;
 
 class ReportsConfig extends Config
 {
+    public function getKey(): string
+    {
+        return 'reports';
+    }
+
     public static function displayName(): string
     {
         return Craft::t('sprout', 'Reports');

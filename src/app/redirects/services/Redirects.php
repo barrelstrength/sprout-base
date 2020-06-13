@@ -10,6 +10,7 @@ namespace barrelstrength\sproutbase\app\redirects\services;
 use barrelstrength\sproutbase\app\redirects\elements\Redirect;
 use barrelstrength\sproutbase\app\redirects\enums\RedirectMethods;
 use barrelstrength\sproutbase\app\redirects\records\Redirect as RedirectRecord;
+use barrelstrength\sproutbase\config\base\Config;
 use barrelstrength\sproutbase\config\models\settings\RedirectsSettings;
 use barrelstrength\sproutbase\jobs\PurgeElements;
 use barrelstrength\sproutbase\SproutBase;
@@ -450,41 +451,6 @@ class Redirects extends Component
     }
 
     /**
-     * @return int|string
-     */
-    public function getTotalNon404Redirects()
-    {
-        $count = Redirect::find()
-            ->where('method !=:method', [
-                ':method' => RedirectMethods::PageNotFound
-            ])
-            ->anyStatus()
-            ->count();
-
-        return $count;
-    }
-
-    /**
-     * @param int $plusTotal
-     *
-     * @return bool
-     */
-    public function canCreateRedirects($plusTotal = 0): bool
-    {
-        $sproutRedirectsIsPro = SproutBase::$app->config->isEdition('sprout-redirects', Config::EDITION_PRO);
-        $sproutSeoIsPro = SproutBase::$app->config->isEdition('sprout-seo', Config::EDITION_PRO);
-
-        if (!$sproutSeoIsPro && !$sproutRedirectsIsPro) {
-            $count = SproutBase::$app->redirects->getTotalNon404Redirects();
-            if ($count >= 3 || $plusTotal + $count > 3) {
-                return false;
-            }
-        }
-
-        return true;
-    }
-
-    /**
      * @param                   $absoluteUrl
      * @param RedirectsSettings $settings
      *
@@ -516,10 +482,43 @@ class Redirects extends Component
     }
 
     /**
-     * @param array $excludedIds
-     * @param null  $siteId
-     * @param bool  $force
+     * @param int $newRedirectCount
      *
+     * @return bool
+     */
+    public function canCreateRedirects($newRedirectCount = 0): bool
+    {
+        $isPro = SproutBase::$app->config->isEdition('redirects', Config::EDITION_PRO);
+
+        if (!$isPro) {
+            $currentRedirectCount = $this->getTotalNon404Redirects();
+            if ($currentRedirectCount >= 3 ||
+                $newRedirectCount + $currentRedirectCount > 3) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+    /**
+     * @return int|string
+     */
+    public function getTotalNon404Redirects()
+    {
+        $count = Redirect::find()
+            ->where('method !=:method', [
+                ':method' => RedirectMethods::PageNotFound
+            ])
+            ->anyStatus()
+            ->count();
+
+        return $count;
+    }
+
+    /**
+     * @param array $excludedIds
+     * @param null $siteId
+     * @param bool $force
      */
     public function purge404s($excludedIds = [], $siteId = null, $force = false)
     {

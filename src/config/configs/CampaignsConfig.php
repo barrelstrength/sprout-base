@@ -14,6 +14,11 @@ use Craft;
 
 class CampaignsConfig extends Config
 {
+    public function getKey(): string
+    {
+        return 'campaigns';
+    }
+
     public static function displayName(): string
     {
         return Craft::t('sprout', 'Campaigns');

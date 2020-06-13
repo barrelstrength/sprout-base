@@ -13,6 +13,11 @@ use Craft;
 
 class FieldsConfig extends Config
 {
+    public function getKey(): string
+    {
+        return 'fields';
+    }
+
     public static function displayName(): string
     {
         return Craft::t('sprout', 'Fields');

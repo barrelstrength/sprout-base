@@ -14,6 +14,11 @@ use Craft;
 
 class MetadataConfig extends Config
 {
+    public function getKey(): string
+    {
+        return 'metadata';
+    }
+
     public static function displayName(): string
     {
         return Craft::t('sprout', 'Metadata');

@@ -8,9 +8,6 @@
 namespace barrelstrength\sproutbase\config\base;
 
 use craft\base\Component;
-use craft\helpers\StringHelper;
-use ReflectionClass;
-use ReflectionException;
 
 abstract class Config extends Component implements ConfigInterface
 {
@@ -26,9 +23,9 @@ abstract class Config extends Component implements ConfigInterface
         return $this->_edition;
     }
 
-    public function setEdition($value)
+    public function setEdition()
     {
-        $this->_edition = $value;
+        $this->_edition = 'lite';
     }
 
     /**
@@ -42,18 +39,6 @@ abstract class Config extends Component implements ConfigInterface
     public function setSettings(Settings $settings)
     {
         $this->_settings = $settings;
-    }
-
-    /**
-     * @return string
-     * @throws ReflectionException
-     */
-    public function getKey(): string
-    {
-        $class = new ReflectionClass($this);
-        $baseName = preg_replace('/Config$/', '', $class->getShortName());
-
-        return StringHelper::toKebabCase($baseName);
     }
 
     public function hasControlPanelSettings(): bool

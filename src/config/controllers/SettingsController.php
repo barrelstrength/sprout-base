@@ -16,10 +16,8 @@ use craft\errors\SiteNotFoundException;
 use craft\helpers\UrlHelper;
 use craft\models\Site;
 use craft\web\Controller;
-use ReflectionException;
 use yii\base\ErrorException;
 use yii\base\Exception;
-use yii\base\InvalidConfigException;
 use yii\web\BadRequestHttpException;
 use yii\web\Response;
 
@@ -56,7 +54,6 @@ class SettingsController extends Controller
      *
      * @return Response
      * @throws SiteNotFoundException
-     * @throws ReflectionException
      */
     public function actionEditSettings(
         $settingsTarget = self::SETTINGS_TARGET_PROJECT_CONFIG,
@@ -139,7 +136,6 @@ class SettingsController extends Controller
      * @throws MissingComponentException
      * @throws Exception
      * @throws ErrorException
-     * @throws ReflectionException
      */
     public function actionSaveSettings()
     {
@@ -176,7 +172,6 @@ class SettingsController extends Controller
      * @param array $sproutConfigs
      *
      * @return array
-     * @throws ReflectionException
      */
     protected function buildSubNav(array $sproutConfigs, array $settings, Site $currentSite = null): array {
 

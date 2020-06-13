@@ -15,6 +15,11 @@ use Craft;
 
 class FormsConfig extends Config
 {
+    public function getKey(): string
+    {
+        return 'forms';
+    }
+
     public static function displayName(): string
     {
         return Craft::t('sprout', 'Forms');
