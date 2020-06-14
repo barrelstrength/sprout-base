@@ -12,6 +12,7 @@ use barrelstrength\sproutbase\app\email\models\SimpleRecipient;
 use barrelstrength\sproutbase\app\email\models\SimpleRecipientList;
 use barrelstrength\sproutbase\app\sentemail\elements\SentEmail;
 use barrelstrength\sproutbase\app\sentemail\services\SentEmails;
+use barrelstrength\sproutbase\config\base\Config;
 use barrelstrength\sproutbase\SproutBase;
 use Craft;
 use craft\mail\Mailer;
@@ -41,8 +42,10 @@ class SentEmailController extends Controller
     {
         $this->requirePermission('sprout:sentEmail:viewSentEmail');
 
+        $isPro = SproutBase::$app->config->isEdition('sent-email', Config::EDITION_PRO);
+
         return $this->renderTemplate('sprout/sent-email/sent-email/index', [
-            'isPro' => SproutBase::$app->settings->isPro()
+            'isPro' => $isPro
         ]);
     }
 
@@ -207,9 +210,11 @@ class SentEmailController extends Controller
         $emailId = Craft::$app->getRequest()->getBodyParam('emailId');
         $sentEmail = Craft::$app->elements->getElementById($emailId, SentEmail::class);
 
+        $isPro = SproutBase::$app->config->isEdition('sent-email', Config::EDITION_PRO);
+
         $content = Craft::$app->getView()->renderTemplate('sprout/sent-email/_modals/prepare-resend-email', [
             'sentEmail' => $sentEmail,
-            'isPro' => SproutBase::$app->settings->isPro()
+            'isPro' => $isPro
         ]);
 
         $response = new ModalResponse();

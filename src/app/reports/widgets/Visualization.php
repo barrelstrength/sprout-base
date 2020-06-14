@@ -97,36 +97,28 @@ class Visualization extends Widget
             $dataSource = $report->getDataSource();
         }
 
-        if ($report instanceof Report && $dataSource instanceof DataSource) {
-            $reportIndexUrl = UrlHelper::cpUrl('sprout/reports/view/'.$report->id);
+        $labels = $dataSource->getDefaultLabels($report);
+        $values = $dataSource->getResults($report);
 
-            $labels = $dataSource->getDefaultLabels($report);
-            $values = $dataSource->getResults($report);
+        if (empty($labels) && !empty($values)) {
+            $firstItemInArray = reset($values);
+            $labels = array_keys($firstItemInArray);
+        }
 
-            if (empty($labels) && !empty($values)) {
-                $firstItemInArray = reset($values);
-                $labels = array_keys($firstItemInArray);
-            }
+        $settings = json_decode($report->settings, true);
 
-            $settings = json_decode($report->settings, true);
+        $visualization = false;
 
-            if (array_key_exists('visualization', $settings)) {
-                $visualization = new $settings['visualization']['type'];
-                $visualization->setSettings($settings['visualization']);
-                $visualization->setLabels($labels);
-                $visualization->setValues($values);
-            } else {
-                $visualization = false;
-            }
-        } else {
-            $visualization = false;
-            $reportIndexUrl = '';
+        if (array_key_exists('visualization', $settings)) {
+            $visualization = new $settings['visualization']['type'];
+            $visualization->setSettings($settings['visualization']);
+            $visualization->setLabels($labels);
+            $visualization->setValues($values);
         }
 
         return Craft::$app->getView()->renderTemplate('sprout/reports/_components/widgets/Visualizations/body', [
             'title' => 'report title',
-            'visualization' => $visualization,
-            'reportIndexUrl' => $reportIndexUrl
+            'visualization' => $visualization
         ]);
     }
 

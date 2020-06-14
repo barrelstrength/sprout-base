@@ -10,6 +10,7 @@ namespace barrelstrength\sproutbase\config\configs;
 use barrelstrength\sproutbase\config\base\Config;
 use barrelstrength\sproutbase\config\models\settings\MetadataSettings;
 use barrelstrength\sproutbase\migrations\metadata\Install;
+use barrelstrength\sproutbase\SproutBase;
 use Craft;
 
 class MetadataConfig extends Config
@@ -73,7 +74,6 @@ class MetadataConfig extends Config
     public function getCpUrlRules(): array
     {
         return [
-            // Globals
             'sprout/metadata/globals/<selectedTabHandle:[^\/]+>/<siteHandle:[^\/]+>' =>
                 'sprout/global-metadata/edit-global-metadata',
             'sprout/metadata/globals/<selectedTabHandle:[^\/]+>' =>
@@ -91,6 +91,15 @@ class MetadataConfig extends Config
                 ]
             ],
         ];
+    }
+
+    public function setEdition()
+    {
+        $sproutSeoIsPro = SproutBase::$app->config->isPluginEdition('sprout-seo', Config::EDITION_PRO);
+
+        if ($sproutSeoIsPro) {
+            $this->_edition = Config::EDITION_PRO;
+        }
     }
 }
 

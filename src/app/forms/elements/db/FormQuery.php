@@ -250,7 +250,7 @@ class FormQuery extends ElementQuery
             $this->subQuery->andWhere(Db::parseParam('sproutforms_forms.name', $this->name));
         }
 
-        $isPro = SproutBase::$app->config->isEdition('sprout-forms', Config::EDITION_PRO);
+        $isPro = SproutBase::$app->config->isEdition('forms', Config::EDITION_PRO);
 
         // Limit Sprout Forms Lite to a single form
         if (!$isPro) {

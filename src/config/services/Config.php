@@ -381,7 +381,7 @@ class Config extends Component
         return $plugin !== null ? $plugin->is($edition) : false;
     }
 
-    public function getEdition($handle)
+    public function getEdition($handle): string
     {
         $config = $this->getConfigByKey($handle);
 

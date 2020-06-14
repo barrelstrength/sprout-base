@@ -15,6 +15,7 @@ use Craft;
 use craft\errors\ElementNotFoundException;
 use craft\errors\MissingComponentException;
 use craft\helpers\Json;
+use craft\helpers\UrlHelper;
 use craft\web\Controller;
 use craft\web\Request;
 use Throwable;
@@ -57,7 +58,7 @@ class ReportsController extends Controller
 
             $newReportOptions[] = [
                 'name' => $dataSource::displayName(),
-                'url' => $dataSource->getUrl($dataSource->id.'/new')
+                'url' => UrlHelper::cpUrl('sprout/reports/'.$dataSource->id.'/new')
             ];
         }
 
@@ -102,8 +103,6 @@ class ReportsController extends Controller
 
         $labels = $dataSource->getDefaultLabels($report);
 
-        $reportIndexUrl = $dataSource->getUrl($report->groupId);
-
         $values = $dataSource->getResults($report);
 
         if (empty($labels) && !empty($values)) {
@@ -139,7 +138,6 @@ class ReportsController extends Controller
             'dataSource' => $dataSource,
             'labels' => $labels,
             'values' => $values,
-            'reportIndexUrl' => $reportIndexUrl,
             'redirectUrl' => 'sprout/reports/view/'.$reportId,
 
             // @todo - migration, review permission
@@ -181,8 +179,6 @@ class ReportsController extends Controller
         if (!$dataSource) {
             throw new NotFoundHttpException('Data Source not found.');
         }
-
-        $reportIndexUrl = $dataSource->getUrl($reportElement->groupId);
 
         $groups = SproutBase::$app->reportGroups->getReportGroups();
 
@@ -274,9 +270,8 @@ class ReportsController extends Controller
         return $this->renderTemplate('sprout/reports/reports/_edit', [
             'report' => $reportElement,
             'dataSource' => $dataSource,
-            'reportIndexUrl' => $reportIndexUrl,
             'groups' => $groups,
-            'continueEditingUrl' => $dataSource->getUrl("/$dataSourceId/edit/{id}"),
+            'continueEditingUrl' => UrlHelper::cpUrl('sprout/reports/'.$dataSourceId.'/edit/{id}'),
 
             // @todo - migration, review permission
             'editReportsPermission' => $currentUser->can('sprout:reports:editReports'),

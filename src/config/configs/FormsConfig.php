@@ -11,6 +11,7 @@ use barrelstrength\sproutbase\migrations\forms\Install;
 use barrelstrength\sproutbase\config\base\Config;
 use barrelstrength\sproutbase\config\controllers\SettingsController;
 use barrelstrength\sproutbase\config\models\settings\FormsSettings;
+use barrelstrength\sproutbase\SproutBase;
 use Craft;
 
 class FormsConfig extends Config
@@ -121,6 +122,15 @@ class FormsConfig extends Config
                 ]
             ]
         ];
+    }
+
+    public function setEdition()
+    {
+        $sproutFormsIsPro = SproutBase::$app->config->isPluginEdition('sprout-forms', Config::EDITION_PRO);
+
+        if ($sproutFormsIsPro) {
+            $this->_edition = Config::EDITION_PRO;
+        }
     }
 }
 

@@ -10,6 +10,7 @@ namespace barrelstrength\sproutbase\config\configs;
 use barrelstrength\sproutbase\migrations\reports\Install;
 use barrelstrength\sproutbase\config\base\Config;
 use barrelstrength\sproutbase\config\models\settings\ReportsSettings;
+use barrelstrength\sproutbase\SproutBase;
 use Craft;
 
 class ReportsConfig extends Config
@@ -96,6 +97,15 @@ class ReportsConfig extends Config
             'sprout/reports/data-sources' =>
                 'sprout/data-sources/data-sources-index-template'
         ];
+    }
+
+    public function setEdition()
+    {
+        $sproutReportsIsPro = SproutBase::$app->config->isPluginEdition('sprout-reports', Config::EDITION_STANDARD);
+
+        if ($sproutReportsIsPro) {
+            $this->_edition = Config::EDITION_PRO;
+        }
     }
 }
 

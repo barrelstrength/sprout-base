@@ -114,20 +114,6 @@ abstract class DataSource extends SavableComponent implements DataSourceInterfac
     }
 
     /**
-     * Returns the CP Edit URL for the given data source used to create Reports
-     *
-     * @param null $append
-     *
-     * @return string
-     */
-    public function getUrl($append = null): string
-    {
-        $appendedUrl = ltrim($append, '/');
-
-        return UrlHelper::cpUrl('sprout/reports/'.$appendedUrl);
-    }
-
-    /**
      * Allow a user to toggle the Allow Html setting.
      *
      * @return bool

@@ -70,7 +70,7 @@
                             <span class="shortcut">⌘S</span></a>
                     </li>
                     <li><a class="formsubmit"
-                            data-redirect="{{ dataSource.getUrl(dataSource.id ~ '/new')|hash }}">
+                            data-redirect="{{ cpUrl('sprout/reports/'~dataSource.id~'/new')|hash }}">
                             {{ "Save and add another report"|t('sprout') }}</a>
                     </li>
                 </ul>

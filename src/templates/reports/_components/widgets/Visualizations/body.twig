@@ -7,7 +7,9 @@
             }
         }
     })|raw }}
-    <a href="{{ reportIndexUrl }}">{{ "View report"|t('sprout') }}</a>
+    <a href="{{ cpUrl('sprout/reports/view/'~report.id) }}">
+        {{ "View report"|t('sprout') }}
+    </a>
 {% else %}
     {{ "Visualization not found"|t('sprout') }}
 {% endif %}

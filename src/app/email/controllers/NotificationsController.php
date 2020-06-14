@@ -9,6 +9,7 @@ use barrelstrength\sproutbase\app\email\elements\NotificationEmail;
 use barrelstrength\sproutbase\app\email\emailtemplates\BasicTemplates;
 use barrelstrength\sproutbase\app\email\mailers\DefaultMailer;
 use barrelstrength\sproutbase\app\email\models\ModalResponse;
+use barrelstrength\sproutbase\config\base\Config;
 use barrelstrength\sproutbase\SproutBase;
 use Craft;
 use craft\base\Plugin;
@@ -33,11 +34,11 @@ use yii\web\Response;
 
 class NotificationsController extends Controller
 {
-    private $isSproutEmailPro;
+    private $isPro;
 
     public function init()
     {
-        $this->isSproutEmailPro = SproutBase::$app->config->isEdition('sprout-email', Config::EDITION_PRO);
+        $this->isPro = SproutBase::$app->config->isEdition('email', Config::EDITION_PRO);
     }
 
     /**
@@ -49,7 +50,7 @@ class NotificationsController extends Controller
         $this->requirePermission('sprout:email:viewNotifications');
 
         return $this->renderTemplate('sprout/email/notifications/index', [
-            'isPro' => $this->isSproutEmailPro
+            'isPro' => $this->isPro
         ]);
     }
 
@@ -78,7 +79,7 @@ class NotificationsController extends Controller
             'emailId' => $emailId,
             'notificationEmail' => $notificationEmail,
             'isNewNotificationEmail' => $isNewNotificationEmail,
-            'isPro' => $this->isSproutEmailPro,
+            'isPro' => $this->isPro,
         ]);
     }
 
@@ -166,7 +167,7 @@ class NotificationsController extends Controller
             'tabs' => $tabs,
             'showPreviewBtn' => $showPreviewBtn,
             'shareUrl' => $shareUrl,
-            'isPro' => $this->isSproutEmailPro
+            'isPro' => $this->isPro
         ]);
     }
 

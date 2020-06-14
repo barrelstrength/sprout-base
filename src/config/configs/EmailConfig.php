@@ -10,6 +10,7 @@ namespace barrelstrength\sproutbase\config\configs;
 use barrelstrength\sproutbase\migrations\email\Install;
 use barrelstrength\sproutbase\config\base\Config;
 use barrelstrength\sproutbase\config\models\settings\EmailSettings;
+use barrelstrength\sproutbase\SproutBase;
 use Craft;
 
 class EmailConfig extends Config
@@ -86,6 +87,15 @@ class EmailConfig extends Config
 //                'route' => 'sprout/sent-email/preview'
 //            ],
         ];
+    }
+
+    public function setEdition()
+    {
+        $sproutEmailIsPro = SproutBase::$app->config->isPluginEdition('sprout-email', Config::EDITION_PRO);
+
+        if ($sproutEmailIsPro) {
+            $this->_edition = Config::EDITION_PRO;
+        }
     }
 }
 

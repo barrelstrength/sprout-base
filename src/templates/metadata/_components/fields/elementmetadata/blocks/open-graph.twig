@@ -1,7 +1,7 @@
 {% import "_includes/forms" as forms %}
 {% import "sprout/metadata/_includes/sproutseo" as sproutMetaCp %}
 
-{% set sproutSeoApp = craft.app.getModule('sprout-seo').app %}
+{% set sproutBaseApp = craft.app.getModule('sprout').app %}
 
 {% set transformOptions = sprout.seo.getTransforms() %}
 
@@ -39,7 +39,7 @@
             value: meta.ogDescription
         }) }}
 
-        {% set ogImageId = sproutSeoApp.optimize.getImageId(meta.ogImage ?? null) %}
+        {% set ogImageId = sproutBaseApp.optimize.getImageId(meta.ogImage ?? null) %}
         {% if ogImageId %}
             {% set ogImageElement = [craft.app.elements.getElementById(ogImageId)] %}
         {% else %}

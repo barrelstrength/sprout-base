@@ -102,7 +102,7 @@ class GlobalMetadataController extends Controller
         $countryInputHtml = $addressFormatter->getCountryInputHtml();
         $addressFormHtml = $addressFormatter->getAddressFormHtml();
 
-        $isPro = SproutBase::$app->config->isEdition('sprout-seo', Config::EDITION_PRO);
+        $isPro = SproutBase::$app->config->isEdition('metadata', Config::EDITION_PRO);
 
         $addressJson = $address ? Json::encode($address) : null;
 

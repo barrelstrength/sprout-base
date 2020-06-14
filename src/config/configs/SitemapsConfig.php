@@ -68,13 +68,11 @@ class SitemapsConfig extends Config
     {
         return [
             // Sitemaps
-            'sprout/sitemaps/sitemaps/edit/<sitemapSectionId:\d+>/<siteHandle:[^\/]+>' =>
+            'sprout/sitemaps/edit/<sitemapSectionId:\d+>/<siteHandle:[^\/]+>' =>
                 'sprout/sitemaps/sitemap-edit-template',
-            'sprout/sitemaps/sitemaps/new/<siteHandle:[^\/]+>' =>
+            'sprout/sitemaps/new/<siteHandle:[^\/]+>' =>
                 'sprout/sitemaps/sitemap-edit-template',
-            'sprout/sitemaps/sitemaps/<siteHandle:[^\/]+>' =>
-                'sprout/sitemaps/sitemap-index-template',
-            'sprout/sitemaps/sitemaps' =>
+            'sprout/sitemaps/<siteHandle:[^\/]+>' =>
                 'sprout/sitemaps/sitemap-index-template',
             'sprout/sitemaps' =>
                 'sprout/sitemaps/sitemap-index-template'
@@ -98,13 +96,12 @@ class SitemapsConfig extends Config
      * - sitemap-custom-pages.xml
      *
      * @return array
-     * @throws SiteNotFoundException
      */
     public function getSiteUrlRules(): array
     {
         $settings = SproutBase::$app->settings->getSettingsByKey('sitemaps');
 
-        if ($settings->getIsEnabled()) {
+        if ($this->getEdition() === Config::EDITION_PRO && $settings->getIsEnabled()) {
             return [
                 'sitemap-<sitemapKey:.*>-<pageNumber:\d+>.xml' =>
                     'sprout/xml-sitemap/render-xml-sitemap',
@@ -114,6 +111,16 @@ class SitemapsConfig extends Config
         }
 
         return [];
+    }
+
+    public function setEdition()
+    {
+        $sproutSitemapsIsPro = SproutBase::$app->config->isPluginEdition('sprout-sitemaps', Config::EDITION_STANDARD);
+        $sproutSeoIsPro = SproutBase::$app->config->isPluginEdition('sprout-seo', Config::EDITION_PRO);
+
+        if ($sproutSeoIsPro || $sproutSitemapsIsPro) {
+            $this->_edition = Config::EDITION_PRO;
+        }
     }
 }
 

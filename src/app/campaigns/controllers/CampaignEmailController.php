@@ -8,6 +8,7 @@ use barrelstrength\sproutbase\app\campaigns\models\CampaignType;
 use barrelstrength\sproutbase\app\email\base\Mailer;
 use barrelstrength\sproutbase\app\email\mailers\DefaultMailer;
 use barrelstrength\sproutbase\app\email\models\ModalResponse;
+use barrelstrength\sproutbase\config\base\Config;
 use barrelstrength\sproutbase\SproutBase;
 use Craft;
 use craft\base\ElementInterface;
@@ -46,8 +47,10 @@ class CampaignEmailController extends Controller
     {
 //        $this->requirePermission('sprout:sentEmail:viewSentEmail');
 
+        $isPro = SproutBase::$app->config->isEdition('campaigns', Config::EDITION_PRO);
+
         return $this->renderTemplate('sprout/campaigns/campaigns/index', [
-//            'isPro' => SproutBase::$app->settings->isPro()
+            'isPro' => $isPro
         ]);
     }
 

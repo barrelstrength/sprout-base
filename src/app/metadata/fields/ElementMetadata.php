@@ -181,7 +181,7 @@ class ElementMetadata extends Field
         Craft::$app->getView()->registerAssetBundle(MetadataAsset::class);
         Craft::$app->getView()->registerAssetBundle(SelectOtherFieldAsset::class);
 
-        $isPro = SproutBase::$app->config->isEdition('sprout-seo', Config::EDITION_PRO);
+        $isPro = SproutBase::$app->config->isEdition('metadata', Config::EDITION_PRO);
 
         return Craft::$app->view->renderTemplate('sprout/metadata/_components/fields/elementmetadata/settings', [
             'fieldId' => $this->id,
@@ -241,7 +241,7 @@ class ElementMetadata extends Field
      */
     public function defineRules(): array
     {
-        $isPro = SproutBase::$app->config->isEdition('sprout-seo', Config::EDITION_PRO);
+        $isPro = SproutBase::$app->config->isEdition('metadata', Config::EDITION_PRO);
         $metadataFieldCount = (int)SproutBase::$app->elementMetadata->getMetadataFieldCount();
 
         $theFirstMetadataField = !$this->id && $metadataFieldCount === 0;

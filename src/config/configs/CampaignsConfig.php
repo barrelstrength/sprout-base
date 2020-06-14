@@ -10,6 +10,7 @@ namespace barrelstrength\sproutbase\config\configs;
 use barrelstrength\sproutbase\config\base\Config;
 use barrelstrength\sproutbase\config\models\settings\CampaignsSettings;
 use barrelstrength\sproutbase\migrations\campaigns\Install;
+use barrelstrength\sproutbase\SproutBase;
 use Craft;
 
 class CampaignsConfig extends Config
@@ -87,6 +88,16 @@ class CampaignsConfig extends Config
                 'template' => 'sprout/email/_special/preview'
             ]
         ];
+    }
+
+    public function setEdition()
+    {
+        $sproutEmailIsPro = SproutBase::$app->config->isPluginEdition('sprout-email', Config::EDITION_PRO);
+        $sproutCampaignsIsPro = SproutBase::$app->config->isPluginEdition('sprout-campaigns', Config::EDITION_PRO);
+
+        if ($sproutEmailIsPro || $sproutCampaignsIsPro) {
+            $this->_edition = Config::EDITION_PRO;
+        }
     }
 }
 

@@ -196,7 +196,7 @@ class Optimize extends Component
             $elementMetadataAttributes = SproutBase::$app->elementMetadata->getRawMetadataFromElement($this->element);
         }
 
-        $isPro = SproutBase::$app->config->isEdition('sprout-seo', Config::EDITION_PRO);
+        $isPro = SproutBase::$app->config->isEdition('metadata', Config::EDITION_PRO);
 
         // Only allow Template Overrides if using Pro Edition
         if ($isPro && $this->templateMetadata) {
@@ -339,7 +339,7 @@ class Optimize extends Component
 
         Craft::$app->view->setTemplatesPath($sproutSeoTemplatesPath);
 
-        $isPro = SproutBase::$app->config->isEdition('sprout-seo', Config::EDITION_PRO);
+        $isPro = SproutBase::$app->config->isEdition('metadata', Config::EDITION_PRO);
 
         $output = Craft::$app->view->renderTemplate('templates/_special/metadata', [
             'metadata' => $metadata,

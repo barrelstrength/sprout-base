@@ -75,7 +75,7 @@ class EntriesController extends BaseController
             return Craft::$app->getResponse()->redirect(UrlHelper::cpUrl('sprout/forms'));
         }
 
-        $isPro = SproutBase::$app->config->isEdition('sprout-forms', Config::EDITION_PRO);
+        $isPro = SproutBase::$app->config->isEdition('forms', Config::EDITION_PRO);
 
         return $this->renderTemplate('sprout/forms/entries/index', [
             'isPro' => $isPro

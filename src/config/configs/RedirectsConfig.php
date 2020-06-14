@@ -65,7 +65,6 @@ class RedirectsConfig extends Config
     public function getCpUrlRules(): array
     {
         return [
-            // Redirects
             'sprout/redirects/edit/<redirectId:\d+>/<siteHandle:[^\/]+>' =>
                 'sprout/redirects/edit-redirect-template',
             'sprout/redirects/edit/<redirectId:\d+>' =>

@@ -897,7 +897,7 @@ class Forms extends Component
      */
     public function canCreateForm(): bool
     {
-        $isPro = SproutBase::$app->config->isEdition('sprout-forms', Config::EDITION_PRO);
+        $isPro = SproutBase::$app->config->isEdition('forms', Config::EDITION_PRO);
 
         if (!$isPro) {
             $forms = $this->getAllForms();
