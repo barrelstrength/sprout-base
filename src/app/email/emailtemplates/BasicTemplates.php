@@ -7,9 +7,6 @@ use Craft;
 
 class BasicTemplates extends EmailTemplates
 {
-    /**
-     * @return string
-     */
     public function getName(): string
     {
         return Craft::t('sprout', 'Basic Notification (Sprout Email)');
@@ -17,12 +14,9 @@ class BasicTemplates extends EmailTemplates
 
     public function getTemplateRoot(): string
     {
-        return Craft::getAlias('@sproutbase/app/email/templates');
+        return Craft::getAlias('@sproutbase/templates/notifications');
     }
 
-    /**
-     * @return string
-     */
     public function getPath(): string
     {
         return '_components/emailtemplates/basic';

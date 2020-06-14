@@ -183,7 +183,7 @@ class NotificationEmailEvents extends Component
             }
         }
 
-        $settings = SproutBase::$app->settings->getSettingsByKey('email');
+        $settings = SproutBase::$app->settings->getSettingsByKey('notifications');
 
         if (!$settings->getIsEnabled()) {
             return false;

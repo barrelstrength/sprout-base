@@ -178,7 +178,7 @@ abstract class EmailElement extends Element
         // Set our default
         $emailTemplates = '';
 
-        $settings = SproutBase::$app->settings->getSettingsByKey('email');
+        $settings = SproutBase::$app->settings->getSettingsByKey('notifications');
 
         // Allow our settings to override our default
         if ($settings->emailTemplateId) {

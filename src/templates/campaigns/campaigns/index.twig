@@ -1,4 +1,4 @@
-{% extends "sprout/email/_layouts/elementindex" %}
+{% extends "sprout/notifications/_layouts/elementindex" %}
 {% set title = "Campaign Email"|t('sprout') %}
 {% set elementType = 'barrelstrength\\sproutbase\\app\\campaigns\\elements\\CampaignEmail' %}
 
@@ -38,6 +38,6 @@
 
     {{ parent() }}
 
-    {% include "sprout/email/_modals/base" %}
+    {% include "sprout/notifications/_modals/base" %}
 
 {% endblock %}

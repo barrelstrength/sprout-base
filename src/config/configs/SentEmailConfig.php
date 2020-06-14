@@ -32,7 +32,7 @@ class SentEmailConfig extends Config
 
     public function getConfigGroup()
     {
-        return new EmailConfig();
+        return new NotificationsConfig();
     }
 
     public function createSettingsModel()

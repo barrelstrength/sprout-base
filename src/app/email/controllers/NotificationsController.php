@@ -38,7 +38,7 @@ class NotificationsController extends Controller
 
     public function init()
     {
-        $this->isPro = SproutBase::$app->config->isEdition('email', Config::EDITION_PRO);
+        $this->isPro = SproutBase::$app->config->isEdition('notifications', Config::EDITION_PRO);
     }
 
     /**
@@ -49,7 +49,7 @@ class NotificationsController extends Controller
     {
         $this->requirePermission('sprout:email:viewNotifications');
 
-        return $this->renderTemplate('sprout/email/notifications/index', [
+        return $this->renderTemplate('sprout/notifications/notifications/index', [
             'isPro' => $this->isPro
         ]);
     }
@@ -75,7 +75,7 @@ class NotificationsController extends Controller
             }
         }
 
-        return $this->renderTemplate('sprout/email/notifications/_editFieldLayout', [
+        return $this->renderTemplate('sprout/notifications/notifications/_editFieldLayout', [
             'emailId' => $emailId,
             'notificationEmail' => $notificationEmail,
             'isNewNotificationEmail' => $isNewNotificationEmail,
@@ -161,7 +161,7 @@ class NotificationsController extends Controller
 
         $tabs = $notificationEmail->getFieldLayoutTabs() ?: $tabs;
 
-        return $this->renderTemplate('sprout/email/notifications/_edit', [
+        return $this->renderTemplate('sprout/notifications/notifications/_edit', [
             'notificationEmail' => $notificationEmail,
             'events' => $events,
             'tabs' => $tabs,
@@ -183,7 +183,7 @@ class NotificationsController extends Controller
 
         $email = Craft::$app->getElements()->getElementById($emailId, NotificationEmail::class);
 
-        return $this->renderTemplate('sprout/email/_preview/preview-body', [
+        return $this->renderTemplate('sprout/notifications/_preview/preview-body', [
             'email' => $email,
             'emailId' => $emailId,
             'htmlBody' => null,
@@ -416,7 +416,7 @@ class NotificationsController extends Controller
 
         if (empty(trim($recipients))) {
             return $this->asJson(
-                ModalResponse::createErrorModalResponse('sprout/email/_modals/response', [
+                ModalResponse::createErrorModalResponse('sprout/notifications/_modals/response', [
                     'email' => $notificationEmail,
                     'message' => Craft::t('sprout', 'Add at least one recipient.')
                 ])
@@ -432,7 +432,7 @@ class NotificationsController extends Controller
 
         if (!$event) {
             return $this->asJson(
-                ModalResponse::createErrorModalResponse('sprout/email/_modals/response', [
+                ModalResponse::createErrorModalResponse('sprout/notifications/_modals/response', [
                     'email' => $notificationEmail,
                     'message' => Craft::t('sprout', 'Unable to find Notification Email event.')
                 ])
@@ -455,7 +455,7 @@ class NotificationsController extends Controller
             }
 
             return $this->asJson(
-                ModalResponse::createErrorModalResponse('sprout/email/_modals/response', [
+                ModalResponse::createErrorModalResponse('sprout/notifications/_modals/response', [
                     'email' => $notificationEmail,
                     'message' => Craft::t('sprout', 'Recipient email addresses do not validate: {invalidEmails}', [
                         'invalidEmails' => implode(', ', $invalidEmails)
@@ -467,7 +467,7 @@ class NotificationsController extends Controller
         try {
             if (!$mailer->sendNotificationEmail($notificationEmail)) {
                 return $this->asJson(
-                    ModalResponse::createErrorModalResponse('sprout/email/_modals/response', [
+                    ModalResponse::createErrorModalResponse('sprout/notifications/_modals/response', [
                         'email' => $notificationEmail,
                         'message' => Craft::t('sprout', 'Unable to send Test Notification Email')
                     ])
@@ -475,7 +475,7 @@ class NotificationsController extends Controller
             }
         } catch (\Exception $exception) {
             return $this->asJson(
-                ModalResponse::createErrorModalResponse('sprout/email/_modals/response', [
+                ModalResponse::createErrorModalResponse('sprout/notifications/_modals/response', [
                     'email' => $notificationEmail,
                     'message' => $exception->getMessage()
                 ])
@@ -484,7 +484,7 @@ class NotificationsController extends Controller
 
 
         return $this->asJson(
-            ModalResponse::createModalResponse('sprout/email/_modals/response', [
+            ModalResponse::createModalResponse('sprout/notifications/_modals/response', [
                 'email' => $notificationEmail,
                 'message' => Craft::t('sprout', 'Test Notification Email sent.')
             ])

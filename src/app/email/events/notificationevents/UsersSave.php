@@ -101,7 +101,7 @@ class UsersSave extends NotificationEvent
             $this->groups = $this->getAllGroups();
         }
 
-        return Craft::$app->getView()->renderTemplate('sprout/email/_components/events/save-user', [
+        return Craft::$app->getView()->renderTemplate('sprout/notifications/_components/events/save-user', [
             'event' => $this
         ]);
     }

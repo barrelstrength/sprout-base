@@ -1,4 +1,4 @@
-{% extends "sprout/email/_layouts/elementindex" %}
+{% extends "sprout/notifications/_layouts/elementindex" %}
 {% import "sprout/config/_includes/sproutcp" as sproutCp %}
 
 {% do view.registerAssetBundle("barrelstrength\\sproutbase\\web\\assetbundles\\sproutcp\\SproutCpAsset") %}
@@ -27,6 +27,6 @@
 
     {{ parent() }}
 
-    {% include "sprout/email/_modals/base" %}
+    {% include "sprout/notifications/_modals/base" %}
 
 {% endblock %}

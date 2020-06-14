@@ -32,7 +32,7 @@ class CampaignsConfig extends Config
 
     public function getConfigGroup()
     {
-        return new EmailConfig();
+        return new NotificationsConfig();
     }
 
     public function createSettingsModel()
@@ -84,8 +84,8 @@ class CampaignsConfig extends Config
 
             // @todo - migration break out into 'messages' module that
             //         handles messages and previewing them
-            'sprout/email/preview/<emailId:\d+>' => [
-                'template' => 'sprout/email/_special/preview'
+            'sprout/notifications/preview/<emailId:\d+>' => [
+                'template' => 'sprout/notifications/_special/preview'
             ]
         ];
     }

@@ -81,7 +81,7 @@ class Settings extends Component
      * @return array [
      *     'campaigns' => new CampaignsSetting,
      *     'control-panel' => new ControlPanelSettings,
-     *     'email' => new EmailSettings,
+     *     'notifications' => new NotificationsSettings,
      *     'fields' => new FieldsSettings,
      *     'forms' => new FormsSettings,
      *     'lists' => new ListsSettings,
@@ -147,7 +147,7 @@ class Settings extends Component
      * @param $handle = [
      *     'campaigns',
      *     'control-panel',
-     *     'email'
+     *     'notifications'
      *     'fields',
      *     'forms',
      *     'lists',

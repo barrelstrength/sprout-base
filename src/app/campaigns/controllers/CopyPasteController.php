@@ -35,7 +35,7 @@ class CopyPasteController extends Controller
         $campaignEmail->dateSent = DateTimeHelper::currentUTCDateTime();
 
         if (SproutBase::$app->campaignEmails->saveCampaignEmail($campaignEmail)) {
-            $html = Craft::$app->getView()->renderTemplate('sprout/email/_modals/response', [
+            $html = Craft::$app->getView()->renderTemplate('sprout/notifications/_modals/response', [
                 'success' => true,
                 'email' => $campaignEmail,
                 'message' => Craft::t('sprout', 'Email marked as sent.')
@@ -47,7 +47,7 @@ class CopyPasteController extends Controller
             ]);
         }
 
-        $html = Craft::$app->getView()->renderTemplate('sprout/email/_modals/response', [
+        $html = Craft::$app->getView()->renderTemplate('sprout/notifications/_modals/response', [
             'success' => true,
             'email' => $campaignEmail,
             'message' => Craft::t('sprout', 'Unable to mark email as sent.')

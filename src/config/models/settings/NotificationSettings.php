@@ -12,7 +12,7 @@ use barrelstrength\sproutbase\config\base\Settings;
 use barrelstrength\sproutbase\config\controllers\SettingsController;
 use Craft;
 
-class EmailSettings extends Settings
+class NotificationSettings extends Settings
 {
     /**
      * @var null
@@ -29,12 +29,12 @@ class EmailSettings extends Settings
         return [
             'mailers' => [
                 'label' => Craft::t('sprout', 'Mailers'),
-                'template' => 'sprout/email/settings/mailers',
+                'template' => 'sprout/notifications/settings/mailers',
                 'settingsTarget' => SettingsController::SETTINGS_TARGET_DB
             ],
             'notifications' => [
                 'label' => Craft::t('sprout', 'Notifications'),
-                'template' => 'sprout/email/settings/notifications'
+                'template' => 'sprout/notifications/settings/notifications'
             ]
         ];
     }

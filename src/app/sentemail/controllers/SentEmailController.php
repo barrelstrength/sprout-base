@@ -73,7 +73,7 @@ class SentEmailController extends Controller
 
         if (!$recipients) {
             return $this->asJson(
-                ModalResponse::createErrorModalResponse('sprout/email/_modals/response', [
+                ModalResponse::createErrorModalResponse('sprout/notifications/_modals/response', [
                     'email' => $sentEmail,
                     'message' => Craft::t('sprout', 'A recipient email address is required')
                 ])
@@ -105,7 +105,7 @@ class SentEmailController extends Controller
             }
 
             return $this->asJson(
-                ModalResponse::createErrorModalResponse('sprout/email/_modals/response', [
+                ModalResponse::createErrorModalResponse('sprout/notifications/_modals/response', [
                     'email' => $sentEmail,
                     'message' => Craft::t('sprout', 'Invalid email address(es) provided: {invalidEmails}', [
                         'invalidEmails' => implode(', ', $invalidEmails)
@@ -170,7 +170,7 @@ class SentEmailController extends Controller
 
             if (!empty($processedRecipients)) {
                 $response = ModalResponse::createModalResponse(
-                    'sprout/email/_modals/response',
+                    'sprout/notifications/_modals/response',
                     [
                         'email' => $sentEmail,
                         'message' => Craft::t('sprout', 'Email sent successfully.')
@@ -182,7 +182,7 @@ class SentEmailController extends Controller
 
             return true;
         } catch (\Exception $e) {
-            $response = ModalResponse::createErrorModalResponse('sprout/email/_modals/response', [
+            $response = ModalResponse::createErrorModalResponse('sprout/notifications/_modals/response', [
                 'email' => $sentEmail,
                 'message' => Craft::t('sprout', $e->getMessage()),
             ]);

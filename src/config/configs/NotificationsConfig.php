@@ -9,20 +9,20 @@ namespace barrelstrength\sproutbase\config\configs;
 
 use barrelstrength\sproutbase\migrations\email\Install;
 use barrelstrength\sproutbase\config\base\Config;
-use barrelstrength\sproutbase\config\models\settings\EmailSettings;
+use barrelstrength\sproutbase\config\models\settings\NotificationSettings;
 use barrelstrength\sproutbase\SproutBase;
 use Craft;
 
-class EmailConfig extends Config
+class NotificationsConfig extends Config
 {
     public function getKey(): string
     {
-        return 'email';
+        return 'notifications';
     }
 
     public static function displayName(): string
     {
-        return Craft::t('sprout', 'Email');
+        return Craft::t('sprout', 'Notifications');
     }
 
     public function getDescription(): string
@@ -30,9 +30,14 @@ class EmailConfig extends Config
         return Craft::t('sprout', 'Manage and send notifications');
     }
 
+    public static function groupName(): string
+    {
+        return Craft::t('sprout', 'Email');
+    }
+
     public function createSettingsModel()
     {
-        return new EmailSettings();
+        return new NotificationSettings();
     }
 
     public function createInstallMigration()
@@ -43,14 +48,8 @@ class EmailConfig extends Config
     public function getCpNavItem(): array
     {
         return [
-            'label' => Craft::t('sprout', 'Email'),
-            'url' => 'sprout/notifications',
-            'subnav' => [
-                'notifications' => [
-                    'label' => Craft::t('sprout', 'Notifications'),
-                    'url' => 'sprout/notifications'
-                ]
-            ]
+            'label' => Craft::t('sprout', 'Notifications'),
+            'url' => 'sprout/notifications'
         ];
     }
 
@@ -80,10 +79,10 @@ class EmailConfig extends Config
                 'sprout/notifications/notifications-index-template',
 
             // Preview
-//            'sprout/email/preview/<emailId:\d+>' => [
+//            'sprout/notifications/preview/<emailId:\d+>' => [
 //                'route' => 'sprout/notifications/preview'
 //            ],
-//            'sprout/email/preview/<emailId:\d+>' => [
+//            'sprout/notifications/preview/<emailId:\d+>' => [
 //                'route' => 'sprout/sent-email/preview'
 //            ],
         ];

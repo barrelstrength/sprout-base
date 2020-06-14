@@ -286,7 +286,7 @@ class DefaultMailer extends Mailer implements NotificationEmailSenderInterface
             }
         }
 
-        return Craft::$app->getView()->renderTemplate('sprout/email/_components/mailers/defaultmailer/lists', [
+        return Craft::$app->getView()->renderTemplate('sprout/notifications/_components/mailers/defaultmailer/lists', [
             'selectedElements' => $selectedElements,
         ]);
     }

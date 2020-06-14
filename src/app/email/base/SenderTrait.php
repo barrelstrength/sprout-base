@@ -43,7 +43,7 @@ trait SenderTrait
     {
         // @todo - override default from,email, and replyTo with values from default settings
 
-        return Craft::$app->getView()->renderTemplate('sprout/email/_components/mailers/recipients-html', [
+        return Craft::$app->getView()->renderTemplate('sprout/notifications/_components/mailers/recipients-html', [
             'campaignEmail' => $campaignEmail
         ]);
     }

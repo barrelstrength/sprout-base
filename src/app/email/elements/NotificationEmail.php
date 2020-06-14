@@ -264,7 +264,7 @@ class NotificationEmail extends EmailElement
     public function getTableAttributeHtml(string $attribute): string
     {
         if ($attribute === 'send') {
-            return Craft::$app->getView()->renderTemplate('sprout/email/_components/elementindex/NotificationEmail/prepare-link', [
+            return Craft::$app->getView()->renderTemplate('sprout/notifications/_components/elementindex/NotificationEmail/prepare-link', [
                 'notification' => $this,
                 'mailer' => $this->getMailer()
             ]);
@@ -279,7 +279,7 @@ class NotificationEmail extends EmailElement
                 ]);
             }
 
-            return Craft::$app->getView()->renderTemplate('sprout/email/_components/elementindex/NotificationEmail/preview-links', [
+            return Craft::$app->getView()->renderTemplate('sprout/notifications/_components/elementindex/NotificationEmail/preview-links', [
                 'email' => $this,
                 'shareUrl' => $shareUrl,
                 'type' => $attribute

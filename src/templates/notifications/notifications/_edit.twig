@@ -1,4 +1,4 @@
-{% extends "sprout/email/_layouts/base" %}
+{% extends "sprout/notifications/_layouts/base" %}
 
 {% import "_includes/forms" as forms %}
 {% import "sprout/fields/_includes/forms" as sproutFields %}
@@ -117,7 +117,7 @@
     {% if namespace is not defined %}{% set namespace = 'fields' %}{% endif %}
 
     <div id="fields">
-        {% include "sprout/email/notifications/_fieldlayout" %}
+        {% include "sprout/notifications/notifications/_fieldlayout" %}
     </div>
 
 {% endblock %}

@@ -87,7 +87,7 @@ class SproutEmailVariable
         }
 
         $templateFolder = null;
-        $settings = SproutBase::$app->settings->getSettingsByKey('email');
+        $settings = SproutBase::$app->settings->getSettingsByKey('notifications');
 
         $templateFolder = $notificationEmail->emailTemplateId ?? $settings->emailTemplateId ?? $defaultEmailTemplates->getPath();
 
