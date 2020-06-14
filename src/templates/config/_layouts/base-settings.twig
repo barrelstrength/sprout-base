@@ -13,8 +13,8 @@
 
 {% set title = "Sprout Settings"|t('sprout') %}
 
-{% set redirectUrl = currentSubsection['url'] ?? craft.app.request.url %}
-{% set actionUrl = currentSubsection['actionUrl'] ?? 'sprout/settings/save-settings' %}
+{% set redirectUrl = currentSection['url'] ?? craft.app.request.url %}
+{% set actionUrl = currentSection['actionUrl'] ?? 'sprout/settings/save-settings' %}
 
 {% set fullPageForm = true %}
 
@@ -37,7 +37,7 @@
                     {% else %}
                         <li>
                             <a href="{{ cpUrl(item.url) }}"
-                                {% if currentSubSectionHandle == itemKey %}class="sel"{% endif %}>
+                                {% if currentSubNavKey == itemKey %}class="sel"{% endif %}>
                                 {{ item.label }}
                             </a>
                         </li>

@@ -3,7 +3,7 @@
 
 {% block actionButton %}
 
-    {% set actionButtonTemplate = currentSubsection.actionButtonTemplate ?? null %}
+    {% set actionButtonTemplate = currentSection.actionButtonTemplate ?? null %}
 
     {% if actionButtonTemplate %}
         {% include actionButtonTemplate %}
@@ -40,14 +40,14 @@
 
     <input type="hidden" name="action" value="{{ actionUrl }}">
     <input type="hidden" name="redirect" value="{{ redirectUrl|hash }}">
-    <input type="hidden" name="settingsSection" value="{{ settingsSectionHandle }}">
+    <input type="hidden" name="settingsSection" value="{{ configKey }}">
     <input type="hidden" name="packAssociativeArrays" value="{{ packAssociativeArrays }}">
     <input type="hidden" name="siteId" value="{{ currentSite.id }}">
 
     <div id="settings-cp">
 
         {% namespace 'settings' %}
-            {% include currentSubsection.template %}
+            {% include currentSection.template %}
         {% endnamespace %}
 
     </div>

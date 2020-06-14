@@ -3,7 +3,7 @@
 
 {% block actionButton %}
 
-    {% set actionButtonTemplate = currentSubsection.actionButtonTemplate ?? null %}
+    {% set actionButtonTemplate = currentSection.actionButtonTemplate ?? null %}
 
     {% if actionButtonTemplate %}
         {% include actionButtonTemplate %}
@@ -19,6 +19,6 @@
 
 {% block content %}
 
-    {% include currentSubsection.template %}
+    {% include currentSection.template %}
 
 {% endblock %}

@@ -70,14 +70,14 @@ class FormsController extends BaseController
 
     /**
      * @param int|null $formId
-     * @param null $settingsSectionHandle
+     * @param null $subNavKey
      *
      * @return Response
      * @throws ForbiddenHttpException
      * @throws MissingComponentException
      * @throws InvalidConfigException
      */
-    public function actionEditSettingsTemplate(int $formId = null, $settingsSectionHandle = null): Response
+    public function actionEditSettingsTemplate(int $formId = null, $subNavKey = null): Response
     {
         $this->requirePermission('sprout:forms:editForms');
 
@@ -86,7 +86,7 @@ class FormsController extends BaseController
         $isPro = SproutBase::$app->config->isEdition('forms', Config::EDITION_PRO);
         $config = SproutBase::$app->config->getConfigByKey('forms');
 
-        return $this->renderTemplate('sprout/forms/forms/_settings/'.$settingsSectionHandle, [
+        return $this->renderTemplate('sprout/forms/forms/_settings/'.$subNavKey, [
             'form' => $form,
             'groups' => SproutBase::$app->groups->getAllFormGroups(),
             'groupId' => $form->groupId ?? null,

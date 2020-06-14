@@ -107,7 +107,7 @@ class FormsConfig extends Config
                 'sprout/forms/edit-form-template',
             'sprout/forms/edit/<formId:\d+>' =>
                 'sprout/forms/edit-form-template',
-            'sprout/forms/edit/<formId:\d+>/settings/<settingsSectionHandle:[^\/]+>' =>
+            'sprout/forms/edit/<formId:\d+>/settings/<subNavKey:[^\/]+>' =>
                 'sprout/forms/edit-settings-template',
             'sprout/forms/entries' =>
                 'sprout/entries/entries-index-template',
@@ -117,13 +117,13 @@ class FormsConfig extends Config
                 'sprout-forms/forms',
 
             // DB Settings
-            'sprout/settings/<settingsSectionHandle:forms>/<settingsSubSectionHandle:entry-statuses>/new' => [
+            'sprout/settings/<configKey:forms>/<subNavKey:entry-statuses>/new' => [
                 'route' => 'sprout/entry-statuses/edit',
                 'params' => [
                     'settingsTarget' => SettingsController::SETTINGS_TARGET_DB
                 ]
             ],
-            'sprout/settings/<settingsSectionHandle:forms>/<settingsSubSectionHandle:entry-statuses>/<entryStatusId:\d+>' => [
+            'sprout/settings/<configKey:forms>/<subNavKey:entry-statuses>/<entryStatusId:\d+>' => [
                 'route' => 'sprout/entry-statuses/edit',
                 'params' => [
                     'settingsTarget' => SettingsController::SETTINGS_TARGET_DB

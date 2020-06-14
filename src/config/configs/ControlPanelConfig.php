@@ -50,9 +50,9 @@ class ControlPanelConfig extends Config
     public function getCpUrlRules(): array
     {
         return [
-            'sprout/settings/<settingsSectionHandle:[^\/]+>/<settingsSubSectionHandle:[^\/]+>' =>
+            'sprout/settings/<configKey:[^\/]+>/<subNavKey:[^\/]+>' =>
                 'sprout/settings/edit-settings',
-            'sprout/settings/<settingsSectionHandle:[^\/]+>' =>
+            'sprout/settings/<configKey:[^\/]+>' =>
                 'sprout/settings/edit-settings',
             'sprout/settings' =>
                 'sprout/settings/hello',

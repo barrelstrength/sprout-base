@@ -49,16 +49,16 @@ class SettingsController extends Controller
 
     /**
      * @param string $settingsTarget
-     * @param null $settingsSectionHandle
-     * @param null $settingsSubSectionHandle
+     * @param null $configKey
+     * @param null $subNavKey
      *
      * @return Response
      * @throws SiteNotFoundException
      */
     public function actionEditSettings(
         $settingsTarget = self::SETTINGS_TARGET_PROJECT_CONFIG,
-        $settingsSectionHandle = null,
-        $settingsSubSectionHandle = null
+        $configKey = null,
+        $subNavKey = null
     ): Response {
 
         $siteHandle = Craft::$app->getRequest()->getQueryParam('site');
@@ -71,7 +71,7 @@ class SettingsController extends Controller
         $sproutConfigs = SproutBase::$app->config->getConfigs(false);
 
         /** @var BaseConfig $currentSproutConfig */
-        $currentSproutConfig = $sproutConfigs[$settingsSectionHandle];
+        $currentSproutConfig = $sproutConfigs[$configKey];
 
         $settings = SproutBase::$app->settings->getSettings(false);
 
@@ -86,20 +86,20 @@ class SettingsController extends Controller
 
         // We grab the config settings a second time for configWarning messages
         $fileConfig = Craft::$app->getConfig()->getConfigFromFile('sprout');
-        $currentFileConfig = $fileConfig[$settingsSectionHandle] ?? [];
+        $currentFileConfig = $fileConfig[$configKey] ?? [];
 
         $navItem = $currentSettings->getSettingsNavItem();
-        $defaultSubSectionHandle = key($navItem);
-        $currentSubSectionHandle = $settingsSubSectionHandle ?? $defaultSubSectionHandle;
+        $defaultSubNavKey = key($navItem);
+        $currentSubNavKey = $subNavKey ?? $defaultSubNavKey;
 
-        $subSection = $navItem[$currentSubSectionHandle];
+        $subSection = $navItem[$currentSubNavKey];
         $dynamicVariables = $subSection['variables'] ?? [];
 
         // Throw error if not found?
-        $currentSubsection = $subNav[$currentSubSectionHandle];
+        $currentSection = $subNav[$currentSubNavKey];
 
-        if (isset($currentSubsection['settingsTarget'])) {
-            $settingsTarget = $currentSubsection['settingsTarget'];
+        if (isset($currentSection['settingsTarget'])) {
+            $settingsTarget = $currentSection['settingsTarget'];
         }
 
         // The settingsTarget defaults to 'project-config'
@@ -109,8 +109,8 @@ class SettingsController extends Controller
             ? 'sprout/config/_layouts/settings-wrapper'
             : 'sprout/config/_layouts/settings';
 
-        $showMultiSiteSettings = $currentSubsection['multisite'] ?? false;
-        $packAssociativeArrays = $currentSubsection['packAssociativeArrays'] ?? false;
+        $showMultiSiteSettings = $currentSection['multisite'] ?? false;
+        $packAssociativeArrays = $currentSection['packAssociativeArrays'] ?? false;
 
         return $this->renderTemplate($settingsTemplate, array_merge([
             'currentSite' => $currentSite,
@@ -118,9 +118,9 @@ class SettingsController extends Controller
             'settings' => $currentSettings,
             'config' => $currentFileConfig,
             'subnav' => $subNav,
-            'currentSubsection' => $currentSubsection,
-            'settingsSectionHandle' => $settingsSectionHandle,
-            'currentSubSectionHandle' => $currentSubSectionHandle,
+            'currentSection' => $currentSection,
+            'configKey' => $configKey,
+            'currentSubNavKey' => $currentSubNavKey,
             'showMultiSiteSettings' => $showMultiSiteSettings,
             'packAssociativeArrays' => $packAssociativeArrays
         ], $dynamicVariables));
