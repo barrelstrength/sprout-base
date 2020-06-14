@@ -8,6 +8,30 @@
 
 {% from _self import configWarning %}
 
+{{ forms.selectField({
+    label: "Redirect Match Strategy"|t('sprout'),
+    name: 'redirectMatchStrategy',
+    instructions: "How to match 404 requests with Redirect records already captured in the database. Defaults to matching the entire URL including query strings. Selecting 'without query strings' will remove all parameters from the request URL before searching for a match."|t('sprout'),
+    options: [
+        { value: 'urlWithQueryStrings', label: 'URL (with query strings)' },
+        { value: 'urlWithoutQueryStrings', label: 'URL (without query strings)' },
+    ],
+    value: settings.redirectMatchStrategy,
+    warning: config.redirectMatchStrategy is defined ? configWarning('redirectMatchStrategy')
+}) }}
+
+{{ forms.selectField({
+    label: "Query String Strategy"|t('sprout'),
+    name: 'queryStringStrategy',
+    instructions: "How to treat query strings after processing a redirect. 'Remove query strings' will remove the query string from the incoming URL entirely. 'Append query strings' will add any query string from the incoming URL to the New Url."|t('sprout'),
+    options: [
+        { value: 'removeQueryStrings', label: 'Remove query strings' },
+        { value: 'appendQueryStrings', label: 'Append query strings' },
+    ],
+    value: settings.queryStringStrategy,
+    warning: config.queryStringStrategy is defined ? configWarning('queryStringStrategy')
+}) }}
+
 {{ forms.lightswitchField({
     label: "Log 404 Redirects"|t('sprout'),
     instructions: "Log 'Page Not Found' errors as 404 Redirects. 404 Redirects will appear on the Redirects tab as a disabled 404 Redirect Element and can be updated to 301 or 302 Redirects."|t('sprout'),
@@ -21,30 +45,6 @@
 
 <div id="settings-total-404redirects"
     class="{% if not settings.enable404RedirectLog %} hidden {% endif %}">
-
-    {{ forms.selectField({
-        label: "Redirect Match Strategy"|t('sprout'),
-        name: 'redirectMatchStrategy',
-        instructions: "How to match 404 requests with Redirect records already captured in the database. Defaults to matching the entire URL including query strings. Selecting 'without query strings' will remove all parameters from the request URL before searching for a match."|t('sprout'),
-        options: [
-            { value: 'urlWithQueryStrings', label: 'URL (with query strings)' },
-            { value: 'urlWithoutQueryStrings', label: 'URL (without query strings)' },
-        ],
-        value: settings.redirectMatchStrategy,
-        warning: config.redirectMatchStrategy is defined ? configWarning('redirectMatchStrategy')
-    }) }}
-
-    {{ forms.selectField({
-        label: "Query String Strategy"|t('sprout'),
-        name: 'queryStringStrategy',
-        instructions: "How to treat query strings after processing a redirect. 'Remove query strings' will remove the query string from the incoming URL entirely. 'Append query strings' will add any query string from the incoming URL to the New Url."|t('sprout'),
-        options: [
-            { value: 'removeQueryStrings', label: 'Remove query strings' },
-            { value: 'appendQueryStrings', label: 'Append query strings' },
-        ],
-        value: settings.queryStringStrategy,
-        warning: config.queryStringStrategy is defined ? configWarning('queryStringStrategy')
-    }) }}
 
     {{ forms.lightswitchField({
         label: "Track Remote IP"|t('sprout'),
