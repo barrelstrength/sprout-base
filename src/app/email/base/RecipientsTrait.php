@@ -230,9 +230,7 @@ trait RecipientsTrait
             $listIds = $listIds['listIds'];
         }
 
-        $sproutReportsIsEnabled = Craft::$app->getPlugins()->isPluginEnabled('sprout-reports');
-
-        if (!$sproutReportsIsEnabled || empty($listIds)) {
+        if (!empty($listIds)) {
             return [];
         }
 

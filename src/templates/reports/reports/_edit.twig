@@ -5,8 +5,6 @@
 {% do view.registerAssetBundle("barrelstrength\\sproutbase\\web\\assetbundles\\sproutcp\\SproutCpAsset") %}
 {% do view.registerAssetBundle("barrelstrength\\sproutbase\\web\\assetbundles\\reports\\SproutReportsAsset") %}
 
-{% set sproutReportsIsEnabled = craft.app.getPlugins().isPluginEnabled('sprout-reports') %}
-
 {% set title = report['id'] is defined and report['id'] is not empty
     ? "Edit Report"|t('sprout')
     : "New Report"|t('sprout') %}
@@ -28,7 +26,7 @@
     }
 ] %}
 
-{% if sproutReportsIsEnabled %}
+{% if isPro %}
     {% set tabs = tabs|merge([{
         label: 'Mailing List',
         url: '#tab-mailing-list',
@@ -163,7 +161,7 @@
 
     </div>
 
-    {% if sproutReportsIsEnabled %}
+    {% if isPro %}
         <div id="tab-mailing-list" class="hidden">
 
             <h3>Mailing Lists</h3>

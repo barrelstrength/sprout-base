@@ -10,6 +10,7 @@ namespace barrelstrength\sproutbase\app\reports\controllers;
 use barrelstrength\sproutbase\app\reports\base\Visualization;
 use barrelstrength\sproutbase\app\reports\elements\Report;
 use barrelstrength\sproutbase\app\reports\models\ReportGroup;
+use barrelstrength\sproutbase\config\base\Config;
 use barrelstrength\sproutbase\SproutBase;
 use Craft;
 use craft\errors\ElementNotFoundException;
@@ -267,6 +268,8 @@ class ReportsController extends Controller
 
         $currentUser = Craft::$app->getUser()->getIdentity();
 
+        $isPro = SproutBase::$app->config->isEdition('reports', Config::EDITION_PRO);
+
         return $this->renderTemplate('sprout/reports/reports/_edit', [
             'report' => $reportElement,
             'dataSource' => $dataSource,
@@ -275,6 +278,7 @@ class ReportsController extends Controller
 
             // @todo - migration, review permission
             'editReportsPermission' => $currentUser->can('sprout:reports:editReports'),
+            'isPro' => $isPro,
             'emailColumnOptions' => $emailColumnOptions,
             'delimiterOptions' => $delimiterOptions,
             'settings' => $settings,
