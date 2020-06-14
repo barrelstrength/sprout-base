@@ -87,5 +87,10 @@ class ListsConfig extends Config
                 'sprout-lists/lists/list-edit-template',
         ];
     }
+
+    public function isUpgradable(): bool
+    {
+        return false;
+    }
 }
 

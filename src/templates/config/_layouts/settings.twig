@@ -1,4 +1,5 @@
 {% extends "sprout/config/_layouts/base-settings" %}
+{% import "sprout/config/_includes/sproutcp" as sproutCp %}
 
 {% block actionButton %}
 
@@ -25,11 +26,11 @@
         </div>
 
 
-        {#        {% if upgradeLink %}#}
-        {#            {{ sproutCp.upgradeToProButton({#}
-        {#                url: upgradeLink#}
-        {#            }) }}#}
-        {#        {% endif %}#}
+        {% if sproutConfig.isUpgradable() %}
+            {{ sproutCp.upgradeToProButton({
+                url: sproutConfig.getUpgradeUrl()
+            }) }}
+        {% endif %}
 
     {% endif %}
 

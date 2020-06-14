@@ -60,8 +60,6 @@ class SettingsController extends Controller
         $settingsSectionHandle = null,
         $settingsSubSectionHandle = null
     ): Response {
-//        $hasUpgradeLink = method_exists($this->plugin, 'getUpgradeUrl');
-//        $upgradeLink = $hasUpgradeLink ? $this->plugin->getUpgradeUrl() : null;
 
         $siteHandle = Craft::$app->getRequest()->getQueryParam('site');
 
@@ -72,7 +70,7 @@ class SettingsController extends Controller
 
         $sproutConfigs = SproutBase::$app->config->getConfigs(false);
 
-        /** @var Config $currentSproutConfig */
+        /** @var BaseConfig $currentSproutConfig */
         $currentSproutConfig = $sproutConfigs[$settingsSectionHandle];
 
         $settings = SproutBase::$app->settings->getSettings(false);
@@ -116,17 +114,15 @@ class SettingsController extends Controller
 
         return $this->renderTemplate($settingsTemplate, array_merge([
             'currentSite' => $currentSite,
+            'sproutConfig' => $currentSproutConfig,
             'settings' => $currentSettings,
             'config' => $currentFileConfig,
             'subnav' => $subNav,
             'currentSubsection' => $currentSubsection,
-
             'settingsSectionHandle' => $settingsSectionHandle,
             'currentSubSectionHandle' => $currentSubSectionHandle,
             'showMultiSiteSettings' => $showMultiSiteSettings,
             'packAssociativeArrays' => $packAssociativeArrays
-
-//            'upgradeLink' => $upgradeLink
         ], $dynamicVariables));
     }
 

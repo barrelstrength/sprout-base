@@ -8,6 +8,7 @@
 namespace barrelstrength\sproutbase\config\base;
 
 use craft\base\Component;
+use craft\helpers\UrlHelper;
 
 abstract class Config extends Component implements ConfigInterface
 {
@@ -26,6 +27,11 @@ abstract class Config extends Component implements ConfigInterface
     public function setEdition()
     {
         $this->_edition = 'lite';
+    }
+
+    public function getIsPro(): bool
+    {
+        return $this->_edition === self::EDITION_PRO;
     }
 
     /**
@@ -99,6 +105,16 @@ abstract class Config extends Component implements ConfigInterface
     public function getConfigSettings(): array
     {
         return [];
+    }
+
+    public function isUpgradable(): bool
+    {
+        return $this->_edition !== self::EDITION_PRO;
+    }
+
+    public function getUpgradeUrl(): string
+    {
+        return UrlHelper::cpUrl('sprout/upgrade/'.$this->getKey());
     }
 }
 

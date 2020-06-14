@@ -99,5 +99,10 @@ class CampaignsConfig extends Config
             $this->_edition = Config::EDITION_PRO;
         }
     }
+
+    public function isUpgradable(): bool
+    {
+        return false;
+    }
 }
 

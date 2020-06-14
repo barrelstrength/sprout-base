@@ -1,4 +1,5 @@
 {% extends "sprout/config/_layouts/base-settings" %}
+{% import "sprout/config/_includes/sproutcp" as sproutCp %}
 
 {% block actionButton %}
 
@@ -6,6 +7,12 @@
 
     {% if actionButtonTemplate %}
         {% include actionButtonTemplate %}
+    {% endif %}
+
+    {% if sproutConfig.isUpgradable() %}
+        {{ sproutCp.upgradeToProButton({
+            url: sproutConfig.getUpgradeUrl()
+        }) }}
     {% endif %}
 
 {% endblock %}

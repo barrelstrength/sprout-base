@@ -40,5 +40,10 @@ class FieldsConfig extends Config
             'url' => 'sprout/settings/fields'
         ];
     }
+
+    public function isUpgradable(): bool
+    {
+        return false;
+    }
 }
 

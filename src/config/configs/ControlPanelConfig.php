@@ -61,5 +61,10 @@ class ControlPanelConfig extends Config
                 'sprout/settings/upgrade-template',
         ];
     }
+
+    public function isUpgradable(): bool
+    {
+        return false;
+    }
 }
 
