@@ -163,6 +163,7 @@ class Entry extends Element
             [
                 'key' => '*',
                 'label' => Craft::t('sprout', 'All Entries'),
+                'defaultSort' => ['dateCreated', 'desc']
             ]
         ];
 
@@ -190,7 +191,8 @@ class Entry extends Element
                         'data' => ['formId' => $form->id],
                         'criteria' => [
                             'formId' => $form->id
-                        ]
+                        ],
+                        'defaultSort' => ['dateCreated', 'desc']
                     ];
                 } else {
                     $noSources[$form->id] = [
@@ -198,7 +200,8 @@ class Entry extends Element
                         'data' => ['formId' => $form->id],
                         'criteria' => [
                             'formId' => $form->id
-                        ]
+                        ],
+                        'defaultSort' => ['dateCreated', 'desc']
                     ];
                 }
             }
@@ -215,7 +218,8 @@ class Entry extends Element
                 ],
                 'criteria' => [
                     'formId' => $form['criteria']['formId']
-                ]
+                ],
+                'defaultSort' => ['dateCreated', 'desc']
             ];
         }
 

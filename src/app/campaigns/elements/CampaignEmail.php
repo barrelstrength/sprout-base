@@ -212,7 +212,8 @@ class CampaignEmail extends EmailElement
         $sources = [
             [
                 'key' => '*',
-                'label' => Craft::t('sprout', 'All campaigns')
+                'label' => Craft::t('sprout', 'All campaigns'),
+                'defaultSort' => ['dateCreated', 'desc']
             ]
         ];
 
@@ -226,7 +227,8 @@ class CampaignEmail extends EmailElement
                 'label' => Craft::t('sprout', $campaignType->name),
                 'criteria' => [
                     'campaignTypeId' => $campaignType->id
-                ]
+                ],
+                'defaultSort' => ['dateCreated', 'desc']
             ];
 
             $sources[] = $source;
@@ -279,8 +281,8 @@ class CampaignEmail extends EmailElement
     {
         return [
             'title' => Craft::t('sprout', 'Title'),
-            'elements.dateCreated' => Craft::t('sprout', 'Date Created'),
-            'elements.dateUpdated' => Craft::t('sprout', 'Date Updated'),
+            'sproutemail_campaignemails.dateCreated' => Craft::t('sprout', 'Date Created'),
+            'sproutemail_campaignemails.dateUpdated' => Craft::t('sprout', 'Date Updated'),
         ];
     }
 
@@ -572,7 +574,8 @@ class CampaignEmail extends EmailElement
     public function datetimeAttributes(): array
     {
         $names = parent::datetimeAttributes();
-        $names[] = 'dateCreated';
+        $names[] = 'dateScheduled';
+        $names[] = 'dateSent';
 
         return $names;
     }

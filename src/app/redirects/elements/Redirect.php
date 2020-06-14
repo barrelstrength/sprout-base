@@ -15,6 +15,7 @@ use barrelstrength\sproutbase\app\redirects\elements\actions\SetStatus;
 use barrelstrength\sproutbase\app\redirects\elements\db\RedirectQuery;
 use barrelstrength\sproutbase\app\redirects\enums\RedirectMethods;
 use barrelstrength\sproutbase\app\redirects\records\Redirect as RedirectRecord;
+use barrelstrength\sproutbase\config\base\Config;
 use barrelstrength\sproutbase\SproutBase;
 use Craft;
 use craft\base\Element;
@@ -207,7 +208,8 @@ class Redirect extends Element
                 'structureEditable' => true,
                 'criteria' => [
                     'method' => [301, 302]
-                ]
+                ],
+                'defaultSort' => ['count', 'desc']
             ]
         ];
 
@@ -226,7 +228,8 @@ class Redirect extends Element
                 'label' => $method,
                 'criteria' => ['method' => $code],
                 'structureId' => SproutBase::$app->redirects->getStructureId(),
-                'structureEditable' => true
+                'structureEditable' => true,
+                'defaultSort' => ['count', 'desc']
             ];
         }
 
@@ -458,10 +461,9 @@ class Redirect extends Element
      */
     public function validateEdition($attribute)
     {
-        $sproutRedirectsIsPro = SproutBase::$app->config->isEdition('redirects', Config::EDITION_PRO);
-        $sproutSeoIsPro = SproutBase::$app->config->isEdition('metadata', Config::EDITION_PRO);
+        $isPro = SproutBase::$app->config->isEdition('redirects', Config::EDITION_PRO);
 
-        if ((!$sproutSeoIsPro && !$sproutRedirectsIsPro) && (int)$this->method !== RedirectMethods::PageNotFound) {
+        if ((!$isPro) && (int)$this->method !== RedirectMethods::PageNotFound) {
 
             $count = SproutBase::$app->redirects->getTotalNon404Redirects();
 
