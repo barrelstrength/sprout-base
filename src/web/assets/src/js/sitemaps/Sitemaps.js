@@ -46,8 +46,7 @@ class SproutSeoSitemapIndex {
       "priority": $('select[name="sproutseo[sections][' + rowId + '][priority]"]').val(),
       "changeFrequency": $('select[name="sproutseo[sections][' + rowId + '][changeFrequency]"]').val(),
       "enabled": enabled,
-      "siteId": siteId,
-      "pluginHandle": $($row).data('pluginHandle')
+      "siteId": siteId
     };
 
     Craft.postActionRequest('sprout/sitemaps/save-sitemap-section', data, $.proxy(function(response, textStatus) {
