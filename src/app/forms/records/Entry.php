@@ -16,14 +16,14 @@ use yii\db\ActiveQueryInterface;
 /**
  * Class Entry record.
  *
- * @property int                  $id
- * @property int                  $statusId
- * @property string               $ipAddress
- * @property string               $userAgent
+ * @property int $id
+ * @property int $statusId
+ * @property string $ipAddress
+ * @property string $userAgent
  * @property ActiveQueryInterface $element
  * @property ActiveQueryInterface $entryStatuses
  * @property ActiveQueryInterface $form
- * @property string               $formId
+ * @property string $formId
  */
 class Entry extends ActiveRecord
 {

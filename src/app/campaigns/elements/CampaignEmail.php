@@ -8,8 +8,8 @@ use barrelstrength\sproutbase\app\campaigns\records\CampaignEmail as CampaignEma
 use barrelstrength\sproutbase\app\email\base\EmailElement;
 use barrelstrength\sproutbase\app\email\base\Mailer;
 use barrelstrength\sproutbase\app\email\mailers\DefaultMailer;
-use barrelstrength\sproutbase\web\assetbundles\email\EmailAsset;
 use barrelstrength\sproutbase\SproutBase;
+use barrelstrength\sproutbase\web\assetbundles\email\EmailAsset;
 use Craft;
 use craft\base\Element;
 use craft\elements\actions\Delete;
@@ -29,8 +29,8 @@ use yii\base\InvalidConfigException;
 /**
  * Class CampaignEmail
  *
- * @property CampaignType         $campaignType
- * @property mixed                $emailTemplateId
+ * @property CampaignType $campaignType
+ * @property mixed $emailTemplateId
  * @property DefaultMailer|Mailer $mailer
  */
 class CampaignEmail extends EmailElement
@@ -182,12 +182,12 @@ class CampaignEmail extends EmailElement
 
     /**
      * @param ElementQueryInterface $elementQuery
-     * @param array|null            $disabledElementIds
-     * @param array                 $viewState
-     * @param string|null           $sourceKey
-     * @param string|null           $context
-     * @param bool                  $includeContainer
-     * @param bool                  $showCheckboxes
+     * @param array|null $disabledElementIds
+     * @param array $viewState
+     * @param string|null $sourceKey
+     * @param string|null $context
+     * @param bool $includeContainer
+     * @param bool $showCheckboxes
      *
      * @return string
      * @throws InvalidConfigException

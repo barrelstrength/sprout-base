@@ -18,8 +18,8 @@ use yii\base\Exception;
 
 /**
  *
- * @property mixed  $bodyHtml
- * @property mixed  $settingsHtml
+ * @property mixed $bodyHtml
+ * @property mixed $settingsHtml
  * @property string $title
  */
 class RecentEntries extends Widget

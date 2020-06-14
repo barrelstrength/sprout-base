@@ -68,7 +68,7 @@ class Sitemaps extends Component
      * Example: entries-5, categories-12
      *
      * @param UrlEnabledSectionType $urlEnabledSectionType
-     * @param null                  $siteId
+     * @param null $siteId
      *
      * @return array
      * @throws SiteNotFoundException

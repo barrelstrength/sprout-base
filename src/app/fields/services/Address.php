@@ -41,10 +41,10 @@ class Address extends Component
     const DEFAULT_LANGUAGE = 'en';
 
     /**
-     * @param FieldInterface   $field
+     * @param FieldInterface $field
      * @param ElementInterface $element
      *
-     * @param bool             $isNew
+     * @param bool $isNew
      *
      * @return bool
      * @throws StaleObjectException
@@ -124,9 +124,9 @@ class Address extends Component
     }
 
     /**
-     * @param FieldInterface   $field
+     * @param FieldInterface $field
      * @param ElementInterface $target
-     * @param bool             $isNew
+     * @param bool $isNew
      *
      * @throws Throwable
      */
@@ -342,7 +342,7 @@ class Address extends Component
     /**
      * @param Field|AddressFieldTrait $field
      * @param                         $value
-     * @param ElementInterface|null   $element
+     * @param ElementInterface|null $element
      *
      * @return string
      * @throws LoaderError
@@ -446,7 +446,7 @@ class Address extends Component
     /**
      * @param Field|AddressFieldTrait $field
      * @param                         $value
-     * @param ElementInterface|null   $element
+     * @param ElementInterface|null $element
      *
      * @return string
      */
@@ -493,7 +493,7 @@ class Address extends Component
     /**
      * Prepare our Address for use as an AddressModel
      *
-     * @param FieldInterface        $field
+     * @param FieldInterface $field
      * @param                       $value
      * @param ElementInterface|null $element
      *
@@ -543,9 +543,9 @@ class Address extends Component
     }
 
     /**
-     * @param FieldInterface   $field
+     * @param FieldInterface $field
      * @param ElementInterface $element
-     * @param bool             $isNew
+     * @param bool $isNew
      *
      * @throws StaleObjectException
      * @throws Throwable

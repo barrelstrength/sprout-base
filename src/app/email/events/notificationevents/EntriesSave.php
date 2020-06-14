@@ -21,14 +21,14 @@ use yii\base\Exception;
 
 /**
  *
- * @property string                            $eventHandlerClassName
- * @property array                             $allSections
+ * @property string $eventHandlerClassName
+ * @property array $allSections
  * @property Entry|null|array|ElementInterface $mockEventObject
- * @property null                              $eventObject
- * @property string                            $name
- * @property mixed                             $eventName
- * @property string                            $description
- * @property string                            $eventClassName
+ * @property null $eventObject
+ * @property string $name
+ * @property mixed $eventName
+ * @property string $description
+ * @property string $eventClassName
  */
 class EntriesSave extends NotificationEvent
 {

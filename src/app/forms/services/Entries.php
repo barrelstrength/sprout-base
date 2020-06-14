@@ -84,7 +84,7 @@ class Entries extends Component
      * displayTab or displayField tags aware of the active entry
      * without calling the displayForm tag.
      *
-     * @param FormElement  $form
+     * @param FormElement $form
      * @param EntryElement $entry
      */
     public function setEntry(FormElement $form, EntryElement $entry)
@@ -186,7 +186,7 @@ class Entries extends Component
 
     /**
      * @param FormElement $form
-     * @param bool        $isSpam
+     * @param bool $isSpam
      *
      * @return mixed
      */

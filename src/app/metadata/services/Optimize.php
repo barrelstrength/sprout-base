@@ -27,13 +27,12 @@ use Twig\Error\SyntaxError;
 use yii\base\Component;
 use yii\base\Exception;
 use yii\base\InvalidConfigException;
-use yii\web\NotFoundHttpException;
 
 /**
  *
- * @property string   $uri
+ * @property string $uri
  * @property null|int $matchedElement
- * @property Site     $matchedSite
+ * @property Site $matchedSite
  */
 class Optimize extends Component
 {
@@ -138,8 +137,8 @@ class Optimize extends Component
 
     /**
      * @param                     $site
-     * @param bool                $render
-     * @param bool                $context
+     * @param bool $render
+     * @param bool $context
      *
      * @return array|null|string
      * @throws Throwable

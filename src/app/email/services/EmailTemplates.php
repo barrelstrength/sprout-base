@@ -8,7 +8,7 @@ use craft\events\RegisterComponentTypesEvent;
 
 /**
  *
- * @property array    $emailTemplatesTypes
+ * @property array $emailTemplatesTypes
  * @property string[] $allEmailTemplates
  */
 class EmailTemplates extends Component

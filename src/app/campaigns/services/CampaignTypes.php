@@ -170,7 +170,7 @@ class CampaignTypes extends Component
     }
 
     /**
-     * @param CampaignType       $campaignType
+     * @param CampaignType $campaignType
      * @param CampaignTypeRecord $campaignTypeRecord
      *
      * @return CampaignTypeRecord

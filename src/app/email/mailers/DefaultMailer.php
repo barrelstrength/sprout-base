@@ -300,7 +300,7 @@ class DefaultMailer extends Mailer implements NotificationEmailSenderInterface
     /**
      * @param Message $message
      * @param Asset[] $assets
-     * @param array   $externalPaths
+     * @param array $externalPaths
      *
      * @throws InvalidConfigException
      */
@@ -345,7 +345,7 @@ class DefaultMailer extends Mailer implements NotificationEmailSenderInterface
 
     /**
      * @param EmailElement $emailElement
-     * @param Message      $message
+     * @param Message $message
      * @param              $recipients
      *
      * @return EmailElement

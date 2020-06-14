@@ -32,10 +32,10 @@ use yii\base\Exception;
  *
  *
  * @property string $svgIconPath
- * @property array  $compatibleCraftFields
- * @property array  $compatibleCraftFieldTypes
- * @property array  $compatibleConditions
- * @property mixed  $exampleInputHtml
+ * @property array $compatibleCraftFields
+ * @property array $compatibleCraftFieldTypes
+ * @property array $compatibleConditions
+ * @property mixed $exampleInputHtml
  */
 class MultipleChoice extends CraftRadioButtons
 {
@@ -83,7 +83,7 @@ class MultipleChoice extends CraftRadioButtons
 
     /**
      * @param            $value
-     * @param Entry      $entry
+     * @param Entry $entry
      * @param array|null $renderingOptions
      *
      * @return Markup

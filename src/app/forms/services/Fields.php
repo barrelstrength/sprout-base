@@ -320,7 +320,7 @@ class Fields extends Component
     /**
      * This service allows create a default tab given a form
      *
-     * @param Form                      $form
+     * @param Form $form
      * @param Field|FieldInterface|null $field
      *
      * @return null
@@ -371,10 +371,10 @@ class Fields extends Component
     /**
      * This service allows add a field to a current FieldLayoutFieldRecord
      *
-     * @param Field       $field
+     * @param Field $field
      * @param FormElement $form
-     * @param int         $tabId
-     * @param int         $nextId the next field Id
+     * @param int $tabId
+     * @param int $nextId the next field Id
      *
      * @return boolean
      */
@@ -433,9 +433,9 @@ class Fields extends Component
     /**
      * This service allows update a field to a current FieldLayoutFieldRecord
      *
-     * @param Field       $field
+     * @param Field $field
      * @param FormElement $form
-     * @param int         $tabId
+     * @param int $tabId
      *
      * @return boolean
      */
@@ -470,8 +470,8 @@ class Fields extends Component
      * Loads the sprout modal field via ajax.
      *
      * @param FormElement $form
-     * @param FormField   $field
-     * @param null        $tabId
+     * @param FormField $field
+     * @param null $tabId
      *
      * @return array
      * @throws LoaderError
@@ -622,7 +622,7 @@ class Fields extends Component
     }
 
     /**
-     * @param FormElement          $form
+     * @param FormElement $form
      * @param FieldLayoutTabRecord $tabRecord
      *
      * @return bool
@@ -674,9 +674,9 @@ class Fields extends Component
     /**
      * Prepends a key/value pair to an array
      *
-     * @param array  $haystack
+     * @param array $haystack
      * @param string $key
-     * @param mixed  $value
+     * @param mixed $value
      *
      * @return array
      * @see array_unshift()

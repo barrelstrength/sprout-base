@@ -32,10 +32,10 @@ use yii\base\Exception;
  *
  *
  * @property string $svgIconPath
- * @property mixed  $settingsHtml
- * @property array  $compatibleConditions
- * @property array  $compatibleCraftFieldTypes
- * @property mixed  $exampleInputHtml
+ * @property mixed $settingsHtml
+ * @property array $compatibleConditions
+ * @property array $compatibleCraftFieldTypes
+ * @property mixed $exampleInputHtml
  */
 class OptIn extends FormField implements PreviewableFieldInterface
 {

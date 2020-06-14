@@ -23,7 +23,7 @@ use yii\db\ActiveQueryInterface;
  * @property                              $info         string
  * @property                              $status       string
  * @property                              $dateCreated  DateTime
- * @property ActiveQueryInterface         $element
+ * @property ActiveQueryInterface $element
  * @property                              $dateUpdated  DateTime
  */
 class SentEmail extends ActiveRecord

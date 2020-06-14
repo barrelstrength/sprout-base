@@ -33,13 +33,13 @@ use yii\base\Exception;
 
 /**
  *
- * @property array  $elementValidationRules
+ * @property array $elementValidationRules
  * @property string $svgIconPath
- * @property mixed  $settingsHtml
- * @property mixed  $exampleInputHtml
- * @property array  $compatibleConditions
- * @property array  $compatibleCraftFieldTypes
- * @property array  $countries
+ * @property mixed $settingsHtml
+ * @property mixed $exampleInputHtml
+ * @property array $compatibleConditions
+ * @property array $compatibleCraftFieldTypes
+ * @property array $countries
  */
 class Phone extends FormField implements PreviewableFieldInterface
 {
@@ -134,7 +134,7 @@ class Phone extends FormField implements PreviewableFieldInterface
     }
 
     /**
-     * @param mixed                 $value
+     * @param mixed $value
      * @param ElementInterface|null $element
      *
      * @return string
@@ -149,8 +149,8 @@ class Phone extends FormField implements PreviewableFieldInterface
     }
 
     /**
-     * @param mixed      $value
-     * @param Entry      $entry
+     * @param mixed $value
+     * @param Entry $entry
      * @param array|null $renderingOptions
      *
      * @return Markup

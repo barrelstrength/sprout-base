@@ -15,25 +15,25 @@ use yii\db\ActiveQueryInterface;
 /**
  * Class Form record.
  *
- * @property int       $id
- * @property int       $groupId
- * @property int       $fieldLayoutId
- * @property string    $name
- * @property string    $handle
- * @property string    $titleFormat
- * @property bool      $displaySectionTitles
- * @property Element   $element
+ * @property int $id
+ * @property int $groupId
+ * @property int $fieldLayoutId
+ * @property string $name
+ * @property string $handle
+ * @property string $titleFormat
+ * @property bool $displaySectionTitles
+ * @property Element $element
  * @property FormGroup $group
- * @property string    $redirectUri
- * @property string    $submissionMethod
- * @property string    $errorDisplayMethod
- * @property string    $successMessage
- * @property string    $errorMessage
- * @property string    $submitButtonText
- * @property bool      $saveData
- * @property string    $formTemplateId
- * @property bool      $enableCaptchas
- * @property string    $oldHandle
+ * @property string $redirectUri
+ * @property string $submissionMethod
+ * @property string $errorDisplayMethod
+ * @property string $successMessage
+ * @property string $errorMessage
+ * @property string $submitButtonText
+ * @property bool $saveData
+ * @property string $formTemplateId
+ * @property bool $enableCaptchas
+ * @property string $oldHandle
  */
 class Form extends ActiveRecord
 {

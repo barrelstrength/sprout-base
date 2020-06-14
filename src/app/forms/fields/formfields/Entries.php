@@ -21,9 +21,9 @@ use yii\base\Exception;
 
 /**
  * @property string $svgIconPath
- * @property array  $compatibleCraftFields
- * @property array  $compatibleCraftFieldTypes
- * @property mixed  $exampleInputHtml
+ * @property array $compatibleCraftFields
+ * @property array $compatibleCraftFieldTypes
+ * @property mixed $exampleInputHtml
  */
 class Entries extends CraftEntries
 {
@@ -66,8 +66,8 @@ class Entries extends CraftEntries
     }
 
     /**
-     * @param mixed      $value
-     * @param Entry      $entry
+     * @param mixed $value
+     * @param Entry $entry
      * @param array|null $renderingOptions
      *
      * @return Markup

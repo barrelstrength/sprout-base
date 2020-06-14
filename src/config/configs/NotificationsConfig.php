@@ -7,12 +7,20 @@
 
 namespace barrelstrength\sproutbase\config\configs;
 
-use barrelstrength\sproutbase\migrations\email\Install;
 use barrelstrength\sproutbase\config\base\Config;
 use barrelstrength\sproutbase\config\models\settings\NotificationSettings;
+use barrelstrength\sproutbase\migrations\email\Install;
 use barrelstrength\sproutbase\SproutBase;
 use Craft;
 
+/**
+ *
+ * @property array $cpNavItem
+ * @property array|string[] $cpUrlRules
+ * @property string $description
+ * @property array[]|array $userPermissions
+ * @property string $key
+ */
 class NotificationsConfig extends Config
 {
     public function getKey(): string

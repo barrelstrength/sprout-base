@@ -6,10 +6,10 @@ use craft\base\Component;
 
 /**
  *
- * @property array  $timeSeries
- * @property array  $settings
+ * @property array $timeSeries
+ * @property array $settings
  * @property string $decimals
- * @property array  $dataSeries
+ * @property array $dataSeries
  * @property string $aggregate
  */
 abstract class Visualization extends Component implements VisualizationInterface

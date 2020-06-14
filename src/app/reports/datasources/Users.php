@@ -36,7 +36,7 @@ class Users extends DataSource
 
     /**
      * @param Report $report
-     * @param array  $settings
+     * @param array $settings
      *
      * @return array
      */

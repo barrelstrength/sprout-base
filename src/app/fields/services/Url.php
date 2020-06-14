@@ -40,7 +40,7 @@ class Url extends Component
     }
 
     /**
-     * @param Field                 $field
+     * @param Field $field
      * @param                       $value
      * @param ElementInterface|null $element
      *
@@ -75,7 +75,7 @@ class Url extends Component
      * Validates a phone number against a given mask/pattern
      *
      * @param                  $value
-     * @param Field            $field
+     * @param Field $field
      *
      * @return bool
      */

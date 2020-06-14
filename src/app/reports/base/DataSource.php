@@ -10,13 +10,12 @@ namespace barrelstrength\sproutbase\app\reports\base;
 use barrelstrength\sproutbase\app\reports\elements\Report;
 use barrelstrength\sproutbase\SproutBase;
 use craft\base\SavableComponent;
-use craft\helpers\UrlHelper;
 
 /**
  * @property string $description
- * @property int    $reportCount
+ * @property int $reportCount
  * @property string $defaultEmailColumn
- * @property bool   $defaultAllowHtml
+ * @property bool $defaultAllowHtml
  */
 abstract class DataSource extends SavableComponent implements DataSourceInterface
 {

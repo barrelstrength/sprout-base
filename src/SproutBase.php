@@ -55,13 +55,16 @@ use craft\services\UserPermissions;
 use craft\web\Application;
 use craft\web\twig\variables\Cp;
 use craft\web\View;
-use ReflectionException;
 use yii\base\Event;
 use yii\base\InvalidConfigException;
 use yii\base\Module;
 use yii\mail\BaseMailer;
 use yii\mail\MailEvent;
 
+/**
+ *
+ * @property array $userPermissions
+ */
 class SproutBase extends Module
 {
     /**

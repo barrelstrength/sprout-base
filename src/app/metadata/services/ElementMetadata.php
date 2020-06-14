@@ -25,7 +25,7 @@ use yii\base\Exception;
 /**
  *
  * @property string|int $metadataFieldCount
- * @property int        $descriptionLength
+ * @property int $descriptionLength
  */
 class ElementMetadata extends Component
 {
@@ -312,7 +312,7 @@ class ElementMetadata extends Component
      * Triggers a Resave Elements job for each Url-Enabled Section with an Element Metadata field
      *
      * @param                  $elementType
-     * @param bool             $afterFieldLayout
+     * @param bool $afterFieldLayout
      * @param FieldLayout|null $fieldLayout
      *
      * @return bool

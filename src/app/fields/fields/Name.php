@@ -95,7 +95,7 @@ class Name extends Field implements PreviewableFieldInterface
     /**
      * Prepare the field value for the database.
      *
-     * @param NameModel             $value
+     * @param NameModel $value
      * @param ElementInterface|null $element
      *
      * @return array|bool|mixed|null|string

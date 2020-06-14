@@ -457,8 +457,8 @@ class SproutSeoVariable
      * Returns all plain fields available given a type
      *
      * @param string $type
-     * @param null   $handle
-     * @param null   $settings
+     * @param null $handle
+     * @param null $settings
      *
      * @return array
      */

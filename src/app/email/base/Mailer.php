@@ -16,7 +16,7 @@ use yii\base\Model;
 
 /**
  *
- * @property string      $description
+ * @property string $description
  * @property null|string $cpSettingsUrl
  */
 abstract class Mailer extends Component

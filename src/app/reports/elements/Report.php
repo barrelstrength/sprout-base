@@ -31,9 +31,9 @@ use yii\web\NotFoundHttpException;
 
 /**
  *
- * @property string          $resultsError
+ * @property string $resultsError
  * @property DataSource|null $dataSource
- * @property mixed           $startEndDate
+ * @property mixed $startEndDate
  */
 class Report extends Element
 {
@@ -408,7 +408,7 @@ class Report extends Element
     /**
      * Returns a user supplied setting if it exists or $default otherwise
      *
-     * @param string     $name
+     * @param string $name
      * @param null|mixed $default
      *
      * @return null

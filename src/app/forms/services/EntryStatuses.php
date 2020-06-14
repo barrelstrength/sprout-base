@@ -21,9 +21,9 @@ use yii\db\StaleObjectException;
 
 /**
  *
- * @property null|int         $spamStatusId
+ * @property null|int $spamStatusId
  * @property null|EntryStatus $defaultEntryStatus
- * @property array            $allEntryStatuses
+ * @property array $allEntryStatuses
  */
 class EntryStatuses extends Component
 {

@@ -27,10 +27,10 @@ use Twig\Markup;
 /**
  *
  * @property string $svgIconPath
- * @property mixed  $settingsHtml
- * @property array  $compatibleCraftFields
- * @property array  $compatibleCraftFieldTypes
- * @property mixed  $exampleInputHtml
+ * @property mixed $settingsHtml
+ * @property array $compatibleCraftFields
+ * @property array $compatibleCraftFieldTypes
+ * @property mixed $exampleInputHtml
  */
 class Invisible extends FormField implements PreviewableFieldInterface
 {

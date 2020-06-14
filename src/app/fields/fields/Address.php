@@ -31,9 +31,9 @@ use yii\base\Exception;
  *
  * @package barrelstrength\sproutbase\app\fields\
  *
- * @property array       $elementValidationRules
+ * @property array $elementValidationRules
  * @property null|string $settingsHtml
- * @property string      $contentColumnType
+ * @property string $contentColumnType
  */
 class Address extends Field implements PreviewableFieldInterface
 {
@@ -85,7 +85,7 @@ class Address extends Field implements PreviewableFieldInterface
     }
 
     /**
-     * @param mixed                 $value
+     * @param mixed $value
      * @param ElementInterface|null $element
      *
      * @return string
@@ -125,7 +125,7 @@ class Address extends Field implements PreviewableFieldInterface
 
     /**
      * @param ElementInterface $element
-     * @param bool             $isNew
+     * @param bool $isNew
      *
      * @throws Throwable
      */

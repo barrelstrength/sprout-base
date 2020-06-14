@@ -22,12 +22,12 @@ use Twig\Error\SyntaxError;
 /**
  *
  * @property string $eventHandlerClassName
- * @property array  $allGroups
- * @property mixed  $mockEventObject
- * @property null   $eventObject
- * @property mixed  $name
- * @property mixed  $eventName
- * @property mixed  $description
+ * @property array $allGroups
+ * @property mixed $mockEventObject
+ * @property null $eventObject
+ * @property mixed $name
+ * @property mixed $eventName
+ * @property mixed $description
  * @property string $eventClassName
  */
 class UsersSave extends NotificationEvent

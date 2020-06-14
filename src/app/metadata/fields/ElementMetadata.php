@@ -29,8 +29,8 @@ use yii\base\InvalidConfigException;
 
 /**
  *
- * @property array       $elementValidationRules
- * @property string      $contentColumnType
+ * @property array $elementValidationRules
+ * @property string $contentColumnType
  * @property null|string $settingsHtml
  */
 class ElementMetadata extends Field
@@ -88,7 +88,7 @@ class ElementMetadata extends Field
     }
 
     /**
-     * @param mixed            $value
+     * @param mixed $value
      * @param ElementInterface $element
      *
      * @return bool
@@ -107,7 +107,7 @@ class ElementMetadata extends Field
     }
 
     /**
-     * @param mixed                 $value
+     * @param mixed $value
      * @param ElementInterface|null $element
      *
      * @return Metadata|mixed
@@ -146,7 +146,7 @@ class ElementMetadata extends Field
     }
 
     /**
-     * @param mixed                 $value
+     * @param mixed $value
      * @param ElementInterface|null $element
      *
      * @return array|mixed|string|null
@@ -194,7 +194,7 @@ class ElementMetadata extends Field
     }
 
     /**
-     * @param mixed                 $value
+     * @param mixed $value
      * @param ElementInterface|null $element
      *
      * @return string

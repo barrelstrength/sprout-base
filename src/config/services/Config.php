@@ -23,6 +23,12 @@ use yii\base\Exception;
 use yii\base\NotSupportedException;
 use yii\web\ServerErrorHttpException;
 
+/**
+ *
+ * @property \barrelstrength\sproutbase\config\base\SproutBasePlugin[] $sproutBasePlugins
+ * @property \barrelstrength\sproutbase\config\models\settings\ControlPanelSettings $controlPanelSettings
+ * @property array $sproutCpSettings
+ */
 class Config extends Component
 {
     const EVENT_REGISTER_SPROUT_CONFIG = 'registerSproutConfig';
@@ -448,7 +454,7 @@ class Config extends Component
                 continue;
             }
 
-            $configTypes = $plugin->getSproutConfigs();
+            $configTypes = $plugin::getSproutConfigs();
             foreach ($configTypes as $configType) {
                 $configDependencies[] = $configType;
             }

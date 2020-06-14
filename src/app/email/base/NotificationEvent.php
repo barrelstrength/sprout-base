@@ -10,12 +10,12 @@ use yii\base\Event;
  *
  * @property null|string $eventHandlerClassName
  * @property null|string $eventId
- * @property null|mixed  $mockEventObject
- * @property null|mixed  $eventObject
- * @property string      $name
+ * @property null|mixed $mockEventObject
+ * @property null|mixed $eventObject
+ * @property string $name
  * @property null|string $eventName
- * @property string      $description
- * @property string      $settingsHtml
+ * @property string $description
+ * @property string $settingsHtml
  * @property null|string $eventClassName
  */
 abstract class NotificationEvent extends SavableComponent

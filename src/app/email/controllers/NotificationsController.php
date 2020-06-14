@@ -12,8 +12,6 @@ use barrelstrength\sproutbase\app\email\models\ModalResponse;
 use barrelstrength\sproutbase\config\base\Config;
 use barrelstrength\sproutbase\SproutBase;
 use Craft;
-use craft\base\Plugin;
-use craft\base\PluginInterface;
 use craft\errors\MissingComponentException;
 use craft\helpers\ElementHelper;
 use craft\helpers\Json;
@@ -55,7 +53,7 @@ class NotificationsController extends Controller
     }
 
     /**
-     * @param null                   $emailId
+     * @param null $emailId
      * @param NotificationEmail|null $notificationEmail
      *
      * @return Response
@@ -84,7 +82,7 @@ class NotificationsController extends Controller
     }
 
     /**
-     * @param null                   $emailId
+     * @param null $emailId
      * @param NotificationEmail|null $notificationEmail
      *
      * @return Response

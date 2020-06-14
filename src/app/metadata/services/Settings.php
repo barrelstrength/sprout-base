@@ -11,7 +11,7 @@ use yii\base\Component;
 
 /**
  * @property string|int $metadataFieldCount
- * @property int        $descriptionLength
+ * @property int $descriptionLength
  */
 class Settings extends Component
 {

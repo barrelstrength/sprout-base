@@ -202,9 +202,9 @@ class Schema extends Component
      *
      * @return array[][]
      */
-    public function getSchemaSubtypes($schemas)
+    public function getSchemaSubtypes($schemas): array
     {
-        $values = null;
+        $values = [];
 
         foreach ($schemas as $schema) {
             if (isset($schema['type'])) {
@@ -233,7 +233,7 @@ class Schema extends Component
      * Returns a schema map instance (based on $uniqueKey) or $default
      *
      * @param string $uniqueKey
-     * @param null   $default
+     * @param null $default
      *
      * @return BaseSchema|null
      */

@@ -34,14 +34,14 @@ use yii\base\Exception;
  * Class SproutFormsNumberField
  *
  *
- * @property string      $contentColumnType
- * @property string      $svgIconPath
+ * @property string $contentColumnType
+ * @property string $svgIconPath
  * @property null|string $settingsHtml
- * @property array       $compatibleCraftFields
- * @property array       $compatibleCraftFieldTypes
- * @property array       $compatibleConditions
- * @property array       $elementValidationRules
- * @property mixed       $exampleInputHtml
+ * @property array $compatibleCraftFields
+ * @property array $compatibleCraftFieldTypes
+ * @property array $compatibleConditions
+ * @property array $elementValidationRules
+ * @property mixed $exampleInputHtml
  */
 class Number extends FormField implements PreviewableFieldInterface
 {
@@ -205,8 +205,8 @@ class Number extends FormField implements PreviewableFieldInterface
     }
 
     /**
-     * @param mixed      $value
-     * @param Entry      $entry
+     * @param mixed $value
+     * @param Entry $entry
      * @param array|null $renderingOptions
      *
      * @return Markup

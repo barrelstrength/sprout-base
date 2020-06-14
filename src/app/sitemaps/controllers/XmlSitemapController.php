@@ -26,7 +26,7 @@ class XmlSitemapController extends Controller
     /**
      * Generates an XML sitemapindex or sitemap
      *
-     * @param null     $sitemapKey
+     * @param null $sitemapKey
      * @param int|null $pageNumber
      *
      * @return Response

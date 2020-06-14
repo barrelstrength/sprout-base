@@ -14,9 +14,9 @@ use yii\base\Event;
 
 /**
  *
- * @property array             $cpUrlRules
+ * @property array $cpUrlRules
  * @property ConfigInterface[] $sproutConfigs
- * @property array             $siteUrlRules
+ * @property array $siteUrlRules
  */
 abstract class SproutBasePlugin extends Plugin
 {

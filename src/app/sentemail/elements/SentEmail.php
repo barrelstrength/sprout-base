@@ -7,12 +7,12 @@
 
 namespace barrelstrength\sproutbase\app\sentemail\elements;
 
-use barrelstrength\sproutbase\web\assetbundles\email\EmailAsset;
 use barrelstrength\sproutbase\app\sentemail\elements\actions\DeleteEmail;
 use barrelstrength\sproutbase\app\sentemail\elements\db\SentEmailQuery;
 use barrelstrength\sproutbase\app\sentemail\models\SentEmailInfoTable;
 use barrelstrength\sproutbase\app\sentemail\records\SentEmail as SentEmailRecord;
 use barrelstrength\sproutbase\SproutBase;
+use barrelstrength\sproutbase\web\assetbundles\email\EmailAsset;
 use Craft;
 use craft\base\Element;
 use craft\elements\db\ElementQueryInterface;
@@ -124,12 +124,12 @@ class SentEmail extends Element
 
     /**
      * @param ElementQueryInterface $elementQuery
-     * @param array|null            $disabledElementIds
-     * @param array                 $viewState
-     * @param string|null           $sourceKey
-     * @param string|null           $context
-     * @param bool                  $includeContainer
-     * @param bool                  $showCheckboxes
+     * @param array|null $disabledElementIds
+     * @param array $viewState
+     * @param string|null $sourceKey
+     * @param string|null $context
+     * @param bool $includeContainer
+     * @param bool $showCheckboxes
      *
      * @return string
      * @throws InvalidConfigException

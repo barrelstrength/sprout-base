@@ -19,16 +19,16 @@ use Twig\Markup;
 use yii\base\Exception;
 
 /**
- * @property array      $elementValidationRules
- * @property array      $fileKindOptions
- * @property string     $svgIconPath
- * @property array      $sourceOptions
- * @property array      $compatibleCraftFields
- * @property array      $compatibleCraftFieldTypes
- * @property array      $contentGqlType
+ * @property array $elementValidationRules
+ * @property array $fileKindOptions
+ * @property string $svgIconPath
+ * @property array $sourceOptions
+ * @property array $compatibleCraftFields
+ * @property array $compatibleCraftFieldTypes
+ * @property array $contentGqlType
  * @property bool|array $eagerLoadingGqlConditions
- * @property mixed      $settingsHtml
- * @property mixed      $exampleInputHtml
+ * @property mixed $settingsHtml
+ * @property mixed $exampleInputHtml
  */
 class FileUpload extends CraftAssets
 {
@@ -113,8 +113,8 @@ class FileUpload extends CraftAssets
     }
 
     /**
-     * @param mixed      $value
-     * @param Entry      $entry
+     * @param mixed $value
+     * @param Entry $entry
      * @param array|null $renderingOptions
      *
      * @return Markup

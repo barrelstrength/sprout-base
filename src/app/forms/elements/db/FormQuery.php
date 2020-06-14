@@ -11,7 +11,6 @@ use barrelstrength\sproutbase\app\forms\models\FormGroup;
 use barrelstrength\sproutbase\app\forms\records\FormGroup as FormGroupRecord;
 use barrelstrength\sproutbase\config\base\Config;
 use barrelstrength\sproutbase\SproutBase;
-use barrelstrength\sproutforms\SproutForms;
 use craft\db\Query;
 use craft\elements\db\ElementQuery;
 use craft\helpers\Db;

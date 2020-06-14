@@ -101,7 +101,7 @@ class Name extends Component
     }
 
     /**
-     * @param FieldInterface        $field
+     * @param FieldInterface $field
      * @param                       $value
      * @param ElementInterface|null $element
      *

@@ -13,17 +13,17 @@ use DateTime;
 use yii\db\ActiveQueryInterface;
 
 /**
- * @property int                  $id
- * @property string               $oldUrl
- * @property string               $newUrl
- * @property int                  $method
- * @property bool                 $matchStrategy
+ * @property int $id
+ * @property string $oldUrl
+ * @property string $newUrl
+ * @property int $method
+ * @property bool $matchStrategy
  * @property ActiveQueryInterface $element
- * @property int                  $count
- * @property string               $lastRemoteIpAddress
- * @property string               $lastReferrer
- * @property string               $lastUserAgent
- * @property DateTime             $dateLastUsed
+ * @property int $count
+ * @property string $lastRemoteIpAddress
+ * @property string $lastReferrer
+ * @property string $lastUserAgent
+ * @property DateTime $dateLastUsed
  *
  */
 class Redirect extends ActiveRecord

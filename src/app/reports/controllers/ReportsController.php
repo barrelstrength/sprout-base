@@ -78,7 +78,7 @@ class ReportsController extends Controller
 
     /**
      * @param Report|null $report
-     * @param int|null    $reportId
+     * @param int|null $reportId
      *
      * @return Response
      * @throws ForbiddenHttpException
@@ -149,9 +149,9 @@ class ReportsController extends Controller
     }
 
     /**
-     * @param string      $dataSourceId
+     * @param string $dataSourceId
      * @param Report|null $report
-     * @param int|null    $reportId
+     * @param int|null $reportId
      *
      * @return Response
      * @throws ForbiddenHttpException

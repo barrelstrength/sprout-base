@@ -24,15 +24,15 @@ use yii\base\Exception;
 /**
  * Class Metadata
  *
- * @property null   $googlePlusMetaTagData
- * @property array  $searchMetaTagData
- * @property array  $robotsMetaTagData
- * @property array  $twitterCardMetaTagData
- * @property array  $geographicMetaTagData
- * @property array  $metaTagData
- * @property array  $openGraphMetaTagData
- * @property array  $rawData
- * @property array  $optimizedProperties
+ * @property null $googlePlusMetaTagData
+ * @property array $searchMetaTagData
+ * @property array $robotsMetaTagData
+ * @property array $twitterCardMetaTagData
+ * @property array $geographicMetaTagData
+ * @property array $metaTagData
+ * @property array $openGraphMetaTagData
+ * @property array $rawData
+ * @property array $optimizedProperties
  * @property string uri
  */
 class Metadata extends Model
@@ -58,7 +58,7 @@ class Metadata extends Model
      *
      * @param array $config
      *
-     * @param bool  $rawDataOnly
+     * @param bool $rawDataOnly
      *
      * @throws Throwable
      */
@@ -253,7 +253,7 @@ class Metadata extends Model
     }
 
     /**
-     * @param array    $config
+     * @param array $config
      * @param MetaType $metaType
      */
     protected function populateMetaType(array &$config, MetaType $metaType)

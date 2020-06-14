@@ -7,9 +7,9 @@
 
 namespace barrelstrength\sproutbase\app\forms\fields\formfields;
 
-use barrelstrength\sproutbase\web\assetbundles\quill\QuillAsset;
 use barrelstrength\sproutbase\app\forms\base\FormField;
 use barrelstrength\sproutbase\app\forms\elements\Entry;
+use barrelstrength\sproutbase\web\assetbundles\quill\QuillAsset;
 use Craft;
 use craft\base\ElementInterface;
 use craft\helpers\Template as TemplateHelper;
@@ -26,8 +26,8 @@ use yii\db\Schema;
 /**
  *
  * @property string $svgIconPath
- * @property mixed  $settingsHtml
- * @property mixed  $exampleInputHtml
+ * @property mixed $settingsHtml
+ * @property mixed $exampleInputHtml
  */
 class SectionHeading extends FormField
 {
@@ -188,8 +188,8 @@ class SectionHeading extends FormField
     }
 
     /**
-     * @param mixed      $value
-     * @param Entry      $entry
+     * @param mixed $value
+     * @param Entry $entry
      * @param array|null $renderingOptions
      *
      * @return Markup

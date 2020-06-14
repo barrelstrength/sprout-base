@@ -34,9 +34,9 @@ class GlobalMetadataController extends Controller
     /**
      * Renders Global Metadata edit pages
      *
-     * @param string       $selectedTabHandle The global handle.
-     * @param string|null  $siteHandle        The site handle, if specified.
-     * @param Globals|null $globals           The global set being edited, if there were any validation errors.
+     * @param string $selectedTabHandle The global handle.
+     * @param string|null $siteHandle The site handle, if specified.
+     * @param Globals|null $globals The global set being edited, if there were any validation errors.
      *
      * @return Response
      * @throws ForbiddenHttpException

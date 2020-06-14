@@ -10,8 +10,6 @@ namespace barrelstrength\sproutbase\config\services;
 use barrelstrength\sproutbase\config\base\Config as BaseConfig;
 use barrelstrength\sproutbase\config\base\ConfigInterface;
 use barrelstrength\sproutbase\config\base\Settings as BaseSettings;
-use barrelstrength\sproutbase\config\configs\ControlPanelConfig;
-use barrelstrength\sproutbase\config\models\settings\ControlPanelSettings;
 use barrelstrength\sproutbase\SproutBase;
 use Craft;
 use craft\helpers\ProjectConfig as ProjectConfigHelper;

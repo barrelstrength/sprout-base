@@ -49,8 +49,8 @@ class SettingsController extends Controller
 
     /**
      * @param string $settingsTarget
-     * @param null   $settingsSectionHandle
-     * @param null   $settingsSubSectionHandle
+     * @param null $settingsSectionHandle
+     * @param null $settingsSubSectionHandle
      *
      * @return Response
      * @throws SiteNotFoundException
@@ -164,12 +164,13 @@ class SettingsController extends Controller
 
     /**
      * @param array $settings
-     * @param Site  $currentSite
+     * @param Site $currentSite
      * @param array $sproutConfigs
      *
      * @return array
      */
-    protected function buildSubNav(array $sproutConfigs, array $settings, Site $currentSite = null): array {
+    protected function buildSubNav(array $sproutConfigs, array $settings, Site $currentSite = null): array
+    {
 
         $subNavGroups = [];
 

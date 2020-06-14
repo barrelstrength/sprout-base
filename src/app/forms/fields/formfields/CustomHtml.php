@@ -24,9 +24,9 @@ use yii\db\Schema;
  *
  * @property string $contentColumnType
  * @property string $svgIconPath
- * @property mixed  $settingsHtml
- * @property array  $compatibleCraftFields
- * @property mixed  $exampleInputHtml
+ * @property mixed $settingsHtml
+ * @property array $compatibleCraftFields
+ * @property mixed $exampleInputHtml
  */
 class CustomHtml extends FormField implements PreviewableFieldInterface
 {
@@ -146,8 +146,8 @@ class CustomHtml extends FormField implements PreviewableFieldInterface
     }
 
     /**
-     * @param mixed      $value
-     * @param Entry      $entry
+     * @param mixed $value
+     * @param Entry $entry
      * @param array|null $renderingOptions
      *
      * @return Markup

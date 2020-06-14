@@ -10,6 +10,24 @@ namespace barrelstrength\sproutbase\config\base;
 use craft\base\Component;
 use craft\helpers\UrlHelper;
 
+/**
+ *
+ * @property null|\barrelstrength\sproutbase\config\base\Settings $settings
+ * @property array $cpNavItem
+ * @property string $upgradeUrl
+ * @property null $configGroup
+ * @property string $description
+ * @property string $edition
+ * @property string $alternateName
+ * @property array $userPermissions
+ * @property array $configSettings
+ * @property array $cpUrlRules
+ * @property string $baseUrl
+ * @property string $name
+ * @property array $sproutDependencies
+ * @property array $siteUrlRules
+ * @property bool $isPro
+ */
 abstract class Config extends Component implements ConfigInterface
 {
     protected $_edition = 'lite';

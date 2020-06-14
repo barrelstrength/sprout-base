@@ -7,12 +7,20 @@
 
 namespace barrelstrength\sproutbase\config\configs;
 
-use barrelstrength\sproutbase\migrations\reports\Install;
 use barrelstrength\sproutbase\config\base\Config;
 use barrelstrength\sproutbase\config\models\settings\ReportsSettings;
+use barrelstrength\sproutbase\migrations\reports\Install;
 use barrelstrength\sproutbase\SproutBase;
 use Craft;
 
+/**
+ *
+ * @property array $cpNavItem
+ * @property array|string[] $cpUrlRules
+ * @property string $description
+ * @property array[]|array $userPermissions
+ * @property string $key
+ */
 class ReportsConfig extends Config
 {
     public function getKey(): string

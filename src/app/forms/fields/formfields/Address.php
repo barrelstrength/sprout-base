@@ -27,13 +27,13 @@ use yii\base\Exception;
 
 /**
  *
- * @property array       $elementValidationRules
- * @property string      $contentColumnType
- * @property string      $svgIconPath
- * @property array       $compatibleCraftFields
- * @property array       $compatibleCraftFieldTypes
+ * @property array $elementValidationRules
+ * @property string $contentColumnType
+ * @property string $svgIconPath
+ * @property array $compatibleCraftFields
+ * @property array $compatibleCraftFieldTypes
  * @property null|string $settingsHtml
- * @property string      $exampleInputHtml
+ * @property string $exampleInputHtml
  */
 class Address extends FormField implements PreviewableFieldInterface
 {
@@ -90,7 +90,7 @@ class Address extends FormField implements PreviewableFieldInterface
     }
 
     /**
-     * @param mixed                 $value
+     * @param mixed $value
      * @param ElementInterface|null $element
      *
      * @return string
@@ -117,7 +117,7 @@ class Address extends FormField implements PreviewableFieldInterface
 
     /**
      * @param ElementInterface $element
-     * @param bool             $isNew
+     * @param bool $isNew
      *
      * @throws Throwable
      */
@@ -144,8 +144,8 @@ class Address extends FormField implements PreviewableFieldInterface
     }
 
     /**
-     * @param mixed      $value
-     * @param Entry      $entry
+     * @param mixed $value
+     * @param Entry $entry
      * @param array|null $renderingOptions
      *
      * @return Markup

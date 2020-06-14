@@ -41,7 +41,7 @@ class Email extends Component
     }
 
     /**
-     * @param FieldInterface        $field
+     * @param FieldInterface $field
      * @param                       $value
      * @param ElementInterface|null $element
      *
@@ -103,7 +103,7 @@ class Email extends Component
      * Validates that an email address is unique to a particular field type
      *
      * @param                  $value
-     * @param FieldInterface   $field
+     * @param FieldInterface $field
      * @param ElementInterface $element
      *
      * @return bool

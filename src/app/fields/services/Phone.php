@@ -51,7 +51,7 @@ class Phone extends Component
     }
 
     /**
-     * @param FieldInterface        $field
+     * @param FieldInterface $field
      * @param                       $value
      *
      * @return string
@@ -91,7 +91,7 @@ class Phone extends Component
     }
 
     /**
-     * @param FieldInterface        $field
+     * @param FieldInterface $field
      * @param                       $value
      * @param ElementInterface|null $element
      *

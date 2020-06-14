@@ -13,6 +13,15 @@ use barrelstrength\sproutbase\migrations\campaigns\Install;
 use barrelstrength\sproutbase\SproutBase;
 use Craft;
 
+/**
+ *
+ * @property array $cpNavItem
+ * @property array $cpUrlRules
+ * @property \barrelstrength\sproutbase\config\configs\NotificationsConfig $configGroup
+ * @property string $description
+ * @property array[]|array $userPermissions
+ * @property string $key
+ */
 class CampaignsConfig extends Config
 {
     public function getKey(): string

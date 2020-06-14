@@ -17,7 +17,7 @@ use yii\db\Schema;
 
 /**
  * @property string $contentColumnType
- * @property mixed  $settingsHtml
+ * @property mixed $settingsHtml
  */
 class PredefinedDate extends BasePredefinedField
 {

@@ -25,13 +25,13 @@ use Twig\Markup;
 use yii\db\Schema;
 
 /**
- * @property array  $elementValidationRules
+ * @property array $elementValidationRules
  * @property string $svgIconPath
- * @property mixed  $settingsHtml
- * @property array  $compatibleCraftFields
- * @property array  $compatibleCraftFieldTypes
+ * @property mixed $settingsHtml
+ * @property array $compatibleCraftFields
+ * @property array $compatibleCraftFieldTypes
  * @property string $contentColumnType
- * @property mixed  $exampleInputHtml
+ * @property mixed $exampleInputHtml
  */
 class Date extends FormField implements PreviewableFieldInterface
 {
@@ -117,7 +117,7 @@ class Date extends FormField implements PreviewableFieldInterface
     }
 
     /**
-     * @param mixed                 $value
+     * @param mixed $value
      * @param ElementInterface|null $element
      *
      * @return DateTime|false|mixed|null
@@ -242,8 +242,8 @@ class Date extends FormField implements PreviewableFieldInterface
     }
 
     /**
-     * @param mixed      $value
-     * @param Entry      $entry
+     * @param mixed $value
+     * @param Entry $entry
      * @param array|null $renderingOptions
      *
      * @return Markup
@@ -280,10 +280,10 @@ class Date extends FormField implements PreviewableFieldInterface
     /**
      * Prepare the time dropdown in increments of the selected minuteIncrement.
      *
-     * @param int    $minuteIncrement
+     * @param int $minuteIncrement
      * @param string $format
-     * @param int    $lower
-     * @param int    $upper
+     * @param int $lower
+     * @param int $upper
      *
      * @return array
      * @throws Exception

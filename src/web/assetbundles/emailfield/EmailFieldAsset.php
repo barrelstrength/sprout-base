@@ -7,7 +7,7 @@
 
 namespace barrelstrength\sproutbase\web\assetbundles\emailfield;
 
-use \barrelstrength\sproutbase\web\assetbundles\sproutcp\SproutCpAsset;
+use barrelstrength\sproutbase\web\assetbundles\sproutcp\SproutCpAsset;
 use craft\web\AssetBundle;
 
 class EmailFieldAsset extends AssetBundle

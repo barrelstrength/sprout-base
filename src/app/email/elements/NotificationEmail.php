@@ -7,8 +7,8 @@ use barrelstrength\sproutbase\app\email\base\SenderTrait;
 use barrelstrength\sproutbase\app\email\elements\actions\DeleteNotification;
 use barrelstrength\sproutbase\app\email\elements\db\NotificationEmailQuery;
 use barrelstrength\sproutbase\app\email\records\NotificationEmail as NotificationEmailRecord;
-use barrelstrength\sproutbase\web\assetbundles\email\EmailAsset;
 use barrelstrength\sproutbase\SproutBase;
+use barrelstrength\sproutbase\web\assetbundles\email\EmailAsset;
 use Craft;
 use craft\behaviors\FieldLayoutBehavior;
 use craft\elements\actions\SetStatus;
@@ -29,7 +29,7 @@ use yii\base\InvalidConfigException;
 /**
  *
  * @property array[]|array $sendRuleOptions
- * @property mixed         $options
+ * @property mixed $options
  */
 class NotificationEmail extends EmailElement
 {

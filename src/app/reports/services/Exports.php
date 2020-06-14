@@ -60,10 +60,10 @@ class Exports extends Component
     /**
      * Takes an array of values and options labels and creates a downloadable CSV file
      *
-     * @param array  $values
-     * @param array  $labels
+     * @param array $values
+     * @param array $labels
      * @param string $filename
-     * @param null   $delimiter
+     * @param null $delimiter
      */
     public function toCsv(array &$values, array $labels = [], $filename = 'export.csv', $delimiter = null)
     {

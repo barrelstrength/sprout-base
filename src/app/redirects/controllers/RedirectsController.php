@@ -58,8 +58,8 @@ class RedirectsController extends Controller
     /**
      * Edit a Redirect
      *
-     * @param null          $redirectId
-     * @param null          $siteHandle
+     * @param null $redirectId
+     * @param null $siteHandle
      * @param Redirect|null $redirect
      *
      * @return Response

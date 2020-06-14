@@ -10,7 +10,6 @@ namespace barrelstrength\sproutbase\app\forms\controllers;
 use barrelstrength\sproutbase\app\forms\elements\Form;
 use barrelstrength\sproutbase\config\base\Config;
 use barrelstrength\sproutbase\SproutBase;
-use barrelstrength\sproutforms\SproutForms;
 use Craft;
 use craft\base\ElementInterface;
 use craft\db\Table;
@@ -71,7 +70,7 @@ class FormsController extends BaseController
 
     /**
      * @param int|null $formId
-     * @param null     $settingsSectionHandle
+     * @param null $settingsSectionHandle
      *
      * @return Response
      * @throws ForbiddenHttpException
@@ -186,7 +185,7 @@ class FormsController extends BaseController
     /**
      * Edit a form.
      *
-     * @param int|null                   $formId
+     * @param int|null $formId
      * @param Form|ElementInterface|null $form
      *
      * @return Response

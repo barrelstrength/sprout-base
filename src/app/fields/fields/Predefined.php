@@ -2,7 +2,7 @@
 
 namespace barrelstrength\sproutbase\app\fields\fields;
 
-use barrelstrength\sproutbase\app\fields\fields\data\PredefinedFieldData;
+use barrelstrength\sproutbase\app\fields\data\PredefinedFieldData;
 use Craft;
 use craft\base\ElementInterface;
 use Throwable;
@@ -15,7 +15,7 @@ use yii\db\Schema;
 /**
  *
  * @property string $contentColumnType
- * @property mixed  $settingsHtml
+ * @property mixed $settingsHtml
  */
 class Predefined extends BasePredefinedField
 {

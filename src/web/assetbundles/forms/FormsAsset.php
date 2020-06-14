@@ -7,8 +7,8 @@
 
 namespace barrelstrength\sproutbase\web\assetbundles\forms;
 
-use barrelstrength\sproutbase\web\assetbundles\selectotherfield\SelectOtherFieldAsset;
 use barrelstrength\sproutbase\web\assetbundles\fontawesome\FontAwesomeAsset;
+use barrelstrength\sproutbase\web\assetbundles\selectotherfield\SelectOtherFieldAsset;
 use barrelstrength\sproutbase\web\assetbundles\sproutcp\SproutCpAsset;
 use craft\web\AssetBundle;
 use craft\web\assets\cp\CpAsset;

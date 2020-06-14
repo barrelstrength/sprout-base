@@ -23,9 +23,9 @@ use Twig\Error\SyntaxError;
 use yii\base\Exception;
 
 /**
- * @property array      $elementValidationRules
+ * @property array $elementValidationRules
  * @property void|array $templateDirectories
- * @property mixed      $settingsHtml
+ * @property mixed $settingsHtml
  */
 class Template extends Field implements PreviewableFieldInterface
 {
@@ -85,7 +85,7 @@ class Template extends Field implements PreviewableFieldInterface
     }
 
     /**
-     * @param mixed                 $value
+     * @param mixed $value
      * @param ElementInterface|null $element
      *
      * @return string

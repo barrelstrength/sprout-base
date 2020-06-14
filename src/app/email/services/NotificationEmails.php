@@ -165,7 +165,7 @@ class NotificationEmails extends Component
 
     /**
      * @param NotificationEmail $email
-     * @param string            $fileExtension
+     * @param string $fileExtension
      *
      * @throws ExitException
      * @throws LoaderError

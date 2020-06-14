@@ -7,12 +7,10 @@
 
 namespace barrelstrength\sproutbase\app\reports\widgets;
 
-use barrelstrength\sproutbase\app\reports\base\DataSource;
 use barrelstrength\sproutbase\app\reports\elements\Report;
 use barrelstrength\sproutbase\SproutBase;
 use Craft;
 use craft\base\Widget;
-use craft\helpers\UrlHelper;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
@@ -22,8 +20,8 @@ use function json_decode;
 /**
  *
  * @property string|false $bodyHtml
- * @property null|string  $settingsHtml
- * @property string       $title
+ * @property null|string $settingsHtml
+ * @property string $title
  */
 class Visualization extends Widget
 {

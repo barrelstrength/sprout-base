@@ -12,22 +12,22 @@ use craft\db\ActiveRecord;
 use yii\db\ActiveQueryInterface;
 
 /**
- * @property int                  $id
- * @property string               $name
- * @property bool                 $hasNameFormat
- * @property string               $nameFormat
- * @property string               $handle
- * @property string               $description
- * @property bool                 $allowHtml
- * @property string               $sortOrder
- * @property string               $sortColumn
- * @property string               $delimiter
- * @property string               $emailColumn
- * @property string               $settings
- * @property int                  $dataSourceId
- * @property bool                 $enabled
+ * @property int $id
+ * @property string $name
+ * @property bool $hasNameFormat
+ * @property string $nameFormat
+ * @property string $handle
+ * @property string $description
+ * @property bool $allowHtml
+ * @property string $sortOrder
+ * @property string $sortColumn
+ * @property string $delimiter
+ * @property string $emailColumn
+ * @property string $settings
+ * @property int $dataSourceId
+ * @property bool $enabled
  * @property ActiveQueryInterface $element
- * @property int                  $groupId
+ * @property int $groupId
  */
 class Report extends ActiveRecord
 {

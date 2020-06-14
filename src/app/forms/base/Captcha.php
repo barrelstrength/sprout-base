@@ -15,7 +15,7 @@ use craft\base\Model;
 /**
  * Class Captcha
  *
- * @property null   $settings
+ * @property null $settings
  * @property string $captchaSettingsHtml
  * @property string $name
  * @property string $description

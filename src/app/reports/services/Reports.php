@@ -23,8 +23,8 @@ use yii\base\Exception;
 /**
  *
  * @property null|Report[] $allReports
- * @property array         $reportsAsSelectFieldOptions
- * @property Query         $reportsQuery
+ * @property array $reportsAsSelectFieldOptions
+ * @property Query $reportsQuery
  */
 class Reports extends Component
 {

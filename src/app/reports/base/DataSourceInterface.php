@@ -18,7 +18,7 @@ interface DataSourceInterface extends SavableComponentInterface
      * Should return an array of strings to be used as column headings in display/output
      *
      * @param Report $report
-     * @param array  $settings
+     * @param array $settings
      *
      * @return array
      */
@@ -28,7 +28,7 @@ interface DataSourceInterface extends SavableComponentInterface
      * Should return an array of records to use in the report
      *
      * @param Report $report
-     * @param array  $settings Not in use. Use $report->getSettings() instead.
+     * @param array $settings Not in use. Use $report->getSettings() instead.
      *
      * @return array
      * @todo - Deprecated $settings param in 1.0. Will be removed in 2.0.

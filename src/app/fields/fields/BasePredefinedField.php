@@ -49,7 +49,7 @@ class BasePredefinedField extends Field implements PreviewableFieldInterface
 
     /**
      * @param Element $element
-     * @param bool    $isNew
+     * @param bool $isNew
      *
      * @throws Throwable
      */

@@ -245,7 +245,7 @@ class IntegrationsController extends BaseController
     }
 
     /**
-     * @param bool             $success
+     * @param bool $success
      * @param Integration|null $integration
      *
      * @return Response

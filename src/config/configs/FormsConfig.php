@@ -7,13 +7,21 @@
 
 namespace barrelstrength\sproutbase\config\configs;
 
-use barrelstrength\sproutbase\migrations\forms\Install;
 use barrelstrength\sproutbase\config\base\Config;
 use barrelstrength\sproutbase\config\controllers\SettingsController;
 use barrelstrength\sproutbase\config\models\settings\FormsSettings;
+use barrelstrength\sproutbase\migrations\forms\Install;
 use barrelstrength\sproutbase\SproutBase;
 use Craft;
 
+/**
+ *
+ * @property array $cpNavItem
+ * @property array $cpUrlRules
+ * @property string $description
+ * @property array[]|array $userPermissions
+ * @property string $key
+ */
 class FormsConfig extends Config
 {
     public function getKey(): string

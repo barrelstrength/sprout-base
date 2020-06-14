@@ -15,10 +15,10 @@ use yii\base\InvalidConfigException;
 /**
  * Class Rule
  *
- * @property array  $conditionRules
- * @property Form   $form
- * @property array  $behaviorActions
- * @property array  $ruleTargets
+ * @property array $conditionRules
+ * @property Form $form
+ * @property array $behaviorActions
+ * @property array $ruleTargets
  * @property string $behaviorDescription
  * @property string $behaviorActionLabel
  */

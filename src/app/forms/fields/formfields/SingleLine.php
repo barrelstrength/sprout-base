@@ -39,11 +39,11 @@ use yii\db\Schema;
  *
  * @property string $contentColumnType
  * @property string $svgIconPath
- * @property mixed  $settingsHtml
- * @property array  $compatibleCraftFields
- * @property array  $compatibleCraftFieldTypes
- * @property array  $compatibleConditions
- * @property mixed  $exampleInputHtml
+ * @property mixed $settingsHtml
+ * @property array $compatibleCraftFields
+ * @property array $compatibleCraftFieldTypes
+ * @property array $compatibleConditions
+ * @property mixed $exampleInputHtml
  */
 class SingleLine extends FormField implements PreviewableFieldInterface
 {

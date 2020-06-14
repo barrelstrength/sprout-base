@@ -121,8 +121,8 @@ class SitemapsController extends Controller
     /**
      * Renders a Sitemap Edit Page
      *
-     * @param int|null            $sitemapSectionId
-     * @param string|null         $siteHandle
+     * @param int|null $sitemapSectionId
+     * @param string|null $siteHandle
      * @param SitemapSection|null $sitemapSection
      *
      * @return Response

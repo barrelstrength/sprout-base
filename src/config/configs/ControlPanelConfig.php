@@ -11,6 +11,11 @@ use barrelstrength\sproutbase\config\base\Config;
 use barrelstrength\sproutbase\config\models\settings\ControlPanelSettings;
 use Craft;
 
+/**
+ *
+ * @property array|string[] $cpUrlRules
+ * @property string $key
+ */
 class ControlPanelConfig extends Config
 {
     public function getKey(): string

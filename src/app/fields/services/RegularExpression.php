@@ -41,7 +41,7 @@ class RegularExpression extends Component
     }
 
     /**
-     * @param Field                 $field
+     * @param Field $field
      * @param                       $value
      * @param ElementInterface|null $element
      *

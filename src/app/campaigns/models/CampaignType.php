@@ -22,19 +22,19 @@ use yii\base\InvalidConfigException;
  * @mixin FieldLayoutBehavior
  * @package Craft
  * --
- * @property int         $id
- * @property string      $name
- * @property string      $handle
- * @property string      $mailer
- * @property string      $titleFormat
- * @property string      $urlFormat
- * @property bool        $hasUrls
- * @property bool        $hasAdvancedTitles
- * @property string      $template
- * @property string      $templateCopyPaste
- * @property int         $fieldLayoutId
+ * @property int $id
+ * @property string $name
+ * @property string $handle
+ * @property string $mailer
+ * @property string $titleFormat
+ * @property string $urlFormat
+ * @property bool $hasUrls
+ * @property bool $hasAdvancedTitles
+ * @property string $template
+ * @property string $templateCopyPaste
+ * @property int $fieldLayoutId
  * @property FieldLayout $fieldLayout
- * @property int         $emailId
+ * @property int $emailId
  */
 class CampaignType extends Model
 {

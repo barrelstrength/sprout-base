@@ -18,7 +18,7 @@ use Craft;
 
 /**
  *
- * @property array            $settingsNavItem
+ * @property array $settingsNavItem
  * @property array|string[][] $spamRedirectBehaviorsAsOptions
  */
 class FormsSettings extends Settings

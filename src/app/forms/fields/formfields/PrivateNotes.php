@@ -23,8 +23,8 @@ use yii\db\Schema;
 /**
  *
  * @property string $svgIconPath
- * @property array  $compatibleCraftFieldTypes
- * @property mixed  $exampleInputHtml
+ * @property array $compatibleCraftFieldTypes
+ * @property mixed $exampleInputHtml
  */
 class PrivateNotes extends FormField
 {
@@ -112,8 +112,8 @@ class PrivateNotes extends FormField
     }
 
     /**
-     * @param mixed      $value
-     * @param Entry      $entry
+     * @param mixed $value
+     * @param Entry $entry
      * @param array|null $renderingOptions
      *
      * @return Markup

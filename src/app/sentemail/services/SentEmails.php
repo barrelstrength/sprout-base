@@ -169,7 +169,7 @@ class SentEmails extends Component
     /**
      * Save email snapshot using the Sent Email Element Type
      *
-     * @param Message            $message
+     * @param Message $message
      * @param SentEmailInfoTable $infoTable
      *
      * @return SentEmail|bool
@@ -350,7 +350,7 @@ class SentEmails extends Component
     /**
      * Update the SproutEmail_SentEmailInfoTableModel based on the emailKey
      *
-     * @param Message            $message
+     * @param Message $message
      * @param SentEmailInfoTable $infoTable
      *
      * @return SentEmailInfoTable

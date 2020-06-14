@@ -40,7 +40,7 @@ class ModalResponse extends Model
 
     /**
      * @param string $template
-     * @param array  $variables
+     * @param array $variables
      *
      * @return ModalResponse
      * @throws LoaderError
@@ -67,7 +67,7 @@ class ModalResponse extends Model
     }
 
     /**
-     * @param null  $template
+     * @param null $template
      * @param array $variables
      *
      * @return ModalResponse

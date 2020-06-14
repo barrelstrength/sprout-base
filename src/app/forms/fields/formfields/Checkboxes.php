@@ -24,9 +24,9 @@ use yii\base\Exception;
  * Class SproutFormsCheckboxesField
  *
  * @property string $svgIconPath
- * @property array  $compatibleCraftFields
- * @property array  $compatibleCraftFieldTypes
- * @property mixed  $exampleInputHtml
+ * @property array $compatibleCraftFields
+ * @property array $compatibleCraftFieldTypes
+ * @property mixed $exampleInputHtml
  */
 class Checkboxes extends CraftCheckboxesField
 {

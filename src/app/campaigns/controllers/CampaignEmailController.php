@@ -57,9 +57,9 @@ class CampaignEmailController extends Controller
     /**
      * Renders a Campaign Email Edit Page
      *
-     * @param null               $campaignTypeId
+     * @param null $campaignTypeId
      * @param CampaignEmail|null $campaignEmail
-     * @param null               $emailId
+     * @param null $emailId
      *
      * @return Response
      */
@@ -421,7 +421,7 @@ class CampaignEmailController extends Controller
     }
 
     /**
-     * @param null   $emailId
+     * @param null $emailId
      * @param string $type
      *
      * @return Response

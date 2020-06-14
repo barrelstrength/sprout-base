@@ -28,11 +28,11 @@ use yii\base\Exception;
  * @package barrelstrength\sproutforms\integrations\sproutemail\events\notificationevents
  *
  * @property string $eventHandlerClassName
- * @property array  $allForms
- * @property Entry  $mockEventObject
- * @property null   $eventObject
- * @property mixed  $name
- * @property mixed  $eventName
+ * @property array $allForms
+ * @property Entry $mockEventObject
+ * @property null $eventObject
+ * @property mixed $name
+ * @property mixed $eventName
  * @property string $eventClassName
  */
 class SaveEntryEvent extends NotificationEvent

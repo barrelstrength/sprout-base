@@ -12,7 +12,7 @@ use craft\db\ActiveRecord;
 /**
  * Class FormGroup record.
  *
- * @property int    $id    ID
+ * @property int $id    ID
  * @property string $name  Name
  */
 class FormGroup extends ActiveRecord

@@ -19,7 +19,7 @@ use craft\db\ActiveRecord;
  * @property                                                   $type
  * @property                                                   $sendRule
  * @property                                                   $settings
- * @property null|IntegrationApi                               $integrationApi
+ * @property null|IntegrationApi $integrationApi
  * @property                                                   $enabled
  */
 class Integration extends ActiveRecord

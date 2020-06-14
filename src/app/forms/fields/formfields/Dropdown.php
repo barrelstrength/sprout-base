@@ -33,10 +33,10 @@ use yii\base\Exception;
  *
  * @property string $modelName
  * @property string $svgIconPath
- * @property array  $compatibleCraftFields
- * @property array  $compatibleCraftFieldTypes
- * @property array  $compatibleConditions
- * @property mixed  $exampleInputHtml
+ * @property array $compatibleCraftFields
+ * @property array $compatibleCraftFieldTypes
+ * @property array $compatibleConditions
+ * @property mixed $exampleInputHtml
  */
 class Dropdown extends CraftDropdownField
 {
@@ -83,8 +83,8 @@ class Dropdown extends CraftDropdownField
     }
 
     /**
-     * @param mixed      $value
-     * @param Entry      $entry
+     * @param mixed $value
+     * @param Entry $entry
      * @param array|null $renderingOptions
      *
      * @return Markup

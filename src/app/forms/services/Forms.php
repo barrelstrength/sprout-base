@@ -14,13 +14,12 @@ use barrelstrength\sproutbase\app\forms\elements\Form as FormElement;
 use barrelstrength\sproutbase\app\forms\errors\FormTemplatesDirectoryNotFoundException;
 use barrelstrength\sproutbase\app\forms\formtemplates\AccessibleTemplates;
 use barrelstrength\sproutbase\app\forms\formtemplates\CustomTemplates;
-use barrelstrength\sproutbase\config\base\Config;
-use barrelstrength\sproutbase\migrations\forms\CreateFormContentTable;
 use barrelstrength\sproutbase\app\forms\records\Form as FormRecord;
 use barrelstrength\sproutbase\app\forms\records\Integration as IntegrationRecord;
 use barrelstrength\sproutbase\app\forms\rules\FieldRule;
+use barrelstrength\sproutbase\config\base\Config;
+use barrelstrength\sproutbase\migrations\forms\CreateFormContentTable;
 use barrelstrength\sproutbase\SproutBase;
-use barrelstrength\sproutforms\SproutForms;
 use Craft;
 use craft\base\ElementInterface;
 use craft\base\Field;
@@ -36,9 +35,9 @@ use yii\base\InvalidConfigException;
 
 /**
  *
- * @property array   $allEnabledCaptchas
- * @property array   $allCaptchas
- * @property array   $allFormTemplateTypes
+ * @property array $allEnabledCaptchas
+ * @property array $allCaptchas
+ * @property array $allFormTemplateTypes
  * @property array[] $allFormTemplates
  * @property array[] $allCaptchaTypes
  */
@@ -110,7 +109,7 @@ class Forms extends Component
 
     /**
      * @param FormElement $form
-     * @param bool        $duplicate
+     * @param bool $duplicate
      *
      * @return bool
      * @throws Throwable
@@ -297,7 +296,7 @@ class Forms extends Component
     /**
      * Returns a form model if one is found in the database by id
      *
-     * @param int      $formId
+     * @param int $formId
      * @param int|null $siteId
      *
      * @return FormElement|ElementInterface|null
@@ -317,7 +316,7 @@ class Forms extends Component
     /**
      * Returns a form model if one is found in the database by handle
      *
-     * @param string   $handle
+     * @param string $handle
      * @param int|null $siteId
      *
      * @return Form|ElementInterface|null
@@ -337,7 +336,7 @@ class Forms extends Component
      * Returns the content table name for a given form field
      *
      * @param FormElement $form
-     * @param bool        $useOldHandle
+     * @param bool $useOldHandle
      *
      * @return string|false
      */

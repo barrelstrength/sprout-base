@@ -16,7 +16,7 @@ use yii\base\Event;
 
 /**
  *
- * @property array    $notificationEmailEventTypes
+ * @property array $notificationEmailEventTypes
  * @property Callable $dynamicEventHandler
  */
 class NotificationEmailEvents extends Component
@@ -39,7 +39,7 @@ class NotificationEmailEvents extends Component
     /**
      * Registers an event listener to be trigger dynamically
      *
-     * @param string   $eventId
+     * @param string $eventId
      * @param Callable $callback
      */
     public function registerEvent($eventId, $callback)
@@ -155,8 +155,8 @@ class NotificationEmailEvents extends Component
      * This method hands things off to Sprout Email when a Notification Event we registered gets triggered.
      *
      * @param                       $notificationEmailEventClassName
-     * @param Event                 $event
-     * @param NotificationEvent     $eventHandlerClass
+     * @param Event $event
+     * @param NotificationEvent $eventHandlerClass
      *
      * @return bool
      * @throws Throwable
@@ -239,7 +239,7 @@ class NotificationEmailEvents extends Component
      * Returns a single notification event
      *
      * @param string $type The return value of the event getId()
-     * @param mixed  $default
+     * @param mixed $default
      *
      * @return NotificationEvent
      */

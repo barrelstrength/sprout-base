@@ -20,7 +20,7 @@ use yii\base\Component;
 
 /**
  *
- * @property array                   $matchedElementVariables
+ * @property array $matchedElementVariables
  * @property UrlEnabledSectionType[] $registeredUrlEnabledSectionsEvent
  */
 class UrlEnabledSections extends Component

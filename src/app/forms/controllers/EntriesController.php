@@ -85,7 +85,7 @@ class EntriesController extends BaseController
     /**
      * Route Controller for Edit Entry Template
      *
-     * @param int|null          $entryId
+     * @param int|null $entryId
      * @param EntryElement|null $entry
      *
      * @return Response
@@ -460,7 +460,7 @@ class EntriesController extends BaseController
     }
 
     /**
-     * @param EntryElement  $entry
+     * @param EntryElement $entry
      * @param FormsSettings $settings
      *
      * @return bool

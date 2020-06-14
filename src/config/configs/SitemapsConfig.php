@@ -7,14 +7,22 @@
 
 namespace barrelstrength\sproutbase\config\configs;
 
-use barrelstrength\sproutbase\migrations\sitemaps\Install;
 use barrelstrength\sproutbase\config\base\Config;
 use barrelstrength\sproutbase\config\models\settings\SitemapsSettings;
+use barrelstrength\sproutbase\migrations\sitemaps\Install;
 use barrelstrength\sproutbase\SproutBase;
 use Craft;
-use craft\errors\SiteNotFoundException;
-use craft\helpers\StringHelper;
 
+/**
+ *
+ * @property array $cpNavItem
+ * @property array|string[] $cpUrlRules
+ * @property \barrelstrength\sproutbase\config\configs\MetadataConfig $configGroup
+ * @property string $description
+ * @property array[]|array $userPermissions
+ * @property array|string[] $siteUrlRules
+ * @property string $key
+ */
 class SitemapsConfig extends Config
 {
     public function getKey(): string

@@ -21,10 +21,10 @@ use yii\base\Exception;
 
 /**
  *
- * @property array  $elementValidationRules
+ * @property array $elementValidationRules
  * @property string $contentColumnType
- * @property mixed  $settingsHtml
- * @property array  $countries
+ * @property mixed $settingsHtml
+ * @property array $countries
  */
 class Phone extends Field implements PreviewableFieldInterface
 {
@@ -100,7 +100,7 @@ class Phone extends Field implements PreviewableFieldInterface
     }
 
     /**
-     * @param mixed                 $value
+     * @param mixed $value
      * @param ElementInterface|null $element
      *
      * @return string

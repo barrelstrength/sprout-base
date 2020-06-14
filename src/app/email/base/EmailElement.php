@@ -12,12 +12,12 @@ use craft\base\Field;
 
 /**
  *
- * @property bool                                                                                                                                                                                                   $isTest
- * @property null|object                                                                                                                                                                                            $eventObject
- * @property string                                                                                                                                                                                                 $emailTemplateId
- * @property \barrelstrength\sproutbase\app\email\base\Mailer                                                                                                                                                       $mailer
- * @property array                                                                                                                                                                                                  $fieldLayoutTabs
- * @property \barrelstrength\sproutbase\app\email\base\EmailTemplates|\barrelstrength\sproutbase\app\email\emailtemplates\CustomTemplates|string|\barrelstrength\sproutbase\app\email\emailtemplates\BasicTemplates $emailTemplates
+ * @property bool $isTest
+ * @property null|object $eventObject
+ * @property string $emailTemplateId
+ * @property Mailer $mailer
+ * @property array $fieldLayoutTabs
+ * @property EmailTemplates|CustomTemplates|string|BasicTemplates $emailTemplates
  */
 abstract class EmailElement extends Element
 {

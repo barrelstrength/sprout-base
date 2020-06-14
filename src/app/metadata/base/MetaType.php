@@ -13,12 +13,12 @@ use craft\base\Field;
 
 /**
  * @property string $handle
- * @property array  $attributesMapping
+ * @property array $attributesMapping
  * @property string $settingsHtml
- * @property array  $staticAttributes
+ * @property array $staticAttributes
  * @property string $iconPath
- * @property array  $rawData
- * @property array  $metaTagData
+ * @property array $rawData
+ * @property array $metaTagData
  */
 abstract class MetaType extends Component
 {

@@ -9,20 +9,20 @@ use yii\db\ActiveQueryInterface;
 /**
  * Class CampaignTypeRecord
  *
- * @property int                  $id
- * @property string               $name
- * @property string               $handle
- * @property string               $type
- * @property string               $mailer
- * @property string               $emailTemplateId
- * @property string               $titleFormat
- * @property string               $urlFormat
- * @property bool                 $hasUrls
- * @property bool                 $hasAdvancedTitles
- * @property string               $template
- * @property string               $templateCopyPaste
+ * @property int $id
+ * @property string $name
+ * @property string $handle
+ * @property string $type
+ * @property string $mailer
+ * @property string $emailTemplateId
+ * @property string $titleFormat
+ * @property string $urlFormat
+ * @property bool $hasUrls
+ * @property bool $hasAdvancedTitles
+ * @property string $template
+ * @property string $templateCopyPaste
  * @property ActiveQueryInterface $fieldLayout
- * @property int                  $fieldLayoutId
+ * @property int $fieldLayoutId
  */
 class CampaignType extends ActiveRecord
 {

@@ -23,7 +23,7 @@ use yii\web\Response;
 class EntryStatusesController extends BaseController
 {
     /**
-     * @param int|null         $entryStatusId
+     * @param int|null $entryStatusId
      * @param EntryStatus|null $entryStatus
      *
      * @return Response

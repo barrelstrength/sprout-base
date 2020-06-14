@@ -22,12 +22,12 @@ use yii\base\InvalidConfigException;
 
 /**
  *
- * @property null|string   $fieldMappingSettingsHtml
- * @property array         $indexedFieldMapping
- * @property array         $targetIntegrationFieldValues
- * @property array         $sendRuleOptions
- * @property array         $targetIntegrationFieldsAsMappingOptions
- * @property array         $sourceFormFields
+ * @property null|string $fieldMappingSettingsHtml
+ * @property array $indexedFieldMapping
+ * @property array $targetIntegrationFieldValues
+ * @property array $sendRuleOptions
+ * @property array $targetIntegrationFieldsAsMappingOptions
+ * @property array $sourceFormFields
  * @property array[]|array $defaultSourceMappingAttributes
  */
 abstract class Integration extends SavableComponent implements IntegrationInterface

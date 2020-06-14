@@ -13,6 +13,15 @@ use barrelstrength\sproutbase\migrations\redirects\Install;
 use barrelstrength\sproutbase\SproutBase;
 use Craft;
 
+/**
+ *
+ * @property array $cpNavItem
+ * @property array|string[] $cpUrlRules
+ * @property \barrelstrength\sproutbase\config\configs\MetadataConfig $configGroup
+ * @property string $description
+ * @property array[]|array $userPermissions
+ * @property string $key
+ */
 class RedirectsConfig extends Config
 {
     public function getKey(): string

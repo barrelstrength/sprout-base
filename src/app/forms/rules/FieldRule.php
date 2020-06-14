@@ -21,10 +21,10 @@ use yii\base\InvalidConfigException;
 /**
  * Add a conditional logic to show or hide a Form Field
  *
- * @property array       $behaviorActions
- * @property array       $behaviorActionsAsOptions
- * @property string      $behaviorActionLabel
- * @property array       $conditionRules
+ * @property array $behaviorActions
+ * @property array $behaviorActionsAsOptions
+ * @property string $behaviorActionLabel
+ * @property array $conditionRules
  * @property null|string $settingsHtml
  */
 class FieldRule extends Rule

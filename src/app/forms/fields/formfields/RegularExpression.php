@@ -26,11 +26,11 @@ use yii\base\InvalidConfigException;
 
 /**
  *
- * @property array  $elementValidationRules
+ * @property array $elementValidationRules
  * @property string $svgIconPath
- * @property mixed  $settingsHtml
- * @property array  $compatibleCraftFieldTypes
- * @property mixed  $exampleInputHtml
+ * @property mixed $settingsHtml
+ * @property array $compatibleCraftFieldTypes
+ * @property mixed $exampleInputHtml
  */
 class RegularExpression extends FormField implements PreviewableFieldInterface
 {
@@ -80,7 +80,7 @@ class RegularExpression extends FormField implements PreviewableFieldInterface
     }
 
     /**
-     * @param mixed                 $value
+     * @param mixed $value
      * @param ElementInterface|null $element
      *
      * @return string
@@ -114,8 +114,8 @@ class RegularExpression extends FormField implements PreviewableFieldInterface
     }
 
     /**
-     * @param mixed      $value
-     * @param Entry      $entry
+     * @param mixed $value
+     * @param Entry $entry
      * @param array|null $renderingOptions
      *
      * @return Markup

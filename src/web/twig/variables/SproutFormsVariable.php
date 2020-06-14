@@ -79,8 +79,8 @@ class SproutFormsVariable
     }
 
     /**
-     * @param Form       $form
-     * @param int        $tabId
+     * @param Form $form
+     * @param int $tabId
      * @param array|null $renderingOptions
      *
      * @return bool|Markup
@@ -142,8 +142,8 @@ class SproutFormsVariable
     /**
      * Returns a complete field for display in template
      *
-     * @param Form       $form
-     * @param FormField  $field
+     * @param Form $form
+     * @param FormField $field
      * @param array|null $renderingOptions
      *
      * @return Markup
@@ -284,7 +284,7 @@ class SproutFormsVariable
      *
      * See the Entries service setEntry method for more details.
      *
-     * @param Form         $form
+     * @param Form $form
      * @param EntryElement $entry
      */
     public function setEntry(Form $form, Entry $entry)
@@ -492,7 +492,7 @@ class SproutFormsVariable
 
     /**
      * @param Form|null $form
-     * @param bool      $generalSettings
+     * @param bool $generalSettings
      *
      * @return array
      */

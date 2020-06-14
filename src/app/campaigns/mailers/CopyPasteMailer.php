@@ -4,10 +4,10 @@ namespace barrelstrength\sproutbase\app\campaigns\mailers;
 
 use barrelstrength\sproutbase\app\campaigns\base\CampaignEmailSenderInterface;
 use barrelstrength\sproutbase\app\campaigns\elements\CampaignEmail;
-use barrelstrength\sproutbase\web\assetbundles\copypastemailer\CopyPasteMailerAsset;
 use barrelstrength\sproutbase\app\email\base\EmailElement;
 use barrelstrength\sproutbase\app\email\base\Mailer;
 use barrelstrength\sproutbase\app\email\models\ModalResponse;
+use barrelstrength\sproutbase\web\assetbundles\copypastemailer\CopyPasteMailerAsset;
 use Craft;
 use Exception;
 use Throwable;

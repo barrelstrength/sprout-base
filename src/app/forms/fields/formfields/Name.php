@@ -32,10 +32,10 @@ use yii\base\Exception;
 
 /**
  * @property string $svgIconPath
- * @property mixed  $settingsHtml
- * @property array  $compatibleConditions
- * @property array  $compatibleCraftFieldTypes
- * @property mixed  $exampleInputHtml
+ * @property mixed $settingsHtml
+ * @property array $compatibleConditions
+ * @property array $compatibleCraftFieldTypes
+ * @property mixed $exampleInputHtml
  */
 class Name extends FormField implements PreviewableFieldInterface
 {
@@ -106,7 +106,7 @@ class Name extends FormField implements PreviewableFieldInterface
     }
 
     /**
-     * @param mixed                 $value
+     * @param mixed $value
      * @param ElementInterface|null $element
      *
      * @return string
@@ -139,8 +139,8 @@ class Name extends FormField implements PreviewableFieldInterface
     }
 
     /**
-     * @param mixed      $value
-     * @param Entry      $entry
+     * @param mixed $value
+     * @param Entry $entry
      * @param array|null $renderingOptions
      *
      * @return Markup

@@ -33,7 +33,7 @@ use yii\db\ActiveRecord;
 /**
  *
  * @property Integration[] $allIntegrations
- * @property mixed         $allIntegrationTypes
+ * @property mixed $allIntegrationTypes
  */
 class Integrations extends Component
 {

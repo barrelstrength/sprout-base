@@ -32,12 +32,12 @@ use yii\db\ActiveRecord;
  * Entry represents a entry element.
  *
  * @property array|ActiveRecord[] $integrationLog
- * @property null|array           $conditionalLogicResults
- * @property null|array           $hiddenFields
- * @property bool                 $isSpam
- * @property array                $captchaErrors
- * @property array                $savedCaptchaErrors
- * @property array                $fields
+ * @property null|array $conditionalLogicResults
+ * @property null|array $hiddenFields
+ * @property bool $isSpam
+ * @property array $captchaErrors
+ * @property array $savedCaptchaErrors
+ * @property array $fields
  */
 class Entry extends Element
 {

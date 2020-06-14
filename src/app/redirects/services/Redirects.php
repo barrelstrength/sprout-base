@@ -36,7 +36,7 @@ use yii\web\HttpException;
 /**
  *
  * @property string|int $totalNon404Redirects
- * @property array      $methods
+ * @property array $methods
  * @property null|mixed $structureId
  */
 class Redirects extends Component
@@ -371,7 +371,7 @@ class Redirects extends Component
 
     /**
      * @param                   $absoluteUrl
-     * @param Site              $site
+     * @param Site $site
      * @param RedirectsSettings $settings
      *
      * @return Redirect|null
@@ -500,6 +500,7 @@ class Redirects extends Component
 
         return true;
     }
+
     /**
      * @return int|string
      */

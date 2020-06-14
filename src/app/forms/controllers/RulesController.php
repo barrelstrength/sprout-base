@@ -261,7 +261,7 @@ class RulesController extends BaseController
     }
 
     /**
-     * @param bool      $success
+     * @param bool $success
      * @param Rule|null $rule
      *
      * @return Response

@@ -66,7 +66,7 @@ class GlobalMetadata extends Component
     /**
      * Save Global Metadata to database
      *
-     * @param string  $globalColumn
+     * @param string $globalColumn
      * @param Globals $globals
      *
      * @return bool
