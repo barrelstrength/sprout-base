@@ -14,13 +14,6 @@ if (typeof Craft.SproutForms === typeof undefined) {
  * Class Craft.SproutForms.EntriesIndex
  */
 Craft.SproutForms.EntriesIndex = Craft.BaseElementIndex.extend({
-  getViewClass: function(mode) {
-    if (mode === 'table') {
-      return Craft.SproutForms.EntriesTableView;
-    } else {
-      return this.base(mode);
-    }
-  },
   getDefaultSort: function() {
     return ['dateCreated', 'desc'];
   }

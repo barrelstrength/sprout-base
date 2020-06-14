@@ -6,8 +6,6 @@
 {% set title = "Entries"|t('sprout') %}
 {% set elementType = 'barrelstrength\\sproutbase\\app\\forms\\elements\\Entry' %}
 
-{% do view.registerAssetBundle("barrelstrength\\sproutbase\\web\\assetbundles\\formentries\\FormEntriesAsset") %}
-
 {% block actionButton %}
     {% if not isPro %}
         <div class="buttons">
@@ -17,4 +15,9 @@
             }) }}
         </div>
     {% endif %}
+{% endblock %}
+
+{% block content %}
+    {# @todo - visualization here. #}
+    {{ parent() }}
 {% endblock %}

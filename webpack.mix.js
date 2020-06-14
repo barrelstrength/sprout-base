@@ -154,14 +154,6 @@ mix
   .sass('src/web/assets/src/scss/forms/forms.scss',
     'src/web/assetbundles/forms/dist/css/forms.css')
 
-  // Form Entries
-  .js([
-    'src/web/assets/src/js/formentries/EntriesIndex.js',
-    'src/web/assets/src/js/formentries/EntriesTableView.js',
-  ], 'src/web/assetbundles/formentries/dist/js/FormEntriesIndex.js')
-  .sass('src/web/assets/src/scss/formentries/charts.scss',
-    'src/web/assetbundles/formentries/dist/css/charts.css')
-
   // Form Templates
   .js([
     'src/web/assets/src/js/formtemplates/Accessibility.js',
