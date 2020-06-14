@@ -38,42 +38,6 @@ class Settings extends Component
     public $context = self::SETTINGS_CONTEXT_APP;
 
     /**
-     * @var ControlPanelSettings
-     */
-    private $_controlPanelSettings;
-
-    private $_cpSettingsLoadStatus = 'not-loaded';
-
-    public function initControlPanelSettings()
-    {
-        if ($this->_controlPanelSettings ||
-            $this->_cpSettingsLoadStatus === 'loaded' ||
-            $this->_cpSettingsLoadStatus === 'loading') {
-            return;
-        }
-
-        $this->_cpSettingsLoadStatus = 'loading';
-
-        $cpConfig = new ControlPanelConfig();
-
-        /** @var ControlPanelSettings $cpSettings */
-        $cpSettings = $this->mergeSettings($cpConfig);
-
-        // Control Panel module has unique needs when returning settings
-        $moduleSettings = $cpSettings->modules;
-
-        // Update settings to be indexed by module key
-        $moduleKeys = array_column($moduleSettings, 'moduleKey');
-        $moduleSettings = array_combine($moduleKeys, $moduleSettings);
-
-        $cpSettings->modules = $moduleSettings;
-
-        $this->_controlPanelSettings = $cpSettings;
-
-        $this->_cpSettingsLoadStatus = 'loaded';
-    }
-
-    /**
      * Gets settings as defined in project config
      *
      * @param bool $includeFileConfigSettings
@@ -111,8 +75,6 @@ class Settings extends Component
 
     public function getSettingsByConfig(BaseConfig $config)
     {
-        $this->initControlPanelSettings();
-
         $settings = $this->mergeSettings($config);
 
         if (!$settings) {
@@ -120,22 +82,14 @@ class Settings extends Component
         }
 
         // Update the settings to add alternateName and enabled settings
-        $cpSettings = $this->_controlPanelSettings ?? null;
-
-        if (!$cpSettings) {
-            return $settings;
-        }
+        $cpSettings = SproutBase::$app->config->getControlPanelSettings();
 
         $moduleSettings = $cpSettings->modules[$config->getKey()] ?? null;
 
-        $alternateName = !empty($moduleSettings['alternateName'])
-            ? $moduleSettings['alternateName']
-            : null;
         $enabledStatus = !empty($moduleSettings['enabled'])
             ? $moduleSettings['enabled']
             : false;
 
-        $settings->setAlternateName($alternateName);
         $settings->setIsEnabled($enabledStatus);
 
         return $settings;
@@ -210,7 +164,7 @@ class Settings extends Component
      *
      * @return BaseSettings|null
      */
-    protected function mergeSettings(ConfigInterface $configType)
+    public function mergeSettings(ConfigInterface $configType)
     {
         $projectConfigService = Craft::$app->getProjectConfig();
         $allProjectConfigSettings = $projectConfigService->get(Config::CONFIG_SPROUT_KEY) ?? [];

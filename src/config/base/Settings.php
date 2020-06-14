@@ -24,11 +24,6 @@ abstract class Settings extends Model implements SettingsInterface
     protected $_currentSite;
 
     /**
-     * @var string
-     */
-    protected $_alternateName = '';
-
-    /**
      * @var bool
      */
     protected $_isEnabled = true;
@@ -48,23 +43,6 @@ abstract class Settings extends Model implements SettingsInterface
     public function setCurrentSite(Site $site = null)
     {
         $this->_currentSite = $site;
-    }
-
-    /**
-     * @return string
-     */
-    public function getAlternateName(): string
-    {
-        if (!empty($this->_alternateName)) {
-            return $this->_alternateName;
-        }
-
-        return '';
-    }
-
-    public function setAlternateName($value)
-    {
-        $this->_alternateName = $value;
     }
 
     public function getIsEnabled()

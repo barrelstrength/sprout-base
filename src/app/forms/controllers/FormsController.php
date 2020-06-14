@@ -84,16 +84,14 @@ class FormsController extends BaseController
 
         $form = SproutBase::$app->forms->getFormById($formId);
 
-        /** @var SproutForms $plugin */
-        $plugin = Craft::$app->plugins->getPlugin('sprout-forms');
-
         $isPro = SproutBase::$app->config->isEdition('forms', Config::EDITION_PRO);
+        $config = SproutBase::$app->config->getConfigByKey('forms');
 
         return $this->renderTemplate('sprout/forms/forms/_settings/'.$settingsSectionHandle, [
             'form' => $form,
             'groups' => SproutBase::$app->groups->getAllFormGroups(),
             'groupId' => $form->groupId ?? null,
-            'settings' => $plugin->getSettings(),
+            'settings' => $config->getSettings(),
             'rules' => SproutBase::$app->rules->getRulesByFormId($formId),
             'ruleOptions' => SproutBase::$app->rules->getRuleOptions(),
             'integrations' => SproutBase::$app->integrations->getIntegrationsByFormId($formId),

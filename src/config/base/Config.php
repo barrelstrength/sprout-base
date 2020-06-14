@@ -19,6 +19,11 @@ abstract class Config extends Component implements ConfigInterface
      */
     protected $_settings;
 
+    /**
+     * @var string
+     */
+    protected $_alternateName = '';
+
     public function getEdition(): string
     {
         return $this->_edition;
@@ -47,9 +52,40 @@ abstract class Config extends Component implements ConfigInterface
         $this->_settings = $settings;
     }
 
+    /**
+     * @return string
+     */
+    public function getAlternateName(): string
+    {
+        if (!empty($this->_alternateName)) {
+            return $this->_alternateName;
+        }
+
+        return '';
+    }
+
+    public function setAlternateName($value)
+    {
+        $this->_alternateName = $value;
+    }
+
     public function hasControlPanelSettings(): bool
     {
         return true;
+    }
+
+    public function getBaseUrl(): string
+    {
+        return UrlHelper::cpUrl('sprout/'.$this->getKey());
+    }
+
+    public function getName(): string
+    {
+        if ($this->getAlternateName()) {
+            return $this->getAlternateName();
+        }
+
+        return static::displayName();
     }
 
     public static function groupName(): string

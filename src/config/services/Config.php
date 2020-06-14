@@ -10,6 +10,8 @@ namespace barrelstrength\sproutbase\config\services;
 use barrelstrength\sproutbase\config\base\Config as BaseConfig;
 use barrelstrength\sproutbase\config\base\ConfigInterface;
 use barrelstrength\sproutbase\config\base\SproutBasePlugin;
+use barrelstrength\sproutbase\config\configs\ControlPanelConfig;
+use barrelstrength\sproutbase\config\models\settings\ControlPanelSettings;
 use barrelstrength\sproutbase\SproutBase;
 use Craft;
 use craft\base\Plugin;
@@ -33,7 +35,21 @@ class Config extends Component
      */
     protected $_configs = [];
 
+    /**
+     * @var ControlPanelSettings
+     */
+    private $_controlPanelSettings;
+
     private $_configLoadStatus = 'not-loaded';
+
+    private $_cpSettingsLoadStatus = 'not-loaded';
+
+    public function getControlPanelSettings(): ControlPanelSettings
+    {
+        $this->initControlPanelSettings();
+
+        return $this->_controlPanelSettings;
+    }
 
     /**
      * @return SproutBasePlugin[]
@@ -94,6 +110,8 @@ class Config extends Component
     {
         $this->prepareContext($includeFileSettings);
 
+        $cpSettings = $this->getControlPanelSettings();
+
         if ($this->_configLoadStatus === 'loaded' || $this->_configLoadStatus === 'loading') {
             return;
         }
@@ -115,11 +133,15 @@ class Config extends Component
                 /** @var BaseConfig $config */
                 $config = new $configType();
 
-                // Assumes we only have two editions in any given plugin
-                // Takes highest edition if module used in multiple plugins
-//                if ($config->getEdition() !== 'pro') {
                 $config->setEdition();
-//                }
+
+                $moduleSettings = $cpSettings->modules[$config->getKey()] ?? null;
+
+                $alternateName = !empty($moduleSettings['alternateName'])
+                    ? $moduleSettings['alternateName']
+                    : null;
+
+                $config->setAlternateName($alternateName);
 
                 if ($settings = SproutBase::$app->settings->getSettingsByConfig($config)) {
                     $config->setSettings($settings);
@@ -131,6 +153,36 @@ class Config extends Component
 
         $this->_configLoadStatus = 'loaded';
     }
+
+    public function initControlPanelSettings()
+    {
+        if ($this->_controlPanelSettings ||
+            $this->_cpSettingsLoadStatus === 'loaded' ||
+            $this->_cpSettingsLoadStatus === 'loading') {
+            return;
+        }
+
+        $this->_cpSettingsLoadStatus = 'loading';
+
+        $cpConfig = new ControlPanelConfig();
+
+        /** @var ControlPanelSettings $cpSettings */
+        $cpSettings = SproutBase::$app->settings->mergeSettings($cpConfig);
+
+        // Control Panel module has unique needs when returning settings
+        $moduleSettings = $cpSettings->modules;
+
+        // Update settings to be indexed by module key
+        $moduleKeys = array_column($moduleSettings, 'moduleKey');
+        $moduleSettings = array_combine($moduleKeys, $moduleSettings);
+
+        $cpSettings->modules = $moduleSettings;
+
+        $this->_controlPanelSettings = $cpSettings;
+
+        $this->_cpSettingsLoadStatus = 'loaded';
+    }
+
 
     /**
      * Returns true if the given dependency exists in any other plugin
@@ -264,9 +316,7 @@ class Config extends Component
                 continue;
             }
 
-            $label = !empty($settings->getAlternateName())
-                ? $settings->getAlternateName()
-                : $configType::displayName();
+            $label = $configType->getName();
 
             $settingsPages[] = [
                 'label' => $label,
@@ -283,28 +333,27 @@ class Config extends Component
         $configTypes = $this->getConfigs(false);
 
         $cpNavItems = [];
-        foreach ($configTypes as $key => $configType) {
-            $config = new $configType();
+        foreach ($configTypes as $key => $config) {
             $navItem = $config->getCpNavItem();
 
             if (empty($navItem)) {
                 continue;
             }
 
-            $settings = SproutBase::$app->settings->getSettingsByKey($configType->getKey());
+            $settings = SproutBase::$app->settings->getSettingsByKey($config->getKey());
 
             if (!$settings->getIsEnabled()) {
                 continue;
             }
 
-            $label = !empty($settings->getAlternateName())
-                ? $settings->getAlternateName()
+            $label = !empty($config->getName())
+                ? $config->getName()
                 : $navItem['label'];
 
             $cpNavItems[$key] = [
                 'label' => $label,
                 'url' => $navItem['url'],
-                'icon' => Craft::getAlias('@sproutbaseassets/sprout/icons/'.$configType->getKey().'/icon-mask.svg'),
+                'icon' => Craft::getAlias('@sproutbaseassets/sprout/icons/'.$config->getKey().'/icon-mask.svg'),
             ];
 
             if (!isset($navItem['subnav']) || count($navItem['subnav']) === 0) {

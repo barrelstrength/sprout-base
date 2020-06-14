@@ -150,7 +150,8 @@ class DefaultMailer extends Mailer implements NotificationEmailSenderInterface
         }
 
         // Only track Sent Emails if Sprout Email is installed ...
-        if (Craft::$app->plugins->getPlugin('sprout-email')) {
+        $sentEmailSettings = SproutBase::$app->settings->getSettingsByKey('sent-email');
+        if ($sentEmailSettings->getIsEnabled()) {
 
             $infoTable = SproutBase::$app->sentEmails->createInfoTableModel('sprout-email', [
                 'emailType' => $notificationEmail->displayName(),

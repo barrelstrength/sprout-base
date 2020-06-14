@@ -9,7 +9,7 @@
 {% set mailer = campaignType.getMailer() %}
 
 {% set fullPageForm = true %}
-{% set saveShortcutRedirect = url('sprout/campaigns/edit/{id}') %}
+{% set saveShortcutRedirect = cpUrl('sprout/campaigns/edit/{id}') %}
 
 {% block actionButton %}
 
@@ -58,8 +58,7 @@
 
 {% block content %}
 
-    <input type="hidden" name="action"
-        value="sprout/campaign-email/save-campaign-email">
+    <input type="hidden" name="action" value="sprout/campaign-email/save-campaign-email">
     {{ redirectInput("sprout/campaigns") }}
 
     {% if emailId %}
