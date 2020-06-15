@@ -8,7 +8,7 @@
 namespace barrelstrength\sproutbase\migrations\redirects;
 
 use barrelstrength\sproutbase\app\redirects\elements\Redirect;
-use barrelstrength\sproutbase\app\redirects\records\Redirect as RedirectRecord;
+use barrelstrength\sproutbase\app\redirects\records\Redirects as RedirectRecord;
 use craft\db\Migration;
 use craft\db\Table;
 

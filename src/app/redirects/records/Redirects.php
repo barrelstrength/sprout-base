@@ -26,7 +26,7 @@ use yii\db\ActiveQueryInterface;
  * @property DateTime $dateLastUsed
  *
  */
-class Redirect extends ActiveRecord
+class Redirects extends ActiveRecord
 {
     /**
      * @inheritdoc

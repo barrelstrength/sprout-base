@@ -14,7 +14,7 @@ use barrelstrength\sproutbase\app\redirects\elements\actions\HardDelete;
 use barrelstrength\sproutbase\app\redirects\elements\actions\SetStatus;
 use barrelstrength\sproutbase\app\redirects\elements\db\RedirectQuery;
 use barrelstrength\sproutbase\app\redirects\enums\RedirectMethods;
-use barrelstrength\sproutbase\app\redirects\records\Redirect as RedirectRecord;
+use barrelstrength\sproutbase\app\redirects\records\Redirects as RedirectRecord;
 use barrelstrength\sproutbase\config\base\Config;
 use barrelstrength\sproutbase\SproutBase;
 use Craft;
