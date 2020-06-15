@@ -945,14 +945,14 @@ class Forms extends Component
     /**
      * Creates the content table for a Form.
      *
-     * @param $name
+     * @param $tableName
      *
      * @throws Throwable
      */
-    private function _createContentTable($name)
+    private function _createContentTable($tableName)
     {
         $migration = new CreateFormContentTable([
-            'tableName' => $name
+            'tableName' => $tableName
         ]);
 
         ob_start();

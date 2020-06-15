@@ -49,9 +49,11 @@ use craft\events\RegisterCpNavItemsEvent;
 use craft\events\RegisterCpSettingsEvent;
 use craft\events\RegisterTemplateRootsEvent;
 use craft\events\RegisterUserPermissionsEvent;
+use craft\events\SiteEvent;
 use craft\helpers\ArrayHelper;
 use craft\i18n\PhpMessageSource;
 use craft\services\Dashboard;
+use craft\services\Sites;
 use craft\services\UserPermissions;
 use craft\web\Application;
 use craft\web\twig\variables\Cp;
@@ -142,6 +144,12 @@ class SproutBase extends Module
         $this->initEmailEvents();
         $this->initReportEvents();
         $this->initConfigEvents();
+
+        Event::on(Sites::class, Sites::EVENT_AFTER_SAVE_SITE, static function(SiteEvent $event) {
+            if ($event->isNew) {
+                SproutBase::$app->globalMetadata->insertDefaultGlobalMetadata($event->site->id);
+            }
+        });
     }
 
     public function initMappings()

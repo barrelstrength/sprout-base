@@ -9,6 +9,7 @@ namespace barrelstrength\sproutbase\app\metadata\services;
 
 use barrelstrength\sproutbase\app\metadata\models\Globals;
 use barrelstrength\sproutbase\app\metadata\records\GlobalMetadata as GlobalMetadataRecord;
+use barrelstrength\sproutbase\SproutBase;
 use Craft;
 use craft\base\Component;
 use craft\db\Query;
@@ -78,22 +79,14 @@ class GlobalMetadata extends Component
         $values[$globalColumn] = $globals->getGlobalByKey($globalColumn, 'json');
         $values['siteId'] = $globals->siteId;
 
-        // new site?
-        $results = (new Query())
+        $globalMetadataRecordExists = (new Query())
             ->select('*')
             ->from([GlobalMetadataRecord::tableName()])
             ->where(['[[siteId]]' => $globals->siteId])
-            ->one();
+            ->exists();
 
-        if (!$results) {
-            //save default settings
-            $migration = new InsertDefaultGlobalsBySite([
-                'siteId' => $globals->siteId,
-            ]);
-
-            ob_start();
-            $migration->up();
-            ob_end_clean();
+        if (!$globalMetadataRecordExists) {
+            $this->insertDefaultGlobalMetadata($globals->siteId);
         }
 
         Craft::$app->db->createCommand()->update(GlobalMetadataRecord::tableName(),
@@ -130,5 +123,31 @@ class GlobalMetadata extends Component
         }
 
         return $options;
+    }
+
+    /**
+     * @param int $siteId
+     */
+    public function insertDefaultGlobalMetadata(int $siteId)
+    {
+        $defaultSettings = '{
+            "seoDivider":"-",
+            "defaultOgType":"website",
+            "ogTransform":"sproutSeo-socialSquare",
+            "twitterTransform":"sproutSeo-socialSquare",
+            "defaultTwitterCard":"summary",
+            "appendTitleValueOnHomepage":"",
+            "appendTitleValue": ""}
+        ';
+
+        Craft::$app->getDb()->createCommand()->insert(GlobalMetadataRecord::tableName(), [
+            'siteId' => $siteId,
+            'identity' => null,
+            'ownership' => null,
+            'contacts' => null,
+            'social' => null,
+            'robots' => null,
+            'settings' => $defaultSettings
+        ]);
     }
 }

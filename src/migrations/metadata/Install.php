@@ -8,6 +8,7 @@
 namespace barrelstrength\sproutbase\migrations\metadata;
 
 use barrelstrength\sproutbase\app\metadata\records\GlobalMetadata as GlobalMetadataRecord;
+use barrelstrength\sproutbase\SproutBase;
 use Craft;
 use craft\db\Migration;
 use craft\db\Table;
@@ -44,6 +45,7 @@ class Install extends Migration
         }
 
         $this->insertDefaultGlobalMetadata();
+
     }
 
     public function safeDown()
@@ -52,31 +54,12 @@ class Install extends Migration
         $this->dropTableIfExists(GlobalMetadataRecord::tableName());
     }
 
-    /**
-     * @throws Throwable
-     */
-    protected function insertDefaultGlobalMetadata()
+    public function insertDefaultGlobalMetadata()
     {
-        $siteId = Craft::$app->getSites()->currentSite->id;
+        $siteIds = Craft::$app->getSites()->allSiteIds;
 
-        $defaultSettings = '{
-            "seoDivider":"-",
-            "defaultOgType":"website",
-            "ogTransform":"sproutSeo-socialSquare",
-            "twitterTransform":"sproutSeo-socialSquare",
-            "defaultTwitterCard":"summary",
-            "appendTitleValueOnHomepage":"",
-            "appendTitleValue": ""}
-        ';
-
-        $this->insert(GlobalMetadataRecord::tableName(), [
-            'siteId' => $siteId,
-            'identity' => null,
-            'ownership' => null,
-            'contacts' => null,
-            'social' => null,
-            'robots' => null,
-            'settings' => $defaultSettings
-        ]);
+        foreach ($siteIds as $siteId) {
+            SproutBase::$app->globalMetadata->insertDefaultGlobalMetadata($siteId);
+        }
     }
 }
