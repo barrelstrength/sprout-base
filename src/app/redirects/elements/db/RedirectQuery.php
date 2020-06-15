@@ -58,42 +58,42 @@ class RedirectQuery extends ElementQuery
             $this->structureId = SproutBase::$app->redirects->getStructureId();
         }
 
-        $this->joinElementTable('sproutseo_redirects');
+        $this->joinElementTable('sprout_redirects');
 
         $this->query->select([
-            'sproutseo_redirects.id',
-            'sproutseo_redirects.oldUrl',
-            'sproutseo_redirects.newUrl',
-            'sproutseo_redirects.method',
-            'sproutseo_redirects.matchStrategy',
-            'sproutseo_redirects.count',
-            'sproutseo_redirects.dateLastUsed',
-            'sproutseo_redirects.lastRemoteIpAddress',
-            'sproutseo_redirects.lastReferrer',
-            'sproutseo_redirects.lastUserAgent'
+            'sprout_redirects.id',
+            'sprout_redirects.oldUrl',
+            'sprout_redirects.newUrl',
+            'sprout_redirects.method',
+            'sprout_redirects.matchStrategy',
+            'sprout_redirects.count',
+            'sprout_redirects.dateLastUsed',
+            'sprout_redirects.lastRemoteIpAddress',
+            'sprout_redirects.lastReferrer',
+            'sprout_redirects.lastUserAgent'
         ]);
 
         if ($this->id) {
             $this->subQuery->andWhere(Db::parseParam(
-                'sproutseo_redirects.id', $this->id)
+                'sprout_redirects.id', $this->id)
             );
         }
 
         if ($this->oldUrl) {
             $this->subQuery->andWhere(Db::parseParam(
-                'sproutseo_redirects.oldUrl', $this->oldUrl)
+                'sprout_redirects.oldUrl', $this->oldUrl)
             );
         }
 
         if ($this->newUrl) {
             $this->subQuery->andWhere(Db::parseParam(
-                'sproutseo_redirects.newUrl', $this->newUrl)
+                'sprout_redirects.newUrl', $this->newUrl)
             );
         }
 
         if ($this->method) {
             $this->subQuery->andWhere(Db::parseParam(
-                'sproutseo_redirects.method', $this->method)
+                'sprout_redirects.method', $this->method)
             );
         }
 

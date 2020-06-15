@@ -548,11 +548,11 @@ class Redirects extends Component
 
             // Don't delete these Redirects
             if (!empty($excludedIds)) {
-                $query->andWhere(['not in', 'sproutseo_redirects.id', $excludedIds]);
+                $query->andWhere(['not in', 'sprout_redirects.id', $excludedIds]);
             }
 
             // orderBy works as string but doesn't recognize second DESC setting as array
-            $query->orderBy('sproutseo_redirects.count DESC, sproutseo_redirects.dateUpdated DESC')
+            $query->orderBy('sprout_redirects.count DESC, sprout_redirects.dateUpdated DESC')
                 ->anyStatus();
 
             $ids = $query->ids();

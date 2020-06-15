@@ -180,7 +180,7 @@ class Redirect extends Element
             'method' => Craft::t('sprout', 'Method'),
             [
                 'label' => Craft::t('sprout', 'Count'),
-                'orderBy' => 'sproutseo_redirects.count',
+                'orderBy' => 'sprout_redirects.count',
                 'attribute' => 'count'
             ],
             'dateLastUsed' => Craft::t('sprout', 'Date Last Used'),

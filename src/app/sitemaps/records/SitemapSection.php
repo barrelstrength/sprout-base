@@ -22,26 +22,8 @@ use craft\db\ActiveRecord;
  */
 class SitemapSection extends ActiveRecord
 {
-    /**
-     * @inheritdoc
-     *
-     * @return string
-     */
     public static function tableName(): string
     {
-        return '{{%sproutseo_sitemaps}}';
-    }
-
-    /**
-     * Create a new instance of the current class. This allows us to
-     * properly unit test our service layer.
-     *
-     * @return SitemapSection
-     */
-    public function create(): SitemapSection
-    {
-        $class = get_class($this);
-
-        return new $class();
+        return '{{%sprout_sitemaps}}';
     }
 }

@@ -35,7 +35,7 @@ class Redirect extends ActiveRecord
      */
     public static function tableName(): string
     {
-        return '{{%sproutseo_redirects}}';
+        return '{{%sprout_redirects}}';
     }
 
     /**
