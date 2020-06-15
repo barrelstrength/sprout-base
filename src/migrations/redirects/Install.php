@@ -8,7 +8,7 @@
 namespace barrelstrength\sproutbase\migrations\redirects;
 
 use barrelstrength\sproutbase\app\redirects\elements\Redirect;
-use barrelstrength\sproutbase\app\redirects\records\Redirects as RedirectRecord;
+use barrelstrength\sproutbase\app\redirects\records\Redirects as RedirectsRecord;
 use craft\db\Migration;
 use craft\db\Table;
 
@@ -19,8 +19,8 @@ class Install extends Migration
      */
     public function safeUp()
     {
-        if (!$this->db->tableExists(RedirectRecord::tableName())) {
-            $this->createTable(RedirectRecord::tableName(), [
+        if (!$this->db->tableExists(RedirectsRecord::tableName())) {
+            $this->createTable(RedirectsRecord::tableName(), [
                 'id' => $this->primaryKey(),
                 'oldUrl' => $this->string()->notNull(),
                 'newUrl' => $this->string(),
@@ -36,9 +36,9 @@ class Install extends Migration
                 'uid' => $this->uid(),
             ]);
 
-            $this->createIndex(null, RedirectRecord::tableName(), 'id');
+            $this->createIndex(null, RedirectsRecord::tableName(), 'id');
 
-            $this->addForeignKey(null, RedirectRecord::tableName(), 'id', Table::ELEMENTS, 'id', 'CASCADE');
+            $this->addForeignKey(null, RedirectsRecord::tableName(), 'id', Table::ELEMENTS, 'id', 'CASCADE');
         }
     }
 
@@ -50,7 +50,7 @@ class Install extends Migration
         // Delete Redirect Elements
         $this->delete(Table::ELEMENTS, ['type' => Redirect::class]);
 
-        // Delete Redirect Table
-        $this->dropTableIfExists(RedirectRecord::tableName());
+        // Delete Redirect Tables
+        $this->dropTableIfExists(RedirectsRecord::tableName());
     }
 }

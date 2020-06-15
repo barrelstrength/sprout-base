@@ -227,7 +227,6 @@ class Redirect extends Element
                 'key' => $key,
                 'label' => $method,
                 'criteria' => ['method' => $code],
-                'structureId' => SproutBase::$app->redirects->getStructureId(),
                 'structureEditable' => true,
                 'defaultSort' => ['count', 'desc']
             ];
