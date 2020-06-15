@@ -90,12 +90,6 @@ class CampaignsConfig extends Config
             'sprout/settings/<configKey:campaigns>/<subNavKey:campaign-types>/edit/<campaignTypeId:\d+>' => [
                 'route' => 'sprout/campaign-type/edit-campaign-type'
             ],
-
-            // @todo - migration break out into 'messages' module that
-            //         handles messages and previewing them
-            'sprout/notifications/preview/<emailId:\d+>' => [
-                'template' => 'sprout/notifications/_special/preview'
-            ]
         ];
     }
 

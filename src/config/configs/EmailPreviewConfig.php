@@ -11,16 +11,16 @@ use barrelstrength\sproutbase\config\base\Config;
 use barrelstrength\sproutbase\migrations\fields\Install;
 use Craft;
 
-class FieldsConfig extends Config
+class EmailPreviewConfig extends Config
 {
     public function getKey(): string
     {
-        return 'fields';
+        return 'email-preview';
     }
 
     public static function displayName(): string
     {
-        return Craft::t('sprout', 'Fields');
+        return Craft::t('sprout', 'Email Preview');
     }
 
     public function hasControlPanelSettings(): bool
@@ -28,22 +28,17 @@ class FieldsConfig extends Config
         return false;
     }
 
-    public function createInstallMigration()
-    {
-        return new Install();
-    }
-
-    public function getSettingsNavItem(): array
-    {
-        return [
-            'label' => Craft::t('sprout', 'Fields'),
-            'url' => 'sprout/settings/fields'
-        ];
-    }
-
     public function isUpgradable(): bool
     {
         return false;
+    }
+
+    public function getCpUrlRules(): array
+    {
+        return [
+            'sprout/preview/email/<emailId:\d+>' =>
+                'sprout/email-preview/preview',
+        ];
     }
 }
 

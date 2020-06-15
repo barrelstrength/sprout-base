@@ -78,21 +78,12 @@ class NotificationsConfig extends Config
     public function getCpUrlRules(): array
     {
         return [
-            // Notifications
             'sprout/notifications/edit/<emailId:\d+|new>' =>
                 'sprout/notifications/edit-notification-email-template',
             'sprout/notifications/settings/edit/<emailId:\d+|new>' =>
                 'sprout/notifications/edit-notification-email-settings-template',
             'sprout/notifications' =>
                 'sprout/notifications/notifications-index-template',
-
-            // Preview
-//            'sprout/notifications/preview/<emailId:\d+>' => [
-//                'route' => 'sprout/notifications/preview'
-//            ],
-//            'sprout/notifications/preview/<emailId:\d+>' => [
-//                'route' => 'sprout/sent-email/preview'
-//            ],
         ];
     }
 

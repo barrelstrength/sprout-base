@@ -12,6 +12,7 @@ use barrelstrength\sproutbase\app\campaigns\controllers\CampaignTypeController;
 use barrelstrength\sproutbase\app\campaigns\mailers\CopyPasteMailer;
 use barrelstrength\sproutbase\app\email\controllers\MailersController;
 use barrelstrength\sproutbase\app\email\controllers\NotificationsController;
+use barrelstrength\sproutbase\app\email\controllers\PreviewController;
 use barrelstrength\sproutbase\app\email\emailtemplates\BasicTemplates;
 use barrelstrength\sproutbase\app\email\events\RegisterMailersEvent;
 use barrelstrength\sproutbase\app\email\mailers\DefaultMailer;
@@ -174,6 +175,7 @@ class SproutBase extends Module
                 'fields-address' => AddressController::class,
                 'mailers' => MailersController::class,
                 'notifications' => NotificationsController::class,
+                'email-preview' => PreviewController::class,
                 'sent-email' => SentEmailController::class,
                 'redirects' => RedirectsController::class,
                 'sitemaps' => SitemapsController::class,

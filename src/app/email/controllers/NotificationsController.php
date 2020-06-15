@@ -129,13 +129,13 @@ class NotificationsController extends Controller
                     'previewUrl' => $notificationEmail->getUrl(),
                     'previewAction' => Craft::$app->getSecurity()->hashData('sprout/notifications/live-preview-notification-email'),
                     'previewParams' => [
-                        'notificationId' => $notificationEmail->id,
+                        'emailId' => $notificationEmail->id,
                     ]
                 ]).');');
 
             if ($notificationEmail->id && $notificationEmail->getUrl()) {
-                $shareUrl = UrlHelper::actionUrl('sprout/notifications/share-notification-email', [
-                    'notificationId' => $notificationEmail->id,
+                $shareUrl = UrlHelper::actionUrl('sprout/email-preview/share-email', [
+                    'emailId' => $notificationEmail->id,
                 ]);
             }
         }
@@ -166,26 +166,6 @@ class NotificationsController extends Controller
             'showPreviewBtn' => $showPreviewBtn,
             'shareUrl' => $shareUrl,
             'isPro' => $this->isPro
-        ]);
-    }
-
-    /**
-     * @param null $emailId
-     *
-     * @return Response
-     * @throws ForbiddenHttpException
-     */
-    public function actionPreview($emailId = null): Response
-    {
-        $this->requirePermission('sprout:email:viewNotifications');
-
-        $email = Craft::$app->getElements()->getElementById($emailId, NotificationEmail::class);
-
-        return $this->renderTemplate('sprout/notifications/_preview/preview-body', [
-            'email' => $email,
-            'emailId' => $emailId,
-            'htmlBody' => null,
-            'body' => null
         ]);
     }
 
@@ -487,82 +467,6 @@ class NotificationsController extends Controller
                 'message' => Craft::t('sprout', 'Test Notification Email sent.')
             ])
         );
-    }
-
-    /**
-     * Prepares a Notification Email to be shared via token-based URL
-     *
-     * @param null $notificationId
-     *
-     * @return Response
-     * @throws Exception
-     * @throws HttpException
-     */
-    public function actionShareNotificationEmail($notificationId = null): Response
-    {
-        if ($notificationId) {
-            $notificationEmail = Craft::$app->getElements()->getElementById($notificationId);
-
-            if (!$notificationEmail) {
-                throw new HttpException(404);
-            }
-
-            $type = Craft::$app->getRequest()->getQueryParam('type');
-
-            $params = [
-                'notificationId' => $notificationId,
-                'type' => $type
-            ];
-        } else {
-            throw new HttpException(404);
-        }
-
-        // Create the token and redirect to the entry URL with the token in place
-        $token = Craft::$app->getTokens()->createToken([
-                'sprout/notifications/view-shared-notification-email',
-                $params
-            ]
-        );
-
-        $url = UrlHelper::urlWithToken($notificationEmail->getUrl(), $token);
-
-        return $this->redirect($url);
-    }
-
-    /**
-     * Renders a shared Notification Email
-     *
-     * @param null $notificationId
-     * @param null $type
-     *
-     * @throws BadRequestHttpException
-     * @throws Exception
-     * @throws ExitException
-     * @throws LoaderError
-     * @throws RuntimeError
-     * @throws SyntaxError
-     */
-    public function actionViewSharedNotificationEmail($notificationId = null, $type = null)
-    {
-        $this->requireToken();
-
-        SproutBase::$app->notifications->getPreviewNotificationEmailById($notificationId, $type);
-    }
-
-    /**
-     * Renders a Notification Email for Live Preview
-     *
-     * @throws Exception
-     * @throws ExitException
-     * @throws LoaderError
-     * @throws SyntaxError
-     * @throws RuntimeError
-     */
-    public function actionLivePreviewNotificationEmail()
-    {
-        $notificationId = Craft::$app->getRequest()->getBodyParam('notificationId');
-
-        SproutBase::$app->notifications->getPreviewNotificationEmailById($notificationId);
     }
 
     /**

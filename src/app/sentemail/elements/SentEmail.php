@@ -248,7 +248,7 @@ class SentEmail extends Element
         switch ($attribute) {
             case 'preview':
 
-                $previewUrl = UrlHelper::cpUrl('sprout/notifications/preview/'.$this->id);
+                $previewUrl = UrlHelper::cpUrl('sprout/preview/email/'.$this->id);
 
                 return '<a class="email-preview" '.
                     'data-email-id="'.$this->id.'" '.

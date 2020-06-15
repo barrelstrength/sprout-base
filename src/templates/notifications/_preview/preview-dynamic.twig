@@ -2,10 +2,6 @@
 
 {% block previewBody %}
 
-    {% set emailUrl = actionUrl('sprout/notifications/share-notification-email', {
-        notificationId: email.id
-    }) %}
-
     <section class="sentemail-pane sentemail-html active">
         <iframe id="preview-html" src="{{ emailUrl }}"></iframe>
     </section>
@@ -15,3 +11,4 @@
     </section>
 
 {% endblock %}
+

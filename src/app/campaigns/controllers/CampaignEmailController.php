@@ -458,23 +458,6 @@ class CampaignEmailController extends Controller
     }
 
     /**
-     * @param null $emailType
-     * @param null $emailId
-     *
-     * @return Response
-     * @throws InvalidConfigException
-     */
-    public function actionPreviewCampaignEmail($emailType = null, $emailId = null): Response
-    {
-        Craft::$app->getView()->registerAssetBundle(CpAsset::class);
-
-        return $this->renderTemplate('sprout/notifications/_special/preview', [
-            'emailType' => $emailType,
-            'emailId' => $emailId
-        ]);
-    }
-
-    /**
      * Returns a Campaign Email Model
      *
      * @return CampaignEmail|ElementInterface|null

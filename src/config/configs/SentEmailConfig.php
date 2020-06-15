@@ -93,10 +93,6 @@ class SentEmailConfig extends Config
                 'sprout/sent-email/sent-email-index-template',
             'sprout/sent-email' =>
                 'sprout/sent-email/sent-email-index-template',
-
-            // Preview
-            'sprout/sent-email/preview/<emailId:\d+>' =>
-                'sprout/sent-email/preview'
         ];
     }
 

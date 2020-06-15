@@ -21,20 +21,6 @@ use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
 use yii\base\Exception;
 
-
-/**
- * Class SaveEntryEvent
- *
- * @package barrelstrength\sproutforms\integrations\sproutemail\events\notificationevents
- *
- * @property string $eventHandlerClassName
- * @property array $allForms
- * @property Entry $mockEventObject
- * @property null $eventObject
- * @property mixed $name
- * @property mixed $eventName
- * @property string $eventClassName
- */
 class SaveEntryEvent extends NotificationEvent
 {
     public $whenNew;

@@ -255,22 +255,4 @@ class SentEmailController extends Controller
 
         return $this->asJson($response->getAttributes());
     }
-
-    /**
-     * @param null $emailId
-     *
-     * @return Response
-     * @throws ForbiddenHttpException
-     */
-    public function actionPreview($emailId = null): Response
-    {
-        $this->requirePermission('sprout:sentEmail:viewSentEmail');
-
-        $email = Craft::$app->getElements()->getElementById($emailId, SentEmail::class);
-
-        return $this->renderTemplate('sprout/sent-email/_preview/preview-body', [
-            'email' => $email,
-            'emailId' => $emailId
-        ]);
-    }
 }
