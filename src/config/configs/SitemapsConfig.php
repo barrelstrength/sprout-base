@@ -110,6 +110,7 @@ class SitemapsConfig extends Config
         $settings = SproutBase::$app->settings->getSettingsByKey('sitemaps');
 
         if ($this->getEdition() === Config::EDITION_PRO && $settings->getIsEnabled()) {
+
             return [
                 'sitemap-<sitemapKey:.*>-<pageNumber:\d+>.xml' =>
                     'sprout/xml-sitemap/render-xml-sitemap',
@@ -129,6 +130,14 @@ class SitemapsConfig extends Config
         if ($sproutSeoIsPro || $sproutSitemapsIsPro) {
             $this->_edition = Config::EDITION_PRO;
         }
+    }
+
+    public function getControllerMapKeys(): array
+    {
+        return [
+            'sitemaps',
+            'xml-sitemaps'
+        ];
     }
 }
 

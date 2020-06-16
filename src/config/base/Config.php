@@ -165,6 +165,17 @@ abstract class Config extends Component implements ConfigInterface
         return [];
     }
 
+    /**
+     * Returns a list of keys that map to controller names
+     * These will be used to disable a modules controller routes.
+     *
+     * @return array
+     */
+    public function getControllerMapKeys(): array
+    {
+        return [];
+    }
+
     public function isUpgradable(): bool
     {
         return $this->_edition !== self::EDITION_PRO;

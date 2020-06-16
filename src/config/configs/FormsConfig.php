@@ -140,5 +140,18 @@ class FormsConfig extends Config
             $this->_edition = Config::EDITION_PRO;
         }
     }
+
+    public function getControllerMapKeys(): array
+    {
+        return [
+            'entries',
+            'entry-statuses',
+            'form-fields',
+            'forms',
+            'groups',
+            'integrations',
+            'rules'
+        ];
+    }
 }
 

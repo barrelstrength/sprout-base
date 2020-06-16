@@ -109,5 +109,12 @@ class MetadataConfig extends Config
             $this->_edition = Config::EDITION_PRO;
         }
     }
+
+    public function getControllerMapKeys(): array
+    {
+        return [
+            'global-metadata'
+        ];
+    }
 }
 

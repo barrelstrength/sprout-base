@@ -407,6 +407,55 @@ class Config extends Component
         return $cpNavItems;
     }
 
+    public function removeDisabledModuleRoutes()
+    {
+        $configTypes = $this->getConfigs(false);
+
+        $sproutControllerMappings = Craft::$app->loadedModules[SproutBase::class]->controllerMap;
+        $sproutControllerMappedKeys = array_keys($sproutControllerMappings);
+
+        $disabledUrlRules = [];
+        foreach ($configTypes as $key => $config) {
+            $settings = $config->getSettings();
+
+            if (!$settings || $settings->getIsEnabled() || !$config->hasControlPanelSettings()) {
+                continue;
+            }
+
+            if (Craft::$app->getRequest()->getIsSiteRequest()) {
+                $urlRules = $config->getSiteUrlRules();
+            } else if (Craft::$app->getRequest()->getIsCpRequest()) {
+                $urlRules = $config->getCpUrlRules();
+            }
+
+            if (empty($urlRules)) {
+                continue;
+            }
+
+            // Union arrays using keys
+            $disabledUrlRules += $urlRules;
+
+            // Disable Controllers
+            $sproutControllerMapKeys = $config->getControllerMapKeys();
+
+            // Disable URL Rules
+            foreach ($sproutControllerMapKeys as $sproutControllerMapKey) {
+                if (in_array($sproutControllerMapKey, $sproutControllerMappedKeys, true)) {
+                    unset(Craft::$app->loadedModules[SproutBase::class]->controllerMap[$sproutControllerMapKey]);
+                }
+            }
+        }
+
+        $disabledUrlRules = array_keys($disabledUrlRules);
+        $registeredRules = Craft::$app->getUrlManager()->rules;
+
+        foreach ($registeredRules as $key => $registeredRule) {
+            if (in_array($registeredRule->name, $disabledUrlRules, true)) {
+                unset($registeredRules[$key]);
+            }
+        }
+    }
+
     /**
      * Check if a plugin is a specific Edition
      *

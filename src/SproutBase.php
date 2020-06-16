@@ -53,6 +53,7 @@ use craft\events\SiteEvent;
 use craft\helpers\ArrayHelper;
 use craft\i18n\PhpMessageSource;
 use craft\services\Dashboard;
+use craft\services\Plugins;
 use craft\services\Sites;
 use craft\services\UserPermissions;
 use craft\web\Application;
@@ -150,6 +151,10 @@ class SproutBase extends Module
                 SproutBase::$app->globalMetadata->insertDefaultGlobalMetadata($event->site->id);
             }
         });
+
+        Event::on(Plugins::class, Plugins::EVENT_AFTER_LOAD_PLUGINS, static function() {
+            SproutBase::$app->config->removeDisabledModuleRoutes();
+        });
     }
 
     public function initMappings()
@@ -174,13 +179,13 @@ class SproutBase extends Module
                 'integrations' => IntegrationsController::class,
                 'rules' => RulesController::class,
                 'global-metadata' => GlobalMetadataController::class,
-                'campaign-email' => CampaignEmailController::class,
-                'campaign-type' => CampaignTypeController::class,
-                'copy-paste' => CopyPasteMailer::class,
                 'reports' => ReportsController::class,
                 'data-sources' => DataSourcesController::class,
                 'fields' => FieldsController::class,
                 'fields-address' => AddressController::class,
+                'campaign-email' => CampaignEmailController::class,
+                'campaign-type' => CampaignTypeController::class,
+                'copy-paste' => CopyPasteMailer::class,
                 'mailers' => MailersController::class,
                 'notifications' => NotificationsController::class,
                 'email-preview' => PreviewController::class,
