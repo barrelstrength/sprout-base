@@ -30,7 +30,7 @@ use craft\helpers\UrlHelper;
  */
 abstract class Config extends Component implements ConfigInterface
 {
-    protected $_edition = 'lite';
+    protected $_edition = null;
 
     /**
      * @var Settings $_settings
@@ -44,6 +44,10 @@ abstract class Config extends Component implements ConfigInterface
 
     public function getEdition(): string
     {
+        if (!$this->_edition) {
+            $this->setEdition();
+        }
+
         return $this->_edition;
     }
 
