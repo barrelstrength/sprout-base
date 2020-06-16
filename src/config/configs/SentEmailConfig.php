@@ -71,10 +71,10 @@ class SentEmailConfig extends Config
     public function getUserPermissions(): array
     {
         return [
-            'sprout:sent-email:viewSentEmail' => [
+            'sprout:email:viewSentEmail' => [
                 'label' => Craft::t('sprout', 'View Sent Email'),
                 'nested' => [
-                    'sprout:sent-email:resendEmails' => [
+                    'sprout:email:resendEmails' => [
                         'label' => Craft::t('sprout', 'Resend Sent Emails')
                     ]
                 ]

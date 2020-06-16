@@ -679,4 +679,9 @@ class CampaignEmail extends EmailElement
         // End the request
         Craft::$app->end();
     }
+
+    public function getPreviewPermission(): string
+    {
+        return 'sprout:email:editCampaigns';
+    }
 }

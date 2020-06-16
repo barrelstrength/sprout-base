@@ -65,7 +65,7 @@ class NotificationsConfig extends Config
     {
         return [
             'sprout:notifications:viewNotifications' => [
-                'label' => Craft::t('sprout', 'View Notifications'),
+                'label' => Craft::t('sprout', 'View Notification Emails'),
                 'nested' => [
                     'sprout:notifications:editNotifications' => [
                         'label' => Craft::t('sprout', 'Edit Notification Emails')

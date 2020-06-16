@@ -25,7 +25,7 @@ return [
     'Edit Forms' => 'Edit Forms',
     'Edit Sitemaps' => 'Edit Sitemaps',
     'View Sent Email' => 'View Sent Email',
-    'View Notifications' => 'View Notifications',
+    'View Notification Emails' => 'View Notification Emails',
     'Edit Notification Emails' => 'Edit Notification Emails',
     'Resend Sent Emails' => 'Resend Sent Emails',
     'Lists' => 'Lists',

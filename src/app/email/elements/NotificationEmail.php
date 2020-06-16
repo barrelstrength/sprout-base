@@ -24,6 +24,7 @@ use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
 use yii\base\Exception;
+use yii\base\ExitException;
 use yii\base\InvalidConfigException;
 
 /**
@@ -520,5 +521,31 @@ class NotificationEmail extends EmailElement
         $rules[] = ['bcc', 'validateEmailList'];
 
         return $rules;
+    }
+
+    public function getPreviewPermission(): string
+    {
+        return 'sprout:email:viewNotifications';
+    }
+
+    /**
+     * @param EmailElement $email
+     *
+     * @return void|null
+     * @throws ExitException
+     */
+    public function preparePreviewEmailElement(EmailElement $email)
+    {
+        /** @var NotificationEmail $email */
+        $event = SproutBase::$app->notificationEvents->getEvent($email);
+
+        if (!$event) {
+            ob_start();
+            echo Craft::t('sprout', 'Notification Email cannot display. The Event setting must be set.');
+            // End the request
+            Craft::$app->end();
+        }
+
+        $email->setEventObject($event->getMockEventObject());
     }
 }

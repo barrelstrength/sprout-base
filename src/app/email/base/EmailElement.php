@@ -10,20 +10,14 @@ use Craft;
 use craft\base\Element;
 use craft\base\Field;
 
-/**
- *
- * @property bool $isTest
- * @property null|object $eventObject
- * @property string $emailTemplateId
- * @property Mailer $mailer
- * @property array $fieldLayoutTabs
- * @property EmailTemplates|CustomTemplates|string|BasicTemplates $emailTemplates
- */
 abstract class EmailElement extends Element
 {
     const ENABLED = 'enabled';
     const PENDING = 'pending';
     const DISABLED = 'disabled';
+
+    const EMAIL_TEMPLATE_TYPE_DYNAMIC = 'dynamic';
+    const EMAIL_TEMPLATE_TYPE_STATIC = 'static';
 
     /**
      * The Subject Line of your email. Your title will also default to the Subject Line unless you set a Title Format.
@@ -293,5 +287,35 @@ abstract class EmailElement extends Element
     public function isReady(): bool
     {
         return ($this->getStatus() == static::ENABLED);
+    }
+
+    /**
+     * The preview type to use for this email element type
+     *
+     * @return string
+     */
+    public function getPreviewType(): string
+    {
+        return self::EMAIL_TEMPLATE_TYPE_DYNAMIC;
+    }
+
+    /**
+     * The permission name to use for this email element type
+     *
+     * @return string
+     */
+    public function getPreviewPermission(): string
+    {
+        return '';
+    }
+
+    /**
+     * @param EmailElement $email
+     *
+     * @return null
+     */
+    public function preparePreviewEmailElement(EmailElement $email)
+    {
+        return null;
     }
 }

@@ -65,10 +65,10 @@ class CampaignsConfig extends Config
     public function getUserPermissions(): array
     {
         return [
-            'sprout:campaigns:editCampaigns' => [
+            'sprout:email:editCampaigns' => [
                 'label' => Craft::t('sprout', 'Edit Campaign Emails'),
                 'nested' => [
-                    'sprout:campaigns:sendCampaigns' => [
+                    'sprout:email:sendCampaigns' => [
                         'label' => Craft::t('sprout', 'Send Campaign Emails')
                     ]
                 ]

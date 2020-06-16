@@ -35,22 +35,6 @@ class SproutEmailVariable
     }
 
     /**
-     * Returns a Campaign Email Share URL and Token
-     *
-     * @param $emailId
-     * @param $campaignTypeId
-     *
-     * @return array|string
-     */
-    public function getCampaignEmailShareUrl($emailId, $campaignTypeId)
-    {
-        return UrlHelper::actionUrl('sprout/campaign-email/share-campaign-email', [
-            'emailId' => $emailId,
-            'campaignTypeId' => $campaignTypeId
-        ]);
-    }
-
-    /**
      * Get the available Email Template Options
      *
      * @param null $notificationEmail

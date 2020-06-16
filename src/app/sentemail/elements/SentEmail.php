@@ -7,6 +7,7 @@
 
 namespace barrelstrength\sproutbase\app\sentemail\elements;
 
+use barrelstrength\sproutbase\app\email\base\EmailElement;
 use barrelstrength\sproutbase\app\sentemail\elements\actions\DeleteEmail;
 use barrelstrength\sproutbase\app\sentemail\elements\db\SentEmailQuery;
 use barrelstrength\sproutbase\app\sentemail\models\SentEmailInfoTable;
@@ -201,7 +202,7 @@ class SentEmail extends Element
             'info' => ['label' => Craft::t('sprout', 'Details')],
         ];
 
-        if (Craft::$app->getUser()->checkPermission('sprout:sentEmail:resendEmails')) {
+        if (Craft::$app->getUser()->checkPermission('sprout:email:resendEmails')) {
             $attributes['resend'] = ['label' => Craft::t('sprout', 'Resend')];
         }
 
@@ -345,5 +346,15 @@ class SentEmail extends Element
         $infoTable->setAttributes(Json::decode($this->info), false);
 
         return $infoTable;
+    }
+
+    public function getPreviewPermission(): string
+    {
+        return 'sprout:email:viewSentEmail';
+    }
+
+    public function getPreviewType(): string
+    {
+        return EmailElement::EMAIL_TEMPLATE_TYPE_STATIC;
     }
 }

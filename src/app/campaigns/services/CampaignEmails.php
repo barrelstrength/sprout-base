@@ -138,30 +138,6 @@ class CampaignEmails extends Component
     }
 
     /**
-     * @param        $htmlBody
-     * @param        $body
-     * @param string $fileExtension
-     *
-     * @throws ExitException
-     */
-    public function showCampaignEmail($htmlBody, $body, $fileExtension = 'html')
-    {
-        if ($fileExtension == 'txt') {
-            $output = $body;
-        } else {
-            $output = $htmlBody;
-        }
-
-        // Output it into a buffer, in case TasksService wants to close the connection prematurely
-        ob_start();
-
-        echo $output;
-
-        // End the request
-        Craft::$app->end();
-    }
-
-    /**
      * @param CampaignEmail $campaignEmail
      *
      * @return mixed

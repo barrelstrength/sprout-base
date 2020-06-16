@@ -25,6 +25,7 @@ use yii\base\ExitException;
 use yii\base\InvalidArgumentException;
 use yii\base\InvalidConfigException;
 use yii\web\BadRequestHttpException;
+use yii\web\ForbiddenHttpException;
 use yii\web\HttpException;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
@@ -42,10 +43,11 @@ class CampaignEmailController extends Controller
 
     /**
      * @return Response
+     * @throws ForbiddenHttpException
      */
     public function actionCampaignEmailIndexTemplate(): Response
     {
-//        $this->requirePermission('sprout:sentEmail:viewSentEmail');
+        $this->requirePermission('sprout:email:editCampaigns');
 
         $isPro = SproutBase::$app->config->isEdition('campaigns', Config::EDITION_PRO);
 
@@ -297,49 +299,6 @@ class CampaignEmailController extends Controller
     }
 
     /**
-     * Renders the Shared Campaign Email
-     *
-     * @param null $emailId
-     * @param null $type
-     *
-     * @throws BadRequestHttpException
-     * @throws Exception
-     * @throws ExitException
-     * @throws LoaderError
-     * @throws NotFoundHttpException
-     * @throws RuntimeError
-     * @throws SyntaxError
-     */
-    public function actionViewSharedCampaignEmail($emailId = null, $type = null)
-    {
-        $this->requireToken();
-
-        $campaignEmail = SproutBase::$app->campaignEmails->getCampaignEmailById($emailId);
-
-        if (!$campaignEmail) {
-            throw new NotFoundHttpException(Craft::t('sprout', 'No Campaign Email with id {id} was found.', [
-                'id' => $emailId
-            ]));
-        }
-
-        $campaignType = SproutBase::$app->campaignTypes->getCampaignTypeById($campaignEmail->campaignTypeId);
-
-        $params = [
-            'email' => $campaignEmail,
-            'campaignType' => $campaignType
-        ];
-
-        $extension = ($type != null && $type == 'text') ? 'txt' : 'html';
-
-        $campaignEmail->setEventObject($params);
-
-        $htmlBody = $campaignEmail->getEmailTemplates()->getHtmlBody();
-        $body = $campaignEmail->getEmailTemplates()->getTextBody();
-
-        SproutBase::$app->campaignEmails->showCampaignEmail($htmlBody, $body, $extension);
-    }
-
-    /**
      * Sends a Test Campaign Email
      *
      * Test Emails do not trigger an onSendEmail event and do not get marked as Sent.
@@ -418,43 +377,6 @@ class CampaignEmailController extends Controller
                 ])
             );
         }
-    }
-
-    /**
-     * @param null $emailId
-     * @param string $type
-     *
-     * @return Response
-     * @throws HttpException
-     */
-    public function actionShareCampaignEmail($emailId = null, $type = 'html'): Response
-    {
-        if ($emailId) {
-            $campaignEmail = SproutBase::$app->campaignEmails->getCampaignEmailById($emailId);
-
-            if (!$campaignEmail) {
-                throw new HttpException(404);
-            }
-        } else {
-            throw new HttpException(404);
-        }
-
-        $params = [
-            'emailId' => $emailId,
-            'type' => $type
-        ];
-
-        // Create the token and redirect to the entry URL with the token in place
-        $token = Craft::$app->getTokens()->createToken(['sprout/campaign-email/view-shared-campaign-email', $params]);
-
-        $emailUrl = '';
-        if ($campaignEmail->getUrl() !== null) {
-            $emailUrl = $campaignEmail->getUrl();
-        }
-
-        $url = UrlHelper::urlWithToken($emailUrl, $token);
-
-        return $this->redirect($url);
     }
 
     /**

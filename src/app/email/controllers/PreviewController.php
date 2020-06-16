@@ -21,6 +21,34 @@ use yii\web\Response;
 class PreviewController extends Controller
 {
     /**
+     * @param int $emailId
+     *
+     * @return Response
+     * @throws HttpException
+     */
+    public function actionPreview(int $emailId = null): Response
+    {
+        if (!$emailId) {
+            throw new HttpException(404);
+        }
+
+        $email = Craft::$app->getElements()->getElementById($emailId);
+
+        if (!$email) {
+            throw new HttpException(404);
+        }
+
+        $this->requirePermission($email->getPreviewPermission());
+
+        $previewTemplate= 'sprout/notifications/_preview/preview-'.$email->getPreviewType();
+
+        return $this->renderTemplate($previewTemplate, [
+            'email' => $email,
+            'emailId' => $emailId
+        ]);
+    }
+
+    /**
      * Prepares a Notification Email to be shared via token-based URL
      *
      * @param int|null $emailId
@@ -28,12 +56,8 @@ class PreviewController extends Controller
      * @return Response
      * @throws HttpException
      */
-    public function actionShareEmail(int $emailId = null): Response
+    public function actionShareEmail(int $emailId): Response
     {
-        if (!$emailId) {
-            throw new HttpException(404);
-        }
-
         $email = Craft::$app->getElements()->getElementById($emailId);
 
         if (!$email) {
@@ -111,18 +135,7 @@ class PreviewController extends Controller
             throw new ElementNotFoundException('Email not found using id '.$$emailId);
         }
 
-        if ($email instanceof NotificationEmail) {
-            $event = SproutBase::$app->notificationEvents->getEvent($email);
-
-            if (!$event) {
-                ob_start();
-                echo Craft::t('sprout', 'Notification Email cannot display. The Event setting must be set.');
-                // End the request
-                Craft::$app->end();
-            }
-
-            $email->setEventObject($event->getMockEventObject());
-        }
+        $email->preparePreviewEmailElement($email);
 
         // The getBodyParam is for livePreviewNotification to update on change
         $subjectLine = Craft::$app->getRequest()->getBodyParam('subjectLine');
