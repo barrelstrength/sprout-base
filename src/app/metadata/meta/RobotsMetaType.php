@@ -72,12 +72,12 @@ class RobotsMetaType extends MetaType
             return $this->robots;
         }
 
-        return SproutBase::$app->optimize->globals['robots'] ?? null;
+        return SproutBase::$app->optimizeMetadata->globals['robots'] ?? null;
     }
 
     public function setRobots($value)
     {
-        $this->robots = SproutBase::$app->optimize->prepareRobotsMetadataValue($value);
+        $this->robots = SproutBase::$app->optimizeMetadata->prepareRobotsMetadataValue($value);
     }
 
     public function getHandle(): string
@@ -102,7 +102,7 @@ class RobotsMetaType extends MetaType
     public function getSettingsHtml(Field $field): string
     {
         $robotsNamespace = $field->handle.'[metadata][robots]';
-        $robots = SproutBase::$app->optimize->prepareRobotsMetadataForSettings($this->robots);
+        $robots = SproutBase::$app->optimizeMetadata->prepareRobotsMetadataForSettings($this->robots);
 
         return Craft::$app->getView()->renderTemplate('sprout/metadata/_components/fields/elementmetadata/blocks/robots', [
             'meta' => $this,
@@ -114,6 +114,6 @@ class RobotsMetaType extends MetaType
 
     public function showMetaDetailsTab(): bool
     {
-        return SproutBase::$app->optimize->elementMetadataField->showRobots;
+        return SproutBase::$app->optimizeMetadata->elementMetadataField->showRobots;
     }
 }

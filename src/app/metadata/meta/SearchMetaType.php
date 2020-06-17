@@ -84,7 +84,7 @@ class SearchMetaType extends MetaType
             return trim($optimizedTitle.$appendTitleString) ?: null;
         }
 
-        return trim(SproutBase::$app->optimize->globals->identity['name']);
+        return trim(SproutBase::$app->optimizeMetadata->globals->identity['name']);
     }
 
     /**
@@ -107,7 +107,7 @@ class SearchMetaType extends MetaType
             return $this->appendTitleValue;
         }
 
-        $settings = SproutBase::$app->optimize->globals->settings;
+        $settings = SproutBase::$app->optimizeMetadata->globals->settings;
 
         if ($settings === null) {
             return null;
@@ -164,7 +164,7 @@ class SearchMetaType extends MetaType
             return mb_substr($optimizedDescription, 0, $descriptionLength) ?: null;
         }
 
-        $globalDescription = SproutBase::$app->optimize->globals->identity['description'] ?? null;
+        $globalDescription = SproutBase::$app->optimizeMetadata->globals->identity['description'] ?? null;
 
         return mb_substr($globalDescription, 0, $descriptionLength) ?: null;
     }
@@ -190,7 +190,7 @@ class SearchMetaType extends MetaType
             return $optimizedKeywords;
         }
 
-        return SproutBase::$app->optimize->globals->identity['keywords'] ?? null;
+        return SproutBase::$app->optimizeMetadata->globals->identity['keywords'] ?? null;
     }
 
     public function setKeywords($value)
@@ -210,7 +210,7 @@ class SearchMetaType extends MetaType
 
     public function showMetaDetailsTab(): bool
     {
-        return SproutBase::$app->optimize->elementMetadataField->showSearchMeta;
+        return SproutBase::$app->optimizeMetadata->elementMetadataField->showSearchMeta;
     }
 
     /**

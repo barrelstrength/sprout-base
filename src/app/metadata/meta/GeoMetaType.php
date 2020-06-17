@@ -184,7 +184,7 @@ class GeoMetaType extends MetaType
 
     public function showMetaDetailsTab(): bool
     {
-        return SproutBase::$app->optimize->elementMetadataField->showGeo;
+        return SproutBase::$app->optimizeMetadata->elementMetadataField->showGeo;
     }
 
     /**

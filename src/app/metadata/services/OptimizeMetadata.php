@@ -28,13 +28,7 @@ use yii\base\Component;
 use yii\base\Exception;
 use yii\base\InvalidConfigException;
 
-/**
- *
- * @property string $uri
- * @property null|int $matchedElement
- * @property Site $matchedSite
- */
-class Optimize extends Component
+class OptimizeMetadata extends Component
 {
     /**
      * Sprout SEO Globals data

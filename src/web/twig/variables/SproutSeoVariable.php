@@ -31,7 +31,7 @@ class SproutSeoVariable
     public function meta(array $meta = [])
     {
         if (count($meta)) {
-            SproutBase::$app->optimize->updateMeta($meta);
+            SproutBase::$app->optimizeMetadata->updateMeta($meta);
         }
     }
 

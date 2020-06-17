@@ -116,7 +116,7 @@ class TwitterMetaType extends MetaType
             return $this->twitterCard;
         }
 
-        return SproutBase::$app->optimize->globals->settings['defaultTwitterCard'] ?? 'summary';
+        return SproutBase::$app->optimizeMetadata->globals->settings['defaultTwitterCard'] ?? 'summary';
     }
 
     /**
@@ -203,7 +203,7 @@ class TwitterMetaType extends MetaType
             return trim($optimizedTitle) ?: null;
         }
 
-        return trim(SproutBase::$app->optimize->globals->identity['name']);
+        return trim(SproutBase::$app->optimizeMetadata->globals->identity['name']);
     }
 
     /**
@@ -231,7 +231,7 @@ class TwitterMetaType extends MetaType
             return mb_substr($optimizedDescription, 0, $descriptionLength) ?: null;
         }
 
-        $globalDescription = SproutBase::$app->optimize->globals->identity['description'] ?? null;
+        $globalDescription = SproutBase::$app->optimizeMetadata->globals->identity['description'] ?? null;
 
         return mb_substr($globalDescription, 0, $descriptionLength) ?: null;
     }
@@ -259,7 +259,7 @@ class TwitterMetaType extends MetaType
             return $this->normalizeImageValue($optimizedImage);
         }
 
-        return SproutBase::$app->optimize->globals->identity['image'] ?? null;
+        return SproutBase::$app->optimizeMetadata->globals->identity['image'] ?? null;
     }
 
     /**
@@ -285,7 +285,7 @@ class TwitterMetaType extends MetaType
             return $this->twitterTransform;
         }
 
-        return SproutBase::$app->optimize->globals->settings['twitterTransform'] ?? null;
+        return SproutBase::$app->optimizeMetadata->globals->settings['twitterTransform'] ?? null;
     }
 
     /**
@@ -325,7 +325,7 @@ class TwitterMetaType extends MetaType
 
     public function showMetaDetailsTab(): bool
     {
-        return SproutBase::$app->optimize->elementMetadataField->showTwitter;
+        return SproutBase::$app->optimizeMetadata->elementMetadataField->showTwitter;
     }
 
     /**
@@ -357,7 +357,7 @@ class TwitterMetaType extends MetaType
             return $this->twitterProfileName;
         }
 
-        $socialProfiles = SproutBase::$app->optimize->globals->social ?? null;
+        $socialProfiles = SproutBase::$app->optimizeMetadata->globals->social ?? null;
 
         if ($socialProfiles === null) {
             return null;

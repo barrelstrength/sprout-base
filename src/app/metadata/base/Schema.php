@@ -409,7 +409,7 @@ abstract class Schema
             }
 
             $transformSetting = $this->globals->settings['ogTransform'];
-            $transform = SproutBase::$app->optimize->getSelectedTransform($transformSetting);
+            $transform = SproutBase::$app->optimizeMetadata->getSelectedTransform($transformSetting);
 
             $image = [
                 'url' => OptimizeHelper::getAssetUrl($imageAsset->id, $transformSetting),

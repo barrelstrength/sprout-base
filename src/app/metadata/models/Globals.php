@@ -225,7 +225,7 @@ class Globals extends Model
      */
     protected function getRobots()
     {
-        $robots = SproutBase::$app->optimize->prepareRobotsMetadataValue($this->robots);
+        $robots = SproutBase::$app->optimizeMetadata->prepareRobotsMetadataValue($this->robots);
 
         if ($robots === null) {
             return null;

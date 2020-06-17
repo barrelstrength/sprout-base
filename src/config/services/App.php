@@ -32,7 +32,7 @@ use barrelstrength\sproutbase\app\forms\services\FormIntegrations;
 use barrelstrength\sproutbase\app\forms\services\FormRules;
 use barrelstrength\sproutbase\app\metadata\services\ElementMetadata;
 use barrelstrength\sproutbase\app\metadata\services\GlobalMetadata;
-use barrelstrength\sproutbase\app\metadata\services\Optimize;
+use barrelstrength\sproutbase\app\metadata\services\OptimizeMetadata;
 use barrelstrength\sproutbase\app\metadata\services\Schema;
 use barrelstrength\sproutbase\app\redirects\services\Redirects;
 use barrelstrength\sproutbase\app\reports\services\DataSources;
@@ -90,9 +90,9 @@ class App extends Component
     public $formRules;
 
     /**
-     * @var Optimize
+     * @var OptimizeMetadata
      */
-    public $optimize;
+    public $optimizeMetadata;
 
     /**
      * @var GlobalMetadata
@@ -270,7 +270,7 @@ class App extends Component
         $this->formRules = new FormRules();
 
         // Metadata
-        $this->optimize = new Optimize();
+        $this->optimizeMetadata = new OptimizeMetadata();
         $this->globalMetadata = new GlobalMetadata();
         $this->elementMetadata = new ElementMetadata();
         $this->schema = new Schema();

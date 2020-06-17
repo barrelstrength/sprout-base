@@ -27,8 +27,8 @@ trait MetaImageTrait
      */
     public function normalizeImageValue($image = null)
     {
-        $element = SproutBase::$app->optimize->element;
-        $elementMetadataField = SproutBase::$app->optimize->elementMetadataField;
+        $element = SproutBase::$app->optimizeMetadata->element;
+        $elementMetadataField = SproutBase::$app->optimizeMetadata->elementMetadataField;
 
         $optimizedImageFieldSetting = $elementMetadataField->optimizedImageField ?? 'manually';
 
@@ -92,7 +92,7 @@ trait MetaImageTrait
 
         // If the siteUrl is https or the current request is https, use it.
         $scheme = parse_url(UrlHelper::baseSiteUrl(), PHP_URL_SCHEME);
-        $transformSettings = $transform ? SproutBase::$app->optimize->getSelectedTransform($transform) : null;
+        $transformSettings = $transform ? SproutBase::$app->optimizeMetadata->getSelectedTransform($transform) : null;
 
         // If our selected asset was deleted, make sure it is null
         $absoluteUrl = null;

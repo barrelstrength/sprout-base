@@ -60,8 +60,8 @@ trait OptimizedTrait
             return $this->optimizedTitle;
         }
 
-        $element = SproutBase::$app->optimize->element;
-        $elementMetadataField = SproutBase::$app->optimize->elementMetadataField;
+        $element = SproutBase::$app->optimizeMetadata->element;
+        $elementMetadataField = SproutBase::$app->optimizeMetadata->elementMetadataField;
 
         $optimizedTitleFieldSetting = $elementMetadataField->optimizedTitleField ?? 'manually';
 
@@ -120,8 +120,8 @@ trait OptimizedTrait
         $descriptionLength = SproutBase::$app->elementMetadata->getDescriptionLength();
         $description = null;
 
-        $element = SproutBase::$app->optimize->element;
-        $elementMetadataField = SproutBase::$app->optimize->elementMetadataField;
+        $element = SproutBase::$app->optimizeMetadata->element;
+        $elementMetadataField = SproutBase::$app->optimizeMetadata->elementMetadataField;
 
         $optimizedDescriptionFieldSetting = $elementMetadataField->optimizedDescriptionField ?? 'manually';
 
@@ -181,7 +181,7 @@ trait OptimizedTrait
             return $optimizedImageId;
         }
 
-        return SproutBase::$app->optimize->globals->identity['image'] ?? null;
+        return SproutBase::$app->optimizeMetadata->globals->identity['image'] ?? null;
     }
 
     /**
@@ -208,8 +208,8 @@ trait OptimizedTrait
 
         $keywords = $this->optimizedKeywords;
 
-        $element = SproutBase::$app->optimize->element;
-        $elementMetadataField = SproutBase::$app->optimize->elementMetadataField;
+        $element = SproutBase::$app->optimizeMetadata->element;
+        $elementMetadataField = SproutBase::$app->optimizeMetadata->elementMetadataField;
 
         $optimizedKeywordsFieldSetting = $elementMetadataField->optimizedKeywordsField ?? 'manually';
 

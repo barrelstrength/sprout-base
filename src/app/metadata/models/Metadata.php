@@ -132,8 +132,8 @@ class Metadata extends Model
      */
     public function setSchemaProperties()
     {
-        $identity = SproutBase::$app->optimize->globals['identity'] ?? null;
-        $elementMetadataField = SproutBase::$app->optimize->elementMetadataField ?? null;
+        $identity = SproutBase::$app->optimizeMetadata->globals['identity'] ?? null;
+        $elementMetadataField = SproutBase::$app->optimizeMetadata->elementMetadataField ?? null;
 
         $globalSchemaTypeId = null;
         $globalSchemaOverrideTypeId = null;

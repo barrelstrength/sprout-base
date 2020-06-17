@@ -57,7 +57,7 @@ class OptimizeHelper
             $asset = Craft::$app->elements->getElementById($id);
 
             if ($asset !== null) {
-                $transform = SproutBase::$app->optimize->getSelectedTransform($transform);
+                $transform = SproutBase::$app->optimizeMetadata->getSelectedTransform($transform);
 
                 $imageUrl = Craft::$app->getAssets()->getAssetUrl($asset, $transform);
 
@@ -86,7 +86,7 @@ class OptimizeHelper
     {
         $value = null;
 
-        $element = SproutBase::$app->optimize->element;
+        $element = SproutBase::$app->optimizeMetadata->element;
 
         if (is_numeric($fieldId)) {
             /**

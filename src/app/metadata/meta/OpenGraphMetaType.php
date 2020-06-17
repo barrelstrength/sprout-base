@@ -195,7 +195,7 @@ class OpenGraphMetaType extends MetaType
 
     public function showMetaDetailsTab(): bool
     {
-        return SproutBase::$app->optimize->elementMetadataField->showOpenGraph;
+        return SproutBase::$app->optimizeMetadata->elementMetadataField->showOpenGraph;
     }
 
     /**
@@ -207,7 +207,7 @@ class OpenGraphMetaType extends MetaType
             return $this->ogType;
         }
 
-        return SproutBase::$app->optimize->globals->settings['defaultOgType'] ?? 'website';
+        return SproutBase::$app->optimizeMetadata->globals->settings['defaultOgType'] ?? 'website';
     }
 
     /**
@@ -227,7 +227,7 @@ class OpenGraphMetaType extends MetaType
             return $this->ogSiteName;
         }
 
-        return SproutBase::$app->optimize->globals->identity['name'] ?? Craft::$app->getSystemName();
+        return SproutBase::$app->optimizeMetadata->globals->identity['name'] ?? Craft::$app->getSystemName();
     }
 
     /**
@@ -271,7 +271,7 @@ class OpenGraphMetaType extends MetaType
             return $this->ogPublisher;
         }
 
-        $socialSettings = SproutBase::$app->optimize->globals->social;
+        $socialSettings = SproutBase::$app->optimizeMetadata->globals->social;
         $facebookPage = $this->getFacebookPage($socialSettings);
 
         return $facebookPage ?? null;
@@ -321,7 +321,7 @@ class OpenGraphMetaType extends MetaType
             return trim($optimizedTitle) ?: null;
         }
 
-        return trim(SproutBase::$app->optimize->globals->identity['name']);
+        return trim(SproutBase::$app->optimizeMetadata->globals->identity['name']);
     }
 
     /**
@@ -349,7 +349,7 @@ class OpenGraphMetaType extends MetaType
             return mb_substr($optimizedDescription, 0, $descriptionLength) ?: null;
         }
 
-        $globalDescription = SproutBase::$app->optimize->globals->identity['description'] ?? null;
+        $globalDescription = SproutBase::$app->optimizeMetadata->globals->identity['description'] ?? null;
 
         return mb_substr($globalDescription, 0, $descriptionLength) ?: null;
     }
@@ -397,7 +397,7 @@ class OpenGraphMetaType extends MetaType
             return $this->normalizeImageValue($optimizedImage);
         }
 
-        return SproutBase::$app->optimize->globals->identity['image'] ?? null;
+        return SproutBase::$app->optimizeMetadata->globals->identity['image'] ?? null;
     }
 
     /**
@@ -475,7 +475,7 @@ class OpenGraphMetaType extends MetaType
             return $this->ogTransform;
         }
 
-        return SproutBase::$app->optimize->globals->settings['ogTransform'] ?? null;
+        return SproutBase::$app->optimizeMetadata->globals->settings['ogTransform'] ?? null;
     }
 
     /**
@@ -518,7 +518,7 @@ class OpenGraphMetaType extends MetaType
             return null;
         }
 
-        $element = SproutBase::$app->optimize->element;
+        $element = SproutBase::$app->optimizeMetadata->element;
 
         if ($element) {
             $dateUpdated = $element->dateUpdated ?? null;
@@ -548,7 +548,7 @@ class OpenGraphMetaType extends MetaType
             return null;
         }
 
-        $element = SproutBase::$app->optimize->element;
+        $element = SproutBase::$app->optimizeMetadata->element;
 
         if ($element) {
             $postDate = $element->postDate ?? null;
@@ -584,7 +584,7 @@ class OpenGraphMetaType extends MetaType
             return null;
         }
 
-        $element = SproutBase::$app->optimize->element;
+        $element = SproutBase::$app->optimizeMetadata->element;
 
         if ($element) {
             $expiryDate = $element->expiryDate ?? null;

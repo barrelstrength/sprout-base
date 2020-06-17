@@ -328,8 +328,8 @@ class ElementMetadata extends Field
 
         $globals = SproutBase::$app->globalMetadata->getGlobalMetadata($site);
 
-        SproutBase::$app->optimize->globals = $globals;
-        SproutBase::$app->optimize->element = $element;
-        SproutBase::$app->optimize->elementMetadataField = $this;
+        SproutBase::$app->optimizeMetadata->globals = $globals;
+        SproutBase::$app->optimizeMetadata->element = $element;
+        SproutBase::$app->optimizeMetadata->elementMetadataField = $this;
     }
 }
