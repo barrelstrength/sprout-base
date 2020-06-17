@@ -590,7 +590,7 @@ class SproutSeoVariable
      */
     public function getSchemas(): array
     {
-        return SproutBase::$app->schema->getSchemas();
+        return SproutBase::$app->schemaMetadata->getSchemas();
     }
 
     /**

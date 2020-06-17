@@ -33,7 +33,7 @@ use barrelstrength\sproutbase\app\forms\services\FormRules;
 use barrelstrength\sproutbase\app\metadata\services\ElementMetadata;
 use barrelstrength\sproutbase\app\metadata\services\GlobalMetadata;
 use barrelstrength\sproutbase\app\metadata\services\OptimizeMetadata;
-use barrelstrength\sproutbase\app\metadata\services\Schema;
+use barrelstrength\sproutbase\app\metadata\services\SchemaMetadata;
 use barrelstrength\sproutbase\app\redirects\services\Redirects;
 use barrelstrength\sproutbase\app\reports\services\DataSources;
 use barrelstrength\sproutbase\app\reports\services\Exports;
@@ -105,9 +105,9 @@ class App extends Component
     public $elementMetadata;
 
     /**
-     * @var Schema
+     * @var SchemaMetadata
      */
-    public $schema;
+    public $schemaMetadata;
 
     /**
      * @var CampaignEmails
@@ -273,7 +273,7 @@ class App extends Component
         $this->optimizeMetadata = new OptimizeMetadata();
         $this->globalMetadata = new GlobalMetadata();
         $this->elementMetadata = new ElementMetadata();
-        $this->schema = new Schema();
+        $this->schemaMetadata = new SchemaMetadata();
 
         // Campaigns
         $this->campaignTypes = new CampaignTypes();

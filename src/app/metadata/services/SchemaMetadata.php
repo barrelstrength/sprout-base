@@ -31,12 +31,7 @@ use Craft;
 use craft\helpers\Json;
 use yii\base\Component;
 
-/**
- *
- * @property array $schemasTypes
- * @property array $schemaOptions
- */
-class Schema extends Component
+class SchemaMetadata extends Component
 {
     const EVENT_REGISTER_SCHEMAS = 'registerSchemasEvent';
 
@@ -144,7 +139,7 @@ class Schema extends Component
         // Get a filtered list of our default Sprout SEO schema
         $defaultSchema = array_filter($schemas, static function($map) {
             /**
-             * @var Schema $map
+             * @var SchemaMetadata $map
              */
             return stripos(get_class($map), 'barrelstrength\\sproutseo') !== false;
         });
@@ -152,7 +147,7 @@ class Schema extends Component
         // Get a filtered list of of any custom schema
         $customSchema = array_filter($schemas, static function($map) {
             /**
-             * @var Schema $map
+             * @var SchemaMetadata $map
              */
             return stripos(get_class($map), 'barrelstrength\\sproutseo') === false;
         });
@@ -324,7 +319,7 @@ class Schema extends Component
      */
     private function getSchemaChildren($type): array
     {
-        $tree = SproutBase::$app->schema->getVocabularies($type);
+        $tree = SproutBase::$app->schemaMetadata->getVocabularies($type);
 
         /**
          * @var array $children

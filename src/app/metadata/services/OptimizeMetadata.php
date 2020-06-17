@@ -303,7 +303,7 @@ class OptimizeMetadata extends Component
         }
 
         if ($schemaTypeId && $element !== null) {
-            $schema = SproutBase::$app->schema->getSchemaByUniqueKey($schemaTypeId);
+            $schema = SproutBase::$app->schemaMetadata->getSchemaByUniqueKey($schemaTypeId);
             $schema->addContext = true;
             $schema->isMainEntity = true;
 

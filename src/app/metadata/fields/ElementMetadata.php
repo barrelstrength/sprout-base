@@ -175,8 +175,8 @@ class ElementMetadata extends Field
      */
     public function getSettingsHtml()
     {
-        $schemas = SproutBase::$app->schema->getSchemaOptions();
-        $schemaSubtypes = SproutBase::$app->schema->getSchemaSubtypes($schemas);
+        $schemas = SproutBase::$app->schemaMetadata->getSchemaOptions();
+        $schemaSubtypes = SproutBase::$app->schemaMetadata->getSchemaSubtypes($schemas);
 
         Craft::$app->getView()->registerAssetBundle(MetadataAsset::class);
         Craft::$app->getView()->registerAssetBundle(SelectOtherFieldAsset::class);
