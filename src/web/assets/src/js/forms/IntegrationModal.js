@@ -361,7 +361,7 @@ if (typeof Craft.SproutForms === typeof undefined) {
         const inputId = this.$container.find('input[name="integrationId"]');
         const id = inputId.length ? inputId.val() : false;
 
-        Craft.postActionRequest('sprout/integrations/save-integration', data, $.proxy(function(response, textStatus) {
+        Craft.postActionRequest('sprout/form-integrations/save-integration', data, $.proxy(function(response, textStatus) {
           this.$saveSpinner.addClass('hidden');
 
           const statusSuccess = (textStatus === 'success');
@@ -418,7 +418,7 @@ if (typeof Craft.SproutForms === typeof undefined) {
           'formId': formId
         };
 
-        Craft.postActionRequest('sprout/integrations/edit-integration', data, $.proxy(function(response, textStatus) {
+        Craft.postActionRequest('sprout/form-integrations/edit-integration', data, $.proxy(function(response, textStatus) {
           this.$loadSpinner.addClass('hidden');
 
           const statusSuccess = (textStatus === 'success');
@@ -455,7 +455,7 @@ if (typeof Craft.SproutForms === typeof undefined) {
 
           const integrationId = $(this.$container).find('input[name="integrationId"]').val();
 
-          Craft.postActionRequest('sprout/integrations/delete-integration', data, $.proxy(function(response, textStatus) {
+          Craft.postActionRequest('sprout/form-integrations/delete-integration', data, $.proxy(function(response, textStatus) {
             const statusSuccess = (textStatus === 'success');
 
             if (statusSuccess && response.success) {
