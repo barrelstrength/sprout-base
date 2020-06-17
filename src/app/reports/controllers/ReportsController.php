@@ -7,6 +7,7 @@
 
 namespace barrelstrength\sproutbase\app\reports\controllers;
 
+use barrelstrength\sproutbase\app\reports\base\DataSource;
 use barrelstrength\sproutbase\app\reports\base\Visualization;
 use barrelstrength\sproutbase\app\reports\elements\Report;
 use barrelstrength\sproutbase\app\reports\models\ReportGroup;
@@ -21,6 +22,7 @@ use craft\web\Controller;
 use craft\web\Request;
 use Throwable;
 use yii\base\Exception;
+use yii\db\Query;
 use yii\db\StaleObjectException;
 use yii\web\BadRequestHttpException;
 use yii\web\ForbiddenHttpException;
@@ -156,6 +158,7 @@ class ReportsController extends Controller
      * @return Response
      * @throws ForbiddenHttpException
      * @throws NotFoundHttpException
+     * @throws MissingComponentException
      */
     public function actionEditReportTemplate(string $dataSourceId = null, Report $report = null, int $reportId = null): Response
     {
@@ -179,6 +182,11 @@ class ReportsController extends Controller
 
         if (!$dataSource) {
             throw new NotFoundHttpException('Data Source not found.');
+        }
+
+        if ($message = $this->processEditionChecks($reportElement)) {
+            Craft::$app->getSession()->setNotice($message);
+            return $this->redirect(UrlHelper::cpUrl('sprout/reports'));
         }
 
         $groups = SproutBase::$app->reportGroups->getReportGroups();
@@ -549,5 +557,48 @@ class ReportsController extends Controller
         $visualizationSettings['type'] = $visualizationType;
 
         return $visualizationSettings;
+    }
+
+    /**
+     * Returns null on success and an error message on failure
+     *
+     * @param Report $report
+     *
+     * @return string
+     * @throws ForbiddenHttpException
+     */
+    private function processEditionChecks(Report $report)
+    {
+        $isPro = SproutBase::$app->config->isEdition('reports', Config::EDITION_PRO);
+
+        // No changes if Pro or if editing an existing report
+        if ($isPro || $report->id) {
+            return null;
+        }
+
+        /** @var DataSource $dataSource */
+        $dataSource = $report->getDataSource();
+        $dataSourceId = $dataSource->id;
+
+        $allowedDataSourceIds = SproutBase::$app->reports->getAllowedDataSourceIds();
+        $defaultDataSourceIds = SproutBase::$app->reports->getDefaultDataSourceIds();
+
+        if (!in_array($dataSourceId, $allowedDataSourceIds, false)) {
+            return Craft::t('sprout', 'Upgrade to Sprout Reports PRO to use Custom Reports and Data Source integrations.');
+        }
+
+        if (in_array($dataSourceId, $defaultDataSourceIds, false)) {
+            $reportForDataSourceAlreadyExists = (new Query())
+                ->select('*')
+                ->from('{{%sproutreports_reports}}')
+                ->where([
+                    'dataSourceId' => $dataSourceId
+                ])
+                ->exists();
+
+            if ($reportForDataSourceAlreadyExists) {
+                return Craft::t('sprout', 'Upgrade to Sprout Reports PRO to create additional '.$dataSource::displayName().' reports.');
+            }
+        }
     }
 }

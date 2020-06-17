@@ -13,6 +13,7 @@ use barrelstrength\sproutbase\app\forms\records\Entry as EntryRecord;
 use barrelstrength\sproutbase\app\forms\records\EntryStatus as EntryStatusRecord;
 use barrelstrength\sproutbase\app\reports\base\DataSource;
 use barrelstrength\sproutbase\app\reports\elements\Report;
+use barrelstrength\sproutbase\helpers\DateRangeHelper;
 use barrelstrength\sproutbase\SproutBase;
 use Craft;
 use craft\db\Query;
@@ -243,7 +244,7 @@ class EntriesDataSource extends DataSource
             }
         }
 
-        $dateRanges = SproutBase::$app->reports->getDateRanges(false);
+        $dateRanges = DateRangeHelper::getDateRanges(false);
 
         $entryStatusOptions = [];
         $defaultSelectedEntryStatuses = [];

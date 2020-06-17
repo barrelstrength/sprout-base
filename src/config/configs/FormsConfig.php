@@ -7,6 +7,9 @@
 
 namespace barrelstrength\sproutbase\config\configs;
 
+use barrelstrength\sproutbase\app\forms\integrations\sproutreports\datasources\EntriesDataSource;
+use barrelstrength\sproutbase\app\forms\integrations\sproutreports\datasources\IntegrationLogDataSource;
+use barrelstrength\sproutbase\app\forms\integrations\sproutreports\datasources\SpamLogDataSource;
 use barrelstrength\sproutbase\config\base\Config;
 use barrelstrength\sproutbase\config\controllers\SettingsController;
 use barrelstrength\sproutbase\config\models\settings\FormsSettings;
@@ -151,6 +154,15 @@ class FormsConfig extends Config
             'groups',
             'integrations',
             'rules'
+        ];
+    }
+
+    public function getSupportedDataSourceTypes(): array
+    {
+        return [
+            EntriesDataSource::class,
+            IntegrationLogDataSource::class,
+            SpamLogDataSource::class
         ];
     }
 }

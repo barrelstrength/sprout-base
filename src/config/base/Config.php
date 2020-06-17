@@ -42,7 +42,7 @@ abstract class Config extends Component implements ConfigInterface
      */
     protected $_alternateName = '';
 
-    public function getEdition(): string
+    public function getEdition()
     {
         if (!$this->_edition) {
             $this->setEdition();

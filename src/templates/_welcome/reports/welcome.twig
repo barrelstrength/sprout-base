@@ -1,0 +1,29 @@
+{% extends "sprout/config/_layouts/base-landing" %}
+{% import "sprout/config/_includes/sproutcp" as sproutCp %}
+
+{% set title = "Welcome to Sprout Reports"|t('sprout') %}
+{% set bodyClass = 'sprout-landing-page' %}
+{% set assetUrl = view.getAssetManager().getPublishedUrl('@sproutbaseassets/sprout/screenshots', true) -%}
+
+{% block content %}
+
+    <div class="sprout-landing">
+
+        {{ parent() }}
+
+        {{ sproutCp.featureHeader({
+            heading: "Ramp up your Report Repetoire."|t('sprout'),
+            message: "Sprout Reports makes it easy to create pre-defined and custom reports in Twig, MySQL, and PHP."|t('sprout'),
+            primaryButtonText: "Get Started"|t('sprout'),
+            primaryButtonLink: cpUrl('sprout/forms'),
+            secondaryButtonText: "Read the Docs"|t('sprout'),
+            secondaryButtonLink: "https://sprout.barrelstrengthdesign.com/docs/reports"
+        }) }}
+
+        {{ sproutCp.featureImage({
+            imageUrl: assetUrl ~ '/forms/feature-formbuilder-toboldlygo.png',
+            altText: 'Sprout Forms Form Builder for Craft CMS'|t('sprout')
+        }) }}
+
+    </div>
+{% endblock %}

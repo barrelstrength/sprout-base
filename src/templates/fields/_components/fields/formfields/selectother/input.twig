@@ -7,7 +7,7 @@
     {%- set value = (value is defined ? value : null) %}
     {%- set hasOptgroups = false -%}
 
-<div class="sprout-selectother">
+<div class="sprout-selectother{%- if disabled is defined and disabled %} disabled{% endif %}">
 
     <div class="{{ class }}">
         <select

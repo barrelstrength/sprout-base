@@ -1,0 +1,31 @@
+{% extends "sprout/config/_layouts/base-landing" %}
+{% import "sprout/config/_includes/sproutcp" as sproutCp %}
+
+{% set title = "Upgrade to Sprout Reports Pro"|t('sprout') %}
+{% set bodyClass = 'sprout-landing-page' %}
+{% set assetUrl = view.getAssetManager().getPublishedUrl('@sproutbase/web/assets/sprout/screenshots/forms', true) -%}
+{% set pluginStoreLink = currentUser.admin ? cpUrl('plugin-store/sprout-forms') : 'https://plugins.craftcms.com/sprout-forms' %}
+
+{% block content %}
+
+    <div class="sprout-landing">
+
+        {{ parent() }}
+
+        {{ sproutCp.featureHeader({
+            heading: "Ramp up your Report Repetoire."|t('sprout'),
+            message: "Sprout Reports [pro] makes it easy to create unlimited pre-defined and custom reports in Twig, MySQL, and PHP, along with Visualizations for your reports and dashboard."|t('sprout'),
+            primaryButtonText: "Upgrade Now"|t('sprout'),
+            primaryButtonLink: pluginStoreLink,
+            secondaryButtonText: "Learn More"|t('sprout'),
+            secondaryButtonLink: "https://sprout.barrelstrengthdesign.com/docs/reports"
+        }) }}
+
+        {{ sproutCp.featureImage({
+            imageUrl: assetUrl ~ '/feature-formbuilder-toboldlygo.png',
+            altText: 'Sprout Forms Form Builder for Craft CMS'|t('sprout')
+        }) }}
+
+    </div>
+
+{% endblock %}

@@ -7,6 +7,9 @@
 
 namespace barrelstrength\sproutbase\config\configs;
 
+use barrelstrength\sproutbase\app\reports\datasources\CustomQuery;
+use barrelstrength\sproutbase\app\reports\datasources\CustomTwigTemplate;
+use barrelstrength\sproutbase\app\reports\datasources\Users;
 use barrelstrength\sproutbase\config\base\Config;
 use barrelstrength\sproutbase\config\models\settings\ReportsSettings;
 use barrelstrength\sproutbase\migrations\reports\Install;
@@ -121,6 +124,15 @@ class ReportsConfig extends Config
         return [
             'reports',
             'data-sources'
+        ];
+    }
+
+    public function getSupportedDataSourceTypes(): array
+    {
+        return [
+            CustomQuery::class,
+            CustomTwigTemplate::class,
+            Users::class
         ];
     }
 }

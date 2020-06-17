@@ -11,6 +11,8 @@ use barrelstrength\sproutbase\app\reports\base\DataSource;
 use barrelstrength\sproutbase\app\reports\elements\actions\DeleteReport;
 use barrelstrength\sproutbase\app\reports\elements\db\ReportQuery;
 use barrelstrength\sproutbase\app\reports\records\Report as ReportRecord;
+use barrelstrength\sproutbase\config\base\Config;
+use barrelstrength\sproutbase\helpers\DateRangeHelper;
 use barrelstrength\sproutbase\SproutBase;
 use Craft;
 use craft\base\Element;
@@ -191,6 +193,8 @@ class Report extends Element
 
         $mailingListModal = false;
 
+        $isPro = SproutBase::$app->config->isEdition('reports', Config::EDITION_PRO);
+
         // Just in case, skip console requests
         if (!Craft::$app->getRequest()->getIsConsoleRequest()) {
             // Identify the Element Selector Modal for Mailing Lists
@@ -214,17 +218,18 @@ class Report extends Element
             ];
         }
 
-        $sources[] = [
-            'key' => 'mailingList',
-            'label' => Craft::t('sprout', 'All mailing lists'),
-            'data' => [
-                'readonly' => true
-            ],
-            'criteria' => [
-                'emailColumn' => ':notempty:'
-            ]
-        ];
-//        }
+        if ($isPro) {
+            $sources[] = [
+                'key' => 'mailingList',
+                'label' => Craft::t('sprout', 'All mailing lists'),
+                'data' => [
+                    'readonly' => true
+                ],
+                'criteria' => [
+                    'emailColumn' => ':notempty:'
+                ]
+            ];
+        }
 
         // @todo - migration, consider conditionally displaying based on PRO plugins existing
         $groups = SproutBase::$app->reportGroups->getReportGroups();
@@ -485,14 +490,14 @@ class Report extends Element
             $startDateSetting = $this->getSetting('startDate');
             $endDateSetting = $this->getSetting('endDate');
         } else {
-            $startEndDate = SproutBase::$app->reports->getStartEndDateRange($dateRange);
+            $startEndDate = DateRangeHelper::getStartEndDateRange($dateRange);
 
             $startDateSetting = $startEndDate['startDate'];
             $endDateSetting = $startEndDate['endDate'];
         }
 
-        $this->startDate = SproutBase::$app->reports->getUtcDateTime($startDateSetting);
-        $this->endDate = SproutBase::$app->reports->getUtcDateTime($endDateSetting);
+        $this->startDate = DateRangeHelper::getUtcDateTime($startDateSetting);
+        $this->endDate = DateRangeHelper::getUtcDateTime($endDateSetting);
 
         return $this;
     }

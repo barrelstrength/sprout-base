@@ -151,10 +151,6 @@ class SproutBase extends Module
                 SproutBase::$app->globalMetadata->insertDefaultGlobalMetadata($event->site->id);
             }
         });
-
-        Event::on(Plugins::class, Plugins::EVENT_AFTER_LOAD_PLUGINS, static function() {
-            SproutBase::$app->config->removeDisabledModuleRoutes();
-        });
     }
 
     public function initMappings()
@@ -249,11 +245,6 @@ class SproutBase extends Module
             $event->types[] = CustomTwigTemplate::class;
             $event->types[] = Users::class;
         });
-
-        Event::on(Dashboard::class, Dashboard::EVENT_REGISTER_WIDGET_TYPES, static function(RegisterComponentTypesEvent $event) {
-            $event->types[] = Number::class;
-            $event->types[] = Visualization::class;
-        });
     }
 
     public function initConfigEvents()
@@ -267,6 +258,10 @@ class SproutBase extends Module
             if ($settingsPages = self::$app->config->getSproutCpSettings()) {
                 $event->settings['Sprout Settings'] = $settingsPages;
             }
+        });
+
+        Event::on(Plugins::class, Plugins::EVENT_AFTER_LOAD_PLUGINS, static function() {
+            SproutBase::$app->config->removeDisabledModuleRoutes();
         });
     }
 

@@ -1,6 +1,7 @@
 {% extends "sprout/reports/_layouts/base" %}
 {% import "_includes/forms" as forms %}
 {% import "sprout/fields/_includes/forms" as sproutFields %}
+{% import "sprout/config/_includes/sproutcp" as sproutCp %}
 
 {% do view.registerAssetBundle("barrelstrength\\sproutbase\\web\\assetbundles\\sproutcp\\SproutCpAsset") %}
 {% do view.registerAssetBundle("barrelstrength\\sproutbase\\web\\assetbundles\\reports\\SproutReportsAsset") %}
@@ -23,16 +24,13 @@
         label: 'Visualization',
         url: '#tab-visualization',
         class: null,
-    }
-] %}
-
-{% if isPro %}
-    {% set tabs = tabs|merge([{
+    },
+    {
         label: 'Mailing List',
         url: '#tab-mailing-list',
         class: null
-    }]) %}
-{% endif %}
+    }
+] %}
 
 {% set fullPageForm = true %}
 
@@ -133,7 +131,15 @@
 
     <div id="tab-visualization" class="hidden">
 
-        <h3>Visualizations</h3>
+        {% if not isPro %}
+            {{ sproutCp.upgradeToProCallout({
+                message: '<a href="'~cpUrl('sprout/upgrade/reports')~'">Upgrade to Sprout Reports PRO</a> to enable unlimited custom reports, mailing list integration, and visualizations.'
+            }) }}
+
+            <hr>
+        {% endif %}
+
+        <h3>{{ "Visualizations"|t('sprout') }}</h3>
 
         <div style="padding: 14px;background-color: #f3f7fc;border-radius:4px;">
 
@@ -147,7 +153,8 @@
             label: 'Visualization Type',
             name: 'visualizationType',
             value: settings.visualization.type,
-            options: visualizationOptions
+            options: visualizationOptions,
+            disabled: not isPro
         }) }}
 
         {% for item in visualizationTypes %}
@@ -161,44 +168,53 @@
 
     </div>
 
-    {% if isPro %}
-        <div id="tab-mailing-list" class="hidden">
 
-            <h3>Mailing Lists</h3>
+    <div id="tab-mailing-list" class="hidden">
 
-            <div style="padding: 14px;background-color: #f3f7fc;border-radius:4px;">
+        {% if not isPro %}
+            {{ sproutCp.upgradeToProCallout({
+                message: '<a href="'~cpUrl('sprout/upgrade/reports')~'">Upgrade to Sprout Reports PRO</a> to enable unlimited custom reports, mailing list integration, and visualizations.'
+            }) }}
 
-                <p>{{ "Reports can be used as Mailing Lists when sending Notification Emails in Sprout Email and Sprout Forms. A Report becomes a Mailing List when the Email Column setting is defined."|t('sprout') }}<p>
+            <hr>
 
-                <p>{{ "The Email Column should reference a column that is returned by the report that provides a valid email address. The Email Column name is case sensitive and should match the exactly match the column name in the header of the report. If the value returned by the Email Column does not validate as an email, it will be ignored."|t('sprout') }}</p>
+        {% endif %}
 
-            </div>
+        <h3>{{ "Mailing Lists"|t('sprout') }}</h3>
 
-            {% if report.getDataSource().isEmailColumnEditable() %}
-                {{ forms.field({
-                    label: 'Email Column'|t('sprout'),
-                    placeholder: 'Email'|t('sprout'),
-                }, sproutFields.selectOther({
-                    name: 'emailColumn',
-                    options: emailColumnOptions,
-                    value: report.emailColumn,
-                    otherPlaceholderText: 'email'|t('sprout-forms')
-                })) }}
-            {% else %}
-                {# Email column not editable and set by Data Source #}
-                {{ forms.textField({
-                    label: 'Email Column'|t('sprout'),
-                    name: 'emailColumn',
-                    class: 'code',
-                    value: report is defined ? report.getDataSource().getDefaultEmailColumn() : "",
-                    errors: report is defined ? report.getErrors('emailColumn') : "",
-                    warning: 'Email Column is set by Data Source'|t('sprout'),
-                    readonly: true
-                }) }}
-            {% endif %}
+        <div style="padding: 14px;background-color: #f3f7fc;border-radius:4px;">
+
+            <p>{{ "Reports can be used as Mailing Lists when sending Notification Emails in Sprout Email and Sprout Forms. A Report becomes a Mailing List when the Email Column setting is defined."|t('sprout') }}<p>
+
+            <p>{{ "The Email Column should reference a column that is returned by the report that provides a valid email address. The Email Column name is case sensitive and should exactly match the column name in the header of the report. If the value returned by the Email Column does not validate as an email, it will be ignored."|t('sprout') }}</p>
 
         </div>
-    {% endif %}
+
+        {% if report.getDataSource().isEmailColumnEditable() %}
+            {{ forms.field({
+                label: 'Email Column'|t('sprout'),
+                placeholder: 'Email'|t('sprout'),
+            }, sproutFields.selectOther({
+                name: 'emailColumn',
+                options: emailColumnOptions,
+                value: report.emailColumn,
+                otherPlaceholderText: 'email'|t('sprout-forms'),
+                disabled: not isPro
+            })) }}
+        {% else %}
+            {# Email column not editable and set by Data Source #}
+            {{ forms.textField({
+                label: 'Email Column'|t('sprout'),
+                name: 'emailColumn',
+                class: 'code',
+                value: report is defined ? report.getDataSource().getDefaultEmailColumn() : "",
+                errors: report is defined ? report.getErrors('emailColumn') : "",
+                warning: 'Email Column is set by Data Source'|t('sprout'),
+                readonly: true
+            }) }}
+        {% endif %}
+
+    </div>
 
 {% endblock %}
 

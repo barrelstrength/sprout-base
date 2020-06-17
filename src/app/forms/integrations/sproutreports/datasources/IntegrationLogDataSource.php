@@ -13,6 +13,7 @@ use barrelstrength\sproutbase\app\forms\records\Integration as IntegrationRecord
 use barrelstrength\sproutbase\app\forms\records\IntegrationLog as IntegrationLogRecord;
 use barrelstrength\sproutbase\app\reports\base\DataSource;
 use barrelstrength\sproutbase\app\reports\elements\Report;
+use barrelstrength\sproutbase\helpers\DateRangeHelper;
 use barrelstrength\sproutbase\SproutBase;
 use Craft;
 use craft\db\Query;
@@ -157,7 +158,7 @@ class IntegrationLogDataSource extends DataSource
             }
         }
 
-        $dateRanges = SproutBase::$app->reports->getDateRanges(false);
+        $dateRanges = DateRangeHelper::getDateRanges(false);
 
         return Craft::$app->getView()->renderTemplate('sprout/forms/_integrations/sproutreports/datasources/IntegrationLogDataSource/settings', [
             'formOptions' => $formOptions,

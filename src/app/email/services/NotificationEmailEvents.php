@@ -60,7 +60,6 @@ class NotificationEmailEvents extends Component
             };
     }
 
-
     /**
      * Returns all the available Notification Email Event Types
      *
@@ -140,7 +139,6 @@ class NotificationEmailEvents extends Component
      * 2. We register an anonymous function as the handler
      * 3. This closure gets called with the name of the event and the event itself
      * 4. This closure executes as real event handler for the triggered event
-     *
      */
     public function getDynamicEventHandler(): callable
     {
@@ -152,9 +150,10 @@ class NotificationEmailEvents extends Component
     }
 
     /**
-     * This method hands things off to Sprout Email when a Notification Event we registered gets triggered.
+     * This method hands things off to Sprout Email when a
+     * Notification Event we registered gets triggered.
      *
-     * @param                       $notificationEmailEventClassName
+     * @param $notificationEmailEventClassName
      * @param Event $event
      * @param NotificationEvent $eventHandlerClass
      *
