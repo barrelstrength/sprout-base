@@ -30,12 +30,7 @@ use yii\base\Exception;
 use yii\base\InvalidConfigException;
 use yii\db\ActiveRecord;
 
-/**
- *
- * @property Integration[] $allIntegrations
- * @property mixed $allIntegrationTypes
- */
-class Integrations extends Component
+class FormIntegrations extends Component
 {
     const EVENT_REGISTER_INTEGRATIONS = 'registerIntegrations';
 
@@ -69,7 +64,7 @@ class Integrations extends Component
      */
     public function getAllIntegrations(): array
     {
-        $integrationTypes = SproutBase::$app->integrations->getAllIntegrationTypes();
+        $integrationTypes = SproutBase::$app->formIntegrations->getAllIntegrationTypes();
 
         $integrations = [];
 
@@ -318,7 +313,7 @@ class Integrations extends Component
                     'message' => 'Pending'
                 ], false);
 
-                $integrationLog = SproutBase::$app->integrations->logIntegration($integrationLog);
+                $integrationLog = SproutBase::$app->formIntegrations->logIntegration($integrationLog);
 
                 $integrationLogs[] = [
                     'integration' => $integration,
@@ -349,7 +344,7 @@ class Integrations extends Component
                     'message' => $integrationNotSentMessage
                 ], false);
 
-                SproutBase::$app->integrations->logIntegration($integrationLog);
+                SproutBase::$app->formIntegrations->logIntegration($integrationLog);
 
                 continue;
             }
@@ -365,7 +360,7 @@ class Integrations extends Component
                             'message' => $integration->getSuccessMessage()
                         ], false);
 
-                        $integrationLog = SproutBase::$app->integrations->logIntegration($integrationLog);
+                        $integrationLog = SproutBase::$app->formIntegrations->logIntegration($integrationLog);
                     }
                 }
             } catch (\Exception $e) {
@@ -390,7 +385,7 @@ class Integrations extends Component
                     'status' => self::ENTRY_INTEGRATION_COMPLETED_STATUS
                 ], false);
 
-                $integrationLog = SproutBase::$app->integrations->logIntegration($integrationLog
+                $integrationLog = SproutBase::$app->formIntegrations->logIntegration($integrationLog
                 );
             }
 

@@ -82,6 +82,6 @@ class IntegrationLog extends Model
      */
     public function getIntegration()
     {
-        return SproutBase::$app->integrations->getIntegrationById($this->integrationId);
+        return SproutBase::$app->formIntegrations->getIntegrationById($this->integrationId);
     }
 }

@@ -508,7 +508,7 @@ class Entry extends Element
      */
     public function getIntegrationLog(): array
     {
-        return SproutBase::$app->integrations->getIntegrationLogsByEntryId($this->id);
+        return SproutBase::$app->formIntegrations->getIntegrationLogsByEntryId($this->id);
     }
 
     /**

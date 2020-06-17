@@ -56,10 +56,10 @@ class FormIntegrationsController extends BaseController
         $pieces = explode('-', $integrationId);
 
         if (count($pieces) == 3) {
-            $integration = SproutBase::$app->integrations->getIntegrationById($pieces[2]);
+            $integration = SproutBase::$app->formIntegrations->getIntegrationById($pieces[2]);
             if ($integration) {
                 $integration->enabled = $enabled;
-                if (SproutBase::$app->integrations->saveIntegration($integration)) {
+                if (SproutBase::$app->formIntegrations->saveIntegration($integration)) {
                     return $this->returnJson(true, $integration);
                 }
             }
@@ -84,7 +84,7 @@ class FormIntegrationsController extends BaseController
         $type = $request->getRequiredBodyParam('type');
 
         /** @var Integration $integration */
-        $integration = SproutBase::$app->integrations->createIntegration([
+        $integration = SproutBase::$app->formIntegrations->createIntegration([
             'id' => $request->getBodyParam('integrationId'),
             'formId' => $request->getBodyParam('formId'),
             'name' => $request->getBodyParam('name'),
@@ -96,7 +96,7 @@ class FormIntegrationsController extends BaseController
 
         $integration = new $type($integration);
 
-        if (!SproutBase::$app->integrations->saveIntegration($integration)) {
+        if (!SproutBase::$app->formIntegrations->saveIntegration($integration)) {
             Craft::error('Unable to save integration.', __METHOD__);
 
             return $this->returnJson(false);
@@ -124,7 +124,7 @@ class FormIntegrationsController extends BaseController
 
         $integrationId = $request->getBodyParam('integrationId');
 
-        $integration = SproutBase::$app->integrations->getIntegrationById($integrationId);
+        $integration = SproutBase::$app->formIntegrations->getIntegrationById($integrationId);
 
         if ($integration === null) {
             $message = Craft::t('sprout', 'No integration found with id: {id}', [
@@ -148,7 +148,7 @@ class FormIntegrationsController extends BaseController
                 'id' => $integration->id,
                 'name' => $integration->name
             ],
-            'template' => SproutBase::$app->integrations->getModalIntegrationTemplate($integration),
+            'template' => SproutBase::$app->formIntegrations->getModalIntegrationTemplate($integration),
         ]);
     }
 
@@ -189,7 +189,7 @@ class FormIntegrationsController extends BaseController
         $this->requireAcceptsJson();
 
         $integrationId = Craft::$app->request->getRequiredBodyParam('integrationId');
-        $integration = SproutBase::$app->integrations->getIntegrationById($integrationId);
+        $integration = SproutBase::$app->formIntegrations->getIntegrationById($integrationId);
 
         if (!$integration) {
             return $this->asJson([
@@ -220,7 +220,7 @@ class FormIntegrationsController extends BaseController
         $integrationId = Craft::$app->request->getRequiredBodyParam('integrationId');
 
         /** @var ElementIntegration $integration */
-        $integration = SproutBase::$app->integrations->getIntegrationById($integrationId);
+        $integration = SproutBase::$app->formIntegrations->getIntegrationById($integrationId);
         $integrationType = Craft::$app->getRequest()->getBodyParam('type');
 
         // Grab the current form values from the serialized ajax request instead of from POST

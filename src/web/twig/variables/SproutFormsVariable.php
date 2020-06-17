@@ -574,7 +574,7 @@ class SproutFormsVariable
      */
     public function getIntegrationOptions(): array
     {
-        $integrations = SproutBase::$app->integrations->getAllIntegrations();
+        $integrations = SproutBase::$app->formIntegrations->getAllIntegrations();
 
         $options[] = [
             'label' => Craft::t('sprout', 'Add Integration...'),

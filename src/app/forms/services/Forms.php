@@ -518,7 +518,7 @@ class Forms extends Component
      */
     public function updateFieldOnIntegrations($oldHandle, $newHandle, $form)
     {
-        $integrations = SproutBase::$app->integrations->getIntegrationsByFormId($form->id);
+        $integrations = SproutBase::$app->formIntegrations->getIntegrationsByFormId($form->id);
 
         /** @var Integration $integration */
         foreach ($integrations as $integration) {
@@ -542,7 +542,7 @@ class Forms extends Component
             }
 
             $integration->fieldMapping = $fieldMapping;
-            SproutBase::$app->integrations->saveIntegration($integration);
+            SproutBase::$app->formIntegrations->saveIntegration($integration);
         }
     }
 

@@ -93,7 +93,7 @@ class FormsController extends BaseController
             'settings' => $config->getSettings(),
             'rules' => SproutBase::$app->rules->getRulesByFormId($formId),
             'ruleOptions' => SproutBase::$app->rules->getRuleOptions(),
-            'integrations' => SproutBase::$app->integrations->getIntegrationsByFormId($formId),
+            'integrations' => SproutBase::$app->formIntegrations->getIntegrationsByFormId($formId),
             'isPro' => $isPro
         ]);
     }
