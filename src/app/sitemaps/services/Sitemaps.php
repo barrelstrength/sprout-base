@@ -430,4 +430,22 @@ class Sitemaps extends Component
 
         return [];
     }
+
+    /**
+     * @param null $uri
+     *
+     * @return bool
+     */
+    public function uriHasTags($uri = null): bool
+    {
+        if (false !== strpos($uri, '{{')) {
+            return true;
+        }
+
+        if (false !== strpos($uri, '{%')) {
+            return true;
+        }
+
+        return false;
+    }
 }

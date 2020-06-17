@@ -5,7 +5,7 @@
 
 {% do view.registerAssetBundle("barrelstrength\\sproutbase\\web\\assetbundles\\metadata\\MetadataAsset") %}
 
-{% set socialProfileOptions = sprout.seo.getFinalOptions('social', 'profileName', globals) %}
+{% set socialProfileOptions = sprout.app.globalMetadata.getGlobalMetadataDropdownOptions('social', 'profileName', globals) %}
 
 {% set cols = [
     {

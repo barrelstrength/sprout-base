@@ -55,7 +55,7 @@
 
 <hr>
 
-{% set captchas = sprout.forms.getAllCaptchas() %}
+{% set captchas = sprout.app.forms.getAllCaptchas() %}
 {% for captcha in captchas %}
 
     {% set captchaId = className(captcha)|kebab %}

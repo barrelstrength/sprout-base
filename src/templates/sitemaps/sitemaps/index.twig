@@ -82,7 +82,7 @@
         {% if sitemapSection.uri == '__home__' %}
             <span data-icon="home" title="Homepage"></span>
         {% else %}
-            {% if sprout.sitemaps.uriHasTags(sitemapSection.uri) %}
+            {% if sprout.app.sitemaps.uriHasTags(sitemapSection.uri) %}
                 <code>
                     {{ "Dynamic URL"|t('sprout') }}
                     <span class="info">

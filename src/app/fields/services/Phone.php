@@ -69,7 +69,7 @@ class Phone extends Component
         $inputId = Craft::$app->getView()->formatInputId($name);
         $namespaceInputId = Craft::$app->getView()->namespaceInputId($inputId);
         $namespaceCountryId = Craft::$app->getView()->namespaceInputId($countryId);
-        $countries = SproutBase::$app->phoneField->getCountries();
+        $countries = $this->getCountries();
 
         $country = $value['country'] ?? $field->country;
         $val = $value['phone'] ?? null;

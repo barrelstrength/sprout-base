@@ -1,8 +1,8 @@
 <div class="sprout-metadata-status" style="color:#ccc;">
     <span class="sproutseo-icon icon-search
-        {% if sprout.seo.hasActiveMetadata('search', sitemapSection) %}sproutseo-status-pass{% endif %}">&#xe800;</span>
+        {% if sprout.app.globalMetadata.hasActiveMetadata('search', sitemapSection) %}sproutseo-status-pass{% endif %}">&#xe800;</span>
     <span class="sproutseo-icon icon-facebook
-        {% if sprout.seo.hasActiveMetadata('openGraph', sitemapSection) %}sproutseo-status-pass{% endif %}">&#xe802;</span>
+        {% if sprout.app.globalMetadata.hasActiveMetadata('openGraph', sitemapSection) %}sproutseo-status-pass{% endif %}">&#xe802;</span>
     <span class="sproutseo-icon icon-twitter
-        {% if sprout.seo.hasActiveMetadata('twitterCard', sitemapSection) %}sproutseo-status-pass{% endif %}">&#xe807;</span>
+        {% if sprout.app.globalMetadata.hasActiveMetadata('twitterCard', sitemapSection) %}sproutseo-status-pass{% endif %}">&#xe807;</span>
 </div>

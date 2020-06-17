@@ -11,7 +11,7 @@
 
 {% from _self import configWarning %}
 
-{% set templateOptions = sprout.forms.getTemplateOptions() %}
+{% set templateOptions = sprout.app.forms.getFormTemplateOptions() %}
 
 {{ forms.field({
     label: "Default Form Templates"|t('sprout'),

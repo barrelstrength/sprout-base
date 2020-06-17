@@ -1,8 +1,6 @@
 {% import "_includes/forms" as forms %}
 
-{% set sproutBaseApp = craft.app.getModule('sprout').app %}
-
-{% set campaignTypes = sproutBaseApp.campaignTypes.getCampaignTypes() %}
+{% set campaignTypes = sprout.app.campaignTypes.getCampaignTypes() %}
 {% if campaignTypes|length %}
 
     {% for campaignType in campaignTypes %}

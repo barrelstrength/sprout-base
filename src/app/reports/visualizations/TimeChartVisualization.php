@@ -3,6 +3,7 @@
 namespace barrelstrength\sproutbase\app\reports\visualizations;
 
 use barrelstrength\sproutbase\app\reports\base\Visualization;
+use barrelstrength\sproutbase\SproutBase;
 use Craft;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
@@ -31,8 +32,11 @@ class TimeChartVisualization extends Visualization
      */
     public function getSettingsHtml(array $settings): string
     {
+        $visualizationAggregateOptions = SproutBase::$app->visualizations->getAggregates();
+
         return Craft::$app->getView()->renderTemplate('sprout/reports/_components/visualizations/TimeChart/settings', [
-            'settings' => $settings
+            'settings' => $settings,
+            'visualizationAggregateOptions' => $visualizationAggregateOptions
         ]);
     }
 

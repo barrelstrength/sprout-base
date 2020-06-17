@@ -20,7 +20,7 @@ tab      = tab or null
     <div
         {% if instance == 'active' %}id="sproutfield-{{ field.id }}"{% endif %}
         class="{%- if instance == 'active' %}target-field{% endif -%}{%- if instance == 'source' %}source-field{% endif %} {{ evenOddClass }}"
-        data-type="{{ sprout.forms.getFieldClassName(field) }}"
+        data-type="{{ className(field) }}"
         data-defaultname="{{ field.displayName }}"
     >
 
@@ -47,13 +47,12 @@ tab      = tab or null
         {% endif %}
 
         <div class="body{% if instance == 'source' %} hidden{% endif %}">
-            {% if sprout.forms.validateField(field) %}
+            {% if sprout.app.forms.validateField(field) %}
                 {{ field.getExampleInputHtml()|raw }}
             {% else %}
                 <div class="missing-component pane">
                     <p class="error">
-                        Unable to find component
-                        class {{ sprout.forms.getFieldClass(field) }}
+                        Unable to find component class {{ className(field) }}
                     </p>
                 </div>
             {% endif %}
@@ -61,7 +60,7 @@ tab      = tab or null
 
         {# This is built dynamically in js when creating new field from source #}
         {% if instance == 'active' %}
-            {% if sprout.forms.validateField(field) %}
+            {% if sprout.app.forms.validateField(field) %}
                 <ul class="settings">
                     <li>
                         <a id="sproutform-field-{{ field.id }}" data-fieldid="{{ field.id }}" href="#" tabindex="0"><i class="fa fa-pencil fa-2x" title="Edit"></i></a>

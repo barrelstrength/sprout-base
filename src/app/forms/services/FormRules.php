@@ -24,6 +24,7 @@ use Twig\Error\SyntaxError;
 use yii\base\Exception;
 use yii\base\InvalidConfigException;
 use yii\db\StaleObjectException;
+use yii\web\BadRequestHttpException;
 
 class FormRules extends Component
 {

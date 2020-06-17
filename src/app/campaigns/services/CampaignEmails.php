@@ -12,6 +12,7 @@ use craft\helpers\DateTimeHelper;
 use Throwable;
 use yii\base\Exception;
 use yii\base\ExitException;
+use yii\base\InvalidConfigException;
 
 /**
  * Class CampaignEmails
@@ -176,5 +177,24 @@ class CampaignEmails extends Component
         } catch (\Exception $e) {
             throw $e;
         }
+    }
+
+    /**
+     * Returns the value of the displayDateScheduled general config setting
+     *
+     * @todo - displayDateScheduled is still a hidden config variable
+     *
+     * @return bool
+     * @throws InvalidConfigException
+     */
+    public function getDisplayDateScheduled(): bool
+    {
+        $config = Craft::$app->getConfig()->getConfigSettings('general');
+
+        if (!is_array($config)) {
+            return false;
+        }
+
+        return $config->displayDateScheduled ?? false;
     }
 }

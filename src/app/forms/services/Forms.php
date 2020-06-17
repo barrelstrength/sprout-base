@@ -32,6 +32,7 @@ use Throwable;
 use yii\base\Component;
 use yii\base\Exception;
 use yii\base\InvalidConfigException;
+use yii\web\BadRequestHttpException;
 
 /**
  *
@@ -806,6 +807,68 @@ class Forms extends Component
     }
 
     /**
+     * @param Form|null $form
+     * @param bool $generalSettings
+     *
+     * @return array
+     */
+    public function getFormTemplateOptions(Form $form = null, $generalSettings = false): array
+    {
+        $defaultFormTemplates = new AccessibleTemplates();
+
+        if ($generalSettings) {
+            $options[] = [
+                'optgroup' => Craft::t('sprout', 'Global Templates')
+            ];
+
+            $options[] = [
+                'label' => Craft::t('sprout', 'Default Form Templates'),
+                'value' => null
+            ];
+        }
+
+        $templates = $this->getAllFormTemplates();
+        $templateIds = [];
+
+        if ($generalSettings) {
+            $options[] = [
+                'optgroup' => Craft::t('sprout', 'Form-Specific Templates')
+            ];
+        }
+
+        foreach ($templates as $template) {
+            $options[] = [
+                'label' => $template->getName(),
+                'value' => get_class($template)
+            ];
+            $templateIds[] = get_class($template);
+        }
+
+        $templateFolder = null;
+        $settings = SproutBase::$app->settings->getSettingsByKey('forms');
+
+        $templateFolder = $form->formTemplateId ?? $settings->formTemplateId ?? AccessibleTemplates::class;
+
+        $options[] = [
+            'optgroup' => Craft::t('sprout', 'Custom Template Folder')
+        ];
+
+        if (!in_array($templateFolder, $templateIds, false) && $templateFolder != '') {
+            $options[] = [
+                'label' => $templateFolder,
+                'value' => $templateFolder
+            ];
+        }
+
+        $options[] = [
+            'label' => Craft::t('sprout', 'Add Custom'),
+            'value' => 'custom'
+        ];
+
+        return $options;
+    }
+
+    /**
      * Returns all available Captcha classes
      *
      * @return array
@@ -940,6 +1003,34 @@ class Forms extends Component
         }
 
         return $tabs;
+    }
+
+    /**
+     * @param $field
+     *
+     * @return mixed
+     */
+    public function validateField($field)
+    {
+        return method_exists($field, 'getFrontEndInputHtml');
+    }
+
+    /**
+     * @param $formFieldHandle
+     * @param $formId
+     *
+     * @return mixed
+     * @throws BadRequestHttpException
+     */
+    public function getFormField($formFieldHandle, $formId)
+    {
+        $form = Craft::$app->elements->getElementById($formId);
+
+        if (!$form) {
+            throw new BadRequestHttpException('No form exists with the ID '.$formId);
+        }
+
+        return $form->getField($formFieldHandle);
     }
 
     /**

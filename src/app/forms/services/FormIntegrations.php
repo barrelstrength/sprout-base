@@ -429,4 +429,26 @@ class FormIntegrations extends Component
 
         return false;
     }
+
+    /**
+     * @return array
+     */
+    public function getIntegrationOptions(): array
+    {
+        $integrations = SproutBase::$app->formIntegrations->getAllIntegrations();
+
+        $options[] = [
+            'label' => Craft::t('sprout', 'Add Integration...'),
+            'value' => ''
+        ];
+
+        foreach ($integrations as $integration) {
+            $options[] = [
+                'label' => $integration::displayName(),
+                'value' => get_class($integration)
+            ];
+        }
+
+        return $options;
+    }
 }

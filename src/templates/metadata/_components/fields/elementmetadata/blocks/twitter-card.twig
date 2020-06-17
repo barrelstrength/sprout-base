@@ -1,7 +1,7 @@
 {% import "_includes/forms" as forms %}
 {% import "sprout/metadata/_includes/sproutseo" as sproutMetaCp %}
 
-{% set transformOptions = sprout.seo.getTransforms() %}
+{% set transformOptions = sprout.app.globalMetadata.getTransforms() %}
 
 <div class="sproutseo-box-twitter">
     <div class="sproutseo-fields" id="twitter-card">

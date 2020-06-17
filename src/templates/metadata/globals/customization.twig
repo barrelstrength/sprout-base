@@ -6,7 +6,7 @@
 {% do view.registerAssetBundle("barrelstrength\\sproutbase\\web\\assetbundles\\metadata\\MetadataAsset") %}
 
 {% set settings         = globals.settings %}
-{% set transformOptions = sprout.seo.getTransforms() %}
+{% set transformOptions = sprout.app.globalMetadata.getTransforms() %}
 
 {% block content %}
 

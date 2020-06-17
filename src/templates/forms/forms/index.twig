@@ -2,12 +2,13 @@
 
 {% extends "sprout/forms/_layouts/elementindex" %}
 {% import "sprout/config/_includes/sproutcp" as sproutCp %}
+
 {% set title = "Forms"|t('sprout') %}
 {% set elementType = 'barrelstrength\\sproutbase\\app\\forms\\elements\\Form' %}
 {% set canCreateForm = craft.app.getModule('sprout').app.forms.canCreateForm() %}
 
 {% set groupId = null %}
-{% set groups = sprout.forms.getAllFormGroups('id') %}
+{% set groups = sprout.app.formGroups.getAllFormGroups('id') %}
 
 {% block actionButton %}
     <div class="buttons">

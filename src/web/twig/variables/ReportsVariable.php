@@ -11,35 +11,8 @@ use barrelstrength\sproutbase\app\reports\elements\Report;
 use barrelstrength\sproutbase\SproutBase;
 use yii\base\Exception;
 
-class SproutReportsVariable
+class ReportsVariable
 {
-    /**
-     * @return Report[]
-     */
-    public function getReports(): array
-    {
-        return SproutBase::$app->reports->getAllReports();
-    }
-
-    /**
-     * @return null|Report[]
-     */
-    public function getReportGroups()
-    {
-        return SproutBase::$app->reportGroups->getReportGroups();
-    }
-
-    /**
-     * @param $groupId
-     *
-     * @return array
-     * @throws Exception
-     */
-    public function getReportsByGroupId($groupId): array
-    {
-        return SproutBase::$app->reports->getReportsByGroupId($groupId);
-    }
-
     /**
      * @param array $row
      */
@@ -63,22 +36,13 @@ class SproutReportsVariable
      *
      * @param array $rows
      *
-     * @example array(
-     *          array( ... ),
-     *          array( ... )
-     *          )
-     *
+     * @example [
+     *   [ ... ],
+     *   [ ... ],
+     * ]
      */
     public function addRows(array $rows)
     {
         SproutBase::$app->twigDataSource->addRows($rows);
-    }
-
-    /**
-     * @return Report[]
-     */
-    public function getVisualizationAggregates(): array
-    {
-        return SproutBase::$app->visualizations->getAggregates();
     }
 }

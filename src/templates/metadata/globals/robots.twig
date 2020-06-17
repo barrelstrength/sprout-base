@@ -2,9 +2,7 @@
 {% import "_includes/forms" as forms %}
 {% import "sprout/metadata/_includes/sproutseo" as sproutMetaCp %}
 
-{% set sproutBaseApp = craft.app.getModule('sprout').app %}
-
-{% set robots = sproutBaseApp.optimize.prepareRobotsMetadataForSettings(globals.robots) %}
+{% set robots = sprout.app.optimizeMetadata.prepareRobotsMetadataForSettings(globals.robots) %}
 
 {% block content %}
 

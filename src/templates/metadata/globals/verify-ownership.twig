@@ -5,7 +5,7 @@
 
 {% do view.registerAssetBundle("barrelstrength\\sproutbase\\web\\assetbundles\\metadata\\MetadataAsset") %}
 
-{% set verifyOwnershipOptions = sprout.seo.getFinalOptions('ownership', 'service', globals) %}
+{% set verifyOwnershipOptions = sprout.app.globalMetadata.getGlobalMetadataDropdownOptions('ownership', 'service', globals) %}
 
 {% set cols = [
     {

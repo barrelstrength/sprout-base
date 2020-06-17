@@ -7,6 +7,7 @@
 
 namespace barrelstrength\sproutbase\app\forms\services;
 
+use barrelstrength\sproutbase\app\forms\base\Condition;
 use barrelstrength\sproutbase\app\forms\base\FormField;
 use barrelstrength\sproutbase\app\forms\elements\Form;
 use barrelstrength\sproutbase\app\forms\elements\Form as FormElement;
@@ -249,18 +250,58 @@ class FormFields extends Component
     }
 
     /**
+     * @param $registeredFields
+     * @param $sproutFormsFields
+     *
+     * @return mixed
+     */
+    public function getCustomFields($registeredFields, $sproutFormsFields)
+    {
+        foreach ($sproutFormsFields as $group) {
+            foreach ($group as $field) {
+                unset($registeredFields[$field]);
+            }
+        }
+
+        return $registeredFields;
+    }
+
+    /**
+     * @param $conditionClass
+     * @param $formField
+     *
+     * @return Condition
+     */
+    public function getFieldCondition($conditionClass, $formField): Condition
+    {
+        return new $conditionClass(['formField' => $formField]);
+    }
+
+    /**
      * @param $type
      *
-     * @return FormField|null
+     * @return FormField|mixed|null
+     * @throws Exception
      */
     public function getRegisteredField($type)
     {
-        $fields = $this->getRegisteredFields();
+        $fields = SproutBase::$app->formFields->getRegisteredFields();
 
         foreach ($fields as $field) {
             if ($field->getType() == $type) {
                 return $field;
             }
+        }
+
+        $message = Craft::t('sprout', '{type} field does not support front-end display using Sprout Forms.', [
+                'type' => $type
+            ]
+        );
+
+        Craft::error($message, __METHOD__);
+
+        if (Craft::$app->getConfig()->getGeneral()->devMode) {
+            throw new Exception($message);
         }
 
         return null;
@@ -662,14 +703,6 @@ class FormFields extends Component
 
         return $results;
     }
-
-//    public function what() {
-//        $fieldLayout = Craft::$app->fields->assembleLayout($postedFieldLayout, $requiredFields);
-//        $fieldLayout->type = FormElement::class;
-//
-//        // Set the tab to the form
-//        $form->setFieldLayout($fieldLayout);
-//    }
 
     /**
      * Prepends a key/value pair to an array

@@ -30,17 +30,6 @@ use Twig\Error\SyntaxError;
 use Twig\Markup;
 use yii\base\Exception;
 
-
-/**
- *
- * @property array $elementValidationRules
- * @property string $svgIconPath
- * @property mixed $settingsHtml
- * @property mixed $exampleInputHtml
- * @property array $compatibleConditions
- * @property array $compatibleCraftFieldTypes
- * @property array $countries
- */
 class Phone extends FormField implements PreviewableFieldInterface
 {
     /**

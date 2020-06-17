@@ -29,11 +29,7 @@ use Twig\Markup;
 use yii\base\Exception;
 use yii\web\BadRequestHttpException;
 
-/**
- * SproutForms provides an API for accessing information about forms. It is accessible from templates via `craft.sproutForms`.
- *
- */
-class SproutFormsVariable
+class FormsVariable
 {
     /**
      * Returns a complete form for display in template
@@ -319,30 +315,6 @@ class SproutFormsVariable
     }
 
     /**
-     * Gets Form Groups
-     *
-     * @param int $id Group ID (optional)
-     *
-     * @return array
-     */
-    public function getAllFormGroups($id = null): array
-    {
-        return SproutBase::$app->formGroups->getAllFormGroups($id);
-    }
-
-    /**
-     * Gets all forms in a specific group by ID
-     *
-     * @param $id
-     *
-     * @return Form[]
-     */
-    public function getFormsByGroupId($id): array
-    {
-        return SproutBase::$app->formGroups->getFormsByGroupId($id);
-    }
-
-    /**
      * @param $settings
      *
      * @throws MissingComponentException
@@ -370,186 +342,11 @@ class SproutFormsVariable
     }
 
     /**
-     * @param $type
-     *
-     * @return FormField|mixed|null
-     * @throws Exception
-     */
-    public function getRegisteredField($type)
-    {
-        $fields = SproutBase::$app->formFields->getRegisteredFields();
-
-        foreach ($fields as $field) {
-            if ($field->getType() == $type) {
-                return $field;
-            }
-        }
-
-        $message = Craft::t('sprout', '{type} field does not support front-end display using Sprout Forms.', [
-                'type' => $type
-            ]
-        );
-
-        Craft::error($message, __METHOD__);
-
-        if (Craft::$app->getConfig()->getGeneral()->devMode) {
-            throw new Exception($message);
-        }
-
-        return null;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getTemplatesPath()
-    {
-        return Craft::$app->getView()->getTemplatesPath();
-    }
-
-    /**
      * @param array $variables
      */
     public function addFieldVariables(array $variables)
     {
         Forms::addFieldVariables($variables);
-    }
-
-    /**
-     * @param string
-     *
-     * @return bool
-     */
-    public function isPluginInstalled($plugin): bool
-    {
-        $plugins = Craft::$app->plugins->getAllPlugins();
-
-        if (array_key_exists($plugin, $plugins)) {
-            return true;
-        }
-
-        return false;
-    }
-
-    /**
-     * @return array
-     */
-    public function getEntryStatuses(): array
-    {
-        return SproutBase::$app->formEntryStatuses->getAllEntryStatuses();
-    }
-
-    /**
-     * @return array|FormField[]
-     */
-    public function getRegisteredFields(): array
-    {
-        return SproutBase::$app->formFields->getRegisteredFields();
-    }
-
-    /**
-     * @return array
-     */
-    public function getRegisteredFieldsByGroup(): array
-    {
-        return SproutBase::$app->formFields->getRegisteredFieldsByGroup();
-    }
-
-    /**
-     * @param $registeredFields
-     * @param $sproutFormsFields
-     *
-     * @return mixed
-     */
-    public function getCustomFields($registeredFields, $sproutFormsFields)
-    {
-        foreach ($sproutFormsFields as $group) {
-            foreach ($group as $field) {
-                unset($registeredFields[$field]);
-            }
-        }
-
-        return $registeredFields;
-    }
-
-    /**
-     * @param $field
-     *
-     * @return string
-     */
-    public function getFieldClassName($field): string
-    {
-        return get_class($field);
-    }
-
-    /**
-     * @return array
-     */
-    public function getAllCaptchas(): array
-    {
-        return SproutBase::$app->forms->getAllCaptchas();
-    }
-
-    /**
-     * @param Form|null $form
-     * @param bool $generalSettings
-     *
-     * @return array
-     */
-    public function getTemplateOptions(Form $form = null, $generalSettings = false): array
-    {
-        $defaultFormTemplates = new AccessibleTemplates();
-
-        if ($generalSettings) {
-            $options[] = [
-                'optgroup' => Craft::t('sprout', 'Global Templates')
-            ];
-
-            $options[] = [
-                'label' => Craft::t('sprout', 'Default Form Templates'),
-                'value' => null
-            ];
-        }
-
-        $templates = SproutBase::$app->forms->getAllFormTemplates();
-        $templateIds = [];
-
-        if ($generalSettings) {
-            $options[] = [
-                'optgroup' => Craft::t('sprout', 'Form-Specific Templates')
-            ];
-        }
-
-        foreach ($templates as $template) {
-            $options[] = [
-                'label' => $template->getName(),
-                'value' => get_class($template)
-            ];
-            $templateIds[] = get_class($template);
-        }
-
-        $templateFolder = null;
-        $settings = SproutBase::$app->settings->getSettingsByKey('forms');
-
-        $templateFolder = $form->formTemplateId ?? $settings->formTemplateId ?? AccessibleTemplates::class;
-
-        $options[] = [
-            'optgroup' => Craft::t('sprout', 'Custom Template Folder')
-        ];
-
-        if (!in_array($templateFolder, $templateIds, false) && $templateFolder != '') {
-            $options[] = [
-                'label' => $templateFolder,
-                'value' => $templateFolder
-            ];
-        }
-
-        $options[] = [
-            'label' => Craft::t('sprout', 'Add Custom'),
-            'value' => 'custom'
-        ];
-
-        return $options;
     }
 
     /**
@@ -567,78 +364,6 @@ class SproutFormsVariable
         }
 
         return $query;
-    }
-
-    /**
-     * @return array
-     */
-    public function getIntegrationOptions(): array
-    {
-        $integrations = SproutBase::$app->formIntegrations->getAllIntegrations();
-
-        $options[] = [
-            'label' => Craft::t('sprout', 'Add Integration...'),
-            'value' => ''
-        ];
-
-        foreach ($integrations as $integration) {
-            $options[] = [
-                'label' => $integration::displayName(),
-                'value' => get_class($integration)
-            ];
-        }
-
-        return $options;
-    }
-
-
-    /**
-     * @param $field
-     *
-     * @return mixed
-     */
-    public function validateField($field)
-    {
-        return method_exists($field, 'getFrontEndInputHtml');
-    }
-
-    /**
-     * @param $field
-     *
-     * @return mixed
-     */
-    public function getFieldClass($field)
-    {
-        return get_class($field);
-    }
-
-    /**
-     * @param $formFieldHandle
-     * @param $formId
-     *
-     * @return mixed
-     * @throws BadRequestHttpException
-     */
-    public function getFormField($formFieldHandle, $formId)
-    {
-        $form = Craft::$app->elements->getElementById($formId);
-
-        if (!$form) {
-            throw new BadRequestHttpException('No form exists with the ID '.$formId);
-        }
-
-        return $form->getField($formFieldHandle);
-    }
-
-    /**
-     * @param $conditionClass
-     * @param $formField
-     *
-     * @return Condition
-     */
-    public function getFieldCondition($conditionClass, $formField): Condition
-    {
-        return new $conditionClass(['formField' => $formField]);
     }
 
     /**

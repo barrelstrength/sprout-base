@@ -3,7 +3,7 @@
 
 {% set content %}
 
-    {% set integrationOptions = sprout.forms.getIntegrationOptions() %}
+    {% set integrationOptions = sprout.app.formIntegrations.getIntegrationOptions() %}
 
     <input id="formId" type="hidden" name="formId" value="{{ form.id }}">
 

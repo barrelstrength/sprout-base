@@ -2,9 +2,7 @@
 {% set title = "Campaign Email"|t('sprout') %}
 {% set elementType = 'barrelstrength\\sproutbase\\app\\campaigns\\elements\\CampaignEmail' %}
 
-{% set sproutBaseApp = craft.app.getModule('sprout').app %}
-
-{% set campaignTypes = sproutBaseApp.campaignTypes.getCampaignTypes() %}
+{% set campaignTypes = sprout.app.campaignTypes.getCampaignTypes() %}
 
 {% block actionButton %}
 

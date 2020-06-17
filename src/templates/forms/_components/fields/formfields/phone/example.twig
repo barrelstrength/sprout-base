@@ -1,6 +1,6 @@
 {% import "_includes/forms" as forms %}
 
-{% set options = sprout.fields.getCountries() %}
+{% set options = sprout.app.phoneField.getCountries() %}
 
 {{ forms.select({
     options: options,

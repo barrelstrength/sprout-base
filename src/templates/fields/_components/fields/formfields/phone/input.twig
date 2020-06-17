@@ -1,6 +1,6 @@
 {% import "_includes/forms" as forms %}
 
-{% set options = sprout.fields.getCountries() %}
+{% set options = sprout.app.phoneField.getCountries() %}
 
 {% if field.limitToSingleCountry %}
     <input type="hidden" name="{{ name }}[country]" value="{{ country }}">

@@ -11,7 +11,7 @@
         {% endif %}
     {% endif %}
 
-    {% set fieldTypes = sprout.forms.getRegisteredFields() %}
+    {% set fieldTypes = sprout.app.formFields.getRegisteredFields() %}
 
     <input type="hidden" name="formId" value="{{ form.id }}">
 

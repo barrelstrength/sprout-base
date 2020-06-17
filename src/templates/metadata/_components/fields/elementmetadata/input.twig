@@ -1,8 +1,6 @@
 {% import "_includes/forms" as forms %}
 {% import "sprout/metadata/_includes/sproutseo" as sproutMetaCp %}
 
-{% set sproutBaseApp = craft.app.getModule('sprout').app %}
-
 {% set displayMetadataField = false %}
 {% set maxDescriptionLength = sprout.seo.getDescriptionLength() %}
 
@@ -95,7 +93,7 @@
 
             {% set displayMetadataField = true %}
 
-            {% set optimizedImageId = sproutBaseApp.optimize.getImageId(values.optimizedImage ?? null) %}
+            {% set optimizedImageId = sprout.app.optimizeMetadata.getImageId(values.optimizedImage ?? null) %}
             {% if optimizedImageId %}
                 {% set optimizedImageElement = [craft.app.elements.getElementById(optimizedImageId)] %}
             {% else %}
@@ -211,7 +209,7 @@ feel like they are part of the natural flow of fields #}
 
 {% js on ready %}
 
-    {% set seoBadgeInfo = sproutBaseApp.elementMetadata.getSeoBadgeInfo(settings) %}
+    {% set seoBadgeInfo = sprout.app.elementMetadata.getSeoBadgeInfo(settings) %}
 
     new SproutSeoMetadataField({
     fieldHandle: '{{ field.handle }}',

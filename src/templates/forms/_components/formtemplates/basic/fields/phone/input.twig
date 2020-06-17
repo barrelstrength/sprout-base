@@ -24,7 +24,7 @@
         {%- if field.limitToSingleCountry %} disabled {% endif %}
         {{- dataAttributes|raw -}}
     >
-        {%- for key, option in sprout.fields.getCountries() -%}
+        {%- for key, option in countries -%}
 
             {%- set optionLabel = option -%}
             {%- set optionValue = key -%}

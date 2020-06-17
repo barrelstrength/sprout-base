@@ -5,7 +5,7 @@
 
 {% do view.registerAssetBundle("barrelstrength\\sproutbase\\web\\assetbundles\\metadata\\MetadataAsset") %}
 
-{% set contactOptions = sprout.seo.getFinalOptions('contacts', 'contactType', globals) %}
+{% set contactOptions = sprout.app.globalMetadata.getGlobalMetadataDropdownOptions('contacts', 'contactType', globals) %}
 
 {% set cols = [
     {

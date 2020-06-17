@@ -4,7 +4,7 @@
 
     <h1>{{ "Copy & Paste"|t('sprout') }}</h1>
 
-    {% set dateScheduled = sprout.campaigns.getDisplayDateScheduled(email) %}
+    {% set dateScheduled = sprout.app.campaignEmails.getDisplayDateScheduled(email) %}
 
     {% if dateScheduled is not empty %}
         <div style="float:left; margin-bottom: 20px;">

@@ -9,7 +9,7 @@
 
 {% from _self import configWarning %}
 
-{% set templateOptions = sprout.email.getEmailTemplateOptions() %}
+{% set templateOptions = sprout.app.emailTemplates.getEmailTemplateOptions() %}
 
 {{ forms.field({
     label: "Default Email Templates"|t('sprout'),

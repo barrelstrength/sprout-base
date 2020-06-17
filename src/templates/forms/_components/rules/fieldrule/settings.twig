@@ -58,7 +58,7 @@
 
                                 {# Condition Dropdown #}
                             {% elseif loop.index0 == 1 %}
-                                {% set formField = sprout.forms.getFormField(formFieldHandle, fieldRule.formId) %}
+                                {% set formField = sprout.app.forms.getFormField(formFieldHandle, fieldRule.formId) %}
                                 {% set conditionsAsOptions = formField.getConditionsAsOptions() %}
                                 {{ forms.select({
                                     name: colName,
@@ -70,7 +70,7 @@
 
                                 {# Condition Value #}
                             {% else %}
-                                {% set fieldCondition = sprout.forms.getFieldCondition(conditionClass, formField) %}
+                                {% set fieldCondition = sprout.app.formFields.getFieldCondition(conditionClass, formField) %}
                                 {{ formField.getConditionValueInputHtml(fieldCondition, colName, col)|raw }}
                             {% endif %}
                         </td>
