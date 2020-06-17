@@ -58,7 +58,7 @@ class SproutFormsVariable
 
         $view = Craft::$app->getView();
 
-        $entry = SproutBase::$app->entries->getEntry($form);
+        $entry = SproutBase::$app->formEntries->getEntry($form);
 
         $templatePaths = SproutBase::$app->forms->getFormTemplatePaths($form);
 
@@ -101,7 +101,7 @@ class SproutFormsVariable
 
         $view = Craft::$app->getView();
 
-        $entry = SproutBase::$app->entries->getEntry($form);
+        $entry = SproutBase::$app->formEntries->getEntry($form);
 
         $templatePaths = SproutBase::$app->forms->getFormTemplatePaths($form);
 
@@ -171,7 +171,7 @@ class SproutFormsVariable
 
         $view = Craft::$app->getView();
 
-        $entry = SproutBase::$app->entries->getEntry($form);
+        $entry = SproutBase::$app->formEntries->getEntry($form);
 
         $templatePaths = SproutBase::$app->forms->getFormTemplatePaths($form);
 
@@ -264,7 +264,7 @@ class SproutFormsVariable
      */
     public function getEntryById($id)
     {
-        return SproutBase::$app->entries->getEntryById($id);
+        return SproutBase::$app->formEntries->getEntryById($id);
     }
 
     /**
@@ -276,7 +276,7 @@ class SproutFormsVariable
      */
     public function getEntry(Form $form)
     {
-        return SproutBase::$app->entries->getEntry($form);
+        return SproutBase::$app->formEntries->getEntry($form);
     }
 
     /**
@@ -289,7 +289,7 @@ class SproutFormsVariable
      */
     public function setEntry(Form $form, Entry $entry)
     {
-        SproutBase::$app->entries->setEntry($form, $entry);
+        SproutBase::$app->formEntries->setEntry($form, $entry);
     }
 
     /**
@@ -304,7 +304,7 @@ class SproutFormsVariable
     public function getLastEntry($formId = null)
     {
         if ($entryId = Craft::$app->getSession()->get('lastEntryId')) {
-            $entry = SproutBase::$app->entries->getEntryById($entryId);
+            $entry = SproutBase::$app->formEntries->getEntryById($entryId);
 
             if (!$entry) {
                 return null;

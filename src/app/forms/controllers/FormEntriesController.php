@@ -102,7 +102,7 @@ class FormEntriesController extends BaseController
             $entry = SproutBase::$app->forms->activeCpEntry;
         } else {
             if ($entry === null) {
-                $entry = SproutBase::$app->entries->getEntryById($entryId);
+                $entry = SproutBase::$app->formEntries->getEntryById($entryId);
             }
 
             if (!$entry) {
@@ -118,7 +118,7 @@ class FormEntriesController extends BaseController
             throw new ElementNotFoundException('No Form exists with id '.$form->id);
         }
 
-        $saveData = SproutBase::$app->entries->isSaveDataEnabled($form);
+        $saveData = SproutBase::$app->formEntries->isSaveDataEnabled($form);
 
         if (!$saveData) {
             Craft::$app->getSession()->setError(Craft::t('sprout', "Unable to edit entry. Enable the 'Save Data' for this form to view, edit, or delete content."));
@@ -245,23 +245,23 @@ class FormEntriesController extends BaseController
             $entry->statusId = SproutBase::$app->entryStatuses->getSpamStatusId();
         }
 
-        $saveData = SproutBase::$app->entries->isSaveDataEnabled($this->form, $entry->getIsSpam());
+        $saveData = SproutBase::$app->formEntries->isSaveDataEnabled($this->form, $entry->getIsSpam());
 
         // Save Data and Trigger the onSaveEntryEvent
         // This saves both valid and spam entries
         // Integrations run on EntryElement::EVENT_AFTER_SAVE Event
         if ($saveData) {
-            $success = SproutBase::$app->entries->saveEntry($entry);
+            $success = SproutBase::$app->formEntries->saveEntry($entry);
 
             if ($entry->hasCaptchaErrors()) {
-                SproutBase::$app->entries->logEntriesSpam($entry);
+                SproutBase::$app->formEntries->logEntriesSpam($entry);
             }
         } else {
             $isNewEntry = !$entry->id;
-            SproutBase::$app->entries->callOnSaveEntryEvent($entry, $isNewEntry);
+            SproutBase::$app->formEntries->callOnSaveEntryEvent($entry, $isNewEntry);
         }
 
-        SproutBase::$app->entries->runPurgeSpamElements();
+        SproutBase::$app->formEntries->runPurgeSpamElements();
 
         if (!$success || $this->isSpamAndHasRedirectBehavior($entry, $settings)) {
             return $this->redirectWithValidationErrors($entry);
@@ -384,7 +384,7 @@ class FormEntriesController extends BaseController
             return new EntryElement();
         }
 
-        $entry = SproutBase::$app->entries->getEntryById($entryId);
+        $entry = SproutBase::$app->formEntries->getEntryById($entryId);
 
         if (!$entry) {
             $message = Craft::t('sprout', 'No form entry exists with the given ID: {id}', [

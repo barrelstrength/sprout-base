@@ -10,7 +10,7 @@ namespace barrelstrength\sproutbase\app\forms\integrations\sproutemail\events\no
 use barrelstrength\sproutbase\app\email\base\NotificationEvent;
 use barrelstrength\sproutbase\app\forms\elements\Entry;
 use barrelstrength\sproutbase\app\forms\events\OnSaveEntryEvent;
-use barrelstrength\sproutbase\app\forms\services\Entries;
+use barrelstrength\sproutbase\app\forms\services\FormEntries;
 use barrelstrength\sproutbase\SproutBase;
 use Craft;
 use craft\errors\ElementNotFoundException;
@@ -36,7 +36,7 @@ class SaveEntryEvent extends NotificationEvent
      */
     public function getEventClassName()
     {
-        return Entries::class;
+        return FormEntries::class;
     }
 
     /**

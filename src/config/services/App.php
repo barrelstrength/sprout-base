@@ -22,7 +22,7 @@ use barrelstrength\sproutbase\app\fields\services\Phone;
 use barrelstrength\sproutbase\app\fields\services\RegularExpression;
 use barrelstrength\sproutbase\app\fields\services\Url;
 use barrelstrength\sproutbase\app\fields\services\Utilities as FieldUtilities;
-use barrelstrength\sproutbase\app\forms\services\Entries;
+use barrelstrength\sproutbase\app\forms\services\FormEntries;
 use barrelstrength\sproutbase\app\forms\services\EntryStatuses;
 use barrelstrength\sproutbase\app\forms\services\Fields;
 use barrelstrength\sproutbase\app\forms\services\Forms;
@@ -65,9 +65,9 @@ class App extends Component
     public $fields;
 
     /**
-     * @var Entries
+     * @var FormEntries
      */
-    public $entries;
+    public $formEntries;
 
     /**
      * @var EntryStatuses
@@ -263,7 +263,7 @@ class App extends Component
         $this->groups = new Groups();
         $this->forms = new Forms();
         $this->fields = new Fields();
-        $this->entries = new Entries();
+        $this->formEntries = new FormEntries();
         $this->entryStatuses = new EntryStatuses();
         $this->frontEndFields = new FrontEndFields();
         $this->integrations = new Integrations();

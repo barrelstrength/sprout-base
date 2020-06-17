@@ -67,6 +67,6 @@ class EntriesSpamLog extends Model
      */
     public function getEntry()
     {
-        return SproutBase::$app->entries->getEntryById($this->entryId);
+        return SproutBase::$app->formEntries->getEntryById($this->entryId);
     }
 }

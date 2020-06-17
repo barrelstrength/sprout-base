@@ -179,7 +179,7 @@ class Entry extends Element
         $prepSources = [];
 
         foreach ($forms as $form) {
-            $saveData = SproutBase::$app->entries->isSaveDataEnabled($form);
+            $saveData = SproutBase::$app->formEntries->isSaveDataEnabled($form);
             if ($saveData) {
                 if ($form->groupId) {
                     if (!isset($prepSources[$form->groupId]['heading']) && isset($groups[$form->groupId])) {

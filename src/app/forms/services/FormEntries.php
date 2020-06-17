@@ -25,14 +25,7 @@ use Throwable;
 use yii\base\Component;
 use yii\base\Exception;
 
-/**
- * Class Entries
- *
- * @package barrelstrength\sproutforms\services
- *
- * @property FormElement $entry
- */
-class Entries extends Component
+class FormEntries extends Component
 {
     const SPAM_DEFAULT_LIMIT = 500;
 
