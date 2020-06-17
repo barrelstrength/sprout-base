@@ -5,7 +5,7 @@
  * @license   https://craftcms.github.io/license
  */
 
-namespace barrelstrength\sproutbase\app\fields\data;
+namespace barrelstrength\sproutbase\app\fields\fields\data;
 
 use Craft;
 use craft\base\ElementInterface;
