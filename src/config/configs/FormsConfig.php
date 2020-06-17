@@ -121,13 +121,13 @@ class FormsConfig extends Config
 
             // DB Settings
             'sprout/settings/<configKey:forms>/<subNavKey:entry-statuses>/new' => [
-                'route' => 'sprout/entry-statuses/edit',
+                'route' => 'sprout/form-entry-statuses/edit',
                 'params' => [
                     'settingsTarget' => SettingsController::SETTINGS_TARGET_DB
                 ]
             ],
             'sprout/settings/<configKey:forms>/<subNavKey:entry-statuses>/<entryStatusId:\d+>' => [
-                'route' => 'sprout/entry-statuses/edit',
+                'route' => 'sprout/form-entry-statuses/edit',
                 'params' => [
                     'settingsTarget' => SettingsController::SETTINGS_TARGET_DB
                 ]
@@ -147,11 +147,11 @@ class FormsConfig extends Config
     public function getControllerMapKeys(): array
     {
         return [
-            'entries',
-            'entry-statuses',
+            'form-entries',
+            'form-entry-statuses',
             'form-fields',
             'forms',
-            'groups',
+            'form-groups',
             'integrations',
             'rules'
         ];

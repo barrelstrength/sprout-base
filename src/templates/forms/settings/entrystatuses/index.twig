@@ -59,14 +59,14 @@
     new Craft.VueAdminTable({
     columns: columns,
     container: '#entry-statuses-admin-table',
-    deleteAction: 'sprout/entry-statuses/delete',
+    deleteAction: 'sprout/form-entry-statuses/delete',
     deleteConfirmationMessage: Craft.t('sprout', "Are you sure you want to delete the Entry Status “{name}”?"),
     deleteSuccessMessage: Craft.t('sprout', "Entry status deleted"),
     deleteFailMessage: Craft.t('sprout', "Unable to delete status. Status must not be used on existing entries."),
     emptyMessage: Craft.t('sprout', 'No entry statuses exist yet.'),
     minItems: 2,
     padded: true,
-    reorderAction: 'sprout/entry-statuses/reorder',
+    reorderAction: 'sprout/form-entry-statuses/reorder',
     reorderSuccessMessage: Craft.t('sprout', 'Entry statuses reordered.'),
     reorderFailMessage: Craft.t('sprout', 'Couldn’t reorder statuses.'),
     tableData: {{ tableData|json_encode|raw }}

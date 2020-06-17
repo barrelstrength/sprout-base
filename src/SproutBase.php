@@ -21,7 +21,7 @@ use barrelstrength\sproutbase\app\email\services\Mailers;
 use barrelstrength\sproutbase\app\fields\controllers\AddressController;
 use barrelstrength\sproutbase\app\fields\controllers\FieldsController;
 use barrelstrength\sproutbase\app\forms\controllers\FormEntriesController;
-use barrelstrength\sproutbase\app\forms\controllers\EntryStatusesController;
+use barrelstrength\sproutbase\app\forms\controllers\FormEntryStatusesController;
 use barrelstrength\sproutbase\app\forms\controllers\FormFieldsController;
 use barrelstrength\sproutbase\app\forms\controllers\FormsController;
 use barrelstrength\sproutbase\app\forms\controllers\FormGroupsController;
@@ -167,10 +167,10 @@ class SproutBase extends Module
             $this->controllerNamespace = 'sproutbase\\config\\controllers';
 
             $this->controllerMap = [
-                'entry-statuses' => EntryStatusesController::class,
-                'form-entries' => FormEntriesController::class,
-                'form-fields' => FormFieldsController::class,
                 'forms' => FormsController::class,
+                'form-entries' => FormEntriesController::class,
+                'form-entry-statuses' => FormEntryStatusesController::class,
+                'form-fields' => FormFieldsController::class,
                 'form-groups' => FormGroupsController::class,
                 'integrations' => IntegrationsController::class,
                 'rules' => RulesController::class,

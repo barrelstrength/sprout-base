@@ -20,7 +20,7 @@ use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
 
-class EntryStatusesController extends BaseController
+class FormEntryStatusesController extends BaseController
 {
     /**
      * @param int|null $entryStatusId
