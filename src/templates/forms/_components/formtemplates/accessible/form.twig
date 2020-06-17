@@ -35,7 +35,7 @@
     {%- if rules %} data-rules="{{ rules|json_encode|raw|e('html') }}"{% endif -%}
 >
     {{ csrfInput() }}
-    <input type="hidden" aria-hidden="true" name="action" value="sprout/entries/save-entry">
+    <input type="hidden" aria-hidden="true" name="action" value="sprout/form-entries/save-entry">
     <input type="hidden" aria-hidden="true" name="handle" value="{{ form.handle }}">
     {%- if redirectUri is not empty %}
         {% if redirectUri|slice(0, 1)|lower == '?' %}

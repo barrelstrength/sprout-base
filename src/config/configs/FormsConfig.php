@@ -113,9 +113,9 @@ class FormsConfig extends Config
             'sprout/forms/edit/<formId:\d+>/settings/<subNavKey:[^\/]+>' =>
                 'sprout/forms/edit-settings-template',
             'sprout/forms/entries' =>
-                'sprout/entries/entries-index-template',
+                'sprout/form-entries/entries-index-template',
             'sprout/forms/entries/edit/<entryId:\d+>' =>
-                'sprout/entries/edit-entry-template',
+                'sprout/form-entries/edit-entry-template',
             'sprout/forms/<groupId:\d+>' =>
                 'sprout-forms/forms',
 

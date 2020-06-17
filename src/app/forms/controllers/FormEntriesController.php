@@ -29,14 +29,7 @@ use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
 
-/**
- * Class EntriesController
- *
- * @package barrelstrength\sproutforms\controllers
- *
- * @property EntryElement $entryModel
- */
-class EntriesController extends BaseController
+class FormEntriesController extends BaseController
 {
     const EVENT_BEFORE_POPULATE = 'beforePopulate';
     const EVENT_BEFORE_VALIDATE = 'beforeValidate';
