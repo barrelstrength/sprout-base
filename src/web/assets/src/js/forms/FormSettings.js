@@ -107,7 +107,7 @@ if (typeof Craft.SproutForms === typeof undefined) {
 
       const data = {ruleId: ruleId, enabled: enabled, formId: formId};
 
-      Craft.postActionRequest('sprout/rules/enable-rule', data, $.proxy(function(response, textStatus) {
+      Craft.postActionRequest('sprout/form-rules/enable-rule', data, $.proxy(function(response, textStatus) {
         if (textStatus === 'success' && response.success) {
           Craft.cp.displayNotice(Craft.t('sprout', 'Conditional updated.'));
         } else {
@@ -231,7 +231,7 @@ if (typeof Craft.SproutForms === typeof undefined) {
         formId: formId
       };
 
-      Craft.postActionRequest('sprout/rules/save-rule', data, $.proxy(function(response, textStatus) {
+      Craft.postActionRequest('sprout/form-rules/save-rule', data, $.proxy(function(response, textStatus) {
         if (textStatus === 'success') {
           const rule = response.rule;
           ruleTableBody.append('<tr id ="sproutforms-rules-row-' + rule.id + '" class="field sproutforms-rules-row">' +

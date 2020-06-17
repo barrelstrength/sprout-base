@@ -187,7 +187,7 @@ class SproutFormsRules {
     };
 
     postData[window.csrfTokenName] = this.form.querySelector('[name="' + window.csrfTokenName + '"]').value;
-    postData['action'] = 'sprout/rules/validate-condition';
+    postData['action'] = 'sprout/form-rules/validate-condition';
     postData['rules'] = rules;
 
     let body = Object.keys(postData).map(function(key) {

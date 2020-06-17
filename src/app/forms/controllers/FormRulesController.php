@@ -24,7 +24,7 @@ use yii\base\InvalidConfigException;
 use yii\web\BadRequestHttpException;
 use yii\web\Response;
 
-class RulesController extends BaseController
+class FormRulesController extends BaseController
 {
     protected $allowAnonymous = [
         'validate-condition'

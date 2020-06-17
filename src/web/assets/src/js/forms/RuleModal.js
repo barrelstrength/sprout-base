@@ -362,7 +362,7 @@ if (typeof Craft.SproutForms === typeof undefined) {
         const inputId = this.$container.find('input[name="ruleId"]');
         const id = inputId.length ? inputId.val() : false;
 
-        Craft.postActionRequest('sprout/rules/save-rule', data, $.proxy(function(response, textStatus) {
+        Craft.postActionRequest('sprout/form-rules/save-rule', data, $.proxy(function(response, textStatus) {
           this.$saveSpinner.addClass('hidden');
 
           const statusSuccess = (textStatus === 'success');
@@ -421,7 +421,7 @@ if (typeof Craft.SproutForms === typeof undefined) {
           'formId': formId
         };
 
-        Craft.postActionRequest('sprout/rules/edit-rule', data, $.proxy(function(response, textStatus) {
+        Craft.postActionRequest('sprout/form-rules/edit-rule', data, $.proxy(function(response, textStatus) {
           this.$loadSpinner.addClass('hidden');
 
           const statusSuccess = (textStatus === 'success');
@@ -458,7 +458,7 @@ if (typeof Craft.SproutForms === typeof undefined) {
 
           const ruleId = $(this.$container).find('input[name="ruleId"]').val();
 
-          Craft.postActionRequest('sprout/rules/delete-rule', data, $.proxy(function(response, textStatus) {
+          Craft.postActionRequest('sprout/form-rules/delete-rule', data, $.proxy(function(response, textStatus) {
             const statusSuccess = (textStatus === 'success');
 
             if (statusSuccess && response.success) {

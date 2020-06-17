@@ -26,7 +26,7 @@ use barrelstrength\sproutbase\app\forms\controllers\FormFieldsController;
 use barrelstrength\sproutbase\app\forms\controllers\FormsController;
 use barrelstrength\sproutbase\app\forms\controllers\FormGroupsController;
 use barrelstrength\sproutbase\app\forms\controllers\FormIntegrationsController;
-use barrelstrength\sproutbase\app\forms\controllers\RulesController;
+use barrelstrength\sproutbase\app\forms\controllers\FormRulesController;
 use barrelstrength\sproutbase\app\metadata\controllers\GlobalMetadataController;
 use barrelstrength\sproutbase\app\redirects\controllers\RedirectsController;
 use barrelstrength\sproutbase\app\reports\controllers\DataSourcesController;
@@ -173,7 +173,7 @@ class SproutBase extends Module
                 'form-fields' => FormFieldsController::class,
                 'form-groups' => FormGroupsController::class,
                 'form-integrations' => FormIntegrationsController::class,
-                'rules' => RulesController::class,
+                'form-rules' => FormRulesController::class,
                 'global-metadata' => GlobalMetadataController::class,
                 'reports' => ReportsController::class,
                 'data-sources' => DataSourcesController::class,
