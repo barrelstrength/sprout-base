@@ -19,13 +19,7 @@ use yii\base\Component;
 use yii\base\Exception;
 use yii\db\StaleObjectException;
 
-/**
- *
- * @property null|int $spamStatusId
- * @property null|EntryStatus $defaultEntryStatus
- * @property array $allEntryStatuses
- */
-class EntryStatuses extends Component
+class FormEntryStatuses extends Component
 {
     /**
      * @return EntryStatus[]
@@ -220,7 +214,7 @@ class EntryStatuses extends Component
      */
     public function getSpamStatusId()
     {
-        $spam = SproutBase::$app->entryStatuses->getEntryStatusByHandle(EntryStatus::SPAM_STATUS_HANDLE);
+        $spam = SproutBase::$app->formEntryStatuses->getEntryStatusByHandle(EntryStatus::SPAM_STATUS_HANDLE);
 
         if (!$spam->id) {
             return null;
@@ -241,7 +235,7 @@ class EntryStatuses extends Component
      */
     public function markAsSpam($formEntryElements): bool
     {
-        $spam = SproutBase::$app->entryStatuses->getEntryStatusByHandle(EntryStatus::SPAM_STATUS_HANDLE);
+        $spam = SproutBase::$app->formEntryStatuses->getEntryStatusByHandle(EntryStatus::SPAM_STATUS_HANDLE);
 
         if (!$spam->id) {
             return false;

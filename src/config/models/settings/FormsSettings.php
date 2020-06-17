@@ -72,7 +72,7 @@ class FormsSettings extends Settings
                 'settingsTarget' => SettingsController::SETTINGS_TARGET_DB,
                 'actionButtonTemplate' => 'sprout/forms/settings/entrystatuses/_actionStatusButton',
                 'variables' => [
-                    'entryStatuses' => SproutBase::$app->entryStatuses->getAllEntryStatuses()
+                    'entryStatuses' => SproutBase::$app->formEntryStatuses->getAllEntryStatuses()
                 ]
             ]
         ];

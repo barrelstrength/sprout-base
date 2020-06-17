@@ -126,8 +126,8 @@ class FormEntriesController extends BaseController
             return $this->renderTemplate('sprout/forms/entries');
         }
 
-        $entryStatus = SproutBase::$app->entryStatuses->getEntryStatusById($entry->statusId);
-        $statuses = SproutBase::$app->entryStatuses->getAllEntryStatuses();
+        $entryStatus = SproutBase::$app->formEntryStatuses->getEntryStatusById($entry->statusId);
+        $statuses = SproutBase::$app->formEntryStatuses->getAllEntryStatuses();
         $entryStatuses = [];
 
         foreach ($statuses as $key => $status) {
@@ -208,7 +208,7 @@ class FormEntriesController extends BaseController
         $this->populateEntryModel($entry);
 
         $statusId = $request->getBodyParam('statusId');
-        $entryStatus = SproutBase::$app->entryStatuses->getDefaultEntryStatus();
+        $entryStatus = SproutBase::$app->formEntryStatuses->getDefaultEntryStatus();
         $entry->statusId = $statusId ?? $entry->statusId ?? $entryStatus->id;
 
         // Render the Entry Title
@@ -242,7 +242,7 @@ class FormEntriesController extends BaseController
         $success = true;
 
         if ($entry->hasCaptchaErrors()) {
-            $entry->statusId = SproutBase::$app->entryStatuses->getSpamStatusId();
+            $entry->statusId = SproutBase::$app->formEntryStatuses->getSpamStatusId();
         }
 
         $saveData = SproutBase::$app->formEntries->isSaveDataEnabled($this->form, $entry->getIsSpam());

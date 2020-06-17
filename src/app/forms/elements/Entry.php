@@ -131,7 +131,7 @@ class Entry extends Element
      */
     public static function statuses(): array
     {
-        $statuses = SproutBase::$app->entryStatuses->getAllEntryStatuses();
+        $statuses = SproutBase::$app->formEntryStatuses->getAllEntryStatuses();
         $statusArray = [];
 
         foreach ($statuses as $status) {
@@ -429,7 +429,7 @@ class Entry extends Element
     {
         $statusId = $this->statusId;
 
-        return SproutBase::$app->entryStatuses->getEntryStatusById($statusId)->handle;
+        return SproutBase::$app->formEntryStatuses->getEntryStatusById($statusId)->handle;
     }
 
     /**

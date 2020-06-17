@@ -216,7 +216,7 @@ class EntryQuery extends ElementQuery
             ));
         }
 
-        $spamStatusId = SproutBase::$app->entryStatuses->getSpamStatusId();
+        $spamStatusId = SproutBase::$app->formEntryStatuses->getSpamStatusId();
 
         // If and ID is being requested directly OR the spam status ID OR
         // the spam status handle is explicitly provided, override the include spam flag

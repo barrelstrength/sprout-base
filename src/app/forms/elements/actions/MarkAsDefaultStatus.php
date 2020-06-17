@@ -39,7 +39,7 @@ class MarkAsDefaultStatus extends ElementAction
     {
         parent::init();
 
-        $this->entryStatus = SproutBase::$app->entryStatuses->getDefaultEntryStatus();
+        $this->entryStatus = SproutBase::$app->formEntryStatuses->getDefaultEntryStatus();
     }
 
     /**
@@ -68,7 +68,7 @@ class MarkAsDefaultStatus extends ElementAction
     {
         $message = null;
 
-        $response = SproutBase::$app->entryStatuses->markAsDefaultStatus($query->all());
+        $response = SproutBase::$app->formEntryStatuses->markAsDefaultStatus($query->all());
 
         if ($response) {
             $message = Craft::t('sprout', 'Entries marked as {statusName}.', [

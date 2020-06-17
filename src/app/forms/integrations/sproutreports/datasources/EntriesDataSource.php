@@ -249,8 +249,8 @@ class EntriesDataSource extends DataSource
         $entryStatusOptions = [];
         $defaultSelectedEntryStatuses = [];
 
-        $entryStatuses = SproutBase::$app->entryStatuses->getAllEntryStatuses();
-        $spamStatusId = SproutBase::$app->entryStatuses->getSpamStatusId();
+        $entryStatuses = SproutBase::$app->formEntryStatuses->getAllEntryStatuses();
+        $spamStatusId = SproutBase::$app->formEntryStatuses->getSpamStatusId();
 
         foreach ($entryStatuses as $entryStatus) {
             $entryStatusOptions[$entryStatus->id]['label'] = $entryStatus->name;

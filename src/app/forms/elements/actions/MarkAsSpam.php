@@ -53,7 +53,7 @@ class MarkAsSpam extends ElementAction
     {
         $message = null;
 
-        $response = SproutBase::$app->entryStatuses->markAsSpam($query->all());
+        $response = SproutBase::$app->formEntryStatuses->markAsSpam($query->all());
 
         if ($response) {
             $message = Craft::t('sprout', 'Entries marked as Spam.');
