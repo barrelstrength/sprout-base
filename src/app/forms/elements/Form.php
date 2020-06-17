@@ -404,7 +404,7 @@ class Form extends Element
      */
     public function getRules(): array
     {
-        return SproutBase::$app->rules->getRulesByFormId($this->id, FieldRule::class, true);
+        return SproutBase::$app->formRules->getRulesByFormId($this->id, FieldRule::class, true);
     }
 
     /**

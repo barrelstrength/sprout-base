@@ -431,7 +431,7 @@ class Forms extends Component
      */
     public function removeFieldRulesUsingField($oldHandle, $form)
     {
-        $rules = SproutBase::$app->rules->getRulesByFormId($form->id, FieldRule::class);
+        $rules = SproutBase::$app->formRules->getRulesByFormId($form->id, FieldRule::class);
 
         /** @var Field[] $fields */
         $fields = $form->getFieldLayout()->getFields();
@@ -445,7 +445,7 @@ class Forms extends Component
         foreach ($rules as $rule) {
 
             if (!in_array($rule->behaviorTarget, $fieldHandles, true)) {
-                SproutBase::$app->rules->deleteRule($rule);
+                SproutBase::$app->formRules->deleteRule($rule);
                 continue;
             }
 
@@ -461,12 +461,12 @@ class Forms extends Component
 
                 if (empty($rule->conditions[$conditionSetKey])) {
                     // If we removed all conditions from a rule, delete the entire rule
-                    SproutBase::$app->rules->deleteRule($rule);
+                    SproutBase::$app->formRules->deleteRule($rule);
                     continue 2;
                 }
             }
 
-            SproutBase::$app->rules->saveRule($rule);
+            SproutBase::$app->formRules->saveRule($rule);
         }
     }
 
@@ -482,7 +482,7 @@ class Forms extends Component
      */
     public function updateFieldOnFieldRules($oldHandle, $newHandle, $form)
     {
-        $rules = SproutBase::$app->rules->getRulesByFormId($form->id);
+        $rules = SproutBase::$app->formRules->getRulesByFormId($form->id);
 
         /** @var FieldRule $rule */
         foreach ($rules as $rule) {
@@ -502,7 +502,7 @@ class Forms extends Component
             }
 
             $rule->conditions = $conditions;
-            SproutBase::$app->rules->saveRule($rule);
+            SproutBase::$app->formRules->saveRule($rule);
         }
     }
 

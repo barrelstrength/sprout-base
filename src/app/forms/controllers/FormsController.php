@@ -91,8 +91,8 @@ class FormsController extends BaseController
             'groups' => SproutBase::$app->formGroups->getAllFormGroups(),
             'groupId' => $form->groupId ?? null,
             'settings' => $config->getSettings(),
-            'rules' => SproutBase::$app->rules->getRulesByFormId($formId),
-            'ruleOptions' => SproutBase::$app->rules->getRuleOptions(),
+            'rules' => SproutBase::$app->formRules->getRulesByFormId($formId),
+            'ruleOptions' => SproutBase::$app->formRules->getRuleOptions(),
             'integrations' => SproutBase::$app->formIntegrations->getIntegrationsByFormId($formId),
             'isPro' => $isPro
         ]);

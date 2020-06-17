@@ -29,7 +29,7 @@ use barrelstrength\sproutbase\app\forms\services\Forms;
 use barrelstrength\sproutbase\app\forms\services\FrontEndFields;
 use barrelstrength\sproutbase\app\forms\services\FormGroups;
 use barrelstrength\sproutbase\app\forms\services\FormIntegrations;
-use barrelstrength\sproutbase\app\forms\services\Rules;
+use barrelstrength\sproutbase\app\forms\services\FormRules;
 use barrelstrength\sproutbase\app\metadata\services\ElementMetadata;
 use barrelstrength\sproutbase\app\metadata\services\GlobalMetadata;
 use barrelstrength\sproutbase\app\metadata\services\Optimize;
@@ -85,9 +85,9 @@ class App extends Component
     public $formIntegrations;
 
     /**
-     * @var Rules
+     * @var FormRules
      */
-    public $rules;
+    public $formRules;
 
     /**
      * @var Optimize
@@ -267,7 +267,7 @@ class App extends Component
         $this->formEntryStatuses = new FormEntryStatuses();
         $this->frontEndFields = new FrontEndFields();
         $this->formIntegrations = new FormIntegrations();
-        $this->rules = new Rules();
+        $this->formRules = new FormRules();
 
         // Metadata
         $this->optimize = new Optimize();

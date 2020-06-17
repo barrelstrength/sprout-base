@@ -25,11 +25,7 @@ use yii\base\Exception;
 use yii\base\InvalidConfigException;
 use yii\db\StaleObjectException;
 
-/**
- * @property array $integrationOptions
- * @property array $ruleOptions
- */
-class Rules extends Component
+class FormRules extends Component
 {
     /**
      * @return array

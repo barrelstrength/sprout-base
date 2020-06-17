@@ -55,7 +55,7 @@ class FormRulesController extends BaseController
 
         $settings = $request->getBodyParam('settings.'.$type);
 
-        $rule = SproutBase::$app->rules->createRule([
+        $rule = SproutBase::$app->formRules->createRule([
             'id' => $rule->id,
             'formId' => $rule->formId,
             'name' => $rule->name,
@@ -68,7 +68,7 @@ class FormRulesController extends BaseController
 
         $rule = new $type($rule);
 
-        if (!SproutBase::$app->rules->saveRule($rule)) {
+        if (!SproutBase::$app->formRules->saveRule($rule)) {
             Craft::error('Unable to save rule.', __METHOD__);
 
             return $this->returnJson(false);
@@ -96,7 +96,7 @@ class FormRulesController extends BaseController
 
         $ruleId = $request->getBodyParam('ruleId');
 
-        $rule = SproutBase::$app->rules->getRuleById($ruleId);
+        $rule = SproutBase::$app->formRules->getRuleById($ruleId);
 
         if ($rule === null) {
             $message = Craft::t('sprout', 'No rule found with id: {id}', [
@@ -120,7 +120,7 @@ class FormRulesController extends BaseController
                 'id' => $rule->id,
                 'name' => $rule->name
             ],
-            'template' => SproutBase::$app->rules->getRulesModal($rule),
+            'template' => SproutBase::$app->formRules->getRulesModal($rule),
         ]);
     }
 
@@ -137,7 +137,7 @@ class FormRulesController extends BaseController
 
         $ruleId = Craft::$app->request->getRequiredBodyParam('ruleId');
 
-        $rule = SproutBase::$app->rules->getRuleById($ruleId);
+        $rule = SproutBase::$app->formRules->getRuleById($ruleId);
 
         if (!$rule) {
             return $this->asJson([
@@ -145,7 +145,7 @@ class FormRulesController extends BaseController
             ]);
         }
 
-        if (!SproutBase::$app->rules->deleteRule($rule)) {
+        if (!SproutBase::$app->formRules->deleteRule($rule)) {
             return $this->asJson([
                 'success' => false,
                 'errors' => $rule->getErrors()
@@ -177,10 +177,10 @@ class FormRulesController extends BaseController
         $ruleId = $pieces[2];
 
         if (count($pieces) === 3) {
-            $rule = SproutBase::$app->rules->getRuleById($ruleId);
+            $rule = SproutBase::$app->formRules->getRuleById($ruleId);
             if ($rule) {
                 $rule->enabled = $enabled;
-                if (SproutBase::$app->rules->saveRule($rule)) {
+                if (SproutBase::$app->formRules->saveRule($rule)) {
                     return $this->returnJson(true, $rule);
                 }
             }
