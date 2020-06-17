@@ -281,7 +281,7 @@ class FormsController extends BaseController
         $fieldLayout = Craft::$app->getFields()->assembleLayoutFromPost();
 
         if ($duplicate) {
-            $fieldLayout = SproutBase::$app->fields->getDuplicateLayout($duplicatedForm, $fieldLayout);
+            $fieldLayout = SproutBase::$app->formFields->getDuplicateLayout($duplicatedForm, $fieldLayout);
         }
 
         // Make sure we have a layout if:
@@ -347,7 +347,7 @@ class FormsController extends BaseController
         $tab = null;
 
         if ($formId && $name) {
-            $tab = SproutBase::$app->fields->createNewTab($formId, $name);
+            $tab = SproutBase::$app->formFields->createNewTab($formId, $name);
 
             if ($tab->id) {
                 return $this->asJson([
@@ -390,7 +390,7 @@ class FormsController extends BaseController
                 ->fieldLayoutId($tabRecord->layoutId)
                 ->one();
 
-            if (SproutBase::$app->fields->deleteTab($form, $tabRecord)) {
+            if (SproutBase::$app->formFields->deleteTab($form, $tabRecord)) {
                 return $this->asJson([
                     'success' => true
                 ]);
@@ -420,7 +420,7 @@ class FormsController extends BaseController
         $newName = $request->getBodyParam('newName');
 
         if ($tabId && $newName) {
-            $result = SproutBase::$app->fields->renameTab($tabId, $newName);
+            $result = SproutBase::$app->formFields->renameTab($tabId, $newName);
 
             if ($result) {
                 return $this->asJson([

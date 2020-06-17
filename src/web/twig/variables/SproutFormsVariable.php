@@ -377,7 +377,7 @@ class SproutFormsVariable
      */
     public function getRegisteredField($type)
     {
-        $fields = SproutBase::$app->fields->getRegisteredFields();
+        $fields = SproutBase::$app->formFields->getRegisteredFields();
 
         foreach ($fields as $field) {
             if ($field->getType() == $type) {
@@ -444,7 +444,7 @@ class SproutFormsVariable
      */
     public function getRegisteredFields(): array
     {
-        return SproutBase::$app->fields->getRegisteredFields();
+        return SproutBase::$app->formFields->getRegisteredFields();
     }
 
     /**
@@ -452,7 +452,7 @@ class SproutFormsVariable
      */
     public function getRegisteredFieldsByGroup(): array
     {
-        return SproutBase::$app->fields->getRegisteredFieldsByGroup();
+        return SproutBase::$app->formFields->getRegisteredFieldsByGroup();
     }
 
     /**

@@ -64,7 +64,7 @@ use yii\db\StaleObjectException;
  * @property mixed $defaultTabName
  * @property array $registeredFieldsByGroup
  */
-class Fields extends Component
+class FormFields extends Component
 {
     /**
      * @event RegisterFieldsEvent The event that is triggered when registering the fields available.

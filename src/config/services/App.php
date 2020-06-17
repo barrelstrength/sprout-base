@@ -24,7 +24,7 @@ use barrelstrength\sproutbase\app\fields\services\Url;
 use barrelstrength\sproutbase\app\fields\services\Utilities as FieldUtilities;
 use barrelstrength\sproutbase\app\forms\services\FormEntries;
 use barrelstrength\sproutbase\app\forms\services\EntryStatuses;
-use barrelstrength\sproutbase\app\forms\services\Fields;
+use barrelstrength\sproutbase\app\forms\services\FormFields;
 use barrelstrength\sproutbase\app\forms\services\Forms;
 use barrelstrength\sproutbase\app\forms\services\FrontEndFields;
 use barrelstrength\sproutbase\app\forms\services\Groups;
@@ -60,9 +60,9 @@ class App extends Component
     public $forms;
 
     /**
-     * @var Fields
+     * @var FormFields
      */
-    public $fields;
+    public $formFields;
 
     /**
      * @var FormEntries
@@ -262,7 +262,7 @@ class App extends Component
         // Forms
         $this->groups = new Groups();
         $this->forms = new Forms();
-        $this->fields = new Fields();
+        $this->formFields = new FormFields();
         $this->formEntries = new FormEntries();
         $this->entryStatuses = new EntryStatuses();
         $this->frontEndFields = new FrontEndFields();

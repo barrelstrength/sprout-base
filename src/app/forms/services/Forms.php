@@ -638,7 +638,7 @@ class Forms extends Component
 
         /** @var Field $field */
         $field = null;
-        $form = SproutBase::$app->fields->addDefaultTab($form, $field);
+        $form = SproutBase::$app->formFields->addDefaultTab($form, $field);
 
         if ($this->saveForm($form)) {
             // Let's delete the default field

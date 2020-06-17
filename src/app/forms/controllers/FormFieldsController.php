@@ -53,7 +53,7 @@ class FormFieldsController extends BaseController
             throw new ElementNotFoundException('Form not found.');
         }
 
-        return $this->asJson(SproutBase::$app->fields->getModalFieldTemplate($form));
+        return $this->asJson(SproutBase::$app->formFields->getModalFieldTemplate($form));
     }
 
     /**
@@ -80,7 +80,7 @@ class FormFieldsController extends BaseController
 
         if ($type && $form && $tab) {
             /** @var Field $field */
-            $field = SproutBase::$app->fields->createDefaultField($type, $form);
+            $field = SproutBase::$app->formFields->createDefaultField($type, $form);
 
             if ($field) {
                 // Set the field layout
@@ -89,7 +89,7 @@ class FormFieldsController extends BaseController
 
                 if ($oldTabs) {
                     // it's a new field
-                    $response = SproutBase::$app->fields->addFieldToLayout($field, $form, $tabId, $nextId);
+                    $response = SproutBase::$app->formFields->addFieldToLayout($field, $form, $tabId, $nextId);
 
                     return $this->returnJson($response, $field, $form, $tab->name, $tabId);
                 }
@@ -208,9 +208,9 @@ class FormFieldsController extends BaseController
             $tabName = FieldLayoutTabRecord::findOne($tabId)->name;
 
             if ($isNewField) {
-                $response = SproutBase::$app->fields->addFieldToLayout($field, $form, $tabId);
+                $response = SproutBase::$app->formFields->addFieldToLayout($field, $form, $tabId);
             } else {
-                $response = SproutBase::$app->fields->updateFieldToLayout($field, $form, $tabId);
+                $response = SproutBase::$app->formFields->updateFieldToLayout($field, $form, $tabId);
             }
         }
 
@@ -280,7 +280,7 @@ class FormFieldsController extends BaseController
                         'name' => $group->name,
                     ],
                 ],
-                'template' => SproutBase::$app->fields->getModalFieldTemplate($form, $field, $group->id),
+                'template' => SproutBase::$app->formFields->getModalFieldTemplate($form, $field, $group->id),
             ]);
         }
 
@@ -357,7 +357,7 @@ class FormFieldsController extends BaseController
         $this->requirePermission('sprout:forms:editForms');
 
         $fieldIds = Json::decode(Craft::$app->request->getRequiredBodyParam('ids'));
-        SproutBase::$app->fields->reorderFields($fieldIds);
+        SproutBase::$app->formFields->reorderFields($fieldIds);
 
         return $this->asJson([
             'success' => true
@@ -397,7 +397,7 @@ class FormFieldsController extends BaseController
                     'id' => $tabId
                 ],
             ],
-            'template' => $success ? false : SproutBase::$app->fields->getModalFieldTemplate($form, $field),
+            'template' => $success ? false : SproutBase::$app->formFields->getModalFieldTemplate($form, $field),
         ]);
     }
 }
