@@ -27,7 +27,7 @@ use barrelstrength\sproutbase\app\forms\services\EntryStatuses;
 use barrelstrength\sproutbase\app\forms\services\FormFields;
 use barrelstrength\sproutbase\app\forms\services\Forms;
 use barrelstrength\sproutbase\app\forms\services\FrontEndFields;
-use barrelstrength\sproutbase\app\forms\services\Groups;
+use barrelstrength\sproutbase\app\forms\services\FormGroups;
 use barrelstrength\sproutbase\app\forms\services\Integrations;
 use barrelstrength\sproutbase\app\forms\services\Rules;
 use barrelstrength\sproutbase\app\metadata\services\ElementMetadata;
@@ -50,9 +50,9 @@ use craft\base\Component;
 class App extends Component
 {
     /**
-     * @var Groups
+     * @var FormGroups
      */
-    public $groups;
+    public $formGroups;
 
     /**
      * @var Forms
@@ -260,7 +260,7 @@ class App extends Component
     public function init()
     {
         // Forms
-        $this->groups = new Groups();
+        $this->formGroups = new FormGroups();
         $this->forms = new Forms();
         $this->formFields = new FormFields();
         $this->formEntries = new FormEntries();

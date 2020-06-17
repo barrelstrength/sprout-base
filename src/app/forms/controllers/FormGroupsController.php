@@ -39,7 +39,7 @@ class FormGroupsController extends BaseController
 
         $isNewGroup = (null === $group->id);
 
-        if (SproutBase::$app->groups->saveGroup($group)) {
+        if (SproutBase::$app->formGroups->saveGroup($group)) {
             if ($isNewGroup) {
                 Craft::$app->getSession()->setNotice(Craft::t('sprout', 'Group added.'));
             }
@@ -71,7 +71,7 @@ class FormGroupsController extends BaseController
         $request = Craft::$app->getRequest();
 
         $groupId = $request->getRequiredBodyParam('id');
-        $success = SproutBase::$app->groups->deleteGroupById($groupId);
+        $success = SproutBase::$app->formGroups->deleteGroupById($groupId);
 
         Craft::$app->getSession()->setNotice(Craft::t('sprout', 'Group deleted.'));
 

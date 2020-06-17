@@ -327,7 +327,7 @@ class SproutFormsVariable
      */
     public function getAllFormGroups($id = null): array
     {
-        return SproutBase::$app->groups->getAllFormGroups($id);
+        return SproutBase::$app->formGroups->getAllFormGroups($id);
     }
 
     /**
@@ -339,7 +339,7 @@ class SproutFormsVariable
      */
     public function getFormsByGroupId($id): array
     {
-        return SproutBase::$app->groups->getFormsByGroupId($id);
+        return SproutBase::$app->formGroups->getFormsByGroupId($id);
     }
 
     /**

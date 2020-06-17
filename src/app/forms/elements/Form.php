@@ -120,7 +120,7 @@ class Form extends Element
             ]
         ];
 
-        $groups = SproutBase::$app->groups->getAllFormGroups();
+        $groups = SproutBase::$app->formGroups->getAllFormGroups();
 
         foreach ($groups as $group) {
             $key = 'group:'.$group->id;

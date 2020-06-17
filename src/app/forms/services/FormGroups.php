@@ -15,7 +15,7 @@ use craft\db\Query;
 use yii\base\Component;
 use yii\base\Exception;
 
-class Groups extends Component
+class FormGroups extends Component
 {
     private $_groupsById;
 

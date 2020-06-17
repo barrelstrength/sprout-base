@@ -88,7 +88,7 @@ class FormsController extends BaseController
 
         return $this->renderTemplate('sprout/forms/forms/_settings/'.$subNavKey, [
             'form' => $form,
-            'groups' => SproutBase::$app->groups->getAllFormGroups(),
+            'groups' => SproutBase::$app->formGroups->getAllFormGroups(),
             'groupId' => $form->groupId ?? null,
             'settings' => $config->getSettings(),
             'rules' => SproutBase::$app->rules->getRulesByFormId($formId),

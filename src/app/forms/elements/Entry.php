@@ -172,7 +172,7 @@ class Entry extends Element
         ];
 
         // Prepare the data for our sources sidebar
-        $groups = SproutBase::$app->groups->getAllFormGroups('id');
+        $groups = SproutBase::$app->formGroups->getAllFormGroups('id');
         $forms = SproutBase::$app->forms->getAllForms();
 
         $noSources = [];
