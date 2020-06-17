@@ -17,7 +17,7 @@ use yii\web\BadRequestHttpException;
 use yii\web\ForbiddenHttpException;
 use yii\web\Response;
 
-class GroupsController extends BaseController
+class FormGroupsController extends BaseController
 {
     /**
      * Save a group.
