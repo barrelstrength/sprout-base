@@ -111,6 +111,8 @@
             </div>
         </div>
 
+        {% if customSections|length %}
+
         <table class="data fullwidth custom-pages sitemap-settings" id="custom-pages">
             <thead>
 
@@ -119,7 +121,7 @@
             </thead>
             <tbody>
 
-            {% if customSections|length %}
+
 
                 {% for customSection in customSections %}
 
@@ -137,22 +139,22 @@
 
                 {% endfor %}
 
-            {% else %}
-
-                {% set boxBody %}
-                    <p>{{ "Add a Custom URL for any page that doesn't exist in a URL-Enabled Section."|t('sprout')|raw }}</p>
-                {% endset %}
-
-                {{ sproutCp.mediaBox({
-                    heading: "Custom Pages"|t('sprout'),
-                    body: boxBody,
-                    resourcePath: '@sproutbase/app/sitemaps/icon.svg'
-                }) }}
-
-            {% endif %}
-
             </tbody>
         </table>
+
+        {% else %}
+
+            {% set boxBody %}
+                <p>{{ "Add a Custom URL for any page that doesn't exist in a URL-Enabled Section."|t('sprout')|raw }}</p>
+            {% endset %}
+
+            {{ sproutCp.mediaBox({
+                heading: "Custom Pages"|t('sprout'),
+                body: boxBody,
+                resourcePath: '@sproutbase/web/assets/sprout/icons/sitemaps/icon.svg'
+            }) }}
+
+        {% endif %}
 
     {% endif %}
 
