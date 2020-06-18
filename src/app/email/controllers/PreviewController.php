@@ -40,7 +40,7 @@ class PreviewController extends Controller
 
         $this->requirePermission($email->getPreviewPermission());
 
-        $previewTemplate= 'sprout/notifications/_preview/preview-'.$email->getPreviewType();
+        $previewTemplate = 'sprout/notifications/_preview/preview-'.$email->getPreviewType();
 
         return $this->renderTemplate($previewTemplate, [
             'email' => $email,

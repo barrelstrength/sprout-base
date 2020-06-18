@@ -87,7 +87,7 @@ class Visualization extends Widget
      */
     public function getBodyHtml()
     {
-        $dataSource = false;
+        $dataSource = null;
 
         $report = Craft::$app->elements->getElementById($this->reportId, Report::class);
 

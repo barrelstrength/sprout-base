@@ -15,7 +15,7 @@ use craft\models\Site;
 /**
  * @property array $settingsNavItem
  * @property bool $isEnabled
- * @property null|\craft\models\Site $currentSite
+ * @property null|Site $currentSite
  * @property string $key
  */
 abstract class Settings extends Model implements SettingsInterface

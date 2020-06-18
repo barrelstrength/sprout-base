@@ -32,6 +32,7 @@ use Throwable;
 use yii\base\Component;
 use yii\base\Exception;
 use yii\base\InvalidConfigException;
+use yii\db\Transaction;
 use yii\web\BadRequestHttpException;
 
 /**
@@ -145,6 +146,7 @@ class Forms extends Component
             return false;
         }
 
+        /** @var Transaction $transaction */
         $transaction = Craft::$app->db->beginTransaction();
 
         try {
@@ -223,6 +225,7 @@ class Forms extends Component
      */
     public function deleteForm(FormElement $form): bool
     {
+        /** @var Transaction $transaction */
         $transaction = Craft::$app->db->beginTransaction();
 
         try {
@@ -672,7 +675,7 @@ class Forms extends Component
     /**
      * Returns all available Form Templates
      *
-     * @return array[]
+     * @return FormTemplates[]
      */
     public function getAllFormTemplates(): array
     {

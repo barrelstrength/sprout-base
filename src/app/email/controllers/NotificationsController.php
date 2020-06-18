@@ -19,15 +19,10 @@ use craft\helpers\UrlHelper;
 use craft\web\Controller;
 use InvalidArgumentException;
 use Throwable;
-use Twig\Error\LoaderError;
-use Twig\Error\RuntimeError;
-use Twig\Error\SyntaxError;
 use yii\base\Exception;
-use yii\base\ExitException;
 use yii\base\InvalidConfigException;
 use yii\web\BadRequestHttpException;
 use yii\web\ForbiddenHttpException;
-use yii\web\HttpException;
 use yii\web\Response;
 
 class NotificationsController extends Controller
@@ -309,9 +304,6 @@ class NotificationsController extends Controller
 
             Craft::$app->getSession()->setError(Craft::t('sprout', 'Unable to save notification.'));
 
-//            $errorMessage = $this->formatErrors();
-//            Craft::error($errorMessage, __METHOD__);
-
             Craft::$app->getUrlManager()->setRouteParams([
                 'notificationEmail' => $notificationEmail
             ]);
@@ -467,29 +459,6 @@ class NotificationsController extends Controller
                 'message' => Craft::t('sprout', 'Test Notification Email sent.')
             ])
         );
-    }
-
-    /**
-     * @return string
-     */
-    public function formatErrors(): string
-    {
-        $errors = $this->getErrors();
-
-        $text = '';
-        if (!empty($errors)) {
-            $text .= '<ul>';
-            foreach ($errors as $key => $error) {
-                if (is_array($error)) {
-                    foreach ($error as $desc) {
-                        $text .= '<li>'.$desc.'</li>';
-                    }
-                }
-            }
-            $text .= '</ul>';
-        }
-
-        return $text;
     }
 
     /**

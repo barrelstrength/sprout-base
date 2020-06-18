@@ -186,6 +186,7 @@ class ReportsController extends Controller
 
         if ($message = $this->processEditionChecks($reportElement)) {
             Craft::$app->getSession()->setNotice($message);
+
             return $this->redirect(UrlHelper::cpUrl('sprout/reports'));
         }
 
@@ -564,8 +565,7 @@ class ReportsController extends Controller
      *
      * @param Report $report
      *
-     * @return string
-     * @throws ForbiddenHttpException
+     * @return string|null
      */
     private function processEditionChecks(Report $report)
     {
@@ -600,5 +600,7 @@ class ReportsController extends Controller
                 return Craft::t('sprout', 'Upgrade to Sprout Reports PRO to create additional '.$dataSource::displayName().' reports.');
             }
         }
+
+        return null;
     }
 }

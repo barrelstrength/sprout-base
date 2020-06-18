@@ -24,6 +24,7 @@ use Throwable;
 use yii\base\Exception;
 use yii\base\InvalidConfigException;
 use yii\base\InvalidRouteException;
+use yii\db\Transaction;
 use yii\web\BadRequestHttpException;
 use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
@@ -449,6 +450,7 @@ class FormsController extends BaseController
         $formTabIds = Json::decode(Craft::$app->getRequest()->getRequiredBodyParam('ids'));
 
         $db = Craft::$app->getDb();
+        /** @var Transaction $transaction */
         $transaction = $db->beginTransaction();
 
         try {

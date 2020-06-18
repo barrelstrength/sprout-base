@@ -11,6 +11,11 @@ use barrelstrength\sproutbase\config\base\Config;
 use barrelstrength\sproutbase\migrations\fields\Install;
 use Craft;
 
+/**
+ *
+ * @property array $settingsNavItem
+ * @property string $key
+ */
 class FieldsConfig extends Config
 {
     public function getKey(): string

@@ -239,7 +239,7 @@ class DefaultMailer extends Mailer implements NotificationEmailSenderInterface
      */
     public function getLists(): array
     {
-        if (empty($this->lists)) {
+//        if (empty($this->lists)) {
             // Get all selected Mailing List Reports
             // Prepare SimpleRecipientList of their data
             // Assign it to $this->lists and return it...
@@ -248,7 +248,7 @@ class DefaultMailer extends Mailer implements NotificationEmailSenderInterface
 
             // Assign lists
 //            $this->lists = $listType ? $listType->getLists() : [];
-        }
+//        }
 
         return $this->lists;
     }

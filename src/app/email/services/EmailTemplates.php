@@ -5,9 +5,9 @@ namespace barrelstrength\sproutbase\app\email\services;
 use barrelstrength\sproutbase\app\email\base\EmailTemplates as BaseEmailTemplates;
 use barrelstrength\sproutbase\app\email\emailtemplates\BasicTemplates;
 use barrelstrength\sproutbase\SproutBase;
+use Craft;
 use craft\base\Component;
 use craft\events\RegisterComponentTypesEvent;
-use Craft;
 
 /**
  *

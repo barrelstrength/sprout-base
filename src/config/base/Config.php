@@ -12,7 +12,7 @@ use craft\helpers\UrlHelper;
 
 /**
  *
- * @property null|\barrelstrength\sproutbase\config\base\Settings $settings
+ * @property null|Settings $settings
  * @property array $cpNavItem
  * @property string $upgradeUrl
  * @property null $configGroup
@@ -26,11 +26,12 @@ use craft\helpers\UrlHelper;
  * @property string $name
  * @property array $sproutDependencies
  * @property array $siteUrlRules
+ * @property array $controllerMapKeys
  * @property bool $isPro
  */
 abstract class Config extends Component implements ConfigInterface
 {
-    protected $_edition = null;
+    protected $_edition;
 
     /**
      * @var Settings $_settings

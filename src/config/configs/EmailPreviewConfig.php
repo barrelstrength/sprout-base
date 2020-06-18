@@ -8,9 +8,12 @@
 namespace barrelstrength\sproutbase\config\configs;
 
 use barrelstrength\sproutbase\config\base\Config;
-use barrelstrength\sproutbase\migrations\fields\Install;
 use Craft;
 
+/**
+ *
+ * @property string $key
+ */
 class EmailPreviewConfig extends Config
 {
     public function getKey(): string

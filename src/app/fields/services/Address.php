@@ -32,6 +32,7 @@ use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
 use yii\db\StaleObjectException;
+use yii\db\Transaction;
 
 class Address extends Component
 {
@@ -104,6 +105,7 @@ class Address extends Component
         }
 
         $db = Craft::$app->getDb();
+        /** @var Transaction $transaction */
         $transaction = $db->beginTransaction();
 
         try {
@@ -132,7 +134,7 @@ class Address extends Component
      */
     public function duplicateAddress(FieldInterface $field, ElementInterface $target, bool $isNew)
     {
-        /** Element $target */
+        /** @var Transaction $transaction */
         $transaction = Craft::$app->getDb()->beginTransaction();
 
         try {

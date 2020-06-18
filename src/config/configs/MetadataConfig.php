@@ -19,6 +19,7 @@ use Craft;
  * @property array $cpUrlRules
  * @property string $description
  * @property array[]|array $userPermissions
+ * @property array|string[] $controllerMapKeys
  * @property string $key
  */
 class MetadataConfig extends Config

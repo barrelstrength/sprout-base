@@ -14,6 +14,7 @@ use craft\base\ElementAction;
 use craft\elements\db\ElementQueryInterface;
 use Exception;
 use Throwable;
+use yii\db\Transaction;
 
 /**
  *
@@ -61,6 +62,7 @@ class ExcludeUrl extends ElementAction
         /** @var Redirect[] $redirects */
         $redirects = $query->all();
 
+        /** @var Transaction $transaction */
         $transaction = Craft::$app->db->beginTransaction();
 
         try {

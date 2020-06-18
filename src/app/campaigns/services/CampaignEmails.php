@@ -11,13 +11,15 @@ use craft\base\Component;
 use craft\helpers\DateTimeHelper;
 use Throwable;
 use yii\base\Exception;
-use yii\base\ExitException;
 use yii\base\InvalidConfigException;
+use yii\db\Transaction;
 
 /**
  * Class CampaignEmails
  *
  * @package barrelstrength\sproutbase\app\campaigns\services
+ *
+ * @property bool $displayDateScheduled
  */
 class CampaignEmails extends Component
 {
@@ -127,6 +129,7 @@ class CampaignEmails extends Component
             $campaignEmailRecord = CampaignEmailRecord::findOne($campaignEmail->id);
 
             if ($campaignEmailRecord) {
+                /** @var Transaction $transaction */
                 $transaction = Craft::$app->getDb()->beginTransaction();
 
                 $campaignEmailRecord->emailSettings = $values;
@@ -182,10 +185,10 @@ class CampaignEmails extends Component
     /**
      * Returns the value of the displayDateScheduled general config setting
      *
-     * @todo - displayDateScheduled is still a hidden config variable
-     *
      * @return bool
      * @throws InvalidConfigException
+     * @todo - displayDateScheduled is still a hidden config variable
+     *
      */
     public function getDisplayDateScheduled(): bool
     {

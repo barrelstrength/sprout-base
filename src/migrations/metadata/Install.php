@@ -45,7 +45,6 @@ class Install extends Migration
         }
 
         $this->insertDefaultGlobalMetadata();
-
     }
 
     public function safeDown()

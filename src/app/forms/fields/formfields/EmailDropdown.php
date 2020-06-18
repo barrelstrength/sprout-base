@@ -164,7 +164,7 @@ class EmailDropdown extends CraftDropdownField
     {
         /** @var SingleOptionFieldData $value */
         $valueOptions = $value->getOptions();
-        $anySelected = SproutBase::$app->utilities->isAnyOptionsSelected(
+        $anySelected = SproutBase::$app->fieldUtilities->isAnyOptionsSelected(
             $valueOptions,
             $value->value
         );

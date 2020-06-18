@@ -7,9 +7,7 @@
 
 namespace barrelstrength\sproutbase\web\twig\variables;
 
-use barrelstrength\sproutbase\app\reports\elements\Report;
 use barrelstrength\sproutbase\SproutBase;
-use yii\base\Exception;
 
 class ReportsVariable
 {

@@ -21,6 +21,10 @@ use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
 use yii\base\Exception;
 
+/**
+ *
+ * @property array $allForms
+ */
 class SaveEntryEvent extends NotificationEvent
 {
     public $whenNew;

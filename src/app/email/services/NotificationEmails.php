@@ -4,23 +4,17 @@ namespace barrelstrength\sproutbase\app\email\services;
 
 use barrelstrength\sproutbase\app\email\base\Mailer;
 use barrelstrength\sproutbase\app\email\base\NotificationEmailSenderInterface;
-use barrelstrength\sproutbase\app\email\base\NotificationEvent;
 use barrelstrength\sproutbase\app\email\elements\NotificationEmail;
 use barrelstrength\sproutbase\app\email\records\NotificationEmail as NotificationEmailRecord;
-use barrelstrength\sproutbase\SproutBase;
 use Craft;
 use craft\base\Component;
 use craft\base\ElementInterface;
-use craft\errors\ElementNotFoundException;
 use craft\helpers\App;
 use craft\helpers\ElementHelper;
 use craft\models\FieldLayout;
 use Exception;
 use Throwable;
-use Twig\Error\LoaderError;
-use Twig\Error\RuntimeError;
-use Twig\Error\SyntaxError;
-use yii\base\ExitException;
+use yii\db\Transaction;
 
 class NotificationEmails extends Component
 {
@@ -38,6 +32,7 @@ class NotificationEmails extends Component
             return false;
         }
 
+        /** @var Transaction $transaction */
         $transaction = Craft::$app->getDb()->beginTransaction();
 
         try {

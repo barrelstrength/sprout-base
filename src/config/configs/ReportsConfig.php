@@ -22,6 +22,8 @@ use Craft;
  * @property array|string[] $cpUrlRules
  * @property string $description
  * @property array[]|array $userPermissions
+ * @property array|string[] $controllerMapKeys
+ * @property array|string[] $supportedDataSourceTypes
  * @property string $key
  */
 class ReportsConfig extends Config

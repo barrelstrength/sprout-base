@@ -31,6 +31,7 @@ use yii\base\InvalidConfigException;
  *
  * @property CampaignType $campaignType
  * @property mixed $emailTemplateId
+ * @property string $previewPermission
  * @property DefaultMailer|Mailer $mailer
  */
 class CampaignEmail extends EmailElement
@@ -678,6 +679,8 @@ class CampaignEmail extends EmailElement
 
         // End the request
         Craft::$app->end();
+
+        return null;
     }
 
     public function getPreviewPermission(): string

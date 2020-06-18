@@ -21,6 +21,7 @@ use craft\helpers\Component as ComponentHelper;
 use yii\base\Component;
 use yii\base\Exception;
 use yii\base\InvalidConfigException;
+use yii\db\Transaction;
 
 /**
  * Class DataSources
@@ -250,6 +251,7 @@ class DataSources extends Component
     {
         $reports = SproutBase::$app->reports->getReportsBySourceId($dataSourceId);
 
+        /** @var Transaction $transaction */
         $transaction = Craft::$app->db->beginTransaction();
 
         try {

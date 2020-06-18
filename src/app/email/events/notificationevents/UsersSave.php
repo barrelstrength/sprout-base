@@ -203,9 +203,7 @@ class UsersSave extends NotificationEvent
          */
         $event = $this->event ?? null;
 
-        /**
-         * @var User $element
-         */
+        /** @var User $element */
         $element = $event->sender;
 
         $currentUsersUserGroups = null;
@@ -235,7 +233,7 @@ class UsersSave extends NotificationEvent
             return null;
         }
 
-        if ($this->userGroupIds != false) {
+        if ($this->userGroupIds !== false && is_array($this->userGroupIds)) {
             if ($this->isValidUserGroupIds($currentUsersUserGroups)) {
 
                 if (!is_array($newUserGroups)) {

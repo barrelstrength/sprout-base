@@ -18,7 +18,14 @@ use Throwable;
 use yii\base\Component;
 use yii\base\Exception;
 use yii\db\StaleObjectException;
+use yii\db\Transaction;
 
+/**
+ *
+ * @property null|int $spamStatusId
+ * @property null|EntryStatus $defaultEntryStatus
+ * @property EntryStatus[] $allEntryStatuses
+ */
 class FormEntryStatuses extends Component
 {
     /**
@@ -111,6 +118,8 @@ class FormEntryStatuses extends Component
         $entryStatus->validate();
 
         if (!$entryStatus->hasErrors()) {
+
+            /** @var Transaction $transaction */
             $transaction = Craft::$app->db->beginTransaction();
 
             try {
@@ -174,6 +183,7 @@ class FormEntryStatuses extends Component
      */
     public function reorderEntryStatuses($entryStatusIds): bool
     {
+        /** @var Transaction $transaction */
         $transaction = Craft::$app->db->beginTransaction();
 
         try {

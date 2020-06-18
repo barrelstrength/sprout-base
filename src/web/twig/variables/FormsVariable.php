@@ -7,13 +7,11 @@
 
 namespace barrelstrength\sproutbase\web\twig\variables;
 
-use barrelstrength\sproutbase\app\forms\base\Condition;
 use barrelstrength\sproutbase\app\forms\base\FormField;
 use barrelstrength\sproutbase\app\forms\elements\db\EntryQuery;
 use barrelstrength\sproutbase\app\forms\elements\Entry;
 use barrelstrength\sproutbase\app\forms\elements\Entry as EntryElement;
 use barrelstrength\sproutbase\app\forms\elements\Form;
-use barrelstrength\sproutbase\app\forms\formtemplates\AccessibleTemplates;
 use barrelstrength\sproutbase\app\forms\services\Forms;
 use barrelstrength\sproutbase\SproutBase;
 use Craft;
@@ -27,7 +25,6 @@ use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
 use Twig\Markup;
 use yii\base\Exception;
-use yii\web\BadRequestHttpException;
 
 class FormsVariable
 {
@@ -155,7 +152,7 @@ class FormsVariable
             throw new Exception('The displayField tag requires a Form model.');
         }
 
-        if (!$this->validateField($field)) {
+        if (!SproutBase::$app->forms->validateField($field)) {
             throw new Exception('The displayField tag requires a Field model.');
         }
 

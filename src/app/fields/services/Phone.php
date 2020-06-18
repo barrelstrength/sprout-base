@@ -8,7 +8,6 @@
 namespace barrelstrength\sproutbase\app\fields\services;
 
 use barrelstrength\sproutbase\app\fields\models\Phone as PhoneModel;
-use barrelstrength\sproutbase\SproutBase;
 use CommerceGuys\Addressing\Country\CountryRepository;
 use Craft;
 use craft\base\ElementInterface;

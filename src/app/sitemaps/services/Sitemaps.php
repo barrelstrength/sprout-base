@@ -20,6 +20,7 @@ use craft\errors\SiteNotFoundException;
 use Throwable;
 use yii\base\Component;
 use yii\db\Exception;
+use yii\db\Transaction;
 use yii\web\NotFoundHttpException;
 
 class Sitemaps extends Component
@@ -189,6 +190,7 @@ class Sitemaps extends Component
         $sitemapSectionRecord->changeFrequency = $sitemapSection->changeFrequency;
         $sitemapSectionRecord->enabled = $sitemapSection->enabled ?? 0;
 
+        /** @var Transaction $transaction */
         $transaction = Craft::$app->getDb()->beginTransaction();
 
         try {

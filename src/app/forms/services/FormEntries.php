@@ -24,7 +24,12 @@ use craft\helpers\Json;
 use Throwable;
 use yii\base\Component;
 use yii\base\Exception;
+use yii\db\Transaction;
 
+/**
+ *
+ * @property FormElement $entry
+ */
 class FormEntries extends Component
 {
     const SPAM_DEFAULT_LIMIT = 500;
@@ -140,6 +145,7 @@ class FormEntries extends Component
         $this->trigger(EntryElement::EVENT_BEFORE_SAVE, $event);
 
         $db = Craft::$app->getDb();
+        /** @var Transaction $transaction */
         $transaction = $db->beginTransaction();
 
         try {

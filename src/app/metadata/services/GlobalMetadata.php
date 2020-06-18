@@ -20,6 +20,7 @@ use craft\fields\PlainText;
 use craft\helpers\Json;
 use craft\models\Site;
 use DateTime;
+use DateTimeZone;
 use Throwable;
 use yii\db\Exception;
 
@@ -28,6 +29,7 @@ use yii\db\Exception;
  *
  * @package Craft
  *
+ * @property array $organizationOptions
  * @property array $transforms
  */
 class GlobalMetadata extends Component
@@ -172,7 +174,7 @@ class GlobalMetadata extends Component
      */
     public function getDate($string): DateTime
     {
-        return new DateTime($string['date'], new \DateTimeZone(Craft::$app->getTimeZone()));
+        return new DateTime($string['date'], new DateTimeZone(Craft::$app->getTimeZone()));
     }
 
     /**
@@ -460,9 +462,9 @@ class GlobalMetadata extends Component
     /**
      * @param Site $site
      *
-     * @return array
+     * @return array|array[]
      * @throws SiteNotFoundException
-     * @throws Exception
+     * @throws \yii\base\Exception
      */
     public function getGenderOptions(Site $site): array
     {
@@ -625,7 +627,6 @@ class GlobalMetadata extends Component
     {
         return $this->getOptimizedOptions(Assets::class, 'optimizedImageField', $settings);
     }
-
 
 
     /**

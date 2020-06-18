@@ -19,6 +19,13 @@ use yii\base\Component;
 use yii\base\Exception;
 use yii\db\Transaction;
 
+/**
+ *
+ * @property array $defaultDataSourceIds
+ * @property null|Report[] $allReports
+ * @property array $reportsAsSelectFieldOptions
+ * @property array $allowedDataSourceIds
+ */
 class Reports extends Component
 {
     /**
@@ -59,6 +66,7 @@ class Reports extends Component
     {
         if (!$report) {
             Craft::info('Report not saved due to validation error.', __METHOD__);
+
             return false;
         }
 
@@ -68,6 +76,7 @@ class Reports extends Component
 
         if ($report->hasErrors()) {
             Craft::error('Unable to save Report.', __METHOD__);
+
             return false;
         }
 
@@ -268,7 +277,6 @@ class Reports extends Component
             foreach ($config->getSupportedDataSourceTypes() as $dataSourceType) {
                 $dataSourceTypes[] = $dataSourceType;
             }
-
         }
 
         $dataSourceTypes = array_filter($dataSourceTypes);

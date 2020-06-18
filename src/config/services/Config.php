@@ -25,8 +25,8 @@ use yii\web\ServerErrorHttpException;
 
 /**
  *
- * @property \barrelstrength\sproutbase\config\base\SproutBasePlugin[] $sproutBasePlugins
- * @property \barrelstrength\sproutbase\config\models\settings\ControlPanelSettings $controlPanelSettings
+ * @property SproutBasePlugin[] $sproutBasePlugins
+ * @property ControlPanelSettings $controlPanelSettings
  * @property array $sproutCpSettings
  */
 class Config extends Component

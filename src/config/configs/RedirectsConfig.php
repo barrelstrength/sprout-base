@@ -17,9 +17,10 @@ use Craft;
  *
  * @property array $cpNavItem
  * @property array|string[] $cpUrlRules
- * @property \barrelstrength\sproutbase\config\configs\MetadataConfig $configGroup
+ * @property MetadataConfig $configGroup
  * @property string $description
  * @property array[]|array $userPermissions
+ * @property array|string[] $controllerMapKeys
  * @property string $key
  */
 class RedirectsConfig extends Config

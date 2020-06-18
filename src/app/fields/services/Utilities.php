@@ -54,28 +54,5 @@ class Utilities extends Component
 
         return false;
     }
-
-    /**
-     * @return string
-     */
-    public function formatErrors(): string
-    {
-        $errors = $this->getErrors();
-
-        $text = '';
-        if (!empty($errors)) {
-            $text .= '<ul>';
-            foreach ($errors as $key => $error) {
-                if (is_array($error)) {
-                    foreach ($error as $desc) {
-                        $text .= '<li>'.$desc.'</li>';
-                    }
-                }
-            }
-            $text .= '</ul>';
-        }
-
-        return $text;
-    }
 }
 

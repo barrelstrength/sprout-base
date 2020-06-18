@@ -14,7 +14,6 @@ use barrelstrength\sproutbase\app\forms\records\Form as FormRecord;
 use barrelstrength\sproutbase\app\reports\base\DataSource;
 use barrelstrength\sproutbase\app\reports\elements\Report;
 use barrelstrength\sproutbase\helpers\DateRangeHelper;
-use barrelstrength\sproutbase\SproutBase;
 use Craft;
 use craft\db\Query;
 use craft\helpers\DateTimeHelper;
