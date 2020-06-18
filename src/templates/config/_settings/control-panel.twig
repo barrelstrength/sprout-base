@@ -15,8 +15,6 @@
 
 {% set cpSettings = create('barrelstrength\\sproutbase\\config\\models\\settings\\ControlPanelSettings') %}
 
-{#{% do cpSettings.dog(cpSettingsRows, settings) %}#}
-
 {{ forms.editableTableField({
     label: "Sprout Modules"|t('sprout'),
     instructions: "Sprout plugins are composed of one or more modules. Choose the Sprout modules to enable and what they should be named."|t('sprout'),
@@ -43,4 +41,13 @@
     fullWidth: true,
     staticRows: true,
     errors: []|unique
+}) }}
+
+{{ forms.lightswitchField({
+    label: "Disable Upgrade to Pro Messaging"|t('sprout'),
+    instructions: "Sprout plugins will display upgrade notices throughout the interface where features can be improved by updating to Pro. This can be handy when getting familiar with a plugin and can be disabled when you'd prefer to no longer see the reminders."|t('sprout'),
+    name: 'disableUpgradeMessages',
+    on: settings.disableUpgradeMessages,
+    onLabel: "Enable"|t('sprout'),
+    warning: config.disableUpgradeMessages is defined ? configWarning('disableUpgradeMessages')
 }) }}

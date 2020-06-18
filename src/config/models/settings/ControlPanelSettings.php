@@ -11,6 +11,7 @@ use barrelstrength\sproutbase\config\base\Settings;
 use barrelstrength\sproutbase\config\controllers\SettingsController;
 use barrelstrength\sproutbase\SproutBase;
 use Craft;
+use craft\errors\SiteNotFoundException;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
@@ -24,30 +25,15 @@ class ControlPanelSettings extends Settings
 {
     public $modules;
 
-//    public $campaignsPluginName = '';
-//
-//    public $emailPluginName = '';
-//
-//    public $formsPluginName = '';
-//
-//    public $listsPluginName = '';
-//
-//    public $reportsPluginName = '';
-//
-//    public $redirectsPluginName = '';
-//
-//    public $seoPluginName = '';
-//
-//    public $sentEmailPluginName = '';
-//
-//    public $sitemapsPluginName = '';
+    public $disableUpgradeMessages = false;
 
     /**
      * @return array|array[]
+     * @throws Exception
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
-     * @throws Exception
+     * @throws SiteNotFoundException
      */
     public function getSettingsNavItem(): array
     {
