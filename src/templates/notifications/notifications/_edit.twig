@@ -302,7 +302,7 @@
             errors: notificationEmail ? notificationEmail.getErrors('slug')|merge(notificationEmail.getErrors('uri')),
         }) }}
 
-        {% set templateOptions = sprout.app.emailTemplates.getEmailTemplateOptions(campaignType) %}
+        {% set templateOptions = sprout.app.emailTemplates.getEmailTemplateOptions(notificationEmail.emailTemplateId) %}
 
         {{ forms.field({
             label: "Templates <span class='info'>The Email Templates to display your email.</span>"|t('sprout'),

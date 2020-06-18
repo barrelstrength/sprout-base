@@ -57,11 +57,11 @@ class EmailTemplates extends Component
     /**
      * Get the available Email Template Options
      *
-     * @param null $notificationEmail
+     * @param null $emailTemplateId
      *
      * @return array
      */
-    public function getEmailTemplateOptions($notificationEmail = null): array
+    public function getEmailTemplateOptions($emailTemplateId = null): array
     {
         $defaultEmailTemplates = new BasicTemplates();
 
@@ -94,7 +94,7 @@ class EmailTemplates extends Component
         $templateFolder = null;
         $settings = SproutBase::$app->settings->getSettingsByKey('notifications');
 
-        $templateFolder = $notificationEmail->emailTemplateId ?? $settings->emailTemplateId ?? $defaultEmailTemplates->getPath();
+        $templateFolder = $emailTemplateId ?? $settings->emailTemplateId ?? $defaultEmailTemplates->getPath();
 
         $options[] = [
             'optgroup' => Craft::t('sprout', 'Custom Template Folder')

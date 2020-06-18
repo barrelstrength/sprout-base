@@ -68,7 +68,7 @@
             errors: (campaignType is defined ? campaignType.getErrors('mailer') : null)
         }) }}
 
-        {% set templateOptions = sprout.app.emailTemplates.getEmailTemplateOptions(campaignType) %}
+        {% set templateOptions = sprout.app.emailTemplates.getEmailTemplateOptions(campaignType.emailTemplateId) %}
 
         {{ forms.field({
             label: "Email Templates"|t('sprout'),
