@@ -80,11 +80,6 @@ mix
     'src/web/assets/src/scss/reports/visualizations.scss',
     'src/web/assetbundles/reports/dist/css/visualizations.css')
 
-  // Sent Email
-  .sass(
-    'src/web/assets/src/scss/sentemail/sent-email.scss',
-    'src/web/assetbundles/copypastemailer/dist/css/sent-email.css')
-
   // Campaigns
   .js([
     'src/web/assets/src/js/campaigns/CopyPaste.js'

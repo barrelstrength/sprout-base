@@ -128,7 +128,6 @@ class NotificationEmails extends Component
 
         $systemEmailSettings = App::mailSettings();
 
-        // @todo - add override settings to Sprout Email
         $notificationEmail->fromName = $systemEmailSettings->fromName;
         $notificationEmail->fromEmail = $systemEmailSettings->fromEmail;
 

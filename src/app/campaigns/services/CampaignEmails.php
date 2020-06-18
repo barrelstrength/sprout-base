@@ -188,7 +188,6 @@ class CampaignEmails extends Component
      * @return bool
      * @throws InvalidConfigException
      * @todo - displayDateScheduled is still a hidden config variable
-     *
      */
     public function getDisplayDateScheduled(): bool
     {

@@ -166,8 +166,6 @@ trait RecipientsTrait
             }
         }
 
-        // @todo - Add support for Segment Lists to be added to lists array.
-
         return $recipientList;
     }
 

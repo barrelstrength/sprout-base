@@ -41,8 +41,6 @@ trait SenderTrait
      */
     public function getSenderHtml(CampaignEmail $campaignEmail): string
     {
-        // @todo - override default from,email, and replyTo with values from default settings
-
         return Craft::$app->getView()->renderTemplate('sprout/notifications/_components/mailers/recipients-html', [
             'campaignEmail' => $campaignEmail
         ]);
