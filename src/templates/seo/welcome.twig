@@ -1,0 +1,30 @@
+{% extends "sprout/config/_layouts/base-landing" %}
+{% import "sprout/config/_includes/sproutcp" as sproutCp %}
+
+{% set title = "Welcome to Sprout SEO"|t('sprout') %}
+{% set bodyClass = 'sprout-landing-page' %}
+{% set assetUrl = view.getAssetManager().getPublishedUrl('@sproutbase/app/metadata/web/assets/seo/dist', true) -%}
+
+{% block content %}
+
+    <div class="sprout-landing">
+
+        {{ parent() }}
+
+        {{ sproutCp.featureHeader({
+            heading: "Smart, content-driven SEO"|t('sprout'),
+            message: "Sprout SEO makes it seamless to manage metadata for Search, Structured Data, and Social Sharing to ensure your content is findable and sharable."|t('sprout'),
+            primaryButtonText: "Get Started"|t('sprout'),
+            primaryButtonLink: cpUrl('sprout/seo/globals'),
+            secondaryButtonText: "Read the Docs"|t('sprout'),
+            secondaryButtonLink: "https://sprout.barrelstrengthdesign.com/docs/seo"
+        }) }}
+
+        {{ sproutCp.featureImage({
+            imageUrl: assetUrl ~ '/images/sproutseo-feature.png',
+            altText: 'Content-focused SEO for Craft CMS'|t('sprout')
+        }) }}
+
+    </div>
+
+{% endblock %}

@@ -27,7 +27,7 @@ use barrelstrength\sproutbase\app\forms\controllers\FormGroupsController;
 use barrelstrength\sproutbase\app\forms\controllers\FormIntegrationsController;
 use barrelstrength\sproutbase\app\forms\controllers\FormRulesController;
 use barrelstrength\sproutbase\app\forms\controllers\FormsController;
-use barrelstrength\sproutbase\app\metadata\controllers\GlobalMetadataController;
+use barrelstrength\sproutbase\app\seo\controllers\GlobalMetadataController;
 use barrelstrength\sproutbase\app\redirects\controllers\RedirectsController;
 use barrelstrength\sproutbase\app\reports\controllers\DataSourcesController;
 use barrelstrength\sproutbase\app\reports\controllers\ReportsController;

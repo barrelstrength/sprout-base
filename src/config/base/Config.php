@@ -179,7 +179,7 @@ abstract class Config extends Component implements ConfigInterface
 
     public function isUpgradable(): bool
     {
-        return $this->_edition !== self::EDITION_PRO;
+        return $this->getEdition() !== self::EDITION_PRO;
     }
 
     public function getUpgradeUrl(): string

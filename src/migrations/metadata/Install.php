@@ -7,7 +7,7 @@
 
 namespace barrelstrength\sproutbase\migrations\metadata;
 
-use barrelstrength\sproutbase\app\metadata\records\GlobalMetadata as GlobalMetadataRecord;
+use barrelstrength\sproutbase\app\seo\records\GlobalMetadata as GlobalMetadataRecord;
 use barrelstrength\sproutbase\SproutBase;
 use Craft;
 use craft\db\Migration;

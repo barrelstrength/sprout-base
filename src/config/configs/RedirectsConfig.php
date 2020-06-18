@@ -17,7 +17,7 @@ use Craft;
  *
  * @property array $cpNavItem
  * @property array|string[] $cpUrlRules
- * @property MetadataConfig $configGroup
+ * @property SeoConfig $configGroup
  * @property string $description
  * @property array[]|array $userPermissions
  * @property array|string[] $controllerMapKeys
@@ -42,7 +42,7 @@ class RedirectsConfig extends Config
 
     public function getConfigGroup()
     {
-        return new MetadataConfig();
+        return new SeoConfig();
     }
 
     public function createSettingsModel()

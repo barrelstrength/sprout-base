@@ -7,7 +7,7 @@
 
 namespace barrelstrength\sproutbase\web\twig\variables;
 
-use barrelstrength\sproutbase\app\metadata\models\Globals;
+use barrelstrength\sproutbase\app\seo\models\Globals;
 use barrelstrength\sproutbase\SproutBase;
 use craft\errors\SiteNotFoundException;
 use craft\models\Site;
