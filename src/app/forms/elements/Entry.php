@@ -311,9 +311,9 @@ class Entry extends Element
     protected static function defineSortOptions(): array
     {
         $attributes = [
-            'sproutforms_entries.dateCreated' => Craft::t('sprout', 'Date Created'),
             // @todo - fix error where formName is not a column on subquery
             //'formName'               => Craft::t('sprout','Form Name'),
+            'sproutforms_entries.dateCreated' => Craft::t('sprout', 'Date Created'),
             'sproutforms_entries.dateUpdated' => Craft::t('sprout', 'Date Updated'),
         ];
 

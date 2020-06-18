@@ -291,9 +291,6 @@ class Forms extends Component
         $query->siteId($siteId);
         $query->orderBy(['name' => SORT_ASC]);
 
-        // @todo - look into enabledForSite method
-        // $query->enabledForSite(false);
-
         return $query->all();
     }
 
@@ -311,9 +308,6 @@ class Forms extends Component
         $query->id($formId);
         $query->siteId($siteId);
 
-        // @todo - look into enabledForSite method
-        // $query->enabledForSite(false);
-
         return $query->one();
     }
 
@@ -330,8 +324,6 @@ class Forms extends Component
         $query = FormElement::find();
         $query->handle($handle);
         $query->siteId($siteId);
-        // @todo - look into enabledForSite method
-        // $query->enabledForSite(false);
 
         return $query->one();
     }

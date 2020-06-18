@@ -96,7 +96,6 @@ class FormFieldsController extends BaseController
             }
         }
 
-        // @todo - add error messages
         return $this->returnJson(false, null, $form, null, $tabId);
     }
 
@@ -114,9 +113,9 @@ class FormFieldsController extends BaseController
 
         $request = Craft::$app->getRequest();
         $fieldsService = Craft::$app->getFields();
-        // Make sure our field has a section
 
-        // @todo - handle this much more gracefully
+        // Make sure our field has a section
+        // @todo - handle this more gracefully
         $tabId = $request->getBodyParam('tabId');
 
         // Get the Form these fields are related to

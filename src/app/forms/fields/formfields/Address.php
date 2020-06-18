@@ -214,7 +214,6 @@ class Address extends FormField implements PreviewableFieldInterface
      */
     public function validateAddress(ElementInterface $element): bool
     {
-        // @todo - improve validation
         if (!$this->required) {
             return true;
         }
