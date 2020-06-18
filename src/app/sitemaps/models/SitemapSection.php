@@ -39,9 +39,19 @@ class SitemapSection extends Model
     public $siteId;
 
     /**
+     * @var string
+     */
+    public $uniqueKey;
+
+    /**
      * @var int
      */
     public $urlEnabledSectionId;
+
+    /**
+     * @var int
+     */
+    public $enabled;
 
     /**
      * @var string
@@ -54,11 +64,6 @@ class SitemapSection extends Model
     public $uri;
 
     /**
-     * @var int
-     */
-    public $changeFrequency;
-
-    /**
      * @var string
      */
     public $priority;
@@ -66,46 +71,21 @@ class SitemapSection extends Model
     /**
      * @var int
      */
-    public $enabled;
-
-    // Attributes assigned from URL-Enabled Section integration
+    public $changeFrequency;
 
     /**
+     * Attributes assigned from URL-Enabled Section integration
+     *
      * @var string
      */
     public $name;
 
     /**
+     * Attributes assigned from URL-Enabled Section integration
+     *
      * @var string
      */
     public $handle;
-
-    /**
-     * @var string
-     */
-    public $uniqueKey;
-
-// @todo - do we need the following attributes or can we update things and remove them?
-
-    /**
-     * @var bool
-     */
-    public $isNew;
-
-    /**
-     * @var DateTime
-     */
-    public $dateCreated;
-
-    /**
-     * @var DateTime
-     */
-    public $dateUpdated;
-
-    /**
-     * @var int
-     */
-    public $uid;
 
     /**
      * @return Site|null

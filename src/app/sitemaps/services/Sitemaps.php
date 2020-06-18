@@ -44,11 +44,11 @@ class Sitemaps extends Component
      */
     public function getCustomSitemapSections($siteId): array
     {
-        $customSections = (new Query())
-            ->select('*')
-            ->from([SitemapSectionRecord::tableName()])
-            ->where('[[siteId]]=:siteId', [':siteId' => $siteId])
-            ->andWhere('type=:type', [':type' => NoSection::class])
+        $customSections = $this->createSitemapSectionQuery()
+            ->where([
+                'siteId' => $siteId,
+                'type' => NoSection::class
+            ])
             ->all();
 
         $sitemapSections = [];
@@ -106,10 +106,11 @@ class Sitemaps extends Component
             throw new SiteNotFoundException('Unable to find site. $siteId must not be null');
         }
 
-        $results = (new Query())
-            ->select('*')
-            ->from([SitemapSectionRecord::tableName()])
-            ->where(['type' => $type, '[[siteId]]' => $siteId])
+        $results = $this->createSitemapSectionQuery()
+            ->where([
+                'type' => $type,
+                '[[siteId]]' => $siteId
+            ])
             ->all();
 
         $sitemapSections = [];
@@ -132,10 +133,10 @@ class Sitemaps extends Component
      */
     public function getSitemapSectionById($id)
     {
-        $result = (new Query())
-            ->select('*')
-            ->from([SitemapSectionRecord::tableName()])
-            ->where(['id' => $id])
+        $result = $this->createSitemapSectionQuery()
+            ->where([
+                'id' => $id
+            ])
             ->one();
 
         if ($result) {
@@ -365,7 +366,6 @@ class Sitemaps extends Component
                 } else {
                     // If no URL-Enabled Section exists, create a new one
                     $sitemapSection = new SitemapSection();
-                    $sitemapSection->isNew = true;
                     $sitemapSection->urlEnabledSectionId = $urlEnabledSection->id;
                 }
 
@@ -431,6 +431,23 @@ class Sitemaps extends Component
         }
 
         return [];
+    }
+
+    protected function createSitemapSectionQuery(): Query
+    {
+        return (new Query())
+            ->select([
+                'id',
+                'siteId',
+                'urlEnabledSectionId',
+                'type',
+                'uri',
+                'changeFrequency',
+                'priority',
+                'enabled',
+                'uniqueKey'
+            ])
+            ->from([SitemapSectionRecord::tableName()]);
     }
 
     /**

@@ -34,6 +34,7 @@
             {% for urlEnabledSectionKey, urlEnabledSection in urlEnabledSectionType.urlEnabledSections %}
 
                 {% set sitemapSection = urlEnabledSection.sitemapSection %}
+                {% set isNewSitemapSection = not sitemapSection.id %}
 
                 {% if loop.first %}
 
@@ -52,13 +53,13 @@
                     {% set elementTableName = urlEnabledSectionType.getElementTableName() %}
                     {% set sproutSeoHandle = elementTableName~':'~sitemapSection.handle %}
 
-                    <tr class="{{ sitemapSection.isNew ? 'sitemapsection-isnew' : null }}"
+                    <tr class="{{ isNewSitemapSection ? 'sitemapsection-isnew' : null }}"
                         data-rowid="{{ urlEnabledSectionKey }}"
                         data-id="{{ sitemapSection.id ? sitemapSection.id : null }}"
                         data-type="{{ urlEnabledSectionType.getType() }}"
                         data-url-enabled-section-id="{{ sitemapSection.urlEnabledSectionId }}"
                         data-uri="{{ sitemapSection.uri }}"
-                        data-is-new="{{ sitemapSection.isNew }}"
+                        data-is-new="{{ isNewSitemapSection }}"
                         data-plugin-handle="{{ craft.app.getRequest().getSegment(1) }}">
 
                         {% block sitemapSectionTableRow %}{% endblock %}

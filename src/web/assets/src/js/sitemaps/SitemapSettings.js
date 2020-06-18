@@ -1,4 +1,3 @@
-// @todo - sitemaps/src/js/settings.js => sitemap-settings.js
 (function() {
   const multilingualToggleDiv = document.getElementById('settings-enableMultilingualSitemaps');
 
