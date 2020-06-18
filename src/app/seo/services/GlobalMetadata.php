@@ -512,6 +512,7 @@ class GlobalMetadata extends Component
         $options = [];
         $fields = Craft::$app->fields->getAllFields();
 
+        $config = SproutBase::$app->config->getConfigByKey('seo');
         $pluginSettings = SproutBase::$app->settings->getSettingsByKey('seo');
 
         $options[''] = Craft::t('sprout', 'None');
@@ -543,9 +544,7 @@ class GlobalMetadata extends Component
             $options[$settings[$handle]] = $settings[$handle];
         }
 
-        // @todo - migration, fix editions/pro logic
-//        $needPro = $this->getIsPro() ? '' : '(Pro)';
-        $needPro = true;
+        $needPro = $config->getIsPro() ? '' : '(Pro)';
         $options[] = [
             'value' => 'custom',
             'label' => Craft::t('sprout', 'Add Custom Format {needPro}', [
