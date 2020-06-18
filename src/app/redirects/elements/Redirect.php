@@ -22,6 +22,7 @@ use craft\base\Element;
 use craft\elements\actions\Edit;
 use craft\elements\db\ElementQueryInterface;
 use craft\errors\SiteNotFoundException;
+use craft\helpers\DateTimeHelper;
 use craft\helpers\UrlHelper;
 use DateTime;
 use Twig\Error\LoaderError;
@@ -138,9 +139,9 @@ class Redirect extends Element
     public static function defineTableAttributes($source = null): array
     {
         $attributes = [
+            'method' => Craft::t('sprout', 'Method'),
             'oldUrl' => Craft::t('sprout', 'Old Url'),
             'newUrl' => Craft::t('sprout', 'New Url'),
-            'method' => Craft::t('sprout', 'Method'),
             'count' => Craft::t('sprout', 'Count'),
             'dateLastUsed' => Craft::t('sprout', 'Date Last Used'),
             'test' => Craft::t('sprout', 'Test'),
@@ -308,8 +309,8 @@ class Redirect extends Element
      */
     public function __toString()
     {
-        if ($this->oldUrl) {
-            return (string)$this->oldUrl;
+        if ($this->method) {
+            return (string)$this->method;
         }
 
         return (string)$this->id ?: static::class;
@@ -535,13 +536,28 @@ class Redirect extends Element
      * @return string
      * @throws InvalidConfigException
      * @throws InvalidConfigException
+     * @throws \Exception
      */
     protected function tableAttributeHtml(string $attribute): string
     {
         switch ($attribute) {
+            case 'oldUrl':
+
+                return '<input readonly class="code sprout-redirects-elementindex-input" value="'.$this->oldUrl.'">';
+
             case 'newUrl':
 
-                return $this->newUrl ?? '/';
+                $newUrl = $this->newUrl ?? '/';
+                return '<input readonly class="code sprout-redirects-elementindex-input" value="'.$newUrl.'">';
+
+            case 'dateLastUsed':
+
+                if ($this->dateLastUsed) {
+                    $dateLastUsed = DateTimeHelper::toDateTime($this->dateLastUsed);
+                    return $dateLastUsed->format('Y-m-d');
+                }
+
+                return '';
 
             case 'test':
                 // no link for regex

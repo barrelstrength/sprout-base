@@ -130,7 +130,9 @@
         </div>
         <div class="data">
             <div class="heading">{{ "Base URL"|t('sprout') }}</div>
-            <div class="value">{{ currentSite.baseUrl }}</div>
+            <div class="value">
+                <input type="text" value="{{ currentSite.baseUrl }}" class="text fullwidth" style="padding-left:0;border:none;box-shadow:none;"/>
+            </div>
         </div>
     </div>
 
