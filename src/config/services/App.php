@@ -22,6 +22,7 @@ use barrelstrength\sproutbase\app\fields\services\Phone;
 use barrelstrength\sproutbase\app\fields\services\RegularExpression;
 use barrelstrength\sproutbase\app\fields\services\Url;
 use barrelstrength\sproutbase\app\fields\services\Utilities as FieldUtilities;
+use barrelstrength\sproutbase\app\forms\services\FormCaptchas;
 use barrelstrength\sproutbase\app\forms\services\FormEntries;
 use barrelstrength\sproutbase\app\forms\services\FormEntryStatuses;
 use barrelstrength\sproutbase\app\forms\services\FormFields;
@@ -29,6 +30,7 @@ use barrelstrength\sproutbase\app\forms\services\FormGroups;
 use barrelstrength\sproutbase\app\forms\services\FormIntegrations;
 use barrelstrength\sproutbase\app\forms\services\FormRules;
 use barrelstrength\sproutbase\app\forms\services\Forms;
+use barrelstrength\sproutbase\app\forms\services\FormTemplates;
 use barrelstrength\sproutbase\app\forms\services\FrontEndFields;
 use barrelstrength\sproutbase\app\seo\services\ElementMetadata;
 use barrelstrength\sproutbase\app\seo\services\GlobalMetadata;
@@ -73,6 +75,16 @@ class App extends Component
      * @var FormEntryStatuses
      */
     public $formEntryStatuses;
+
+    /**
+     * @var FormTemplates
+     */
+    public $formTemplates;
+
+    /**
+     * @var FormCaptchas
+     */
+    public $formCaptchas;
 
     /**
      * @var FrontEndFields
@@ -268,6 +280,8 @@ class App extends Component
         $this->frontEndFields = new FrontEndFields();
         $this->formIntegrations = new FormIntegrations();
         $this->formRules = new FormRules();
+        $this->formTemplates = new FormTemplates();
+        $this->formCaptchas = new FormCaptchas();
 
         // Metadata
         $this->optimizeMetadata = new OptimizeMetadata();

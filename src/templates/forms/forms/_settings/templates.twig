@@ -10,7 +10,7 @@
     {{ redirectInput('sprout/forms/edit/'~form.id~'/settings/templates') }}
     <input type="hidden" id="formId" name="formId" value="{{ form.id }}">
 
-    {% set templateOptions = sprout.app.forms.getFormTemplateOptions(form, true) %}
+    {% set templateOptions = sprout.app.formTemplates.getFormTemplateOptions(form, true) %}
 
     {{ forms.field({
         label: "Templates"|t('sprout'),

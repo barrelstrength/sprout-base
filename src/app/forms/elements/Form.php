@@ -386,7 +386,7 @@ class Form extends Element
         $defaultFormTemplates = new AccessibleTemplates();
 
         if ($this->formTemplateId) {
-            $templatePath = SproutBase::$app->forms->getFormTemplateById($this->formTemplateId);
+            $templatePath = SproutBase::$app->formTemplates->getFormTemplateById($this->formTemplateId);
             if ($templatePath) {
                 return $templatePath;
             }

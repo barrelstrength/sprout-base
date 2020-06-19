@@ -7,13 +7,9 @@
 
 namespace barrelstrength\sproutbase\app\forms\services;
 
-use barrelstrength\sproutbase\app\forms\base\FormTemplates;
 use barrelstrength\sproutbase\app\forms\base\Integration;
 use barrelstrength\sproutbase\app\forms\elements\Form;
 use barrelstrength\sproutbase\app\forms\elements\Form as FormElement;
-use barrelstrength\sproutbase\app\forms\errors\FormTemplatesDirectoryNotFoundException;
-use barrelstrength\sproutbase\app\forms\formtemplates\AccessibleTemplates;
-use barrelstrength\sproutbase\app\forms\formtemplates\CustomTemplates;
 use barrelstrength\sproutbase\app\forms\records\Form as FormRecord;
 use barrelstrength\sproutbase\app\forms\records\Integration as IntegrationRecord;
 use barrelstrength\sproutbase\app\forms\rules\FieldRule;
@@ -25,7 +21,6 @@ use craft\base\ElementInterface;
 use craft\base\Field;
 use craft\db\Query;
 use craft\errors\MissingComponentException;
-use craft\events\RegisterComponentTypesEvent;
 use craft\helpers\MigrationHelper;
 use craft\helpers\StringHelper;
 use Throwable;
@@ -45,9 +40,7 @@ use yii\web\BadRequestHttpException;
  */
 class Forms extends Component
 {
-    const EVENT_REGISTER_CAPTCHAS = 'registerSproutFormsCaptchas';
 
-    const EVENT_REGISTER_FORM_TEMPLATES = 'registerFormTemplatesEvent';
 
     /**
      * @var array
@@ -649,305 +642,6 @@ class Forms extends Component
     }
 
     /**
-     * Returns all available Form Templates Class Names
-     *
-     * @return array
-     */
-    public function getAllFormTemplateTypes(): array
-    {
-        $event = new RegisterComponentTypesEvent([
-            'types' => []
-        ]);
-
-        $this->trigger(self::EVENT_REGISTER_FORM_TEMPLATES, $event);
-
-        return $event->types;
-    }
-
-    /**
-     * Returns all available Form Templates
-     *
-     * @return FormTemplates[]
-     */
-    public function getAllFormTemplates(): array
-    {
-        $templateTypes = $this->getAllFormTemplateTypes();
-        $templates = [];
-
-        foreach ($templateTypes as $templateType) {
-            $templates[$templateType] = new $templateType();
-        }
-
-        uasort($templates, static function($a, $b) {
-            /**
-             * @var $a FormTemplates
-             * @var $b FormTemplates
-             */
-            return $a->getName() <=> $b->getName();
-        });
-
-        return $templates;
-    }
-
-    /**
-     * @param FormElement $form
-     *
-     * @return array
-     * @throws Exception
-     */
-    public function getFormTemplatePaths(FormElement $form): array
-    {
-        $settings = SproutBase::$app->settings->getSettingsByKey('forms');
-
-        $templates = [];
-        $templateFolder = '';
-        $fallbackFormTemplates = new AccessibleTemplates();
-        $defaultTemplate = $fallbackFormTemplates->getFullPath();
-
-        if ($settings->formTemplateId) {
-            $defaultFormTemplates = $this->getFormTemplateById($settings->formTemplateId);
-            if ($defaultFormTemplates) {
-                // custom path by template API
-                $templateFolder = $defaultFormTemplates->getFullPath();
-            } else {
-                // custom folder on site path
-                $templateFolder = $this->getSitePath($settings->formTemplateId);
-            }
-        }
-
-        if ($form->formTemplateId) {
-            $formTemplates = $this->getFormTemplateById($form->formTemplateId);
-            if ($formTemplates) {
-                // custom path by template API
-                $templateFolder = $formTemplates->getFullPath();
-            } else {
-                // custom folder on site path
-                $templateFolder = $this->getSitePath($form->formTemplateId);
-            }
-        }
-
-        // Set our defaults
-        $templates['form'] = $defaultTemplate;
-        $templates['tab'] = $defaultTemplate;
-        $templates['field'] = $defaultTemplate;
-        $templates['fields'] = $defaultTemplate;
-        $templates['email'] = $defaultTemplate;
-
-        // See if we should override our defaults
-        if ($templateFolder) {
-
-            $formTemplate = $templateFolder.DIRECTORY_SEPARATOR.'form';
-            $tabTemplate = $templateFolder.DIRECTORY_SEPARATOR.'tab';
-            $fieldTemplate = $templateFolder.DIRECTORY_SEPARATOR.'field';
-            $fieldsFolder = $templateFolder.DIRECTORY_SEPARATOR.'fields';
-            $emailTemplate = $templateFolder.DIRECTORY_SEPARATOR.'email';
-            $basePath = $templateFolder.DIRECTORY_SEPARATOR;
-
-            foreach (Craft::$app->getConfig()->getGeneral()->defaultTemplateExtensions as $extension) {
-
-                if (file_exists($formTemplate.'.'.$extension)) {
-                    $templates['form'] = $basePath;
-                }
-
-                if (file_exists($tabTemplate.'.'.$extension)) {
-                    $templates['tab'] = $basePath;
-                }
-
-                if (file_exists($fieldTemplate.'.'.$extension)) {
-                    $templates['field'] = $basePath;
-                }
-
-                if (file_exists($fieldsFolder)) {
-                    $templates['fields'] = $basePath.'fields';
-                }
-
-                if (file_exists($emailTemplate.'.'.$extension)) {
-                    $templates['email'] = $basePath;
-                }
-            }
-
-            if (file_exists($fieldsFolder)) {
-                $templates['fields'] = $basePath.'fields';
-            }
-        }
-
-        return $templates;
-    }
-
-    /**
-     * @param $templateId
-     *
-     * @return FormTemplates|null
-     * @throws FormTemplatesDirectoryNotFoundException
-     */
-    public function getFormTemplateById($templateId): FormTemplates
-    {
-        $formTemplates = null;
-
-        if (class_exists($templateId)) {
-            /** @var FormTemplates $templateId */
-            $formTemplates = new $templateId();
-        }
-
-        if ($formTemplates instanceof FormTemplates === false) {
-            $formTemplates = new CustomTemplates();
-            $formTemplates->setPath($templateId);
-        }
-
-        if (!is_dir($formTemplates->getFullPath())) {
-            throw new FormTemplatesDirectoryNotFoundException('Unable to find Form Templates directory: '.$formTemplates->getFullPath());
-        }
-
-        return $formTemplates;
-    }
-
-    /**
-     * @param Form|null $form
-     * @param bool $generalSettings
-     *
-     * @return array
-     */
-    public function getFormTemplateOptions(Form $form = null, $generalSettings = false): array
-    {
-        $defaultFormTemplates = new AccessibleTemplates();
-
-        if ($generalSettings) {
-            $options[] = [
-                'optgroup' => Craft::t('sprout', 'Global Templates')
-            ];
-
-            $options[] = [
-                'label' => Craft::t('sprout', 'Default Form Templates'),
-                'value' => null
-            ];
-        }
-
-        $templates = $this->getAllFormTemplates();
-        $templateIds = [];
-
-        if ($generalSettings) {
-            $options[] = [
-                'optgroup' => Craft::t('sprout', 'Form-Specific Templates')
-            ];
-        }
-
-        foreach ($templates as $template) {
-            $options[] = [
-                'label' => $template->getName(),
-                'value' => get_class($template)
-            ];
-            $templateIds[] = get_class($template);
-        }
-
-        $templateFolder = null;
-        $settings = SproutBase::$app->settings->getSettingsByKey('forms');
-
-        $templateFolder = $form->formTemplateId ?? $settings->formTemplateId ?? AccessibleTemplates::class;
-
-        $options[] = [
-            'optgroup' => Craft::t('sprout', 'Custom Template Folder')
-        ];
-
-        if (!in_array($templateFolder, $templateIds, false) && $templateFolder != '') {
-            $options[] = [
-                'label' => $templateFolder,
-                'value' => $templateFolder
-            ];
-        }
-
-        $options[] = [
-            'label' => Craft::t('sprout', 'Add Custom'),
-            'value' => 'custom'
-        ];
-
-        return $options;
-    }
-
-    /**
-     * Returns all available Captcha classes
-     *
-     * @return array
-     */
-    public function getAllCaptchaTypes(): array
-    {
-        $event = new RegisterComponentTypesEvent([
-            'types' => []
-        ]);
-
-        $this->trigger(self::EVENT_REGISTER_CAPTCHAS, $event);
-
-        return $event->types;
-    }
-
-    /**
-     * @return array
-     */
-    public function getAllCaptchas(): array
-    {
-        $captchaTypes = $this->getAllCaptchaTypes();
-        $captchas = [];
-
-        foreach ($captchaTypes as $captchaType) {
-            $captchas[$captchaType] = new $captchaType();
-        }
-
-        return $captchas;
-    }
-
-    /**
-     * @return array
-     */
-    public function getAllEnabledCaptchas(): array
-    {
-        $sproutFormsSettings = SproutBase::$app->settings->getSettingsByKey('forms');
-        $captchaTypes = $this->getAllCaptchas();
-        $captchas = [];
-
-        foreach ($captchaTypes as $captchaType) {
-            $isEnabled = $sproutFormsSettings->captchaSettings[get_class($captchaType)]['enabled'] ?? false;
-            if ($isEnabled) {
-                $captchas[get_class($captchaType)] = $captchaType;
-            }
-        }
-
-        return $captchas;
-    }
-
-    /**
-     * @param $context
-     *
-     * @return string|null
-     */
-    public function handleModifyFormHook($context)
-    {
-        /** @var Form $form */
-        $form = $context['form'] ?? null;
-        if ($form !== null && $form->enableCaptchas) {
-            return $this->getCaptchasHtml($form);
-        }
-
-        return null;
-    }
-
-    /**
-     * @param FormElement $form
-     *
-     * @return string
-     */
-    public function getCaptchasHtml(Form $form): string
-    {
-        $captchas = $this->getAllEnabledCaptchas();
-        $captchaHtml = '';
-
-        foreach ($captchas as $captcha) {
-            $captcha->form = $form;
-            $captchaHtml .= $captcha->getCaptchaHtml();
-        }
-
-        return $captchaHtml;
-    }
-
-    /**
      * Checks if the current plugin edition allows a user to create a Form
      *
      * @return bool
@@ -1047,13 +741,18 @@ class Forms extends Component
     }
 
     /**
-     * @param $path
+     * @param $context
      *
-     * @return string
-     * @throws Exception
+     * @return string|null
      */
-    private function getSitePath($path): string
+    public function handleModifyFormHook($context)
     {
-        return Craft::$app->path->getSiteTemplatesPath().DIRECTORY_SEPARATOR.$path;
+        /** @var Form $form */
+        $form = $context['form'] ?? null;
+        if ($form !== null && $form->enableCaptchas) {
+            return SproutBase::$app->formCaptchas->getCaptchasHtml($form);
+        }
+
+        return null;
     }
 }

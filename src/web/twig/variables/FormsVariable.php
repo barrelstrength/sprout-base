@@ -53,7 +53,7 @@ class FormsVariable
 
         $entry = SproutBase::$app->formEntries->getEntry($form);
 
-        $templatePaths = SproutBase::$app->forms->getFormTemplatePaths($form);
+        $templatePaths = SproutBase::$app->formTemplates->getFormTemplatePaths($form);
 
         // Check if we need to update our Front-end Form Template Path
         $view->setTemplatesPath($templatePaths['form']);
@@ -96,7 +96,7 @@ class FormsVariable
 
         $entry = SproutBase::$app->formEntries->getEntry($form);
 
-        $templatePaths = SproutBase::$app->forms->getFormTemplatePaths($form);
+        $templatePaths = SproutBase::$app->formTemplates->getFormTemplatePaths($form);
 
         // Set Tab template path
         $view->setTemplatesPath($templatePaths['tab']);
@@ -166,7 +166,7 @@ class FormsVariable
 
         $entry = SproutBase::$app->formEntries->getEntry($form);
 
-        $templatePaths = SproutBase::$app->forms->getFormTemplatePaths($form);
+        $templatePaths = SproutBase::$app->formTemplates->getFormTemplatePaths($form);
 
         $view->setTemplatesPath($field->getTemplatesPath());
 
