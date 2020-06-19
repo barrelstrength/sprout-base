@@ -35,6 +35,9 @@
         <input type="hidden" name="globalColumn" value="contacts">
         <input type="hidden" name="siteId" value="{{ globals.siteId }}">
 
+        {% set redirectUrl = craft.app.request.pathInfo~'?site='~currentSite.handle %}
+        <input type="hidden" name="redirect" value="{{ redirectUrl|hash }}">
+
         <table id="sproutseo-schema-contacts" class="data fullwidth">
             <thead>
             <tr>

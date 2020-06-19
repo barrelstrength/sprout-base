@@ -13,6 +13,9 @@
         <input type="hidden" name="globalColumn" value="robots">
         <input type="hidden" name="siteId" value="{{ globals.siteId }}">
 
+        {% set redirectUrl = craft.app.request.pathInfo~'?site='~currentSite.handle %}
+        <input type="hidden" name="redirect" value="{{ redirectUrl|hash }}">
+
         {% set robotsContext = 'globals' %}
         {% set robotsNamespace = 'sproutseo[globals][robots]' %}
         {% include "sprout/seo/_components/fields/elementmetadata/blocks/robots" %}

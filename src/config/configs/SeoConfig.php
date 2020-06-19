@@ -78,22 +78,12 @@ class SeoConfig extends Config
     public function getCpUrlRules(): array
     {
         return [
-            'sprout/seo/globals/<selectedTabHandle:[^\/]+>/<siteHandle:[^\/]+>' =>
-                'sprout/global-metadata/edit-global-metadata',
             'sprout/seo/globals/<selectedTabHandle:[^\/]+>' =>
                 'sprout/global-metadata/edit-global-metadata',
-            'sprout/seo/globals' => [
-                'route' => 'sprout/global-metadata/edit-global-metadata',
-                'params' => [
-                    'selectedTabHandle' => 'website-identity'
-                ]
-            ],
-            'sprout/seo' => [
-                'route' => 'sprout/global-metadata/edit-global-metadata',
-                'params' => [
-                    'selectedTabHandle' => 'website-identity'
-                ]
-            ],
+            'sprout/seo/globals' =>
+                'sprout/global-metadata/hello',
+            'sprout/seo' =>
+                'sprout/global-metadata/hello',
         ];
     }
 

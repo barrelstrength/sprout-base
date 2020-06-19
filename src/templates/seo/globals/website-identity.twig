@@ -35,6 +35,9 @@
         <input type="hidden" name="globalColumn" value="identity">
         <input type="hidden" name="siteId" value="{{ globals.siteId }}">
 
+        {% set redirectUrl = craft.app.request.pathInfo~'?site='~currentSite.handle %}
+        <input type="hidden" name="redirect" value="{{ redirectUrl|hash }}">
+
         {{ forms.textField({
             label: "Name"|t('sprout') ~ sproutMetaCp.infoIcon({
                 label: "Name"|t('sprout'),

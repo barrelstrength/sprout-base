@@ -18,6 +18,7 @@ use craft\errors\SiteNotFoundException;
 use craft\helpers\DateTimeHelper;
 use craft\helpers\Json;
 use craft\helpers\Template;
+use craft\helpers\UrlHelper;
 use craft\web\Controller;
 use Throwable;
 use Twig\Error\LoaderError;
@@ -31,11 +32,15 @@ use yii\web\Response;
 
 class GlobalMetadataController extends Controller
 {
+    public function actionHello(): Response
+    {
+        return $this->redirect(UrlHelper::cpUrl('sprout/seo/globals/website-identity'));
+    }
+
     /**
      * Renders Global Metadata edit pages
      *
      * @param string $selectedTabHandle The global handle.
-     * @param string|null $siteHandle The site handle, if specified.
      * @param Globals|null $globals The global set being edited, if there were any validation errors.
      *
      * @return Response
@@ -47,9 +52,11 @@ class GlobalMetadataController extends Controller
      * @throws SiteNotFoundException
      * @throws Exception
      */
-    public function actionEditGlobalMetadata(string $selectedTabHandle, string $siteHandle = null, Globals $globals = null): Response
+    public function actionEditGlobalMetadata(string $selectedTabHandle, Globals $globals = null): Response
     {
         $currentSite = Craft::$app->getSites()->getPrimarySite();
+
+        $siteHandle = Craft::$app->getRequest()->getQueryParam('site');
 
         if (Craft::$app->getIsMultiSite()) {
             // Get the sites the user is allowed to edit

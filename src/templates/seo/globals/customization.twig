@@ -14,6 +14,9 @@
         <input type="hidden" name="globalColumn" value="settings">
         <input type="hidden" name="siteId" value="{{ globals.siteId }}">
 
+        {% set redirectUrl = craft.app.request.pathInfo~'?site='~currentSite.handle %}
+        <input type="hidden" name="redirect" value="{{ redirectUrl|hash }}">
+
         {{ forms.autosuggestField({
             label: 'Character used between Title segments'|t('sprout') ~ sproutMetaCp.infoIcon({
                 label: 'Character'|t('sprout'),
