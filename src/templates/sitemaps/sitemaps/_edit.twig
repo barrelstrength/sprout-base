@@ -4,7 +4,7 @@
 {% set title = sitemapSection.name ?? "Create a new custom page"|t %}
 
 {% set crumbs = [
-    { label: "Sitemap"|t, url: url('sprout/sitemaps') }
+    { label: "Sitemap"|t, url: cpUrl('sprout/sitemaps') }
 ] %}
 
 {% set centered = true %}
@@ -17,7 +17,7 @@
 
 {% block actionButton %}
     <input type="hidden" name="action" value="sprout/sitemaps/save-sitemap-section">
-    {{ redirectInput('sprout/sitemaps/' ~ currentSite.handle) }}
+    {{ redirectInput('sprout/sitemaps?site=' ~ currentSite.handle) }}
     <input type="hidden" id="sectionId" name="id" value="{{ sitemapSection.id is defined ? sitemapSection.id : '' }}">
     <input type="hidden" name="urlEnabledSectionId" value="{{ sitemapSection.urlEnabledSectionId ?? '' }}">
     <input type="hidden" name="type" value="{{ sitemapSection.type ?? '' }}">

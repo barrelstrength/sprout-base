@@ -105,8 +105,7 @@
             </div>
             <div style="flex-shrink: 0;">
                 <div class="buttons right">
-                    <a class="btn submit add icon"
-                        href="{{ url('sprout/sitemaps/new/' ~ currentSite.handle) }}">{{ "Custom URL"|t }}</a>
+                    <a class="btn submit add icon" href="{{ cpUrl('sprout/sitemaps/new', { 'site': currentSite.handle }) }}">{{ "Custom URL"|t }}</a>
                 </div>
             </div>
         </div>
@@ -120,8 +119,6 @@
 
             </thead>
             <tbody>
-
-
 
                 {% for customSection in customSections %}
 

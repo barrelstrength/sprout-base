@@ -8,10 +8,12 @@
 namespace barrelstrength\sproutbase\config\configs;
 
 use barrelstrength\sproutbase\config\base\Config;
+use barrelstrength\sproutbase\config\base\Settings;
 use barrelstrength\sproutbase\config\models\settings\SitemapsSettings;
 use barrelstrength\sproutbase\migrations\sitemaps\Install;
 use barrelstrength\sproutbase\SproutBase;
 use Craft;
+use craft\helpers\ProjectConfig as ProjectConfigHelper;
 
 /**
  *
@@ -76,13 +78,10 @@ class SitemapsConfig extends Config
     public function getCpUrlRules(): array
     {
         return [
-            // Sitemaps
-            'sprout/sitemaps/edit/<sitemapSectionId:\d+>/<siteHandle:[^\/]+>' =>
+            'sprout/sitemaps/edit/<sitemapSectionId:\d+>' =>
                 'sprout/sitemaps/sitemap-edit-template',
-            'sprout/sitemaps/new/<siteHandle:[^\/]+>' =>
+            'sprout/sitemaps/new' =>
                 'sprout/sitemaps/sitemap-edit-template',
-            'sprout/sitemaps/<siteHandle:[^\/]+>' =>
-                'sprout/sitemaps/sitemap-index-template',
             'sprout/sitemaps' =>
                 'sprout/sitemaps/sitemap-index-template'
         ];
@@ -131,6 +130,14 @@ class SitemapsConfig extends Config
         if ($sproutSeoIsPro || $sproutSitemapsIsPro) {
             $this->_edition = Config::EDITION_PRO;
         }
+    }
+
+    public function setSettings(Settings $settings)
+    {
+        $settings->siteSettings = ProjectConfigHelper::unpackAssociativeArray($settings->siteSettings);
+        $settings->groupSettings = ProjectConfigHelper::unpackAssociativeArray($settings->groupSettings);
+
+        parent::setSettings($settings);
     }
 
     public function getControllerMapKeys(): array

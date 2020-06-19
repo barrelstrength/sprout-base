@@ -25,16 +25,16 @@ class SitemapsController extends Controller
     /**
      * Renders the Sitemap Index Page
      *
-     * @param string|null $siteHandle
-     *
      * @return Response
      * @throws ForbiddenHttpException
      * @throws NotFoundHttpException
      * @throws SiteNotFoundException
      */
-    public function actionSitemapIndexTemplate(string $siteHandle = null): Response
+    public function actionSitemapIndexTemplate(): Response
     {
         $this->requirePermission('sprout:sitemaps:editSitemaps');
+
+        $siteHandle = Craft::$app->getRequest()->getQueryParam('site');
 
         $settings = SproutBase::$app->settings->getSettingsByKey('sitemaps');
         $enableMultilingualSitemaps = Craft::$app->getIsMultiSite() && $settings->enableMultilingualSitemaps;
@@ -56,6 +56,7 @@ class SitemapsController extends Controller
 
         // For per-site sitemaps, only display the Sites enabled in the Sprout SEO settings
         if ($enableMultilingualSitemaps === false) {
+
             $editableSiteIds = array_intersect($enabledSiteIds, $editableSiteIds);
         } else {
             $siteIdsFromEditableGroups = [];
@@ -90,7 +91,8 @@ class SitemapsController extends Controller
                 $firstSiteInGroup = $sitesInCurrentSiteGroup[0];
             } else {
                 // If we don't have a handle, we'll load the first site in the first group
-                // We'll assume that we have at least one site group and the Current Site will be the same as the First Site
+                // We assume at least one site group and the Current Site will be the same as the First Site
+
                 $allSiteGroups = Craft::$app->sites->getAllGroups();
                 $currentSiteGroup = $allSiteGroups[0];
                 $sitesInCurrentSiteGroup = Craft::$app->sites->getSitesByGroupId($currentSiteGroup->id);
@@ -122,16 +124,18 @@ class SitemapsController extends Controller
      * Renders a Sitemap Edit Page
      *
      * @param int|null $sitemapSectionId
-     * @param string|null $siteHandle
      * @param SitemapSection|null $sitemapSection
      *
      * @return Response
      * @throws ForbiddenHttpException
      * @throws NotFoundHttpException
+     * @throws BadRequestHttpException
      */
-    public function actionSitemapEditTemplate(int $sitemapSectionId = null, string $siteHandle = null, SitemapSection $sitemapSection = null): Response
+    public function actionSitemapEditTemplate(int $sitemapSectionId = null, SitemapSection $sitemapSection = null): Response
     {
         $this->requirePermission('sprout:sitemaps:editSitemaps');
+
+        $siteHandle = Craft::$app->getRequest()->getRequiredQueryParam('site');
 
         if ($siteHandle === null) {
             throw new NotFoundHttpException('Unable to find site with handle: '.$siteHandle);
@@ -156,7 +160,7 @@ class SitemapsController extends Controller
             }
         }
 
-        $continueEditingUrl = 'sprout/sitemaps/edit/{id}/'.$currentSite->handle;
+        $continueEditingUrl = 'sprout/sitemaps/edit/{id}?site='.$currentSite->handle;
 
         $tabs = [
             [
