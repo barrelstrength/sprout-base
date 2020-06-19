@@ -30,17 +30,6 @@ abstract class Captcha extends Model
     const CAPTCHA_ERRORS_KEY = 'captchaErrors';
 
     /**
-     * A unique ID that is generated dynamically using the plugin
-     * handle and the captcha class name {pluginhandle}-{captchaclassname}
-     *
-     * @example
-     * pluginname-captchaclassname
-     *
-     * @var string
-     */
-    public $captchaId;
-
-    /**
      * The form where the captcha is being output
      *
      * @var Form

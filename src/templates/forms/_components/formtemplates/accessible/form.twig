@@ -98,29 +98,29 @@
 {% endcss %}
 
 {%- set accessibilityJsUrl = view.getAssetManager().getPublishedUrl(
-    '@sproutbase/app/forms/web/assets/formtemplates/dist/js/accessibility.js',
+    '@sproutbase/web/public/formtemplates/dist/js/accessibility.js',
     true) -%}
 {%- do view.registerJsFile(accessibilityJsUrl, {
     position: 3
 }) -%}
 
 {%- set addressFieldJsUrl = view.getAssetManager().getPublishedUrl(
-    '@sproutbase/app/forms/web/assets/formtemplates/dist/js/addressfield.js',
+    '@sproutbase/web/public/formtemplates/dist/js/AddressField.js',
     true) -%}
 {%- do view.registerJsFile(addressFieldJsUrl) -%}
 
 {%- set disableSubmitButtonJsUrl = view.getAssetManager().getPublishedUrl(
-    '@sproutbase/app/forms/web/assets/formtemplates/dist/js/disable-submit-button.js',
+    '@sproutbase/web/public/formtemplates/dist/js/DisableSubmitButton.js',
     true) -%}
 {%- do view.registerJsFile(disableSubmitButtonJsUrl) -%}
 
 {%- set rulesJsUrl = view.getAssetManager().getPublishedUrl(
-    '@sproutbase/app/forms/web/assets/formtemplates/dist/js/rules.js',
+    '@sproutbase/web/public/formtemplates/dist/js/Rules.js',
     true) -%}
 {%- do view.registerJsFile(rulesJsUrl) -%}
 
 {%- set submitHandlerJsUrl = view.getAssetManager().getPublishedUrl(
-    '@sproutbase/app/forms/web/assets/formtemplates/dist/js/submit-handler.js',
+    '@sproutbase/web/public/formtemplates/dist/js/SubmitHandler.js',
     true) -%}
 {%- do view.registerJsFile(submitHandlerJsUrl) -%}
 

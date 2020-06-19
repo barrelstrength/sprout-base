@@ -333,13 +333,13 @@ class OptimizeMetadata extends Component
      */
     public function renderMetadata($metadata): string
     {
-        $sproutSeoTemplatesPath = Craft::getAlias('@sproutbase/app/metadata/');
+        $sproutSeoTemplatesPath = Craft::getAlias('@sproutbase/templates/seo/');
 
         Craft::$app->view->setTemplatesPath($sproutSeoTemplatesPath);
 
         $isPro = SproutBase::$app->config->isEdition('seo', Config::EDITION_PRO);
 
-        $output = Craft::$app->view->renderTemplate('templates/_special/metadata', [
+        $output = Craft::$app->view->renderTemplate('_special/metadata', [
             'metadata' => $metadata,
             'isPro' => $isPro
         ]);

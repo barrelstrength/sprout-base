@@ -25,7 +25,7 @@ class BasicTemplates extends FormTemplates
 
     public function getTemplateRoot(): string
     {
-        return Craft::getAlias('@sproutbase/app/forms/templates');
+        return Craft::getAlias('@sproutbase/templates/forms');
     }
 
     /**

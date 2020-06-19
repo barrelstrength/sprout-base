@@ -147,7 +147,7 @@ class Notes extends Field
     {
         $file = $this->style;
         // Return our default css
-        $path = Craft::getAlias('@sproutbase/app/fields/templates/_special/Default.css');
+        $path = Craft::getAlias('@sproutbase/templates/fields/_special/Default.css');
 
         $customPath = Craft::$app->getPath()->getConfigPath().DIRECTORY_SEPARATOR.$dir.DIRECTORY_SEPARATOR.$file;
 
