@@ -35,17 +35,26 @@ use barrelstrength\sproutbase\app\forms\controllers\FormGroupsController;
 use barrelstrength\sproutbase\app\forms\controllers\FormIntegrationsController;
 use barrelstrength\sproutbase\app\forms\controllers\FormRulesController;
 use barrelstrength\sproutbase\app\forms\controllers\FormsController;
-use barrelstrength\sproutbase\app\seo\controllers\GlobalMetadataController;
 use barrelstrength\sproutbase\app\redirects\controllers\RedirectsController;
 use barrelstrength\sproutbase\app\reports\controllers\DataSourcesController;
 use barrelstrength\sproutbase\app\reports\controllers\ReportsController;
 use barrelstrength\sproutbase\app\reports\datasources\CustomQuery;
-use barrelstrength\sproutbase\app\reports\datasources\CustomTwigTemplate;
-use barrelstrength\sproutbase\app\reports\datasources\Users;
 use barrelstrength\sproutbase\app\reports\services\DataSources;
 use barrelstrength\sproutbase\app\sentemail\controllers\SentEmailController;
+use barrelstrength\sproutbase\app\seo\controllers\GlobalMetadataController;
 use barrelstrength\sproutbase\app\sitemaps\controllers\SitemapsController;
 use barrelstrength\sproutbase\app\sitemaps\controllers\XmlSitemapController;
+use barrelstrength\sproutbase\config\configs\CampaignsConfig;
+use barrelstrength\sproutbase\config\configs\EmailPreviewConfig;
+use barrelstrength\sproutbase\config\configs\FieldsConfig;
+use barrelstrength\sproutbase\config\configs\FormsConfig;
+use barrelstrength\sproutbase\config\configs\ListsConfig;
+use barrelstrength\sproutbase\config\configs\NotificationsConfig;
+use barrelstrength\sproutbase\config\configs\RedirectsConfig;
+use barrelstrength\sproutbase\config\configs\ReportsConfig;
+use barrelstrength\sproutbase\config\configs\SentEmailConfig;
+use barrelstrength\sproutbase\config\configs\SeoConfig;
+use barrelstrength\sproutbase\config\configs\SitemapsConfig;
 use barrelstrength\sproutbase\config\controllers\SettingsController;
 use barrelstrength\sproutbase\config\services\App;
 use barrelstrength\sproutbase\web\twig\Extension;
@@ -71,12 +80,24 @@ use yii\base\Module;
 use yii\mail\BaseMailer;
 use yii\mail\MailEvent;
 
-/**
- *
- * @property array $userPermissions
- */
 class SproutBase extends Module
 {
+    const SPROUT_MODULES = [
+        CampaignsConfig::class,
+        EmailPreviewConfig::class,
+        FieldsConfig::class,
+        FormsConfig::class,
+        ListsConfig::class,
+        NotificationsConfig::class,
+        RedirectsConfig::class,
+        ReportsConfig::class,
+        SentEmailConfig::class,
+        SeoConfig::class,
+        SitemapsConfig::class
+    ];
+
+    protected $_controlPanelSettings;
+
     /**
      * @var App
      */
@@ -296,7 +317,7 @@ class SproutBase extends Module
 
             $permissionKey = StringHelper::camelCase($configType->getKey());
             $permissions['sprout:'.$permissionKey.':accessModule'] = [
-                'label' => 'Access ' . $configType->getName(),
+                'label' => 'Access '.$configType->getName(),
                 'nested' => $nestedPermissions
             ];
         }
