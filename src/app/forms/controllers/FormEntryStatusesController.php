@@ -52,7 +52,7 @@ class FormEntryStatusesController extends BaseController
             }
         }
 
-        return $this->renderTemplate('sprout/forms/settings/entrystatuses/_edit', [
+        return $this->renderTemplate('sprout/_settings/entry-statuses/edit', [
             'entryStatus' => $entryStatus,
             'entryStatusId' => $entryStatusId
         ]);

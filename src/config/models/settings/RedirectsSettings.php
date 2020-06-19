@@ -63,7 +63,7 @@ class RedirectsSettings extends Settings
         return [
             'redirects' => [
                 'label' => Craft::t('sprout', 'Redirects'),
-                'template' => 'sprout/redirects/settings/redirects'
+                'template' => 'sprout/_settings/redirects'
             ]
         ];
     }

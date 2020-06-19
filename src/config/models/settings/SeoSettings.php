@@ -46,7 +46,7 @@ class SeoSettings extends Settings
         return [
             'meta' => [
                 'label' => Craft::t('sprout', 'Metadata'),
-                'template' => 'sprout/seo/settings/metadata'
+                'template' => 'sprout/_settings/metadata'
             ]
         ];
     }

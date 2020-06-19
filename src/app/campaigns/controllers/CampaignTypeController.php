@@ -61,7 +61,7 @@ class CampaignTypeController extends Controller
         unset($mailerOptions[DefaultMailer::class]);
 
         // Load our template
-        return $this->renderTemplate('sprout/campaigns/settings/campaign-types/_edit', [
+        return $this->renderTemplate('sprout/_settings/campaign-types/edit', [
             'mailers' => $mailerOptions,
             'campaignTypeId' => $campaignTypeId,
             'campaignType' => $campaignType

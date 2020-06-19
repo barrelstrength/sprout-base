@@ -92,7 +92,7 @@ class ControlPanelSettings extends Settings
         return [
             'control-panel' => [
                 'label' => Craft::t('sprout', 'Control Panel'),
-                'template' => 'sprout/config/_settings/control-panel',
+                'template' => 'sprout/_settings/control-panel',
 //                'multisite' => true,
                 'variables' => [
                     'cpSettingsRows' => $cpSettingsRows
@@ -100,7 +100,7 @@ class ControlPanelSettings extends Settings
             ],
             'welcome' => [
                 'label' => Craft::t('sprout', 'Welcome'),
-                'template' => 'sprout/config/_settings/welcome',
+                'template' => 'sprout/_settings/welcome',
                 'settingsTarget' => SettingsController::SETTINGS_TARGET_DB
             ]
         ];
