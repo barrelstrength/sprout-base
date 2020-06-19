@@ -7,6 +7,7 @@
 
 namespace barrelstrength\sproutbase\config\configs;
 
+use barrelstrength\sproutbase\app\email\events\notificationevents\EntriesSave;
 use barrelstrength\sproutbase\app\reports\datasources\CustomQuery;
 use barrelstrength\sproutbase\app\reports\datasources\CustomTwigTemplate;
 use barrelstrength\sproutbase\app\reports\datasources\Users;
@@ -16,16 +17,6 @@ use barrelstrength\sproutbase\migrations\reports\Install;
 use barrelstrength\sproutbase\SproutBase;
 use Craft;
 
-/**
- *
- * @property array $cpNavItem
- * @property array|string[] $cpUrlRules
- * @property string $description
- * @property array[]|array $userPermissions
- * @property array|string[] $controllerMapKeys
- * @property array|string[] $supportedDataSourceTypes
- * @property string $key
- */
 class ReportsConfig extends Config
 {
     public function getKey(): string
