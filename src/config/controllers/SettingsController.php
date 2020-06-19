@@ -106,8 +106,8 @@ class SettingsController extends Controller
         // Plugins should pass a settingsTarget of 'db' if they
         // wish to manage their settings on their own
         $settingsTemplate = $settingsTarget === 'db'
-            ? 'sprout/config/_layouts/settings-wrapper'
-            : 'sprout/config/_layouts/settings';
+            ? 'sprout/_layouts/settings-wrapper'
+            : 'sprout/_layouts/settings';
 
         $showMultiSiteSettings = $currentSection['multisite'] ?? false;
         $packAssociativeArrays = $currentSection['packAssociativeArrays'] ?? false;

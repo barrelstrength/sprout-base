@@ -1,4 +1,4 @@
-{% extends "sprout/seo/_layouts/general" %}
+{% extends "sprout/seo/_layouts/global-metadata" %}
 {% import "_includes/forms" as forms %}
 {% import "sprout/fields/_includes/forms" as sproutFields %}
 {% import "sprout/seo/_includes/sproutseo" as sproutMetaCp %}
@@ -418,8 +418,6 @@
     </form>
 
 {% endblock %}
-
-{% do view.registerAssetBundle("barrelstrength\\sproutbase\\web\\assetbundles\\metadata\\MetadataAsset") %}
 
 {% js on ready %}
     Craft.SproutFields.initFields($("#content"));

@@ -43,9 +43,10 @@ class FormEntryStatusesController extends BaseController
                 }
 
                 if ($entryStatus->handle == EntryStatus::SPAM_STATUS_HANDLE) {
+
                     Craft::$app->session->setError(Craft::t('sprout', "Spam status can't be updated"));
 
-                    return $this->redirect(UrlHelper::cpUrl('sprout/settings/entry-statuses'));
+                    return $this->redirect(UrlHelper::cpUrl('sprout/settings/forms/entry-statuses'));
                 }
             } else {
                 $entryStatus = new EntryStatus();

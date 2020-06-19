@@ -1,11 +1,11 @@
 {% requirePermission 'sprout:reports:editDataSources' %}
 
-{% extends "sprout/reports/_layouts/base" %}
+{% extends "sprout/_layouts/base" %}
 {% import "_includes/forms" as forms %}
 
-{% set title  = "Data Sources"|t('sprout') %}
+{% set selectedSubnavItem = 'data-sources' %}
 
-{% set selectedSubnavItem = 'datasources' %}
+{% set title  = "Data Sources"|t('sprout') %}
 
 {% block content %}
     <div class="tableview">

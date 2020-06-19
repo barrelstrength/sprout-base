@@ -1,7 +1,8 @@
-{% extends "sprout/seo/_layouts/base" %}
-{% import "sprout/config/_includes/sproutcp" as sproutCp %}
+{% extends "sprout/_layouts/base" %}
+{% import "sprout/_includes/sproutcp" as sproutCp %}
 
 {% do view.registerAssetBundle("barrelstrength\\sproutbase\\web\\assetbundles\\sproutcp\\SproutCpAsset") %}
+{% do view.registerAssetBundle("barrelstrength\\sproutbase\\web\\assetbundles\\metadata\\MetadataAsset") %}
 
 {% if title is not defined %}
     {% set title = "Global Metadata"|t('sprout') %}

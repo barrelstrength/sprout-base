@@ -1,7 +1,9 @@
 {% requirePermission "sprout:forms:editForms" %}
 
-{% extends "sprout/forms/_layouts/base" %}
-{% import "sprout/config/_includes/sproutcp" as sproutCp %}
+{% extends "sprout/_layouts/base" %}
+{% import "sprout/_includes/sproutcp" as sproutCp %}
+
+{% do view.registerAssetBundle("barrelstrength\\sproutbase\\web\\assetbundles\\sproutcp\\SproutCpAsset") %}
 
 {% set crumbs = [
     { label: "Forms"|t('sprout'), url: cpUrl('sprout/forms') }

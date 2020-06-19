@@ -1,5 +1,5 @@
 {% extends "_layouts/cp" %}
-{% import "sprout/config/_includes/sproutcp" as sproutCp %}
+{% import "sprout/_includes/sproutcp" as sproutCp %}
 
 {% set title  = report.name %}
 {% set bodyClass = 'sprout-reports-content' %}
@@ -113,7 +113,7 @@
             {{ sproutCp.mediaBox({
                 heading: "No results found"|t('sprout'),
                 body: boxBody,
-                resourcePath: '@sproutbase/app/reports/web/assets/reports/dist/images/icon.svg'
+                resourcePath: '@sproutbase/web/assets/sprout/icons/reports/icon.svg'
             }) }}
 
         {% endif %}

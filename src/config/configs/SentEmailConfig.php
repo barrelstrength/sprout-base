@@ -60,12 +60,6 @@ class SentEmailConfig extends Config
         return [
             'label' => Craft::t('sprout', 'Sent Email'),
             'url' => 'sprout/sent-email',
-            'subnav' => [
-                'reports' => [
-                    'label' => Craft::t('sprout', 'Sent Emails'),
-                    'url' => 'sprout/sent-email/sent-email'
-                ],
-            ]
         ];
     }
 
