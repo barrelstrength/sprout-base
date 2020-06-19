@@ -146,8 +146,12 @@ class Config extends Component
                 $alternateName = !empty($moduleSettings['alternateName'])
                     ? $moduleSettings['alternateName']
                     : null;
+                $disableUpgradeMessages = !empty($cpSettings['disableUpgradeMessages'])
+                    ? true
+                    : false;
 
                 $config->setAlternateName($alternateName);
+                $config->setDisableUpgradeMessages($disableUpgradeMessages);
 
                 if ($settings = SproutBase::$app->settings->getSettingsByConfig($config)) {
                     $config->setSettings($settings);

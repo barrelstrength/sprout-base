@@ -84,11 +84,10 @@ class Settings extends Component
 
         $moduleSettings = $cpSettings->modules[$config->getKey()] ?? null;
 
-        $enabledStatus = !empty($moduleSettings['enabled'])
-            ? $moduleSettings['enabled']
-            : false;
+        $enabledStatus = !empty($moduleSettings['enabled']) ? true : false;
 
         $settings->setIsEnabled($enabledStatus);
+
 
         return $settings;
     }

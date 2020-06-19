@@ -31,7 +31,15 @@ use craft\helpers\UrlHelper;
  */
 abstract class Config extends Component implements ConfigInterface
 {
+    /**
+     * @var string|null
+     */
     protected $_edition;
+
+    /**
+     * @var bool
+     */
+    protected $_disableUpgradeMessages = false;
 
     /**
      * @var Settings $_settings
@@ -57,8 +65,22 @@ abstract class Config extends Component implements ConfigInterface
         $this->_edition = 'lite';
     }
 
+    public function getDisableUpgradeMessages(): bool
+    {
+        return $this->_disableUpgradeMessages;
+    }
+
+    public function setDisableUpgradeMessages($value)
+    {
+        $this->_disableUpgradeMessages = (int)$value;
+    }
+
     public function getIsPro(): bool
     {
+        if (!$this->_edition) {
+            $this->setEdition();
+        }
+
         return $this->_edition === self::EDITION_PRO;
     }
 
