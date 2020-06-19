@@ -7,33 +7,11 @@
 
 namespace barrelstrength\sproutbase\app\forms\services;
 
-use barrelstrength\sproutbase\app\forms\base\FormTemplates;
-use barrelstrength\sproutbase\app\forms\base\Integration;
 use barrelstrength\sproutbase\app\forms\elements\Form;
 use barrelstrength\sproutbase\app\forms\elements\Form as FormElement;
-use barrelstrength\sproutbase\app\forms\errors\FormTemplatesDirectoryNotFoundException;
-use barrelstrength\sproutbase\app\forms\formtemplates\AccessibleTemplates;
-use barrelstrength\sproutbase\app\forms\formtemplates\CustomTemplates;
-use barrelstrength\sproutbase\app\forms\records\Form as FormRecord;
-use barrelstrength\sproutbase\app\forms\records\Integration as IntegrationRecord;
-use barrelstrength\sproutbase\app\forms\rules\FieldRule;
-use barrelstrength\sproutbase\config\base\Config;
-use barrelstrength\sproutbase\migrations\forms\CreateFormContentTable;
 use barrelstrength\sproutbase\SproutBase;
-use Craft;
-use craft\base\ElementInterface;
-use craft\base\Field;
-use craft\db\Query;
-use craft\errors\MissingComponentException;
 use craft\events\RegisterComponentTypesEvent;
-use craft\helpers\MigrationHelper;
-use craft\helpers\StringHelper;
-use Throwable;
 use yii\base\Component;
-use yii\base\Exception;
-use yii\base\InvalidConfigException;
-use yii\db\Transaction;
-use yii\web\BadRequestHttpException;
 
 class FormCaptchas extends Component
 {

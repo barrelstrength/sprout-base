@@ -14,7 +14,6 @@ use barrelstrength\sproutbase\app\sentemail\elements\SentEmail;
 use barrelstrength\sproutbase\app\sentemail\services\SentEmails;
 use barrelstrength\sproutbase\config\base\Config;
 use barrelstrength\sproutbase\SproutBase;
-use barrelstrength\sproutsentemail\SproutSentEmail;
 use Craft;
 use craft\mail\Mailer;
 use craft\mail\Message;

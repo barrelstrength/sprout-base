@@ -23,12 +23,6 @@ use yii\base\Exception;
 use yii\base\NotSupportedException;
 use yii\web\ServerErrorHttpException;
 
-/**
- *
- * @property SproutBasePlugin[] $sproutBasePlugins
- * @property ControlPanelSettings $controlPanelSettings
- * @property array $sproutCpSettings
- */
 class Config extends Component
 {
     const EVENT_REGISTER_SPROUT_CONFIG = 'registerSproutConfig';

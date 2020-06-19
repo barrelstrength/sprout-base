@@ -13,7 +13,6 @@ use barrelstrength\sproutbase\jobs\PurgeElements;
 use barrelstrength\sproutbase\SproutBase;
 use Craft;
 use craft\base\Component;
-use craft\base\Plugin;
 use craft\errors\SiteNotFoundException;
 use craft\helpers\App;
 use craft\helpers\Json;

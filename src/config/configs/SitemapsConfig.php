@@ -15,17 +15,6 @@ use barrelstrength\sproutbase\SproutBase;
 use Craft;
 use craft\helpers\ProjectConfig as ProjectConfigHelper;
 
-/**
- *
- * @property array $cpNavItem
- * @property array|string[] $cpUrlRules
- * @property SeoConfig $configGroup
- * @property string $description
- * @property array[]|array $userPermissions
- * @property array|string[] $siteUrlRules
- * @property array|string[] $controllerMapKeys
- * @property string $key
- */
 class SitemapsConfig extends Config
 {
     public function getKey(): string

@@ -14,7 +14,6 @@ use craft\base\Model;
 use craft\errors\SiteNotFoundException;
 use craft\helpers\UrlHelper;
 use craft\models\Site;
-use DateTime;
 use yii\base\Exception;
 
 /**

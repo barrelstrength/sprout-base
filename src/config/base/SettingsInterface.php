@@ -8,10 +8,6 @@
 namespace barrelstrength\sproutbase\config\base;
 
 /**
- * Interface SettingsInterface
- *
- * @package barrelstrength\sproutbase\config\base
- *
  * @mixin Settings::getIsEnabled()
  */
 interface SettingsInterface

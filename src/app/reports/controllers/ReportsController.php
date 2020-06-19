@@ -22,7 +22,6 @@ use craft\web\Controller;
 use craft\web\Request;
 use Throwable;
 use yii\base\Exception;
-use yii\db\Query;
 use yii\db\StaleObjectException;
 use yii\web\BadRequestHttpException;
 use yii\web\ForbiddenHttpException;

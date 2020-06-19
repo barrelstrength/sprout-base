@@ -12,12 +12,6 @@ use craft\base\Model;
 use craft\errors\SiteNotFoundException;
 use craft\models\Site;
 
-/**
- * @property array $settingsNavItem
- * @property bool $isEnabled
- * @property null|Site $currentSite
- * @property string $key
- */
 abstract class Settings extends Model implements SettingsInterface
 {
     /**

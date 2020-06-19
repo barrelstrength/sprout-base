@@ -10,10 +10,6 @@ namespace barrelstrength\sproutbase\config\configs;
 use barrelstrength\sproutbase\config\base\Config;
 use Craft;
 
-/**
- *
- * @property string $key
- */
 class EmailPreviewConfig extends Config
 {
     public function getKey(): string

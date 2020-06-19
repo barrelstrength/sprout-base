@@ -17,10 +17,6 @@ use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
 use yii\base\Exception;
 
-/**
- *
- * @property array $settingsNavItem
- */
 class ControlPanelSettings extends Settings
 {
     public $modules;

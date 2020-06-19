@@ -7,7 +7,6 @@
 
 namespace barrelstrength\sproutbase\app\reports\services;
 
-use barrelstrength\sproutbase\app\reports\datasources\CustomQuery;
 use barrelstrength\sproutbase\app\reports\elements\Report;
 use barrelstrength\sproutbase\app\reports\records\DataSource as DataSourceRecord;
 use barrelstrength\sproutbase\app\reports\records\Report as ReportRecord;

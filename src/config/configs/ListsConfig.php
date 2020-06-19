@@ -11,13 +11,6 @@ use barrelstrength\sproutbase\config\base\Config;
 use barrelstrength\sproutbase\config\models\settings\ListsSettings;
 use Craft;
 
-/**
- *
- * @property array $cpNavItem
- * @property array $cpUrlRules
- * @property array[]|array $userPermissions
- * @property string $key
- */
 class ListsConfig extends Config
 {
     public function getKey(): string

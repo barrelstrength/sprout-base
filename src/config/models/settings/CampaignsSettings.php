@@ -11,10 +11,6 @@ use barrelstrength\sproutbase\config\base\Settings;
 use barrelstrength\sproutbase\config\controllers\SettingsController;
 use Craft;
 
-/**
- *
- * @property array $settingsNavItem
- */
 class CampaignsSettings extends Settings
 {
     /**

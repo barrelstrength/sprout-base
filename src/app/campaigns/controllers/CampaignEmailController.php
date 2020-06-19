@@ -24,10 +24,6 @@ use yii\web\BadRequestHttpException;
 use yii\web\ForbiddenHttpException;
 use yii\web\Response;
 
-/**
- *
- * @property null|ElementInterface|CampaignEmail $campaignEmailModel
- */
 class CampaignEmailController extends Controller
 {
     /**

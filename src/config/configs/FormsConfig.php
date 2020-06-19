@@ -18,16 +18,6 @@ use barrelstrength\sproutbase\migrations\forms\Install;
 use barrelstrength\sproutbase\SproutBase;
 use Craft;
 
-/**
- *
- * @property array $cpNavItem
- * @property array $cpUrlRules
- * @property string $description
- * @property array[]|array $userPermissions
- * @property array|string[] $controllerMapKeys
- * @property array|string[] $supportedDataSourceTypes
- * @property string $key
- */
 class FormsConfig extends Config
 {
     public function getKey(): string

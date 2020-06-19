@@ -16,11 +16,6 @@ use barrelstrength\sproutbase\config\controllers\SettingsController;
 use barrelstrength\sproutbase\SproutBase;
 use Craft;
 
-/**
- *
- * @property array $settingsNavItem
- * @property array|string[][] $spamRedirectBehaviorsAsOptions
- */
 class FormsSettings extends Settings
 {
     const SPAM_REDIRECT_BEHAVIOR_NORMAL = 'redirectAsNormal';

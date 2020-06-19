@@ -13,15 +13,6 @@ use barrelstrength\sproutbase\migrations\metadata\Install;
 use barrelstrength\sproutbase\SproutBase;
 use Craft;
 
-/**
- *
- * @property array $cpNavItem
- * @property array $cpUrlRules
- * @property string $description
- * @property array[]|array $userPermissions
- * @property array|string[] $controllerMapKeys
- * @property string $key
- */
 class SeoConfig extends Config
 {
     public function getKey(): string

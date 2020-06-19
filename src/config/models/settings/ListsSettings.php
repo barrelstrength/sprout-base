@@ -9,10 +9,6 @@ namespace barrelstrength\sproutbase\config\models\settings;
 
 use barrelstrength\sproutbase\config\base\Settings;
 
-/**
- *
- * @property array $settingsNavItem
- */
 class ListsSettings extends Settings
 {
 

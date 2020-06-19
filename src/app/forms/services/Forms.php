@@ -25,7 +25,6 @@ use craft\helpers\MigrationHelper;
 use craft\helpers\StringHelper;
 use Throwable;
 use yii\base\Component;
-use yii\base\Exception;
 use yii\base\InvalidConfigException;
 use yii\db\Transaction;
 use yii\web\BadRequestHttpException;

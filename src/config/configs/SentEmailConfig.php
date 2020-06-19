@@ -13,16 +13,6 @@ use barrelstrength\sproutbase\migrations\sentemail\Install;
 use barrelstrength\sproutbase\SproutBase;
 use Craft;
 
-/**
- *
- * @property array $cpNavItem
- * @property array|string[] $cpUrlRules
- * @property NotificationsConfig $configGroup
- * @property string $description
- * @property array[]|array $userPermissions
- * @property array|string[] $controllerMapKeys
- * @property string $key
- */
 class SentEmailConfig extends Config
 {
     public function getKey(): string

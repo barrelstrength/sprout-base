@@ -12,12 +12,6 @@ use craft\events\RegisterUrlRulesEvent;
 use craft\web\UrlManager;
 use yii\base\Event;
 
-/**
- *
- * @property array $cpUrlRules
- * @property ConfigInterface[] $sproutConfigs
- * @property array $siteUrlRules
- */
 abstract class SproutBasePlugin extends Plugin
 {
     /**

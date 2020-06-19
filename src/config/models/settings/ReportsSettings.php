@@ -10,10 +10,6 @@ namespace barrelstrength\sproutbase\config\models\settings;
 use barrelstrength\sproutbase\config\base\Settings;
 use Craft;
 
-/**
- *
- * @property array $settingsNavItem
- */
 class ReportsSettings extends Settings
 {
     /**
