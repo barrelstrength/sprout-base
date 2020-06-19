@@ -685,6 +685,6 @@ class CampaignEmail extends EmailElement
 
     public function getPreviewPermission(): string
     {
-        return 'sprout:email:editCampaigns';
+        return 'sprout:campaigns:editCampaigns';
     }
 }

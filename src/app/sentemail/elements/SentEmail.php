@@ -352,7 +352,7 @@ class SentEmail extends Element
 
     public function getPreviewPermission(): string
     {
-        return 'sprout:email:viewSentEmail';
+        return 'sprout:sentEmail:viewSentEmail';
     }
 
     public function getPreviewType(): string

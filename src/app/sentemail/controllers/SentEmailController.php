@@ -41,7 +41,7 @@ class SentEmailController extends Controller
      */
     public function actionSentEmailIndexTemplate($siteHandle = null): Response
     {
-        $this->requirePermission('sprout:email:viewSentEmail');
+        $this->requirePermission('sprout:sentEmail:viewSentEmail');
 
         $isPro = SproutBase::$app->config->isEdition('sent-email', Config::EDITION_PRO);
 
@@ -239,7 +239,7 @@ class SentEmailController extends Controller
     public function actionGetInfoHtml(): Response
     {
         $this->requirePostRequest();
-        $this->requirePermission('sprout:email:viewSentEmail');
+        $this->requirePermission('sprout:sentEmail:viewSentEmail');
 
         $sentEmailId = Craft::$app->getRequest()->getBodyParam('emailId');
 

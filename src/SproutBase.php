@@ -57,6 +57,7 @@ use craft\events\RegisterTemplateRootsEvent;
 use craft\events\RegisterUserPermissionsEvent;
 use craft\events\SiteEvent;
 use craft\helpers\ArrayHelper;
+use craft\helpers\StringHelper;
 use craft\i18n\PhpMessageSource;
 use craft\services\Plugins;
 use craft\services\Sites;
@@ -202,7 +203,7 @@ class SproutBase extends Module
     public function initPermissions()
     {
         Event::on(UserPermissions::class, UserPermissions::EVENT_REGISTER_PERMISSIONS, function(RegisterUserPermissionsEvent $event) {
-            $event->permissions['Sprout Settings'] = $this->getUserPermissions();
+            $event->permissions['Sprout Plugins'] = $this->getUserPermissions();
         });
     }
 
@@ -268,7 +269,7 @@ class SproutBase extends Module
 
         Event::on(Cp::class, Cp::EVENT_REGISTER_CP_SETTINGS, static function(RegisterCpSettingsEvent $event) {
             if ($settingsPages = self::$app->config->getSproutCpSettings()) {
-                $event->settings['Sprout Settings'] = $settingsPages;
+                $event->settings['Sprout Plugins'] = $settingsPages;
             }
         });
 
@@ -277,9 +278,6 @@ class SproutBase extends Module
         });
     }
 
-    /**
-     * @return array
-     */
     public function getUserPermissions(): array
     {
         $configTypes = self::$app->config->getConfigs(false);
@@ -291,9 +289,16 @@ class SproutBase extends Module
                 continue;
             }
 
+            $nestedPermissions = [];
             foreach ($configType->getUserPermissions() as $permissionName => $permissionArray) {
-                $permissions[$permissionName] = $permissionArray;
+                $nestedPermissions[$permissionName] = $permissionArray;
             }
+
+            $permissionKey = StringHelper::camelCase($configType->getKey());
+            $permissions['sprout:'.$permissionKey.':accessModule'] = [
+                'label' => 'Access ' . $configType->getName(),
+                'nested' => $nestedPermissions
+            ];
         }
 
         ksort($permissions, SORT_NATURAL);

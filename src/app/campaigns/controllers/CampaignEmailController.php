@@ -41,7 +41,7 @@ class CampaignEmailController extends Controller
      */
     public function actionCampaignEmailIndexTemplate(): Response
     {
-        $this->requirePermission('sprout:email:editCampaigns');
+        $this->requirePermission('sprout:campaigns:editCampaigns');
 
         $isPro = SproutBase::$app->config->isEdition('campaigns', Config::EDITION_PRO);
 
