@@ -208,22 +208,6 @@
 
         {% if events|length %}
 
-            {% set eventOptions = [{
-                'label': 'Select event...'|t('sprout'),
-                'value': null
-            }] %}
-
-            {% for eventClass, event in events %}
-
-                {% set isSaveEntryEvent = eventClass == 'barrelstrength\\sproutemail\\events\\notificationevents\\EntriesSave' %}
-
-                {% set eventOptions = eventOptions|merge([{
-                    label: event.getName(),
-                    value: eventClass,
-                    disabled: not isPro and not isSaveEntryEvent
-                }]) %}
-            {% endfor %}
-
             {% set upgradeDescriptionEventId = '' %}
             {% if not isPro %}
                 {% set upgradeDescriptionEventId = ' <strong>Upgrade to PRO</strong> to use all Notification Events. '|t('sprout') %}

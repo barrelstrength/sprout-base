@@ -14,10 +14,18 @@ use barrelstrength\sproutbase\app\email\controllers\MailersController;
 use barrelstrength\sproutbase\app\email\controllers\NotificationsController;
 use barrelstrength\sproutbase\app\email\controllers\PreviewController;
 use barrelstrength\sproutbase\app\email\emailtemplates\BasicTemplates;
+use barrelstrength\sproutbase\app\email\events\NotificationEmailEvent;
+use barrelstrength\sproutbase\app\email\events\notificationevents\EntriesDelete;
+use barrelstrength\sproutbase\app\email\events\notificationevents\EntriesSave;
+use barrelstrength\sproutbase\app\email\events\notificationevents\Manual;
+use barrelstrength\sproutbase\app\email\events\notificationevents\UsersActivate;
+use barrelstrength\sproutbase\app\email\events\notificationevents\UsersDelete;
+use barrelstrength\sproutbase\app\email\events\notificationevents\UsersSave;
 use barrelstrength\sproutbase\app\email\events\RegisterMailersEvent;
 use barrelstrength\sproutbase\app\email\mailers\DefaultMailer;
 use barrelstrength\sproutbase\app\email\services\EmailTemplates;
 use barrelstrength\sproutbase\app\email\services\Mailers;
+use barrelstrength\sproutbase\app\email\services\NotificationEmailEvents;
 use barrelstrength\sproutbase\app\fields\controllers\AddressController;
 use barrelstrength\sproutbase\app\fields\controllers\FieldsController;
 use barrelstrength\sproutbase\app\forms\controllers\FormEntriesController;
@@ -233,14 +241,21 @@ class SproutBase extends Module
         Event::on(EmailTemplates::class, EmailTemplates::EVENT_REGISTER_EMAIL_TEMPLATES, static function(RegisterComponentTypesEvent $event) {
             $event->types[] = BasicTemplates::class;
         });
+
+        Event::on(NotificationEmailEvents::class, NotificationEmailEvents::EVENT_REGISTER_EMAIL_EVENT_TYPES, static function(NotificationEmailEvent $event) {
+            $event->events[] = EntriesSave::class;
+            $event->events[] = EntriesDelete::class;
+            $event->events[] = UsersSave::class;
+            $event->events[] = UsersDelete::class;
+            $event->events[] = UsersActivate::class;
+            $event->events[] = Manual::class;
+        });
     }
 
     public function initReportEvents()
     {
         Event::on(DataSources::class, DataSources::EVENT_REGISTER_DATA_SOURCES, static function(RegisterComponentTypesEvent $event) {
             $event->types[] = CustomQuery::class;
-            $event->types[] = CustomTwigTemplate::class;
-            $event->types[] = Users::class;
         });
     }
 

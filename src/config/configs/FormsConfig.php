@@ -7,6 +7,7 @@
 
 namespace barrelstrength\sproutbase\config\configs;
 
+use barrelstrength\sproutbase\app\forms\integrations\sproutemail\events\notificationevents\SaveEntryEvent;
 use barrelstrength\sproutbase\app\forms\integrations\sproutreports\datasources\EntriesDataSource;
 use barrelstrength\sproutbase\app\forms\integrations\sproutreports\datasources\IntegrationLogDataSource;
 use barrelstrength\sproutbase\app\forms\integrations\sproutreports\datasources\SpamLogDataSource;
@@ -165,6 +166,13 @@ class FormsConfig extends Config
             EntriesDataSource::class,
             IntegrationLogDataSource::class,
             SpamLogDataSource::class
+        ];
+    }
+
+    public function getSupportedNotificationEventTypes(): array
+    {
+        return [
+            SaveEntryEvent::class
         ];
     }
 }

@@ -32,9 +32,23 @@ class NotificationEmailEvents extends Component
     const EVENT_SEND_NOTIFICATION_EMAIL = 'onSendNotificationEmail';
 
     /**
+     * @var array
+     */
+    protected $_allowedNotificationEventTypes;
+
+    /**
      * @var Callable[] Events that notifications have subscribed to
      */
     protected $registeredEvents = [];
+
+    public function getAllowedNotificationEventTypes(): array
+    {
+        if (!$this->_allowedNotificationEventTypes) {
+            $this->populateAllowedNotificationEventTypes();
+        }
+
+        return $this->_allowedNotificationEventTypes;
+    }
 
     /**
      * Registers an event listener to be trigger dynamically
@@ -312,5 +326,30 @@ class NotificationEmailEvents extends Component
         });
 
         return $events;
+    }
+
+    private function populateAllowedNotificationEventTypes()
+    {
+        $configs = SproutBase::$app->config->getConfigs(false);
+
+        $notificationEventTypes = [];
+
+        foreach ($configs as $config) {
+            $settings = $config->getSettings();
+
+            if (!$settings || ($settings && !$settings->getIsEnabled())) {
+                continue;
+            }
+
+            if (!method_exists($config, 'getSupportedNotificationEventTypes')) {
+                continue;
+            }
+
+            foreach ($config->getSupportedNotificationEventTypes() as $notificationEventType) {
+                $notificationEventTypes[] = $notificationEventType;
+            }
+        }
+
+        $this->_allowedNotificationEventTypes = array_filter($notificationEventTypes);
     }
 }

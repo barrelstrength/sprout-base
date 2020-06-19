@@ -90,8 +90,6 @@ class NotificationsController extends Controller
     {
         $this->requirePermission('sprout:email:editNotifications');
 
-        $routeParams = Craft::$app->getUrlManager()->getRouteParams();
-
         // Immediately create a new Notification
         if ($emailId === 'new') {
             $notificationEmail = SproutBase::$app->notifications->createNewNotification();
@@ -154,9 +152,20 @@ class NotificationsController extends Controller
 
         $tabs = $notificationEmail->getFieldLayoutTabs() ?: $tabs;
 
+        $allowedNotificationEventTypes = SproutBase::$app->notificationEvents->getAllowedNotificationEventTypes();
+
+        foreach ($events as $eventClass => $event) {
+            $eventOptions[] = [
+                'label' => $event->getName(),
+                'value' => $eventClass,
+                'disabled' => !$this->isPro && !in_array($eventClass, $allowedNotificationEventTypes, true)
+            ];
+        }
+
         return $this->renderTemplate('sprout/notifications/notifications/_edit', [
             'notificationEmail' => $notificationEmail,
             'events' => $events,
+            'eventOptions' => $eventOptions ?? [],
             'tabs' => $tabs,
             'showPreviewBtn' => $showPreviewBtn,
             'shareUrl' => $shareUrl,

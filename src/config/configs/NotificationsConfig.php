@@ -7,6 +7,13 @@
 
 namespace barrelstrength\sproutbase\config\configs;
 
+use barrelstrength\sproutbase\app\email\events\notificationevents\EntriesDelete;
+use barrelstrength\sproutbase\app\email\events\notificationevents\EntriesSave;
+use barrelstrength\sproutbase\app\email\events\notificationevents\Manual;
+use barrelstrength\sproutbase\app\email\events\notificationevents\UsersActivate;
+use barrelstrength\sproutbase\app\email\events\notificationevents\UsersDelete;
+use barrelstrength\sproutbase\app\email\events\notificationevents\UsersLogin;
+use barrelstrength\sproutbase\app\email\events\notificationevents\UsersSave;
 use barrelstrength\sproutbase\config\base\Config;
 use barrelstrength\sproutbase\config\models\settings\NotificationSettings;
 use barrelstrength\sproutbase\migrations\email\Install;
@@ -101,6 +108,25 @@ class NotificationsConfig extends Config
     {
         return [
             'notifications'
+        ];
+    }
+
+    public function getSupportedNotificationEventTypes(): array
+    {
+        if ($this->getIsPro()) {
+            return [
+                EntriesDelete::class,
+                EntriesSave::class,
+                Manual::class,
+                UsersActivate::class,
+                UsersDelete::class,
+                UsersLogin::class,
+                UsersSave::class
+            ];
+        }
+
+        return [
+            EntriesSave::class
         ];
     }
 }
