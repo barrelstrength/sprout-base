@@ -228,7 +228,7 @@ trait RecipientsTrait
             $listIds = $listIds['listIds'];
         }
 
-        if (!empty($listIds)) {
+        if (empty($listIds)) {
             return [];
         }
 
