@@ -384,31 +384,65 @@ class Config extends Component
      */
     public function updateCpNavItems(array $cpNavItems, array $sproutNavItems): array
     {
-        $plugins = Craft::$app->getPlugins()->getAllPlugins();
+        $beforePluginNavItemKeys = [
+            'dashboard',
+            'entries',
+            'globals',
+            'categories',
+            'assets',
+            'users'
+        ];
 
-        // Filter out all plugins that don't extend SproutBasePlugin
-        // and exclude the plugin calling this method
-        $sproutPluginKeys = array_keys(array_filter($plugins, static function($plugin) {
-            return $plugin instanceof SproutBasePlugin;
-        }));
+        $afterPluginNavItemKeys = [
+            'graphql',
+            'utilities',
+            'settings',
+            'plugin-store'
+        ];
 
-        $defaultSproutCpNavItems = array_filter($cpNavItems, static function($navItem) use ($sproutPluginKeys) {
-            return in_array($navItem['url'], $sproutPluginKeys, true);
+        $newCpNavItems = [];
+        $afterCpNavItems = [];
+        $otherCpNavItems = [];
+
+        // Break out the current nav into multiple arrays that we can re-assemble later
+        // 1. Craft defaults at the top of the nav
+        // 2. Plugins and stuff
+        // 3. Craft defaults and settings at bottom of nav
+        foreach ($cpNavItems as $cpNavItem) {
+            switch (true) {
+                case (in_array($cpNavItem['url'], $beforePluginNavItemKeys, true)):
+                    $newCpNavItems[] = $cpNavItem;
+                    break;
+                case (in_array($cpNavItem['url'], $afterPluginNavItemKeys, true)):
+                    $afterCpNavItems[] = $cpNavItem;
+                    break;
+                default:
+                    $otherCpNavItems[] = $cpNavItem;
+                    break;
+            }
+        }
+
+        // Add our module nav items to the plugins and stuff
+        foreach ($sproutNavItems as $sproutNavItem) {
+            $otherCpNavItems[] = $sproutNavItem;
+        }
+
+        // Sort custom nav items alphabetically by label
+        uasort($otherCpNavItems, static function($a, $b) {
+            return $a['label'] <=> $b['label'];
         });
 
-        $firstPosition = null;
-        foreach ($defaultSproutCpNavItems as $key => $defaultSproutCpNavItem) {
-            if ($firstPosition === null) {
-                $firstPosition = $key;
-            }
-            unset($cpNavItems[$key]);
+        // Add the custom nav items back to the nav
+        foreach ($otherCpNavItems as $otherCpNavItem) {
+            $newCpNavItems[] = $otherCpNavItem;
         }
 
-        foreach ($sproutNavItems as $sproutNavItem) {
-            $cpNavItems[] = $sproutNavItem;
+        // Add the Craft defaults back to the bottom of the nav
+        foreach ($afterCpNavItems as $afterCpNavItem) {
+            $newCpNavItems[] = $afterCpNavItem;
         }
 
-        return $cpNavItems;
+        return $newCpNavItems;
     }
 
     public function removeDisabledModuleRoutes()
