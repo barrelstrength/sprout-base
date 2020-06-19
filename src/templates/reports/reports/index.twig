@@ -1,4 +1,7 @@
 {% extends "sprout/reports/_layouts/elementindex" %}
+{% import "sprout/config/_includes/sproutcp" as sproutCp %}
+
+{% do view.registerAssetBundle("barrelstrength\\sproutbase\\web\\assetbundles\\sproutcp\\SproutCpAsset") %}
 
 {% set title = "Reports"|t('sprout') %}
 
@@ -31,6 +34,13 @@
                     <a class="btn submit add icon" href="{{ newReportOptions[0].url }}">{{ "New Report"|t('sprout') }}</a>
                 {% endif %}
             </div>
+        {% endif %}
+
+        {% if not config.getDisableUpgradeMessages() and not config.getIsPro() %}
+            {{ sproutCp.upgradeToProButton({
+                url: config.getUpgradeUrl(),
+                title: "Upgrade to Sprout Reports PRO to access unlimited data sources and create visualizations."|t('sprout')
+            }) }}
         {% endif %}
 
     {% endif %}

@@ -52,10 +52,11 @@ class ReportsController extends Controller
         }
 
         $newReportOptions = [];
+        $allowedDataSourceIds = SproutBase::$app->reports->getAllowedDataSourceIds();
 
         foreach ($dataSources as $dataSource) {
 
-            if (!$dataSource->allowNew) {
+            if (!$dataSource->allowNew || !in_array($dataSource->id, $allowedDataSourceIds, true)) {
                 continue;
             }
 
@@ -67,10 +68,13 @@ class ReportsController extends Controller
 
         $currentUser = Craft::$app->getUser()->getIdentity();
 
+        $config = SproutBase::$app->config->getConfigByKey('reports');
+
         return $this->renderTemplate('sprout/reports/reports/index', [
             'dataSources' => $dataSources,
             'groupId' => $groupId,
             'reports' => $reports,
+            'config' => $config,
             'newReportOptions' => $newReportOptions,
 
             // @todo - migration review / fix
@@ -135,6 +139,8 @@ class ReportsController extends Controller
 
         $currentUser = Craft::$app->getUser()->getIdentity();
 
+        $config = SproutBase::$app->config->getConfigByKey('reports');
+
         return $this->renderTemplate('sprout/reports/results/index', [
             'report' => $report,
             'visualization' => $visualization,
@@ -142,6 +148,7 @@ class ReportsController extends Controller
             'labels' => $labels,
             'values' => $values,
             'redirectUrl' => 'sprout/reports/view/'.$reportId,
+            'config' => $config,
 
             // @todo - migration, review permission
             'editReportsPermission' => $currentUser->can('sprout:reports:editReports'),
@@ -277,7 +284,7 @@ class ReportsController extends Controller
 
         $currentUser = Craft::$app->getUser()->getIdentity();
 
-        $isPro = SproutBase::$app->config->isEdition('reports', Config::EDITION_PRO);
+        $config = SproutBase::$app->config->getConfigByKey('reports');
 
         return $this->renderTemplate('sprout/reports/reports/_edit', [
             'report' => $reportElement,
@@ -287,7 +294,7 @@ class ReportsController extends Controller
 
             // @todo - migration, review permission
             'editReportsPermission' => $currentUser->can('sprout:reports:editReports'),
-            'isPro' => $isPro,
+            'config' => $config,
             'emailColumnOptions' => $emailColumnOptions,
             'delimiterOptions' => $delimiterOptions,
             'settings' => $settings,
@@ -581,24 +588,9 @@ class ReportsController extends Controller
         $dataSourceId = $dataSource->id;
 
         $allowedDataSourceIds = SproutBase::$app->reports->getAllowedDataSourceIds();
-        $defaultDataSourceIds = SproutBase::$app->reports->getDefaultDataSourceIds();
 
         if (!in_array($dataSourceId, $allowedDataSourceIds, false)) {
             return Craft::t('sprout', 'Upgrade to Sprout Reports PRO to use Custom Reports and Data Source integrations.');
-        }
-
-        if (in_array($dataSourceId, $defaultDataSourceIds, false)) {
-            $reportForDataSourceAlreadyExists = (new Query())
-                ->select('*')
-                ->from('{{%sproutreports_reports}}')
-                ->where([
-                    'dataSourceId' => $dataSourceId
-                ])
-                ->exists();
-
-            if ($reportForDataSourceAlreadyExists) {
-                return Craft::t('sprout', 'Upgrade to Sprout Reports PRO to create additional '.$dataSource::displayName().' reports.');
-            }
         }
 
         return null;

@@ -131,10 +131,16 @@ class ReportsConfig extends Config
 
     public function getSupportedDataSourceTypes(): array
     {
+        if ($this->getIsPro()) {
+            return [
+                CustomQuery::class,
+                CustomTwigTemplate::class,
+                Users::class
+            ];
+        }
+
         return [
-            CustomQuery::class,
-            CustomTwigTemplate::class,
-            Users::class
+            CustomQuery::class
         ];
     }
 }

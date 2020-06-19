@@ -6,6 +6,9 @@
 {% do view.registerAssetBundle("barrelstrength\\sproutbase\\web\\assetbundles\\sproutcp\\SproutCpAsset") %}
 {% do view.registerAssetBundle("barrelstrength\\sproutbase\\web\\assetbundles\\reports\\SproutReportsAsset") %}
 
+{% set isPro = config.getIsPro() %}
+{% set disableUpgradeMessages = config.getDisableUpgradeMessages() %}
+
 {% set title = report['id'] is defined and report['id'] is not empty
     ? "Edit Report"|t('sprout')
     : "New Report"|t('sprout') %}
@@ -19,18 +22,24 @@
         label: 'Report',
         url: '#tab-report',
         class: null,
-    },
-    {
+    }
+] %}
+
+{% if not disableUpgradeMessages and not isPro %}
+    {% set tabs = tabs|merge([{
         label: 'Visualization',
         url: '#tab-visualization',
         class: null,
-    },
-    {
+    }]) %}
+{% endif %}
+
+{% if not disableUpgradeMessages and not isPro %}
+    {% set tabs = tabs|merge([{
         label: 'Mailing List',
         url: '#tab-mailing-list',
         class: null
-    }
-] %}
+    }]) %}
+{% endif %}
 
 {% set fullPageForm = true %}
 
