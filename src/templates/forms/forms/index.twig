@@ -5,7 +5,7 @@
 
 {% set title = "Forms"|t('sprout') %}
 {% set elementType = 'barrelstrength\\sproutbase\\app\\forms\\elements\\Form' %}
-{% set canCreateForm = craft.app.getModule('sprout').app.forms.canCreateForm() %}
+{% set canCreateForm = sprout.app.forms.canCreateForm() %}
 
 {% set groupId = null %}
 {% set groups = sprout.app.formGroups.getAllFormGroups('id') %}

@@ -4,7 +4,7 @@
 
 {% do view.registerAssetBundle("barrelstrength\\sproutbase\\web\\assetbundles\\sproutcp\\SproutCpAsset") %}
 
-{% set metadataFieldCount = craft.app.getModule('sprout').app.elementMetadata.getMetadataFieldCount() %}
+{% set metadataFieldCount = sprout.app.elementMetadata.getMetadataFieldCount() %}
 {% set noMetadataFieldsExist = not fieldId and metadataFieldCount == 0 %}
 {% set thisIsTheOneMetadataField = fieldId and metadataFieldCount == 1 %}
 

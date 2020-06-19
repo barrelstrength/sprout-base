@@ -4,7 +4,7 @@
 
 {% do view.registerAssetBundle("barrelstrength\\sproutbase\\web\\assetbundles\\sproutcp\\SproutCpAsset") %}
 
-{% set canCreateForm = craft.app.getModule('sprout').app.forms.canCreateForm() %}
+{% set canCreateForm = sprout.app.forms.canCreateForm() %}
 
 {% set crumbs    = [
     { label: "Settings"|t('sprout'), url: cpUrl('settings') },

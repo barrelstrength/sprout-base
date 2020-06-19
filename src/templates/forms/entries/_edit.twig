@@ -4,7 +4,7 @@
 
 {% do view.registerAssetBundle("barrelstrength\\sproutbase\\web\\assetbundles\\sproutcp\\SproutCpAsset") %}
 
-{% set canCreateForm = craft.app.getModule('sprout').app.forms.canCreateForm() %}
+{% set canCreateForm = sprout.app.forms.canCreateForm() %}
 
 {% set crumbs = [
     { label: "Entries"|t('sprout'), url: cpUrl('sprout/forms/entries') }
@@ -120,7 +120,7 @@
             <hr>
             {% for integrationLog in integrationLogs %}
                 <div class="data">
-                    {% set integration = craft.app.getModule('sprout').app.integrations.getIntegrationById(integrationLog.integrationId) %}
+                    {% set integration = sprout.app.formIntegrations.getIntegrationById(integrationLog.integrationId) %}
                     <h5 class="heading">{{ integration.name }}</h5>
                     {% if integrationLog.success %}
                         {% if integrationLog.status == 'notsent' %}

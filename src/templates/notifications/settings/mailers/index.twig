@@ -2,7 +2,7 @@
 
 {% set title = 'Mailers' %}
 
-{% set mailers = craft.app.getModule('sprout').app.mailers.getRegisteredMailers() %}
+{% set mailers = sprout.app.mailers.getRegisteredMailers() %}
 
 {% set mailerTableHtml %}
 
