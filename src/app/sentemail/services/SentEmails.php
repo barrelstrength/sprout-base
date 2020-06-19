@@ -306,27 +306,19 @@ class SentEmails extends Component
     /**
      * Create a SproutEmail_SentEmailInfoTableModel with the Craft and plugin info values
      *
-     * @param       $pluginHandle
+     * @param $sourceName
+     * @param string $sourceVersion
      * @param array $values
      *
      * @return SentEmailInfoTable
      */
-    public function createInfoTableModel($pluginHandle, array $values = []): SentEmailInfoTable
+    public function createInfoTableModel($sourceName, $sourceVersion = '', array $values = []): SentEmailInfoTable
     {
         $infoTable = new SentEmailInfoTable();
         $infoTable->setAttributes($values, false);
 
-        /**
-         * @var $plugin Plugin
-         */
-        $plugin = Craft::$app->getPlugins()->getPlugin($pluginHandle);
-        $infoTable->source = '';
-        $infoTable->sourceVersion = '';
-
-        if ($plugin) {
-            $infoTable->source = $plugin::getInstance()->name;
-            $infoTable->sourceVersion = $plugin::getInstance()->name.' '.$plugin->getVersion();
-        }
+        $infoTable->source = $sourceName ?? Craft::t('sprout', 'Unknown');
+        $infoTable->sourceVersion = $sourceVersion;
 
         $craftVersion = $this->getCraftVersion();
 

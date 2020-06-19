@@ -14,6 +14,7 @@ use barrelstrength\sproutbase\app\sentemail\elements\SentEmail;
 use barrelstrength\sproutbase\app\sentemail\services\SentEmails;
 use barrelstrength\sproutbase\config\base\Config;
 use barrelstrength\sproutbase\SproutBase;
+use barrelstrength\sproutsentemail\SproutSentEmail;
 use Craft;
 use craft\mail\Mailer;
 use craft\mail\Message;
@@ -134,7 +135,7 @@ class SentEmailController extends Controller
                 $email->setTextBody($sentEmail->body);
                 $email->setHtmlBody($sentEmail->htmlBody);
 
-                $infoTable = SproutBase::$app->sentEmails->createInfoTableModel('sprout-sent-email');
+                $infoTable = SproutBase::$app->sentEmails->createInfoTableModel('Sprout');
 
                 $emailTypes = $infoTable->getEmailTypes();
                 $infoTable->emailType = $emailTypes['Resent'];

@@ -153,9 +153,9 @@ class DefaultMailer extends Mailer implements NotificationEmailSenderInterface
         $sentEmailSettings = SproutBase::$app->settings->getSettingsByKey('sent-email');
         if ($sentEmailSettings->getIsEnabled()) {
 
-            $infoTable = SproutBase::$app->sentEmails->createInfoTableModel('sprout-email', [
+            $infoTable = SproutBase::$app->sentEmails->createInfoTableModel('Sprout', '', [
                 'emailType' => $notificationEmail->displayName(),
-                'mailer' => self::displayName()
+                'mailer' => 'Sprout Mailer'
             ]);
 
             $deliveryTypes = $infoTable->getDeliveryTypes();
