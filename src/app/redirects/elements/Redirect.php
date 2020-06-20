@@ -139,9 +139,9 @@ class Redirect extends Element
     public static function defineTableAttributes($source = null): array
     {
         $attributes = [
-            'method' => Craft::t('sprout', 'Method'),
             'oldUrl' => Craft::t('sprout', 'Old Url'),
             'newUrl' => Craft::t('sprout', 'New Url'),
+            'method' => Craft::t('sprout', 'Method'),
             'count' => Craft::t('sprout', 'Count'),
             'dateLastUsed' => Craft::t('sprout', 'Date Last Used'),
             'test' => Craft::t('sprout', 'Test'),
@@ -309,8 +309,8 @@ class Redirect extends Element
      */
     public function __toString()
     {
-        if ($this->method) {
-            return (string)$this->method;
+        if ($this->oldUrl) {
+            return (string)$this->oldUrl;
         }
 
         return (string)$this->id ?: static::class;
@@ -541,15 +541,6 @@ class Redirect extends Element
     protected function tableAttributeHtml(string $attribute): string
     {
         switch ($attribute) {
-            case 'oldUrl':
-
-                return '<input readonly class="code sprout-redirects-elementindex-input" value="'.$this->oldUrl.'">';
-
-            case 'newUrl':
-
-                $newUrl = $this->newUrl ?? '/';
-
-                return '<input readonly class="code sprout-redirects-elementindex-input" value="'.$newUrl.'">';
 
             case 'dateLastUsed':
 
