@@ -282,8 +282,16 @@ class CampaignEmail extends EmailElement
     {
         return [
             'title' => Craft::t('sprout', 'Title'),
-            'sproutemail_campaignemails.dateCreated' => Craft::t('sprout', 'Date Created'),
-            'sproutemail_campaignemails.dateUpdated' => Craft::t('sprout', 'Date Updated'),
+            [
+                'label' => Craft::t('sprout', 'Date Created'),
+                'orderBy' => 'elements.dateCreated',
+                'attribute' => 'dateCreated'
+            ],
+            [
+                'label' => Craft::t('sprout', 'Date Updated'),
+                'orderBy' => 'elements.dateUpdated',
+                'attribute' => 'dateUpdated'
+            ],
         ];
     }
 
