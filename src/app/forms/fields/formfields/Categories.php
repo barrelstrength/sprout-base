@@ -59,7 +59,7 @@ class Categories extends CraftCategories
     {
         return Craft::$app->getView()->renderTemplate('sprout/forms/_components/fields/formfields/categories/example',
             [
-                'field' => $this
+                'field' => $this,
             ]
         );
     }
@@ -99,7 +99,7 @@ class Categories extends CraftCategories
     public function getCompatibleCraftFieldTypes(): array
     {
         return [
-            CraftCategories::class
+            CraftCategories::class,
         ];
     }
 }

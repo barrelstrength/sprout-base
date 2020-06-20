@@ -19,7 +19,7 @@ class LandingAsset extends AssetBundle
 
         $this->depends = [
             CpAsset::class,
-            SproutCpAsset::class
+            SproutCpAsset::class,
         ];
 
         $this->css = [

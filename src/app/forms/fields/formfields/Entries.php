@@ -60,7 +60,7 @@ class Entries extends CraftEntries
     {
         return Craft::$app->getView()->renderTemplate('sprout/forms/_components/fields/formfields/entries/example',
             [
-                'field' => $this
+                'field' => $this,
             ]
         );
     }
@@ -100,7 +100,7 @@ class Entries extends CraftEntries
     public function getCompatibleCraftFieldTypes(): array
     {
         return [
-            CraftEntries::class
+            CraftEntries::class,
         ];
     }
 }

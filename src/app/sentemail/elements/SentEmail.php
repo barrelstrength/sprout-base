@@ -165,8 +165,8 @@ class SentEmail extends Element
             [
                 'key' => '*',
                 'label' => Craft::t('sprout', 'All Sent Emails'),
-                'defaultSort' => ['dateCreated', 'desc']
-            ]
+                'defaultSort' => ['dateCreated', 'desc'],
+            ],
         ];
 
         return $sources;
@@ -186,7 +186,7 @@ class SentEmail extends Element
     protected static function defineSortOptions(): array
     {
         $attributes = [
-            'elements.dateCreated' => Craft::t('sprout', 'Date Sent')
+            'elements.dateCreated' => Craft::t('sprout', 'Date Sent'),
         ];
 
         return $attributes;

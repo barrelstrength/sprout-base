@@ -83,7 +83,7 @@ class SchemaMetadata extends Component
             IntangibleSchema::class,
             OrganizationSchema::class,
             PersonSchema::class,
-            PlaceSchema::class
+            PlaceSchema::class,
         ];
 
         if (Craft::$app->getPlugins()->getPlugin('commerce')) {
@@ -91,7 +91,7 @@ class SchemaMetadata extends Component
         }
 
         $event = new RegisterSchemasEvent([
-            'schemas' => $schemas
+            'schemas' => $schemas,
         ]);
 
         $this->trigger(self::EVENT_REGISTER_SCHEMAS, $event);
@@ -160,8 +160,8 @@ class SchemaMetadata extends Component
         // Build our options
         $schemaOptions = [
             '' => Craft::t('sprout', 'None'), [
-                'optgroup' => Craft::t('sprout', 'Default Types')
-            ]
+                'optgroup' => Craft::t('sprout', 'Default Types'),
+            ],
         ];
 
 
@@ -172,7 +172,7 @@ class SchemaMetadata extends Component
             return [
                 'label' => $schema->getName(),
                 'type' => $schema->getType(),
-                'value' => get_class($schema)
+                'value' => get_class($schema),
             ];
         }, $defaultSchema));
 
@@ -187,7 +187,7 @@ class SchemaMetadata extends Component
                     'label' => $schema->getName(),
                     'type' => $schema->getType(),
                     'value' => get_class($schema),
-                    'isCustom' => '1'
+                    'isCustom' => '1',
                 ];
             }, $customSchema));
         }
@@ -213,7 +213,7 @@ class SchemaMetadata extends Component
                 // Create a generic first item in our list that matches the top level schema
                 // We do this so we don't have a blank dropdown option for our secondary schemas
                 $firstItem = [
-                    $type => []
+                    $type => [],
                 ];
 
                 if (!isset($schema['isCustom'])) {

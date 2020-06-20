@@ -35,7 +35,7 @@ class SentEmailQuery extends ElementQuery
             'sproutemail_sentemail.info',
             'sproutemail_sentemail.status',
             'sproutemail_sentemail.dateCreated',
-            'sproutemail_sentemail.dateUpdated'
+            'sproutemail_sentemail.dateUpdated',
         ]);
 
         return parent::beforePrepare();

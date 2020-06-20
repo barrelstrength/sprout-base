@@ -25,16 +25,16 @@ class FormsAsset extends AssetBundle
             JqueryAsset::class,
             SproutCpAsset::class,
             FontAwesomeAsset::class,
-            SelectOtherFieldAsset::class
+            SelectOtherFieldAsset::class,
         ];
 
         $this->css = [
             'css/forms.css',
-            'css/forms-ui.css'
+            'css/forms-ui.css',
         ];
 
         $this->js = [
-            'js/Forms.js'
+            'js/Forms.js',
         ];
 
         parent::init();

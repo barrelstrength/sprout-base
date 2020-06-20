@@ -46,7 +46,7 @@ class SproutSeoSitemapIndex {
       "priority": $('select[name="sproutseo[sections][' + rowId + '][priority]"]').val(),
       "changeFrequency": $('select[name="sproutseo[sections][' + rowId + '][changeFrequency]"]').val(),
       "enabled": enabled,
-      "siteId": siteId
+      "siteId": siteId,
     };
 
     Craft.postActionRequest('sprout/sitemaps/save-sitemap-section', data, $.proxy(function(response, textStatus) {
@@ -107,7 +107,7 @@ class SproutSeoSitemapIndex {
     let customPageId = row.getAttribute('data-id');
 
     let data = {
-      id: customPageId
+      id: customPageId,
     };
 
     Craft.postActionRequest('sprout/sitemaps/delete-sitemap-by-id', data, $.proxy(function(response, textStatus) {

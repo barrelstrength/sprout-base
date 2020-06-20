@@ -61,7 +61,7 @@ class SitemapsConfig extends Config
     {
         return [
             'label' => Craft::t('sprout', 'Sitemaps'),
-            'url' => 'sprout/sitemaps'
+            'url' => 'sprout/sitemaps',
         ];
     }
 
@@ -69,7 +69,7 @@ class SitemapsConfig extends Config
     {
         return [
             'sprout:sitemaps:editSitemaps' => [
-                'label' => Craft::t('sprout', 'Edit Sitemaps')
+                'label' => Craft::t('sprout', 'Edit Sitemaps'),
             ],
         ];
     }
@@ -82,7 +82,7 @@ class SitemapsConfig extends Config
             'sprout/sitemaps/new' =>
                 'sprout/sitemaps/sitemap-edit-template',
             'sprout/sitemaps' =>
-                'sprout/sitemaps/sitemap-index-template'
+                'sprout/sitemaps/sitemap-index-template',
         ];
     }
 
@@ -143,7 +143,7 @@ class SitemapsConfig extends Config
     {
         return [
             'sitemaps',
-            'xml-sitemaps'
+            'xml-sitemaps',
         ];
     }
 }

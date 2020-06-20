@@ -186,7 +186,7 @@ class NotificationEmail extends EmailElement
         return [
             self::ENABLED => Craft::t('sprout', 'Enabled'),
 //            self::PENDING => Craft::t('sprout', 'Pending'),
-            self::DISABLED => Craft::t('sprout', 'Disabled')
+            self::DISABLED => Craft::t('sprout', 'Disabled'),
         ];
     }
 
@@ -198,8 +198,8 @@ class NotificationEmail extends EmailElement
         $sources = [
             [
                 'key' => '*',
-                'label' => Craft::t('sprout', 'All notifications')
-            ]
+                'label' => Craft::t('sprout', 'All notifications'),
+            ],
         ];
 
         return $sources;
@@ -215,7 +215,7 @@ class NotificationEmail extends EmailElement
             'subjectLine' => ['label' => Craft::t('sprout', 'Subject Line')],
             'dateCreated' => ['label' => Craft::t('sprout', 'Date Created')],
             'send' => ['label' => Craft::t('sprout', 'Send')],
-            'preview' => ['label' => Craft::t('sprout', 'Preview'), 'icon' => 'view']
+            'preview' => ['label' => Craft::t('sprout', 'Preview'), 'icon' => 'view'],
         ];
 
         return $attributes;
@@ -269,7 +269,7 @@ class NotificationEmail extends EmailElement
         if ($attribute === 'send') {
             return Craft::$app->getView()->renderTemplate('sprout/notifications/_components/elementindex/NotificationEmail/prepare-link', [
                 'notification' => $this,
-                'mailer' => $this->getMailer()
+                'mailer' => $this->getMailer(),
             ]);
         }
 
@@ -285,7 +285,7 @@ class NotificationEmail extends EmailElement
             return Craft::$app->getView()->renderTemplate('sprout/notifications/_components/elementindex/NotificationEmail/preview-links', [
                 'email' => $this,
                 'shareUrl' => $shareUrl,
-                'type' => $attribute
+                'type' => $attribute,
             ]);
         }
 
@@ -393,7 +393,7 @@ class NotificationEmail extends EmailElement
         $recipients = $this->{$attribute};
         $validator = new EmailValidator();
         $multipleValidations = new MultipleValidationWithAnd([
-            new RFCValidation()
+            new RFCValidation(),
         ]);
 
         // Add any On The Fly Recipients to our List
@@ -422,7 +422,7 @@ class NotificationEmail extends EmailElement
         return array_merge(parent::behaviors(), [
             'fieldLayout' => [
                 'class' => FieldLayoutBehavior::class,
-                'elementType' => self::class
+                'elementType' => self::class,
             ],
         ]);
     }
@@ -458,26 +458,26 @@ class NotificationEmail extends EmailElement
         $options = [
             [
                 'label' => Craft::t('sprout', 'Always'),
-                'value' => '*'
-            ]
+                'value' => '*',
+            ],
         ];
 
         $customSendRule = $this->sendRule;
 
         $options[] = [
-            'optgroup' => Craft::t('sprout', 'Custom Rule')
+            'optgroup' => Craft::t('sprout', 'Custom Rule'),
         ];
 
         if ($customSendRule != '*' && $customSendRule) {
             $options[] = [
                 'label' => $customSendRule,
-                'value' => $customSendRule
+                'value' => $customSendRule,
             ];
         }
 
         $options[] = [
             'label' => Craft::t('sprout', 'Add Custom'),
-            'value' => 'custom'
+            'value' => 'custom',
         ];
 
         return $options;

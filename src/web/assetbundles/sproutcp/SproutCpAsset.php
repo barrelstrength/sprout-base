@@ -17,7 +17,7 @@ class SproutCpAsset extends AssetBundle
         $this->sourcePath = '@sproutbaseassetbundles/sproutcp/dist';
 
         $this->depends = [
-            CpAsset::class
+            CpAsset::class,
         ];
 
         $this->css = [

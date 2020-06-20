@@ -163,12 +163,12 @@ class Entry extends Element
             [
                 'key' => '*',
                 'label' => Craft::t('sprout', 'All Entries'),
-                'defaultSort' => ['dateCreated', 'desc']
-            ]
+                'defaultSort' => ['dateCreated', 'desc'],
+            ],
         ];
 
         $sources[] = [
-            'heading' => Craft::t('sprout', 'Forms')
+            'heading' => Craft::t('sprout', 'Forms'),
         ];
 
         // Prepare the data for our sources sidebar
@@ -190,18 +190,18 @@ class Entry extends Element
                         'label' => $form->name,
                         'data' => ['formId' => $form->id],
                         'criteria' => [
-                            'formId' => $form->id
+                            'formId' => $form->id,
                         ],
-                        'defaultSort' => ['dateCreated', 'desc']
+                        'defaultSort' => ['dateCreated', 'desc'],
                     ];
                 } else {
                     $noSources[$form->id] = [
                         'label' => $form->name,
                         'data' => ['formId' => $form->id],
                         'criteria' => [
-                            'formId' => $form->id
+                            'formId' => $form->id,
                         ],
-                        'defaultSort' => ['dateCreated', 'desc']
+                        'defaultSort' => ['dateCreated', 'desc'],
                     ];
                 }
             }
@@ -217,9 +217,9 @@ class Entry extends Element
                     'formId' => $form['data']['formId'],
                 ],
                 'criteria' => [
-                    'formId' => $form['criteria']['formId']
+                    'formId' => $form['criteria']['formId'],
                 ],
-                'defaultSort' => ['dateCreated', 'desc']
+                'defaultSort' => ['dateCreated', 'desc'],
             ];
         }
 
@@ -227,7 +227,7 @@ class Entry extends Element
         foreach ($prepSources as $source) {
             if (isset($source['heading'])) {
                 $sources[] = [
-                    'heading' => $source['heading']
+                    'heading' => $source['heading'],
                 ];
             }
 
@@ -240,8 +240,8 @@ class Entry extends Element
                         'formId' => $form['data']['formId'],
                     ],
                     'criteria' => [
-                        'formId' => $form['criteria']['formId']
-                    ]
+                        'formId' => $form['criteria']['formId'],
+                    ],
                 ];
             }
         }
@@ -249,7 +249,7 @@ class Entry extends Element
         $settings = SproutBase::$app->settings->getSettingsByKey('forms');
 
         $sources[] = [
-            'heading' => Craft::t('sprout', 'Misc')
+            'heading' => Craft::t('sprout', 'Misc'),
         ];
 
         if ($settings->saveSpamToDatabase) {
@@ -257,8 +257,8 @@ class Entry extends Element
                 'key' => 'sproutFormsWithSpam',
                 'label' => 'Spam',
                 'criteria' => [
-                    'status' => EntryStatus::SPAM_STATUS_HANDLE
-                ]
+                    'status' => EntryStatus::SPAM_STATUS_HANDLE,
+                ],
             ];
         }
 
@@ -281,12 +281,12 @@ class Entry extends Element
 
         // Mark As Spam
         $actions[] = Craft::$app->getElements()->createAction([
-            'type' => MarkAsSpam::class
+            'type' => MarkAsSpam::class,
         ]);
 
         // Mark As Default Status
         $actions[] = Craft::$app->getElements()->createAction([
-            'type' => MarkAsDefaultStatus::class
+            'type' => MarkAsDefaultStatus::class,
         ]);
 
         return $actions;

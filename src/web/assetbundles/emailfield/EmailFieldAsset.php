@@ -17,7 +17,7 @@ class EmailFieldAsset extends AssetBundle
         $this->sourcePath = '@sproutbaseassetbundles/emailfield/dist';
 
         $this->depends = [
-            SproutCpAsset::class
+            SproutCpAsset::class,
         ];
 
         $this->css = [

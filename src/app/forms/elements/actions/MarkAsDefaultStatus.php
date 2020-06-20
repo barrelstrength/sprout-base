@@ -56,7 +56,7 @@ class MarkAsDefaultStatus extends ElementAction
     public function getConfirmationMessage()
     {
         return Craft::t('sprout', 'Are you sure you want to mark the selected form entries as {statusName}', [
-            'statusName' => $this->entryStatus->name
+            'statusName' => $this->entryStatus->name,
         ]);
     }
 
@@ -72,11 +72,11 @@ class MarkAsDefaultStatus extends ElementAction
 
         if ($response) {
             $message = Craft::t('sprout', 'Entries marked as {statusName}.', [
-                'statusName' => $this->entryStatus->name
+                'statusName' => $this->entryStatus->name,
             ]);
         } else {
             $message = Craft::t('sprout', 'Unable to mark entries as {statusName}.', [
-                'statusName' => $this->entryStatus->name
+                'statusName' => $this->entryStatus->name,
             ]);
         }
 

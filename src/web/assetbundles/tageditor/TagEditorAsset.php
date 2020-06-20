@@ -16,12 +16,12 @@ class TagEditorAsset extends AssetBundle
         $this->sourcePath = '@sproutbaselib';
 
         $this->css = [
-            'jquery.tag-editor/css/jquery.tag-editor.css'
+            'jquery.tag-editor/css/jquery.tag-editor.css',
         ];
 
         $this->js = [
             'jquery.tag-editor/js/jquery.tag-editor.min.js',
-            'jquery.caret/js/jquery.caret.min.js'
+            'jquery.caret/js/jquery.caret.min.js',
         ];
 
         parent::init();

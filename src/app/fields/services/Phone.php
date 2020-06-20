@@ -84,7 +84,7 @@ class Phone extends Component
                 'field' => $field,
                 'value' => $val,
                 'countries' => $countries,
-                'country' => $country
+                'country' => $country,
             ]
         );
     }
@@ -139,7 +139,7 @@ class Phone extends Component
 
             return Json::encode([
                 'country' => $value->country,
-                'phone' => $value->phone
+                'phone' => $value->phone,
             ]);
         }
 
@@ -197,7 +197,7 @@ class Phone extends Component
 
         return Craft::t('sprout', $message.' Example format: {exampleNumber}', [
             'fieldName' => $field->name,
-            'exampleNumber' => $exampleNationalNumber
+            'exampleNumber' => $exampleNationalNumber,
         ]);
     }
 

@@ -108,7 +108,7 @@ class RegularExpression extends FormField implements PreviewableFieldInterface
     {
         return Craft::$app->getView()->renderTemplate('sprout/forms/_components/fields/formfields/regularexpression/example',
             [
-                'field' => $this
+                'field' => $this,
             ]
         );
     }
@@ -139,7 +139,7 @@ class RegularExpression extends FormField implements PreviewableFieldInterface
                 'pattern' => $pattern,
                 'errorMessage' => $this->customPatternErrorMessage,
                 'renderingOptions' => $renderingOptions,
-                'placeholder' => $placeholder
+                'placeholder' => $placeholder,
             ]
         );
 
@@ -184,7 +184,7 @@ class RegularExpression extends FormField implements PreviewableFieldInterface
         /** @noinspection ClassConstantCanBeUsedInspection */
         return [
             CraftPlainText::class,
-            'barrelstrength\\sproutfields\\fields\\RegularExpression'
+            'barrelstrength\\sproutfields\\fields\\RegularExpression',
         ];
     }
 }

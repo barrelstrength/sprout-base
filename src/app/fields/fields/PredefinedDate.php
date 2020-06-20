@@ -49,7 +49,7 @@ class PredefinedDate extends BasePredefinedField
     {
         return Craft::$app->getView()->renderTemplate('sprout/fields/_components/fields/formfields/predefineddate/settings',
             [
-                'field' => $this
+                'field' => $this,
             ]);
     }
 
@@ -83,7 +83,7 @@ class PredefinedDate extends BasePredefinedField
             [
                 'field' => $this,
                 'name' => $this->handle,
-                'value' => $value
+                'value' => $value,
             ]);
     }
 

@@ -48,7 +48,7 @@ class FieldRule extends Rule
     {
         return Craft::$app->getView()->renderTemplate('sprout/forms/_components/rules/fieldrule/settings',
             [
-                'fieldRule' => $this
+                'fieldRule' => $this,
             ]
         );
     }
@@ -60,7 +60,7 @@ class FieldRule extends Rule
     {
         return [
             'Show',
-            'Hide'
+            'Hide',
         ];
     }
 
@@ -73,7 +73,7 @@ class FieldRule extends Rule
         foreach ($this->getBehaviorActions() as $behaviorAction) {
             $options[] = [
                 'label' => $behaviorAction,
-                'value' => strtolower($behaviorAction)
+                'value' => strtolower($behaviorAction),
             ];
         }
 

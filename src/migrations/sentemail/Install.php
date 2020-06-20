@@ -33,7 +33,7 @@ class Install extends Migration
                 'status' => $this->string(),
                 'dateCreated' => $this->dateTime(),
                 'dateUpdated' => $this->dateTime(),
-                'uid' => $this->uid()
+                'uid' => $this->uid(),
             ]);
 
             $this->addForeignKey(null, SentEmailRecord::tableName(),

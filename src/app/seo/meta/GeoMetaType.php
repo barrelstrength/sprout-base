@@ -71,7 +71,7 @@ class GeoMetaType extends MetaType
         return [
             'region' => 'geo.region',
             'placename' => 'geo.placename',
-            'position' => 'geo.position'
+            'position' => 'geo.position',
         ];
     }
 
@@ -178,7 +178,7 @@ class GeoMetaType extends MetaType
     {
         return Craft::$app->getView()->renderTemplate('sprout/seo/_components/fields/elementmetadata/blocks/geo', [
             'meta' => $this,
-            'field' => $field
+            'field' => $field,
         ]);
     }
 

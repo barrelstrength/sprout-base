@@ -98,7 +98,7 @@ class EntriesSave extends NotificationEvent
         }
 
         return Craft::$app->getView()->renderTemplate('sprout/notifications/_components/events/save-entry', [
-            'event' => $this
+            'event' => $this,
         ]);
     }
 
@@ -123,7 +123,7 @@ class EntriesSave extends NotificationEvent
             $id = array_shift($ids);
 
             $criteria->where([
-                'sectionId' => $id
+                'sectionId' => $id,
             ]);
         }
 
@@ -140,12 +140,12 @@ class EntriesSave extends NotificationEvent
         $rules[] = [
             'whenNew', 'required', 'when' => function() {
                 return $this->whenUpdated == false;
-            }
+            },
         ];
         $rules[] = [
             'whenUpdated', 'required', 'when' => function() {
                 return $this->whenNew == false;
-            }
+            },
         ];
         $rules[] = [['whenNew', 'whenUpdated'], 'validateWhenTriggers'];
         $rules[] = [['event'], 'validateEvent'];
@@ -242,7 +242,7 @@ class EntriesSave extends NotificationEvent
         foreach ($result as $key => $section) {
             $options[] = [
                 'label' => $section->name,
-                'value' => $section->id
+                'value' => $section->id,
             ];
         }
 

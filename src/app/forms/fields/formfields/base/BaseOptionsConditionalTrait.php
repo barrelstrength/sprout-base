@@ -22,7 +22,7 @@ trait BaseOptionsConditionalTrait
 
         $selectConditionClasses = [
             IsCondition::class,
-            IsNotCondition::class
+            IsNotCondition::class,
         ];
 
         foreach ($selectConditionClasses as $selectCondition) {

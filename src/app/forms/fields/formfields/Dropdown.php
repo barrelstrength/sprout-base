@@ -77,7 +77,7 @@ class Dropdown extends CraftDropdownField
     {
         return Craft::$app->getView()->renderTemplate('sprout/forms/_components/fields/formfields/dropdown/example',
             [
-                'field' => $this
+                'field' => $this,
             ]
         );
     }
@@ -101,7 +101,7 @@ class Dropdown extends CraftDropdownField
                 'value' => $value,
                 'field' => $this,
                 'entry' => $entry,
-                'renderingOptions' => $renderingOptions
+                'renderingOptions' => $renderingOptions,
             ]
         );
 
@@ -115,7 +115,7 @@ class Dropdown extends CraftDropdownField
     {
         return [
             CraftPlainText::class,
-            CraftDropdownField::class
+            CraftDropdownField::class,
         ];
     }
 
@@ -129,7 +129,7 @@ class Dropdown extends CraftDropdownField
             new StartsWithCondition(),
             new DoesNotStartWithCondition(),
             new EndsWithCondition(),
-            new DoesNotEndWithCondition()
+            new DoesNotEndWithCondition(),
         ];
     }
 }

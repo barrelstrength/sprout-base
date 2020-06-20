@@ -65,7 +65,7 @@ if (typeof Craft.SproutBase === typeof undefined) {
 
       if (name) {
         const data = {
-          name: name
+          name: name,
         };
 
         Craft.postActionRequest(settings.newGroupAction, data, $.proxy(function(response) {
@@ -87,7 +87,7 @@ if (typeof Craft.SproutBase === typeof undefined) {
       if (newName && newName !== oldName) {
         const data = {
           id: this.$selectedGroup.data('id'),
-          name: newName
+          name: newName,
         };
 
         Craft.postActionRequest(settings.renameGroupAction, data, $.proxy(function(response) {
@@ -110,7 +110,7 @@ if (typeof Craft.SproutBase === typeof undefined) {
     deleteSelectedGroup: function() {
       if (confirm(Craft.t('sprout', settings.deleteGroupConfirmMessage))) {
         const data = {
-          id: this.$selectedGroup.data('id')
+          id: this.$selectedGroup.data('id'),
         };
 
         Craft.postActionRequest(settings.deleteGroupAction, data, $.proxy(function(response) {
@@ -141,7 +141,7 @@ if (typeof Craft.SproutBase === typeof undefined) {
       }
 
       return errors;
-    }
+    },
   });
 
 })();

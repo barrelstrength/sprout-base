@@ -17,7 +17,7 @@ class PhoneFieldAsset extends AssetBundle
         $this->sourcePath = '@sproutbaseassetbundles/phonefield/dist';
 
         $this->depends = [
-            CpAsset::class
+            CpAsset::class,
         ];
 
         $this->css = [
@@ -25,7 +25,7 @@ class PhoneFieldAsset extends AssetBundle
         ];
 
         $this->js = [
-            'js/PhoneField.js'
+            'js/PhoneField.js',
         ];
 
         parent::init();

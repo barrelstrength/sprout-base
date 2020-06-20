@@ -66,7 +66,7 @@ Craft.SproutBase.EditAddressModal = Garnish.Modal.extend(
         addressId: addressId,
         fieldId: fieldId,
         countryCode: countryCode,
-        namespace: this.settings.namespace
+        namespace: this.settings.namespace,
       }, $.proxy(function(response) {
         // Cleanup some duplicate fields because the country dropdown is already on the page
         // @todo - refactor how this HTML is built so Country Dropdown we don't need to use sleight of hand like this
@@ -111,7 +111,7 @@ Craft.SproutBase.EditAddressModal = Garnish.Modal.extend(
         'postalCode',
         'sortingCode',
         'address1',
-        'address2'
+        'address2',
       ];
 
       const formValues = {};
@@ -123,7 +123,7 @@ Craft.SproutBase.EditAddressModal = Garnish.Modal.extend(
       });
 
       const data = {
-        formValues: formValues
+        formValues: formValues,
       };
 
       data.namespace = this.settings.namespace;
@@ -150,6 +150,6 @@ Craft.SproutBase.EditAddressModal = Garnish.Modal.extend(
     },
     defaults: {
       onSubmit: $.noop,
-      onUpdate: $.noop
-    }
+      onUpdate: $.noop,
+    },
   });

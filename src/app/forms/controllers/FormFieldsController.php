@@ -146,7 +146,7 @@ class FormFieldsController extends BaseController
         $fieldLayoutField = FieldLayoutFieldRecord::findOne([
                 'layoutId' => $fieldLayout->id,
                 'tabId' => $tabId,
-                'fieldId' => $fieldId
+                'fieldId' => $fieldId,
             ]
         );
 
@@ -258,7 +258,7 @@ class FormFieldsController extends BaseController
         if ($field) {
             $fieldLayoutField = FieldLayoutFieldRecord::findOne([
                 'fieldId' => $field->id,
-                'layoutId' => $form->fieldLayoutId
+                'layoutId' => $form->fieldLayoutId,
             ]);
 
             $field->required = $fieldLayoutField->required;
@@ -331,12 +331,12 @@ class FormFieldsController extends BaseController
             SproutBase::$app->forms->removeFieldRulesUsingField($oldHandle, $form);
 
             return $this->asJson([
-                'success' => true
+                'success' => true,
             ]);
         }
 
         return $this->asJson([
-            'success' => false
+            'success' => false,
         ]);
     }
 
@@ -359,7 +359,7 @@ class FormFieldsController extends BaseController
         SproutBase::$app->formFields->reorderFields($fieldIds);
 
         return $this->asJson([
-            'success' => true
+            'success' => true,
         ]);
     }
 
@@ -393,7 +393,7 @@ class FormFieldsController extends BaseController
                 'instructions' => $field->instructions,
                 'group' => [
                     'name' => $tabName,
-                    'id' => $tabId
+                    'id' => $tabId,
                 ],
             ],
             'template' => $success ? false : SproutBase::$app->formFields->getModalFieldTemplate($form, $field),

@@ -47,7 +47,7 @@ class Sitemaps extends Component
         $customSections = $this->createSitemapSectionQuery()
             ->where([
                 'siteId' => $siteId,
-                'type' => NoSection::class
+                'type' => NoSection::class,
             ])
             ->all();
 
@@ -109,7 +109,7 @@ class Sitemaps extends Component
         $results = $this->createSitemapSectionQuery()
             ->where([
                 'type' => $type,
-                '[[siteId]]' => $siteId
+                '[[siteId]]' => $siteId,
             ])
             ->all();
 
@@ -135,7 +135,7 @@ class Sitemaps extends Component
     {
         $result = $this->createSitemapSectionQuery()
             ->where([
-                'id' => $id
+                'id' => $id,
             ])
             ->one();
 
@@ -228,7 +228,7 @@ class Sitemaps extends Component
             $sitemapSectionRecords = SitemapSectionRecord::find()
                 ->where(['in', 'siteId', $siteIds])
                 ->andWhere([
-                    'urlEnabledSectionId' => $sitemapSectionRecord->urlEnabledSectionId
+                    'urlEnabledSectionId' => $sitemapSectionRecord->urlEnabledSectionId,
                 ])
                 ->indexBy('siteId')
                 ->all();
@@ -277,7 +277,7 @@ class Sitemaps extends Component
 
         $affectedRows = Craft::$app->getDb()->createCommand()
             ->delete(SitemapSectionRecord::tableName(), [
-                'id' => $id
+                'id' => $id,
             ])
             ->execute();
 
@@ -445,7 +445,7 @@ class Sitemaps extends Component
                 'changeFrequency',
                 'priority',
                 'enabled',
-                'uniqueKey'
+                'uniqueKey',
             ])
             ->from([SitemapSectionRecord::tableName()]);
     }

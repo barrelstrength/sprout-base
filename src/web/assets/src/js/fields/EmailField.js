@@ -22,7 +22,7 @@ SproutEmailField = Garnish.Base.extend({
         'elementId': elementId,
         'fieldContext': fieldContext,
         'fieldHandle': fieldHandle,
-        'value': $(sproutEmailFieldId).val()
+        'value': $(sproutEmailFieldId).val(),
       };
 
       // Query the controller so the regex validation is all done through PHP.
@@ -36,5 +36,5 @@ SproutEmailField = Garnish.Base.extend({
       }, []);
 
     }, 500);
-  }
+  },
 });

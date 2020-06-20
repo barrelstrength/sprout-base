@@ -105,7 +105,7 @@ class Reports extends Component
     {
         $reportRecords = ReportRecord::find()
             ->where([
-                'dataSourceId' => $dataSourceId
+                'dataSourceId' => $dataSourceId,
             ])
             ->all();
 
@@ -152,7 +152,7 @@ class Reports extends Component
                     DataSourceRecord::tableName().' datasource',
                     '[[datasource.id]] = [[reports.dataSourceId]]')
                 ->where([
-                    'groupId' => $groupId
+                    'groupId' => $groupId,
                 ])
                 ->all();
 
@@ -192,7 +192,7 @@ class Reports extends Component
     {
         $totalReportsForDataSource = ReportRecord::find()
             ->where([
-                'dataSourceId' => $dataSourceId
+                'dataSourceId' => $dataSourceId,
             ])
             ->count();
 

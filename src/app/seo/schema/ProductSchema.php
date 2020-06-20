@@ -69,7 +69,7 @@ class ProductSchema extends ThingSchema
 
         $websiteIdentity = [
             'Person' => WebsiteIdentityPersonSchema::class,
-            'Organization' => WebsiteIdentityOrganizationSchema::class
+            'Organization' => WebsiteIdentityOrganizationSchema::class,
         ];
 
         /** @var Commerce $commerce */

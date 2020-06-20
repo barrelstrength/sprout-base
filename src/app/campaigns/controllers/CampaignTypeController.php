@@ -64,7 +64,7 @@ class CampaignTypeController extends Controller
         return $this->renderTemplate('sprout/_settings/campaign-types/edit', [
             'mailers' => $mailerOptions,
             'campaignTypeId' => $campaignTypeId,
-            'campaignType' => $campaignType
+            'campaignType' => $campaignType,
         ]);
     }
 
@@ -97,7 +97,7 @@ class CampaignTypeController extends Controller
             Craft::$app->getSession()->setError(Craft::t('sprout', 'Unable to save campaign.'));
 
             Craft::$app->getUrlManager()->setRouteParams([
-                'campaignType' => $campaignType
+                'campaignType' => $campaignType,
             ]);
 
             $this->redirectToPostedUrl();
@@ -129,14 +129,14 @@ class CampaignTypeController extends Controller
             $session->setNotice(Craft::t('sprout', 'Campaign Type deleted.'));
 
             return $this->asJson([
-                'success' => true
+                'success' => true,
             ]);
         }
 
         $session->setError(Craft::t('sprout', "Couldn't delete Campaign."));
 
         return $this->asJson([
-            'success' => false
+            'success' => false,
         ]);
     }
 }

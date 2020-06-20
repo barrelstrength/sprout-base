@@ -38,7 +38,7 @@ class SproutFormsIntegration {
     const integrationId = $('#integrationId').val();
 
     const data = {
-      'integrationId': integrationId
+      'integrationId': integrationId,
     };
 
     Craft.postActionRequest('sprout/form-integrations/get-source-form-fields', data, $.proxy(function(response, textStatus) {

@@ -22,11 +22,11 @@ class RedirectsAsset extends AssetBundle
         ];
 
         $this->css = [
-            'css/redirects.css'
+            'css/redirects.css',
         ];
 
         $this->js = [
-            'js/RedirectIndex.js'
+            'js/RedirectIndex.js',
         ];
 
         parent::init();

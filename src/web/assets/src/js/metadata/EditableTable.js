@@ -33,7 +33,7 @@ Craft.SproutSeo.EditableTable = Garnish.Base.extend(
 
       this.sorter = new Craft.DataTableSorter(this.$table, {
         helperClass: 'editabletablesorthelper',
-        copyDraggeeInputValuesToHelper: true
+        copyDraggeeInputValuesToHelper: true,
       });
 
       if (this.isVisible()) {
@@ -85,14 +85,14 @@ Craft.SproutSeo.EditableTable = Garnish.Base.extend(
       $tr.find('input,textarea,select').first().focus();
 
       this.settings.onAddRow($tr);
-    }
+    },
   },
   {
     textualColTypes: ['singleline', 'multiline', 'number'],
     defaults: {
       rowIdPrefix: '',
       onAddRow: $.noop,
-      onDeleteRow: $.noop
+      onDeleteRow: $.noop,
     },
 
     getRowHtml: function(rowId, columns, baseName, values) {
@@ -176,7 +176,7 @@ Craft.SproutSeo.EditableTable = Garnish.Base.extend(
         '</tr>';
 
       return rowHtml;
-    }
+    },
 
   });
 
@@ -223,7 +223,7 @@ Craft.SproutSeo.EditableTable.Row = Garnish.Base.extend(
           this.addListener($textarea, 'mousedown', 'ignoreNextTextareaFocus');
 
           this.niceTexts.push(new Garnish.NiceText($textarea, {
-            onHeightChange: $.proxy(this, 'onTextareaHeightChange')
+            onHeightChange: $.proxy(this, 'onTextareaHeightChange'),
           }));
 
           if (col.type === 'singleline' || col.type === 'number') {
@@ -349,8 +349,8 @@ Craft.SproutSeo.EditableTable.Row = Garnish.Base.extend(
 
       // onDeleteRow callback
       this.table.settings.onDeleteRow(this.$tr);
-    }
+    },
   },
   {
-    numericKeyCodes: [9 /* (tab) */, 8 /* (delete) */, 37, 38, 39, 40 /* (arrows) */, 45, 91 /* (minus) */, 46, 190 /* period */, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57 /* (0-9) */]
+    numericKeyCodes: [9 /* (tab) */, 8 /* (delete) */, 37, 38, 39, 40 /* (arrows) */, 45, 91 /* (minus) */, 46, 190 /* period */, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57 /* (0-9) */],
   });

@@ -64,7 +64,7 @@ class MultiSelect extends CraftMultiSelect
     {
         return Craft::$app->getView()->renderTemplate('sprout/forms/_components/fields/formfields/multiselect/example',
             [
-                'field' => $this
+                'field' => $this,
             ]
         );
     }
@@ -88,7 +88,7 @@ class MultiSelect extends CraftMultiSelect
                 'value' => $value,
                 'field' => $this,
                 'entry' => $entry,
-                'renderingOptions' => $renderingOptions
+                'renderingOptions' => $renderingOptions,
             ]
         );
 
@@ -101,7 +101,7 @@ class MultiSelect extends CraftMultiSelect
     public function getCompatibleCraftFieldTypes(): array
     {
         return [
-            CraftMultiSelect::class
+            CraftMultiSelect::class,
         ];
     }
 }

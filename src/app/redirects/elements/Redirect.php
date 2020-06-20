@@ -147,7 +147,7 @@ class Redirect extends Element
             'test' => Craft::t('sprout', 'Test'),
             'lastRemoteIpAddress' => Craft::t('sprout', 'Last Remote IP'),
             'lastReferrer' => Craft::t('sprout', 'Last Referrer'),
-            'lastUserAgent' => Craft::t('sprout', 'Last User Agent')
+            'lastUserAgent' => Craft::t('sprout', 'Last User Agent'),
         ];
 
         return $attributes;
@@ -182,7 +182,7 @@ class Redirect extends Element
             [
                 'label' => Craft::t('sprout', 'Count'),
                 'orderBy' => 'sprout_redirects.count',
-                'attribute' => 'count'
+                'attribute' => 'count',
             ],
             'dateLastUsed' => Craft::t('sprout', 'Date Last Used'),
             'elements.dateCreated' => Craft::t('sprout', 'Date Created'),
@@ -208,14 +208,14 @@ class Redirect extends Element
                 'structureId' => SproutBase::$app->redirects->getStructureId(),
                 'structureEditable' => true,
                 'criteria' => [
-                    'method' => [301, 302]
+                    'method' => [301, 302],
                 ],
-                'defaultSort' => ['count', 'desc']
-            ]
+                'defaultSort' => ['count', 'desc'],
+            ],
         ];
 
         $sources[] = [
-            'heading' => Craft::t('sprout', 'Methods')
+            'heading' => Craft::t('sprout', 'Methods'),
         ];
 
         $methods = SproutBase::$app->redirects->getMethods();
@@ -229,7 +229,7 @@ class Redirect extends Element
                 'label' => $method,
                 'criteria' => ['method' => $code],
                 'structureEditable' => true,
-                'defaultSort' => ['count', 'desc']
+                'defaultSort' => ['count', 'desc'],
             ];
         }
 
@@ -357,7 +357,7 @@ class Redirect extends Element
 
         $html = Craft::$app->view->renderTemplate('sprout/redirects/redirects/_editor', [
             'redirect' => $this,
-            'methodOptions' => $methodOptions
+            'methodOptions' => $methodOptions,
         ]);
 
         // Everything else
@@ -517,7 +517,7 @@ class Redirect extends Element
 
         if (isset($newUrl['host']) && strpos($newUrl['host'], '$') !== false) {
             $this->addError($attribute, Craft::t('sprout', 'The host name ({host}) of an absolute URL cannot contain capture groups.', [
-                'host' => $newUrl['host'] ?? null
+                'host' => $newUrl['host'] ?? null,
             ]));
         }
 
@@ -525,7 +525,7 @@ class Redirect extends Element
         if (!isset($newUrl['path']) || (isset($newUrl['path']) && strpos($newUrl['path'], '/') !== 0)) {
             $this->addError($attribute, Craft::t('sprout', 'The host name  
             ({host}) of an absolute URL must end with a slash.', [
-                'host' => $newUrl['host'] ?? null
+                'host' => $newUrl['host'] ?? null,
             ]));
         }
     }
@@ -548,12 +548,14 @@ class Redirect extends Element
             case 'newUrl':
 
                 $newUrl = $this->newUrl ?? '/';
+
                 return '<input readonly class="code sprout-redirects-elementindex-input" value="'.$newUrl.'">';
 
             case 'dateLastUsed':
 
                 if ($this->dateLastUsed) {
                     $dateLastUsed = DateTimeHelper::toDateTime($this->dateLastUsed);
+
                     return $dateLastUsed->format('Y-m-d');
                 }
 

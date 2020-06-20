@@ -31,7 +31,7 @@ class BarChartVisualization extends Visualization
     public function getSettingsHtml(array $settings): string
     {
         return Craft::$app->getView()->renderTemplate('sprout/reports/_components/visualizations/BarChart/settings', [
-            'settings' => $settings
+            'settings' => $settings,
         ]);
     }
 

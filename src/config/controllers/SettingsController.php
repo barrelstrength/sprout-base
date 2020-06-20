@@ -122,7 +122,7 @@ class SettingsController extends Controller
             'configKey' => $configKey,
             'currentSubNavKey' => $currentSubNavKey,
             'showMultiSiteSettings' => $showMultiSiteSettings,
-            'packAssociativeArrays' => $packAssociativeArrays
+            'packAssociativeArrays' => $packAssociativeArrays,
         ], $dynamicVariables));
     }
 
@@ -151,7 +151,7 @@ class SettingsController extends Controller
             Craft::$app->getSession()->setError(Craft::t('sprout', 'Couldn’t save settings.'));
 
             Craft::$app->getUrlManager()->setRouteParams([
-                'settings' => $settings
+                'settings' => $settings,
             ]);
 
             return null;
@@ -211,7 +211,7 @@ class SettingsController extends Controller
         // Loop through again to use our groupings and build our nav
         foreach ($subNavGroups as $heading => $subNavGroup) {
             $subNav[] = [
-                'heading' => $heading
+                'heading' => $heading,
             ];
 
             ksort($subNavGroup);

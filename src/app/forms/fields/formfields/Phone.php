@@ -126,7 +126,7 @@ class Phone extends FormField implements PreviewableFieldInterface
     {
         return Craft::$app->getView()->renderTemplate('sprout/forms/_components/fields/formfields/phone/example',
             [
-                'field' => $this
+                'field' => $this,
             ]
         );
     }
@@ -172,7 +172,7 @@ class Phone extends FormField implements PreviewableFieldInterface
                 'entry' => $entry,
                 'country' => $country,
                 'countries' => $countries,
-                'renderingOptions' => $renderingOptions
+                'renderingOptions' => $renderingOptions,
             ]
         );
 
@@ -237,7 +237,7 @@ class Phone extends FormField implements PreviewableFieldInterface
     {
         /** @noinspection ClassConstantCanBeUsedInspection */
         return [
-            'barrelstrength\\sproutfields\\fields\\Phone'
+            'barrelstrength\\sproutfields\\fields\\Phone',
         ];
     }
 
@@ -254,7 +254,7 @@ class Phone extends FormField implements PreviewableFieldInterface
             new StartsWithCondition(),
             new DoesNotStartWithCondition(),
             new EndsWithCondition(),
-            new DoesNotEndWithCondition()
+            new DoesNotEndWithCondition(),
         ];
     }
 }

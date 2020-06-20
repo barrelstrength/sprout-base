@@ -67,7 +67,7 @@ class Gender extends Field
                 'field' => $this,
                 'genderOptions' => $genderOptions,
                 'name' => $name,
-                'value' => $value
+                'value' => $value,
             ]
         );
     }
@@ -82,11 +82,11 @@ class Gender extends Field
         $options = [
             [
                 'label' => Craft::t('sprout', 'Select...'),
-                'value' => ''
+                'value' => '',
             ],
             [
                 'label' => Craft::t('sprout', 'Female'),
-                'value' => 'female'
+                'value' => 'female',
             ],
             [
                 'label' => Craft::t('sprout', 'Male'),
@@ -94,26 +94,26 @@ class Gender extends Field
             ],
             [
                 'label' => Craft::t('sprout', 'Prefer not to say'),
-                'value' => 'decline'
-            ]
+                'value' => 'decline',
+            ],
         ];
 
         $gender = $value ?? null;
 
         $options[] = [
-            'optgroup' => Craft::t('sprout', 'Custom')
+            'optgroup' => Craft::t('sprout', 'Custom'),
         ];
 
         if (!array_key_exists($gender, ['female' => 0, 'male' => 1, 'decline' => 2]) && $gender != '') {
             $options[] = [
                 'label' => $gender,
-                'value' => $gender
+                'value' => $gender,
             ];
         }
 
         $options[] = [
             'label' => Craft::t('sprout', 'Add Custom'),
-            'value' => 'custom'
+            'value' => 'custom',
         ];
 
         return $options;

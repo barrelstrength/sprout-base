@@ -101,13 +101,13 @@ class XmlSitemapController extends Controller
         // Render a specific sitemap
         if ($sitemapKey) {
             return $this->renderTemplate('_components/sitemaps/sitemap', [
-                'elements' => $elements
+                'elements' => $elements,
             ]);
         }
 
         // Render the sitemapindex if no specific sitemap is defined
         return $this->renderTemplate('_components/sitemaps/sitemapindex', [
-            'sitemapIndexUrls' => $sitemapIndexUrls
+            'sitemapIndexUrls' => $sitemapIndexUrls,
         ]);
     }
 }

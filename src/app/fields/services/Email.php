@@ -36,7 +36,7 @@ class Email extends Component
     {
         return Craft::$app->getView()->renderTemplate('sprout/fields/_components/fields/formfields/email/settings',
             [
-                'field' => $field
+                'field' => $field,
             ]);
     }
 
@@ -69,7 +69,7 @@ class Email extends Component
                 'value' => $value,
                 'fieldContext' => $fieldContext,
                 'placeholder' => $field->placeholder,
-                'element' => $element
+                'element' => $element,
             ]);
     }
 

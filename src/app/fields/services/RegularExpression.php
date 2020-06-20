@@ -69,7 +69,7 @@ class RegularExpression extends Component
             'field' => $field,
             'name' => $name,
             'value' => $value,
-            'fieldContext' => $fieldContext
+            'fieldContext' => $fieldContext,
         ]);
     }
 

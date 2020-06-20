@@ -68,9 +68,9 @@ class SentEmailConfig extends Config
                 'label' => Craft::t('sprout', 'View Sent Email'),
                 'nested' => [
                     'sprout:sentEmail:resendEmails' => [
-                        'label' => Craft::t('sprout', 'Resend Sent Emails')
-                    ]
-                ]
+                        'label' => Craft::t('sprout', 'Resend Sent Emails'),
+                    ],
+                ],
             ],
         ];
     }
@@ -102,7 +102,7 @@ class SentEmailConfig extends Config
     public function getControllerMapKeys(): array
     {
         return [
-            'sent-email'
+            'sent-email',
         ];
     }
 }

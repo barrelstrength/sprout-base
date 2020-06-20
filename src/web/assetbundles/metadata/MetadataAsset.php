@@ -27,15 +27,15 @@ class MetadataAsset extends AssetBundle
             DatepickerI18nAsset::class,
             TimepickerAsset::class,
             TagEditorAsset::class,
-            SelectOtherFieldAsset::class
+            SelectOtherFieldAsset::class,
         ];
 
         $this->js = [
-            'js/Metadata.js'
+            'js/Metadata.js',
         ];
 
         $this->css = [
-            'css/metadata.css'
+            'css/metadata.css',
         ];
 
         parent::init();

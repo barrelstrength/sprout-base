@@ -168,7 +168,7 @@ class CampaignEmails extends Component
 
                 if (!$record) {
                     throw new Exception(Craft::t('sprout', 'No Campaign Email with id {id} was found.', [
-                        'id' => $campaignEmail->getCampaignType()->id
+                        'id' => $campaignEmail->getCampaignType()->id,
                     ]));
                 }
 

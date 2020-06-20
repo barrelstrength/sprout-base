@@ -21,7 +21,7 @@ class EmailTemplates extends Component
     public function getEmailTemplatesTypes(): array
     {
         $event = new RegisterComponentTypesEvent([
-            'types' => []
+            'types' => [],
         ]);
 
         $this->trigger(self::EVENT_REGISTER_EMAIL_TEMPLATES, $event);
@@ -72,8 +72,8 @@ class EmailTemplates extends Component
         $options = [
             [
                 'label' => Craft::t('sprout', 'Select...'),
-                'value' => ''
-            ]
+                'value' => '',
+            ],
         ];
 
         /**
@@ -86,7 +86,7 @@ class EmailTemplates extends Component
 
             $options[] = [
                 'label' => $template->getName(),
-                'value' => $type
+                'value' => $type,
             ];
             $templateIds[] = $type;
         }
@@ -97,19 +97,19 @@ class EmailTemplates extends Component
         $templateFolder = $emailTemplateId ?? $settings->emailTemplateId ?? $defaultEmailTemplates->getPath();
 
         $options[] = [
-            'optgroup' => Craft::t('sprout', 'Custom Template Folder')
+            'optgroup' => Craft::t('sprout', 'Custom Template Folder'),
         ];
 
         if (!in_array($templateFolder, $templateIds, false) && $templateFolder != '') {
             $options[] = [
                 'label' => $templateFolder,
-                'value' => $templateFolder
+                'value' => $templateFolder,
             ];
         }
 
         $options[] = [
             'label' => Craft::t('sprout', 'Add Custom'),
-            'value' => 'custom'
+            'value' => 'custom',
         ];
 
         return $options;

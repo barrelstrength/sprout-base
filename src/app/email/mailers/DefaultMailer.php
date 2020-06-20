@@ -84,7 +84,7 @@ class DefaultMailer extends Mailer implements NotificationEmailSenderInterface
         $settings = isset($settings['settings']) ? $settings['settings'] : $this->getSettings();
 
         $html = Craft::$app->getView()->renderTemplate('sprout/config/_integrations/sproutemail/mailers/defaultmailer/settings', [
-            'settings' => $settings
+            'settings' => $settings,
         ]);
 
         return Template::raw($html);
@@ -155,14 +155,14 @@ class DefaultMailer extends Mailer implements NotificationEmailSenderInterface
 
             $infoTable = SproutBase::$app->sentEmails->createInfoTableModel('Sprout', '', [
                 'emailType' => $notificationEmail->displayName(),
-                'mailer' => 'Sprout Mailer'
+                'mailer' => 'Sprout Mailer',
             ]);
 
             $deliveryTypes = $infoTable->getDeliveryTypes();
             $infoTable->deliveryType = $notificationEmail->getIsTest() ? $deliveryTypes['Test'] : $deliveryTypes['Live'];
 
             $variables = [
-                SentEmails::SENT_EMAIL_MESSAGE_VARIABLE => $infoTable
+                SentEmails::SENT_EMAIL_MESSAGE_VARIABLE => $infoTable,
             ];
 
             $message->variables = $variables;
@@ -240,13 +240,13 @@ class DefaultMailer extends Mailer implements NotificationEmailSenderInterface
     public function getLists(): array
     {
 //        if (empty($this->lists)) {
-            // Get all selected Mailing List Reports
-            // Prepare SimpleRecipientList of their data
-            // Assign it to $this->lists and return it...
-            // @todo - how can we attach all fields as arbitrary attributes to be used as personalization in email?
-            // Do we even need this to be a model?
+        // Get all selected Mailing List Reports
+        // Prepare SimpleRecipientList of their data
+        // Assign it to $this->lists and return it...
+        // @todo - how can we attach all fields as arbitrary attributes to be used as personalization in email?
+        // Do we even need this to be a model?
 
-            // Assign lists
+        // Assign lists
 //            $this->lists = $listType ? $listType->getLists() : [];
 //        }
 

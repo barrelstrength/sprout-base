@@ -186,7 +186,7 @@ class SingleLine extends FormField implements PreviewableFieldInterface
     {
         return Craft::$app->getView()->renderTemplate('sprout/forms/_components/fields/formfields/singleline/example',
             [
-                'field' => $this
+                'field' => $this,
             ]
         );
     }
@@ -211,7 +211,7 @@ class SingleLine extends FormField implements PreviewableFieldInterface
                 'value' => $value,
                 'field' => $this,
                 'entry' => $entry,
-                'renderingOptions' => $renderingOptions
+                'renderingOptions' => $renderingOptions,
             ]
         );
 
@@ -248,7 +248,7 @@ class SingleLine extends FormField implements PreviewableFieldInterface
     {
         return [
             CraftPlainText::class,
-            CraftDropdown::class
+            CraftDropdown::class,
         ];
     }
 
@@ -265,7 +265,7 @@ class SingleLine extends FormField implements PreviewableFieldInterface
             new StartsWithCondition(),
             new DoesNotStartWithCondition(),
             new EndsWithCondition(),
-            new DoesNotEndWithCondition()
+            new DoesNotEndWithCondition(),
         ];
     }
 }

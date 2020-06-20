@@ -60,7 +60,7 @@ class Users extends CraftUsers
     {
         return Craft::$app->getView()->renderTemplate('sprout/forms/_components/fields/formfields/users/example',
             [
-                'field' => $this
+                'field' => $this,
             ]
         );
     }
@@ -99,7 +99,7 @@ class Users extends CraftUsers
     public function getCompatibleCraftFieldTypes(): array
     {
         return [
-            CraftUsers::class
+            CraftUsers::class,
         ];
     }
 }

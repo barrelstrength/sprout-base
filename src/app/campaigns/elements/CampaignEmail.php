@@ -169,7 +169,7 @@ class CampaignEmail extends EmailElement
             self::DISABLED => Craft::t('sprout', 'Disabled'),
             self::PENDING => Craft::t('sprout', 'Pending'),
             ///self::SCHEDULED => Craft::t('sprout','Scheduled'),
-            self::SENT => Craft::t('sprout', 'Sent')
+            self::SENT => Craft::t('sprout', 'Sent'),
         ];
     }
 
@@ -214,8 +214,8 @@ class CampaignEmail extends EmailElement
             [
                 'key' => '*',
                 'label' => Craft::t('sprout', 'All campaigns'),
-                'defaultSort' => ['dateCreated', 'desc']
-            ]
+                'defaultSort' => ['dateCreated', 'desc'],
+            ],
         ];
 
         $campaignTypes = SproutBase::$app->campaignTypes->getCampaignTypes();
@@ -227,9 +227,9 @@ class CampaignEmail extends EmailElement
                 'key' => 'campaignTypeId:'.$campaignType->id,
                 'label' => Craft::t('sprout', $campaignType->name),
                 'criteria' => [
-                    'campaignTypeId' => $campaignType->id
+                    'campaignTypeId' => $campaignType->id,
                 ],
-                'defaultSort' => ['dateCreated', 'desc']
+                'defaultSort' => ['dateCreated', 'desc'],
             ];
 
             $sources[] = $source;
@@ -269,7 +269,7 @@ class CampaignEmail extends EmailElement
             'dateSent' => ['label' => Craft::t('sprout', 'Date Sent')],
             'send' => ['label' => Craft::t('sprout', 'Send')],
             'preview' => ['label' => Craft::t('sprout', 'Preview'), 'icon' => 'view'],
-            'link' => ['label' => Craft::t('sprout', 'Link'), 'icon' => 'world']
+            'link' => ['label' => Craft::t('sprout', 'Link'), 'icon' => 'world'],
         ];
 
         return $attributes;
@@ -375,7 +375,7 @@ class CampaignEmail extends EmailElement
             return Craft::$app->getView()->renderTemplate('sprout/campaigns/_components/elementindex/campaignemail/prepare-link', [
                 'campaignEmail' => $this,
                 'campaignType' => $campaignType,
-                'mailer' => $mailer
+                'mailer' => $mailer,
             ]);
         }
 
@@ -383,7 +383,7 @@ class CampaignEmail extends EmailElement
             return Craft::$app->getView()->renderTemplate('sprout/campaigns/_components/elementindex/campaignemail/preview-links', [
                 'email' => $this,
                 'campaignType' => $campaignType,
-                'type' => 'html'
+                'type' => 'html',
             ]);
         }
 
@@ -428,8 +428,8 @@ class CampaignEmail extends EmailElement
             'recipient' => [
                 'firstName' => 'First',
                 'lastName' => 'Last',
-                'email' => 'user@domain.com'
-            ]
+                'email' => 'user@domain.com',
+            ],
         ];
 
         $this->setEventObject($params);

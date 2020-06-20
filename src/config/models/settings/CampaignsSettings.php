@@ -34,8 +34,8 @@ class CampaignsSettings extends Settings
             'campaign-types' => [
                 'label' => Craft::t('sprout', 'Campaign Types'),
                 'template' => 'sprout/_settings/campaign-types',
-                'settingsTarget' => SettingsController::SETTINGS_TARGET_DB
-            ]
+                'settingsTarget' => SettingsController::SETTINGS_TARGET_DB,
+            ],
         ];
     }
 }

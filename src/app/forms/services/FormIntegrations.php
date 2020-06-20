@@ -57,7 +57,7 @@ class FormIntegrations extends Component
     public function getAllIntegrationTypes(): array
     {
         $event = new RegisterComponentTypesEvent([
-            'types' => []
+            'types' => [],
         ]);
 
         $this->trigger(self::EVENT_REGISTER_INTEGRATIONS, $event);
@@ -98,7 +98,7 @@ class FormIntegrations extends Component
                 'integrations.type',
                 'integrations.sendRule',
                 'integrations.settings',
-                'integrations.enabled'
+                'integrations.enabled',
             ])
             ->from([IntegrationRecord::tableName().' integrations'])
             ->where(['integrations.formId' => $formId])
@@ -131,7 +131,7 @@ class FormIntegrations extends Component
                 'integrations.type',
                 'integrations.sendRule',
                 'integrations.settings',
-                'integrations.enabled'
+                'integrations.enabled',
             ])
             ->from([IntegrationRecord::tableName().' integrations'])
             ->where(['integrations.id' => $integrationId])
@@ -228,7 +228,7 @@ class FormIntegrations extends Component
         return [
             'html' => $html,
             'js' => $js,
-            'css' => $css
+            'css' => $css,
         ];
     }
 
@@ -316,14 +316,14 @@ class FormIntegrations extends Component
                     'entryId' => $entryId,
                     'success' => false,
                     'status' => self::ENTRY_INTEGRATION_PENDING_STATUS,
-                    'message' => 'Pending'
+                    'message' => 'Pending',
                 ], false);
 
                 $integrationLog = SproutBase::$app->formIntegrations->logIntegration($integrationLog);
 
                 $integrationLogs[] = [
                     'integration' => $integration,
-                    'integrationLog' => $integrationLog
+                    'integrationLog' => $integrationLog,
                 ];
             }
         }
@@ -347,7 +347,7 @@ class FormIntegrations extends Component
                 $integrationLog->setAttributes([
                     'success' => true,
                     'status' => self::ENTRY_INTEGRATION_NOT_SENT_STATUS,
-                    'message' => $integrationNotSentMessage
+                    'message' => $integrationNotSentMessage,
                 ], false);
 
                 SproutBase::$app->formIntegrations->logIntegration($integrationLog);
@@ -363,7 +363,7 @@ class FormIntegrations extends Component
                         $integrationLog->setAttributes([
                             'success' => true,
                             'status' => self::ENTRY_INTEGRATION_COMPLETED_STATUS,
-                            'message' => $integration->getSuccessMessage()
+                            'message' => $integration->getSuccessMessage(),
                         ], false);
 
                         $integrationLog = SproutBase::$app->formIntegrations->logIntegration($integrationLog);
@@ -371,7 +371,7 @@ class FormIntegrations extends Component
                 }
             } catch (\Exception $e) {
                 $message = Craft::t('sprout', 'Integration failed to submit: {message}', [
-                    'message' => $e->getMessage()
+                    'message' => $e->getMessage(),
                 ]);
                 $integration->addError('global', $message);
                 Craft::error($message, __METHOD__);
@@ -388,7 +388,7 @@ class FormIntegrations extends Component
                 $integrationLog->setAttributes([
                     'success' => false,
                     'message' => $errorMessages,
-                    'status' => self::ENTRY_INTEGRATION_COMPLETED_STATUS
+                    'status' => self::ENTRY_INTEGRATION_COMPLETED_STATUS,
                 ], false);
 
                 $integrationLog = SproutBase::$app->formIntegrations->logIntegration($integrationLog
@@ -396,7 +396,7 @@ class FormIntegrations extends Component
             }
 
             $event = new OnAfterIntegrationSubmit([
-                'integrationLog' => $integrationLog
+                'integrationLog' => $integrationLog,
             ]);
 
             $this->trigger(self::EVENT_AFTER_INTEGRATION_SUBMIT, $event);
@@ -445,13 +445,13 @@ class FormIntegrations extends Component
 
         $options[] = [
             'label' => Craft::t('sprout', 'Add Integration...'),
-            'value' => ''
+            'value' => '',
         ];
 
         foreach ($integrations as $integration) {
             $options[] = [
                 'label' => $integration::displayName(),
-                'value' => get_class($integration)
+                'value' => get_class($integration),
             ];
         }
 

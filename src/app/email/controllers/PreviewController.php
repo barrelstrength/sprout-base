@@ -44,7 +44,7 @@ class PreviewController extends Controller
 
         return $this->renderTemplate($previewTemplate, [
             'email' => $email,
-            'emailId' => $emailId
+            'emailId' => $emailId,
         ]);
     }
 
@@ -70,8 +70,8 @@ class PreviewController extends Controller
         $token = Craft::$app->getTokens()->createToken([
             'sprout/email-preview/view-shared-email', [
                 'emailId' => $emailId,
-                'type' => $type
-            ]
+                'type' => $type,
+            ],
         ]);
 
         $url = UrlHelper::urlWithToken($email->getUrl(), $token);

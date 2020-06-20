@@ -137,7 +137,7 @@ class SitemapSection extends Model
     {
         if (UrlHelper::isAbsoluteUrl($this->$attribute)) {
             $this->addError($attribute, Craft::t('sprout', 'Invalid URI. The URI should only include valid segments of your URL that come after the base domain. i.e. {siteUrl}URI', [
-                'siteUrl' => UrlHelper::siteUrl()
+                'siteUrl' => UrlHelper::siteUrl(),
             ]));
         }
     }

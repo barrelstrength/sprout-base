@@ -147,7 +147,7 @@ class SentEmailInfoTable extends Model
             'Notification' => Craft::t('sprout', 'Notification'),
             'Resent' => Craft::t('sprout', 'Resent'),
             'Sent' => Craft::t('sprout', 'Sent'),
-            'System' => Craft::t('sprout', 'System Message')
+            'System' => Craft::t('sprout', 'System Message'),
         ];
     }
 
@@ -155,7 +155,7 @@ class SentEmailInfoTable extends Model
     {
         return [
             'Sent' => Craft::t('sprout', 'Sent'),
-            'Error' => Craft::t('sprout', 'Error')
+            'Error' => Craft::t('sprout', 'Error'),
         ];
     }
 
@@ -163,7 +163,7 @@ class SentEmailInfoTable extends Model
     {
         return [
             'Live' => Craft::t('sprout', 'Live'),
-            'Test' => Craft::t('sprout', 'Test')
+            'Test' => Craft::t('sprout', 'Test'),
         ];
     }
 }

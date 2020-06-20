@@ -102,7 +102,7 @@ class UsersSave extends NotificationEvent
         }
 
         return Craft::$app->getView()->renderTemplate('sprout/notifications/_components/events/save-user', [
-            'event' => $this
+            'event' => $this,
         ]);
     }
 
@@ -141,12 +141,12 @@ class UsersSave extends NotificationEvent
         $rules[] = [
             'whenNew', 'required', 'when' => function() {
                 return $this->whenUpdated == false;
-            }
+            },
         ];
         $rules[] = [
             'whenUpdated', 'required', 'when' => function() {
                 return $this->whenNew == false;
-            }
+            },
         ];
         $rules[] = [['whenNew', 'whenUpdated'], 'validateWhenTriggers'];
         $rules[] = [['event'], 'validateEvent'];
@@ -280,7 +280,7 @@ class UsersSave extends NotificationEvent
             foreach ($groups as $key => $group) {
                 $options[] = [
                     'label' => $group->name,
-                    'value' => $group->id
+                    'value' => $group->id,
                 ];
             }
         }

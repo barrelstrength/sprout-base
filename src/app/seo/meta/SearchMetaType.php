@@ -126,7 +126,7 @@ class SearchMetaType extends MetaType
             // Add support for using {divider} and {siteName} in the Sitemap 'Append Meta Title' setting
             $appendTitleValue = Craft::$app->view->renderObjectTemplate($globalAppendTitleValue, [
                 'siteName' => $currentSite->name,
-                'divider' => $seoDivider
+                'divider' => $seoDivider,
             ]);
 
             $appendTitleValue = $seoDivider.' '.$appendTitleValue;
@@ -226,7 +226,7 @@ class SearchMetaType extends MetaType
     {
         return Craft::$app->getView()->renderTemplate('sprout/seo/_components/fields/elementmetadata/blocks/search', [
             'meta' => $this,
-            'field' => $field
+            'field' => $field,
         ]);
     }
 }

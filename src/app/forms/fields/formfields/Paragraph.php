@@ -187,7 +187,7 @@ class Paragraph extends FormField implements PreviewableFieldInterface
     {
         return Craft::$app->getView()->renderTemplate('sprout/forms/_components/fields/formfields/paragraph/example',
             [
-                'field' => $this
+                'field' => $this,
             ]
         );
     }
@@ -211,7 +211,7 @@ class Paragraph extends FormField implements PreviewableFieldInterface
                 'value' => $value,
                 'field' => $this,
                 'entry' => $entry,
-                'renderingOptions' => $renderingOptions
+                'renderingOptions' => $renderingOptions,
             ]
         );
 
@@ -247,7 +247,7 @@ class Paragraph extends FormField implements PreviewableFieldInterface
     public function getCompatibleCraftFieldTypes(): array
     {
         return [
-            CraftPlainText::class
+            CraftPlainText::class,
         ];
     }
 
@@ -260,7 +260,7 @@ class Paragraph extends FormField implements PreviewableFieldInterface
             new IsProvidedCondition(),
             new IsNotProvidedCondition(),
             new ContainsCondition(),
-            new DoesNotContainCondition()
+            new DoesNotContainCondition(),
         ];
     }
 
@@ -273,7 +273,7 @@ class Paragraph extends FormField implements PreviewableFieldInterface
 
         $emptyConditionClasses = [
             IsProvidedCondition::class,
-            IsNotProvidedCondition::class
+            IsNotProvidedCondition::class,
         ];
 
         foreach ($emptyConditionClasses as $selectCondition) {

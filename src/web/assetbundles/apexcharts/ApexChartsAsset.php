@@ -16,7 +16,7 @@ class ApexChartsAsset extends AssetBundle
         $this->sourcePath = '@sproutbaselib/apexcharts';
 
         $this->js = [
-            'apexcharts.min.js'
+            'apexcharts.min.js',
         ];
 
         parent::init();

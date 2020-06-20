@@ -37,7 +37,7 @@ class Install extends Migration
                 'enabled' => $this->boolean(),
                 'dateCreated' => $this->dateTime()->notNull(),
                 'dateUpdated' => $this->dateTime()->notNull(),
-                'uid' => $this->uid()
+                'uid' => $this->uid(),
             ]);
 
             $this->createIndex($this->db->getIndexName(ReportRecord::tableName(), 'handle', true, true), ReportRecord::tableName(), 'handle', true);
@@ -52,7 +52,7 @@ class Install extends Migration
                 'name' => $this->string()->notNull(),
                 'dateCreated' => $this->dateTime()->notNull(),
                 'dateUpdated' => $this->dateTime()->notNull(),
-                'uid' => $this->uid()
+                'uid' => $this->uid(),
             ]);
 
             $this->createIndex($this->db->getIndexName(ReportGroupRecord::tableName(), 'name', false, true), ReportGroupRecord::tableName(), 'name');
@@ -65,7 +65,7 @@ class Install extends Migration
                 'allowNew' => $this->boolean(),
                 'dateCreated' => $this->dateTime()->notNull(),
                 'dateUpdated' => $this->dateTime()->notNull(),
-                'uid' => $this->uid()
+                'uid' => $this->uid(),
             ]);
         }
     }

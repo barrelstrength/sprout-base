@@ -130,7 +130,7 @@ class CampaignTypes extends Component
                     'status' => null,
                     'enabledForSite' => false,
                     'limit' => null,
-                ]
+                ],
             ]));
         }
 
@@ -159,7 +159,7 @@ class CampaignTypes extends Component
                 ->delete(
                     'sproutemail_campaigntypes',
                     [
-                        'id' => $campaignTypeId
+                        'id' => $campaignTypeId,
                     ])
                 ->execute();
 
@@ -184,7 +184,7 @@ class CampaignTypes extends Component
             !$campaignTypeRecord) {
 
             throw new Exception(Craft::t('sprout', 'No campaign exists with the ID “{id}”', [
-                'id' => $campaignType->id
+                'id' => $campaignType->id,
             ]));
         }
 

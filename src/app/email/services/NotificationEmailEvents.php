@@ -82,7 +82,7 @@ class NotificationEmailEvents extends Component
     public function getNotificationEmailEventTypes(): array
     {
         $event = new NotificationEmailEvent([
-            'events' => []
+            'events' => [],
         ]);
 
         $this->trigger(self::EVENT_REGISTER_EMAIL_EVENT_TYPES, $event);

@@ -125,7 +125,7 @@ class SectionHeading extends FormField
         $options = [
             'richText' => 'Rich Text',
             'markdown' => 'Markdown',
-            'html' => 'HTML'
+            'html' => 'HTML',
         ];
 
         return $view->renderTemplate('sprout/forms/_components/fields/formfields/sectionheading/settings',
@@ -133,7 +133,7 @@ class SectionHeading extends FormField
                 'id' => $namespaceInputId,
                 'name' => $name,
                 'field' => $this,
-                'outputOptions' => $options
+                'outputOptions' => $options,
             ]
         );
     }
@@ -164,7 +164,7 @@ class SectionHeading extends FormField
             [
                 'id' => $namespaceInputId,
                 'name' => $name,
-                'field' => $this
+                'field' => $this,
             ]
         );
     }
@@ -182,7 +182,7 @@ class SectionHeading extends FormField
     {
         return Craft::$app->getView()->renderTemplate('sprout/forms/_components/fields/formfields/sectionheading/example',
             [
-                'field' => $this
+                'field' => $this,
             ]
         );
     }
@@ -210,7 +210,7 @@ class SectionHeading extends FormField
         $rendered = Craft::$app->getView()->renderTemplate('sectionheading/input',
             [
                 'id' => $namespaceInputId,
-                'field' => $this
+                'field' => $this,
             ]
         );
 

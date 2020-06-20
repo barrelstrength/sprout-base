@@ -100,10 +100,10 @@ class SproutFormsSubmitHandler {
 
     const beforeSproutFormsSubmitEvent = new CustomEvent('beforeSproutFormsSubmit', {
       detail: {
-        promises: []
+        promises: [],
       },
       bubbles: true,
-      cancelable: true
+      cancelable: true,
     });
 
     return new Promise((resolve, reject) => {
@@ -147,10 +147,10 @@ class SproutFormsSubmitHandler {
 
     const sproutFormsSubmitEvent = new CustomEvent('onSproutFormsSubmit', {
       detail: {
-        submitHandler: self
+        submitHandler: self,
       },
       bubbles: true,
-      cancelable: true
+      cancelable: true,
     });
 
     return new Promise((resolve, reject) => {
@@ -185,7 +185,7 @@ class SproutFormsSubmitHandler {
 
   onAfterFormSubmitEvent() {
     const afterSproutFormsSubmitEvent = new CustomEvent('afterSproutFormsSubmit', {
-      bubbles: true
+      bubbles: true,
     });
 
     this.form.dispatchEvent(afterSproutFormsSubmitEvent);
@@ -193,7 +193,7 @@ class SproutFormsSubmitHandler {
 
   onFormSubmitCancelledEvent() {
     const cancelSproutFormsSubmitEvent = new CustomEvent('onSproutFormsSubmitCancelled', {
-      bubbles: true
+      bubbles: true,
     });
 
     this.form.dispatchEvent(cancelSproutFormsSubmitEvent);
@@ -236,7 +236,7 @@ class SproutFormsSubmitHandler {
             self.displayMessageBox({
               id: self.messageBoxId,
               message: response.message,
-              messageClass: self.successMessageClass
+              messageClass: self.successMessageClass,
             });
           }
 
@@ -267,7 +267,7 @@ class SproutFormsSubmitHandler {
               id: self.messageBoxId,
               message: response.message ?? null,
               messageClass: self.errorMessageClass,
-              errors: errorListHtml
+              errors: errorListHtml,
             });
           }
 
@@ -301,7 +301,7 @@ class SproutFormsSubmitHandler {
           id: self.messageBoxId,
           message: '<p>' + self.failureMessage + '</p>',
           messageClass: self.errorMessageClass,
-          errors: errors
+          errors: errors,
         });
       }
     };

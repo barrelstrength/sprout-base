@@ -162,7 +162,7 @@ class OptimizeMetadata extends Component
         $metadata = [
             'globals' => $this->globals,
             'meta' => $this->prioritizedMetadataModel->getMetaTagData(),
-            'schema' => $this->getStructuredData($this->element)
+            'schema' => $this->getStructuredData($this->element),
         ];
 
         if ($render === false) {
@@ -230,7 +230,7 @@ class OptimizeMetadata extends Component
 
         $websiteIdentity = [
             'Person' => WebsiteIdentityPersonSchema::class,
-            'Organization' => WebsiteIdentityOrganizationSchema::class
+            'Organization' => WebsiteIdentityOrganizationSchema::class,
         ];
 
         $identityType = $this->globals->identity['@type'] ?? null;
@@ -341,7 +341,7 @@ class OptimizeMetadata extends Component
 
         $output = Craft::$app->view->renderTemplate('_special/metadata', [
             'metadata' => $metadata,
-            'isPro' => $isPro
+            'isPro' => $isPro,
         ]);
 
         Craft::$app->view->setTemplatesPath(Craft::$app->path->getSiteTemplatesPath());
@@ -454,22 +454,22 @@ class OptimizeMetadata extends Component
                 'width' => 400,
                 'height' => 400,
                 'quality' => 82,
-                'position' => 'center-center'
+                'position' => 'center-center',
             ],
             'sproutSeo-ogRectangle' => [
                 'mode' => 'crop',
                 'width' => 1200,
                 'height' => 630,
                 'quality' => 82,
-                'position' => 'center-center'
+                'position' => 'center-center',
             ],
             'sproutSeo-twitterRectangle' => [
                 'mode' => 'crop',
                 'width' => 1024,
                 'height' => 512,
                 'quality' => 82,
-                'position' => 'center-center'
-            ]
+                'position' => 'center-center',
+            ],
         ];
 
         return $defaultTransforms[$transformHandle] ?? ($transformHandle == '' ? null : $transformHandle);

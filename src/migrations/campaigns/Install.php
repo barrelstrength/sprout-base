@@ -33,7 +33,7 @@ class Install extends Migration
                 'fieldLayoutId' => $this->integer(),
                 'dateCreated' => $this->dateTime()->notNull(),
                 'dateUpdated' => $this->dateTime()->notNull(),
-                'uid' => $this->uid()
+                'uid' => $this->uid(),
             ]);
         }
 
@@ -54,7 +54,7 @@ class Install extends Migration
                 'dateSent' => $this->dateTime(),
                 'dateCreated' => $this->dateTime()->notNull(),
                 'dateUpdated' => $this->dateTime()->notNull(),
-                'uid' => $this->uid()
+                'uid' => $this->uid(),
             ]);
 
             $this->addForeignKey(null, CampaignEmailRecord::tableName(), ['id'], Table::ELEMENTS, ['id'], 'CASCADE');

@@ -41,7 +41,7 @@ class DateRangeHelper
         // The date function still return date based on the cpPanel timezone settings
         $dateTime = [
             'startDate' => date('Y-m-d H:i:s'),
-            'endDate' => date('Y-m-d H:i:s')
+            'endDate' => date('Y-m-d H:i:s'),
         ];
 
         switch ($value) {
@@ -106,7 +106,7 @@ class DateRangeHelper
         $ranges = [
             'thisWeek' => Craft::t('sprout', 'Last 7 Days'),
             'thisMonth' => Craft::t('sprout', 'This Month ({month})', ['month' => $currentMonth]),
-            'lastMonth' => Craft::t('sprout', 'Last Month ({month})', ['month' => $lastMonth])
+            'lastMonth' => Craft::t('sprout', 'Last Month ({month})', ['month' => $lastMonth]),
         ];
 
         if ($withQuarter) {
@@ -114,12 +114,12 @@ class DateRangeHelper
                 'thisQuarter' => Craft::t('sprout', 'This Quarter ({iMonth} - {fMonth} {year})', [
                     'iMonth' => $thisQuarterInitialMonth,
                     'fMonth' => $thisQuarterFinalMonth,
-                    'year' => $thisQuarterYear
+                    'year' => $thisQuarterYear,
                 ]),
                 'lastQuarter' => Craft::t('sprout', 'Last Quarter ({iMonth} - {fMonth} {year})', [
                     'iMonth' => $lastQuarterInitialMonth,
                     'fMonth' => $lastQuarterFinalMonth,
-                    'year' => $lastQuarterYear
+                    'year' => $lastQuarterYear,
                 ]),
             ]);
         }
@@ -127,7 +127,7 @@ class DateRangeHelper
         $ranges = array_merge($ranges, [
             'thisYear' => Craft::t('sprout', 'This Year ({year})', ['year' => $currentYear]),
             'lastYear' => Craft::t('sprout', 'Last Year ({year})', ['year' => $previousYear]),
-            'customRange' => Craft::t('sprout', 'Custom Date Range')
+            'customRange' => Craft::t('sprout', 'Custom Date Range'),
         ]);
 
         return $ranges;
@@ -163,7 +163,7 @@ class DateRangeHelper
 
         return [
             'startDate' => date('Y-m-d H:i:s', $startDate),
-            'endDate' => date('Y-m-d H:i:s', $endDate)
+            'endDate' => date('Y-m-d H:i:s', $endDate),
         ];
     }
 
@@ -198,7 +198,7 @@ class DateRangeHelper
 
         return [
             'startDate' => date('Y-m-d H:i:s', $startDate),
-            'endDate' => date('Y-m-d H:i:s', $endDate)
+            'endDate' => date('Y-m-d H:i:s', $endDate),
         ];
     }
 }

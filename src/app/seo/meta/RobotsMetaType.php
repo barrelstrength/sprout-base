@@ -108,7 +108,7 @@ class RobotsMetaType extends MetaType
             'meta' => $this,
             'field' => $field,
             'robotsNamespace' => $robotsNamespace,
-            'robots' => $robots
+            'robots' => $robots,
         ]);
     }
 

@@ -17,7 +17,7 @@ class UrlFieldAsset extends AssetBundle
         $this->sourcePath = '@sproutbaseassetbundles/urlfield/dist';
 
         $this->depends = [
-            SproutCpAsset::class
+            SproutCpAsset::class,
         ];
 
         $this->css = [

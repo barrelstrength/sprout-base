@@ -27,7 +27,7 @@ class AddressController extends Controller
      * @var array
      */
     protected $allowAnonymous = [
-        'update-address-form-html'
+        'update-address-form-html',
     ];
 
     /**
@@ -115,7 +115,7 @@ class AddressController extends Controller
         $addressDisplayHtml = $addressFormatter->getAddressDisplayHtml($addressModel);
 
         return $this->asJson([
-            'html' => $addressDisplayHtml
+            'html' => $addressDisplayHtml,
         ]);
     }
 
@@ -147,7 +147,7 @@ class AddressController extends Controller
         if (!$addressModel->validate()) {
             return $this->asJson([
                 'result' => false,
-                'errors' => $addressModel->getErrors()
+                'errors' => $addressModel->getErrors(),
             ]);
         }
 
@@ -172,7 +172,7 @@ class AddressController extends Controller
             'html' => $addressDisplayHtml,
             'countryCodeHtml' => $countryCodeHtml,
             'addressFormHtml' => $addressFormHtml,
-            'countryCode' => $countryCode
+            'countryCode' => $countryCode,
         ]);
     }
 
@@ -195,7 +195,7 @@ class AddressController extends Controller
 
         $result = [
             'result' => false,
-            'errors' => []
+            'errors' => [],
         ];
 
         try {
@@ -217,7 +217,7 @@ class AddressController extends Controller
                     $result = [
                         'result' => true,
                         'errors' => [],
-                        'geo' => $data
+                        'geo' => $data,
                     ];
                 }
             }

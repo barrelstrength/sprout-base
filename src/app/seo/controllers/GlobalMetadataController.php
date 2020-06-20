@@ -123,7 +123,7 @@ class GlobalMetadataController extends Controller
             'countryInputHtml' => Template::raw($countryInputHtml),
             'addressFormHtml' => Template::raw($addressFormHtml),
             'addressJson' => $addressJson,
-            'isPro' => $isPro
+            'isPro' => $isPro,
         ]);
     }
 
@@ -178,7 +178,7 @@ class GlobalMetadataController extends Controller
             Craft::$app->getSession()->setError(Craft::t('sprout', 'Unable to save globals.'));
 
             Craft::$app->getUrlManager()->setRouteParams([
-                'globals' => $globals
+                'globals' => $globals,
             ]);
 
             return null;
@@ -229,7 +229,7 @@ class GlobalMetadataController extends Controller
             Craft::$app->getSession()->setError(Craft::t('sprout', 'Unable to save globals.'));
 
             Craft::$app->getUrlManager()->setRouteParams([
-                'globals' => $globals
+                'globals' => $globals,
             ]);
 
             return null;
@@ -266,7 +266,7 @@ class GlobalMetadataController extends Controller
         $addressDisplayHtml = $addressFormatter->getAddressDisplayHtml($address);
 
         return $this->asJson([
-            'html' => $addressDisplayHtml
+            'html' => $addressDisplayHtml,
         ]);
     }
 }

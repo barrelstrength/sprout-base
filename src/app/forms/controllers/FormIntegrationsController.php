@@ -48,7 +48,7 @@ class FormIntegrationsController extends BaseController
 
             if (SproutBase::$app->forms->saveForm($form)) {
                 return $this->asJson([
-                    'success' => true
+                    'success' => true,
                 ]);
             }
         }
@@ -66,7 +66,7 @@ class FormIntegrationsController extends BaseController
         }
 
         return $this->asJson([
-            'success' => false
+            'success' => false,
         ]);
     }
 
@@ -91,7 +91,7 @@ class FormIntegrationsController extends BaseController
             'enabled' => $request->getBodyParam('enabled'),
             'sendRule' => $request->getBodyParam('sendRule'),
             'type' => $type,
-            'settings' => $request->getBodyParam('settings.'.$type)
+            'settings' => $request->getBodyParam('settings.'.$type),
         ]);
 
         $integration = new $type($integration);
@@ -128,7 +128,7 @@ class FormIntegrationsController extends BaseController
 
         if ($integration === null) {
             $message = Craft::t('sprout', 'No integration found with id: {id}', [
-                'id' => $integrationId
+                'id' => $integrationId,
             ]);
 
             Craft::error($message, __METHOD__);
@@ -146,7 +146,7 @@ class FormIntegrationsController extends BaseController
             'errors' => $integration->getErrors(),
             'integration' => [
                 'id' => $integration->id,
-                'name' => $integration->name
+                'name' => $integration->name,
             ],
             'template' => SproutBase::$app->formIntegrations->getModalIntegrationTemplate($integration),
         ]);
@@ -171,7 +171,7 @@ class FormIntegrationsController extends BaseController
         }
 
         return $this->asJson([
-            'success' => $response
+            'success' => $response,
         ]);
     }
 
@@ -194,7 +194,7 @@ class FormIntegrationsController extends BaseController
         if (!$integration) {
             return $this->asJson([
                 'success' => false,
-                'sourceFormFields' => []
+                'sourceFormFields' => [],
             ]);
         }
 
@@ -202,7 +202,7 @@ class FormIntegrationsController extends BaseController
 
         return $this->asJson([
             'success' => true,
-            'sourceFormFields' => $sourceFormFields
+            'sourceFormFields' => $sourceFormFields,
         ]);
     }
 
@@ -240,7 +240,7 @@ class FormIntegrationsController extends BaseController
 
         return $this->asJson([
             'success' => true,
-            'targetIntegrationFields' => $targetIntegrationFields
+            'targetIntegrationFields' => $targetIntegrationFields,
         ]);
     }
 
@@ -259,7 +259,7 @@ class FormIntegrationsController extends BaseController
             'integration' => [
                 'id' => $integration->id,
                 'name' => $integration->name ?? null,
-                'enabled' => $integration->enabled
+                'enabled' => $integration->enabled,
             ],
             //'template' => $success ? false : SproutBase::$app->integrations->getModalIntegrationTemplate($integration),
         ]);

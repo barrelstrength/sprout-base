@@ -54,7 +54,7 @@
 
       this.chart.zoomX(
         new Date(currentStartDate).getTime(),
-        new Date(currentEndDate).getTime()
+        new Date(currentEndDate).getTime(),
       );
 
       return false;
@@ -78,29 +78,29 @@
           height: 380,
           type: 'bar',
           zoom: {
-            enabled: false
-          }
+            enabled: false,
+          },
         },
         plotOptions: {
           bar: {
             horizontal: true,
-          }
+          },
         },
         dataLabels: {
-          enabled: false
+          enabled: false,
         },
         stroke: {
-          curve: 'straight'
+          curve: 'straight',
         },
         grid: {
           row: {
             colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
-            opacity: 0.5
+            opacity: 0.5,
           },
         },
         xaxis: {
-          categories: this.labels
-        }
+          categories: this.labels,
+        },
       };
 
       console.log('CREATE');
@@ -118,24 +118,24 @@
           height: 380,
           type: 'line',
           zoom: {
-            enabled: false
-          }
+            enabled: false,
+          },
         },
         dataLabels: {
-          enabled: false
+          enabled: false,
         },
         stroke: {
-          curve: 'straight'
+          curve: 'straight',
         },
         grid: {
           row: {
             colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
-            opacity: 0.5
+            opacity: 0.5,
           },
         },
         xaxis: {
-          categories: this.labels
-        }
+          categories: this.labels,
+        },
       };
 
       this.draw(settings);
@@ -156,14 +156,14 @@
             breakpoint: 480,
             options: {
               chart: {
-                width: 200
+                width: 200,
               },
               legend: {
-                position: 'bottom'
-              }
-            }
-          }
-        ]
+                position: 'bottom',
+              },
+            },
+          },
+        ],
       };
 
       this.draw(settings);
@@ -179,7 +179,7 @@
           height: 380,
           type: 'line',
           zoom: {
-            enabled: true
+            enabled: true,
           },
           toolbar: {
             show: true,
@@ -193,28 +193,28 @@
               zoomout: true,
               pan: true,
               reset: true,
-              customIcons: []
+              customIcons: [],
             },
-            autoSelected: 'zoom'
-          }
+            autoSelected: 'zoom',
+          },
         },
         dataLabels: {
-          enabled: false
+          enabled: false,
         },
         stroke: {
-          curve: 'straight'
+          curve: 'straight',
         },
         grid: {
           row: {
             colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
-            opacity: 0.5
+            opacity: 0.5,
           },
         },
         xaxis: {
           type: 'datetime',
           min: this.defaultStartDate,
-          max: this.defaultEndDate
-        }
+          max: this.defaultEndDate,
+        },
       };
 
       this.draw(settings);

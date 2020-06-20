@@ -74,12 +74,12 @@ class BasePredefinedField extends Field implements PreviewableFieldInterface
                     [
                         'and',
                         ['elementId' => $element->id],
-                        ['siteId' => $element->siteId]
+                        ['siteId' => $element->siteId],
                     ])
                 ->execute();
         } catch (Exception $e) {
             Craft::$app->getSession()->setError(Craft::t('sprout', 'Error processing Predefined Field: {name}.', [
-                'name' => $this->name
+                'name' => $this->name,
             ]));
             Craft::error($e->getMessage(), __METHOD__);
         }

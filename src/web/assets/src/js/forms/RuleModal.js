@@ -64,7 +64,7 @@ if (typeof Craft.SproutForms === typeof undefined) {
       init: function(settings) {
         this.base();
         this.setSettings(settings, {
-          resizable: true
+          resizable: true,
         });
 
         this.$currentHtml = $();
@@ -188,7 +188,7 @@ if (typeof Craft.SproutForms === typeof undefined) {
             target: this,
             $html: $html,
             $js: $jsInline,
-            $css: $cssInline
+            $css: $cssInline,
           });
         };
         // Fixes bug on Craft3 - Updates way to callback function
@@ -225,7 +225,7 @@ if (typeof Craft.SproutForms === typeof undefined) {
 
                   if (filesCount === 0) {
                     this.trigger('runExternalScripts', {
-                      target: this
+                      target: this,
                     });
                   }
                 } else {
@@ -236,7 +236,7 @@ if (typeof Craft.SproutForms === typeof undefined) {
           }
         } else {
           this.trigger('runExternalScripts', {
-            target: this
+            target: this,
           });
         }
       },
@@ -372,11 +372,11 @@ if (typeof Craft.SproutForms === typeof undefined) {
 
             this.trigger('saveRule', {
               target: this,
-              rule: response.rule
+              rule: response.rule,
             });
 
             Craft.cp.displayNotice(Craft.t('sprout', '\'{name}\' rule saved.', {
-              name: response.rule.name
+              name: response.rule.name,
             }));
 
             this.hide();
@@ -418,7 +418,7 @@ if (typeof Craft.SproutForms === typeof undefined) {
         const formId = $("#formId").val();
         const data = {
           'ruleId': id,
-          'formId': formId
+          'formId': formId,
         };
 
         Craft.postActionRequest('sprout/form-rules/edit-rule', data, $.proxy(function(response, textStatus) {
@@ -505,7 +505,7 @@ if (typeof Craft.SproutForms === typeof undefined) {
         this.$container.remove();
 
         this.trigger('destroy');
-      }
+      },
     },
     {
       /**
@@ -519,7 +519,7 @@ if (typeof Craft.SproutForms === typeof undefined) {
         }
 
         return this._instance;
-      }
+      },
     });
 
 })(jQuery);

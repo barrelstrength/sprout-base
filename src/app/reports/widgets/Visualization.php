@@ -59,7 +59,7 @@ class Visualization extends Widget
             [
                 'widget' => $this,
                 'reports' => SproutBase::$app->reports->getAllReports(),
-                'reportId' => $this->reportId
+                'reportId' => $this->reportId,
             ]);
     }
 
@@ -116,7 +116,7 @@ class Visualization extends Widget
 
         return Craft::$app->getView()->renderTemplate('sprout/reports/_components/widgets/Visualizations/body', [
             'title' => 'report title',
-            'visualization' => $visualization
+            'visualization' => $visualization,
         ]);
     }
 

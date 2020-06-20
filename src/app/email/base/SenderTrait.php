@@ -42,7 +42,7 @@ trait SenderTrait
     public function getSenderHtml(CampaignEmail $campaignEmail): string
     {
         return Craft::$app->getView()->renderTemplate('sprout/notifications/_components/mailers/recipients-html', [
-            'campaignEmail' => $campaignEmail
+            'campaignEmail' => $campaignEmail,
         ]);
     }
 }

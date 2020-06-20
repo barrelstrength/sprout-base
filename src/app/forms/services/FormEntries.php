@@ -139,7 +139,7 @@ class FormEntries extends Component
         }
 
         $event = new OnBeforeSaveEntryEvent([
-            'entry' => $entry
+            'entry' => $entry,
         ]);
 
         $this->trigger(EntryElement::EVENT_BEFORE_SAVE, $event);
@@ -298,7 +298,7 @@ class FormEntries extends Component
     public function resaveElements($formId)
     {
         Craft::$app->getQueue()->push(new ResaveEntries([
-            'formId' => $formId
+            'formId' => $formId,
         ]));
     }
 }

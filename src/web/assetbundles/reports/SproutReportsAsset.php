@@ -21,16 +21,16 @@ class SproutReportsAsset extends AssetBundle
         $this->depends = [
             CpAsset::class,
             ApexChartsAsset::class,
-            DataTablesAsset::class
+            DataTablesAsset::class,
         ];
 
         $this->css = [
             'css/reports.css',
-            'css/visualizations.css'
+            'css/visualizations.css',
         ];
 
         $this->js = [
-            'js/Reports.js'
+            'js/Reports.js',
         ];
 
         parent::init();

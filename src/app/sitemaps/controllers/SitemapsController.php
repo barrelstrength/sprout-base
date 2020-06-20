@@ -116,7 +116,7 @@ class SitemapsController extends Controller
             'enableMultilingualSitemaps' => $enableMultilingualSitemaps,
             'urlEnabledSectionTypes' => $urlEnabledSectionTypes,
             'customSections' => $customSections,
-            'pluginSettings' => $settings
+            'pluginSettings' => $settings,
         ]);
     }
 
@@ -167,14 +167,14 @@ class SitemapsController extends Controller
                 'label' => 'Custom Page',
                 'url' => '#tab1',
                 'class' => null,
-            ]
+            ],
         ];
 
         return $this->renderTemplate('sprout/sitemaps/sitemaps/_edit', [
             'currentSite' => $currentSite,
             'sitemapSection' => $sitemapSection,
             'continueEditingUrl' => $continueEditingUrl,
-            'tabs' => $tabs
+            'tabs' => $tabs,
         ]);
     }
 
@@ -210,7 +210,7 @@ class SitemapsController extends Controller
             Craft::$app->getSession()->setError(Craft::t('sprout', "Couldn't save the Sitemap."));
 
             Craft::$app->getUrlManager()->setRouteParams([
-                'sitemapSection' => $sitemapSection
+                'sitemapSection' => $sitemapSection,
             ]);
 
             return null;
@@ -219,7 +219,7 @@ class SitemapsController extends Controller
         if (Craft::$app->request->getAcceptsJson()) {
             return $this->asJson([
                 'success' => true,
-                'sitemapSection' => $sitemapSection
+                'sitemapSection' => $sitemapSection,
             ]);
         }
 
@@ -247,7 +247,7 @@ class SitemapsController extends Controller
 
         if (Craft::$app->request->getAcceptsJson()) {
             return $this->asJson([
-                'success' => $result >= 0
+                'success' => $result >= 0,
             ]);
         }
 

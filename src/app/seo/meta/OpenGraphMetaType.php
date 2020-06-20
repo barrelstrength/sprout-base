@@ -162,7 +162,7 @@ class OpenGraphMetaType extends MetaType
             'ogLocale' => 'og:locale',
             'ogDateCreated' => 'article:published_time',
             'ogDateUpdated' => 'article:modified_time',
-            'ogExpiryDate' => 'article:expiration_time'
+            'ogExpiryDate' => 'article:expiration_time',
         ];
     }
 
@@ -189,7 +189,7 @@ class OpenGraphMetaType extends MetaType
     {
         return Craft::$app->getView()->renderTemplate('sprout/seo/_components/fields/elementmetadata/blocks/open-graph', [
             'meta' => $this,
-            'field' => $field
+            'field' => $field,
         ]);
     }
 

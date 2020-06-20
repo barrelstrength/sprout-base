@@ -73,7 +73,7 @@ class ReportQuery extends ElementQuery
             'sproutreports_reports.emailColumn',
             'sproutreports_reports.settings',
             'sproutreports_reports.groupId',
-            'sproutreports_reports.enabled'
+            'sproutreports_reports.enabled',
         ]);
 
         $this->query->innerJoin(DataSourceRecord::tableName().' sproutreports_datasources', '[[sproutreports_datasources.id]] = [[sproutreports_reports.dataSourceId]]');
@@ -111,7 +111,7 @@ class ReportQuery extends ElementQuery
 
             // Restrict the query to Data Sources from enabled modules
             $dataSourceIdsCondition = [
-                'in', '[[sproutreports_reports.dataSourceId]]', $allowedDataSourceIds
+                'in', '[[sproutreports_reports.dataSourceId]]', $allowedDataSourceIds,
             ];
             $this->query->andWhere($dataSourceIdsCondition);
 
@@ -119,7 +119,7 @@ class ReportQuery extends ElementQuery
                 ->select('*')
                 ->from('{{%sproutreports_reports}}')
                 ->where([
-                    'not', Db::parseParam('[[dataSourceId]]', $defaultDataSourceIds)
+                    'not', Db::parseParam('[[dataSourceId]]', $defaultDataSourceIds),
                 ])
                 ->count();
 

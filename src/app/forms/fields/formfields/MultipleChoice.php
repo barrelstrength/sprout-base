@@ -76,7 +76,7 @@ class MultipleChoice extends CraftRadioButtons
     {
         return Craft::$app->getView()->renderTemplate('sprout/forms/_components/fields/formfields/multiplechoice/example',
             [
-                'field' => $this
+                'field' => $this,
             ]
         );
     }
@@ -100,7 +100,7 @@ class MultipleChoice extends CraftRadioButtons
                 'value' => $value,
                 'field' => $this,
                 'entry' => $entry,
-                'renderingOptions' => $renderingOptions
+                'renderingOptions' => $renderingOptions,
             ]
         );
 
@@ -110,7 +110,7 @@ class MultipleChoice extends CraftRadioButtons
     public function getCompatibleCraftFieldTypes(): array
     {
         return [
-            CraftRadioButtons::class
+            CraftRadioButtons::class,
         ];
     }
 
@@ -124,7 +124,7 @@ class MultipleChoice extends CraftRadioButtons
             new StartsWithCondition(),
             new DoesNotStartWithCondition(),
             new EndsWithCondition(),
-            new DoesNotEndWithCondition()
+            new DoesNotEndWithCondition(),
         ];
     }
 

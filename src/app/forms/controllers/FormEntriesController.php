@@ -49,7 +49,7 @@ class FormEntriesController extends BaseController
      * @var string[]
      */
     protected $allowAnonymous = [
-        'save-entry'
+        'save-entry',
     ];
 
     public function init()
@@ -75,7 +75,7 @@ class FormEntriesController extends BaseController
         $isPro = SproutBase::$app->config->isEdition('forms', Config::EDITION_PRO);
 
         return $this->renderTemplate('sprout/forms/entries/index', [
-            'isPro' => $isPro
+            'isPro' => $isPro,
         ]);
     }
 
@@ -197,7 +197,7 @@ class FormEntriesController extends BaseController
         }
 
         $event = new OnBeforePopulateEntryEvent([
-            'form' => $this->form
+            'form' => $this->form,
         ]);
 
         $this->trigger(self::EVENT_BEFORE_POPULATE, $event);
@@ -224,7 +224,7 @@ class FormEntriesController extends BaseController
 
         $event = new OnBeforeValidateEntryEvent([
             'form' => $this->form,
-            'entry' => $entry
+            'entry' => $entry,
         ]);
 
         // Captchas are processed and added to
@@ -392,7 +392,7 @@ class FormEntriesController extends BaseController
 
         if (!$entry) {
             $message = Craft::t('sprout', 'No form entry exists with the given ID: {id}', [
-                'entryId' => $entryId
+                'entryId' => $entryId,
             ]);
             throw new Exception($message);
         }
@@ -422,7 +422,7 @@ class FormEntriesController extends BaseController
             SproutBase::$app->forms->activeCpEntry = $entry;
 
             Craft::$app->getUrlManager()->setRouteParams([
-                'entry' => $entry
+                'entry' => $entry,
             ]);
 
             return null;
@@ -450,7 +450,7 @@ class FormEntriesController extends BaseController
 
         // Return the form using it's name as a variable on the front-end
         Craft::$app->getUrlManager()->setRouteParams([
-            $this->form->handle => $entry
+            $this->form->handle => $entry,
         ]);
 
         return null;

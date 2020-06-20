@@ -135,7 +135,7 @@ class CampaignType extends Model
         return [
             'fieldLayout' => [
                 'class' => FieldLayoutBehavior::class,
-                'elementType' => CampaignEmail::class
+                'elementType' => CampaignEmail::class,
             ],
         ];
     }

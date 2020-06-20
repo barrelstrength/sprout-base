@@ -16,11 +16,11 @@ class CopyPasteMailerAsset extends AssetBundle
         ];
 
         $this->js = [
-            'js/CopyPaste.js'
+            'js/CopyPaste.js',
         ];
 
         $this->css = [
-            'css/copy-paste.css'
+            'css/copy-paste.css',
         ];
 
         parent::init();

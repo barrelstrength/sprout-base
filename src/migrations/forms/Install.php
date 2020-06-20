@@ -132,7 +132,7 @@ class Install extends Migration
             'color' => $this->enum('color', [
                 'green', 'orange', 'red', 'blue',
                 'yellow', 'pink', 'purple', 'turquoise',
-                'light', 'grey', 'black'
+                'light', 'grey', 'black',
             ])->notNull()->defaultValue('blue'),
             'sortOrder' => $this->smallInteger()->unsigned(),
             'isDefault' => $this->boolean(),
@@ -174,7 +174,7 @@ class Install extends Migration
             'integrationId' => $this->integer()->notNull(),
             'success' => $this->boolean()->defaultValue(false),
             'status' => $this->enum('status', [
-                'pending', 'notsent', 'completed'
+                'pending', 'notsent', 'completed',
             ])->notNull()->defaultValue('pending'),
             'message' => $this->text(),
             'dateCreated' => $this->dateTime()->notNull(),
@@ -350,22 +350,22 @@ class Install extends Migration
                 'handle' => 'unread',
                 'color' => 'blue',
                 'sortOrder' => 1,
-                'isDefault' => 1
+                'isDefault' => 1,
             ],
             1 => [
                 'name' => 'Read',
                 'handle' => 'read',
                 'color' => 'grey',
                 'sortOrder' => 2,
-                'isDefault' => 0
+                'isDefault' => 0,
             ],
             2 => [
                 'name' => 'Spam',
                 'handle' => 'spam',
                 'color' => 'black',
                 'sortOrder' => 3,
-                'isDefault' => 0
-            ]
+                'isDefault' => 0,
+            ],
         ];
 
         foreach ($defaultEntryStatuses as $entryStatus) {
@@ -374,7 +374,7 @@ class Install extends Migration
                 'handle' => $entryStatus['handle'],
                 'color' => $entryStatus['color'],
                 'sortOrder' => $entryStatus['sortOrder'],
-                'isDefault' => $entryStatus['isDefault']
+                'isDefault' => $entryStatus['isDefault'],
             ]);
         }
 
@@ -382,7 +382,7 @@ class Install extends Migration
         $dataSourceTypes = [
             EntriesDataSource::class,
             IntegrationLogDataSource::class,
-            SpamLogDataSource::class
+            SpamLogDataSource::class,
         ];
 
         foreach ($dataSourceTypes as $dataSourceClass) {

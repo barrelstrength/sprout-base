@@ -32,7 +32,7 @@ class CampaignEmailQuery extends ElementQuery
             'sproutemail_campaignemails.dateScheduled',
             'sproutemail_campaignemails.dateSent',
             'sproutemail_campaignemails.dateCreated',
-            'sproutemail_campaignemails.dateUpdated'
+            'sproutemail_campaignemails.dateUpdated',
         ]);
 
         if ($this->campaignTypeId) {

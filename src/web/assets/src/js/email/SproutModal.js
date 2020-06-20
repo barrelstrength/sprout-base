@@ -68,7 +68,7 @@ class SproutModal {
 
       success: function handleSuccessfulRequest(response) {
         callback(null, response);
-      }
+      },
     };
 
     request.data[Craft.csrfTokenName] = Craft.csrfTokenValue;

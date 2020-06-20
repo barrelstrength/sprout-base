@@ -81,7 +81,7 @@ trait ModalWorkflowTrait
 
         return Craft::$app->getView()->renderTemplate('sprout/notifications/_modals/prepare-email-snapshot', [
             'email' => $email,
-            'recipients' => $recipients
+            'recipients' => $recipients,
         ]);
     }
 }

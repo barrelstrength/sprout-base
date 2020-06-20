@@ -131,21 +131,21 @@ class EmailDropdown extends CraftDropdownField
                         'label' => [
                             'heading' => Craft::t('sprout', 'Name'),
                             'type' => 'singleline',
-                            'autopopulate' => 'value'
+                            'autopopulate' => 'value',
                         ],
                         'value' => [
                             'heading' => Craft::t('sprout', 'Email'),
                             'type' => 'singleline',
-                            'class' => 'code'
+                            'class' => 'code',
                         ],
                         'default' => [
                             'heading' => Craft::t('sprout', 'Default?'),
                             'type' => 'checkbox',
-                            'class' => 'thin'
+                            'class' => 'thin',
                         ],
                     ],
-                    'rows' => $options
-                ]
+                    'rows' => $options,
+                ],
             ]
         );
     }
@@ -182,7 +182,7 @@ class EmailDropdown extends CraftDropdownField
             [
                 'name' => $name,
                 'value' => $value,
-                'options' => $options
+                'options' => $options,
             ]
         );
     }
@@ -200,7 +200,7 @@ class EmailDropdown extends CraftDropdownField
     {
         return Craft::$app->getView()->renderTemplate('sprout/forms/_components/fields/formfields/emaildropdown/example',
             [
-                'field' => $this
+                'field' => $this,
             ]
         );
     }
@@ -230,7 +230,7 @@ class EmailDropdown extends CraftDropdownField
                 'options' => $options,
                 'field' => $this,
                 'entry' => $entry,
-                'renderingOptions' => $renderingOptions
+                'renderingOptions' => $renderingOptions,
             ]
         );
 
@@ -301,7 +301,7 @@ class EmailDropdown extends CraftDropdownField
     {
         return [
             CraftPlainText::class,
-            CraftDropdownField::class
+            CraftDropdownField::class,
         ];
     }
 
@@ -315,7 +315,7 @@ class EmailDropdown extends CraftDropdownField
             new StartsWithCondition(),
             new DoesNotStartWithCondition(),
             new EndsWithCondition(),
-            new DoesNotEndWithCondition()
+            new DoesNotEndWithCondition(),
         ];
     }
 }

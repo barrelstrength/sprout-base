@@ -61,7 +61,7 @@ class ReportsController extends Controller
 
             $newReportOptions[] = [
                 'name' => $dataSource::displayName(),
-                'url' => UrlHelper::cpUrl('sprout/reports/'.$dataSource->id.'/new')
+                'url' => UrlHelper::cpUrl('sprout/reports/'.$dataSource->id.'/new'),
             ];
         }
 
@@ -77,7 +77,7 @@ class ReportsController extends Controller
             'newReportOptions' => $newReportOptions,
 
             // @todo - migration review / fix
-            'editReportsPermission' => $currentUser->can('sprout:reports:editReports')
+            'editReportsPermission' => $currentUser->can('sprout:reports:editReports'),
         ]);
     }
 
@@ -152,7 +152,7 @@ class ReportsController extends Controller
             // @todo - migration, review permission
             'editReportsPermission' => $currentUser->can('sprout:reports:editReports'),
             'settings' => SproutBase::$app->settings->getSettingsByKey('reports'),
-            'sortColumnPosition' => $sortColumnPosition
+            'sortColumnPosition' => $sortColumnPosition,
         ]);
     }
 
@@ -201,27 +201,27 @@ class ReportsController extends Controller
         $emailColumnOptions = [
             [
                 'label' => 'None',
-                'value' => ''
+                'value' => '',
             ],
             [
                 'label' => 'Email (email)',
-                'value' => 'email'
+                'value' => 'email',
             ],
             [
-                'optgroup' => 'Custom'
-            ]
+                'optgroup' => 'Custom',
+            ],
         ];
 
         if (!in_array($reportElement->emailColumn, ['', 'email'], true)) {
             $emailColumnOptions[] = [
                 'label' => $reportElement->emailColumn,
-                'value' => $reportElement->emailColumn
+                'value' => $reportElement->emailColumn,
             ];
         }
 
         $emailColumnOptions[] = [
             'label' => 'Add custom',
-            'value' => 'custom'
+            'value' => 'custom',
         ];
 
         $delimiterOptions = [
@@ -236,7 +236,7 @@ class ReportsController extends Controller
             [
                 'label' => Craft::t('sprout', 'Tab'),
                 'value' => $reportElement::DELIMITER_TAB,
-            ]
+            ],
         ];
 
         $visualizations = SproutBase::$app->visualizations->getVisualizations();
@@ -257,7 +257,7 @@ class ReportsController extends Controller
                 'labelColumn' => '',
                 'dataColumns' => [''],
                 'aggregate' => '',
-                'decimals' => 0
+                'decimals' => 0,
             ];
         }
 
@@ -348,7 +348,7 @@ class ReportsController extends Controller
 
         // Send the report back to the template
         Craft::$app->getUrlManager()->setRouteParams([
-            'report' => $reportElement
+            'report' => $reportElement,
         ]);
 
         return null;
@@ -375,7 +375,7 @@ class ReportsController extends Controller
 
             // Send the report back to the template
             Craft::$app->getUrlManager()->setRouteParams([
-                'report' => $report
+                'report' => $report,
             ]);
 
             return null;
@@ -521,7 +521,7 @@ class ReportsController extends Controller
 
             if (!$report) {
                 $report->addError('id', Craft::t('sprout', 'Could not find a report with id {reportId}', [
-                    'reportId' => $reportId
+                    'reportId' => $reportId,
                 ]));
             }
         } else {

@@ -60,7 +60,7 @@ class Tags extends CraftTags
     {
         return Craft::$app->getView()->renderTemplate('sprout/forms/_components/fields/formfields/tags/example',
             [
-                'field' => $this
+                'field' => $this,
             ]
         );
     }
@@ -100,7 +100,7 @@ class Tags extends CraftTags
     public function getCompatibleCraftFieldTypes(): array
     {
         return [
-            CraftTags::class
+            CraftTags::class,
         ];
     }
 }

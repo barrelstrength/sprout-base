@@ -50,7 +50,7 @@ class UrlEnabledSections extends Component
         }
 
         $event = new RegisterUrlEnabledSectionTypesEvent([
-            'urlEnabledSectionTypes' => $urlEnabledSectionTypes
+            'urlEnabledSectionTypes' => $urlEnabledSectionTypes,
         ]);
 
         $this->trigger(self::EVENT_REGISTER_URL_ENABLED_SECTION_TYPES, $event);

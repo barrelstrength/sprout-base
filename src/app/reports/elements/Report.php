@@ -178,7 +178,7 @@ class Report extends Element
     {
         $attributes = [
             'name' => Craft::t('sprout', 'Name'),
-            'dataSourceId' => Craft::t('sprout', 'Data Source')
+            'dataSourceId' => Craft::t('sprout', 'Data Source'),
         ];
 
         return $attributes;
@@ -212,9 +212,9 @@ class Report extends Element
                     'key' => '*',
                     'label' => Craft::t('sprout', 'All reports'),
                     'criteria' => [
-                        'emailColumn' => ':empty:'
-                    ]
-                ]
+                        'emailColumn' => ':empty:',
+                    ],
+                ],
             ];
         }
 
@@ -223,11 +223,11 @@ class Report extends Element
                 'key' => 'mailingList',
                 'label' => Craft::t('sprout', 'All mailing lists'),
                 'data' => [
-                    'readonly' => true
+                    'readonly' => true,
                 ],
                 'criteria' => [
-                    'emailColumn' => ':notempty:'
-                ]
+                    'emailColumn' => ':notempty:',
+                ],
             ];
         }
 
@@ -237,7 +237,7 @@ class Report extends Element
         if ($groups) {
 
             $sources[] = [
-                'heading' => Craft::t('sprout', 'Group')
+                'heading' => Craft::t('sprout', 'Group'),
             ];
 
             foreach ($groups as $group) {
@@ -247,7 +247,7 @@ class Report extends Element
                     'key' => $key,
                     'label' => Craft::t('sprout', $group->name),
                     'data' => ['id' => $group->id],
-                    'criteria' => ['groupId' => $group->id]
+                    'criteria' => ['groupId' => $group->id],
                 ];
             }
         }
@@ -338,7 +338,7 @@ class Report extends Element
 
         if ($attribute === 'download') {
             return '<a href="'.UrlHelper::actionUrl('sprout/reports/export-report', [
-                    'reportId' => $this->id
+                    'reportId' => $this->id,
                 ]).'" class="btn small">'.Craft::t('sprout', 'Export').'</a>';
         }
 
@@ -348,7 +348,7 @@ class Report extends Element
 
             if (!$dataSource) {
                 $message = Craft::t('sprout', 'Data Source not found: {dataSourceId}', [
-                    'dataSourceId' => $attribute
+                    'dataSourceId' => $attribute,
                 ]);
 
                 return '<span class="error">'.$message.'</span>';
@@ -531,8 +531,8 @@ class Report extends Element
                 'errors' => $this->getErrors('name'),
                 'first' => true,
                 'autofocus' => true,
-                'required' => true
-            ]
+                'required' => true,
+            ],
         ]);
 
         if ($this->dataSource instanceof DataSource) {
@@ -561,13 +561,13 @@ class Report extends Element
             ['handle'],
             HandleValidator::class,
             'reservedWords' => [
-                'id', 'dateCreated', 'dateUpdated', 'uid', 'title'
-            ]
+                'id', 'dateCreated', 'dateUpdated', 'uid', 'title',
+            ],
         ];
         $rules[] = [
             ['name', 'handle'],
             UniqueValidator::class,
-            'targetClass' => ReportRecord::class
+            'targetClass' => ReportRecord::class,
         ];
 
         return $rules;

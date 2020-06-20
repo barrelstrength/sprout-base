@@ -31,7 +31,7 @@ class FormTemplates extends Component
     public function getAllFormTemplateTypes(): array
     {
         $event = new RegisterComponentTypesEvent([
-            'types' => []
+            'types' => [],
         ]);
 
         $this->trigger(self::EVENT_REGISTER_FORM_TEMPLATES, $event);
@@ -188,12 +188,12 @@ class FormTemplates extends Component
 
         if ($generalSettings) {
             $options[] = [
-                'optgroup' => Craft::t('sprout', 'Global Templates')
+                'optgroup' => Craft::t('sprout', 'Global Templates'),
             ];
 
             $options[] = [
                 'label' => Craft::t('sprout', 'Default Form Templates'),
-                'value' => null
+                'value' => null,
             ];
         }
 
@@ -202,14 +202,14 @@ class FormTemplates extends Component
 
         if ($generalSettings) {
             $options[] = [
-                'optgroup' => Craft::t('sprout', 'Form-Specific Templates')
+                'optgroup' => Craft::t('sprout', 'Form-Specific Templates'),
             ];
         }
 
         foreach ($templates as $template) {
             $options[] = [
                 'label' => $template->getName(),
-                'value' => get_class($template)
+                'value' => get_class($template),
             ];
             $templateIds[] = get_class($template);
         }
@@ -220,19 +220,19 @@ class FormTemplates extends Component
         $templateFolder = $form->formTemplateId ?? $settings->formTemplateId ?? AccessibleTemplates::class;
 
         $options[] = [
-            'optgroup' => Craft::t('sprout', 'Custom Template Folder')
+            'optgroup' => Craft::t('sprout', 'Custom Template Folder'),
         ];
 
         if (!in_array($templateFolder, $templateIds, false) && $templateFolder != '') {
             $options[] = [
                 'label' => $templateFolder,
-                'value' => $templateFolder
+                'value' => $templateFolder,
             ];
         }
 
         $options[] = [
             'label' => Craft::t('sprout', 'Add Custom'),
-            'value' => 'custom'
+            'value' => 'custom',
         ];
 
         return $options;

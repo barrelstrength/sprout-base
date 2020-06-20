@@ -79,10 +79,10 @@ class IntegrationLogDataSource extends DataSource
 
         if ($startDate && $endDate) {
             $formQuery->andWhere('[[log.dateCreated]] > :startDate', [
-                ':startDate' => $startDate->format('Y-m-d H:i:s')
+                ':startDate' => $startDate->format('Y-m-d H:i:s'),
             ]);
             $formQuery->andWhere('[[log.dateCreated]] < :endDate', [
-                ':endDate' => $endDate->format('Y-m-d H:i:s')
+                ':endDate' => $endDate->format('Y-m-d H:i:s'),
             ]);
         }
 
@@ -135,7 +135,7 @@ class IntegrationLogDataSource extends DataSource
         foreach ($forms as $form) {
             $formOptions[] = [
                 'label' => $form->name,
-                'value' => $form->id
+                'value' => $form->id,
             ];
         }
 
@@ -164,7 +164,7 @@ class IntegrationLogDataSource extends DataSource
             'defaultStartDate' => new DateTime($defaultStartDate),
             'defaultEndDate' => new DateTime($defaultEndDate),
             'dateRanges' => $dateRanges,
-            'options' => $settings
+            'options' => $settings,
         ]);
     }
 

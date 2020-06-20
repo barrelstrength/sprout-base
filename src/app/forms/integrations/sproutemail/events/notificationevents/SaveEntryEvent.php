@@ -81,7 +81,7 @@ class SaveEntryEvent extends NotificationEvent
         }
 
         return Craft::$app->getView()->renderTemplate('sprout/forms/_integrations/sproutemail/events/notificationevents/SaveEntryEvent/settings', [
-            'event' => $this
+            'event' => $this,
         ]);
     }
 
@@ -140,12 +140,12 @@ class SaveEntryEvent extends NotificationEvent
         $rules[] = [
             'whenNew', 'required', 'when' => function() {
                 return $this->whenUpdated == false;
-            }
+            },
         ];
         $rules[] = [
             'whenUpdated', 'required', 'when' => function() {
                 return $this->whenNew == false;
-            }
+            },
         ];
         $rules[] = [['whenNew', 'whenUpdated'], 'validateWhenTriggers'];
         $rules[] = [['event'], 'validateEvent'];
@@ -240,7 +240,7 @@ class SaveEntryEvent extends NotificationEvent
         foreach ($forms as $key => $form) {
             $options[] = [
                 'label' => $form->name,
-                'value' => $form->id
+                'value' => $form->id,
             ];
         }
 

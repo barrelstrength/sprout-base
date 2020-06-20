@@ -36,13 +36,13 @@ class ListsConfig extends Config
             'subnav' => [
                 'subscribers' => [
                     'label' => Craft::t('sprout', 'Subscribers'),
-                    'url' => 'sprout/lists/subscribers'
+                    'url' => 'sprout/lists/subscribers',
                 ],
                 'lists' => [
                     'label' => Craft::t('sprout', 'Lists'),
-                    'url' => 'sprout/lists/lists'
-                ]
-            ]
+                    'url' => 'sprout/lists/lists',
+                ],
+            ],
         ];
     }
 
@@ -53,11 +53,11 @@ class ListsConfig extends Config
     {
         return [
             'sprout:lists:editSubscribers' => [
-                'label' => Craft::t('sprout', 'Edit Subscribers')
+                'label' => Craft::t('sprout', 'Edit Subscribers'),
             ],
             'sprout:lists:editLists' => [
-                'label' => Craft::t('sprout', 'Edit Lists')
-            ]
+                'label' => Craft::t('sprout', 'Edit Lists'),
+            ],
         ];
     }
 
@@ -73,7 +73,7 @@ class ListsConfig extends Config
             'sprout-lists/subscribers/edit/<id:\d+>' =>
                 'sprout-lists/subscribers/edit-subscriber-template',
             'sprout-lists/subscribers/<listHandle:[^\/]+>' => [
-                'template' => 'sprout-lists/subscribers'
+                'template' => 'sprout-lists/subscribers',
             ],
             'sprout-lists/subscribers' =>
                 'sprout-lists/subscribers/subscribers-index-template',

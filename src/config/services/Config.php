@@ -126,7 +126,7 @@ class Config extends Component
         $cpConfig = new ControlPanelConfig();
         $cpConfig->setSettings($this->getCpSettings());
         $this->_configs['control-panel'] = $cpConfig;
-        
+
         foreach ($plugins as $plugin) {
 
             $isPluginEnabled = Craft::$app->getPlugins()->isPluginEnabled($plugin->handle);
@@ -360,14 +360,14 @@ class Config extends Component
             'globals',
             'categories',
             'assets',
-            'users'
+            'users',
         ];
 
         $afterPluginNavItemKeys = [
             'graphql',
             'utilities',
             'settings',
-            'plugin-store'
+            'plugin-store',
         ];
 
         $newCpNavItems = [];
@@ -542,7 +542,7 @@ class Config extends Component
             $permissionKey = StringHelper::camelCase($configType->getKey());
             $permissions['sprout:'.$permissionKey.':accessModule'] = [
                 'label' => 'Access '.$configType->getName(),
-                'nested' => $nestedPermissions
+                'nested' => $nestedPermissions,
             ];
         }
 

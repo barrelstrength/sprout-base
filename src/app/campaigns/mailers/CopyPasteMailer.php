@@ -97,7 +97,7 @@ class CopyPasteMailer extends Mailer implements CampaignEmailSenderInterface
                 [
                     'email' => $campaignEmail,
                     'html' => $campaignEmail->getEmailTemplates()->getHtmlBody(),
-                    'text' => $campaignEmail->getEmailTemplates()->getTextBody()
+                    'text' => $campaignEmail->getEmailTemplates()->getTextBody(),
                 ]);
 
             return $response;

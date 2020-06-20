@@ -133,7 +133,7 @@ trait RecipientsTrait
 
         $validator = new EmailValidator();
         $multipleValidations = new MultipleValidationWithAnd([
-            new RFCValidation()
+            new RFCValidation(),
         ]);
 
         // Add any On The Fly Recipients to our List
@@ -186,7 +186,7 @@ trait RecipientsTrait
 
         $validator = new EmailValidator();
         $multipleValidations = new MultipleValidationWithAnd([
-            new RFCValidation()
+            new RFCValidation(),
         ]);
 
         if (!empty($recipients)) {

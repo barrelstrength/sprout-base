@@ -51,7 +51,7 @@ class RedirectsController extends Controller
         return $this->renderTemplate('sprout/redirects/redirects/index', [
             'currentSite' => $currentSite,
             'isPro' => $isPro,
-            'canCreateRedirects' => $canCreateRedirects
+            'canCreateRedirects' => $canCreateRedirects,
         ]);
     }
 
@@ -114,8 +114,8 @@ class RedirectsController extends Controller
         $crumbs = [
             [
                 'label' => Craft::t('sprout', 'Redirects'),
-                'url' => UrlHelper::cpUrl('redirects')
-            ]
+                'url' => UrlHelper::cpUrl('redirects'),
+            ],
         ];
 
         $tabs = [
@@ -123,7 +123,7 @@ class RedirectsController extends Controller
                 'label' => 'Redirect',
                 'url' => '#tab1',
                 'class' => null,
-            ]
+            ],
         ];
 
         $isPro = SproutBase::$app->config->isEdition('redirects', Config::EDITION_PRO);
@@ -136,7 +136,7 @@ class RedirectsController extends Controller
             'tabs' => $tabs,
             'continueEditingUrl' => $continueEditingUrl,
             'saveAsNewUrl' => $saveAsNewUrl,
-            'isPro' => $isPro
+            'isPro' => $isPro,
         ]);
     }
 
@@ -192,7 +192,7 @@ class RedirectsController extends Controller
 
             // Send the event back to the template
             Craft::$app->getUrlManager()->setRouteParams([
-                'redirect' => $redirect
+                'redirect' => $redirect,
             ]);
 
             return null;
@@ -228,7 +228,7 @@ class RedirectsController extends Controller
         Craft::$app->getSession()->setError(Craft::t('sprout', 'Couldn’t delete redirect.'));
 
         Craft::$app->getUrlManager()->setRouteParams([
-            'redirect' => $element
+            'redirect' => $element,
         ]);
 
         return null;

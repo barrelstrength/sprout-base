@@ -34,7 +34,7 @@ class SproutReportsDataTables {
       pageLength: self.defaultPageLength,
       lengthMenu: [
         [10, 25, 50, 100, 250, -1],
-        [10, 25, 50, 100, 250, 'All']
+        [10, 25, 50, 100, 250, 'All'],
       ],
       pagingType: 'simple',
       language: {
@@ -58,8 +58,8 @@ class SproutReportsDataTables {
             }
 
             return data;
-          }
-        }
+          },
+        },
       ],
       initComplete: function() {
 
@@ -103,7 +103,7 @@ class SproutReportsDataTables {
         });
 
         self.resizeTable();
-      }
+      },
     });
   }
 

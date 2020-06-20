@@ -30,12 +30,12 @@ class NotificationSettings extends Settings
             'mailers' => [
                 'label' => Craft::t('sprout', 'Mailers'),
                 'template' => 'sprout/_settings/mailers',
-                'settingsTarget' => SettingsController::SETTINGS_TARGET_DB
+                'settingsTarget' => SettingsController::SETTINGS_TARGET_DB,
             ],
             'notifications' => [
                 'label' => Craft::t('sprout', 'Notifications'),
-                'template' => 'sprout/_settings/notifications'
-            ]
+                'template' => 'sprout/_settings/notifications',
+            ],
         ];
     }
 }

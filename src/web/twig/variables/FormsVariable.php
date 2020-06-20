@@ -62,7 +62,7 @@ class FormsVariable
         $formHtml = $view->renderTemplate('form', [
                 'form' => $form,
                 'entry' => $entry,
-                'renderingOptions' => $renderingOptions
+                'renderingOptions' => $renderingOptions,
             ]
         );
 
@@ -122,7 +122,7 @@ class FormsVariable
             'form' => $form,
             'entry' => $entry,
             'tabs' => [$layoutTab],
-            'renderingOptions' => $renderingOptions
+            'renderingOptions' => $renderingOptions,
         ]);
 
         $siteTemplatesPath = Craft::$app->path->getSiteTemplatesPath();
@@ -158,7 +158,7 @@ class FormsVariable
 
         if ($renderingOptions !== null) {
             $renderingOptions = [
-                'fields' => $renderingOptions['fields'] ?? null
+                'fields' => $renderingOptions['fields'] ?? null,
             ];
         }
 
@@ -203,9 +203,9 @@ class FormsVariable
                 'input' => $inputHtml,
                 'renderingOptions' => [
                     'fields' => [
-                        $field->handle => $fieldRenderingOptionsWrapper
-                    ]
-                ]
+                        $field->handle => $fieldRenderingOptionsWrapper,
+                    ],
+                ],
             ]
         );
 

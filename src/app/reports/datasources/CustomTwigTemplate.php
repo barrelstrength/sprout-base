@@ -125,7 +125,7 @@ class CustomTwigTemplate extends DataSource
 
                 $customSettingsHtml = Craft::$app->getView()->renderString($customSettingsHtmlWithExtras, [
                     'settings' => count($settings) ? $settings : $this->report->getSettings(),
-                    'errors' => $settingsErrors
+                    'errors' => $settingsErrors,
                 ], View::TEMPLATE_MODE_CP);
             }
         }
@@ -133,7 +133,7 @@ class CustomTwigTemplate extends DataSource
         return Craft::$app->getView()->renderTemplate('sprout/reports/_components/datasources/CustomTwigTemplate/settings', [
             'settings' => $this->report->getSettings(),
             'errors' => $settingsErrors,
-            'settingsContents' => $customSettingsHtml ?? null
+            'settingsContents' => $customSettingsHtml ?? null,
         ]);
     }
 
@@ -201,7 +201,7 @@ class CustomTwigTemplate extends DataSource
 
         $view->renderTemplate($resultsTemplate, [
             'isExport' => $this->isExport,
-            'settings' => $settings
+            'settings' => $settings,
         ]);
 
         $view->setTemplateMode($view::TEMPLATE_MODE_CP);

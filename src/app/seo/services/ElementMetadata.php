@@ -176,7 +176,7 @@ class ElementMetadata extends Component
                 'type' => 'optimizedImageField',
                 'value' => $settings['optimizedImageField'],
                 'badgeClass' => 'sproutseo-metaimage-info',
-            ]
+            ],
         ];
 
         $seoFieldHandles = [];
@@ -192,7 +192,7 @@ class ElementMetadata extends Component
                     $seoFieldHandles[$handle] = [
                         'type' => $targetSetting['type'],
                         'handle' => $handle,
-                        'badgeClass' => $targetSetting['badgeClass']
+                        'badgeClass' => $targetSetting['badgeClass'],
                     ];
                 }
             } else {
@@ -202,7 +202,7 @@ class ElementMetadata extends Component
                 $seoFieldHandles[$handles] = [
                     'type' => $targetSetting['type'],
                     'handle' => $handles,
-                    'badgeClass' => $targetSetting['badgeClass']
+                    'badgeClass' => $targetSetting['badgeClass'],
                 ];
             }
         }

@@ -144,7 +144,7 @@ class FormFields extends Component
                     'handle' => $fieldLayoutField->handle,
                     'instructions' => $fieldLayoutField->instructions,
                     'required' => $fieldLayoutField->required,
-                    'settings' => $fieldLayoutField->getSettings()
+                    'settings' => $fieldLayoutField->getSettings(),
                 ]);
 
                 Craft::$app->content->fieldContext = $form->getFieldContext();
@@ -186,7 +186,7 @@ class FormFields extends Component
 
             // Our fields are registered in the SproutForms main class
             $event = new RegisterFieldsEvent([
-                'fields' => []
+                'fields' => [],
             ]);
 
             $this->trigger(self::EVENT_REGISTER_FIELDS, $event);
@@ -294,7 +294,7 @@ class FormFields extends Component
         }
 
         $message = Craft::t('sprout', '{type} field does not support front-end display using Sprout Forms.', [
-                'type' => $type
+                'type' => $type,
             ]
         );
 
@@ -318,7 +318,7 @@ class FormFields extends Component
     public function getFieldValue($field, $value)
     {
         return FieldRecord::findOne([
-            $field => $value
+            $field => $value,
         ]);
     }
 
@@ -429,13 +429,13 @@ class FormFields extends Component
 
             if ($nextId) {
                 $fieldLayoutFieldNext = FieldLayoutFieldRecord::findOne([
-                    'tabId' => $tabId, 'layoutId' => $form->fieldLayoutId, 'fieldId' => $nextId
+                    'tabId' => $tabId, 'layoutId' => $form->fieldLayoutId, 'fieldId' => $nextId,
                 ]);
 
                 if ($fieldLayoutFieldNext) {
                     $fieldLayoutFields = FieldLayoutFieldRecord::find()
                         ->where([
-                            'tabId' => $tabId, 'layoutId' => $form->fieldLayoutId
+                            'tabId' => $tabId, 'layoutId' => $form->fieldLayoutId,
 
                         ])
                         ->andWhere(['>=', 'sortOrder', $fieldLayoutFieldNext->sortOrder])
@@ -452,7 +452,7 @@ class FormFields extends Component
 
             if (null === $sortOrder) {
                 $fieldLayoutFields = FieldLayoutFieldRecord::findAll([
-                    'tabId' => $tabId, 'layoutId' => $form->fieldLayoutId
+                    'tabId' => $tabId, 'layoutId' => $form->fieldLayoutId,
                 ]);
                 // At last
                 $sortOrder = count($fieldLayoutFields) + 1;
@@ -487,7 +487,7 @@ class FormFields extends Component
         if ($field !== null && $form !== null) {
             $fieldRecord = FieldLayoutFieldRecord::findOne([
                 'fieldId' => $field->id,
-                'layoutId' => $form->fieldLayoutId
+                'layoutId' => $form->fieldLayoutId,
             ]);
 
             if ($fieldRecord) {
@@ -558,7 +558,7 @@ class FormFields extends Component
         return [
             'html' => $html,
             'js' => $js,
-            'css' => $css
+            'css' => $css,
         ];
     }
 
@@ -622,7 +622,7 @@ class FormFields extends Component
             ->select('sortOrder')
             ->from(Table::FIELDLAYOUTTABS)
             ->where([
-                'layoutId' => $fieldLayout->id
+                'layoutId' => $fieldLayout->id,
             ])
             ->orderBy('sortOrder desc')
             ->scalar();
@@ -696,7 +696,7 @@ class FormFields extends Component
             ->select('*')
             ->from(Table::FIELDLAYOUTTABS)
             ->where([
-                'layoutId' => $layoutId
+                'layoutId' => $layoutId,
             ])
             ->orderBy('sortOrder asc')
             ->all();
@@ -735,7 +735,7 @@ class FormFields extends Component
             /** @var FieldLayoutFieldRecord $fieldLayoutFieldRecord */
             $fieldLayoutFieldRecord = FieldLayoutFieldRecord::find()
                 ->where('fieldId=:fieldId', [
-                    ':fieldId' => $fieldId
+                    ':fieldId' => $fieldId,
                 ]);
 
             if (!$fieldLayoutFieldRecord) {

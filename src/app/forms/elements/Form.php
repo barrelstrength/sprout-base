@@ -117,7 +117,7 @@ class Form extends Element
             [
                 'key' => '*',
                 'label' => Craft::t('sprout', 'All Forms'),
-            ]
+            ],
         ];
 
         $groups = SproutBase::$app->formGroups->getAllFormGroups();
@@ -129,7 +129,7 @@ class Form extends Element
                 'key' => $key,
                 'label' => Craft::t('sprout', $group->name),
                 'data' => ['id' => $group->id],
-                'criteria' => ['groupId' => $group->id]
+                'criteria' => ['groupId' => $group->id],
             ];
         }
 
@@ -188,7 +188,7 @@ class Form extends Element
         return array_merge(parent::behaviors(), [
             'fieldLayout' => [
                 'class' => FieldLayoutBehavior::class,
-                'elementType' => self::class
+                'elementType' => self::class,
             ],
         ]);
     }
@@ -344,32 +344,32 @@ class Form extends Element
         $options = [
             [
                 'label' => Craft::t('sprout', 'Select...'),
-                'value' => ''
-            ]
+                'value' => '',
+            ],
         ];
 
         foreach ($apiOptions as $key => $option) {
             $options[] = [
                 'label' => $option,
-                'value' => $key
+                'value' => $key,
             ];
             $classesIds[] = $key;
         }
 
         $options[] = [
-            'optgroup' => Craft::t('sprout', 'Custom CSS Classes')
+            'optgroup' => Craft::t('sprout', 'Custom CSS Classes'),
         ];
 
         if (!in_array($cssClasses, $classesIds, true) && $cssClasses) {
             $options[] = [
                 'label' => $cssClasses,
-                'value' => $cssClasses
+                'value' => $cssClasses,
             ];
         }
 
         $options[] = [
             'label' => Craft::t('sprout', 'Add Custom'),
-            'value' => 'custom'
+            'value' => 'custom',
         ];
 
         return $options;
@@ -442,7 +442,7 @@ class Form extends Element
             {
                 return Html::a('', $this->getCpEditUrl().'/settings/general', [
                     'data-icon' => 'settings',
-                    'title' => Craft::t('sprout', 'Visit form settings')
+                    'title' => Craft::t('sprout', 'Visit form settings'),
                 ]);
             }
         }
@@ -463,12 +463,12 @@ class Form extends Element
         $rules[] = [
             ['handle'],
             HandleValidator::class,
-            'reservedWords' => ['id', 'dateCreated', 'dateUpdated', 'uid', 'title']
+            'reservedWords' => ['id', 'dateCreated', 'dateUpdated', 'uid', 'title'],
         ];
         $rules[] = [
             ['name', 'handle'],
             UniqueValidator::class,
-            'targetClass' => FormRecord::class
+            'targetClass' => FormRecord::class,
         ];
 
         return $rules;

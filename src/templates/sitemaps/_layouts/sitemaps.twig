@@ -112,13 +112,13 @@
 
         {% if customSections|length %}
 
-        <table class="data fullwidth custom-pages sitemap-settings" id="custom-pages">
-            <thead>
+            <table class="data fullwidth custom-pages sitemap-settings" id="custom-pages">
+                <thead>
 
-            {% block customSectionTableRowHead %}{% endblock %}
+                {% block customSectionTableRowHead %}{% endblock %}
 
-            </thead>
-            <tbody>
+                </thead>
+                <tbody>
 
                 {% for customSection in customSections %}
 
@@ -136,8 +136,8 @@
 
                 {% endfor %}
 
-            </tbody>
-        </table>
+                </tbody>
+            </table>
 
         {% else %}
 

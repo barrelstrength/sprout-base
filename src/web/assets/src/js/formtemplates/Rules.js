@@ -39,7 +39,7 @@ class SproutFormsRules {
           orConditions.push({
             'fieldHandle': condition[0],
             'condition': condition[1],
-            'value': condition[2]
+            'value': condition[2],
           });
         }
         ruleSets[andConditionSetKey] = orConditions;
@@ -55,7 +55,7 @@ class SproutFormsRules {
 
       this.allRules[targetHandle] = {
         "rules": ruleSets,
-        "action": rules.behaviorAction
+        "action": rules.behaviorAction,
       };
     }
 
@@ -133,7 +133,7 @@ class SproutFormsRules {
           orConditions.push({
             condition: condition.condition,
             inputValue: inputValue,
-            ruleValue: typeof condition.value === 'undefined' ? '' : condition.value
+            ruleValue: typeof condition.value === 'undefined' ? '' : condition.value,
           });
 
         }
@@ -145,7 +145,7 @@ class SproutFormsRules {
     }
 
     let rules = JSON.stringify({
-      data: conditionsByField
+      data: conditionsByField,
     });
 
     this.validateConditions(rules);

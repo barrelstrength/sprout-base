@@ -65,7 +65,7 @@ class EntryElementIntegration extends ElementIntegration
         return Craft::$app->getView()->renderTemplate('sprout/forms/_components/integrationtypes/entryelement/settings',
             [
                 'integration' => $this,
-                'sectionsOptions' => $sections
+                'sectionsOptions' => $sections,
             ]
         );
     }
@@ -121,7 +121,7 @@ class EntryElementIntegration extends ElementIntegration
             if ($result) {
                 $this->successMessage = Craft::t('sprout', 'Entry Element ID {id} created in {sectionName} Section', [
                     'id' => $entryElement->id,
-                    'sectionName' => $entryElement->getSection()->name
+                    'sectionName' => $entryElement->getSection()->name,
                 ]);
 
                 return true;
@@ -212,7 +212,7 @@ class EntryElementIntegration extends ElementIntegration
 
             $finalOptions[] = [
                 'label' => $field->name.' ('.$field->handle.')',
-                'value' => $field->handle
+                'value' => $field->handle,
             ];
         }
 
@@ -244,22 +244,22 @@ class EntryElementIntegration extends ElementIntegration
             [
                 'label' => Craft::t('sprout', 'Title'),
                 'value' => 'title',
-                'class' => PlainText::class
+                'class' => PlainText::class,
             ],
             [
                 'label' => Craft::t('sprout', 'Slug'),
                 'value' => 'slug',
-                'class' => PlainText::class
+                'class' => PlainText::class,
             ],
             [
                 'label' => Craft::t('sprout', 'Post Date'),
                 'value' => 'postDate',
-                'class' => Date::class
+                'class' => Date::class,
             ],
             [
                 'label' => Craft::t('sprout', 'Date Created'),
                 'value' => 'dateCreated',
-                'class' => Date::class
+                'class' => Date::class,
             ],
         ];
 
@@ -345,7 +345,7 @@ class EntryElementIntegration extends ElementIntegration
             foreach ($entryTypes as $entryType) {
                 $options[] = [
                     'label' => $entryType->name,
-                    'value' => $entryType->id
+                    'value' => $entryType->id,
                 ];
             }
         }

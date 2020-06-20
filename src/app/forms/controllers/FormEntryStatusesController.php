@@ -55,7 +55,7 @@ class FormEntryStatusesController extends BaseController
 
         return $this->renderTemplate('sprout/_settings/entry-statuses/edit', [
             'entryStatus' => $entryStatus,
-            'entryStatusId' => $entryStatusId
+            'entryStatusId' => $entryStatusId,
         ]);
     }
 
@@ -85,7 +85,7 @@ class FormEntryStatusesController extends BaseController
             Craft::$app->session->setError(Craft::t('sprout', 'Could not save Entry Status.'));
 
             Craft::$app->getUrlManager()->setRouteParams([
-                'entryStatus' => $entryStatus
+                'entryStatus' => $entryStatus,
             ]);
 
             return null;

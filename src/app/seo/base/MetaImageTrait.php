@@ -146,7 +146,7 @@ trait MetaImageTrait
             $absoluteUrl,
             $imageWidth,
             $imageHeight,
-            $imageType
+            $imageType,
         ];
     }
 }

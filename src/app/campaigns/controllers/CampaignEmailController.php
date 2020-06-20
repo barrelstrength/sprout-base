@@ -42,7 +42,7 @@ class CampaignEmailController extends Controller
         $isPro = SproutBase::$app->config->isEdition('campaigns', Config::EDITION_PRO);
 
         return $this->renderTemplate('sprout/campaigns/campaigns/index', [
-            'isPro' => $isPro
+            'isPro' => $isPro,
         ]);
     }
 
@@ -91,7 +91,7 @@ class CampaignEmailController extends Controller
                 'label' => 'Message',
                 'url' => '#tab1',
                 'class' => null,
-            ]
+            ],
         ];
 
         $tabs = count($campaignEmail->getFieldLayoutTabs()) ? $campaignEmail->getFieldLayoutTabs() : $tabs;
@@ -102,7 +102,7 @@ class CampaignEmailController extends Controller
             'campaignTypeId' => $campaignTypeId,
             'campaignType' => $campaignType,
             'showPreviewBtn' => $showPreviewBtn,
-            'tabs' => $tabs
+            'tabs' => $tabs,
         ]);
     }
 
@@ -124,7 +124,7 @@ class CampaignEmailController extends Controller
 
         if (!$this->campaignType) {
             throw new Exception(Craft::t('sprout', 'No Campaign exists with the id “{id}”', [
-                'id' => $campaignTypeId
+                'id' => $campaignTypeId,
             ]));
         }
 
@@ -147,7 +147,7 @@ class CampaignEmailController extends Controller
             $session->setError(Craft::t('sprout', 'Could not save Campaign Email.'));
 
             Craft::$app->getUrlManager()->setRouteParams([
-                'campaignEmail' => $campaignEmail
+                'campaignEmail' => $campaignEmail,
             ]);
 
             return null;
@@ -244,12 +244,12 @@ class CampaignEmailController extends Controller
 
         $html = Craft::$app->getView()->renderTemplate('sprout/campaigns/_modals/campaigns/prepare-test-email', [
             'campaignEmail' => $campaignEmail,
-            'campaignType' => $campaignType
+            'campaignType' => $campaignType,
         ]);
 
         return $this->asJson([
             'success' => true,
-            'content' => $html
+            'content' => $html,
         ]);
     }
 
@@ -279,12 +279,12 @@ class CampaignEmailController extends Controller
 
         $html = Craft::$app->getView()->renderTemplate('sprout/campaigns/_modals/campaigns/prepare-scheduled-email', [
             'campaignEmail' => $campaignEmail,
-            'campaignType' => $campaignType
+            'campaignType' => $campaignType,
         ]);
 
         return $this->asJson([
             'success' => true,
-            'content' => $html
+            'content' => $html,
         ]);
     }
 
@@ -310,7 +310,7 @@ class CampaignEmailController extends Controller
 
         if (!$campaignEmail) {
             throw new InvalidArgumentException(Craft::t('sprout', 'Unable to find Campaign Email with id {id}', [
-                'id' => $emailId
+                'id' => $emailId,
             ]));
         }
 
@@ -332,8 +332,8 @@ class CampaignEmailController extends Controller
                 ModalResponse::createErrorModalResponse('sprout/notifications/_modals/response', [
                     'email' => $campaignEmail,
                     'message' => Craft::t('sprout', 'Recipient email addresses do not validate: {invalidEmails}', [
-                        'invalidEmails' => implode(', ', $invalidEmails)
-                    ])
+                        'invalidEmails' => implode(', ', $invalidEmails),
+                    ]),
                 ])
             );
         }
@@ -347,7 +347,7 @@ class CampaignEmailController extends Controller
                 return $this->asJson(
                     ModalResponse::createErrorModalResponse('sprout/notifications/_modals/response', [
                         'email' => $campaignEmail,
-                        'message' => Craft::t('sprout', 'Unable to send Test Campaign Email')
+                        'message' => Craft::t('sprout', 'Unable to send Test Campaign Email'),
                     ])
                 );
             }
@@ -355,7 +355,7 @@ class CampaignEmailController extends Controller
             return $this->asJson(
                 ModalResponse::createModalResponse('sprout/notifications/_modals/response', [
                     'email' => $campaignEmail,
-                    'message' => Craft::t('sprout', 'Test Campaign Email sent.')
+                    'message' => Craft::t('sprout', 'Test Campaign Email sent.'),
                 ])
             );
         } catch (\Exception $e) {

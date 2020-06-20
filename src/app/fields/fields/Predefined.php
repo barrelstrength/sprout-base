@@ -65,7 +65,7 @@ class Predefined extends BasePredefinedField
     {
         return Craft::$app->getView()->renderTemplate('sprout/fields/_components/fields/formfields/predefined/settings',
             [
-                'field' => $this
+                'field' => $this,
             ]);
     }
 

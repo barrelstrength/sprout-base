@@ -24,7 +24,7 @@ class Mailers extends Component
     public function getRegisteredMailers(): array
     {
         $event = new RegisterMailersEvent([
-            'mailers' => []
+            'mailers' => [],
         ]);
 
         $this->trigger(self::EVENT_REGISTER_MAILER_TYPES, $event);

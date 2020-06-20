@@ -159,7 +159,7 @@ class Redirects extends Component
                 'redirects.matchStrategy',
                 'redirects.count',
                 'elements.enabled',
-                'elements_sites.siteId'
+                'elements_sites.siteId',
             ])
             ->from(RedirectRecord::tableName().' as redirects')
             ->leftJoin('{{%elements}} as elements', '[[redirects.id]] = [[elements.id]]')
@@ -168,7 +168,7 @@ class Redirects extends Component
             ->orderBy('[[structureelements.lft]] asc')
             ->where([
                 '[[elements_sites.siteId]]' => $site->id,
-                '[[structureelements.level]]' => 1
+                '[[structureelements.level]]' => 1,
             ])
             ->all();
 
@@ -256,7 +256,7 @@ class Redirects extends Component
         $methods = [
             Craft::t('sprout', RedirectMethods::Permanent) => 'Permanent',
             Craft::t('sprout', RedirectMethods::Temporary) => 'Temporary',
-            Craft::t('sprout', RedirectMethods::PageNotFound) => 'Page Not Found'
+            Craft::t('sprout', RedirectMethods::PageNotFound) => 'Page Not Found',
         ];
 
         $newMethods = [];
@@ -436,7 +436,7 @@ class Redirects extends Component
             ->innerJoin(Table::ELEMENTS_SITES.' elements_sites', '[[elements_sites.elementId]] = [[redirects.id]]')
             ->where([
                 'elements_sites.siteId' => $redirect->siteId,
-                'redirects.oldUrl' => $redirect->oldUrl
+                'redirects.oldUrl' => $redirect->oldUrl,
             ])
             ->scalar();
 
@@ -508,7 +508,7 @@ class Redirects extends Component
     {
         $count = Redirect::find()
             ->where('method !=:method', [
-                ':method' => RedirectMethods::PageNotFound
+                ':method' => RedirectMethods::PageNotFound,
             ])
             ->anyStatus()
             ->count();

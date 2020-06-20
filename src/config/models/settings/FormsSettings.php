@@ -58,8 +58,8 @@ class FormsSettings extends Settings
                 'label' => Craft::t('sprout', 'Spam Protection'),
                 'template' => 'sprout/_settings/spam-protection',
                 'variables' => [
-                    'spamRedirectBehaviorOptions' => $this->getSpamRedirectBehaviorsAsOptions()
-                ]
+                    'spamRedirectBehaviorOptions' => $this->getSpamRedirectBehaviorsAsOptions(),
+                ],
             ],
             'entry-statuses' => [
                 'label' => Craft::t('sprout', 'Entry Statuses'),
@@ -67,9 +67,9 @@ class FormsSettings extends Settings
                 'settingsTarget' => SettingsController::SETTINGS_TARGET_DB,
                 'actionButtonTemplate' => 'sprout/_settings/entry-statuses/actionStatusButton',
                 'variables' => [
-                    'entryStatuses' => SproutBase::$app->formEntryStatuses->getAllEntryStatuses()
-                ]
-            ]
+                    'entryStatuses' => SproutBase::$app->formEntryStatuses->getAllEntryStatuses(),
+                ],
+            ],
         ];
     }
 
@@ -81,12 +81,12 @@ class FormsSettings extends Settings
         return [
             [
                 'label' => 'Redirect as normal (recommended)',
-                'value' => self::SPAM_REDIRECT_BEHAVIOR_NORMAL
+                'value' => self::SPAM_REDIRECT_BEHAVIOR_NORMAL,
             ],
             [
                 'label' => 'Redirect back to form',
-                'value' => self::SPAM_REDIRECT_BEHAVIOR_BACK_TO_FORM
-            ]
+                'value' => self::SPAM_REDIRECT_BEHAVIOR_BACK_TO_FORM,
+            ],
         ];
     }
 
@@ -103,15 +103,15 @@ class FormsSettings extends Settings
     {
         $this->captchaSettings = [
             DuplicateCaptcha::class => [
-                'enabled' => 0
+                'enabled' => 0,
             ],
             JavascriptCaptcha::class => [
-                'enabled' => 1
+                'enabled' => 1,
             ],
             HoneypotCaptcha::class => [
                 'enabled' => 0,
                 'honeypotFieldName' => 'sprout-forms-hc',
-                'honeypotScreenReaderMessage' => 'Leave this field blank'
+                'honeypotScreenReaderMessage' => 'Leave this field blank',
             ],
         ];
     }

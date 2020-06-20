@@ -32,7 +32,7 @@ class LineChartVisualization extends Visualization
     public function getSettingsHtml(array $settings): string
     {
         return Craft::$app->getView()->renderTemplate('sprout/reports/_components/visualizations/LineChart/settings', [
-            'settings' => $settings
+            'settings' => $settings,
         ]);
     }
 

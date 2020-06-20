@@ -64,7 +64,7 @@ class Address extends Component
                 ->delete(AddressRecord::tableName(), [
                     'elementId' => $element->id,
                     'siteId' => $element->siteId,
-                    'fieldId' => $field->id
+                    'fieldId' => $field->id,
                 ])
                 ->execute();
 
@@ -81,7 +81,7 @@ class Address extends Component
         $record = AddressRecord::findOne([
             'elementId' => $element->id,
             'siteId' => $element->siteId,
-            'fieldId' => $field->id
+            'fieldId' => $field->id,
         ]);
 
         if (!$record) {
@@ -163,7 +163,7 @@ class Address extends Component
 
         Craft::$app->db->createCommand()
             ->delete(AddressRecord::tableName(), [
-                'id' => $addressIdsWithDeletedElementIds
+                'id' => $addressIdsWithDeletedElementIds,
             ])
             ->execute();
     }
@@ -188,7 +188,7 @@ class Address extends Component
                 'postalCode',
                 'sortingCode',
                 'address1',
-                'address2'
+                'address2',
             ])
             ->from(AddressRecord::tableName())
             ->where(['id' => $id])
@@ -225,12 +225,12 @@ class Address extends Component
                 'postalCode',
                 'sortingCode',
                 'address1',
-                'address2'
+                'address2',
             ])
             ->from(AddressRecord::tableName())
             ->where([
                 'siteId' => $element->siteId,
-                'fieldId' => $fieldId
+                'fieldId' => $fieldId,
             ]);
 
         if ($element->id) {
@@ -270,7 +270,7 @@ class Address extends Component
         $event = new OnSaveAddressEvent([
             'model' => $model,
             'address' => $model,
-            'source' => $source
+            'source' => $source,
         ]);
 
         $this->trigger(self::EVENT_ON_SAVE_ADDRESS, $event);
@@ -297,7 +297,7 @@ class Address extends Component
         foreach (Craft::$app->getI18n()->getAllLocales() as $locale) {
             $craftAvailableLocales[$locale->id] = Craft::t('app', '{id} – {name}', [
                 'name' => $locale->getDisplayName(Craft::$app->language),
-                'id' => $locale->id
+                'id' => $locale->id,
             ]);
         }
 
@@ -336,7 +336,7 @@ class Address extends Component
             'sprout/fields/_components/fields/formfields/address/settings', [
                 'field' => $field,
                 'countries' => $countries,
-                'languages' => $availableLocales
+                'languages' => $availableLocales,
             ]
         );
     }
@@ -440,7 +440,7 @@ class Address extends Component
                 'countryInputHtml' => Template::raw($countryInputHtml),
                 'addressFormHtml' => Template::raw($addressFormHtml),
                 'showCountryDropdown' => $showCountryDropdown,
-                'showAddressOnInitialLoad' => $showAddressOnInitialLoad
+                'showAddressOnInitialLoad' => $showAddressOnInitialLoad,
             ]
         );
     }

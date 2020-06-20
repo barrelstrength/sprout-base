@@ -38,7 +38,7 @@ class DataSourcesController extends Controller
 
         return $this->renderTemplate('sprout/reports/datasources/index', [
             'installedDataSources' => $installedDataSources,
-            'uninstalledDataSources' => $uninstalledDataSources
+            'uninstalledDataSources' => $uninstalledDataSources,
         ]);
     }
 

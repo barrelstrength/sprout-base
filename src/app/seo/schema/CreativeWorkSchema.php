@@ -70,7 +70,7 @@ class CreativeWorkSchema extends ThingSchema
 
         $websiteIdentity = [
             'Person' => WebsiteIdentityPersonSchema::class,
-            'Organization' => WebsiteIdentityOrganizationSchema::class
+            'Organization' => WebsiteIdentityOrganizationSchema::class,
         ];
 
         if (isset($element->postDate)) {

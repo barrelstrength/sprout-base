@@ -27,7 +27,7 @@
 
     // Start observing the target node for configured mutations
     toggleMultisiteObserver.observe(multilingualToggleDiv, {
-      attributes: true
+      attributes: true,
     });
   }
 })();

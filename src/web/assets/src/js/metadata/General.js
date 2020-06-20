@@ -120,7 +120,7 @@ class SproutSeoKeywordsField {
 
   initKeywordsField() {
     $(this.keywordsFieldId + ' input').tagEditor({
-      animateDelete: 20
+      animateDelete: 20,
     });
   }
 }

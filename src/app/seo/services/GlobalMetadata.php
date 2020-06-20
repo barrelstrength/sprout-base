@@ -109,7 +109,7 @@ class GlobalMetadata extends Component
     public function getTransforms(): array
     {
         $options = [
-            '' => Craft::t('sprout', 'None')
+            '' => Craft::t('sprout', 'None'),
         ];
 
         $options[] = ['optgroup' => Craft::t('sprout', 'Default Transforms')];
@@ -205,7 +205,7 @@ class GlobalMetadata extends Component
         $options = $this->getGlobalMetadataSettingsOptions($schemaType);
 
         $options[] = [
-            'optgroup' => Craft::t('sprout', 'Custom')
+            'optgroup' => Craft::t('sprout', 'Custom'),
         ];
 
         $schemas = $schemaGlobals->{$schemaType} != null ? $schemaGlobals->{$schemaType} : [];
@@ -238,52 +238,52 @@ class GlobalMetadata extends Component
                 $options = [
                     [
                         'label' => Craft::t('sprout', 'Select Type...'),
-                        'value' => ''
+                        'value' => '',
                     ],
                     [
                         'label' => Craft::t('sprout', 'Customer Service'),
-                        'value' => 'customer service'
+                        'value' => 'customer service',
                     ],
                     [
                         'label' => Craft::t('sprout', 'Technical Support'),
-                        'value' => 'technical support'
+                        'value' => 'technical support',
                     ],
                     [
                         'label' => Craft::t('sprout', 'Billing Support'),
-                        'value' => 'billing support'
+                        'value' => 'billing support',
                     ],
                     [
                         'label' => Craft::t('sprout', 'Bill Payment'),
-                        'value' => 'bill payment'
+                        'value' => 'bill payment',
                     ],
                     [
                         'label' => Craft::t('sprout', 'Sales'),
-                        'value' => 'sales'
+                        'value' => 'sales',
                     ],
                     [
                         'label' => Craft::t('sprout', 'Reservations'),
-                        'value' => 'reservations'
+                        'value' => 'reservations',
                     ],
                     [
                         'label' => Craft::t('sprout', 'Credit Card Support'),
-                        'value' => 'credit card support'
+                        'value' => 'credit card support',
                     ],
                     [
                         'label' => Craft::t('sprout', 'Emergency'),
-                        'value' => 'emergency'
+                        'value' => 'emergency',
                     ],
                     [
                         'label' => Craft::t('sprout', 'Baggage Tracking'),
-                        'value' => 'baggage tracking'
+                        'value' => 'baggage tracking',
                     ],
                     [
                         'label' => Craft::t('sprout', 'Roadside Assistance'),
-                        'value' => 'roadside assistance'
+                        'value' => 'roadside assistance',
                     ],
                     [
                         'label' => Craft::t('sprout', 'Package Tracking'),
-                        'value' => 'package tracking'
-                    ]
+                        'value' => 'package tracking',
+                    ],
                 ];
 
                 break;
@@ -293,48 +293,48 @@ class GlobalMetadata extends Component
                 $options = [
                     [
                         'label' => Craft::t('sprout', 'Select...'),
-                        'value' => ''
+                        'value' => '',
                     ],
                     [
                         'label' => Craft::t('sprout', 'Facebook'),
-                        'value' => 'Facebook'
+                        'value' => 'Facebook',
                     ],
                     [
                         'label' => Craft::t('sprout', 'Twitter'),
-                        'value' => 'Twitter'
+                        'value' => 'Twitter',
                     ],
                     [
                         'label' => Craft::t('sprout', 'Google+'),
-                        'value' => 'Google+'
+                        'value' => 'Google+',
                     ],
                     [
                         'label' => Craft::t('sprout', 'Instagram'),
-                        'value' => 'Instagram'
+                        'value' => 'Instagram',
                     ],
                     [
                         'label' => Craft::t('sprout', 'YouTube'),
-                        'value' => 'YouTube'
+                        'value' => 'YouTube',
                     ],
                     [
                         'label' => Craft::t('sprout', 'LinkedIn'),
-                        'value' => 'LinkedIn'
+                        'value' => 'LinkedIn',
                     ],
                     [
                         'label' => Craft::t('sprout', 'Myspace'),
-                        'value' => 'Myspace'
+                        'value' => 'Myspace',
                     ],
                     [
                         'label' => Craft::t('sprout', 'Pinterest'),
-                        'value' => 'Pinterest'
+                        'value' => 'Pinterest',
                     ],
                     [
                         'label' => Craft::t('sprout', 'SoundCloud'),
-                        'value' => 'SoundCloud'
+                        'value' => 'SoundCloud',
                     ],
                     [
                         'label' => Craft::t('sprout', 'Tumblr'),
-                        'value' => 'Tumblr'
-                    ]
+                        'value' => 'Tumblr',
+                    ],
                 ];
 
                 break;
@@ -344,43 +344,43 @@ class GlobalMetadata extends Component
                 $options = [
                     [
                         'label' => Craft::t('sprout', 'Select...'),
-                        'value' => ''
+                        'value' => '',
                     ],
                     [
                         'label' => Craft::t('sprout', 'Bing Webmaster Tools'),
                         'value' => 'bingWebmasterTools',
-                        'metaTagName' => 'msvalidate.01'
+                        'metaTagName' => 'msvalidate.01',
                     ],
                     [
                         'label' => Craft::t('sprout', 'Facebook App ID'),
                         'value' => 'facebookAppId',
-                        'metaTagName' => 'fb:app_id'
+                        'metaTagName' => 'fb:app_id',
                     ],
                     [
                         'label' => Craft::t('sprout', 'Facebook Page'),
                         'value' => 'facebookPage',
-                        'metaTagName' => 'fb:page_id'
+                        'metaTagName' => 'fb:page_id',
                     ],
                     [
                         'label' => Craft::t('sprout', 'Facebook Admins'),
                         'value' => 'facebookAdmins',
-                        'metaTagName' => 'fb:admins'
+                        'metaTagName' => 'fb:admins',
                     ],
                     [
                         'label' => Craft::t('sprout', 'Google Search Console'),
                         'value' => 'googleSearchConsole',
-                        'metaTagName' => 'google-site-verification'
+                        'metaTagName' => 'google-site-verification',
                     ],
                     [
                         'label' => Craft::t('sprout', 'Pinterest'),
                         'value' => 'pinterest',
-                        'metaTagName' => 'p:domain_verify'
+                        'metaTagName' => 'p:domain_verify',
                     ],
                     [
                         'label' => Craft::t('sprout', 'Yandex Webmaster Tools'),
                         'value' => 'yandexWebmasterTools',
-                        'metaTagName' => 'yandex-verification'
-                    ]
+                        'metaTagName' => 'yandex-verification',
+                    ],
                 ];
 
                 break;
@@ -424,24 +424,24 @@ class GlobalMetadata extends Component
         $options = [
             [
                 'label' => Craft::t('sprout', 'None'),
-                'value' => ''
+                'value' => '',
             ],
             [
                 'label' => Craft::t('sprout', '$'),
-                'value' => '$'
+                'value' => '$',
             ],
             [
                 'label' => Craft::t('sprout', '$$'),
-                'value' => '$$'
+                'value' => '$$',
             ],
             [
                 'label' => Craft::t('sprout', '$$$'),
-                'value' => '$$$'
+                'value' => '$$$',
             ],
             [
                 'label' => Craft::t('sprout', '$$$$'),
-                'value' => '$$$$'
-            ]
+                'value' => '$$$$',
+            ],
         ];
 
         $schemaGlobals = SproutBase::$app->globalMetadata->getGlobalMetadata($site);
@@ -472,16 +472,16 @@ class GlobalMetadata extends Component
         $options = [
             [
                 'label' => Craft::t('sprout', 'None'),
-                'value' => ''
+                'value' => '',
             ],
             [
                 'label' => Craft::t('sprout', 'Female'),
-                'value' => 'female'
+                'value' => 'female',
             ],
             [
                 'label' => Craft::t('sprout', 'Male'),
                 'value' => 'male',
-            ]
+            ],
         ];
 
         $schemaGlobals = SproutBase::$app->globalMetadata->getGlobalMetadata($site);
@@ -548,9 +548,9 @@ class GlobalMetadata extends Component
         $options[] = [
             'value' => 'custom',
             'label' => Craft::t('sprout', 'Add Custom Format {needPro}', [
-                'needPro' => $needPro
+                'needPro' => $needPro,
             ]),
-            'disabled' => !$needPro
+            'disabled' => !$needPro,
         ];
 
         return $options;
@@ -695,7 +695,7 @@ class GlobalMetadata extends Component
             'contacts' => null,
             'social' => null,
             'robots' => null,
-            'settings' => $defaultSettings
+            'settings' => $defaultSettings,
         ]);
     }
 }

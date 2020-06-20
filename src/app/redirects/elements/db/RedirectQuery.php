@@ -65,7 +65,7 @@ class RedirectQuery extends ElementQuery
             'sprout_redirects.dateLastUsed',
             'sprout_redirects.lastRemoteIpAddress',
             'sprout_redirects.lastReferrer',
-            'sprout_redirects.lastUserAgent'
+            'sprout_redirects.lastUserAgent',
         ]);
 
         if ($this->id) {

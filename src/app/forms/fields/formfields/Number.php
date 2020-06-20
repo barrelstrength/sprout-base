@@ -182,7 +182,7 @@ class Number extends FormField implements PreviewableFieldInterface
         return Craft::$app->getView()->renderTemplate('_includes/forms/text', [
             'name' => $this->handle,
             'value' => $value,
-            'size' => $this->size
+            'size' => $this->size,
         ]);
     }
 
@@ -199,7 +199,7 @@ class Number extends FormField implements PreviewableFieldInterface
     {
         return Craft::$app->getView()->renderTemplate('sprout/forms/_components/fields/formfields/number/example',
             [
-                'field' => $this
+                'field' => $this,
             ]
         );
     }
@@ -223,7 +223,7 @@ class Number extends FormField implements PreviewableFieldInterface
                 'value' => $value,
                 'field' => $this,
                 'entry' => $entry,
-                'renderingOptions' => $renderingOptions
+                'renderingOptions' => $renderingOptions,
             ]
         );
 
@@ -243,7 +243,7 @@ class Number extends FormField implements PreviewableFieldInterface
             ['max'],
             'compare',
             'compareAttribute' => 'min',
-            'operator' => '>='
+            'operator' => '>=',
         ];
 
         if (!$this->decimals) {
@@ -268,7 +268,7 @@ class Number extends FormField implements PreviewableFieldInterface
         return [
             CraftPlainText::class,
             CraftDropdown::class,
-            CraftNumber::class
+            CraftNumber::class,
         ];
     }
 

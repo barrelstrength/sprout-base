@@ -38,12 +38,12 @@ class FormRules extends Component
     {
         $options[] = [
             'label' => Craft::t('sprout', 'Add Rule...'),
-            'value' => ''
+            'value' => '',
         ];
 
         $options[] = [
             'label' => FieldRule::displayName(),
-            'value' => FieldRule::class
+            'value' => FieldRule::class,
         ];
 
         return $options;
@@ -69,7 +69,7 @@ class FormRules extends Component
                 'rules.behaviorAction',
                 'rules.behaviorTarget',
                 'rules.settings',
-                'rules.enabled'
+                'rules.enabled',
             ])
             ->from([RulesRecord::tableName().' rules'])
             ->where(['rules.formId' => $formId]);
@@ -112,7 +112,7 @@ class FormRules extends Component
                 'rules.behaviorAction',
                 'rules.behaviorTarget',
                 'rules.settings',
-                'rules.enabled'
+                'rules.enabled',
             ])
             ->from([RulesRecord::tableName().' rules'])
             ->where(['rules.id' => $ruleId])
@@ -229,7 +229,7 @@ class FormRules extends Component
         return [
             'html' => $html,
             'js' => $js,
-            'css' => $css
+            'css' => $css,
         ];
     }
 }

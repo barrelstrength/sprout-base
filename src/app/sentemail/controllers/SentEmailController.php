@@ -45,7 +45,7 @@ class SentEmailController extends Controller
         $isPro = SproutBase::$app->config->isEdition('sent-email', Config::EDITION_PRO);
 
         return $this->renderTemplate('sprout/sent-email/sent-email/index', [
-            'isPro' => $isPro
+            'isPro' => $isPro,
         ]);
     }
 
@@ -75,14 +75,14 @@ class SentEmailController extends Controller
             return $this->asJson(
                 ModalResponse::createErrorModalResponse('sprout/notifications/_modals/response', [
                     'email' => $sentEmail,
-                    'message' => Craft::t('sprout', 'A recipient email address is required')
+                    'message' => Craft::t('sprout', 'A recipient email address is required'),
                 ])
             );
         }
 
         $validator = new EmailValidator();
         $validations = new MultipleValidationWithAnd([
-            new RFCValidation()
+            new RFCValidation(),
         ]);
         $recipientList = new SimpleRecipientList();
         $recipientArray = explode(',', $recipients);
@@ -108,8 +108,8 @@ class SentEmailController extends Controller
                 ModalResponse::createErrorModalResponse('sprout/notifications/_modals/response', [
                     'email' => $sentEmail,
                     'message' => Craft::t('sprout', 'Invalid email address(es) provided: {invalidEmails}', [
-                        'invalidEmails' => implode(', ', $invalidEmails)
-                    ])
+                        'invalidEmails' => implode(', ', $invalidEmails),
+                    ]),
                 ])
             );
         }
@@ -150,7 +150,7 @@ class SentEmailController extends Controller
                     'renderedEmail' => $email,
                     'recipients' => $recipients,
                     'processedRecipients' => null,
-                    SentEmails::SENT_EMAIL_MESSAGE_VARIABLE => $infoTable
+                    SentEmails::SENT_EMAIL_MESSAGE_VARIABLE => $infoTable,
                 ];
 
                 $email->variables = $variables;
@@ -173,7 +173,7 @@ class SentEmailController extends Controller
                     'sprout/notifications/_modals/response',
                     [
                         'email' => $sentEmail,
-                        'message' => Craft::t('sprout', 'Email sent successfully.')
+                        'message' => Craft::t('sprout', 'Email sent successfully.'),
                     ]
                 );
 
@@ -214,7 +214,7 @@ class SentEmailController extends Controller
 
         $content = Craft::$app->getView()->renderTemplate('sprout/sent-email/_modals/prepare-resend-email', [
             'sentEmail' => $sentEmail,
-            'isPro' => $isPro
+            'isPro' => $isPro,
         ]);
 
         $response = new ModalResponse();
@@ -246,7 +246,7 @@ class SentEmailController extends Controller
         $sentEmail = Craft::$app->elements->getElementById($sentEmailId, SentEmail::class);
 
         $content = Craft::$app->getView()->renderTemplate('sprout/sent-email/_modals/info-table', [
-            'info' => $sentEmail->getInfo()
+            'info' => $sentEmail->getInfo(),
         ]);
 
         $response = new ModalResponse();

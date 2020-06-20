@@ -23,6 +23,7 @@ use craft\db\Query;
 use craft\errors\MissingComponentException;
 use craft\helpers\MigrationHelper;
 use craft\helpers\StringHelper;
+use Exception;
 use Throwable;
 use yii\base\Component;
 use yii\base\InvalidConfigException;
@@ -196,7 +197,7 @@ class Forms extends Component
             $transaction->commit();
 
             Craft::info('Form Saved.', __METHOD__);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             Craft::error('Unable to save form: '.$e->getMessage(), __METHOD__);
             $transaction->rollBack();
 
@@ -212,7 +213,7 @@ class Forms extends Component
      * @param FormElement $form
      *
      * @return bool
-     * @throws \Exception
+     * @throws Exception
      * @throws Throwable
      */
     public function deleteForm(FormElement $form): bool
@@ -261,7 +262,7 @@ class Forms extends Component
             }
 
             $transaction->commit();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $transaction->rollBack();
 
             throw $e;
@@ -372,7 +373,7 @@ class Forms extends Component
     public function getFieldValue($field, $value)
     {
         return FormRecord::findOne([
-            $field => $value
+            $field => $value,
         ]);
     }
 
@@ -580,7 +581,7 @@ class Forms extends Component
      * @param $formElements
      *
      * @return bool
-     * @throws \Exception
+     * @throws Exception
      * @throws Throwable
      */
     public function deleteForms($formElements): bool
@@ -605,7 +606,7 @@ class Forms extends Component
      * @param string|null $handle
      *
      * @return FormElement|null
-     * @throws \Exception
+     * @throws Exception
      * @throws Throwable
      */
     public function createNewForm($name = null, $handle = null)
@@ -686,7 +687,7 @@ class Forms extends Component
             $tabs[$tab->id] = [
                 'label' => Craft::t('sprout', $tab->name),
                 'url' => '#sproutforms-tab-'.$tab->id,
-                'class' => $hasErrors ? 'error' : null
+                'class' => $hasErrors ? 'error' : null,
             ];
         }
 
@@ -731,7 +732,7 @@ class Forms extends Component
     private function _createContentTable($tableName)
     {
         $migration = new CreateFormContentTable([
-            'tableName' => $tableName
+            'tableName' => $tableName,
         ]);
 
         ob_start();

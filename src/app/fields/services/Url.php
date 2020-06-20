@@ -66,7 +66,7 @@ class Url extends Component
                 'value' => $value,
                 'fieldContext' => $fieldContext,
                 'placeholder' => $field->placeholder,
-                'element' => $element
+                'element' => $element,
             ]
         );
     }

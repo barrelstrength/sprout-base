@@ -174,7 +174,7 @@ class EntryQuery extends ElementQuery
             'sproutforms_forms.name as formName',
             'sproutforms_forms.handle as formHandle',
             'sproutforms_forms.groupId as formGroupId',
-            'sproutforms_entrystatuses.handle as statusHandle'
+            'sproutforms_entrystatuses.handle as statusHandle',
         ]);
 
         $this->query->innerJoin(FormRecord::tableName().' sproutforms_forms', '[[sproutforms_forms.id]] = [[sproutforms_entries.formId]]');

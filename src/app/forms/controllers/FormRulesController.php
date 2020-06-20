@@ -27,7 +27,7 @@ use yii\web\Response;
 class FormRulesController extends BaseController
 {
     protected $allowAnonymous = [
-        'validate-condition'
+        'validate-condition',
     ];
 
     /**
@@ -100,7 +100,7 @@ class FormRulesController extends BaseController
 
         if ($rule === null) {
             $message = Craft::t('sprout', 'No rule found with id: {id}', [
-                'id' => $ruleId
+                'id' => $ruleId,
             ]);
 
             Craft::error($message, __METHOD__);
@@ -118,7 +118,7 @@ class FormRulesController extends BaseController
             'errors' => $rule->getErrors(),
             'conditional' => [
                 'id' => $rule->id,
-                'name' => $rule->name
+                'name' => $rule->name,
             ],
             'template' => SproutBase::$app->formRules->getRulesModal($rule),
         ]);
@@ -141,19 +141,19 @@ class FormRulesController extends BaseController
 
         if (!$rule) {
             return $this->asJson([
-                'success' => false
+                'success' => false,
             ]);
         }
 
         if (!SproutBase::$app->formRules->deleteRule($rule)) {
             return $this->asJson([
                 'success' => false,
-                'errors' => $rule->getErrors()
+                'errors' => $rule->getErrors(),
             ]);
         }
 
         return $this->asJson([
-            'success' => true
+            'success' => true,
         ]);
     }
 
@@ -187,7 +187,7 @@ class FormRulesController extends BaseController
         }
 
         return $this->asJson([
-            'success' => false
+            'success' => false,
         ]);
     }
 
@@ -219,7 +219,7 @@ class FormRulesController extends BaseController
 
         return $this->asJson([
             'success' => true,
-            'html' => $formField->getConditionValueInputHtml($conditionClass, $inputName, $inputValue)
+            'html' => $formField->getConditionValueInputHtml($conditionClass, $inputName, $inputValue),
         ]);
     }
 
@@ -256,7 +256,7 @@ class FormRulesController extends BaseController
 
         return $this->asJson([
             'success' => true,
-            'result' => $results
+            'result' => $results,
         ]);
     }
 
@@ -275,8 +275,8 @@ class FormRulesController extends BaseController
                 'id' => $rule->id,
                 'name' => $rule->name ?? null,
                 'enabled' => $rule->enabled,
-                'behavior' => $rule->getBehaviorDescription()
-            ]
+                'behavior' => $rule->getBehaviorDescription(),
+            ],
         ]);
     }
 }

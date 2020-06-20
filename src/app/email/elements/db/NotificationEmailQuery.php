@@ -33,7 +33,7 @@ class NotificationEmailQuery extends ElementQuery
             'sproutemail_notificationemails.enableFileAttachments',
             'sproutemail_notificationemails.dateCreated',
             'sproutemail_notificationemails.dateUpdated',
-            'sproutemail_notificationemails.fieldLayoutId'
+            'sproutemail_notificationemails.fieldLayoutId',
         ]);
 
         return parent::beforePrepare();

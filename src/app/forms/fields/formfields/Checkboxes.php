@@ -67,7 +67,7 @@ class Checkboxes extends CraftCheckboxesField
     {
         return Craft::$app->getView()->renderTemplate('sprout/forms/_components/fields/formfields/checkboxes/example',
             [
-                'field' => $this
+                'field' => $this,
             ]
         );
     }
@@ -92,7 +92,7 @@ class Checkboxes extends CraftCheckboxesField
                 'value' => $value,
                 'field' => $this,
                 'entry' => $entry,
-                'renderingOptions' => $renderingOptions
+                'renderingOptions' => $renderingOptions,
             ]
         );
 
@@ -105,7 +105,7 @@ class Checkboxes extends CraftCheckboxesField
     public function getCompatibleCraftFieldTypes(): array
     {
         return [
-            CraftCheckboxes::class
+            CraftCheckboxes::class,
         ];
     }
 }

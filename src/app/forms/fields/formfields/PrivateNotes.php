@@ -106,7 +106,7 @@ class PrivateNotes extends FormField
     {
         return Craft::$app->getView()->renderTemplate('sprout/forms/_components/fields/formfields/privatenotes/example',
             [
-                'field' => $this
+                'field' => $this,
             ]
         );
     }
@@ -130,7 +130,7 @@ class PrivateNotes extends FormField
     public function getCompatibleCraftFieldTypes(): array
     {
         return [
-            CraftPlainText::class
+            CraftPlainText::class,
         ];
     }
 }

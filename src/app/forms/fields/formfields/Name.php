@@ -133,7 +133,7 @@ class Name extends FormField implements PreviewableFieldInterface
     {
         return Craft::$app->getView()->renderTemplate('sprout/forms/_components/fields/formfields/name/example',
             [
-                'field' => $this
+                'field' => $this,
             ]
         );
     }
@@ -161,7 +161,7 @@ class Name extends FormField implements PreviewableFieldInterface
                 'value' => $value,
                 'field' => $this,
                 'entry' => $entry,
-                'renderingOptions' => $renderingOptions
+                'renderingOptions' => $renderingOptions,
             ]
         );
 
@@ -207,7 +207,7 @@ class Name extends FormField implements PreviewableFieldInterface
         /** @noinspection ClassConstantCanBeUsedInspection */
         return [
             'barrelstrength\\sproutfields\\fields\\Name',
-            CraftPlainText::class
+            CraftPlainText::class,
         ];
     }
 
@@ -221,7 +221,7 @@ class Name extends FormField implements PreviewableFieldInterface
             new StartsWithCondition(),
             new DoesNotStartWithCondition(),
             new EndsWithCondition(),
-            new DoesNotEndWithCondition()
+            new DoesNotEndWithCondition(),
         ];
     }
 }

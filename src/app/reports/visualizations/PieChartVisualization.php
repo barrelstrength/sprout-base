@@ -32,7 +32,7 @@ class PieChartVisualization extends Visualization
     public function getSettingsHtml(array $settings): string
     {
         return Craft::$app->getView()->renderTemplate('sprout/reports/_components/visualizations/PieChart/settings', [
-            'settings' => $settings
+            'settings' => $settings,
         ]);
     }
 

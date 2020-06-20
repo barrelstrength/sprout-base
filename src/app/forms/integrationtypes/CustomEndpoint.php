@@ -55,7 +55,7 @@ class CustomEndpoint extends Integration
     {
         return Craft::$app->getView()->renderTemplate('sprout/forms/_components/integrationtypes/customendpoint/settings',
             [
-                'integration' => $this
+                'integration' => $this,
             ]
         );
     }
@@ -86,7 +86,7 @@ class CustomEndpoint extends Integration
         Craft::info($targetIntegrationFieldValues, __METHOD__);
 
         $response = $client->post($endpoint, [
-            RequestOptions::JSON => $targetIntegrationFieldValues
+            RequestOptions::JSON => $targetIntegrationFieldValues,
         ]);
 
         $res = $response->getBody()->getContents();

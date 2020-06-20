@@ -22,11 +22,11 @@ class DragulaAsset extends AssetBundle
 
         $this->js = [
             'js/dragula.min.js',
-            'js/dom-autoscroller.min.js'
+            'js/dom-autoscroller.min.js',
         ];
 
         $this->css = [
-            'css/dragula.min.css'
+            'css/dragula.min.css',
         ];
 
         parent::init();

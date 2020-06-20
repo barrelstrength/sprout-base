@@ -103,7 +103,7 @@ class TwitterMetaType extends MetaType
             'twitterTitle' => 'twitter:title',
             'twitterDescription' => 'twitter:description',
             'twitterUrl' => 'twitter:url',
-            'twitterImage' => 'twitter:image'
+            'twitterImage' => 'twitter:image',
         ];
     }
 
@@ -319,7 +319,7 @@ class TwitterMetaType extends MetaType
     {
         return Craft::$app->getView()->renderTemplate('sprout/seo/_components/fields/elementmetadata/blocks/twitter-card', [
             'meta' => $this,
-            'field' => $field
+            'field' => $field,
         ]);
     }
 

@@ -93,7 +93,7 @@ class EntriesDataSource extends DataSource
                 '[[entries.referrer]] AS "referrer"',
                 '[[entries.userAgent]] AS "userAgent"',
                 '[[entries.dateCreated]] AS "dateCreated"',
-                '[[entries.dateUpdated]] AS "dateUpdated"'
+                '[[entries.dateUpdated]] AS "dateUpdated"',
             ])
             ->from($contentTable.' AS formcontenttable')
             ->innerJoin('{{%elements}} elements', '[[formcontenttable.elementId]] = [[elements.id]]')
@@ -104,10 +104,10 @@ class EntriesDataSource extends DataSource
 
         if ($startDate && $endDate) {
             $formQuery->andWhere('[[formcontenttable.dateCreated]] > :startDate', [
-                ':startDate' => $startDate->format('Y-m-d H:i:s')
+                ':startDate' => $startDate->format('Y-m-d H:i:s'),
             ]);
             $formQuery->andWhere('[[formcontenttable.dateCreated]] < :endDate', [
-                ':endDate' => $endDate->format('Y-m-d H:i:s')
+                ':endDate' => $endDate->format('Y-m-d H:i:s'),
             ]);
         }
 
@@ -222,7 +222,7 @@ class EntriesDataSource extends DataSource
         foreach ($forms as $form) {
             $formOptions[] = [
                 'label' => $form->name,
-                'value' => $form->id
+                'value' => $form->id,
             ];
         }
 
@@ -268,7 +268,7 @@ class EntriesDataSource extends DataSource
             'dateRanges' => $dateRanges,
             'options' => $settings,
             'entryStatusOptions' => $entryStatusOptions,
-            'defaultSelectedEntryStatuses' => $defaultSelectedEntryStatuses
+            'defaultSelectedEntryStatuses' => $defaultSelectedEntryStatuses,
         ]);
     }
 

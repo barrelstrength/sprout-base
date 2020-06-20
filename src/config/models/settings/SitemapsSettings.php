@@ -42,14 +42,14 @@ class SitemapsSettings extends Settings
     {
         $subNav['sitemaps'] = [
             'label' => Craft::t('sprout', 'Sitemaps'),
-            'template' => 'sprout/_settings/sitemaps'
+            'template' => 'sprout/_settings/sitemaps',
         ];
 
         if (Craft::$app->isMultiSite) {
             $subNav['sitemap-sites'] = [
                 'label' => Craft::t('sprout', 'Sitemap Sites'),
                 'template' => 'sprout/_settings/sitemap-sites',
-                'packAssociativeArrays' => true
+                'packAssociativeArrays' => true,
             ];
         }
 

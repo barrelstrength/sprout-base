@@ -107,7 +107,7 @@ class FileUpload extends CraftAssets
     {
         return Craft::$app->getView()->renderTemplate('sprout/forms/_components/fields/formfields/fileupload/example',
             [
-                'field' => $this
+                'field' => $this,
             ]
         );
     }
@@ -131,7 +131,7 @@ class FileUpload extends CraftAssets
                 'value' => $value,
                 'field' => $this,
                 'entry' => $entry,
-                'renderingOptions' => $renderingOptions
+                'renderingOptions' => $renderingOptions,
             ]
         );
 
@@ -144,7 +144,7 @@ class FileUpload extends CraftAssets
     public function getCompatibleCraftFieldTypes(): array
     {
         return [
-            CraftAssets::class
+            CraftAssets::class,
         ];
     }
 }

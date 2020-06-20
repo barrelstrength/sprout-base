@@ -36,7 +36,7 @@ class TimeChartVisualization extends Visualization
 
         return Craft::$app->getView()->renderTemplate('sprout/reports/_components/visualizations/TimeChart/settings', [
             'settings' => $settings,
-            'visualizationAggregateOptions' => $visualizationAggregateOptions
+            'visualizationAggregateOptions' => $visualizationAggregateOptions,
         ]);
     }
 

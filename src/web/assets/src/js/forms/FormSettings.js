@@ -180,7 +180,7 @@ if (typeof Craft.SproutForms === typeof undefined) {
       const data = {
         type: currentIntegration,
         formId: formId,
-        sendRule: '*'
+        sendRule: '*',
       };
 
       Craft.postActionRequest('sprout/form-integrations/save-integration', data, $.proxy(function(response, textStatus) {
@@ -228,7 +228,7 @@ if (typeof Craft.SproutForms === typeof undefined) {
 
       const data = {
         type: currentRule,
-        formId: formId
+        formId: formId,
       };
 
       Craft.postActionRequest('sprout/form-rules/save-rule', data, $.proxy(function(response, textStatus) {

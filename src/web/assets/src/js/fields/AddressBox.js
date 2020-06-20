@@ -11,7 +11,7 @@ if (typeof Craft.SproutBase === typeof undefined) {
     {
       initFields: function($container) {
         $('.sproutaddressinfo-box', $container).SproutAddressBox();
-      }
+      },
     });
 
   // -------------------------------------------
@@ -25,7 +25,7 @@ if (typeof Craft.SproutBase === typeof undefined) {
         return this.each(function() {
           new Craft.SproutBase.AddressBox($container);
         });
-      }
+      },
     });
 
   Craft.SproutBase.AddressBox = Garnish.Base.extend({
@@ -168,7 +168,7 @@ if (typeof Craft.SproutBase === typeof undefined) {
       Craft.postActionRequest(actionUrl, {
         addressId: addressId,
         defaultCountryCode: defaultCountryCode,
-        addressJson: addressJson
+        addressJson: addressJson,
       }, $.proxy(function(response) {
         this.$addressBox.find('.address-format .spinner').remove();
         self.$addressBox.find('.address-format').empty();
@@ -204,7 +204,7 @@ if (typeof Craft.SproutBase === typeof undefined) {
         'postalCode',
         'sortingCode',
         'address1',
-        'address2'
+        'address2',
       ];
 
       const self = this;
@@ -235,7 +235,7 @@ if (typeof Craft.SproutBase === typeof undefined) {
       }
 
       const data = {
-        addressInfo: self.addressInfo
+        addressInfo: self.addressInfo,
       };
 
       /**
@@ -256,6 +256,6 @@ if (typeof Craft.SproutBase === typeof undefined) {
           Craft.cp.displayError(Craft.t('sprout', 'Unable to find the address: ' + response.errors));
         }
       }, this), [])
-    }
+    },
   })
 })(jQuery);

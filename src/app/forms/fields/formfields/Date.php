@@ -145,7 +145,7 @@ class Date extends FormField implements PreviewableFieldInterface
     {
         return Craft::$app->getView()->renderTemplate('sprout/forms/_components/fields/formfields/date/example',
             [
-                'field' => $this
+                'field' => $this,
             ]
         );
     }
@@ -197,7 +197,7 @@ class Date extends FormField implements PreviewableFieldInterface
                     [
                         'label' => Craft::t('app', 'Show date and time'),
                         'value' => 'showBoth',
-                    ]
+                    ],
                 ],
                 'value' => $dateTimeValue,
                 'incrementOptions' => $options,
@@ -234,7 +234,7 @@ class Date extends FormField implements PreviewableFieldInterface
                 'name' => $this->handle,
                 'value' => $value,
                 'field' => $this,
-                'timeOptions' => $this->getTimeIncrementsAsOptions($this->minuteIncrement)
+                'timeOptions' => $this->getTimeIncrementsAsOptions($this->minuteIncrement),
             ]
         );
 
@@ -270,7 +270,7 @@ class Date extends FormField implements PreviewableFieldInterface
                 'field' => $this,
                 'entry' => $entry,
                 'timeOptions' => $this->getTimeIncrementsAsOptions($this->minuteIncrement),
-                'renderingOptions' => $renderingOptions
+                'renderingOptions' => $renderingOptions,
             ]
         );
 
@@ -323,7 +323,7 @@ class Date extends FormField implements PreviewableFieldInterface
     {
         return [
             CraftPlainText::class,
-            CraftDate::class
+            CraftDate::class,
         ];
     }
 }

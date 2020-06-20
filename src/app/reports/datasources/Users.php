@@ -149,13 +149,13 @@ class Users extends DataSource
 
         $userGroupSettings[] = [
             'label' => 'Admin',
-            'value' => 'admin'
+            'value' => 'admin',
         ];
 
         foreach ($userGroups as $userGroup) {
             $userGroupSettings[] = [
                 'label' => $userGroup->name,
-                'value' => $userGroup->id
+                'value' => $userGroup->id,
             ];
         }
 
@@ -165,7 +165,7 @@ class Users extends DataSource
         return Craft::$app->getView()->renderTemplate('sprout/reports/_components/datasources/Users/settings', [
             'userGroupSettings' => $userGroupSettings,
             'settings' => count($settings) ? $settings : $this->report->getSettings(),
-            'errors' => $settingsErrors
+            'errors' => $settingsErrors,
         ]);
     }
 

@@ -24,7 +24,7 @@ class Extension extends AbstractExtension implements GlobalsInterface
     public function getTokenParsers(): array
     {
         return [
-            new SproutSeoTokenParser()
+            new SproutSeoTokenParser(),
         ];
     }
 }

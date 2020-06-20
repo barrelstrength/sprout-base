@@ -38,7 +38,7 @@ class SproutFormsAddressField {
       action: 'sprout/fields-address/update-address-form-html',
       namespace: baseInputName,
       countryCode: countrySelectInput.value,
-      overrideTemplatePaths: true
+      overrideTemplatePaths: true,
     };
 
     data[window.csrfTokenName] = this.form.querySelector('[name="' + window.csrfTokenName + '"]').value;

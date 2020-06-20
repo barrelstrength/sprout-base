@@ -48,7 +48,7 @@ class WebsiteIdentityWebsiteSchema extends Schema
 
         $websiteIdentity = [
             'Person' => WebsiteIdentityPersonSchema::class,
-            'Organization' => WebsiteIdentityOrganizationSchema::class
+            'Organization' => WebsiteIdentityOrganizationSchema::class,
         ];
 
         $this->addText('name', $schema['name']);

@@ -233,7 +233,7 @@ trait OptimizedTrait
                         'de' => German::class,
                         'it' => Italian::class,
                         'nn' => Norwegian::class,
-                        'es' => Spanish::class
+                        'es' => Spanish::class,
                     ];
 
                     $language = $element->getSite()->language;

@@ -114,7 +114,7 @@ class Url extends FormField implements PreviewableFieldInterface
     {
         return Craft::$app->getView()->renderTemplate('sprout/forms/_components/fields/formfields/url/example',
             [
-                'field' => $this
+                'field' => $this,
             ]
         );
     }
@@ -144,7 +144,7 @@ class Url extends FormField implements PreviewableFieldInterface
                 'pattern' => $this->customPattern,
                 'errorMessage' => $errorMessage,
                 'renderingOptions' => $renderingOptions,
-                'placeholder' => $placeholder
+                'placeholder' => $placeholder,
             ]
         );
 
@@ -203,7 +203,7 @@ class Url extends FormField implements PreviewableFieldInterface
         return [
             CraftPlainText::class,
             CraftUrl::class,
-            'barrelstrength\\sproutfields\\fields\\Url'
+            'barrelstrength\\sproutfields\\fields\\Url',
         ];
     }
 }

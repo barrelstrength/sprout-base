@@ -139,7 +139,7 @@ abstract class EmailTemplates
 
         $htmlBody = Craft::$app->getView()->renderTemplate($htmlEmailTemplate, [
             'email' => $this->email,
-            'object' => $this->email->getEventObject()
+            'object' => $this->email->getEventObject(),
         ]);
 
         $textEmailTemplateExists = Craft::$app->getView()->doesTemplateExist($textEmailTemplate);
@@ -148,11 +148,11 @@ abstract class EmailTemplates
         if ($textEmailTemplateExists) {
             $body = Craft::$app->getView()->renderTemplate($textEmailTemplate, [
                 'email' => $this->email,
-                'object' => $this->email->getEventObject()
+                'object' => $this->email->getEventObject(),
             ]);
         } else {
             $converter = new HtmlConverter([
-                'strip_tags' => true
+                'strip_tags' => true,
             ]);
 
             // For more advanced html templates, conversion may be tougher. Minifying the HTML

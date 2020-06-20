@@ -138,7 +138,7 @@ class Address extends FormField implements PreviewableFieldInterface
     {
         return Craft::$app->getView()->renderTemplate('sprout/forms/_components/fields/formfields/address/example',
             [
-                'field' => $this
+                'field' => $this,
             ]
         );
     }
@@ -192,7 +192,7 @@ class Address extends FormField implements PreviewableFieldInterface
                 'renderingOptions' => $renderingOptions,
                 'addressFormHtml' => TemplateHelper::raw($addressFormHtml),
                 'countryInputHtml' => TemplateHelper::raw($countryInputHtml),
-                'showCountryDropdown' => $showCountryDropdown
+                'showCountryDropdown' => $showCountryDropdown,
             ]
         );
 
@@ -244,7 +244,7 @@ class Address extends FormField implements PreviewableFieldInterface
     {
         /** @noinspection ClassConstantCanBeUsedInspection */
         return [
-            'barrelstrength\\sproutfields\\fields\\Address'
+            'barrelstrength\\sproutfields\\fields\\Address',
         ];
     }
 }

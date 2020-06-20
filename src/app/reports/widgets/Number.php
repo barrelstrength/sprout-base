@@ -89,7 +89,7 @@ class Number extends Widget
 
         return Craft::$app->getView()->renderTemplate('sprout/reports/_components/widgets/Number/settings', [
                 'widget' => $this,
-                'reportOptions' => $reportOptions
+                'reportOptions' => $reportOptions,
             ]
         );
     }
@@ -119,7 +119,7 @@ class Number extends Widget
                 return Craft::$app->getView()->renderTemplate('sprout/reports/_components/widgets/Number/body',
                     [
                         'widget' => $this,
-                        'result' => $this->getScalarValue($result)
+                        'result' => $this->getScalarValue($result),
                     ]
                 );
             }
@@ -128,7 +128,7 @@ class Number extends Widget
         return Craft::$app->getView()->renderTemplate('sprout/reports/_components/widgets/Number/body',
             [
                 'widget' => $this,
-                'result' => Craft::t('sprout', 'NaN')
+                'result' => Craft::t('sprout', 'NaN'),
             ]);
     }
 

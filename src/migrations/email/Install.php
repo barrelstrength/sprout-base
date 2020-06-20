@@ -38,7 +38,7 @@ class Install extends Migration
                 'dateCreated' => $this->dateTime(),
                 'dateUpdated' => $this->dateTime(),
                 'fieldLayoutId' => $this->integer(),
-                'uid' => $this->uid()
+                'uid' => $this->uid(),
             ]);
 
             $this->addForeignKey(null, NotificationEmailRecord::tableName(), ['id'], Table::ELEMENTS, ['id'], 'CASCADE');

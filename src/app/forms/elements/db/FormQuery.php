@@ -221,7 +221,7 @@ class FormQuery extends ElementQuery
             'sproutforms_forms.errorMessage',
             'sproutforms_forms.submitButtonText',
             'sproutforms_forms.formTemplateId',
-            'sproutforms_forms.enableCaptchas'
+            'sproutforms_forms.enableCaptchas',
         ]);
 
         if ($this->totalEntries) {

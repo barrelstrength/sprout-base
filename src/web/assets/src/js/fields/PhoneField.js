@@ -20,8 +20,8 @@ SproutPhoneField = Garnish.Base.extend({
       let data = {
         value: {
           'country': country,
-          'phone': phoneNumber
-        }
+          'phone': phoneNumber,
+        },
       };
 
       // Determine if we should show Phone link on initial load
@@ -35,8 +35,8 @@ SproutPhoneField = Garnish.Base.extend({
       let data = {
         value: {
           'country': country,
-          'phone': phoneNumber
-        }
+          'phone': phoneNumber,
+        },
       };
       validatePhoneNumber(currentPhoneField, data);
     });
@@ -51,7 +51,7 @@ SproutPhoneField = Garnish.Base.extend({
         }
       }, [])
     }
-  }
+  },
 });
 
 

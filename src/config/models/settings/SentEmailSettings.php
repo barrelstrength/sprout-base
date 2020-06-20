@@ -27,8 +27,8 @@ class SentEmailSettings extends Settings
         return [
             'sent-email' => [
                 'label' => Craft::t('sprout', 'Sent Email'),
-                'template' => 'sprout/_settings/sent-email'
-            ]
+                'template' => 'sprout/_settings/sent-email',
+            ],
         ];
     }
 }

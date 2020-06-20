@@ -302,7 +302,7 @@ class AddressFormatter
             'class' => 'sprout-address-delete',
             'name' => $this->namespace,
             'inputName' => 'delete',
-            'value' => null
+            'value' => null,
         ]);
 
         $addressLayout .= Craft::$app->view->renderTemplate(
@@ -310,7 +310,7 @@ class AddressFormatter
             'class' => 'sprout-address-field-id',
             'name' => $this->namespace,
             'inputName' => 'fieldId',
-            'value' => $this->getAddressModel()->fieldId
+            'value' => $this->getAddressModel()->fieldId,
         ]);
 
         $addressLayout .= Craft::$app->view->renderTemplate(
@@ -318,7 +318,7 @@ class AddressFormatter
             'class' => 'sprout-address-id',
             'name' => $this->namespace,
             'inputName' => 'id',
-            'value' => $this->getAddressModel()->id
+            'value' => $this->getAddressModel()->id,
         ]);
 
         return $addressLayout;
@@ -349,7 +349,7 @@ class AddressFormatter
                 'options' => $countries,
                 'value' => $this->countryCode ?? $this->defaultCountryCode(),
                 'hideDropdown' => !$showCountryDropdown,
-                'highlightCountries' => $this->highlightCountries
+                'highlightCountries' => $this->highlightCountries,
             ]
         );
     }
@@ -373,7 +373,7 @@ class AddressFormatter
                 'name' => $this->namespace,
                 'inputName' => 'postalCode',
                 'autocomplete' => 'postal-code',
-                'value' => $value
+                'value' => $value,
             ]
         );
     }
@@ -417,7 +417,7 @@ class AddressFormatter
                 'name' => $this->namespace,
                 'inputName' => $addressName,
                 'autocomplete' => $autocomplete,
-                'value' => $value
+                'value' => $value,
             ]
         );
     }
@@ -441,7 +441,7 @@ class AddressFormatter
                 'name' => $this->namespace,
                 'inputName' => 'sortingCode',
                 'autocomplete' => 'address-level4',
-                'value' => $value
+                'value' => $value,
             ]
         );
     }
@@ -465,7 +465,7 @@ class AddressFormatter
                 'name' => $this->namespace,
                 'inputName' => 'locality',
                 'autocomplete' => 'address-level2',
-                'value' => $value
+                'value' => $value,
             ]
         );
     }
@@ -489,7 +489,7 @@ class AddressFormatter
                 'name' => $this->namespace,
                 'inputName' => 'dependentLocality',
                 'autocomplete' => 'address-level3',
-                'value' => $value
+                'value' => $value,
             ]
         );
     }
@@ -518,7 +518,7 @@ class AddressFormatter
                     'inputName' => 'administrativeAreaCode',
                     'autocomplete' => 'address-level1',
                     'options' => $states,
-                    'value' => $value
+                    'value' => $value,
                 ]
             );
         }
@@ -530,7 +530,7 @@ class AddressFormatter
                 'name' => $this->namespace,
                 'inputName' => 'administrativeAreaCode',
                 'autocomplete' => 'address-level1',
-                'value' => $value
+                'value' => $value,
             ]
         );
     }

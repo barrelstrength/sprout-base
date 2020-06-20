@@ -17,15 +17,15 @@ class AddressFieldAsset extends AssetBundle
         $this->sourcePath = '@sproutbaseassetbundles/addressfield/dist';
 
         $this->depends = [
-            SproutCpAsset::class
+            SproutCpAsset::class,
         ];
 
         $this->css = [
-            'css/address-field.css'
+            'css/address-field.css',
         ];
 
         $this->js = [
-            'js/AddressField.js'
+            'js/AddressField.js',
         ];
 
         parent::init();

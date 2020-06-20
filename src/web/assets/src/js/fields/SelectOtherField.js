@@ -11,7 +11,7 @@ if (typeof Craft.SproutFields === typeof undefined) {
     {
       initFields: function($container) {
         $('.sprout-selectother', $container).sproutSelectOther();
-      }
+      },
     });
 
 // -------------------------------------------
@@ -25,7 +25,7 @@ if (typeof Craft.SproutFields === typeof undefined) {
           new Craft.SproutFields.SelectOtherField(this);
         }
       });
-    }
+    },
   });
 
   Craft.SproutFields.SelectOtherField = Garnish.Base.extend({
@@ -78,7 +78,7 @@ if (typeof Craft.SproutFields === typeof undefined) {
       // Show our dropdown again
       this.$dropdownField.parent().removeClass('hidden');
 
-    }
+    },
 
   });
 

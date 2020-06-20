@@ -80,7 +80,7 @@ class Template extends Field implements PreviewableFieldInterface
         return Craft::$app->getView()->renderTemplate('sprout/fields/_components/fields/formfields/template/settings',
             [
                 'field' => $this,
-                'templateDirectoryOptions' => $templateDirectoryOptions
+                'templateDirectoryOptions' => $templateDirectoryOptions,
             ]);
     }
 
@@ -124,7 +124,7 @@ class Template extends Field implements PreviewableFieldInterface
                 'element' => $element,
                 'templateDropdownOptions' => $templateDropdownOptions,
                 'templateSuggestions' => $templateSuggestions,
-                'field' => $this
+                'field' => $this,
             ]);
     }
 
@@ -214,7 +214,7 @@ class Template extends Field implements PreviewableFieldInterface
             $templatePath = str_replace($root.'/', '', $path);
             $templateDirectoryOptions[] = [
                 'label' => $templatePath,
-                'value' => $templatePath
+                'value' => $templatePath,
             ];
         }
 
@@ -320,7 +320,7 @@ class Template extends Field implements PreviewableFieldInterface
 
             $dropdownOptions[] = [
                 'label' => $template,
-                'value' => $template
+                'value' => $template,
             ];
         }
 
@@ -331,7 +331,7 @@ class Template extends Field implements PreviewableFieldInterface
                 [
                     'label' => Craft::t('app', 'Templates'),
                     'data' => $suggestions,
-                ]
+                ],
             ];
         }
 

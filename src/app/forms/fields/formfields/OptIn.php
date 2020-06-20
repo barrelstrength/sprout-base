@@ -153,7 +153,7 @@ class OptIn extends FormField implements PreviewableFieldInterface
                 'namespaceInputId' => $namespaceInputId,
                 'label' => $this->optInMessage,
                 'value' => 1,
-                'checked' => $value
+                'checked' => $value,
             ]);
     }
 
@@ -170,7 +170,7 @@ class OptIn extends FormField implements PreviewableFieldInterface
     {
         return Craft::$app->getView()->renderTemplate('sprout/forms/_components/fields/formfields/optin/example',
             [
-                'field' => $this
+                'field' => $this,
             ]
         );
     }
@@ -195,7 +195,7 @@ class OptIn extends FormField implements PreviewableFieldInterface
                 'value' => $value,
                 'field' => $this,
                 'entry' => $entry,
-                'renderingOptions' => $renderingOptions
+                'renderingOptions' => $renderingOptions,
             ]
         );
 
@@ -221,7 +221,7 @@ class OptIn extends FormField implements PreviewableFieldInterface
     {
         return [
             new IsCheckedCondition(),
-            new IsNotCheckedCondition()
+            new IsNotCheckedCondition(),
         ];
     }
 
@@ -234,7 +234,7 @@ class OptIn extends FormField implements PreviewableFieldInterface
 
         $emptyConditionClasses = [
             IsCheckedCondition::class,
-            IsNotCheckedCondition::class
+            IsNotCheckedCondition::class,
         ];
 
         foreach ($emptyConditionClasses as $selectCondition) {
@@ -256,7 +256,7 @@ class OptIn extends FormField implements PreviewableFieldInterface
             CraftDropdown::class,
             CraftCheckboxes::class,
             CraftRadioButtons::class,
-            CraftLightswitch::class
+            CraftLightswitch::class,
         ];
     }
 }

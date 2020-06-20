@@ -42,7 +42,7 @@ Craft.SproutForms.EditableTable = Garnish.Base.extend(
 
       this.sorter = new Craft.DataTableSorter(this.$table, {
         helperClass: 'editabletablesorthelper',
-        copyDraggeeInputValuesToHelper: true
+        copyDraggeeInputValuesToHelper: true,
       });
 
       if (this.isVisible()) {
@@ -101,14 +101,14 @@ Craft.SproutForms.EditableTable = Garnish.Base.extend(
       this.settings.onAddRow($tr);
       this.$addRowBtn = $tr.find('#add-rule');
       this.addListener(this.$addRowBtn, 'activate', 'addRow');
-    }
+    },
   },
   {
     textualColTypes: ['singleline', 'multiline', 'number'],
     defaults: {
       rowIdPrefix: '',
       onAddRow: $.noop,
-      onDeleteRow: $.noop
+      onDeleteRow: $.noop,
     },
 
     getRowHtml: function(rowId, columns, baseName, values, fieldRuleOptions) {
@@ -233,7 +233,7 @@ Craft.SproutForms.EditableTable = Garnish.Base.extend(
         '</tr>';
 
       return rowHtml;
-    }
+    },
 
   });
 
@@ -283,7 +283,7 @@ Craft.SproutForms.EditableTable.Row = Garnish.Base.extend(
           this.addListener($textarea, 'mousedown', 'ignoreNextTextareaFocus');
 
           this.niceTexts.push(new Garnish.NiceText($textarea, {
-            onHeightChange: $.proxy(this, 'onTextareaHeightChange')
+            onHeightChange: $.proxy(this, 'onTextareaHeightChange'),
           }));
 
           if (col.type === 'singleline' || col.type === 'number') {
@@ -378,7 +378,7 @@ Craft.SproutForms.EditableTable.Row = Garnish.Base.extend(
         'condition': this.$tr.find("td:eq(1)").find("select").val(),
         'inputName': lastElement.attr("name"),
         'inputValue': lastElement.val(),
-        'formId': $("#formId").val()
+        'formId': $("#formId").val(),
       };
 
       Craft.postActionRequest('sprout/form-rules/get-condition-value-input-html', data, $.proxy(function(response, textStatus) {
@@ -490,8 +490,8 @@ Craft.SproutForms.EditableTable.Row = Garnish.Base.extend(
 
       // onDeleteRow callback
       this.table.settings.onDeleteRow(this.$tr);
-    }
+    },
   },
   {
-    numericKeyCodes: [9 /* (tab) */, 8 /* (delete) */, 37, 38, 39, 40 /* (arrows) */, 45, 91 /* (minus) */, 46, 190 /* period */, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57 /* (0-9) */]
+    numericKeyCodes: [9 /* (tab) */, 8 /* (delete) */, 37, 38, 39, 40 /* (arrows) */, 45, 91 /* (minus) */, 46, 190 /* period */, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57 /* (0-9) */],
   });

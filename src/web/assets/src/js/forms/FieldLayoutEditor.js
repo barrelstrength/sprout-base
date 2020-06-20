@@ -115,7 +115,7 @@ let autoScroll = require('dom-autoscroller');
         invalid: function(el, handle) {
           // do not move any item with donotdrag class.
           return el.classList.contains('donotdrag');
-        }
+        },
       }).on('drag', function(el) {
 
         $(el).addClass('drag-active');
@@ -175,8 +175,8 @@ let autoScroll = require('dom-autoscroller');
           autoScroll: function() {
             // Only scroll when the pointer is down, and there is a child being dragged.
             return this.down && window.sproutforms.formBuilder.dragging;
-          }
-        }
+          },
+        },
       );
     }
 
@@ -238,7 +238,7 @@ let autoScroll = require('dom-autoscroller');
       $(el).prepend($([
         '<div class="active-field-header">',
         '<h2>', defaultName, '</h2>',
-        '</div>'
+        '</div>',
       ].join('')));
 
       const formId = $("#formId").val();
@@ -246,7 +246,7 @@ let autoScroll = require('dom-autoscroller');
         'type': type,
         'formId': formId,
         'tabId': tabId,
-        'nextId': nextId
+        'nextId': nextId,
       };
 
       Craft.postActionRequest('sprout/form-fields/create-field', data, function(response, textStatus) {
@@ -266,13 +266,13 @@ let autoScroll = require('dom-autoscroller');
         $(el).prepend($([
           '<ul class="settings">',
           '<li><a id="sproutform-field-', defaultField.id, '" data-fieldid="', defaultField.id, '" href="#" tabindex="0" ><i class="fa fa-pencil fa-2x" title="', Craft.t('sprout', 'Edit'), '"></i></a></li>',
-          '</ul>'
+          '</ul>',
         ].join('')));
 
         // Add fieldLayout input
         $(el).append($([
-            '<input type="hidden" name="fieldLayout[', tabName, '][]" value="', defaultField.id, '" class="id-input">'
-          ].join('')
+            '<input type="hidden" name="fieldLayout[', tabName, '][]" value="', defaultField.id, '" class="id-input">',
+          ].join(''),
         ));
 
         $("#sproutform-field-" + defaultField.id).on('activate', function(event) {
@@ -305,7 +305,7 @@ let autoScroll = require('dom-autoscroller');
           },
           onHide: function() {
             self.$formPageManagerBtn.removeClass('active');
-          }
+          },
         });
 
         this.initFormPageManagerAdminTable();
@@ -325,7 +325,7 @@ let autoScroll = require('dom-autoscroller');
       this.$formPageManagerForm = $(
         '<form method="post" accept-charset="UTF-8">' +
         '<input type="hidden" name="action" value="sprout/forms/save-form-page"/>' +
-        '</form>'
+        '</form>',
       );
       this.$formPageManagerForm.appendTo(Garnish.$bod);
 
@@ -370,7 +370,7 @@ let autoScroll = require('dom-autoscroller');
         onDeleteItem: function(id) {
           self.currentTabName = Craft.cp.$selectedTab.text();
           self.refreshFieldLayout();
-        }
+        },
       });
     }
 
@@ -385,7 +385,7 @@ let autoScroll = require('dom-autoscroller');
 
       let data = {
         formId: self.formId,
-        name: self.newTabName
+        name: self.newTabName,
       };
 
       self.$revisionStatus.addClass('invisible');
@@ -419,7 +419,7 @@ let autoScroll = require('dom-autoscroller');
 
       let data = {
         tabId: tabId,
-        newName: this.newTabName
+        newName: this.newTabName,
       };
 
       Craft.postActionRequest('sprout/forms/rename-form-tab', data, function(response) {
@@ -453,7 +453,7 @@ let autoScroll = require('dom-autoscroller');
         '<td class="formpagemanagerhud-col-rename thin"><a class="edit icon" title="' + Craft.t('sprout', 'Rename') + '" role="button"></a></td>' +
         (totalTabs > 1 ? '<td class="formpagemanagerhud-col-move thin"><a class="move icon" title="' + Craft.t('sprout', 'Reorder') + '" role="button"></a></td>' : '') +
         (totalTabs > 1 ? '<td class="thin"><a class="delete icon" title="' + Craft.t('app', 'Delete') + '" role="button"></a></td>' : '') +
-        '</tr>'
+        '</tr>',
       );
     }
 
@@ -462,7 +462,7 @@ let autoScroll = require('dom-autoscroller');
       this.$newTabs = null;
 
       let data = {
-        formId: this.formId
+        formId: this.formId,
       };
 
       self.$revisionStatus.addClass('invisible');

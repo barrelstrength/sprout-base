@@ -189,7 +189,7 @@ class ElementMetadata extends Field
             'field' => $this,
             'schemas' => $schemas,
             'schemaSubtypes' => $schemaSubtypes,
-            'isPro' => $isPro
+            'isPro' => $isPro,
         ]);
     }
 
@@ -232,7 +232,7 @@ class ElementMetadata extends Field
             'metaTypes' => $value->getMetaTypes(),
             'values' => $value->getRawData(),
             'fieldId' => $fieldId,
-            'settings' => $settings
+            'settings' => $settings,
         ]);
     }
 

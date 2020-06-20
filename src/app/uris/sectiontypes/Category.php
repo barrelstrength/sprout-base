@@ -153,7 +153,7 @@ class Category extends UrlEnabledSectionType
                 'status' => null,
                 'enabledForSite' => false,
                 'limit' => null,
-            ]
+            ],
         ]));
 
         return true;

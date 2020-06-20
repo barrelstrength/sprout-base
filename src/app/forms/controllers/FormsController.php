@@ -65,7 +65,7 @@ class FormsController extends BaseController
         $isPro = SproutBase::$app->config->isEdition('forms', Config::EDITION_PRO);
 
         return $this->renderTemplate('sprout/forms/forms', [
-            'isPro' => $isPro
+            'isPro' => $isPro,
         ]);
     }
 
@@ -95,7 +95,7 @@ class FormsController extends BaseController
             'rules' => SproutBase::$app->formRules->getRulesByFormId($formId),
             'ruleOptions' => SproutBase::$app->formRules->getRuleOptions(),
             'integrations' => SproutBase::$app->formIntegrations->getIntegrationsByFormId($formId),
-            'isPro' => $isPro
+            'isPro' => $isPro,
         ]);
     }
 
@@ -162,7 +162,7 @@ class FormsController extends BaseController
             Craft::$app->getSession()->setError(Craft::t('sprout', 'Couldn’t save form.'));
 
             Craft::$app->getUrlManager()->setRouteParams([
-                'form' => $form
+                'form' => $form,
             ]);
 
             return null;
@@ -231,7 +231,7 @@ class FormsController extends BaseController
             'form' => $form,
             'formTabs' => $tabs,
             'continueEditingUrl' => 'sprout/forms/edit/{id}',
-            'isPro' => $isPro
+            'isPro' => $isPro,
         ]);
     }
 
@@ -351,15 +351,15 @@ class FormsController extends BaseController
                     'success' => true,
                     'tab' => [
                         'id' => $tab->id,
-                        'name' => $tab->name
-                    ]
+                        'name' => $tab->name,
+                    ],
                 ]);
             }
         }
 
         return $this->asJson([
             'success' => false,
-            'errors' => $tab->getErrors()
+            'errors' => $tab->getErrors(),
         ]);
     }
 
@@ -389,14 +389,14 @@ class FormsController extends BaseController
 
             if (SproutBase::$app->formFields->deleteTab($form, $tabRecord)) {
                 return $this->asJson([
-                    'success' => true
+                    'success' => true,
                 ]);
             }
         }
 
         return $this->asJson([
             'success' => false,
-            'errors' => $tabRecord->getErrors()
+            'errors' => $tabRecord->getErrors(),
         ]);
     }
 
@@ -421,14 +421,14 @@ class FormsController extends BaseController
 
             if ($result) {
                 return $this->asJson([
-                    'success' => true
+                    'success' => true,
                 ]);
             }
         }
 
         return $this->asJson([
             'success' => false,
-            'errors' => Craft::t('sprout', 'Unable to rename tab')
+            'errors' => Craft::t('sprout', 'Unable to rename tab'),
         ]);
     }
 
@@ -454,13 +454,13 @@ class FormsController extends BaseController
             // increment $index by one to avoid using '0' in the sort order
             foreach ($formTabIds as $index => $tabId) {
                 $db->createCommand()->update(Table::FIELDLAYOUTTABS, [
-                    'sortOrder' => $index + 1
+                    'sortOrder' => $index + 1,
                 ], ['id' => $tabId], [], false)->execute();
             }
             $transaction->commit();
 
             return $this->asJson([
-                'success' => true
+                'success' => true,
             ]);
         } catch (\yii\db\Exception $e) {
             $transaction->rollBack();
@@ -468,7 +468,7 @@ class FormsController extends BaseController
 
         return $this->asJson([
             'success' => false,
-            'errors' => Craft::t('sprout', 'Unable to rename tab')
+            'errors' => Craft::t('sprout', 'Unable to rename tab'),
         ]);
     }
 
@@ -497,12 +497,12 @@ class FormsController extends BaseController
         $tabs = SproutBase::$app->forms->getTabsForFieldLayout($form);
 
         $tabsHtml = !empty($tabs) ? $view->renderTemplate('_includes/tabs', [
-            'tabs' => $tabs
+            'tabs' => $tabs,
         ]) : null;
 
         $contentHtml = $view->renderTemplate('sprout/forms/forms/_editFormContent', [
             'form' => $form,
-            'fieldLayout' => $form->getFieldLayout()
+            'fieldLayout' => $form->getFieldLayout(),
         ]);
 
         return $this->asJson([
@@ -510,7 +510,7 @@ class FormsController extends BaseController
             'tabsHtml' => $tabsHtml,
             'contentHtml' => $contentHtml,
             'headHtml' => $view->getHeadHtml(),
-            'bodyHtml' => $view->getBodyHtml()
+            'bodyHtml' => $view->getBodyHtml(),
         ]);
     }
 

@@ -270,7 +270,7 @@ abstract class EmailElement extends Element
                     $tabs[] = [
                         'label' => Craft::t('sprout', $tab->name),
                         'url' => '#tab'.($index + 1),
-                        'class' => $hasErrors ? 'error' : null
+                        'class' => $hasErrors ? 'error' : null,
                     ];
                 }
             }

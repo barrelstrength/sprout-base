@@ -66,7 +66,7 @@ class RecentEntries extends Widget
 
             if ($form) {
                 return Craft::t('sprout', 'Recent {formName} Entries', [
-                    'formName' => $form->name
+                    'formName' => $form->name,
                 ]);
             }
         }
@@ -94,7 +94,7 @@ class RecentEntries extends Widget
 
         return Craft::$app->getView()->renderTemplate('sprout/forms/_components/widgets/RecentEntries/body', [
             'entries' => $query->all(),
-            'widget' => $this
+            'widget' => $this,
         ]);
     }
 
@@ -110,7 +110,7 @@ class RecentEntries extends Widget
     public function getSettingsHtml(): string
     {
         $forms = [
-            0 => Craft::t('sprout', 'All forms')
+            0 => Craft::t('sprout', 'All forms'),
         ];
 
         $sproutForms = SproutBase::$app->forms->getAllForms();
@@ -123,7 +123,7 @@ class RecentEntries extends Widget
 
         return Craft::$app->getView()->renderTemplate('sprout/forms/_components/widgets/RecentEntries/settings', [
             'sproutForms' => $forms,
-            'widget' => $this
+            'widget' => $this,
         ]);
     }
 }

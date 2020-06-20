@@ -56,9 +56,9 @@ class SeoConfig extends Config
             'subnav' => [
                 'globals' => [
                     'label' => Craft::t('sprout', 'Globals'),
-                    'url' => 'sprout/seo/globals'
-                ]
-            ]
+                    'url' => 'sprout/seo/globals',
+                ],
+            ],
         ];
     }
 
@@ -66,8 +66,8 @@ class SeoConfig extends Config
     {
         return [
             'sprout:seo:editGlobals' => [
-                'label' => Craft::t('sprout', 'Edit Globals')
-            ]
+                'label' => Craft::t('sprout', 'Edit Globals'),
+            ],
         ];
     }
 
@@ -98,7 +98,7 @@ class SeoConfig extends Config
     public function getControllerMapKeys(): array
     {
         return [
-            'global-metadata'
+            'global-metadata',
         ];
     }
 }

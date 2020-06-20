@@ -89,10 +89,10 @@ class SpamLogDataSource extends DataSource
 
         if ($startDate && $endDate) {
             $query->andWhere('[[entries_spam_log.dateCreated]] > :startDate', [
-                ':startDate' => $startDate->format('Y-m-d H:i:s')
+                ':startDate' => $startDate->format('Y-m-d H:i:s'),
             ]);
             $query->andWhere('[[entries_spam_log.dateCreated]] < :endDate', [
-                ':endDate' => $endDate->format('Y-m-d H:i:s')
+                ':endDate' => $endDate->format('Y-m-d H:i:s'),
             ]);
         }
 
@@ -137,7 +137,7 @@ class SpamLogDataSource extends DataSource
         foreach ($forms as $form) {
             $formOptions[] = [
                 'label' => $form->name,
-                'value' => $form->id
+                'value' => $form->id,
             ];
         }
 
@@ -166,7 +166,7 @@ class SpamLogDataSource extends DataSource
             'defaultStartDate' => new DateTime($defaultStartDate),
             'defaultEndDate' => new DateTime($defaultEndDate),
             'dateRanges' => $dateRanges,
-            'options' => $settings
+            'options' => $settings,
         ]);
     }
 

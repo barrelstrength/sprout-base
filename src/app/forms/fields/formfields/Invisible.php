@@ -115,7 +115,7 @@ class Invisible extends FormField implements PreviewableFieldInterface
                 'id' => $namespaceInputId,
                 'name' => $name,
                 'value' => $value,
-                'field' => $this
+                'field' => $this,
             ]
         );
     }
@@ -133,7 +133,7 @@ class Invisible extends FormField implements PreviewableFieldInterface
     {
         return Craft::$app->getView()->renderTemplate('sprout/forms/_components/fields/formfields/invisible/example',
             [
-                'field' => $this
+                'field' => $this,
             ]
         );
     }
@@ -201,7 +201,7 @@ class Invisible extends FormField implements PreviewableFieldInterface
     {
         return [
             CraftPlainText::class,
-            CraftDropdown::class
+            CraftDropdown::class,
         ];
     }
 

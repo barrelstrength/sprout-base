@@ -92,7 +92,7 @@ class Email extends FormField implements PreviewableFieldInterface
     {
         return Craft::$app->getView()->renderTemplate('sprout/forms/_components/fields/formfields/email/example',
             [
-                'field' => $this
+                'field' => $this,
             ]
         );
     }
@@ -156,7 +156,7 @@ class Email extends FormField implements PreviewableFieldInterface
                 'entry' => $entry,
                 'errorMessage' => $errorMessage,
                 'renderingOptions' => $renderingOptions,
-                'placeholder' => $placeholder
+                'placeholder' => $placeholder,
             ]
         );
 
@@ -219,7 +219,7 @@ class Email extends FormField implements PreviewableFieldInterface
         return [
             CraftPlainText::class,
             CraftEmail::class,
-            CraftDropdown::class
+            CraftDropdown::class,
         ];
     }
 
@@ -233,7 +233,7 @@ class Email extends FormField implements PreviewableFieldInterface
             new StartsWithCondition(),
             new DoesNotStartWithCondition(),
             new EndsWithCondition(),
-            new DoesNotEndWithCondition()
+            new DoesNotEndWithCondition(),
         ];
     }
 }

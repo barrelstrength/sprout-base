@@ -25,7 +25,7 @@ class FormCaptchas extends Component
     public function getAllCaptchaTypes(): array
     {
         $event = new RegisterComponentTypesEvent([
-            'types' => []
+            'types' => [],
         ]);
 
         $this->trigger(self::EVENT_REGISTER_CAPTCHAS, $event);

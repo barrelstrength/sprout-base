@@ -159,7 +159,7 @@ class NotificationEmails extends Component
     public function getFieldValue($field, $value)
     {
         return NotificationEmailRecord::findOne([
-            $field => $value
+            $field => $value,
         ]);
     }
 }

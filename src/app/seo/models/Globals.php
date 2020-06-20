@@ -179,7 +179,7 @@ class Globals extends Model
                 $contactPoints[] = [
                     '@type' => 'ContactPoint',
                     'contactType' => $contact['contactType'] ?? $contact[0],
-                    'telephone' => $contact['telephone'] ?? $contact[1]
+                    'telephone' => $contact['telephone'] ?? $contact[1],
                 ];
             }
         }
@@ -202,7 +202,7 @@ class Globals extends Model
             foreach ($profiles as $profile) {
                 $profileLinks[] = [
                     'profileName' => $profile['profileName'] ?? $profile[0],
-                    'url' => $profile['url'] ?? $profile[1]
+                    'url' => $profile['url'] ?? $profile[1],
                 ];
             }
         }

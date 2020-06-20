@@ -60,14 +60,14 @@ class ControlPanelSettings extends Settings
             $headingInputHtml = Craft::$app->getView()->renderTemplate('_includes/forms/text', [
                 'name' => 'modules['.$i.'][moduleKey]',
                 'value' => $config::getKey(),
-                'type' => 'hidden'
+                'type' => 'hidden',
             ]);
 
             $enabledInputHtml = Craft::$app->getView()->renderTemplate('_includes/forms/lightswitch', [
                 'name' => 'modules['.$i.'][enabled]',
                 'on' => $enabledValue,
                 'value' => $currentSite->id,
-                'small' => true
+                'small' => true,
             ]);
 
 
@@ -79,7 +79,7 @@ class ControlPanelSettings extends Settings
                 'moduleKey' => $config::getKey(),
                 'heading' => $config::displayName().$headingInputHtml.$infoHtml,
                 'enabled' => $enabledInputHtml,
-                'alternateName' => $alternateNameValue
+                'alternateName' => $alternateNameValue,
             ];
 
             $i++;
@@ -91,14 +91,14 @@ class ControlPanelSettings extends Settings
                 'template' => 'sprout/_settings/control-panel',
 //                'multisite' => true,
                 'variables' => [
-                    'cpSettingsRows' => $cpSettingsRows
-                ]
+                    'cpSettingsRows' => $cpSettingsRows,
+                ],
             ],
             'welcome' => [
                 'label' => Craft::t('sprout', 'Welcome'),
                 'template' => 'sprout/_settings/welcome',
-                'settingsTarget' => SettingsController::SETTINGS_TARGET_DB
-            ]
+                'settingsTarget' => SettingsController::SETTINGS_TARGET_DB,
+            ],
         ];
     }
 

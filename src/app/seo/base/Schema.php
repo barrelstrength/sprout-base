@@ -392,7 +392,7 @@ abstract class Schema
             $meta = $this->prioritizedMetadataModel;
 
             $image = [
-                'url' => $imageId
+                'url' => $imageId,
             ];
 
             $openGraphMeta = $meta->getMetaTypes('openGraph');
@@ -414,7 +414,7 @@ abstract class Schema
             $image = [
                 'url' => OptimizeHelper::getAssetUrl($imageAsset->id, $transformSetting),
                 'width' => $imageAsset->getWidth($transform),
-                'height' => $imageAsset->getHeight($transform)
+                'height' => $imageAsset->getHeight($transform),
             ];
         } else {
             return null;
@@ -541,7 +541,7 @@ abstract class Schema
     public function addOpeningHours(array $openingHours)
     {
         $days = [
-            0 => 'Su', 1 => 'Mo', 2 => 'Tu', 3 => 'We', 4 => 'Th', 5 => 'Fr', 6 => 'Sa'
+            0 => 'Su', 1 => 'Mo', 2 => 'Tu', 3 => 'We', 4 => 'Th', 5 => 'Fr', 6 => 'Sa',
         ];
 
         $index = 0;

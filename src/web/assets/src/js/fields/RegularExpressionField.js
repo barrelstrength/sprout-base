@@ -21,7 +21,7 @@ SproutRegularExpressionField = Garnish.Base.extend({
       let data = {
         'fieldHandle': fieldHandle,
         'fieldContext': fieldContext,
-        'value': $(sproutRegularExpressionFieldId).val()
+        'value': $(sproutRegularExpressionFieldId).val(),
       };
 
       // Query the controller so the regex validation is all done through PHP.
@@ -34,5 +34,5 @@ SproutRegularExpressionField = Garnish.Base.extend({
       }, []);
 
     }, 500);
-  }
+  },
 });

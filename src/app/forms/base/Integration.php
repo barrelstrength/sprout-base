@@ -155,9 +155,9 @@ abstract class Integration extends SavableComponent implements IntegrationInterf
                 'compatibleCraftFields' => [
                     CraftPlainText::class,
                     CraftDropdown::class,
-                    CraftNumber::class
+                    CraftNumber::class,
                 ],
-                'fieldType' => SingleLine::class
+                'fieldType' => SingleLine::class,
             ],
             [
                 'label' => Craft::t('sprout', 'Entry ID'),
@@ -165,44 +165,44 @@ abstract class Integration extends SavableComponent implements IntegrationInterf
                 'compatibleCraftFields' => [
                     CraftPlainText::class,
                     CraftDropdown::class,
-                    CraftNumber::class
+                    CraftNumber::class,
                 ],
-                'fieldType' => SingleLine::class
+                'fieldType' => SingleLine::class,
             ],
             [
                 'label' => Craft::t('sprout', 'Title'),
                 'value' => 'title',
                 'compatibleCraftFields' => [
                     CraftPlainText::class,
-                    CraftDropdown::class
+                    CraftDropdown::class,
                 ],
-                'fieldType' => SingleLine::class
+                'fieldType' => SingleLine::class,
             ],
             [
                 'label' => Craft::t('sprout', 'Date Created'),
                 'value' => 'dateCreated',
                 'compatibleCraftFields' => [
-                    CraftDate::class
+                    CraftDate::class,
                 ],
-                'fieldType' => SingleLine::class
+                'fieldType' => SingleLine::class,
             ],
             [
                 'label' => Craft::t('sprout', 'IP Address'),
                 'value' => 'ipAddress',
                 'compatibleCraftFields' => [
                     CraftPlainText::class,
-                    CraftDropdown::class
+                    CraftDropdown::class,
                 ],
-                'fieldType' => SingleLine::class
+                'fieldType' => SingleLine::class,
             ],
             [
                 'label' => Craft::t('sprout', 'User Agent'),
                 'value' => 'userAgent',
                 'compatibleCraftFields' => [
-                    CraftPlainText::class
+                    CraftPlainText::class,
                 ],
-                'fieldType' => SingleLine::class
-            ]
+                'fieldType' => SingleLine::class,
+            ],
         ]);
 
         $fields = $this->getForm()->getFields();
@@ -210,7 +210,7 @@ abstract class Integration extends SavableComponent implements IntegrationInterf
         if (count($fields)) {
             if ($addOptGroup) {
                 $options[] = [
-                    'optgroup' => Craft::t('sprout', 'Custom Fields')
+                    'optgroup' => Craft::t('sprout', 'Custom Fields'),
                 ];
             }
 
@@ -219,7 +219,7 @@ abstract class Integration extends SavableComponent implements IntegrationInterf
                     'label' => $field->name,
                     'value' => $field->handle,
                     'compatibleCraftFields' => $field->getCompatibleCraftFieldTypes(),
-                    'fieldType' => get_class($field)
+                    'fieldType' => get_class($field),
                 ];
             }
         }
@@ -283,7 +283,7 @@ abstract class Integration extends SavableComponent implements IntegrationInterf
 
             $newFieldMapping[] = [
                 'sourceFormField' => $sourceFormField->handle,
-                'targetIntegrationField' => $targetIntegrationField
+                'targetIntegrationField' => $targetIntegrationField,
             ];
         }
 
@@ -344,8 +344,8 @@ abstract class Integration extends SavableComponent implements IntegrationInterf
         $options = [
             [
                 'label' => Craft::t('sprout', 'Always'),
-                'value' => '*'
-            ]
+                'value' => '*',
+            ],
         ];
 
         $options = array_merge($options, $optIns);
@@ -353,19 +353,19 @@ abstract class Integration extends SavableComponent implements IntegrationInterf
         $customSendRule = $this->sendRule;
 
         $options[] = [
-            'optgroup' => Craft::t('sprout', 'Custom Rule')
+            'optgroup' => Craft::t('sprout', 'Custom Rule'),
         ];
 
         if (!in_array($this->sendRule, $fieldHandles, false) && $customSendRule != '*') {
             $options[] = [
                 'label' => $customSendRule,
-                'value' => $customSendRule
+                'value' => $customSendRule,
             ];
         }
 
         $options[] = [
             'label' => Craft::t('sprout', 'Add Custom'),
-            'value' => 'custom'
+            'value' => 'custom',
         ];
 
         return $options;
@@ -383,9 +383,9 @@ abstract class Integration extends SavableComponent implements IntegrationInterf
                 'compatibleCraftFields' => [
                     CraftPlainText::class,
                     CraftDropdown::class,
-                    CraftNumber::class
+                    CraftNumber::class,
                 ],
-                'type' => Number::class
+                'type' => Number::class,
             ],
             [
                 'name' => Craft::t('sprout', 'Entry ID'),
@@ -393,44 +393,44 @@ abstract class Integration extends SavableComponent implements IntegrationInterf
                 'compatibleCraftFields' => [
                     CraftPlainText::class,
                     CraftDropdown::class,
-                    CraftNumber::class
+                    CraftNumber::class,
                 ],
-                'type' => Number::class
+                'type' => Number::class,
             ],
             [
                 'name' => Craft::t('sprout', 'Title'),
                 'handle' => 'title',
                 'compatibleCraftFields' => [
                     CraftPlainText::class,
-                    CraftDropdown::class
+                    CraftDropdown::class,
                 ],
-                'type' => SingleLine::class
+                'type' => SingleLine::class,
             ],
             [
                 'name' => Craft::t('sprout', 'Date Created'),
                 'handle' => 'dateCreated',
                 'compatibleCraftFields' => [
-                    CraftDate::class
+                    CraftDate::class,
                 ],
-                'type' => SingleLine::class
+                'type' => SingleLine::class,
             ],
             [
                 'name' => Craft::t('sprout', 'IP Address'),
                 'handle' => 'ipAddress',
                 'compatibleCraftFields' => [
                     CraftPlainText::class,
-                    CraftDropdown::class
+                    CraftDropdown::class,
                 ],
-                'type' => SingleLine::class
+                'type' => SingleLine::class,
             ],
             [
                 'name' => Craft::t('sprout', 'User Agent'),
                 'handle' => 'userAgent',
                 'compatibleCraftFields' => [
-                    CraftPlainText::class
+                    CraftPlainText::class,
                 ],
-                'type' => SingleLine::class
-            ]
+                'type' => SingleLine::class,
+            ],
         ];
 
         return $sourceFormFieldsData;

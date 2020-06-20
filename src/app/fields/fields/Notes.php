@@ -78,7 +78,7 @@ class Notes extends Field
             [
                 'field' => $this,
                 'options' => $this->getOptions(),
-                'styles' => $this->_getCustomStyleOptions()
+                'styles' => $this->_getCustomStyleOptions(),
             ]
         );
     }
@@ -130,7 +130,7 @@ class Notes extends Field
                 'field' => $this,
                 'id' => $namespaceInputId,
                 'name' => $name,
-                'selectedStyleCss' => $selectedStyleCss
+                'selectedStyleCss' => $selectedStyleCss,
             ]
         );
     }
@@ -175,7 +175,7 @@ class Notes extends Field
         if (is_dir($path)) {
             $files = FileHelper::findFiles($path, [
                 'only' => ['*.css'],
-                'recursive' => false
+                'recursive' => false,
             ]);
 
             foreach ($files as $file) {
@@ -195,8 +195,8 @@ class Notes extends Field
             'output' => [
                 'richText' => 'Rich Text',
                 'markdown' => 'Markdown',
-                'html' => 'HTML'
-            ]
+                'html' => 'HTML',
+            ],
         ];
 
         return $options;

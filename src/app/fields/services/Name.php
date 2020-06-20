@@ -129,7 +129,7 @@ class Name extends Component
                 'name' => $name,
                 'field' => $field,
                 'value' => $value,
-                'fieldContext' => $fieldContext
+                'fieldContext' => $fieldContext,
             ]);
     }
 }

@@ -21,11 +21,11 @@ class SitemapsAsset extends AssetBundle
         ];
 
         $this->css = [
-            'css/sitemaps.css'
+            'css/sitemaps.css',
         ];
 
         $this->js = [
-            'js/Sitemaps.js'
+            'js/Sitemaps.js',
         ];
 
         parent::init();

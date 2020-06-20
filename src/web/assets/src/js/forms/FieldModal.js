@@ -70,7 +70,7 @@ if (typeof Craft.SproutForms === typeof undefined) {
       init: function(settings) {
         this.base();
         this.setSettings(settings, {
-          resizable: true
+          resizable: true,
         });
 
         this.$currentHtml = $();
@@ -109,7 +109,7 @@ if (typeof Craft.SproutForms === typeof undefined) {
         this.setContainer($container);
         const formId = $("#formId").val();
         const postData = {
-          formId: formId
+          formId: formId,
         };
 
         // Loads the field settings template file, as well as all the resources that come with it
@@ -200,7 +200,7 @@ if (typeof Craft.SproutForms === typeof undefined) {
             target: this,
             $html: $html,
             $js: $jsInline,
-            $css: $cssInline
+            $css: $cssInline,
           });
         };
         // Fixes bug on Craft3 - Updates way to callback function
@@ -237,7 +237,7 @@ if (typeof Craft.SproutForms === typeof undefined) {
 
                   if (filesCount === 0) {
                     this.trigger('runExternalScripts', {
-                      target: this
+                      target: this,
                     });
                   }
                 } else {
@@ -248,7 +248,7 @@ if (typeof Craft.SproutForms === typeof undefined) {
           }
         } else {
           this.trigger('runExternalScripts', {
-            target: this
+            target: this,
           });
         }
       },
@@ -388,12 +388,12 @@ if (typeof Craft.SproutForms === typeof undefined) {
             if (id === false) {
               this.trigger('newField', {
                 target: this,
-                field: response.field
+                field: response.field,
               });
             } else {
               this.trigger('saveField', {
                 target: this,
-                field: response.field
+                field: response.field,
               });
 
               Craft.cp.displayNotice(Craft.t('sprout', '\'{name}\' field saved.', {name: response.field.name}));
@@ -523,7 +523,7 @@ if (typeof Craft.SproutForms === typeof undefined) {
         this.$container.remove();
 
         this.trigger('destroy');
-      }
+      },
     },
     {
       /**
@@ -537,7 +537,7 @@ if (typeof Craft.SproutForms === typeof undefined) {
         }
 
         return this._instance;
-      }
+      },
     });
 
 })(jQuery);

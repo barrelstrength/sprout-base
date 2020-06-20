@@ -189,7 +189,7 @@ class Address extends Model
         $rules[] = [
             'address1',
             'required',
-            'message' => Craft::t('sprout', 'Address 1 field cannot be blank.')
+            'message' => Craft::t('sprout', 'Address 1 field cannot be blank.'),
         ];
 
         return $rules;

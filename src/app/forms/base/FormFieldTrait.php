@@ -204,7 +204,7 @@ trait FormFieldTrait
             foreach ($conditions as $condition) {
                 $options[] = [
                     'label' => $condition->getLabel(),
-                    'value' => get_class($condition)
+                    'value' => get_class($condition),
                 ];
             }
         }
