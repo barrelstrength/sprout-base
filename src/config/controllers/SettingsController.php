@@ -23,8 +23,8 @@ use yii\web\Response;
 
 class SettingsController extends Controller
 {
-    const SETTINGS_TARGET_PROJECT_CONFIG = 'project-config';
-    const SETTINGS_TARGET_DB = 'db';
+    const SETTINGS_TARGET_SPROUT_BASE = 'default';
+    const SETTINGS_TARGET_CUSTOM = 'custom';
 
     /**
      * Send user to the Sprout hello page if they are messing
@@ -56,7 +56,7 @@ class SettingsController extends Controller
      * @throws SiteNotFoundException
      */
     public function actionEditSettings(
-        $settingsTarget = self::SETTINGS_TARGET_PROJECT_CONFIG,
+        $settingsTarget = self::SETTINGS_TARGET_SPROUT_BASE,
         $configKey = null,
         $subNavKey = null
     ): Response {
@@ -105,7 +105,7 @@ class SettingsController extends Controller
         // The settingsTarget defaults to 'project-config'
         // Plugins should pass a settingsTarget of 'db' if they
         // wish to manage their settings on their own
-        $settingsTemplate = $settingsTarget === 'db'
+        $settingsTemplate = $settingsTarget === self::SETTINGS_TARGET_CUSTOM
             ? 'sprout/_layouts/settings-wrapper'
             : 'sprout/_layouts/settings';
 

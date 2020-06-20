@@ -64,7 +64,7 @@ class FormsSettings extends Settings
             'entry-statuses' => [
                 'label' => Craft::t('sprout', 'Entry Statuses'),
                 'template' => 'sprout/_settings/entry-statuses/index',
-                'settingsTarget' => SettingsController::SETTINGS_TARGET_DB,
+                'settingsTarget' => SettingsController::SETTINGS_TARGET_CUSTOM,
                 'actionButtonTemplate' => 'sprout/_settings/entry-statuses/actionStatusButton',
                 'variables' => [
                     'entryStatuses' => SproutBase::$app->formEntryStatuses->getAllEntryStatuses(),

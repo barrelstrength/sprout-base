@@ -136,13 +136,13 @@ class FormsConfig extends Config
             'sprout/settings/<configKey:forms>/<subNavKey:entry-statuses>/new' => [
                 'route' => 'sprout/form-entry-statuses/edit',
                 'params' => [
-                    'settingsTarget' => SettingsController::SETTINGS_TARGET_DB,
+                    'settingsTarget' => SettingsController::SETTINGS_TARGET_CUSTOM,
                 ],
             ],
             'sprout/settings/<configKey:forms>/<subNavKey:entry-statuses>/<entryStatusId:\d+>' => [
                 'route' => 'sprout/form-entry-statuses/edit',
                 'params' => [
-                    'settingsTarget' => SettingsController::SETTINGS_TARGET_DB,
+                    'settingsTarget' => SettingsController::SETTINGS_TARGET_CUSTOM,
                 ],
             ],
         ];

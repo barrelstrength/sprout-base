@@ -97,7 +97,7 @@ class ControlPanelSettings extends Settings
             'welcome' => [
                 'label' => Craft::t('sprout', 'Welcome'),
                 'template' => 'sprout/_settings/welcome',
-                'settingsTarget' => SettingsController::SETTINGS_TARGET_DB,
+                'settingsTarget' => SettingsController::SETTINGS_TARGET_CUSTOM,
             ],
         ];
     }
