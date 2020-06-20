@@ -7,6 +7,7 @@
 
 namespace barrelstrength\sproutbase\config\base;
 
+use barrelstrength\sproutbase\config\configs\ControlPanelConfig;
 use craft\base\Plugin;
 use craft\events\RegisterUrlRulesEvent;
 use craft\web\UrlManager;
@@ -45,6 +46,7 @@ abstract class SproutBasePlugin extends Plugin
     private function getCpUrlRules(): array
     {
         $configTypes = static::getSproutConfigs();
+        $configTypes[] = ControlPanelConfig::class;
 
         $urlRules = [];
         foreach ($configTypes as $configType) {
@@ -61,6 +63,7 @@ abstract class SproutBasePlugin extends Plugin
     private function getSiteUrlRules(): array
     {
         $configTypes = static::getSproutConfigs();
+        $configTypes[] = ControlPanelConfig::class;
 
         $urlRules = [];
         foreach ($configTypes as $configType) {

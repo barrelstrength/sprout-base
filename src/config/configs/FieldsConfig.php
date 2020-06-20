@@ -33,7 +33,7 @@ class FieldsConfig extends Config
         return Craft::t('sprout', 'Fields');
     }
 
-    public function hasControlPanelSettings(): bool
+    public static function hasControlPanelSettings(): bool
     {
         return false;
     }

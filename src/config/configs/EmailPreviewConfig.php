@@ -31,7 +31,7 @@ class EmailPreviewConfig extends Config
         return Craft::t('sprout', 'Email Preview');
     }
 
-    public function hasControlPanelSettings(): bool
+    public static function hasControlPanelSettings(): bool
     {
         return false;
     }

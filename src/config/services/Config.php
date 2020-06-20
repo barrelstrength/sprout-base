@@ -123,6 +123,10 @@ class Config extends Component
 
         $plugins = $this->getSproutBasePlugins();
 
+        $cpConfig = new ControlPanelConfig();
+        $cpConfig->setSettings($this->getCpSettings());
+        $this->_configs['control-panel'] = $cpConfig;
+        
         foreach ($plugins as $plugin) {
 
             $isPluginEnabled = Craft::$app->getPlugins()->isPluginEnabled($plugin->handle);

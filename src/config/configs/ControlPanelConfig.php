@@ -31,7 +31,7 @@ class ControlPanelConfig extends Config
         return Craft::t('sprout', 'Control Panel');
     }
 
-    public function hasControlPanelSettings(): bool
+    public static function hasControlPanelSettings(): bool
     {
         return false;
     }

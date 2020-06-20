@@ -36,7 +36,7 @@ interface ConfigInterface
      *
      * @return bool
      */
-    public function hasControlPanelSettings(): bool;
+    public static function hasControlPanelSettings(): bool;
 
     /**
      * Returns the name of the group that will be used to group settings for this config

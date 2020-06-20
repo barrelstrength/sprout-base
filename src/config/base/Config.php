@@ -95,7 +95,7 @@ abstract class Config extends Component implements ConfigInterface
         $this->_alternateName = $value;
     }
 
-    public function hasControlPanelSettings(): bool
+    public static function hasControlPanelSettings(): bool
     {
         return true;
     }

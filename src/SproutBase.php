@@ -21,9 +21,11 @@ use barrelstrength\sproutbase\app\email\mailers\DefaultMailer;
 use barrelstrength\sproutbase\app\email\services\EmailTemplates;
 use barrelstrength\sproutbase\app\email\services\Mailers;
 use barrelstrength\sproutbase\app\email\services\NotificationEmailEvents;
+use barrelstrength\sproutbase\app\reports\datasources\CustomQuery;
 use barrelstrength\sproutbase\app\reports\services\DataSources;
 use barrelstrength\sproutbase\config\base\Config;
 use barrelstrength\sproutbase\config\configs\CampaignsConfig;
+use barrelstrength\sproutbase\config\configs\ControlPanelConfig;
 use barrelstrength\sproutbase\config\configs\EmailPreviewConfig;
 use barrelstrength\sproutbase\config\configs\FieldsConfig;
 use barrelstrength\sproutbase\config\configs\FormsConfig;
@@ -63,6 +65,7 @@ class SproutBase extends Module
      */
     const SPROUT_MODULES = [
         CampaignsConfig::class,
+        ControlPanelConfig::class,
         EmailPreviewConfig::class,
         FieldsConfig::class,
         FormsConfig::class,
@@ -169,7 +172,9 @@ class SproutBase extends Module
         foreach (self::SPROUT_MODULES as $moduleClassName) {
             $moduleControllerMap = $moduleClassName::getControllerMap();
 
-            if (!$cpSettings->isModuleEnabled($moduleClassName::getKey())) {
+            // Skip disabled modules. Install all modules that don't have CP settings.
+            if ($moduleClassName::hasControlPanelSettings() === true &&
+                !$cpSettings->isModuleEnabled($moduleClassName::getKey())) {
                 continue;
             }
 
