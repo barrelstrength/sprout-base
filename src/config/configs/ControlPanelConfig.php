@@ -41,15 +41,6 @@ class ControlPanelConfig extends Config
         return new ControlPanelSettings();
     }
 
-//    public function getUserPermissions(): array
-//    {
-//        return [
-//            'sprout:sitemaps:editSitemaps' => [
-//                'label' => Craft::t('sprout', 'Edit Sitemaps')
-//            ],
-//        ];
-//    }
-
     public function getCpUrlRules(): array
     {
         return [

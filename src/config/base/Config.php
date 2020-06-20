@@ -102,7 +102,7 @@ abstract class Config extends Component implements ConfigInterface
 
     public function getBaseUrl(): string
     {
-        return UrlHelper::cpUrl('sprout/'.$this->getKey());
+        return UrlHelper::cpUrl('sprout/'.static::getKey());
     }
 
     public function getName(): string
@@ -174,17 +174,6 @@ abstract class Config extends Component implements ConfigInterface
         return [];
     }
 
-    /**
-     * Returns a list of keys that map to controller names
-     * These will be used to disable a modules controller routes.
-     *
-     * @return array
-     */
-    public function getControllerMapKeys(): array
-    {
-        return [];
-    }
-
     public function isUpgradable(): bool
     {
         return $this->getEdition() !== self::EDITION_PRO;
@@ -192,7 +181,7 @@ abstract class Config extends Component implements ConfigInterface
 
     public function getUpgradeUrl(): string
     {
-        return UrlHelper::cpUrl('sprout/upgrade/'.$this->getKey());
+        return UrlHelper::cpUrl('sprout/upgrade/'.static::getKey());
     }
 }
 

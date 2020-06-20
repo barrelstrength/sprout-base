@@ -110,13 +110,5 @@ class CampaignsConfig extends Config
     {
         return false;
     }
-
-    public function getControllerMapKeys(): array
-    {
-        return [
-            'campaign-email',
-            'campaign-type',
-        ];
-    }
 }
 

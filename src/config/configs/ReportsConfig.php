@@ -113,14 +113,6 @@ class ReportsConfig extends Config
         }
     }
 
-    public function getControllerMapKeys(): array
-    {
-        return [
-            'reports',
-            'data-sources',
-        ];
-    }
-
     public static function getControllerMap(): array
     {
         return [

@@ -157,19 +157,6 @@ class FormsConfig extends Config
         }
     }
 
-    public function getControllerMapKeys(): array
-    {
-        return [
-            'form-entries',
-            'form-entry-statuses',
-            'form-fields',
-            'forms',
-            'form-groups',
-            'integrations',
-            'rules',
-        ];
-    }
-
     public function getSupportedDataSourceTypes(): array
     {
         return [

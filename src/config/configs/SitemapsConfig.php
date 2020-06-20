@@ -138,13 +138,5 @@ class SitemapsConfig extends Config
 
         parent::setSettings($settings);
     }
-
-    public function getControllerMapKeys(): array
-    {
-        return [
-            'sitemaps',
-            'xml-sitemaps',
-        ];
-    }
 }
 

@@ -105,13 +105,6 @@ class NotificationsConfig extends Config
         }
     }
 
-    public function getControllerMapKeys(): array
-    {
-        return [
-            'notifications',
-        ];
-    }
-
     public function getSupportedNotificationEventTypes(): array
     {
         if ($this->getIsPro()) {
