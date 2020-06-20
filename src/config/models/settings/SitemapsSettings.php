@@ -59,7 +59,7 @@ class SitemapsSettings extends Settings
     /**
      * @throws SiteNotFoundException
      */
-    protected function beforeAddDefaultSettings()
+    public function beforeAddDefaultSettings()
     {
         $site = Craft::$app->getSites()->getPrimarySite();
         $this->siteSettings[$site->id] = $site->id;

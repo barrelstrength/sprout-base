@@ -56,7 +56,7 @@ abstract class Settings extends Model implements SettingsInterface
         return [];
     }
 
-    protected function beforeAddDefaultSettings()
+    public function beforeAddDefaultSettings()
     {
         return null;
     }

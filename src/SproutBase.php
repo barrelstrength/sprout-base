@@ -39,6 +39,7 @@ use barrelstrength\sproutbase\config\configs\SitemapsConfig;
 use barrelstrength\sproutbase\config\services\App;
 use barrelstrength\sproutbase\web\twig\Extension;
 use Craft;
+use craft\events\ExceptionEvent;
 use craft\events\RegisterComponentTypesEvent;
 use craft\events\RegisterCpNavItemsEvent;
 use craft\events\RegisterCpSettingsEvent;
@@ -50,6 +51,7 @@ use craft\i18n\PhpMessageSource;
 use craft\services\Sites;
 use craft\services\UserPermissions;
 use craft\web\Application;
+use craft\web\ErrorHandler;
 use craft\web\twig\variables\Cp;
 use craft\web\View;
 use yii\base\Event;
@@ -152,12 +154,6 @@ class SproutBase extends Module
         $this->initEmailEvents();
         $this->initReportEvents();
         $this->initConfigEvents();
-
-        Event::on(Sites::class, Sites::EVENT_AFTER_SAVE_SITE, static function(SiteEvent $event) {
-            if ($event->isNew) {
-                SproutBase::$app->globalMetadata->insertDefaultGlobalMetadata($event->site->id);
-            }
-        });
     }
 
     public function initMappings()
@@ -257,5 +253,11 @@ class SproutBase extends Module
                 $event->settings['Sprout Plugins'] = $settingsPages;
             }
         });
+
+        Event::on(
+            ErrorHandler::class,
+            ErrorHandler::EVENT_BEFORE_HANDLE_EXCEPTION, [
+            self::$app->redirects, 'handleRedirectsOnException'
+        ]);
     }
 }

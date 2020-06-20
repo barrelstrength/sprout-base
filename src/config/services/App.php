@@ -51,6 +51,67 @@ use craft\base\Component;
 
 class App extends Component
 {
+    public function init()
+    {
+        // Forms
+        $this->formGroups = new FormGroups();
+        $this->forms = new Forms();
+        $this->formFields = new FormFields();
+        $this->formEntries = new FormEntries();
+        $this->formEntryStatuses = new FormEntryStatuses();
+        $this->frontEndFields = new FrontEndFields();
+        $this->formIntegrations = new FormIntegrations();
+        $this->formRules = new FormRules();
+        $this->formTemplates = new FormTemplates();
+        $this->formCaptchas = new FormCaptchas();
+
+        // Metadata
+        $this->optimizeMetadata = new OptimizeMetadata();
+        $this->globalMetadata = new GlobalMetadata();
+        $this->elementMetadata = new ElementMetadata();
+        $this->schemaMetadata = new SchemaMetadata();
+
+        // Campaigns
+        $this->campaignTypes = new CampaignTypes();
+        $this->campaignEmails = new CampaignEmails();
+
+        // Fields
+        $this->addressField = new Address();
+        $this->addressFormatter = new AddressFormatter();
+        $this->emailField = new Email();
+        $this->emailDropdownField = new EmailDropdown();
+        $this->nameField = new Name();
+        $this->phoneField = new Phone();
+        $this->regularExpressionField = new RegularExpression();
+        $this->urlField = new Url();
+        $this->fieldUtilities = new FieldUtilities();
+
+        // Reports
+        $this->dataSources = new DataSources();
+        $this->twigDataSource = new TwigDataSource();
+        $this->exports = new Exports();
+        $this->reportGroups = new ReportGroups();
+        $this->reports = new Reports();
+        $this->visualizations = new Visualizations();
+
+        // Email
+        $this->emailTemplates = new EmailTemplates();
+        $this->mailers = new Mailers();
+        $this->notifications = new NotificationEmails();
+        $this->notificationEvents = new NotificationEmailEvents();
+        $this->sentEmails = new SentEmails();
+
+        $this->redirects = new Redirects();
+        $this->sitemaps = new Sitemaps();
+        $this->xmlSitemap = new XmlSitemap();
+        $this->urlEnabledSections = new UrlEnabledSections();
+
+        // Sprout Base
+        $this->config = new Config();
+        $this->settings = new Settings();
+        $this->utilities = new Utilities();
+    }
+
     /**
      * @var FormGroups
      */
@@ -265,68 +326,4 @@ class App extends Component
      * @var Utilities
      */
     public $utilities;
-
-    /**
-     * @inheritdoc
-     */
-    public function init()
-    {
-        // Forms
-        $this->formGroups = new FormGroups();
-        $this->forms = new Forms();
-        $this->formFields = new FormFields();
-        $this->formEntries = new FormEntries();
-        $this->formEntryStatuses = new FormEntryStatuses();
-        $this->frontEndFields = new FrontEndFields();
-        $this->formIntegrations = new FormIntegrations();
-        $this->formRules = new FormRules();
-        $this->formTemplates = new FormTemplates();
-        $this->formCaptchas = new FormCaptchas();
-
-        // Metadata
-        $this->optimizeMetadata = new OptimizeMetadata();
-        $this->globalMetadata = new GlobalMetadata();
-        $this->elementMetadata = new ElementMetadata();
-        $this->schemaMetadata = new SchemaMetadata();
-
-        // Campaigns
-        $this->campaignTypes = new CampaignTypes();
-        $this->campaignEmails = new CampaignEmails();
-
-        // Fields
-        $this->addressField = new Address();
-        $this->addressFormatter = new AddressFormatter();
-        $this->emailField = new Email();
-        $this->emailDropdownField = new EmailDropdown();
-        $this->nameField = new Name();
-        $this->phoneField = new Phone();
-        $this->regularExpressionField = new RegularExpression();
-        $this->urlField = new Url();
-        $this->fieldUtilities = new FieldUtilities();
-
-        // Reports
-        $this->dataSources = new DataSources();
-        $this->twigDataSource = new TwigDataSource();
-        $this->exports = new Exports();
-        $this->reportGroups = new ReportGroups();
-        $this->reports = new Reports();
-        $this->visualizations = new Visualizations();
-
-        // Email
-        $this->emailTemplates = new EmailTemplates();
-        $this->mailers = new Mailers();
-        $this->notifications = new NotificationEmails();
-        $this->notificationEvents = new NotificationEmailEvents();
-        $this->sentEmails = new SentEmails();
-
-        $this->redirects = new Redirects();
-        $this->sitemaps = new Sitemaps();
-        $this->xmlSitemap = new XmlSitemap();
-        $this->urlEnabledSections = new UrlEnabledSections();
-
-        // Sprout Base
-        $this->config = new Config();
-        $this->settings = new Settings();
-        $this->utilities = new Utilities();
-    }
 }
