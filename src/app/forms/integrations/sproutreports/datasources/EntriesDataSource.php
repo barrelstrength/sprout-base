@@ -219,7 +219,6 @@ class EntriesDataSource extends DataSource
             ];
         }
 
-        // @todo Determine sensible default start and end date based on Order data
         $defaultStartDate = null;
         $defaultEndDate = null;
 

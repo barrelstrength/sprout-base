@@ -8,12 +8,15 @@
 namespace barrelstrength\sproutbase\app\redirects\elements\actions;
 
 use barrelstrength\sproutbase\app\redirects\elements\Redirect;
+use barrelstrength\sproutbase\config\services\Config;
 use barrelstrength\sproutbase\SproutBase;
 use Craft;
 use craft\base\ElementAction;
 use craft\elements\db\ElementQueryInterface;
 use Exception;
+use GuzzleHttp\Exception\BadResponseException;
 use Throwable;
+use yii\base\InvalidConfigException;
 use yii\db\Transaction;
 
 class ExcludeUrl extends ElementAction
@@ -65,17 +68,14 @@ class ExcludeUrl extends ElementAction
                 Craft::$app->elements->deleteElement($redirect, true);
             }
 
-            // @todo - migration, fix saving of settings
-            SproutBase::$app->config->saveGlobalSettings($redirectSettings->getAttributes());
+            if (!SproutBase::$app->settings->saveSettings(Config::CONFIG_SPROUT_KEY.'.redirects', $redirectSettings)) {
+                throw new InvalidConfigException('Unable to save Excluded URL Patterns');
+            }
 
             $transaction->commit();
-
-            Craft::info('Form Saved.', __METHOD__);
         } catch (Throwable $e) {
-            Craft::error('Unable to save form: '.$e->getMessage(), __METHOD__);
             $transaction->rollBack();
         }
-
 
         $this->setMessage(Craft::t('sprout', 'Added to Excluded URL Patterns setting.'));
 

@@ -114,11 +114,7 @@ class FormFieldsController extends BaseController
         $request = Craft::$app->getRequest();
         $fieldsService = Craft::$app->getFields();
 
-        // Make sure our field has a section
-        // @todo - handle this more gracefully
         $tabId = $request->getBodyParam('tabId');
-
-        // Get the Form these fields are related to
         $formId = $request->getRequiredBodyParam('formId');
         $form = SproutBase::$app->forms->getFormById($formId);
 

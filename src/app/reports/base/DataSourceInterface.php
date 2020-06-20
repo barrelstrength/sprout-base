@@ -32,7 +32,6 @@ interface DataSourceInterface extends SavableComponentInterface
      *
      * @return array
      * @todo - Deprecated $settings param in 1.0. Will be removed in 2.0.
-     *
      */
     public function getResults(Report $report, array $settings = []): array;
 }

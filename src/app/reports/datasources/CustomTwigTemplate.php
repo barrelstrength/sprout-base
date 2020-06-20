@@ -82,10 +82,12 @@ class CustomTwigTemplate extends DataSource
         $settingsErrors = $this->report->getErrors('settings');
         $settingsErrors = array_shift($settingsErrors);
 
-        // @todo - refactor?
+        // @todo - update method signature to remove $settings as it's available as $this->report->getSettings()
         // We pass $settings to this method from the template, but the settings
         // may already exist on the report.... maybe we can simplify?
-        $settings = count($settings) ? array_merge($settings, $this->report->getSettings()) : $this->report->getSettings();
+        $settings = count($settings)
+            ? array_merge($settings, $this->report->getSettings())
+            : $this->report->getSettings();
 
         $customSettingsHtml = null;
 
