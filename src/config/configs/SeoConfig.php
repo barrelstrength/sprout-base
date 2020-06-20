@@ -7,6 +7,7 @@
 
 namespace barrelstrength\sproutbase\config\configs;
 
+use barrelstrength\sproutbase\app\seo\controllers\GlobalMetadataController;
 use barrelstrength\sproutbase\config\base\Config;
 use barrelstrength\sproutbase\config\models\settings\SeoSettings;
 use barrelstrength\sproutbase\migrations\metadata\Install;
@@ -15,7 +16,14 @@ use Craft;
 
 class SeoConfig extends Config
 {
-    public function getKey(): string
+    public static function getControllerMap(): array
+    {
+        return [
+            'global-metadata' => GlobalMetadataController::class,
+        ];
+    }
+
+    public static function getKey(): string
     {
         return 'seo';
     }

@@ -7,12 +7,7 @@
 
 namespace barrelstrength\sproutbase;
 
-use barrelstrength\sproutbase\app\campaigns\controllers\CampaignEmailController;
-use barrelstrength\sproutbase\app\campaigns\controllers\CampaignTypeController;
 use barrelstrength\sproutbase\app\campaigns\mailers\CopyPasteMailer;
-use barrelstrength\sproutbase\app\email\controllers\MailersController;
-use barrelstrength\sproutbase\app\email\controllers\NotificationsController;
-use barrelstrength\sproutbase\app\email\controllers\PreviewController;
 use barrelstrength\sproutbase\app\email\emailtemplates\BasicTemplates;
 use barrelstrength\sproutbase\app\email\events\NotificationEmailEvent;
 use barrelstrength\sproutbase\app\email\events\notificationevents\EntriesDelete;
@@ -26,24 +21,8 @@ use barrelstrength\sproutbase\app\email\mailers\DefaultMailer;
 use barrelstrength\sproutbase\app\email\services\EmailTemplates;
 use barrelstrength\sproutbase\app\email\services\Mailers;
 use barrelstrength\sproutbase\app\email\services\NotificationEmailEvents;
-use barrelstrength\sproutbase\app\fields\controllers\AddressController;
-use barrelstrength\sproutbase\app\fields\controllers\FieldsController;
-use barrelstrength\sproutbase\app\forms\controllers\FormEntriesController;
-use barrelstrength\sproutbase\app\forms\controllers\FormEntryStatusesController;
-use barrelstrength\sproutbase\app\forms\controllers\FormFieldsController;
-use barrelstrength\sproutbase\app\forms\controllers\FormGroupsController;
-use barrelstrength\sproutbase\app\forms\controllers\FormIntegrationsController;
-use barrelstrength\sproutbase\app\forms\controllers\FormRulesController;
-use barrelstrength\sproutbase\app\forms\controllers\FormsController;
-use barrelstrength\sproutbase\app\redirects\controllers\RedirectsController;
-use barrelstrength\sproutbase\app\reports\controllers\DataSourcesController;
-use barrelstrength\sproutbase\app\reports\controllers\ReportsController;
-use barrelstrength\sproutbase\app\reports\datasources\CustomQuery;
 use barrelstrength\sproutbase\app\reports\services\DataSources;
-use barrelstrength\sproutbase\app\sentemail\controllers\SentEmailController;
-use barrelstrength\sproutbase\app\seo\controllers\GlobalMetadataController;
-use barrelstrength\sproutbase\app\sitemaps\controllers\SitemapsController;
-use barrelstrength\sproutbase\app\sitemaps\controllers\XmlSitemapController;
+use barrelstrength\sproutbase\config\base\Config;
 use barrelstrength\sproutbase\config\configs\CampaignsConfig;
 use barrelstrength\sproutbase\config\configs\EmailPreviewConfig;
 use barrelstrength\sproutbase\config\configs\FieldsConfig;
@@ -55,7 +34,6 @@ use barrelstrength\sproutbase\config\configs\ReportsConfig;
 use barrelstrength\sproutbase\config\configs\SentEmailConfig;
 use barrelstrength\sproutbase\config\configs\SeoConfig;
 use barrelstrength\sproutbase\config\configs\SitemapsConfig;
-use barrelstrength\sproutbase\config\controllers\SettingsController;
 use barrelstrength\sproutbase\config\services\App;
 use barrelstrength\sproutbase\web\twig\Extension;
 use Craft;
@@ -66,9 +44,7 @@ use craft\events\RegisterTemplateRootsEvent;
 use craft\events\RegisterUserPermissionsEvent;
 use craft\events\SiteEvent;
 use craft\helpers\ArrayHelper;
-use craft\helpers\StringHelper;
 use craft\i18n\PhpMessageSource;
-use craft\services\Plugins;
 use craft\services\Sites;
 use craft\services\UserPermissions;
 use craft\web\Application;
@@ -82,6 +58,9 @@ use yii\mail\MailEvent;
 
 class SproutBase extends Module
 {
+    /**
+     * @var Config[] SPROUT_MODULES
+     */
     const SPROUT_MODULES = [
         CampaignsConfig::class,
         EmailPreviewConfig::class,
@@ -93,10 +72,8 @@ class SproutBase extends Module
         ReportsConfig::class,
         SentEmailConfig::class,
         SeoConfig::class,
-        SitemapsConfig::class
+        SitemapsConfig::class,
     ];
-
-    protected $_controlPanelSettings;
 
     /**
      * @var App
@@ -161,7 +138,7 @@ class SproutBase extends Module
         parent::init();
 
         $this->setComponents([
-            'app' => App::class
+            'app' => App::class,
         ]);
 
         self::$app = $this->get('app');
@@ -187,50 +164,37 @@ class SproutBase extends Module
         Craft::setAlias('@sproutbaseassetbundles', $this->getBasePath().'/web/assetbundles');
         Craft::setAlias('@sproutbaselib', dirname(__DIR__).'/lib');
 
-        // Setup Controllers
+        $cpSettings = self::$app->config->getCpSettings();
+        $controllerMap = [];
+        foreach (self::SPROUT_MODULES as $moduleClassName) {
+            $moduleControllerMap = $moduleClassName::getControllerMap();
+
+            if (!$cpSettings->isModuleEnabled($moduleClassName::getKey())) {
+                continue;
+            }
+
+            foreach ($moduleControllerMap as $key => $className) {
+                $controllerMap[$key] = $className;
+            }
+        }
+
         if (Craft::$app->getRequest()->getIsConsoleRequest()) {
             $this->controllerNamespace = 'sproutbase\\config\\console\\controllers';
         } else {
             $this->controllerNamespace = 'sproutbase\\config\\controllers';
-
-            $this->controllerMap = [
-                'forms' => FormsController::class,
-                'form-entries' => FormEntriesController::class,
-                'form-entry-statuses' => FormEntryStatusesController::class,
-                'form-fields' => FormFieldsController::class,
-                'form-groups' => FormGroupsController::class,
-                'form-integrations' => FormIntegrationsController::class,
-                'form-rules' => FormRulesController::class,
-                'global-metadata' => GlobalMetadataController::class,
-                'reports' => ReportsController::class,
-                'data-sources' => DataSourcesController::class,
-                'fields' => FieldsController::class,
-                'fields-address' => AddressController::class,
-                'campaign-email' => CampaignEmailController::class,
-                'campaign-type' => CampaignTypeController::class,
-                'copy-paste' => CopyPasteMailer::class,
-                'mailers' => MailersController::class,
-                'notifications' => NotificationsController::class,
-                'email-preview' => PreviewController::class,
-                'sent-email' => SentEmailController::class,
-                'redirects' => RedirectsController::class,
-                'sitemaps' => SitemapsController::class,
-                'xml-sitemap' => XmlSitemapController::class,
-                'settings' => SettingsController::class,
-            ];
+            $this->controllerMap = $controllerMap;
         }
     }
 
     public function initPermissions()
     {
-        Event::on(UserPermissions::class, UserPermissions::EVENT_REGISTER_PERMISSIONS, function(RegisterUserPermissionsEvent $event) {
-            $event->permissions['Sprout Plugins'] = $this->getUserPermissions();
+        Event::on(UserPermissions::class, UserPermissions::EVENT_REGISTER_PERMISSIONS, static function(RegisterUserPermissionsEvent $event) {
+            $event->permissions['Sprout Plugins'] = self::$app->config->getUserPermissions();
         });
     }
 
     public function initTemplateEvents()
     {
-        // Setup Template Roots
         Event::on(View::class, View::EVENT_REGISTER_CP_TEMPLATE_ROOTS, function(RegisterTemplateRootsEvent $e) {
             $e->roots['sprout'] = $this->getBasePath().DIRECTORY_SEPARATOR.'templates';
         });
@@ -240,7 +204,15 @@ class SproutBase extends Module
 
     public function initEmailEvents()
     {
-        // Email Tracking
+        Event::on(Application::class, Application::EVENT_INIT, static function() {
+            SproutBase::$app->notificationEvents->registerNotificationEmailEventHandlers();
+        });
+
+        Event::on(Mailers::class, Mailers::EVENT_REGISTER_MAILER_TYPES, static function(RegisterMailersEvent $event) {
+            $event->mailers[] = new DefaultMailer();
+            $event->mailers[] = new CopyPasteMailer();
+        });
+
         Event::on(BaseMailer::class, BaseMailer::EVENT_AFTER_SEND, static function(MailEvent $event) {
             $sentEmailSettings = SproutBase::$app->settings->getSettingsByKey('sent-email');
             if ($sentEmailSettings->getIsEnabled()) {
@@ -248,18 +220,6 @@ class SproutBase extends Module
             }
         });
 
-        // Register Sprout Email Events
-        Event::on(Application::class, Application::EVENT_INIT, static function() {
-            SproutBase::$app->notificationEvents->registerNotificationEmailEventHandlers();
-        });
-
-        // Register Sprout Email Mailers
-        Event::on(Mailers::class, Mailers::EVENT_REGISTER_MAILER_TYPES, static function(RegisterMailersEvent $event) {
-            $event->mailers[] = new DefaultMailer();
-            $event->mailers[] = new CopyPasteMailer();
-        });
-
-        // Register Sprout Email Templates
         Event::on(EmailTemplates::class, EmailTemplates::EVENT_REGISTER_EMAIL_TEMPLATES, static function(RegisterComponentTypesEvent $event) {
             $event->types[] = BasicTemplates::class;
         });
@@ -284,8 +244,7 @@ class SproutBase extends Module
     public function initConfigEvents()
     {
         Event::on(Cp::class, Cp::EVENT_REGISTER_CP_NAV_ITEMS, static function(RegisterCpNavItemsEvent $event) {
-            $sproutNavItems = SproutBase::$app->config->buildSproutNavItems();
-            $event->navItems = SproutBase::$app->config->updateCpNavItems($event->navItems, $sproutNavItems);
+            $event->navItems = SproutBase::$app->config->updateCpNavItems($event->navItems);
         });
 
         Event::on(Cp::class, Cp::EVENT_REGISTER_CP_SETTINGS, static function(RegisterCpSettingsEvent $event) {
@@ -293,37 +252,5 @@ class SproutBase extends Module
                 $event->settings['Sprout Plugins'] = $settingsPages;
             }
         });
-
-        Event::on(Plugins::class, Plugins::EVENT_AFTER_LOAD_PLUGINS, static function() {
-            SproutBase::$app->config->removeDisabledModuleRoutes();
-        });
-    }
-
-    public function getUserPermissions(): array
-    {
-        $configTypes = self::$app->config->getConfigs(false);
-
-        $permissions = [];
-        foreach ($configTypes as $configType) {
-            // Don't worry about it if no permissions exist
-            if (!method_exists($configType, 'getUserPermissions')) {
-                continue;
-            }
-
-            $nestedPermissions = [];
-            foreach ($configType->getUserPermissions() as $permissionName => $permissionArray) {
-                $nestedPermissions[$permissionName] = $permissionArray;
-            }
-
-            $permissionKey = StringHelper::camelCase($configType->getKey());
-            $permissions['sprout:'.$permissionKey.':accessModule'] = [
-                'label' => 'Access '.$configType->getName(),
-                'nested' => $nestedPermissions
-            ];
-        }
-
-        ksort($permissions, SORT_NATURAL);
-
-        return $permissions;
     }
 }

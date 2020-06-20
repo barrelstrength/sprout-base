@@ -7,6 +7,7 @@
 
 namespace barrelstrength\sproutbase\config\configs;
 
+use barrelstrength\sproutbase\app\sentemail\controllers\SentEmailController;
 use barrelstrength\sproutbase\config\base\Config;
 use barrelstrength\sproutbase\config\models\settings\SentEmailSettings;
 use barrelstrength\sproutbase\migrations\sentemail\Install;
@@ -15,7 +16,14 @@ use Craft;
 
 class SentEmailConfig extends Config
 {
-    public function getKey(): string
+    public static function getControllerMap(): array
+    {
+        return [
+            'sent-email' => SentEmailController::class,
+        ];
+    }
+
+    public static function getKey(): string
     {
         return 'sent-email';
     }

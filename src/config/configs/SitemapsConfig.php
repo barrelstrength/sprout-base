@@ -7,6 +7,8 @@
 
 namespace barrelstrength\sproutbase\config\configs;
 
+use barrelstrength\sproutbase\app\sitemaps\controllers\SitemapsController;
+use barrelstrength\sproutbase\app\sitemaps\controllers\XmlSitemapController;
 use barrelstrength\sproutbase\config\base\Config;
 use barrelstrength\sproutbase\config\base\Settings;
 use barrelstrength\sproutbase\config\models\settings\SitemapsSettings;
@@ -17,7 +19,15 @@ use craft\helpers\ProjectConfig as ProjectConfigHelper;
 
 class SitemapsConfig extends Config
 {
-    public function getKey(): string
+    public static function getControllerMap(): array
+    {
+        return [
+            'sitemaps' => SitemapsController::class,
+            'xml-sitemap' => XmlSitemapController::class,
+        ];
+    }
+
+    public static function getKey(): string
     {
         return 'sitemaps';
     }

@@ -7,6 +7,9 @@
 
 namespace barrelstrength\sproutbase\config\configs;
 
+use barrelstrength\sproutbase\app\campaigns\controllers\CampaignEmailController;
+use barrelstrength\sproutbase\app\campaigns\controllers\CampaignTypeController;
+use barrelstrength\sproutbase\app\campaigns\mailers\CopyPasteMailer;
 use barrelstrength\sproutbase\config\base\Config;
 use barrelstrength\sproutbase\config\models\settings\CampaignsSettings;
 use barrelstrength\sproutbase\migrations\campaigns\Install;
@@ -15,7 +18,16 @@ use Craft;
 
 class CampaignsConfig extends Config
 {
-    public function getKey(): string
+    public static function getControllerMap(): array
+    {
+        return [
+            'campaign-email' => CampaignEmailController::class,
+            'campaign-type' => CampaignTypeController::class,
+            'copy-paste' => CopyPasteMailer::class,
+        ];
+    }
+
+    public static function getKey(): string
     {
         return 'campaigns';
     }
@@ -49,7 +61,7 @@ class CampaignsConfig extends Config
     {
         return [
             'label' => Craft::t('sprout', 'Campaigns'),
-            'url' => 'sprout/campaigns'
+            'url' => 'sprout/campaigns',
         ];
     }
 
@@ -60,10 +72,10 @@ class CampaignsConfig extends Config
                 'label' => Craft::t('sprout', 'Edit Campaign Emails'),
                 'nested' => [
                     'sprout:campaigns:sendCampaigns' => [
-                        'label' => Craft::t('sprout', 'Send Campaign Emails')
-                    ]
-                ]
-            ]
+                        'label' => Craft::t('sprout', 'Send Campaign Emails'),
+                    ],
+                ],
+            ],
         ];
     }
 
@@ -79,7 +91,7 @@ class CampaignsConfig extends Config
 
             // DB Settings
             'sprout/settings/<configKey:campaigns>/<subNavKey:campaign-types>/edit/<campaignTypeId:\d+>' => [
-                'route' => 'sprout/campaign-type/edit-campaign-type'
+                'route' => 'sprout/campaign-type/edit-campaign-type',
             ],
         ];
     }
@@ -103,7 +115,7 @@ class CampaignsConfig extends Config
     {
         return [
             'campaign-email',
-            'campaign-type'
+            'campaign-type',
         ];
     }
 }

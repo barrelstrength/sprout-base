@@ -53,7 +53,7 @@ class DataSources extends Component
          * @var DataSourceRecord $dataSourceRecord
          */
         $dataSourceRecord = DataSourceRecord::find()->where([
-            'id' => $id
+            'id' => $id,
         ])->one();
 
         if ($dataSourceRecord === null) {
@@ -78,7 +78,7 @@ class DataSources extends Component
     public function getAllDataSourceTypes(): array
     {
         $event = new RegisterComponentTypesEvent([
-            'types' => []
+            'types' => [],
         ]);
 
         $this->trigger(self::EVENT_REGISTER_DATA_SOURCES, $event);
@@ -258,14 +258,14 @@ class DataSources extends Component
             foreach ($reports as $report) {
                 Craft::$app->getDb()->createCommand()
                     ->delete(ReportRecord::tableName(), [
-                        '[[id]]' => $report->id
+                        '[[id]]' => $report->id,
                     ])
                     ->execute();
             }
 
             Craft::$app->getDb()->createCommand()
                 ->delete(DataSourceRecord::tableName(), [
-                    '[[id]]' => $dataSourceId
+                    '[[id]]' => $dataSourceId,
                 ])
                 ->execute();
 

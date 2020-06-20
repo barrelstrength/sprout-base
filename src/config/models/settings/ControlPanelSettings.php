@@ -53,13 +53,13 @@ class ControlPanelSettings extends Settings
                 continue;
             }
 
-            $projectConfigSettings = $projectConfigModules[$config->getKey()] ?? null;
+            $projectConfigSettings = $projectConfigModules[$config::getKey()] ?? null;
             $enabledValue = (isset($projectConfigSettings['enabled']) && !empty($projectConfigSettings['enabled'])) ? $projectConfigSettings['enabled'] : false;
             $alternateNameValue = (isset($projectConfigSettings['alternateName']) && !empty($projectConfigSettings['alternateName'])) ? $projectConfigSettings['alternateName'] : '';
 
             $headingInputHtml = Craft::$app->getView()->renderTemplate('_includes/forms/text', [
                 'name' => 'modules['.$i.'][moduleKey]',
-                'value' => $config->getKey(),
+                'value' => $config::getKey(),
                 'type' => 'hidden'
             ]);
 
@@ -76,7 +76,7 @@ class ControlPanelSettings extends Settings
                 : '';
 
             $cpSettingsRows[] = [
-                'moduleKey' => $config->getKey(),
+                'moduleKey' => $config::getKey(),
                 'heading' => $config::displayName().$headingInputHtml.$infoHtml,
                 'enabled' => $enabledInputHtml,
                 'alternateName' => $alternateNameValue
@@ -100,6 +100,15 @@ class ControlPanelSettings extends Settings
                 'settingsTarget' => SettingsController::SETTINGS_TARGET_DB
             ]
         ];
+    }
+
+    public function isModuleEnabled($key): bool
+    {
+        if (isset($this->modules[$key])) {
+            return (bool)$this->modules[$key]['enabled'];
+        }
+
+        return false;
     }
 }
 

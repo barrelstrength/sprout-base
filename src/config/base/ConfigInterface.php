@@ -29,7 +29,7 @@ interface ConfigInterface
      *
      * @return string
      */
-    public function getKey(): string;
+    public static function getKey(): string;
 
     /**
      * Returns true if Config should display settings on the Control Panel settings page

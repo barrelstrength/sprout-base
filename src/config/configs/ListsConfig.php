@@ -13,7 +13,7 @@ use Craft;
 
 class ListsConfig extends Config
 {
-    public function getKey(): string
+    public static function getKey(): string
     {
         return 'lists';
     }

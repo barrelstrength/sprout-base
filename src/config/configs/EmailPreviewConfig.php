@@ -7,12 +7,21 @@
 
 namespace barrelstrength\sproutbase\config\configs;
 
+use barrelstrength\sproutbase\app\email\controllers\PreviewController;
 use barrelstrength\sproutbase\config\base\Config;
 use Craft;
 
 class EmailPreviewConfig extends Config
 {
-    public function getKey(): string
+    public static function getControllerMap(): array
+    {
+        return [
+            'email-preview' => PreviewController::class,
+        ];
+    }
+
+
+    public static function getKey(): string
     {
         return 'email-preview';
     }

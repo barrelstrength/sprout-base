@@ -169,6 +169,11 @@ abstract class Config extends Component implements ConfigInterface
         return [];
     }
 
+    public static function getControllerMap(): array
+    {
+        return [];
+    }
+
     /**
      * Returns a list of keys that map to controller names
      * These will be used to disable a modules controller routes.

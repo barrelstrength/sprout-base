@@ -16,6 +16,7 @@ use barrelstrength\sproutbase\SproutBase;
 use Craft;
 use craft\base\Plugin;
 use craft\helpers\ProjectConfig as ProjectConfigHelper;
+use craft\helpers\StringHelper;
 use craft\services\Plugins;
 use yii\base\Component;
 use yii\base\ErrorException;
@@ -38,17 +39,19 @@ class Config extends Component
     /**
      * @var ControlPanelSettings
      */
-    private $_controlPanelSettings;
+    private $_cpSettings;
 
     private $_configLoadStatus = 'not-loaded';
 
     private $_cpSettingsLoadStatus = 'not-loaded';
 
-    public function getControlPanelSettings(): ControlPanelSettings
+    public function getCpSettings(): ControlPanelSettings
     {
-        $this->initControlPanelSettings();
+        if (!$this->_cpSettings) {
+            $this->initControlPanelSettings();
+        }
 
-        return $this->_controlPanelSettings;
+        return $this->_cpSettings;
     }
 
     /**
@@ -110,7 +113,7 @@ class Config extends Component
     {
         $this->prepareContext($includeFileSettings);
 
-        $cpSettings = $this->getControlPanelSettings();
+        $cpSettings = SproutBase::$app->config->getCpSettings();
 
         if ($this->_configLoadStatus === 'loaded' || $this->_configLoadStatus === 'loading') {
             return;
@@ -135,7 +138,7 @@ class Config extends Component
 
                 $config->setEdition();
 
-                $moduleSettings = $cpSettings->modules[$config->getKey()] ?? null;
+                $moduleSettings = $cpSettings->modules[$config::getKey()] ?? null;
 
                 $alternateName = !empty($moduleSettings['alternateName'])
                     ? $moduleSettings['alternateName']
@@ -151,42 +154,12 @@ class Config extends Component
                     $config->setSettings($settings);
                 }
 
-                $this->_configs[$config->getKey()] = $config;
+                $this->_configs[$config::getKey()] = $config;
             }
         }
 
         $this->_configLoadStatus = 'loaded';
     }
-
-    public function initControlPanelSettings()
-    {
-        if ($this->_controlPanelSettings ||
-            $this->_cpSettingsLoadStatus === 'loaded' ||
-            $this->_cpSettingsLoadStatus === 'loading') {
-            return;
-        }
-
-        $this->_cpSettingsLoadStatus = 'loading';
-
-        $cpConfig = new ControlPanelConfig();
-
-        /** @var ControlPanelSettings $cpSettings */
-        $cpSettings = SproutBase::$app->settings->mergeSettings($cpConfig);
-
-        // Control Panel module has unique needs when returning settings
-        $moduleSettings = $cpSettings->modules;
-
-        // Update settings to be indexed by module key
-        $moduleKeys = array_column($moduleSettings, 'moduleKey');
-        $moduleSettings = array_combine($moduleKeys, $moduleSettings);
-
-        $cpSettings->modules = $moduleSettings;
-
-        $this->_controlPanelSettings = $cpSettings;
-
-        $this->_cpSettingsLoadStatus = 'loaded';
-    }
-
 
     /**
      * Returns true if the given dependency exists in any other plugin
@@ -274,10 +247,10 @@ class Config extends Component
 
             $settings->beforeAddDefaultSettings();
 
-            $projectConfigSettingsKey = self::CONFIG_SPROUT_KEY.'.'.$config->getKey();
+            $projectConfigSettingsKey = self::CONFIG_SPROUT_KEY.'.'.$config::getKey();
             $newSettings = ProjectConfigHelper::packAssociativeArrays($settings->toArray());
 
-            Craft::$app->getProjectConfig()->set($projectConfigSettingsKey, $newSettings, "Added default Sprout Settings for “{$config->getKey()}”");
+            Craft::$app->getProjectConfig()->set($projectConfigSettingsKey, $newSettings, "Added default Sprout Settings for “{$config::getKey()}”");
         }
     }
 
@@ -286,7 +259,7 @@ class Config extends Component
      */
     public function removeConfigSettingsToProjectConfig(ConfigInterface $config)
     {
-        $projectConfigSettingsKey = self::CONFIG_SPROUT_KEY.'.'.$config->getKey();
+        $projectConfigSettingsKey = self::CONFIG_SPROUT_KEY.'.'.$config::getKey();
 
         Craft::$app->getProjectConfig()->remove($projectConfigSettingsKey);
     }
@@ -302,8 +275,8 @@ class Config extends Component
 
         $settingsPages[] = [
             'label' => $cpConfig::displayName(),
-            'url' => 'sprout/settings/'.$cpConfig->getKey(),
-            'icon' => Craft::getAlias('@sproutbaseassets/sprout/icons/'.$cpConfig->getKey().'/icon.svg'),
+            'url' => 'sprout/settings/'.$cpConfig::getKey(),
+            'icon' => Craft::getAlias('@sproutbaseassets/sprout/icons/'.$cpConfig::getKey().'/icon.svg'),
         ];
 
         foreach ($configTypes as $configType) {
@@ -344,7 +317,7 @@ class Config extends Component
                 continue;
             }
 
-            $settings = SproutBase::$app->settings->getSettingsByKey($config->getKey());
+            $settings = SproutBase::$app->settings->getSettingsByKey($config::getKey());
 
             if (!$settings->getIsEnabled()) {
                 continue;
@@ -357,7 +330,7 @@ class Config extends Component
             $cpNavItems[$key] = [
                 'label' => $label,
                 'url' => $navItem['url'],
-                'icon' => Craft::getAlias('@sproutbaseassets/sprout/icons/'.$config->getKey().'/icon-mask.svg'),
+                'icon' => Craft::getAlias('@sproutbaseassets/sprout/icons/'.$config::getKey().'/icon-mask.svg'),
             ];
 
             if (!isset($navItem['subnav']) || count($navItem['subnav']) === 0) {
@@ -372,11 +345,10 @@ class Config extends Component
 
     /**
      * @param array $cpNavItems
-     * @param array $sproutNavItems
      *
      * @return array
      */
-    public function updateCpNavItems(array $cpNavItems, array $sproutNavItems): array
+    public function updateCpNavItems(array $cpNavItems): array
     {
         $beforePluginNavItemKeys = [
             'dashboard',
@@ -416,6 +388,8 @@ class Config extends Component
             }
         }
 
+        $sproutNavItems = $this->buildSproutNavItems();
+
         // Add our module nav items to the plugins and stuff
         foreach ($sproutNavItems as $sproutNavItem) {
             $otherCpNavItems[] = $sproutNavItem;
@@ -437,55 +411,6 @@ class Config extends Component
         }
 
         return $newCpNavItems;
-    }
-
-    public function removeDisabledModuleRoutes()
-    {
-        $configTypes = $this->getConfigs(false);
-
-        $sproutControllerMappings = Craft::$app->loadedModules[SproutBase::class]->controllerMap;
-        $sproutControllerMappedKeys = array_keys($sproutControllerMappings);
-
-        $disabledUrlRules = [];
-        foreach ($configTypes as $key => $config) {
-            $settings = $config->getSettings();
-
-            if (!$settings || $settings->getIsEnabled() || !$config->hasControlPanelSettings()) {
-                continue;
-            }
-
-            if (Craft::$app->getRequest()->getIsSiteRequest()) {
-                $urlRules = $config->getSiteUrlRules();
-            } else if (Craft::$app->getRequest()->getIsCpRequest()) {
-                $urlRules = $config->getCpUrlRules();
-            }
-
-            if (empty($urlRules)) {
-                continue;
-            }
-
-            // Union arrays using keys
-            $disabledUrlRules += $urlRules;
-
-            // Disable Controllers
-            $sproutControllerMapKeys = $config->getControllerMapKeys();
-
-            // Disable URL Rules
-            foreach ($sproutControllerMapKeys as $sproutControllerMapKey) {
-                if (in_array($sproutControllerMapKey, $sproutControllerMappedKeys, true)) {
-                    unset(Craft::$app->loadedModules[SproutBase::class]->controllerMap[$sproutControllerMapKey]);
-                }
-            }
-        }
-
-        $disabledUrlRules = array_keys($disabledUrlRules);
-        $registeredRules = Craft::$app->getUrlManager()->rules;
-
-        foreach ($registeredRules as $key => $registeredRule) {
-            if (in_array($registeredRule->name, $disabledUrlRules, true)) {
-                unset($registeredRules[$key]);
-            }
-        }
     }
 
     /**
@@ -563,5 +488,62 @@ class Config extends Component
             // Rebuild the config array if a new context triggered
             $this->_configLoadStatus = 'not-loaded';
         }
+    }
+
+    private function initControlPanelSettings()
+    {
+        if ($this->_cpSettings ||
+            $this->_cpSettingsLoadStatus === 'loaded' ||
+            $this->_cpSettingsLoadStatus === 'loading') {
+            return;
+        }
+
+        $this->_cpSettingsLoadStatus = 'loading';
+
+        $cpConfig = new ControlPanelConfig();
+
+        /** @var ControlPanelSettings $cpSettings */
+        $cpSettings = SproutBase::$app->settings->mergeSettings($cpConfig);
+
+        // Control Panel module has unique needs when returning settings
+        $moduleSettings = $cpSettings->modules;
+
+        // Update settings to be indexed by module key
+        $moduleKeys = array_column($moduleSettings, 'moduleKey');
+        $moduleSettings = array_combine($moduleKeys, $moduleSettings);
+
+        $cpSettings->modules = $moduleSettings;
+
+        $this->_cpSettings = $cpSettings;
+
+        $this->_cpSettingsLoadStatus = 'loaded';
+    }
+
+    public function getUserPermissions(): array
+    {
+        $configTypes = SproutBase::$app->config->getConfigs(false);
+
+        $permissions = [];
+        foreach ($configTypes as $configType) {
+            // Don't worry about it if no permissions exist
+            if (!method_exists($configType, 'getUserPermissions')) {
+                continue;
+            }
+
+            $nestedPermissions = [];
+            foreach ($configType->getUserPermissions() as $permissionName => $permissionArray) {
+                $nestedPermissions[$permissionName] = $permissionArray;
+            }
+
+            $permissionKey = StringHelper::camelCase($configType->getKey());
+            $permissions['sprout:'.$permissionKey.':accessModule'] = [
+                'label' => 'Access '.$configType->getName(),
+                'nested' => $nestedPermissions
+            ];
+        }
+
+        ksort($permissions, SORT_NATURAL);
+
+        return $permissions;
     }
 }

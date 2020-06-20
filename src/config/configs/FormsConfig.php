@@ -7,6 +7,13 @@
 
 namespace barrelstrength\sproutbase\config\configs;
 
+use barrelstrength\sproutbase\app\forms\controllers\FormEntriesController;
+use barrelstrength\sproutbase\app\forms\controllers\FormEntryStatusesController;
+use barrelstrength\sproutbase\app\forms\controllers\FormFieldsController;
+use barrelstrength\sproutbase\app\forms\controllers\FormGroupsController;
+use barrelstrength\sproutbase\app\forms\controllers\FormIntegrationsController;
+use barrelstrength\sproutbase\app\forms\controllers\FormRulesController;
+use barrelstrength\sproutbase\app\forms\controllers\FormsController;
 use barrelstrength\sproutbase\app\forms\integrations\sproutemail\events\notificationevents\SaveEntryEvent;
 use barrelstrength\sproutbase\app\forms\integrations\sproutreports\datasources\EntriesDataSource;
 use barrelstrength\sproutbase\app\forms\integrations\sproutreports\datasources\IntegrationLogDataSource;
@@ -20,7 +27,20 @@ use Craft;
 
 class FormsConfig extends Config
 {
-    public function getKey(): string
+    public static function getControllerMap(): array
+    {
+        return [
+            'forms' => FormsController::class,
+            'form-entries' => FormEntriesController::class,
+            'form-entry-statuses' => FormEntryStatusesController::class,
+            'form-fields' => FormFieldsController::class,
+            'form-groups' => FormGroupsController::class,
+            'form-integrations' => FormIntegrationsController::class,
+            'form-rules' => FormRulesController::class,
+        ];
+    }
+
+    public static function getKey(): string
     {
         return 'forms';
     }
@@ -53,13 +73,13 @@ class FormsConfig extends Config
             'subnav' => [
                 'forms' => [
                     'label' => Craft::t('sprout', 'Forms'),
-                    'url' => 'sprout/forms'
+                    'url' => 'sprout/forms',
                 ],
                 'entries' => [
                     'label' => Craft::t('sprout', 'Entries'),
-                    'url' => 'sprout/forms/entries'
+                    'url' => 'sprout/forms/entries',
                 ],
-            ]
+            ],
         ];
     }
 
@@ -67,16 +87,16 @@ class FormsConfig extends Config
     {
         return [
             'sprout:forms:editForms' => [
-                'label' => Craft::t('sprout', 'Edit Forms')
+                'label' => Craft::t('sprout', 'Edit Forms'),
             ],
             'sprout:forms:viewEntries' => [
                 'label' => Craft::t('sprout', 'View Form Entries'),
                 'nested' => [
                     'sprout:forms:editEntries' => [
-                        'label' => Craft::t('sprout', 'Edit Form Entries')
-                    ]
-                ]
-            ]
+                        'label' => Craft::t('sprout', 'Edit Form Entries'),
+                    ],
+                ],
+            ],
         ];
     }
 
@@ -116,15 +136,15 @@ class FormsConfig extends Config
             'sprout/settings/<configKey:forms>/<subNavKey:entry-statuses>/new' => [
                 'route' => 'sprout/form-entry-statuses/edit',
                 'params' => [
-                    'settingsTarget' => SettingsController::SETTINGS_TARGET_DB
-                ]
+                    'settingsTarget' => SettingsController::SETTINGS_TARGET_DB,
+                ],
             ],
             'sprout/settings/<configKey:forms>/<subNavKey:entry-statuses>/<entryStatusId:\d+>' => [
                 'route' => 'sprout/form-entry-statuses/edit',
                 'params' => [
-                    'settingsTarget' => SettingsController::SETTINGS_TARGET_DB
-                ]
-            ]
+                    'settingsTarget' => SettingsController::SETTINGS_TARGET_DB,
+                ],
+            ],
         ];
     }
 
@@ -146,7 +166,7 @@ class FormsConfig extends Config
             'forms',
             'form-groups',
             'integrations',
-            'rules'
+            'rules',
         ];
     }
 
@@ -155,14 +175,14 @@ class FormsConfig extends Config
         return [
             EntriesDataSource::class,
             IntegrationLogDataSource::class,
-            SpamLogDataSource::class
+            SpamLogDataSource::class,
         ];
     }
 
     public function getSupportedNotificationEventTypes(): array
     {
         return [
-            SaveEntryEvent::class
+            SaveEntryEvent::class,
         ];
     }
 }

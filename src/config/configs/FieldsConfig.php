@@ -7,13 +7,23 @@
 
 namespace barrelstrength\sproutbase\config\configs;
 
+use barrelstrength\sproutbase\app\fields\controllers\AddressController;
+use barrelstrength\sproutbase\app\fields\controllers\FieldsController;
 use barrelstrength\sproutbase\config\base\Config;
 use barrelstrength\sproutbase\migrations\fields\Install;
 use Craft;
 
 class FieldsConfig extends Config
 {
-    public function getKey(): string
+    public static function getControllerMap(): array
+    {
+        return [
+            'fields' => FieldsController::class,
+            'fields-address' => AddressController::class,
+        ];
+    }
+
+    public static function getKey(): string
     {
         return 'fields';
     }
@@ -37,7 +47,7 @@ class FieldsConfig extends Config
     {
         return [
             'label' => Craft::t('sprout', 'Fields'),
-            'url' => 'sprout/settings/fields'
+            'url' => 'sprout/settings/fields',
         ];
     }
 

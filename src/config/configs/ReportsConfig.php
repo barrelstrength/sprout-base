@@ -7,6 +7,8 @@
 
 namespace barrelstrength\sproutbase\config\configs;
 
+use barrelstrength\sproutbase\app\reports\controllers\DataSourcesController;
+use barrelstrength\sproutbase\app\reports\controllers\ReportsController;
 use barrelstrength\sproutbase\app\reports\datasources\CustomQuery;
 use barrelstrength\sproutbase\app\reports\datasources\CustomTwigTemplate;
 use barrelstrength\sproutbase\app\reports\datasources\Users;
@@ -18,7 +20,7 @@ use Craft;
 
 class ReportsConfig extends Config
 {
-    public function getKey(): string
+    public static function getKey(): string
     {
         return 'reports';
     }
@@ -51,13 +53,13 @@ class ReportsConfig extends Config
             'subnav' => [
                 'reports' => [
                     'label' => Craft::t('sprout', 'Reports'),
-                    'url' => 'sprout/reports'
+                    'url' => 'sprout/reports',
                 ],
                 'data-sources' => [
                     'label' => Craft::t('sprout', 'Data Sources'),
-                    'url' => 'sprout/reports/data-sources'
+                    'url' => 'sprout/reports/data-sources',
                 ],
-            ]
+            ],
         ];
     }
 
@@ -69,15 +71,15 @@ class ReportsConfig extends Config
                 'label' => Craft::t('sprout', 'View Reports'),
                 'nested' => [
                     'sprout:reports:editReports' => [
-                        'label' => Craft::t('sprout', 'Edit Reports')
-                    ]
-                ]
+                        'label' => Craft::t('sprout', 'Edit Reports'),
+                    ],
+                ],
             ],
 
             // Data Sources
             'sprout:reports:editDataSources' => [
-                'label' => Craft::t('sprout', 'Edit Data Sources')
-            ]
+                'label' => Craft::t('sprout', 'Edit Data Sources'),
+            ],
         ];
     }
 
@@ -98,7 +100,7 @@ class ReportsConfig extends Config
 
             // Data Sources
             'sprout/reports/data-sources' =>
-                'sprout/data-sources/data-sources-index-template'
+                'sprout/data-sources/data-sources-index-template',
         ];
     }
 
@@ -115,7 +117,15 @@ class ReportsConfig extends Config
     {
         return [
             'reports',
-            'data-sources'
+            'data-sources',
+        ];
+    }
+
+    public static function getControllerMap(): array
+    {
+        return [
+            'reports' => ReportsController::class,
+            'data-sources' => DataSourcesController::class,
         ];
     }
 
@@ -125,12 +135,12 @@ class ReportsConfig extends Config
             return [
                 CustomQuery::class,
                 CustomTwigTemplate::class,
-                Users::class
+                Users::class,
             ];
         }
 
         return [
-            CustomQuery::class
+            CustomQuery::class,
         ];
     }
 }

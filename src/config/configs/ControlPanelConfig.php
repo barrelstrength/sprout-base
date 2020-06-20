@@ -8,12 +8,20 @@
 namespace barrelstrength\sproutbase\config\configs;
 
 use barrelstrength\sproutbase\config\base\Config;
+use barrelstrength\sproutbase\config\controllers\SettingsController;
 use barrelstrength\sproutbase\config\models\settings\ControlPanelSettings;
 use Craft;
 
 class ControlPanelConfig extends Config
 {
-    public function getKey(): string
+    public static function getControllerMap(): array
+    {
+        return [
+            'settings' => SettingsController::class,
+        ];
+    }
+
+    public static function getKey(): string
     {
         return 'control-panel';
     }

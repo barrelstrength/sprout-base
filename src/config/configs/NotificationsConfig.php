@@ -7,6 +7,8 @@
 
 namespace barrelstrength\sproutbase\config\configs;
 
+use barrelstrength\sproutbase\app\email\controllers\MailersController;
+use barrelstrength\sproutbase\app\email\controllers\NotificationsController;
 use barrelstrength\sproutbase\app\email\events\notificationevents\EntriesDelete;
 use barrelstrength\sproutbase\app\email\events\notificationevents\EntriesSave;
 use barrelstrength\sproutbase\app\email\events\notificationevents\Manual;
@@ -22,7 +24,15 @@ use Craft;
 
 class NotificationsConfig extends Config
 {
-    public function getKey(): string
+    public static function getControllerMap(): array
+    {
+        return [
+            'mailers' => MailersController::class,
+            'notifications' => NotificationsController::class,
+        ];
+    }
+
+    public static function getKey(): string
     {
         return 'notifications';
     }
@@ -56,7 +66,7 @@ class NotificationsConfig extends Config
     {
         return [
             'label' => Craft::t('sprout', 'Notifications'),
-            'url' => 'sprout/notifications'
+            'url' => 'sprout/notifications',
         ];
     }
 
@@ -67,10 +77,10 @@ class NotificationsConfig extends Config
                 'label' => Craft::t('sprout', 'View Notification Emails'),
                 'nested' => [
                     'sprout:notifications:editNotifications' => [
-                        'label' => Craft::t('sprout', 'Edit Notification Emails')
-                    ]
-                ]
-            ]
+                        'label' => Craft::t('sprout', 'Edit Notification Emails'),
+                    ],
+                ],
+            ],
         ];
     }
 
@@ -98,7 +108,7 @@ class NotificationsConfig extends Config
     public function getControllerMapKeys(): array
     {
         return [
-            'notifications'
+            'notifications',
         ];
     }
 
@@ -112,12 +122,12 @@ class NotificationsConfig extends Config
                 UsersActivate::class,
                 UsersDelete::class,
                 UsersLogin::class,
-                UsersSave::class
+                UsersSave::class,
             ];
         }
 
         return [
-            EntriesSave::class
+            EntriesSave::class,
         ];
     }
 }

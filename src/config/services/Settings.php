@@ -79,11 +79,9 @@ class Settings extends Component
             return null;
         }
 
-        // Update the settings to add alternateName and enabled settings
-        $cpSettings = SproutBase::$app->config->getControlPanelSettings();
-
-        $moduleSettings = $cpSettings->modules[$config->getKey()] ?? null;
-
+        // Add enabled settings here for easy access later
+        $cpSettings = SproutBase::$app->config->getCpSettings();
+        $moduleSettings = $cpSettings->modules[$config::getKey()] ?? null;
         $enabledStatus = !empty($moduleSettings['enabled']) ? true : false;
 
         $settings->setIsEnabled($enabledStatus);

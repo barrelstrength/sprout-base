@@ -75,7 +75,7 @@ class SettingsController extends Controller
 
         $settings = SproutBase::$app->settings->getSettings(false);
 
-        $currentSettings = $settings[$currentSproutConfig->getKey()] ?? [];
+        $currentSettings = $settings[$currentSproutConfig::getKey()] ?? [];
 
         // CP settings go first
         $cpSettings['control-panel'] = $settings['control-panel'];
@@ -142,7 +142,7 @@ class SettingsController extends Controller
         $postSettings = Craft::$app->getRequest()->getBodyParam('settings');
 
         $config = SproutBase::$app->config->getConfigByKey($settingsSection, false);
-        $projectConfigSettingsKey = Config::CONFIG_SPROUT_KEY.'.'.$config->getKey();
+        $projectConfigSettingsKey = Config::CONFIG_SPROUT_KEY.'.'.$config::getKey();
 
         $settings = SproutBase::$app->settings->getSettingsByKey($settingsSection, false);
         $settings->setAttributes($postSettings, false);
@@ -189,7 +189,7 @@ class SettingsController extends Controller
             /** @var BaseConfig $matchingSproutConfig */
             $matchingSproutConfig = $sproutConfigs[$settingsKey];
 
-            if ($matchingSproutConfig->getKey() !== 'control-panel' &&
+            if ($matchingSproutConfig::getKey() !== 'control-panel' &&
                 !$setting->getIsEnabled()) {
                 continue;
             }

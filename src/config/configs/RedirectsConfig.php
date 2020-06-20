@@ -7,6 +7,7 @@
 
 namespace barrelstrength\sproutbase\config\configs;
 
+use barrelstrength\sproutbase\app\redirects\controllers\RedirectsController;
 use barrelstrength\sproutbase\config\base\Config;
 use barrelstrength\sproutbase\config\models\settings\RedirectsSettings;
 use barrelstrength\sproutbase\migrations\redirects\Install;
@@ -15,7 +16,14 @@ use Craft;
 
 class RedirectsConfig extends Config
 {
-    public function getKey(): string
+    public static function getControllerMap(): array
+    {
+        return [
+            'redirects' => RedirectsController::class,
+        ];
+    }
+
+    public static function getKey(): string
     {
         return 'redirects';
     }
@@ -57,8 +65,8 @@ class RedirectsConfig extends Config
     {
         return [
             'sprout:redirects:editRedirects' => [
-                'label' => Craft::t('sprout', 'Edit Redirects')
-            ]
+                'label' => Craft::t('sprout', 'Edit Redirects'),
+            ],
         ];
     }
 
@@ -76,7 +84,7 @@ class RedirectsConfig extends Config
             'sprout/redirects/<siteHandle:[^\/]+>' =>
                 'sprout/redirects/redirects-index-template',
             'sprout/redirects' =>
-                'sprout/redirects/redirects-index-template'
+                'sprout/redirects/redirects-index-template',
         ];
     }
 
@@ -93,7 +101,7 @@ class RedirectsConfig extends Config
     public function getControllerMapKeys(): array
     {
         return [
-            'redirects'
+            'redirects',
         ];
     }
 }
