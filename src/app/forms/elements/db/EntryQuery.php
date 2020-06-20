@@ -178,6 +178,7 @@ class EntryQuery extends ElementQuery
             '[[sproutforms_forms.saveData]]', true
         ));
 
+        $this->subQuery->innerJoin(FormRecord::tableName().' sproutforms_forms', '[[sproutforms_forms.id]] = [[sproutforms_entries.formId]]');
         $this->subQuery->innerJoin(EntryStatusRecord::tableName().' sproutforms_entrystatuses', '[[sproutforms_entrystatuses.id]] = [[sproutforms_entries.statusId]]');
 
         if ($this->formId) {
