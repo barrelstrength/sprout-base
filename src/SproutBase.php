@@ -39,16 +39,13 @@ use barrelstrength\sproutbase\config\configs\SitemapsConfig;
 use barrelstrength\sproutbase\config\services\App;
 use barrelstrength\sproutbase\web\twig\Extension;
 use Craft;
-use craft\events\ExceptionEvent;
 use craft\events\RegisterComponentTypesEvent;
 use craft\events\RegisterCpNavItemsEvent;
 use craft\events\RegisterCpSettingsEvent;
 use craft\events\RegisterTemplateRootsEvent;
 use craft\events\RegisterUserPermissionsEvent;
-use craft\events\SiteEvent;
 use craft\helpers\ArrayHelper;
 use craft\i18n\PhpMessageSource;
-use craft\services\Sites;
 use craft\services\UserPermissions;
 use craft\web\Application;
 use craft\web\ErrorHandler;
@@ -255,7 +252,7 @@ class SproutBase extends Module
         Event::on(
             ErrorHandler::class,
             ErrorHandler::EVENT_BEFORE_HANDLE_EXCEPTION, [
-            self::$app->redirects, 'handleRedirectsOnException'
+            self::$app->redirects, 'handleRedirectsOnException',
         ]);
     }
 }

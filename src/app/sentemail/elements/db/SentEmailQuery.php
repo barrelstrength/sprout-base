@@ -12,7 +12,7 @@ use craft\elements\db\ElementQuery;
 class SentEmailQuery extends ElementQuery
 {
     protected $defaultOrderBy = [
-        'sproutemail_sentemail.dateCreated' => SORT_DESC
+        'sproutemail_sentemail.dateCreated' => SORT_DESC,
     ];
 
     protected function beforePrepare(): bool
