@@ -11,9 +11,6 @@ use Craft;
 use craft\base\Model;
 use craft\helpers\UrlHelper;
 
-/**
- * @property string $cpEditUrl
- */
 class EntryStatus extends Model
 {
     const SPAM_STATUS_HANDLE = 'spam';
@@ -66,7 +63,7 @@ class EntryStatus extends Model
     /**
      * Use the translated section name as the string representation.
      *
-     * @inheritdoc
+     * @inheritDoc
      */
     public function __toString()
     {
@@ -82,7 +79,7 @@ class EntryStatus extends Model
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function defineRules(): array
     {

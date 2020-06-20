@@ -9,11 +9,6 @@ use Craft;
 use craft\base\Component;
 use craft\events\RegisterComponentTypesEvent;
 
-/**
- *
- * @property array $emailTemplatesTypes
- * @property string[] $allEmailTemplates
- */
 class EmailTemplates extends Component
 {
     const EVENT_REGISTER_EMAIL_TEMPLATES = 'registerEmailTemplatesEvent';

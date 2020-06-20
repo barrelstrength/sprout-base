@@ -14,11 +14,6 @@ use craft\helpers\Json;
 use Throwable;
 use yii\base\Event;
 
-/**
- *
- * @property array $notificationEmailEventTypes
- * @property Callable $dynamicEventHandler
- */
 class NotificationEmailEvents extends Component
 {
     /**

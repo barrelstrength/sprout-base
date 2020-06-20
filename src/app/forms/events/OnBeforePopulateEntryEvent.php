@@ -10,9 +10,6 @@ namespace barrelstrength\sproutbase\app\forms\events;
 use barrelstrength\sproutbase\app\forms\elements\Form;
 use yii\base\Event;
 
-/**
- * OnBeforePopulateEntryEvent class.
- */
 class OnBeforePopulateEntryEvent extends Event
 {
     /**

@@ -9,11 +9,6 @@ use barrelstrength\sproutbase\app\reports\visualizations\PieChartVisualization;
 use barrelstrength\sproutbase\app\reports\visualizations\TimeChartVisualization;
 use craft\base\Component;
 
-/**
- *
- * @property array $aggregates
- * @property array $visualizations
- */
 class Visualizations extends Component
 {
     /**

@@ -16,9 +16,6 @@ use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
 use yii\base\Exception;
 
-/**
- * Implements all attributes used in geo metadata
- */
 class GeoMetaType extends MetaType
 {
     /**

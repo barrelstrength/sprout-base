@@ -13,7 +13,7 @@ use barrelstrength\sproutbase\app\uris\base\UrlEnabledSectionType;
 class NoSection extends UrlEnabledSectionType
 {
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function getName(): string
     {
@@ -21,7 +21,7 @@ class NoSection extends UrlEnabledSectionType
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function getId()
     {
@@ -29,7 +29,7 @@ class NoSection extends UrlEnabledSectionType
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function getElementIdColumnName(): string
     {
@@ -45,7 +45,7 @@ class NoSection extends UrlEnabledSectionType
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function getById($id)
     {
@@ -53,7 +53,7 @@ class NoSection extends UrlEnabledSectionType
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function getFieldLayoutSettingsObject($id)
     {
@@ -61,7 +61,7 @@ class NoSection extends UrlEnabledSectionType
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function getElementTableName(): string
     {
@@ -69,7 +69,7 @@ class NoSection extends UrlEnabledSectionType
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function getElementType()
     {
@@ -77,7 +77,7 @@ class NoSection extends UrlEnabledSectionType
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function getMatchedElementVariable(): string
     {
@@ -85,7 +85,7 @@ class NoSection extends UrlEnabledSectionType
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function getAllUrlEnabledSections($siteId): array
     {
@@ -93,7 +93,7 @@ class NoSection extends UrlEnabledSectionType
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function getTableName(): string
     {
@@ -101,7 +101,7 @@ class NoSection extends UrlEnabledSectionType
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function resaveElements($elementGroupId = null): bool
     {

@@ -80,6 +80,8 @@ class Predefined extends BasePredefinedField
     }
 
     /**
+     * @inheritDoc
+     *
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError

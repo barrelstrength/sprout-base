@@ -29,10 +29,6 @@ use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
 
-/**
- *
- * @property EntryElement $entryModel
- */
 class FormEntriesController extends BaseController
 {
     const EVENT_BEFORE_POPULATE = 'beforePopulate';

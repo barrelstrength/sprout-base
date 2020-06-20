@@ -10,14 +10,10 @@ use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
 
-/**
- *
- * @property string $description
- */
 class CustomQuery extends DataSource
 {
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public static function displayName(): string
     {
@@ -35,7 +31,7 @@ class CustomQuery extends DataSource
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function getResults(Report $report, array $settings = []): array
     {
@@ -73,7 +69,7 @@ class CustomQuery extends DataSource
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function validateSettings(array $settings = [], array &$errors = []): bool
     {

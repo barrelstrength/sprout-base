@@ -15,10 +15,6 @@ use craft\web\Controller as BaseController;
 use yii\web\BadRequestHttpException;
 use yii\web\Response;
 
-/**
- *
- * @property FieldInterface|null|Field $fieldModel
- */
 class FieldsController extends BaseController
 {
     /**

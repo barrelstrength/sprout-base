@@ -21,9 +21,6 @@ use yii\base\Exception;
  *
  * This class is used to manage the ajax updates of the sitemap settings on the
  * sitemap tab. The attributes are a subset of the Metadata
- *
- * @property null|Site $site
- * @property null|UrlEnabledSection $urlEnabledSection
  */
 class SitemapSection extends Model
 {
@@ -113,7 +110,7 @@ class SitemapSection extends Model
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function defineRules(): array
     {

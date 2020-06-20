@@ -15,10 +15,6 @@ use CommerceGuys\Addressing\Subdivision\SubdivisionRepository;
 use Craft;
 use craft\base\Model;
 
-/**
- *
- * @property null|string $addressDisplayHtml
- */
 class Address extends Model
 {
     /**

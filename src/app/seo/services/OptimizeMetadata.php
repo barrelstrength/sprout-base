@@ -28,11 +28,6 @@ use yii\base\Component;
 use yii\base\Exception;
 use yii\base\InvalidConfigException;
 
-/**
- *
- * @property null|int $matchedElement
- * @property Site $matchedSite
- */
 class OptimizeMetadata extends Component
 {
     /**

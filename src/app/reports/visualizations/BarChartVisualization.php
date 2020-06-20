@@ -11,18 +11,14 @@ use yii\base\Exception;
 
 class BarChartVisualization extends Visualization
 {
-    /**
-     * @inheritdoc
-     */
     public static function displayName(): string
     {
         return Craft::t('sprout', 'Bar Chart');
     }
 
     /**
-     * @param array $settings
+     * @inheritDoc
      *
-     * @return string
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
@@ -36,9 +32,8 @@ class BarChartVisualization extends Visualization
     }
 
     /**
-     * @param array $options
+     * @inheritDoc
      *
-     * @return string
      * @throws Exception
      * @throws LoaderError
      * @throws RuntimeError

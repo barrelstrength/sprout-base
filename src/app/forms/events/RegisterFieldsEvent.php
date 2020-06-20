@@ -9,9 +9,6 @@ namespace barrelstrength\sproutbase\app\forms\events;
 
 use yii\base\Event;
 
-/**
- * RegisterFieldsEvent class.
- */
 class RegisterFieldsEvent extends Event
 {
     /**

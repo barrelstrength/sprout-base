@@ -31,12 +31,6 @@ use Twig\Error\SyntaxError;
 use yii\base\InvalidConfigException;
 use yii\web\NotFoundHttpException;
 
-/**
- *
- * @property string $resultsError
- * @property DataSource|null $dataSource
- * @property mixed $startEndDate
- */
 class Report extends Element
 {
     const DELIMITER_COMMA = ',';
@@ -118,7 +112,7 @@ class Report extends Element
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      *
      * @return ReportQuery The newly created [[RedirectQuery]] instance.
      */
@@ -171,9 +165,6 @@ class Report extends Element
         return $tableAttributes;
     }
 
-    /**
-     * @inheritdoc
-     */
     protected static function defineSortOptions(): array
     {
         $attributes = [
@@ -185,7 +176,7 @@ class Report extends Element
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     protected static function defineSources(string $context = null): array
     {
@@ -231,7 +222,6 @@ class Report extends Element
             ];
         }
 
-        // @todo - migration, consider conditionally displaying based on PRO plugins existing
         $groups = SproutBase::$app->reportGroups->getReportGroups();
 
         if ($groups) {
@@ -257,7 +247,7 @@ class Report extends Element
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     protected static function defineActions(string $source = null): array
     {

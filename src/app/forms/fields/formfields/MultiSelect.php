@@ -19,12 +19,6 @@ use Twig\Error\SyntaxError;
 use Twig\Markup;
 use yii\base\Exception;
 
-/**
- * @property string $svgIconPath
- * @property array $compatibleCraftFields
- * @property array $compatibleCraftFieldTypes
- * @property mixed $exampleInputHtml
- */
 class MultiSelect extends CraftMultiSelect
 {
     use FormFieldTrait;
@@ -36,7 +30,7 @@ class MultiSelect extends CraftMultiSelect
     public $cssClasses;
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public static function displayName(): string
     {
@@ -52,7 +46,7 @@ class MultiSelect extends CraftMultiSelect
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      *
      * @return string
      * @throws LoaderError
@@ -96,7 +90,7 @@ class MultiSelect extends CraftMultiSelect
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function getCompatibleCraftFieldTypes(): array
     {

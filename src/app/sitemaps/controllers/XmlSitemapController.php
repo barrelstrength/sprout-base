@@ -18,10 +18,9 @@ use yii\web\Response;
 
 class XmlSitemapController extends Controller
 {
-    /**
-     * @inheritdoc
-     */
-    public $allowAnonymous = ['render-xml-sitemap'];
+    public $allowAnonymous = [
+        'render-xml-sitemap',
+    ];
 
     /**
      * Generates an XML sitemapindex or sitemap

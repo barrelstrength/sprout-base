@@ -14,9 +14,6 @@ use craft\commerce\elements\Product as ProductElement;
 use craft\commerce\services\ProductTypes;
 use craft\queue\jobs\ResaveElements;
 
-/**
- * Class Product
- */
 class Product extends UrlEnabledSectionType
 {
     /**
@@ -126,7 +123,7 @@ class Product extends UrlEnabledSectionType
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function resaveElements($elementGroupId = null): bool
     {

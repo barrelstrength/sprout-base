@@ -10,14 +10,10 @@ namespace barrelstrength\sproutbase\app\reports\records;
 use craft\db\ActiveRecord;
 
 /**
- * Class DataSource
- *
  * @property int $id
  * @property int $pluginId
  * @property string $type
  * @property bool $allowNew
- *
- * @package barrelstrength\sproutbase\app\reports\records
  */
 class DataSource extends ActiveRecord
 {

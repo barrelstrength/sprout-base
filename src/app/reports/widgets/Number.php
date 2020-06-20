@@ -16,12 +16,6 @@ use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
 use yii\base\Exception;
 
-/**
- *
- * @property string $bodyHtml
- * @property string $settingsHtml
- * @property string $title
- */
 class Number extends Widget
 {
     /**
@@ -49,34 +43,24 @@ class Number extends Widget
      */
     public $reportId;
 
-    /**
-     * @inheritdoc
-     */
     public static function displayName(): string
     {
         return Craft::t('sprout', 'Number');
     }
 
-    /**
-     * @inheritdoc
-     */
     public static function icon()
     {
         return Craft::getAlias('@sproutbase/app/forms/icon-mask.svg');
     }
 
-    /**
-     * @inheritdoc
-     */
     public function getTitle(): string
     {
         return $this->heading;
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      *
-     * @return string
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
@@ -95,9 +79,8 @@ class Number extends Widget
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      *
-     * @return string
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError

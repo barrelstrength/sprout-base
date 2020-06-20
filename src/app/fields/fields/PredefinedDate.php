@@ -42,6 +42,8 @@ class PredefinedDate extends BasePredefinedField
     }
 
     /**
+     * @inheritDoc
+     *
      * @throws Exception
      */
     public function normalizeValue($value, ElementInterface $element = null)
@@ -74,6 +76,8 @@ class PredefinedDate extends BasePredefinedField
     }
 
     /**
+     * @inheritDoc
+     *
      * @throws InvalidConfigException
      */
     public function getTableAttributeHtml($value, ElementInterface $element): string

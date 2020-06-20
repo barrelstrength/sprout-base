@@ -10,9 +10,6 @@ namespace barrelstrength\sproutbase\app\forms\formtemplates;
 use barrelstrength\sproutbase\app\forms\base\FormTemplates;
 use Craft;
 
-/**
- * Class AccessibleTemplates
- */
 class AccessibleTemplates extends FormTemplates
 {
     /**

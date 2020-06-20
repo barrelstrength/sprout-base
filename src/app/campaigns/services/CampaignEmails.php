@@ -14,13 +14,6 @@ use yii\base\Exception;
 use yii\base\InvalidConfigException;
 use yii\db\Transaction;
 
-/**
- * Class CampaignEmails
- *
- * @package barrelstrength\sproutbase\app\campaigns\services
- *
- * @property bool $displayDateScheduled
- */
 class CampaignEmails extends Component
 {
     const EVENT_SEND_SPROUTEMAIL = 'onSendSproutEmail';

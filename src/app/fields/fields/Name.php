@@ -18,10 +18,6 @@ use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
 use yii\base\Exception;
 
-/**
- *
- * @property mixed $settingsHtml
- */
 class Name extends Field implements PreviewableFieldInterface
 {
     /**
@@ -107,7 +103,7 @@ class Name extends Field implements PreviewableFieldInterface
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function getTableAttributeHtml($value, ElementInterface $element): string
     {

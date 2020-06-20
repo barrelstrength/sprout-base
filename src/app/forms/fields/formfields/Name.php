@@ -30,13 +30,6 @@ use Twig\Error\SyntaxError;
 use Twig\Markup;
 use yii\base\Exception;
 
-/**
- * @property string $svgIconPath
- * @property mixed $settingsHtml
- * @property array $compatibleConditions
- * @property array $compatibleCraftFieldTypes
- * @property mixed $exampleInputHtml
- */
 class Name extends FormField implements PreviewableFieldInterface
 {
     /**
@@ -69,32 +62,22 @@ class Name extends FormField implements PreviewableFieldInterface
      */
     private $hasMultipleLabels = false;
 
-    /**
-     * @inheritdoc
-     */
     public static function displayName(): string
     {
         return Craft::t('sprout', 'Name');
     }
 
-    /**
-     * @inheritdoc
-     */
     public function hasMultipleLabels(): bool
     {
         return $this->hasMultipleLabels;
     }
 
-    /**
-     * @return string
-     */
     public function getSvgIconPath(): string
     {
         return '@sproutbaseassets/icons/user.svg';
     }
 
     /**
-     * @return string|null
      * @throws Exception
      * @throws LoaderError
      * @throws RuntimeError
@@ -106,10 +89,8 @@ class Name extends FormField implements PreviewableFieldInterface
     }
 
     /**
-     * @param mixed $value
-     * @param ElementInterface|null $element
+     * @inheritDoc
      *
-     * @return string
      * @throws Exception
      * @throws LoaderError
      * @throws RuntimeError
@@ -121,9 +102,8 @@ class Name extends FormField implements PreviewableFieldInterface
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      *
-     * @return string
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError

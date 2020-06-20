@@ -28,16 +28,6 @@ use Twig\Error\SyntaxError;
 use Twig\Markup;
 use yii\base\Exception;
 
-/**
- * Class SproutFormsDropdownField
- *
- * @property string $modelName
- * @property string $svgIconPath
- * @property array $compatibleCraftFields
- * @property array $compatibleCraftFieldTypes
- * @property array $compatibleConditions
- * @property mixed $exampleInputHtml
- */
 class Dropdown extends CraftDropdownField
 {
     use FormFieldTrait;
@@ -65,7 +55,7 @@ class Dropdown extends CraftDropdownField
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      *
      * @return string
      * @throws LoaderError
@@ -108,9 +98,6 @@ class Dropdown extends CraftDropdownField
         return TemplateHelper::raw($rendered);
     }
 
-    /**
-     * @inheritdoc
-     */
     public function getCompatibleCraftFieldTypes(): array
     {
         return [

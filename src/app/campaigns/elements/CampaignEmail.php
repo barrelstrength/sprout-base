@@ -26,14 +26,6 @@ use yii\base\Exception;
 use yii\base\ExitException;
 use yii\base\InvalidConfigException;
 
-/**
- * Class CampaignEmail
- *
- * @property CampaignType $campaignType
- * @property mixed $emailTemplateId
- * @property string $previewPermission
- * @property DefaultMailer|Mailer $mailer
- */
 class CampaignEmail extends EmailElement
 {
     // Constants

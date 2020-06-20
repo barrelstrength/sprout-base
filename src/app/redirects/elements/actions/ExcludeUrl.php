@@ -16,10 +16,6 @@ use Exception;
 use Throwable;
 use yii\db\Transaction;
 
-/**
- *
- * @property string $triggerLabel
- */
 class ExcludeUrl extends ElementAction
 {
     /**
@@ -32,17 +28,11 @@ class ExcludeUrl extends ElementAction
      */
     public $successMessage;
 
-    /**
-     * @inheritdoc
-     */
     public function getTriggerLabel(): string
     {
         return Craft::t('sprout', 'Add to Excluded URLs');
     }
 
-    /**
-     * @inheritdoc
-     */
     public function getConfirmationMessage()
     {
         return $this->confirmationMessage;

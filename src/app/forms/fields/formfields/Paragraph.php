@@ -128,7 +128,7 @@ class Paragraph extends FormField implements PreviewableFieldInterface
      * Adds support for edit field in the Entries section of SproutForms (Control
      * panel html)
      *
-     * @inheritdoc
+     * @inheritDoc
      *
      * @param                       $value
      * @param ElementInterface|null $element
@@ -150,7 +150,7 @@ class Paragraph extends FormField implements PreviewableFieldInterface
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      *
      * @return string
      * @throws LoaderError
@@ -194,7 +194,7 @@ class Paragraph extends FormField implements PreviewableFieldInterface
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function serializeValue($value, ElementInterface $element = null)
     {
@@ -206,7 +206,7 @@ class Paragraph extends FormField implements PreviewableFieldInterface
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function getSearchKeywords($value, ElementInterface $element): string
     {
@@ -217,7 +217,7 @@ class Paragraph extends FormField implements PreviewableFieldInterface
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function getCompatibleCraftFieldTypes(): array
     {
@@ -227,7 +227,7 @@ class Paragraph extends FormField implements PreviewableFieldInterface
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function getCompatibleConditions()
     {
@@ -240,7 +240,7 @@ class Paragraph extends FormField implements PreviewableFieldInterface
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function getConditionValueInputHtml(ConditionInterface $condition, $fieldName, $fieldValue): string
     {

@@ -55,7 +55,7 @@ class SingleLine extends FormField implements PreviewableFieldInterface
     public $columnType = Schema::TYPE_TEXT;
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public static function displayName(): string
     {
@@ -63,7 +63,7 @@ class SingleLine extends FormField implements PreviewableFieldInterface
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function defineRules(): array
     {
@@ -74,9 +74,6 @@ class SingleLine extends FormField implements PreviewableFieldInterface
         return $rules;
     }
 
-    /**
-     * @inheritdoc
-     */
     public function normalizeValue($value, ElementInterface $element = null)
     {
         if ($value !== null) {
@@ -103,16 +100,13 @@ class SingleLine extends FormField implements PreviewableFieldInterface
         }
     }
 
-    /**
-     * @return string
-     */
     public function getSvgIconPath(): string
     {
         return '@sproutbaseassets/icons/font.svg';
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      *
      * @throws LoaderError
      * @throws RuntimeError
@@ -131,12 +125,8 @@ class SingleLine extends FormField implements PreviewableFieldInterface
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      *
-     * @param                       $value
-     * @param ElementInterface|null $element
-     *
-     * @return string
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
@@ -158,9 +148,8 @@ class SingleLine extends FormField implements PreviewableFieldInterface
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      *
-     * @return string
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
@@ -176,12 +165,8 @@ class SingleLine extends FormField implements PreviewableFieldInterface
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      *
-     * @param            $value
-     * @param array|null $renderingOptions
-     *
-     * @return Markup
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
@@ -203,7 +188,7 @@ class SingleLine extends FormField implements PreviewableFieldInterface
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function serializeValue($value, ElementInterface $element = null)
     {
@@ -215,7 +200,7 @@ class SingleLine extends FormField implements PreviewableFieldInterface
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function getSearchKeywords($value, ElementInterface $element): string
     {
@@ -225,9 +210,6 @@ class SingleLine extends FormField implements PreviewableFieldInterface
         return $value;
     }
 
-    /**
-     * @inheritdoc
-     */
     public function getCompatibleCraftFieldTypes(): array
     {
         return [
@@ -236,9 +218,6 @@ class SingleLine extends FormField implements PreviewableFieldInterface
         ];
     }
 
-    /**
-     * @inheritdoc
-     */
     public function getCompatibleConditions()
     {
         return [

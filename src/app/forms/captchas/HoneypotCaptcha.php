@@ -15,14 +15,6 @@ use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
 use yii\base\Exception;
 
-/**
- * Class HoneypotCaptcha
- *
- * @property string $captchaSettingsHtml
- * @property string $name
- * @property string $description
- * @property string $captchaHtml
- */
 class HoneypotCaptcha extends Captcha
 {
     const HONEYPOT_CAPTCHA_INPUT_KEY = 'sprout-forms-hc';

@@ -28,10 +28,6 @@ use yii\base\ExitException;
 use yii\base\InvalidConfigException;
 
 /**
- *
- * @property array[]|array $sendRuleOptions
- * @property string $previewPermission
- * @property mixed $options
  * @mixin FieldLayoutBehavior
  */
 class NotificationEmail extends EmailElement

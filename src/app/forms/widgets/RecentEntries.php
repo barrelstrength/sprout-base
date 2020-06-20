@@ -16,12 +16,6 @@ use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
 use yii\base\Exception;
 
-/**
- *
- * @property mixed $bodyHtml
- * @property mixed $settingsHtml
- * @property string $title
- */
 class RecentEntries extends Widget
 {
     /**
@@ -39,25 +33,16 @@ class RecentEntries extends Widget
      */
     public $showDate;
 
-    /**
-     * @inheritdoc
-     */
     public static function displayName(): string
     {
         return Craft::t('sprout', 'Recent Entries (Sprout Forms)');
     }
 
-    /**
-     * @inheritdoc
-     */
     public static function icon()
     {
         return Craft::getAlias('@sproutbase/app/forms/icon-mask.svg');
     }
 
-    /**
-     * @inheritdoc
-     */
     public function getTitle(): string
     {
         // Concat form name if the user select a specific form
@@ -75,9 +60,8 @@ class RecentEntries extends Widget
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      *
-     * @return string
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
@@ -99,9 +83,8 @@ class RecentEntries extends Widget
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      *
-     * @return string
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError

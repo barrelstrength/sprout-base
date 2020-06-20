@@ -19,11 +19,6 @@ use Twig\Error\SyntaxError;
 use Twig\Markup;
 use yii\base\Exception;
 
-/**
- * @property string $svgIconPath
- * @property array $compatibleCraftFieldTypes
- * @property mixed $exampleInputHtml
- */
 class Categories extends CraftCategories
 {
     use FormFieldTrait;

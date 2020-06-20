@@ -22,11 +22,6 @@ use Throwable;
 use yii\base\Component;
 use yii\base\Exception;
 
-/**
- *
- * @property string|int $metadataFieldCount
- * @property int $descriptionLength
- */
 class ElementMetadata extends Component
 {
     /**

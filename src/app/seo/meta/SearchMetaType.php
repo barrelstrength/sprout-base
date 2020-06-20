@@ -18,9 +18,6 @@ use Twig\Error\SyntaxError;
 use yii\base\Exception;
 use yii\base\InvalidConfigException;
 
-/**
- * Implements all attributes used in search metadata
- */
 class SearchMetaType extends MetaType
 {
     /**

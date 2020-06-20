@@ -27,16 +27,6 @@ use Twig\Error\SyntaxError;
 use Twig\Markup;
 use yii\base\Exception;
 
-/**
- * Class SproutFormsCheckboxesField
- *
- *
- * @property string $svgIconPath
- * @property mixed $settingsHtml
- * @property array $compatibleConditions
- * @property array $compatibleCraftFieldTypes
- * @property mixed $exampleInputHtml
- */
 class OptIn extends FormField implements PreviewableFieldInterface
 {
     /**
@@ -116,7 +106,7 @@ class OptIn extends FormField implements PreviewableFieldInterface
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      *
      * @param                       $value
      * @param ElementInterface|null $element
@@ -144,7 +134,7 @@ class OptIn extends FormField implements PreviewableFieldInterface
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      *
      * @return string
      * @throws LoaderError
@@ -162,7 +152,7 @@ class OptIn extends FormField implements PreviewableFieldInterface
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      *
      * @param            $value
      * @param array|null $renderingOptions
@@ -189,7 +179,7 @@ class OptIn extends FormField implements PreviewableFieldInterface
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function defineRules(): array
     {
@@ -201,7 +191,7 @@ class OptIn extends FormField implements PreviewableFieldInterface
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function getCompatibleConditions()
     {
@@ -212,7 +202,7 @@ class OptIn extends FormField implements PreviewableFieldInterface
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function getConditionValueInputHtml(ConditionInterface $condition, $fieldName, $fieldValue): string
     {
@@ -233,7 +223,7 @@ class OptIn extends FormField implements PreviewableFieldInterface
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function getCompatibleCraftFieldTypes(): array
     {

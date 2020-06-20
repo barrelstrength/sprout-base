@@ -23,10 +23,6 @@ use DateTime;
 use yii\base\Component;
 use yii\base\Exception;
 
-/**
- *
- * @property Site[]|array $currentSitemapSites
- */
 class XmlSitemap extends Component
 {
     /**

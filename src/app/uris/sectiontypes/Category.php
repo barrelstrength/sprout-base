@@ -117,7 +117,7 @@ class Category extends UrlEnabledSectionType
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function resaveElements($elementGroupId = null): bool
     {

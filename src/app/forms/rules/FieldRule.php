@@ -18,20 +18,8 @@ use Twig\Error\SyntaxError;
 use yii\base\Exception;
 use yii\base\InvalidConfigException;
 
-/**
- * Add a conditional logic to show or hide a Form Field
- *
- * @property array $behaviorActions
- * @property array $behaviorActionsAsOptions
- * @property string $behaviorActionLabel
- * @property array $conditionRules
- * @property null|string $settingsHtml
- */
 class FieldRule extends Rule
 {
-    /**
-     * @inheritDoc
-     */
     public static function displayName(): string
     {
         return Craft::t('sprout', 'Field Rule');
@@ -39,6 +27,7 @@ class FieldRule extends Rule
 
     /**
      * @return string|null
+     *
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
@@ -53,9 +42,6 @@ class FieldRule extends Rule
         );
     }
 
-    /**
-     * @inheritDoc
-     */
     public function getBehaviorActions(): array
     {
         return [
@@ -64,9 +50,6 @@ class FieldRule extends Rule
         ];
     }
 
-    /**
-     * @inheritDoc
-     */
     public function getBehaviorActionsAsOptions(): array
     {
         $options = [];
@@ -81,7 +64,6 @@ class FieldRule extends Rule
     }
 
     /**
-     * @inheritDoc
      * @throws InvalidConfigException
      */
     public function getRuleTargets(): array
@@ -97,7 +79,6 @@ class FieldRule extends Rule
     }
 
     /**
-     * @inheritDoc
      * @throws InvalidConfigException
      */
     public function getBehaviorDescription(): string

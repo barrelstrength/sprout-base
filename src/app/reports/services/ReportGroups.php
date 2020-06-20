@@ -13,10 +13,6 @@ use yii\base\Component;
 use yii\db\StaleObjectException;
 use yii\web\NotFoundHttpException;
 
-/**
- *
- * @property array $reportGroups
- */
 class ReportGroups extends Component
 {
     /**

@@ -19,13 +19,6 @@ use yii\base\Component;
 use yii\base\Exception;
 use yii\db\Transaction;
 
-/**
- *
- * @property array $defaultDataSourceIds
- * @property null|Report[] $allReports
- * @property array $reportsAsSelectFieldOptions
- * @property array $allowedDataSourceIds
- */
 class Reports extends Component
 {
     /**

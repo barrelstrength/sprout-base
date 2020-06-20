@@ -12,7 +12,7 @@ use yii\base\Exception;
 class LineChartVisualization extends Visualization
 {
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
 
     public static function displayName(): string

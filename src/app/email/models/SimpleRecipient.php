@@ -5,10 +5,6 @@ namespace barrelstrength\sproutbase\app\email\models;
 use craft\base\Model;
 use yii\base\UnknownPropertyException;
 
-/**
- *
- * @property array $customFields
- */
 class SimpleRecipient extends Model
 {
     /**
@@ -35,6 +31,8 @@ class SimpleRecipient extends Model
      *
      * Attributes can be retrieved via $simpleRecipient->customAttribute
      *
+     * @inheritDoc
+     *
      * @throws UnknownPropertyException
      */
     public function __get($name)
@@ -49,8 +47,7 @@ class SimpleRecipient extends Model
     /**
      * Add custom properties to the $_customFieldValues array if they are not found on the model
      *
-     * @param $name
-     * @param $value
+     * @inheritDoc
      *
      * @throws UnknownPropertyException
      */

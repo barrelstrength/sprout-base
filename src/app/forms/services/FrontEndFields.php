@@ -15,10 +15,6 @@ use craft\elements\User;
 use craft\models\Section;
 use yii\base\Component;
 
-/**
- *
- * @property array $singlesEntries
- */
 class FrontEndFields extends Component
 {
     /**

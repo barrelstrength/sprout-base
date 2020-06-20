@@ -18,18 +18,6 @@ use Twig\Error\SyntaxError;
 use Twig\Markup;
 use yii\base\Exception;
 
-/**
- * @property array $elementValidationRules
- * @property array $fileKindOptions
- * @property string $svgIconPath
- * @property array $sourceOptions
- * @property array $compatibleCraftFields
- * @property array $compatibleCraftFieldTypes
- * @property array $contentGqlType
- * @property bool|array $eagerLoadingGqlConditions
- * @property mixed $settingsHtml
- * @property mixed $exampleInputHtml
- */
 class FileUpload extends CraftAssets
 {
     use FormFieldTrait;
@@ -52,7 +40,7 @@ class FileUpload extends CraftAssets
     protected $settingsTemplate = 'sprout/forms/_components/fields/formfields/fileupload/settings';
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public static function displayName(): string
     {
@@ -60,7 +48,7 @@ class FileUpload extends CraftAssets
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public static function defaultSelectionLabel(): string
     {
@@ -95,7 +83,7 @@ class FileUpload extends CraftAssets
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      *
      * @return string
      * @throws LoaderError
@@ -139,7 +127,7 @@ class FileUpload extends CraftAssets
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function getCompatibleCraftFieldTypes(): array
     {

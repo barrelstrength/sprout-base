@@ -19,9 +19,6 @@ use Exception;
 use Throwable;
 use yii\queue\Queue;
 
-/**
- * ResaveEntries job
- */
 class ResaveEntries extends BaseJob
 {
     /**
@@ -72,7 +69,7 @@ class ResaveEntries extends BaseJob
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     protected function defaultDescription(): string
     {

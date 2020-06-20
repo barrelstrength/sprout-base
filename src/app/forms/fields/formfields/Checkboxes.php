@@ -20,14 +20,6 @@ use Twig\Error\SyntaxError;
 use Twig\Markup;
 use yii\base\Exception;
 
-/**
- * Class SproutFormsCheckboxesField
- *
- * @property string $svgIconPath
- * @property array $compatibleCraftFields
- * @property array $compatibleCraftFieldTypes
- * @property mixed $exampleInputHtml
- */
 class Checkboxes extends CraftCheckboxesField
 {
     use FormFieldTrait;
@@ -71,12 +63,8 @@ class Checkboxes extends CraftCheckboxesField
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      *
-     * @param            $value
-     * @param array|null $renderingOptions
-     *
-     * @return Markup
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
@@ -97,9 +85,6 @@ class Checkboxes extends CraftCheckboxesField
         return TemplateHelper::raw($rendered);
     }
 
-    /**
-     * @inheritdoc
-     */
     public function getCompatibleCraftFieldTypes(): array
     {
         return [

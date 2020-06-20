@@ -28,17 +28,6 @@ use yii\base\Exception;
 use yii\base\InvalidConfigException;
 use yii\db\ActiveRecord;
 
-/**
- * Entry represents a entry element.
- *
- * @property array|ActiveRecord[] $integrationLog
- * @property null|array $conditionalLogicResults
- * @property null|array $hiddenFields
- * @property bool $isSpam
- * @property array $captchaErrors
- * @property array $savedCaptchaErrors
- * @property array $fields
- */
 class Entry extends Element
 {
     public $id;
@@ -97,35 +86,21 @@ class Entry extends Element
         return 'entries';
     }
 
-    /**
-     * @inheritdoc
-     */
     public static function hasContent(): bool
     {
         return true;
     }
 
-    /**
-     * @inheritdoc
-     */
     public static function hasTitles(): bool
     {
         return true;
     }
 
-    /**
-     * @inheritdoc
-     */
     public static function hasStatuses(): bool
     {
         return true;
     }
 
-    /**
-     * Returns a list of statuses for this element type
-     *
-     * @return array
-     */
     public static function statuses(): array
     {
         $statuses = SproutBase::$app->formEntryStatuses->getAllEntryStatuses();
@@ -143,7 +118,8 @@ class Entry extends Element
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
+     *
      * @return EntryQuery The newly created [[EntryQuery]] instance.
      */
     public static function find(): ElementQueryInterface
@@ -152,7 +128,7 @@ class Entry extends Element
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     protected static function defineSources(string $context = null): array
     {
@@ -263,7 +239,7 @@ class Entry extends Element
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     protected static function defineActions(string $source = null): array
     {
@@ -295,16 +271,13 @@ class Entry extends Element
      * @return string
      */
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     protected static function defineSearchableAttributes(): array
     {
         return ['id', 'title', 'formName'];
     }
 
-    /**
-     * @inheritdoc
-     */
     protected static function defineSortOptions(): array
     {
         $attributes = [
@@ -316,9 +289,6 @@ class Entry extends Element
         return $attributes;
     }
 
-    /**
-     * @inheritdoc
-     */
     protected static function defineTableAttributes(): array
     {
         $attributes['title'] = ['label' => Craft::t('sprout', 'Title')];
@@ -382,14 +352,10 @@ class Entry extends Element
         return '';
     }
 
-    /**
-     * @inheritdoc
-     */
     public function getCpEditUrl()
     {
         return UrlHelper::cpUrl('sprout/forms/entries/edit/'.$this->id);
     }
-
 
     public function __toString()
     {
@@ -631,7 +597,6 @@ class Entry extends Element
     }
 
     /**
-     * @inheritdoc
      * @throws InvalidConfigException
      */
     protected function defineRules(): array

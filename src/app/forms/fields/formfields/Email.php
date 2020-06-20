@@ -32,16 +32,6 @@ use Twig\Error\SyntaxError;
 use Twig\Markup;
 use yii\base\Exception;
 
-/**
- *
- * @property array $elementValidationRules
- * @property string $svgIconPath
- * @property mixed $settingsHtml
- * @property array $compatibleCraftFields
- * @property array $compatibleCraftFieldTypes
- * @property array $compatibleConditions
- * @property mixed $exampleInputHtml
- */
 class Email extends FormField implements PreviewableFieldInterface
 {
     /**

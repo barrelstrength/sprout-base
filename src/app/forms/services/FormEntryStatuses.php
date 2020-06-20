@@ -20,12 +20,6 @@ use yii\base\Exception;
 use yii\db\StaleObjectException;
 use yii\db\Transaction;
 
-/**
- *
- * @property null|int $spamStatusId
- * @property null|EntryStatus $defaultEntryStatus
- * @property EntryStatus[] $allEntryStatuses
- */
 class FormEntryStatuses extends Component
 {
     /**

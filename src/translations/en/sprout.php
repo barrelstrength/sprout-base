@@ -1286,4 +1286,5 @@ Shorthand syntax: {title}',
     'Sprout Reports makes it easy for content authors to manage complex forms while also giving a wonderful amount of control to designers and developers.' => 'Sprout Reports makes it easy for content authors to manage complex forms while also giving a wonderful amount of control to designers and developers.',
     'Unknown' => 'Unknown',
     'Upgrade to Sprout Reports PRO to access unlimited data sources and create visualizations.' => 'Upgrade to Sprout Reports PRO to access unlimited data sources and create visualizations.',
+    'Enable Upgrade Messages' => 'Enable Upgrade Messages',
 ];

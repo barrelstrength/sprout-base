@@ -18,11 +18,6 @@ use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
 use yii\base\Exception;
 
-/**
- *
- * @property array $elementValidationRules
- * @property mixed $settingsHtml
- */
 class Url extends Field implements PreviewableFieldInterface
 {
     /**
@@ -63,12 +58,8 @@ class Url extends Field implements PreviewableFieldInterface
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      *
-     * @param                       $value
-     * @param ElementInterface|null $element
-     *
-     * @return string
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
@@ -79,9 +70,6 @@ class Url extends Field implements PreviewableFieldInterface
         return SproutBase::$app->urlField->getInputHtml($this, $value, $element);
     }
 
-    /**
-     * @inheritdoc
-     */
     public function getElementValidationRules(): array
     {
         $rules = parent::getElementValidationRules();
@@ -111,7 +99,7 @@ class Url extends Field implements PreviewableFieldInterface
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function getTableAttributeHtml($value, ElementInterface $element): string
     {

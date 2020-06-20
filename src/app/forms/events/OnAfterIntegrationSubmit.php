@@ -10,9 +10,6 @@ namespace barrelstrength\sproutbase\app\forms\events;
 use barrelstrength\sproutbase\app\forms\models\IntegrationLog;
 use yii\base\Event;
 
-/**
- * OnAfterIntegrationSubmit class.
- */
 class OnAfterIntegrationSubmit extends Event
 {
     /**

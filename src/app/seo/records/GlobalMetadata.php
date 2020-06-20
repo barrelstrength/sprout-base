@@ -12,7 +12,7 @@ use yii\db\ActiveRecord;
 class GlobalMetadata extends ActiveRecord
 {
     /**
-     * @inheritdoc
+     * @inheritDoc
      *
      * @return string
      */

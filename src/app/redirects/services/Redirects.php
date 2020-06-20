@@ -33,12 +33,6 @@ use yii\base\ExitException;
 use yii\base\InvalidConfigException;
 use yii\web\HttpException;
 
-/**
- *
- * @property string|int $totalNon404Redirects
- * @property array $methods
- * @property null|mixed $structureId
- */
 class Redirects extends Component
 {
     /**

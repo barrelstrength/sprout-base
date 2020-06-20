@@ -12,19 +12,14 @@ use yii\base\Exception;
 
 class TimeChartVisualization extends Visualization
 {
-    /**
-     * @inheritdoc
-     */
-
     public static function displayName(): string
     {
         return Craft::t('sprout', 'Time Series');
     }
 
     /**
-     * @param array $settings
+     * @inheritDoc
      *
-     * @return string
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
@@ -41,9 +36,8 @@ class TimeChartVisualization extends Visualization
     }
 
     /**
-     * @param array $options
+     * @inheritDoc
      *
-     * @return string
      * @throws Exception
      * @throws LoaderError
      * @throws RuntimeError

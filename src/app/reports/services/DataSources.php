@@ -23,16 +23,6 @@ use yii\base\Exception;
 use yii\base\InvalidConfigException;
 use yii\db\Transaction;
 
-/**
- * Class DataSources
- *
- * @package Craft
- *
- * @property array $allDataSources
- * @property mixed $dataSourcePlugins
- * @property DataSource[] $installedDataSources
- * @property string[] $allDataSourceTypes
- */
 class DataSources extends Component
 {
     /**

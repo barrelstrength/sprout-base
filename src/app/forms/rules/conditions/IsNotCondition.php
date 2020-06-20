@@ -10,15 +10,8 @@ namespace barrelstrength\sproutbase\app\forms\rules\conditions;
 use barrelstrength\sproutbase\app\forms\base\Condition;
 use Craft;
 
-/**
- *
- * @property string $label
- */
 class IsNotCondition extends Condition
 {
-    /**
-     * @inheritDoc
-     */
     public function getLabel(): string
     {
         return 'is not';

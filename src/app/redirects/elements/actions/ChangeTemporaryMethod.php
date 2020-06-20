@@ -14,10 +14,6 @@ use craft\base\ElementAction;
 use craft\elements\db\ElementQueryInterface;
 use yii\db\Exception;
 
-/**
- *
- * @property string $triggerLabel
- */
 class ChangeTemporaryMethod extends ElementAction
 {
     /**
@@ -30,26 +26,19 @@ class ChangeTemporaryMethod extends ElementAction
      */
     public $successMessage;
 
-    /**
-     * @inheritdoc
-     */
     public function getTriggerLabel(): string
     {
         return Craft::t('sprout', 'Update Method to 302');
     }
 
-    /**
-     * @inheritdoc
-     */
     public function getConfirmationMessage()
     {
         return $this->confirmationMessage;
     }
 
     /**
-     * @param ElementQueryInterface $query
+     * @inheritDoc
      *
-     * @return bool
      * @throws Exception
      */
     public function performAction(ElementQueryInterface $query): bool

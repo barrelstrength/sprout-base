@@ -23,11 +23,6 @@ use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
 
-/**
- * Class SpamLogDataSource
- *
- * @package barrelstrength\sproutforms\integrations\sproutreports\datasources
- */
 class SpamLogDataSource extends DataSource
 {
     /**
@@ -47,7 +42,7 @@ class SpamLogDataSource extends DataSource
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      *
      * @throws Exception
      */
@@ -171,7 +166,7 @@ class SpamLogDataSource extends DataSource
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      *
      * @throws Exception
      */

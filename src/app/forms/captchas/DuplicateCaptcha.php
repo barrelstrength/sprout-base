@@ -12,35 +12,21 @@ use barrelstrength\sproutbase\app\forms\events\OnBeforeValidateEntryEvent;
 use Craft;
 use craft\errors\MissingComponentException;
 
-/**
- * Class DuplicateCaptcha
- *
- * @property string $name
- * @property string $description
- * @property string $captchaHtml
- */
 class DuplicateCaptcha extends Captcha
 {
     const DUPLICATE_CAPTCHA_INPUT_KEY = 'sprout-forms-dc';
 
-    /**
-     * @inheritdoc
-     */
     public function getName(): string
     {
         return 'Duplicate Submission Captcha';
     }
 
-    /**
-     * @inheritdoc
-     */
     public function getDescription(): string
     {
         return Craft::t('sprout', 'Prevent duplicate submissions if a user hits submit more than once. This check is handled on the server side in addition to any duplicate submission prevention behavior handled via javascript when the user submits the form.');
     }
 
     /**
-     * @inheritdoc
      * @throws MissingComponentException
      */
     public function getCaptchaHtml(): string
@@ -59,7 +45,8 @@ class DuplicateCaptcha extends Captcha
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
+     *
      * @throws MissingComponentException
      * @throws MissingComponentException
      */

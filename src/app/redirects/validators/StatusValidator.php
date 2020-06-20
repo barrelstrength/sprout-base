@@ -14,7 +14,7 @@ use yii\validators\Validator;
 class StatusValidator extends Validator
 {
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function validateAttribute($object, $attribute)
     {

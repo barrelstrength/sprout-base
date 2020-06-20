@@ -14,11 +14,6 @@ use craft\base\Model;
 use craft\db\Query;
 use craft\errors\SiteNotFoundException;
 
-/**
- *
- * @property null|string|false $urlFormat
- * @property bool|array $fieldLayoutObjects
- */
 class UrlEnabledSection extends Model
 {
     /**

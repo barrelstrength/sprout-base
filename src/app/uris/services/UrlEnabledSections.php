@@ -18,11 +18,6 @@ use Craft;
 use craft\errors\SiteNotFoundException;
 use yii\base\Component;
 
-/**
- *
- * @property array $matchedElementVariables
- * @property UrlEnabledSectionType[] $registeredUrlEnabledSectionsEvent
- */
 class UrlEnabledSections extends Component
 {
     const EVENT_REGISTER_URL_ENABLED_SECTION_TYPES = 'registerUrlEnabledSectionTypesEvent';

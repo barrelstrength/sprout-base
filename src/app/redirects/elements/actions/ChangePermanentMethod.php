@@ -14,10 +14,6 @@ use craft\base\ElementAction;
 use craft\elements\db\ElementQueryInterface;
 use yii\db\Exception;
 
-/**
- *
- * @property string $triggerLabel
- */
 class ChangePermanentMethod extends ElementAction
 {
     /**
@@ -31,7 +27,7 @@ class ChangePermanentMethod extends ElementAction
     public $successMessage;
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function getTriggerLabel(): string
     {
@@ -39,7 +35,7 @@ class ChangePermanentMethod extends ElementAction
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function getConfirmationMessage()
     {

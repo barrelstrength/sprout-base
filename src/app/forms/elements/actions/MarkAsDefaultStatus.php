@@ -14,10 +14,6 @@ use craft\base\ElementAction;
 use craft\elements\db\ElementQueryInterface;
 use Throwable;
 
-/**
- *
- * @property string $triggerLabel
- */
 class MarkAsDefaultStatus extends ElementAction
 {
     /**

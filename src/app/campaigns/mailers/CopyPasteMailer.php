@@ -13,12 +13,6 @@ use Exception;
 use Throwable;
 use yii\base\InvalidConfigException;
 
-/**
- *
- * @property string $actionForPrepareModal
- * @property string $name
- * @property string $senderHtml
- */
 class CopyPasteMailer extends Mailer implements CampaignEmailSenderInterface
 {
     /**
@@ -93,6 +87,8 @@ class CopyPasteMailer extends Mailer implements CampaignEmailSenderInterface
     }
 
     /**
+     * @inheritDoc
+     *
      * @return mixed|null
      */
     public function sendTestCampaignEmail(CampaignEmail $campaignEmail)

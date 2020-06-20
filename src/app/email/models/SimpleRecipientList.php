@@ -4,10 +4,6 @@ namespace barrelstrength\sproutbase\app\email\models;
 
 use craft\base\Model;
 
-/**
- *
- * @property array $recipientEmails
- */
 class SimpleRecipientList extends Model
 {
     /**

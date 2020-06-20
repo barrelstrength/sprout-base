@@ -14,7 +14,7 @@ use barrelstrength\sproutbase\app\forms\rules\conditions\IsNotCondition;
 trait BaseOptionsConditionalTrait
 {
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function getConditionValueInputHtml(ConditionInterface $condition, $fieldName, $fieldValue): string
     {

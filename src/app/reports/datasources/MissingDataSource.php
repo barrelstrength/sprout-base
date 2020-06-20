@@ -7,10 +7,6 @@ use Craft;
 use craft\base\MissingComponentInterface;
 use craft\base\MissingComponentTrait;
 
-/**
- *
- * @property string $description
- */
 class MissingDataSource extends DataSource implements MissingComponentInterface
 {
     use MissingComponentTrait;

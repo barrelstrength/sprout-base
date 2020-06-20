@@ -24,12 +24,11 @@ use yii\db\ActiveQueryInterface;
  * @property string $lastReferrer
  * @property string $lastUserAgent
  * @property DateTime $dateLastUsed
- *
  */
 class Redirects extends ActiveRecord
 {
     /**
-     * @inheritdoc
+     * @inheritDoc
      *
      * @return string
      */

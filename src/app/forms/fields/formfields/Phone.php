@@ -30,15 +30,6 @@ use Twig\Error\SyntaxError;
 use Twig\Markup;
 use yii\base\Exception;
 
-/**
- *
- * @property array $elementValidationRules
- * @property array|string[] $compatibleCraftFieldTypes
- * @property array $compatibleConditions
- * @property string $svgIconPath
- * @property null|string $settingsHtml
- * @property string $exampleInputHtml
- */
 class Phone extends FormField implements PreviewableFieldInterface
 {
     /**
@@ -114,9 +105,6 @@ class Phone extends FormField implements PreviewableFieldInterface
     }
 
     /**
-     * @inheritdoc
-     *
-     * @return string
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
@@ -180,7 +168,7 @@ class Phone extends FormField implements PreviewableFieldInterface
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function getTableAttributeHtml($value, ElementInterface $element): string
     {
@@ -194,9 +182,6 @@ class Phone extends FormField implements PreviewableFieldInterface
         return $html;
     }
 
-    /**
-     * @inheritdoc
-     */
     public function getElementValidationRules(): array
     {
         $rules = parent::getElementValidationRules();
@@ -230,9 +215,6 @@ class Phone extends FormField implements PreviewableFieldInterface
         }
     }
 
-    /**
-     * @inheritdoc
-     */
     public function getCompatibleCraftFieldTypes(): array
     {
         /** @noinspection ClassConstantCanBeUsedInspection */
@@ -241,9 +223,6 @@ class Phone extends FormField implements PreviewableFieldInterface
         ];
     }
 
-    /**
-     * @inheritdoc
-     */
     public function getCompatibleConditions()
     {
         return [

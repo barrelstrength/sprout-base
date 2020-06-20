@@ -23,12 +23,6 @@ use yii\base\Exception;
 use yii\base\InvalidConfigException;
 use yii\db\Schema;
 
-/**
- *
- * @property string $svgIconPath
- * @property mixed $settingsHtml
- * @property mixed $exampleInputHtml
- */
 class SectionHeading extends FormField
 {
     /**
@@ -62,7 +56,7 @@ class SectionHeading extends FormField
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public static function hasContentColumn(): bool
     {
@@ -70,7 +64,7 @@ class SectionHeading extends FormField
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function isPlainInput(): bool
     {
@@ -78,7 +72,7 @@ class SectionHeading extends FormField
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function defineContentAttribute(): string
     {
@@ -86,7 +80,7 @@ class SectionHeading extends FormField
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function displayInstructionsField(): bool
     {
@@ -102,7 +96,7 @@ class SectionHeading extends FormField
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      * @return string
      * @throws ReflectionException
      * @throws LoaderError
@@ -139,7 +133,7 @@ class SectionHeading extends FormField
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      *
      * @param                       $value
      * @param ElementInterface|null $element
@@ -170,7 +164,7 @@ class SectionHeading extends FormField
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      *
      * @return string
      * @throws LoaderError

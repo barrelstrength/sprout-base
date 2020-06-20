@@ -19,11 +19,6 @@ use Twig\Error\SyntaxError;
 use yii\base\Exception;
 use yii\base\InvalidConfigException;
 
-/**
- *
- * @property array $options
- * @property mixed $settingsHtml
- */
 class Notes extends Field
 {
 

@@ -23,14 +23,6 @@ use Twig\Error\SyntaxError;
 use Twig\Markup;
 use yii\base\Exception;
 
-/**
- *
- * @property array $elementValidationRules
- * @property string $svgIconPath
- * @property mixed $settingsHtml
- * @property array $compatibleCraftFieldTypes
- * @property mixed $exampleInputHtml
- */
 class Url extends FormField implements PreviewableFieldInterface
 {
     /**
@@ -72,7 +64,7 @@ class Url extends FormField implements PreviewableFieldInterface
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      *
      * @throws LoaderError
      * @throws RuntimeError
@@ -102,7 +94,7 @@ class Url extends FormField implements PreviewableFieldInterface
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      *
      * @return string
      * @throws LoaderError
@@ -152,7 +144,7 @@ class Url extends FormField implements PreviewableFieldInterface
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function getTableAttributeHtml($value, ElementInterface $element): string
     {
@@ -164,7 +156,7 @@ class Url extends FormField implements PreviewableFieldInterface
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function getElementValidationRules(): array
     {
@@ -195,7 +187,7 @@ class Url extends FormField implements PreviewableFieldInterface
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function getCompatibleCraftFieldTypes(): array
     {

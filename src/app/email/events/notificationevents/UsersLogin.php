@@ -13,17 +13,6 @@ use craft\events\UserEvent;
 use craft\records\User as UserRecord;
 use yii\web\User;
 
-
-/**
- * @property string $eventClassName
- * @property mixed $description
- * @property mixed $eventName
- * @property mixed $name
- * @property mixed $eventObject
- * @property mixed $mockEventObject
- * @property string $eventHandlerClassName
- * @property UserEvent $event
- */
 class UsersLogin extends NotificationEvent
 {
     public function getEventClassName()

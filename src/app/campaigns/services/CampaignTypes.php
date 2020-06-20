@@ -11,13 +11,6 @@ use craft\errors\SiteNotFoundException;
 use craft\queue\jobs\ResaveElements;
 use yii\base\Exception;
 
-/**
- * Class CampaignTypes
- *
- * @package barrelstrength\sproutbase\app\campaigns\services
- *
- * @property array $campaignTypes
- */
 class CampaignTypes extends Component
 {
     /**

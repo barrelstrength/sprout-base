@@ -109,7 +109,7 @@ class FormQuery extends ElementQuery
     public $numberOfFields;
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function __construct($elementType, array $config = [])
     {
@@ -193,7 +193,7 @@ class FormQuery extends ElementQuery
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     protected function beforePrepare(): bool
     {

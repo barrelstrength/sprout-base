@@ -21,20 +21,6 @@ use craft\base\Model;
 use Throwable;
 use yii\base\Exception;
 
-/**
- * Class Metadata
- *
- * @property null $googlePlusMetaTagData
- * @property array $searchMetaTagData
- * @property array $robotsMetaTagData
- * @property array $twitterCardMetaTagData
- * @property array $geographicMetaTagData
- * @property array $metaTagData
- * @property array $openGraphMetaTagData
- * @property array $rawData
- * @property array $optimizedProperties
- * @property string uri
- */
 class Metadata extends Model
 {
     use OptimizedTrait;
@@ -54,21 +40,15 @@ class Metadata extends Model
     protected $rawDataOnly = false;
 
     /**
-     * Metadata constructor.
+     * Metadata constructor
      *
      * @param array $config
-     *
      * @param bool $rawDataOnly
      *
      * @throws Throwable
      */
     public function __construct($config = [], $rawDataOnly = false)
     {
-        // Unset any deprecated properties
-        // @todo - deprecate variables in 5.x
-        // Need to be removed by resaving all Elements with updated Metadata Model
-        unset($config['enableMetaDetailsSearch'], $config['enableMetaDetailsOpenGraph'], $config['enableMetaDetailsTwitterCard'], $config['enableMetaDetailsGeo'], $config['enableMetaDetailsRobots'], $config['dateCreated'], $config['dateUpdated'], $config['uid'], $config['elementId']);
-
         // Remove any null or empty string values from the provided configuration
         $config = array_filter($config);
 

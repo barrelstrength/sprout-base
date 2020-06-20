@@ -32,10 +32,6 @@ use Twig\Markup;
 use yii\base\Exception;
 use yii\base\InvalidConfigException;
 
-/**
- *
- * @property string $description
- */
 class DefaultMailer extends Mailer implements NotificationEmailSenderInterface
 {
     /**
@@ -80,7 +76,7 @@ class DefaultMailer extends Mailer implements NotificationEmailSenderInterface
     }
 
     /**
-     * @param EmailElement $notificationEmail
+     * @inheritDoc
      *
      * @return bool
      * @throws Exception

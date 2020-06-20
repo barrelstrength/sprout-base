@@ -17,12 +17,6 @@ use Twig\Error\SyntaxError;
 use yii\base\Exception;
 use function json_decode;
 
-/**
- *
- * @property string|false $bodyHtml
- * @property null|string $settingsHtml
- * @property string $title
- */
 class Visualization extends Widget
 {
     /**
@@ -30,24 +24,17 @@ class Visualization extends Widget
      */
     public $reportId = 0;
 
-    /**
-     * @inheritdoc
-     */
     public static function displayName(): string
     {
         return Craft::t('sprout', 'Sprout Report Chart');
     }
 
-    /**
-     * @inheritdoc
-     */
     public static function icon()
     {
         return Craft::getAlias('@app/icons/clock.svg');
     }
 
     /**
-     * @return string|null
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
@@ -63,9 +50,6 @@ class Visualization extends Widget
             ]);
     }
 
-    /**
-     * @inheritdoc
-     */
     public function getTitle(): string
     {
         $report = Craft::$app->elements->getElementById($this->reportId, Report::class);
@@ -79,7 +63,6 @@ class Visualization extends Widget
     }
 
     /**
-     * @return false|string
      * @throws Exception
      * @throws LoaderError
      * @throws RuntimeError
@@ -120,9 +103,6 @@ class Visualization extends Widget
         ]);
     }
 
-    /**
-     * @inheritdoc
-     */
     protected function defineRules(): array
     {
         $rules = parent::defineRules();

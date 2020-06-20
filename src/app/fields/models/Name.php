@@ -9,12 +9,6 @@ namespace barrelstrength\sproutbase\app\fields\models;
 
 use craft\base\Model;
 
-/**
- *
- * @property string $fullName
- * @property string $friendlyName
- * @property string $fullNameExtended
- */
 class Name extends Model
 {
     /**

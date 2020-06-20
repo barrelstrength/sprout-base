@@ -27,13 +27,6 @@ use Twig\Error\SyntaxError;
 use yii\base\Event;
 use yii\mail\MailEvent;
 
-/**
- * Class SentEmails
- *
- * @package barrelstrength\sproutbasesentemail\services
- *
- * @property string $craftVersion
- */
 class SentEmails extends Component
 {
     /**
@@ -120,8 +113,6 @@ class SentEmails extends Component
             $infoTable->deliveryStatus = $deliveryStatuses['Sent'];
         } else {
             $infoTable->deliveryStatus = $deliveryStatuses['Error'];
-
-            // @todo - improve flow so we can give a better error message
             $infoTable->message = Craft::t('sprout', 'Unable to send message.');
         }
 

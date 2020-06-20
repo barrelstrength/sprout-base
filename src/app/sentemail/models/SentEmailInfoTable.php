@@ -10,12 +10,6 @@ namespace barrelstrength\sproutbase\app\sentemail\models;
 use Craft;
 use craft\base\Model;
 
-/**
- *
- * @property array $deliveryStatuses
- * @property array $emailTypes
- * @property array $deliveryTypes
- */
 class SentEmailInfoTable extends Model
 {
     // General Info

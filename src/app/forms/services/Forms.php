@@ -30,14 +30,6 @@ use yii\base\InvalidConfigException;
 use yii\db\Transaction;
 use yii\web\BadRequestHttpException;
 
-/**
- *
- * @property array $allEnabledCaptchas
- * @property array $allCaptchas
- * @property array $allFormTemplateTypes
- * @property array[] $allFormTemplates
- * @property array[] $allCaptchaTypes
- */
 class Forms extends Component
 {
 

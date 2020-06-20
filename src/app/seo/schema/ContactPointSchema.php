@@ -38,7 +38,7 @@ class ContactPointSchema extends Schema
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function addProperties()
     {

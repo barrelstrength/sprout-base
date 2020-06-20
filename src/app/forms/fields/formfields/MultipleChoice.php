@@ -27,16 +27,6 @@ use Twig\Error\SyntaxError;
 use Twig\Markup;
 use yii\base\Exception;
 
-/**
- * Class SproutFormsRadioButtonsField
- *
- *
- * @property string $svgIconPath
- * @property array $compatibleCraftFields
- * @property array $compatibleCraftFieldTypes
- * @property array $compatibleConditions
- * @property mixed $exampleInputHtml
- */
 class MultipleChoice extends CraftRadioButtons
 {
     use FormFieldTrait;

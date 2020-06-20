@@ -19,11 +19,6 @@ use Twig\Error\SyntaxError;
 use yii\base\Exception;
 use yii\base\InvalidConfigException;
 
-/**
- *
- * @property array $elementValidationRules
- * @property mixed $settingsHtml
- */
 class RegularExpression extends Field implements PreviewableFieldInterface
 {
     /**

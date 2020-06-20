@@ -12,9 +12,6 @@ use barrelstrength\sproutbase\SproutBase;
 use Craft;
 use craft\base\Model;
 
-/**
- * @property null|Entry $entry
- */
 class EntriesSpamLog extends Model
 {
     /**
@@ -55,7 +52,7 @@ class EntriesSpamLog extends Model
     /**
      * Use the translated section name as the string representation.
      *
-     * @inheritdoc
+     * @inheritDoc
      */
     public function __toString()
     {

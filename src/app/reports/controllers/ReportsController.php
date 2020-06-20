@@ -75,8 +75,6 @@ class ReportsController extends Controller
             'reports' => $reports,
             'config' => $config,
             'newReportOptions' => $newReportOptions,
-
-            // @todo - migration review / fix
             'editReportsPermission' => $currentUser->can('sprout:reports:editReports'),
         ]);
     }
@@ -148,8 +146,6 @@ class ReportsController extends Controller
             'values' => $values,
             'redirectUrl' => 'sprout/reports/view/'.$reportId,
             'config' => $config,
-
-            // @todo - migration, review permission
             'editReportsPermission' => $currentUser->can('sprout:reports:editReports'),
             'settings' => SproutBase::$app->settings->getSettingsByKey('reports'),
             'sortColumnPosition' => $sortColumnPosition,
@@ -290,8 +286,6 @@ class ReportsController extends Controller
             'dataSource' => $dataSource,
             'groups' => $groups,
             'continueEditingUrl' => UrlHelper::cpUrl('sprout/reports/'.$dataSourceId.'/edit/{id}'),
-
-            // @todo - migration, review permission
             'editReportsPermission' => $currentUser->can('sprout:reports:editReports'),
             'config' => $config,
             'emailColumnOptions' => $emailColumnOptions,

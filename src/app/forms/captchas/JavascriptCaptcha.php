@@ -15,13 +15,6 @@ use craft\helpers\StringHelper;
 use craft\web\View;
 use yii\base\InvalidConfigException;
 
-/**
- * Class InvisibleCaptcha
- *
- * @property string $name
- * @property string $description
- * @property string $captchaHtml
- */
 class JavascriptCaptcha extends Captcha
 {
     const JAVASCRIPT_CAPTCHA_INPUT_KEY = 'sprout-forms-jck';

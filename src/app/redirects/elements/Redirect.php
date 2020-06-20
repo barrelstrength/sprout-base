@@ -32,10 +32,6 @@ use yii\base\Exception;
 use yii\base\InvalidConfigException;
 use yii\base\Model;
 
-/**
- *
- * @property string $absoluteNewUrl
- */
 class Redirect extends Element
 {
     /**
@@ -83,45 +79,27 @@ class Redirect extends Element
      */
     public $dateLastUsed;
 
-    /**
-     * Returns the element type name.
-     *
-     * @return string
-     */
     public static function displayName(): string
     {
         return Craft::t('sprout', 'Redirect');
     }
 
-    /**
-     * @return string
-     */
     public static function pluralDisplayName(): string
     {
         return Craft::t('sprout', 'Redirects');
     }
 
-    /**
-     * @inheritDoc IElementType::hasStatuses()
-     *
-     * @return bool
-     */
     public static function hasStatuses(): bool
     {
         return true;
     }
 
-    /**
-     * @return bool
-     */
     public static function isLocalized(): bool
     {
         return true;
     }
 
     /**
-     * @inheritdoc
-     *
      * @return RedirectQuery The newly created [[RedirectQuery]] instance.
      */
     public static function find(): ElementQueryInterface
@@ -170,9 +148,6 @@ class Redirect extends Element
         return $tableAttributes;
     }
 
-    /**
-     * @inheritdoc
-     */
     protected static function defineSortOptions(): array
     {
         $attributes = [
@@ -193,11 +168,7 @@ class Redirect extends Element
     }
 
     /**
-     * Returns this element type's sources.
-     *
-     * @param string|null $context
-     *
-     * @return array
+     * @inheritDoc
      */
     protected static function defineSources(string $context = null): array
     {
@@ -238,10 +209,6 @@ class Redirect extends Element
 
     /**
      * @inheritDoc
-     *
-     * @param string|null $source
-     *
-     * @return array|null
      */
     protected static function defineActions(string $source = null): array
     {
@@ -316,9 +283,6 @@ class Redirect extends Element
         return (string)$this->id ?: static::class;
     }
 
-    /**
-     * @inheritdoc
-     */
     public function getSupportedSites(): array
     {
         // limit to just the one site this element is set to so that we don't propagate when saving
@@ -367,7 +331,7 @@ class Redirect extends Element
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function beforeSave(bool $isNew): bool
     {
@@ -402,7 +366,8 @@ class Redirect extends Element
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
+     *
      * @throws Exception if reasons
      */
     public function afterSave(bool $isNew)

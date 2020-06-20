@@ -28,13 +28,6 @@ use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
 
-/**
- * Class EntriesDataSource
- *
- * @package barrelstrength\sproutforms\integrations\sproutreports\datasources
- *
- * @property null|string $description
- */
 class EntriesDataSource extends DataSource
 {
     /**
@@ -54,7 +47,7 @@ class EntriesDataSource extends DataSource
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      *
      * @throws Exception
      */
@@ -273,7 +266,7 @@ class EntriesDataSource extends DataSource
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      *
      * @throws Exception
      */

@@ -23,14 +23,6 @@ use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
 use Twig\Markup;
 
-/**
- *
- * @property string $svgIconPath
- * @property mixed $settingsHtml
- * @property array $compatibleCraftFields
- * @property array $compatibleCraftFieldTypes
- * @property mixed $exampleInputHtml
- */
 class Hidden extends FormField implements PreviewableFieldInterface
 {
     /**
@@ -48,33 +40,22 @@ class Hidden extends FormField implements PreviewableFieldInterface
      */
     public $value = '';
 
-    /**
-     * @inheritdoc
-     */
     public static function displayName(): string
     {
         return Craft::t('sprout', 'Hidden');
     }
 
-    /**
-     * @inheritdoc
-     */
     public function isPlainInput(): bool
     {
         return true;
     }
 
-    /**
-     * @inheritdoc
-     */
     public function getSvgIconPath(): string
     {
         return '@sproutbaseassets/icons/user-secret.svg';
     }
 
     /**
-     * @inheritdoc
-     *
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
@@ -89,12 +70,10 @@ class Hidden extends FormField implements PreviewableFieldInterface
     }
 
     /**
-     * @inheritdoc
-     *
-     * @param                       $value
-     * @param ElementInterface|null $element
+     * @inheritDoc
      *
      * @return string
+     *
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
@@ -112,9 +91,6 @@ class Hidden extends FormField implements PreviewableFieldInterface
     }
 
     /**
-     * @inheritdoc
-     *
-     * @return string
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
@@ -130,11 +106,8 @@ class Hidden extends FormField implements PreviewableFieldInterface
     }
 
     /**
-     * @param mixed $value
-     * @param Entry $entry
-     * @param array|null $renderingOptions
+     * @inheritDoc
      *
-     * @return Markup
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
@@ -164,9 +137,6 @@ class Hidden extends FormField implements PreviewableFieldInterface
         return TemplateHelper::raw($rendered);
     }
 
-    /**
-     * @inheritdoc
-     */
     public function getCompatibleCraftFieldTypes(): array
     {
         return [

@@ -10,9 +10,6 @@ namespace barrelstrength\sproutbase\app\forms\integrations\sproutemail\emailtemp
 use barrelstrength\sproutbase\app\email\base\EmailTemplates;
 use Craft;
 
-/**
- * Class BasicSproutFormsNotification
- */
 class BasicSproutFormsNotification extends EmailTemplates
 {
     /**

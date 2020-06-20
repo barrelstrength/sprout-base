@@ -22,11 +22,6 @@ use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
 use yii\base\Exception;
 
-/**
- * @property array $elementValidationRules
- * @property void|array $templateDirectories
- * @property mixed $settingsHtml
- */
 class Template extends Field implements PreviewableFieldInterface
 {
     /**

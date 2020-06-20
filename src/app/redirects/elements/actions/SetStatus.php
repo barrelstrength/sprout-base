@@ -19,10 +19,6 @@ use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
 use yii\db\Exception;
 
-/**
- *
- * @property string $triggerHtml
- */
 class SetStatus extends ElementAction
 {
     /**
@@ -43,7 +39,7 @@ class SetStatus extends ElementAction
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function defineRules(): array
     {

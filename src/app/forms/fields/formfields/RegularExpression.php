@@ -23,15 +23,6 @@ use Twig\Markup;
 use yii\base\Exception;
 use yii\base\InvalidConfigException;
 
-
-/**
- *
- * @property array $elementValidationRules
- * @property string $svgIconPath
- * @property mixed $settingsHtml
- * @property array $compatibleCraftFieldTypes
- * @property mixed $exampleInputHtml
- */
 class RegularExpression extends FormField implements PreviewableFieldInterface
 {
     /**
@@ -96,7 +87,7 @@ class RegularExpression extends FormField implements PreviewableFieldInterface
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      *
      * @return string
      * @throws LoaderError
@@ -147,7 +138,7 @@ class RegularExpression extends FormField implements PreviewableFieldInterface
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function getElementValidationRules(): array
     {
@@ -177,7 +168,7 @@ class RegularExpression extends FormField implements PreviewableFieldInterface
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function getCompatibleCraftFieldTypes(): array
     {

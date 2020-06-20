@@ -25,7 +25,7 @@ class RedirectQuery extends ElementQuery
     public $status;
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function init()
     {
@@ -49,7 +49,7 @@ class RedirectQuery extends ElementQuery
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     protected function beforePrepare(): bool
     {

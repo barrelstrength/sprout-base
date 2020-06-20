@@ -13,11 +13,6 @@ use Exception;
 use libphonenumber\PhoneNumberFormat;
 use libphonenumber\PhoneNumberUtil;
 
-/**
- *
- * @property null|string $rFC3966
- * @property null|string $e164
- */
 class Phone extends Model
 {
     /**

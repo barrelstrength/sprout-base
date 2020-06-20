@@ -16,16 +16,6 @@ use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
 use yii\base\Exception;
 
-/**
- * Route our request to Craft or a third-party endpoint
- *
- * Payload forwarding is only available on front-end requests. Any
- * data saved to the database after a forwarded request is editable
- * in Craft as normal, but will not trigger any further calls to
- * the third-party endpoint.
- *
- * @property mixed $settingsHtml
- */
 class CustomEndpoint extends Integration
 {
     /**

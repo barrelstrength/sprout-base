@@ -12,11 +12,6 @@ use Craft;
 use craft\base\MissingComponentInterface;
 use craft\base\MissingComponentTrait;
 
-/**
- * Class MissingIntegration
- *
- * @package barrelstrength\sproutforms\integrationtypes
- */
 class MissingIntegration extends Integration implements MissingComponentInterface
 {
     use MissingComponentTrait;

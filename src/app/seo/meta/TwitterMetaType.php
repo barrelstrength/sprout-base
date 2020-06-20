@@ -19,9 +19,6 @@ use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
 use yii\base\Exception;
 
-/**
- * Implements all attributes used in search metadata
- */
 class TwitterMetaType extends MetaType
 {
     use MetaImageTrait;

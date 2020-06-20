@@ -14,10 +14,6 @@ use craft\base\Model;
 use craft\errors\MissingComponentException;
 use yii\base\InvalidConfigException;
 
-/**
- *
- * @property Integration|null $integration
- */
 class IntegrationLog extends Model
 {
     /**
@@ -67,8 +63,6 @@ class IntegrationLog extends Model
 
     /**
      * Use the translated section name as the string representation.
-     *
-     * @inheritdoc
      */
     public function __toString()
     {

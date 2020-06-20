@@ -10,38 +10,25 @@ use craft\helpers\DateTimeHelper;
 use craft\web\View;
 use Exception;
 
-/**
- *
- * @property string $description
- */
 class CustomTwigTemplate extends DataSource
 {
-    /**
-     * @inheritdoc
-     */
     public static function displayName(): string
     {
         return Craft::t('sprout', 'Twig Template');
     }
 
-    /**
-     * @inheritdoc
-     */
     public function getDescription(): string
     {
         return Craft::t('sprout', 'Create a report using Twig in your templates folder.');
     }
 
-    /**
-     * @inheritdoc
-     */
     public function isAllowHtmlEditable(): bool
     {
         return true;
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      *
      * @throws \yii\base\Exception
      */
@@ -62,7 +49,7 @@ class CustomTwigTemplate extends DataSource
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      *
      * @throws \yii\base\Exception
      */
@@ -85,7 +72,7 @@ class CustomTwigTemplate extends DataSource
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      *
      * @throws \yii\base\Exception
      * @throws Exception
@@ -138,7 +125,7 @@ class CustomTwigTemplate extends DataSource
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      *
      * @throws Exception
      */
@@ -158,7 +145,7 @@ class CustomTwigTemplate extends DataSource
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function validateSettings(array $settings = [], array &$errors = []): bool
     {

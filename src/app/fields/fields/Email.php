@@ -18,11 +18,6 @@ use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
 use yii\base\Exception;
 
-/**
- *
- * @property array $elementValidationRules
- * @property mixed $settingsHtml
- */
 class Email extends Field implements PreviewableFieldInterface
 {
     /**

@@ -30,12 +30,6 @@ use yii\base\Exception;
 use yii\base\InvalidConfigException;
 use yii\db\ActiveRecord;
 
-/**
- *
- * @property array $integrationOptions
- * @property Integration[] $allIntegrations
- * @property array $allIntegrationTypes
- */
 class FormIntegrations extends Component
 {
     const EVENT_REGISTER_INTEGRATIONS = 'registerIntegrations';

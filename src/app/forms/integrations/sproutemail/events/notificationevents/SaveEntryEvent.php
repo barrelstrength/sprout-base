@@ -21,10 +21,6 @@ use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
 use yii\base\Exception;
 
-/**
- *
- * @property array $allForms
- */
 class SaveEntryEvent extends NotificationEvent
 {
     public $whenNew;
@@ -36,7 +32,7 @@ class SaveEntryEvent extends NotificationEvent
     public $formIds = [];
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function getEventClassName()
     {
@@ -44,7 +40,7 @@ class SaveEntryEvent extends NotificationEvent
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function getEventName()
     {
@@ -52,7 +48,7 @@ class SaveEntryEvent extends NotificationEvent
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function getEventHandlerClassName()
     {
@@ -86,7 +82,7 @@ class SaveEntryEvent extends NotificationEvent
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function getEventObject()
     {
@@ -101,7 +97,7 @@ class SaveEntryEvent extends NotificationEvent
     /**
      * @todo fix bug where incorrect form can be selected.
      *
-     * @inheritdoc
+     * @inheritDoc
      */
     public function getMockEventObject()
     {

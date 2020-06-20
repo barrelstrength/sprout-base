@@ -9,11 +9,6 @@ namespace barrelstrength\sproutbase\app\reports\services;
 
 use craft\base\Component;
 
-/**
- * Class SproutReports_TwigDataSourceService
- *
- * @package Craft
- */
 class TwigDataSource extends Component
 {
     /**

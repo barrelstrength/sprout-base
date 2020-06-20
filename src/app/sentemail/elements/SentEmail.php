@@ -23,12 +23,6 @@ use DateTime;
 use yii\base\Exception;
 use yii\base\InvalidConfigException;
 
-/**
- *
- * @property string $previewType
- * @property string $previewPermission
- * @property string $localeNiceDateTime
- */
 class SentEmail extends Element
 {
     const SENT = 'sent';

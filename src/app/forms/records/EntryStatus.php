@@ -23,7 +23,7 @@ use craft\db\ActiveRecord;
 class EntryStatus extends ActiveRecord
 {
     /**
-     * @inheritdoc
+     * @inheritDoc
      *
      * @return string
      */

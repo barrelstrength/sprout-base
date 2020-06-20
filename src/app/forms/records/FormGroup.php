@@ -18,8 +18,6 @@ use craft\db\ActiveRecord;
 class FormGroup extends ActiveRecord
 {
     /**
-     * @inheritdoc
-     *
      * @return string
      */
     public static function tableName(): string

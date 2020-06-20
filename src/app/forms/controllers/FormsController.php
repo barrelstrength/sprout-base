@@ -30,10 +30,6 @@ use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
 
-/**
- *
- * @property Form $formModel
- */
 class FormsController extends BaseController
 {
     /**

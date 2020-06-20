@@ -99,6 +99,8 @@ class SproutBase extends Module
 
     /**
      * This code was copied from craft/base/Plugin
+     *
+     * @inheritDoc
      */
     public function __construct($id, $parent = null, array $config = [])
     {

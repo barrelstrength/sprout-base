@@ -9,10 +9,6 @@ namespace barrelstrength\sproutbase\app\seo\services;
 
 use yii\base\Component;
 
-/**
- * @property string|int $metadataFieldCount
- * @property int $descriptionLength
- */
 class Settings extends Component
 {
 

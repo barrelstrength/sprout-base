@@ -26,10 +26,6 @@ use yii\base\Component;
 use yii\base\Exception;
 use yii\db\Transaction;
 
-/**
- *
- * @property FormElement $entry
- */
 class FormEntries extends Component
 {
     const SPAM_DEFAULT_LIMIT = 500;

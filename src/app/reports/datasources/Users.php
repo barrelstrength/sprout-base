@@ -11,11 +11,6 @@ use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
 use yii\base\Exception;
 
-/**
- *
- * @property string $name
- * @property string $description
- */
 class Users extends DataSource
 {
     /**

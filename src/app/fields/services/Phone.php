@@ -23,10 +23,6 @@ use Twig\Error\SyntaxError;
 use yii\base\Component;
 use yii\base\Exception;
 
-/**
- *
- * @property array $countries
- */
 class Phone extends Component
 {
     /**

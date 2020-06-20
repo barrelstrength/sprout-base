@@ -19,12 +19,6 @@ use Twig\Error\SyntaxError;
 use Twig\Markup;
 use yii\base\Exception;
 
-/**
- * @property string $svgIconPath
- * @property array $compatibleCraftFields
- * @property array $compatibleCraftFieldTypes
- * @property mixed $exampleInputHtml
- */
 class Tags extends CraftTags
 {
     use FormFieldTrait;
@@ -48,7 +42,7 @@ class Tags extends CraftTags
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      *
      * @return string
      * @throws LoaderError
@@ -95,7 +89,7 @@ class Tags extends CraftTags
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function getCompatibleCraftFieldTypes(): array
     {

@@ -10,9 +10,6 @@ namespace barrelstrength\sproutbase\app\forms\events;
 use barrelstrength\sproutbase\app\forms\elements\Entry;
 use yii\base\Event;
 
-/**
- * OnBeforeSaveEntryEvent class.
- */
 class OnBeforeSaveEntryEvent extends Event
 {
     /**

@@ -11,17 +11,13 @@ use yii\base\Exception;
 
 class PieChartVisualization extends Visualization
 {
-    /**
-     * @inheritdoc
-     */
-
     public static function displayName(): string
     {
         return Craft::t('sprout', 'Pie Chart');
     }
 
     /**
-     * @param array $settings
+     * @inheritDoc
      *
      * @return string
      * @throws LoaderError
@@ -37,9 +33,8 @@ class PieChartVisualization extends Visualization
     }
 
     /**
-     * @param array $options
+     * @inheritDoc
      *
-     * @return string
      * @throws Exception
      * @throws LoaderError
      * @throws RuntimeError

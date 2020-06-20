@@ -22,17 +22,6 @@ use yii\base\Exception;
 use yii\base\InvalidConfigException;
 use yii\web\IdentityInterface;
 
-/**
- * Create a Craft Entry element
- *
- * @property string $userElementType
- * @property IdentityInterface|User|null|false $author
- * @property array $defaultAttributes
- * @property array $elementIntegrationFieldOptions
- * @property array $targetIntegrationFieldsAsMappingOptions
- * @property mixed $settingsHtml
- * @property array $sectionsAsOptions
- */
 class EntryElementIntegration extends ElementIntegration
 {
     /**

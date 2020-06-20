@@ -20,12 +20,6 @@ use Twig\Markup;
 use yii\base\Exception;
 use yii\db\Schema;
 
-/**
- *
- * @property string $svgIconPath
- * @property array $compatibleCraftFieldTypes
- * @property mixed $exampleInputHtml
- */
 class PrivateNotes extends FormField
 {
     /**
@@ -38,45 +32,29 @@ class PrivateNotes extends FormField
      */
     public $cssClasses;
 
-    /**
-     * @inheritdoc
-     */
     public static function displayName(): string
     {
         return Craft::t('sprout', 'Private Notes');
     }
 
-    /**
-     * @inheritdoc
-     */
     public function defineContentAttribute(): string
     {
         return Schema::TYPE_TEXT;
     }
 
-    /**
-     * @inheritdoc
-     */
     public function isPlainInput(): bool
     {
         return true;
     }
 
-    /**
-     * @return string
-     */
     public function getSvgIconPath(): string
     {
         return '@sproutbaseassets/icons/sticky-note.svg';
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      *
-     * @param                       $value
-     * @param ElementInterface|null $element
-     *
-     * @return string
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
@@ -94,9 +72,8 @@ class PrivateNotes extends FormField
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      *
-     * @return string
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
@@ -112,11 +89,7 @@ class PrivateNotes extends FormField
     }
 
     /**
-     * @param mixed $value
-     * @param Entry $entry
-     * @param array|null $renderingOptions
-     *
-     * @return Markup
+     * @inheritDoc
      */
     public function getFrontEndInputHtml($value, Entry $entry, array $renderingOptions = null): Markup
     {
@@ -124,9 +97,6 @@ class PrivateNotes extends FormField
         return TemplateHelper::raw('');
     }
 
-    /**
-     * @inheritdoc
-     */
     public function getCompatibleCraftFieldTypes(): array
     {
         return [
