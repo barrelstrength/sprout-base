@@ -44,10 +44,10 @@
 }) }}
 
 {{ forms.lightswitchField({
-    label: "Disable Upgrade to Pro Messaging"|t('sprout'),
+    label: "Enable Upgrade Messages"|t('sprout'),
     instructions: "Sprout plugins will display upgrade notices throughout the interface where features can be improved by updating to Pro. This can be handy when getting familiar with a plugin and can be disabled when you'd prefer to no longer see the reminders."|t('sprout'),
-    name: 'disableUpgradeMessages',
-    on: settings.disableUpgradeMessages,
+    name: 'enableUpgradeMessages',
+    on: settings.enableUpgradeMessages,
     onLabel: "Enable"|t('sprout'),
-    warning: config.disableUpgradeMessages is defined ? configWarning('disableUpgradeMessages')
+    warning: config.enableUpgradeMessages is defined ? configWarning('enableUpgradeMessages')
 }) }}

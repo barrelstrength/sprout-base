@@ -9,7 +9,7 @@
 {% set selectedSubnavItem = 'reports' %}
 
 {% set isPro = config.getIsPro() %}
-{% set disableUpgradeMessages = config.getDisableUpgradeMessages() %}
+{% set enableUpgradeMessages = config.enableUpgradeMessages() %}
 
 {% set title = report['id'] is defined and report['id'] is not empty
     ? "Edit Report"|t('sprout')
@@ -27,7 +27,7 @@
     }
 ] %}
 
-{% if not disableUpgradeMessages and not isPro %}
+{% if enableUpgradeMessages and not isPro %}
     {% set tabs = tabs|merge([{
         label: 'Visualization',
         url: '#tab-visualization',
@@ -35,7 +35,7 @@
     }]) %}
 {% endif %}
 
-{% if not disableUpgradeMessages and not isPro %}
+{% if enableUpgradeMessages and not isPro %}
     {% set tabs = tabs|merge([{
         label: 'Mailing List',
         url: '#tab-mailing-list',

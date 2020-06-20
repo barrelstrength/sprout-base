@@ -21,7 +21,7 @@ class ControlPanelSettings extends Settings
 {
     public $modules;
 
-    public $disableUpgradeMessages = false;
+    public $enableUpgradeMessages = false;
 
     /**
      * @return array|array[]

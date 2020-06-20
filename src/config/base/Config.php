@@ -20,7 +20,7 @@ abstract class Config extends Component implements ConfigInterface
     /**
      * @var bool
      */
-    protected $_disableUpgradeMessages = false;
+    protected $_enableUpgradeMessages = false;
 
     /**
      * @var Settings $_settings
@@ -46,14 +46,14 @@ abstract class Config extends Component implements ConfigInterface
         $this->_edition = 'lite';
     }
 
-    public function getDisableUpgradeMessages(): bool
+    public function getEnableUpgradeMessages(): bool
     {
-        return $this->_disableUpgradeMessages;
+        return $this->_enableUpgradeMessages;
     }
 
-    public function setDisableUpgradeMessages($value)
+    public function setEnableUpgradeMessages($value)
     {
-        $this->_disableUpgradeMessages = (int)$value;
+        $this->_enableUpgradeMessages = (int)$value;
     }
 
     public function getIsPro(): bool
