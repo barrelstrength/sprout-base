@@ -32,17 +32,11 @@ abstract class Condition extends SavableComponent implements ConditionInterface
      */
     public $ruleValue;
 
-    /**
-     * @inheritDoc
-     */
     public function getLabel(): string
     {
         return '';
     }
 
-    /**
-     * @inheritDoc
-     */
     public function getValue(): string
     {
         return '';

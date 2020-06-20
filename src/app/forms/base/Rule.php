@@ -66,9 +66,6 @@ abstract class Rule extends SavableComponent implements RuleInterface
         return $fieldOptions;
     }
 
-    /**
-     * @inheritdoc
-     */
     public function settingsAttributes(): array
     {
         $attributes = parent::settingsAttributes();
@@ -77,25 +74,16 @@ abstract class Rule extends SavableComponent implements RuleInterface
         return $attributes;
     }
 
-    /**
-     * @inheritDoc
-     */
     public function getBehaviorActions(): array
     {
         return [];
     }
 
-    /**
-     * @inheritDoc
-     */
     public function getRuleTargets(): array
     {
         return [];
     }
 
-    /**
-     * @inheritDoc
-     */
     public function getBehaviorDescription(): string
     {
         return '';

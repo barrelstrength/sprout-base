@@ -37,25 +37,17 @@ class HoneypotCaptcha extends Captcha
      */
     public $honeypotScreenReaderMessage;
 
-    /**
-     * @inheritdoc
-     */
     public function getName(): string
     {
         return 'Honeypot Captcha';
     }
 
-    /**
-     * @inheritdoc
-     */
     public function getDescription(): string
     {
         return Craft::t('sprout', 'Block form submissions by robots who auto-fill all of your form fields ');
     }
 
     /**
-     * @inheritdoc
-     * @return string
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
@@ -75,9 +67,6 @@ class HoneypotCaptcha extends Captcha
         return $html;
     }
 
-    /**
-     * @return string
-     */
     public function getCaptchaHtml(): string
     {
         $this->honeypotFieldName = $this->getHoneypotFieldName();

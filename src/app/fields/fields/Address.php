@@ -26,15 +26,6 @@ use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
 use yii\base\Exception;
 
-/**
- * Class Address
- *
- * @package barrelstrength\sproutbase\app\fields\
- *
- * @property array $elementValidationRules
- * @property null|string $settingsHtml
- * @property string $contentColumnType
- */
 class Address extends Field implements PreviewableFieldInterface
 {
     use AddressFieldTrait;
@@ -55,17 +46,11 @@ class Address extends Field implements PreviewableFieldInterface
         ];
     }
 
-    /**
-     * @inheritdoc
-     */
     public static function displayName(): string
     {
         return Craft::t('sprout', 'Address (Sprout Fields)');
     }
 
-    /**
-     * @inheritdoc
-     */
     public static function hasContentColumn(): bool
     {
         return false;
@@ -135,9 +120,6 @@ class Address extends Field implements PreviewableFieldInterface
         parent::afterElementSave($element, $isNew);
     }
 
-    /**
-     * @inheritdoc
-     */
     public function getTableAttributeHtml($value, ElementInterface $element): string
     {
 

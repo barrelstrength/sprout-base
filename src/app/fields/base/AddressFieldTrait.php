@@ -25,20 +25,9 @@ trait AddressFieldTrait
     public $showCountryDropdown = true;
 
     /**
-     * @deprecated No longer in use. Necessary in craft 3.1 migration. Remove in Sprout Forms 4.x and Sprout Fields 4.x
-     */
-    public $hideCountryDropdown;
-
-    /**
      * @var array
      */
     public $highlightCountries = [];
-
-    /**
-     * @deprecated  Remove in Sprout Forms v4.x and Sprout Fields 4.x.
-     * Removed in Sprout Forms v3.6.6 and Sprout Fields v3.4.4 and remains to assist in migrations.
-     */
-    public $addressHelper;
 
     /**
      * This will be populated with the addressId if it should be removed from the database

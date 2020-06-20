@@ -24,15 +24,6 @@ use Twig\Error\SyntaxError;
 use Twig\Markup;
 use yii\db\Schema;
 
-/**
- * @property array $elementValidationRules
- * @property string $svgIconPath
- * @property mixed $settingsHtml
- * @property array $compatibleCraftFields
- * @property array $compatibleCraftFieldTypes
- * @property string $contentColumnType
- * @property mixed $exampleInputHtml
- */
 class Date extends FormField implements PreviewableFieldInterface
 {
     /**
@@ -65,9 +56,6 @@ class Date extends FormField implements PreviewableFieldInterface
      */
     public $maximumDate;
 
-    /**
-     * @inheritdoc
-     */
     public function __construct($config = [])
     {
         // dateTime => showDate + showTime
@@ -103,9 +91,6 @@ class Date extends FormField implements PreviewableFieldInterface
         return Schema::TYPE_DATETIME;
     }
 
-    /**
-     * @inheritdoc
-     */
     public function init()
     {
         parent::init();
@@ -133,8 +118,6 @@ class Date extends FormField implements PreviewableFieldInterface
     }
 
     /**
-     * @inheritdoc
-     *
      * @return string
      * @throws LoaderError
      * @throws RuntimeError
@@ -159,8 +142,6 @@ class Date extends FormField implements PreviewableFieldInterface
     }
 
     /**
-     * @inheritdoc
-     *
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
@@ -206,8 +187,6 @@ class Date extends FormField implements PreviewableFieldInterface
     }
 
     /**
-     * @inheritdoc
-     *
      * @param                       $value
      * @param ElementInterface|null $element
      *
@@ -316,9 +295,6 @@ class Date extends FormField implements PreviewableFieldInterface
         return $times;
     }
 
-    /**
-     * @inheritdoc
-     */
     public function getCompatibleCraftFieldTypes(): array
     {
         return [

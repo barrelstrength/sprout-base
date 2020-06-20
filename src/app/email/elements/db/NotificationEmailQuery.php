@@ -39,9 +39,6 @@ class NotificationEmailQuery extends ElementQuery
         return parent::beforePrepare();
     }
 
-    /**
-     * @inheritdoc
-     */
     protected function statusCondition(string $status)
     {
         switch ($status) {

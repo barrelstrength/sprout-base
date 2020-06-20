@@ -11,24 +11,17 @@ use barrelstrength\sproutbase\app\forms\base\Integration as IntegrationApi;
 use craft\db\ActiveRecord;
 
 /**
- * Class Integration record.
- *
- * @property                                                   $id
- * @property                                                   $formId
- * @property                                                   $name
- * @property                                                   $type
- * @property                                                   $sendRule
- * @property                                                   $settings
+ * @property $id
+ * @property $formId
+ * @property $name
+ * @property $type
+ * @property $sendRule
+ * @property $settings
  * @property null|IntegrationApi $integrationApi
- * @property                                                   $enabled
+ * @property $enabled
  */
 class Integration extends ActiveRecord
 {
-    /**
-     * @inheritdoc
-     *
-     * @return string
-     */
     public static function tableName(): string
     {
         return '{{%sproutforms_integrations}}';

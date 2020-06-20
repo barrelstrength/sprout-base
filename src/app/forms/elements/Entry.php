@@ -92,9 +92,6 @@ class Entry extends Element
         return Craft::t('sprout', 'Form Entries');
     }
 
-    /**
-     * @inheritdoc
-     */
     public static function refHandle()
     {
         return 'entries';

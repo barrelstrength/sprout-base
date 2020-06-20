@@ -80,8 +80,6 @@ class Email extends FormField implements PreviewableFieldInterface
     }
 
     /**
-     * @inheritdoc
-     *
      * @return string
      * @throws LoaderError
      * @throws RuntimeError
@@ -163,9 +161,6 @@ class Email extends FormField implements PreviewableFieldInterface
         return TemplateHelper::raw($rendered);
     }
 
-    /**
-     * @inheritdoc
-     */
     public function getElementValidationRules(): array
     {
         $rules = parent::getElementValidationRules();
@@ -211,9 +206,6 @@ class Email extends FormField implements PreviewableFieldInterface
         }
     }
 
-    /**
-     * @inheritdoc
-     */
     public function getCompatibleCraftFieldTypes(): array
     {
         return [

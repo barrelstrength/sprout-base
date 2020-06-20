@@ -62,10 +62,7 @@ class Name extends Field implements PreviewableFieldInterface
     }
 
     /**
-     * @inheritdoc
-     *
-     * @param                       $value
-     * @param ElementInterface|null $element
+     * @inheritDoc
      *
      * @return string
      * @throws LoaderError

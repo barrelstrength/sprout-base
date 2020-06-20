@@ -37,35 +37,21 @@ class CopyPasteMailer extends Mailer implements CampaignEmailSenderInterface
         return Craft::t('sprout', 'Copy and paste your email campaigns to better (or worse) places.');
     }
 
-    /**
-     * @inheritdoc
-     */
     public function hasSender(): bool
     {
         return false;
     }
 
-    /**
-     * @inheritdoc
-     */
     public function hasRecipients(): bool
     {
         return false;
     }
 
-    /**
-     * @return string
-     */
     public function getActionForPrepareModal(): string
     {
         return 'sprout/campaign-email/send-campaign-email';
     }
 
-    /**
-     * @param EmailElement $email
-     *
-     * @return string
-     */
     public function getPrepareModalHtml(EmailElement $email): string
     {
         return '';
@@ -107,8 +93,6 @@ class CopyPasteMailer extends Mailer implements CampaignEmailSenderInterface
     }
 
     /**
-     * @inheritdoc
-     *
      * @return mixed|null
      */
     public function sendTestCampaignEmail(CampaignEmail $campaignEmail)

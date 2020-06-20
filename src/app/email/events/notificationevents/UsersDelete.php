@@ -30,49 +30,31 @@ class UsersDelete extends NotificationEvent
 
     public $adminUsers = false;
 
-    /**
-     * @inheritdoc
-     */
     public function getEventClassName()
     {
         return User::class;
     }
 
-    /**
-     * @inheritdoc
-     */
     public function getEventName()
     {
         return User::EVENT_AFTER_DELETE;
     }
 
-    /**
-     * @inheritdoc
-     */
     public function getEventHandlerClassName()
     {
         return null;
     }
 
-    /**
-     * @inheritdoc
-     */
     public function getName(): string
     {
         return Craft::t('sprout', 'When a user is deleted');
     }
 
-    /**
-     * @inheritdoc
-     */
     public function getDescription(): string
     {
         return Craft::t('sprout', 'Triggered when a user is deleted.');
     }
 
-    /**
-     * @inheritdoc
-     */
     public function getEventObject()
     {
         $event = $this->event ?? null;
@@ -80,9 +62,6 @@ class UsersDelete extends NotificationEvent
         return $event->sender ?? null;
     }
 
-    /**
-     * @inheritdoc
-     */
     public function getMockEventObject()
     {
         $criteria = User::find();

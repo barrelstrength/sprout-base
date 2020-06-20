@@ -11,9 +11,6 @@ class CampaignEmailQuery extends ElementQuery
 
     public $orderBy;
 
-    /**
-     * @inheritdoc
-     */
     protected function beforePrepare(): bool
     {
         $this->joinElementTable('sproutemail_campaignemails');

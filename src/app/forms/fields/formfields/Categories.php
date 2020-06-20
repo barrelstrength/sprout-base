@@ -47,8 +47,6 @@ class Categories extends CraftCategories
     }
 
     /**
-     * @inheritdoc
-     *
      * @return string
      * @throws LoaderError
      * @throws RuntimeError
@@ -93,9 +91,6 @@ class Categories extends CraftCategories
         return TemplateHelper::raw($rendered);
     }
 
-    /**
-     * @inheritdoc
-     */
     public function getCompatibleCraftFieldTypes(): array
     {
         return [

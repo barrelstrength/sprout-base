@@ -14,9 +14,6 @@ use craft\db\Table;
 
 class Install extends Migration
 {
-    /**
-     * @inheritdoc
-     */
     public function safeUp()
     {
         if (!$this->getDb()->tableExists(SentEmailRecord::tableName())) {

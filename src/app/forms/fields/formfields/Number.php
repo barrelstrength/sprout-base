@@ -30,19 +30,6 @@ use Twig\Error\SyntaxError;
 use Twig\Markup;
 use yii\base\Exception;
 
-/**
- * Class SproutFormsNumberField
- *
- *
- * @property string $contentColumnType
- * @property string $svgIconPath
- * @property null|string $settingsHtml
- * @property array $compatibleCraftFields
- * @property array $compatibleCraftFieldTypes
- * @property array $compatibleConditions
- * @property array $elementValidationRules
- * @property mixed $exampleInputHtml
- */
 class Number extends FormField implements PreviewableFieldInterface
 {
     /**
@@ -70,17 +57,11 @@ class Number extends FormField implements PreviewableFieldInterface
      */
     public $size;
 
-    /**
-     * @inheritdoc
-     */
     public static function displayName(): string
     {
         return Craft::t('sprout', 'Number');
     }
 
-    /**
-     * @inheritdoc
-     */
     public function init()
     {
         parent::init();
@@ -115,7 +96,6 @@ class Number extends FormField implements PreviewableFieldInterface
     }
 
     /**
-     * @inheritdoc
      * @throws Exception
      */
     public function getContentColumnType(): string
@@ -123,9 +103,6 @@ class Number extends FormField implements PreviewableFieldInterface
         return Db::getNumericalColumnType($this->min, $this->max, $this->decimals);
     }
 
-    /**
-     * @inheritdoc
-     */
     public function normalizeValue($value, ElementInterface $element = null)
     {
         // Is this a post request?
@@ -158,8 +135,6 @@ class Number extends FormField implements PreviewableFieldInterface
     }
 
     /**
-     * @inheritdoc
-     *
      * @param                       $value
      * @param ElementInterface|null $element
      *
@@ -187,8 +162,6 @@ class Number extends FormField implements PreviewableFieldInterface
     }
 
     /**
-     * @inheritdoc
-     *
      * @return string
      * @throws LoaderError
      * @throws RuntimeError
@@ -230,9 +203,6 @@ class Number extends FormField implements PreviewableFieldInterface
         return TemplateHelper::raw($rendered);
     }
 
-    /**
-     * @inheritdoc
-     */
     public function defineRules(): array
     {
         $rules = parent::defineRules();
@@ -260,9 +230,6 @@ class Number extends FormField implements PreviewableFieldInterface
         ];
     }
 
-    /**
-     * @inheritdoc
-     */
     public function getCompatibleCraftFieldTypes(): array
     {
         return [
@@ -272,9 +239,6 @@ class Number extends FormField implements PreviewableFieldInterface
         ];
     }
 
-    /**
-     * @inheritdoc
-     */
     public function getCompatibleConditions()
     {
         return [

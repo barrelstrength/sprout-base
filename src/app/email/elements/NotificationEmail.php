@@ -94,9 +94,6 @@ class NotificationEmail extends EmailElement
      */
     public $sendMethod;
 
-    /**
-     * @inheritdoc
-     */
     public static function displayName(): string
     {
         return Craft::t('sprout', 'Notification Email');
@@ -110,57 +107,46 @@ class NotificationEmail extends EmailElement
         return Craft::t('sprout', 'Notification Emails');
     }
 
-    /**
-     * @inheritdoc
-     */
     public static function refHandle()
     {
         return 'notificationEmail';
     }
 
-    /**
-     * @inheritdoc
-     */
     public static function hasContent(): bool
     {
         return true;
     }
 
-    /**
-     * @inheritdoc
-     */
     public static function hasTitles(): bool
     {
         return true;
     }
 
-    /**
-     * @inheritdoc
-     */
     public static function hasUris(): bool
     {
         return true;
     }
 
-    /**
-     * @inheritdoc
-     */
     public static function hasStatuses(): bool
     {
         return true;
     }
 
-    /**
-     * @inheritdoc
-     */
     public static function find(): ElementQueryInterface
     {
         return new NotificationEmailQuery(static::class);
     }
 
     /**
-     * @@inheritdoc
+     * @param ElementQueryInterface $elementQuery
+     * @param array|null $disabledElementIds
+     * @param array $viewState
+     * @param string|null $sourceKey
+     * @param string|null $context
+     * @param bool $includeContainer
+     * @param bool $showCheckboxes
      *
+     * @return string
      * @throws InvalidConfigException
      */
     public static function indexHtml(
@@ -178,9 +164,6 @@ class NotificationEmail extends EmailElement
         return $html;
     }
 
-    /**
-     * @inheritdoc
-     */
     public static function statuses(): array
     {
         return [
@@ -190,9 +173,6 @@ class NotificationEmail extends EmailElement
         ];
     }
 
-    /**
-     * @inheritdoc
-     */
     protected static function defineSources(string $context = null): array
     {
         $sources = [
@@ -205,9 +185,6 @@ class NotificationEmail extends EmailElement
         return $sources;
     }
 
-    /**
-     * @inheritdoc
-     */
     protected static function defineTableAttributes(): array
     {
         $attributes = [
@@ -221,9 +198,6 @@ class NotificationEmail extends EmailElement
         return $attributes;
     }
 
-    /**
-     * @inheritdoc
-     */
     protected static function defineSortOptions(): array
     {
         return [
@@ -234,9 +208,6 @@ class NotificationEmail extends EmailElement
         ];
     }
 
-    /**
-     * @inheritdoc
-     */
     protected static function defineActions(string $source = null): array
     {
         $actions = [];
@@ -293,8 +264,6 @@ class NotificationEmail extends EmailElement
     }
 
     /**
-     * @inheritdoc
-     *
      * @throws InvalidConfigException
      */
     public function getFieldLayout()
@@ -359,18 +328,12 @@ class NotificationEmail extends EmailElement
         parent::afterSave($isNew);
     }
 
-    /**
-     * @@inheritdoc
-     *
-     */
     public function getUriFormat()
     {
         return 'sprout/notifications/{slug}';
     }
 
     /**
-     * @inheritdoc
-     *
      * @throws Exception
      */
     public function getUrl()
@@ -437,9 +400,6 @@ class NotificationEmail extends EmailElement
         return Json::decode($this->settings);
     }
 
-    /**
-     * @inheritdoc
-     */
     public function getEmailTemplateId(): string
     {
         return $this->emailTemplateId ?? '';

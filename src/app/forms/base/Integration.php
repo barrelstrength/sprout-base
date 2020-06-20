@@ -66,9 +66,6 @@ abstract class Integration extends SavableComponent implements IntegrationInterf
         return $this->form;
     }
 
-    /**
-     * @inheritdoc
-     */
     public function settingsAttributes(): array
     {
         $attributes = parent::settingsAttributes();
@@ -77,9 +74,6 @@ abstract class Integration extends SavableComponent implements IntegrationInterf
         return $attributes;
     }
 
-    /**
-     * @inheritDoc
-     */
     public function getSuccessMessage()
     {
         if ($this->successMessage !== null) {
@@ -89,9 +83,6 @@ abstract class Integration extends SavableComponent implements IntegrationInterf
         return Craft::t('sprout', 'Success');
     }
 
-    /**
-     * @inheritDoc
-     */
     public function submit(): bool
     {
         return false;
@@ -227,9 +218,6 @@ abstract class Integration extends SavableComponent implements IntegrationInterf
         return $options;
     }
 
-    /**
-     * @inheritDoc
-     */
     public function getTargetIntegrationFieldsAsMappingOptions(): array
     {
         return [];
@@ -290,9 +278,6 @@ abstract class Integration extends SavableComponent implements IntegrationInterf
         $this->fieldMapping = $newFieldMapping;
     }
 
-    /**
-     * @inheritDoc
-     */
     public function getTargetIntegrationFieldValues(): array
     {
         if (!$this->fieldMapping) {

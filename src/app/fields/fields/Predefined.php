@@ -12,11 +12,6 @@ use Twig\Error\SyntaxError;
 use yii\base\Exception;
 use yii\db\Schema;
 
-/**
- *
- * @property string $contentColumnType
- * @property mixed $settingsHtml
- */
 class Predefined extends BasePredefinedField
 {
     /**
@@ -37,25 +32,17 @@ class Predefined extends BasePredefinedField
      */
     public $renderDynamically;
 
-    /**
-     * @inheritDoc
-     */
     public static function displayName(): string
     {
         return Craft::t('sprout', 'Predefined (Sprout Fields)');
     }
 
-    /**
-     * @inheritDoc
-     */
     public function getContentColumnType(): string
     {
         return Schema::TYPE_TEXT;
     }
 
     /**
-     * @inheritDoc
-     *
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
@@ -69,9 +56,6 @@ class Predefined extends BasePredefinedField
             ]);
     }
 
-    /**
-     * @inheritDoc
-     */
     public function normalizeValue($value, ElementInterface $element = null)
     {
         if ($value instanceof PredefinedFieldData) {
@@ -86,9 +70,6 @@ class Predefined extends BasePredefinedField
         return $predefinedFieldData;
     }
 
-    /**
-     * @inheritDoc
-     */
     public function serializeValue($value, ElementInterface $element = null)
     {
         if ($value instanceof PredefinedFieldData) {
@@ -99,8 +80,6 @@ class Predefined extends BasePredefinedField
     }
 
     /**
-     * @inheritDoc
-     *
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError

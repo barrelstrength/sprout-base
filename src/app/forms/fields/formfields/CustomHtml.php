@@ -20,14 +20,6 @@ use Twig\Markup;
 use yii\base\Exception;
 use yii\db\Schema;
 
-/**
- *
- * @property string $contentColumnType
- * @property string $svgIconPath
- * @property mixed $settingsHtml
- * @property array $compatibleCraftFields
- * @property mixed $exampleInputHtml
- */
 class CustomHtml extends FormField implements PreviewableFieldInterface
 {
     /**
@@ -55,41 +47,27 @@ class CustomHtml extends FormField implements PreviewableFieldInterface
         return Craft::t('sprout', 'Custom HTML');
     }
 
-    /**
-     * @inheritdoc
-     */
     public function isPlainInput(): bool
     {
         return true;
     }
 
-    /**
-     * @inheritdoc
-     */
     public function displayInstructionsField(): bool
     {
         return false;
     }
 
-    /**
-     * @inheritdoc
-     */
     public function getContentColumnType(): string
     {
         return Schema::TYPE_TEXT;
     }
 
-    /**
-     * @return string
-     */
     public function getSvgIconPath(): string
     {
         return '@sproutbaseassets/icons/code.svg';
     }
 
     /**
-     * @inheritdoc
-     *
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
@@ -105,8 +83,6 @@ class CustomHtml extends FormField implements PreviewableFieldInterface
     }
 
     /**
-     * @inheritdoc
-     *
      * @param                       $value
      * @param ElementInterface|null $element
      *
@@ -128,8 +104,6 @@ class CustomHtml extends FormField implements PreviewableFieldInterface
     }
 
     /**
-     * @inheritdoc
-     *
      * @return string
      * @throws LoaderError
      * @throws RuntimeError

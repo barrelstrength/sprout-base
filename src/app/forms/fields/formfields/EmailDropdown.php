@@ -34,17 +34,6 @@ use Twig\Markup;
 use yii\base\Exception;
 use yii\db\Schema;
 
-/**
- *
- * @property array $elementValidationRules
- * @property string $contentColumnType
- * @property string $svgIconPath
- * @property mixed $settingsHtml
- * @property array $compatibleCraftFields
- * @property array $compatibleCraftFieldTypes
- * @property array $compatibleConditions
- * @property mixed $exampleInputHtml
- */
 class EmailDropdown extends CraftDropdownField
 {
     use FormFieldTrait;
@@ -60,17 +49,11 @@ class EmailDropdown extends CraftDropdownField
         return Craft::t('sprout', 'Email Dropdown');
     }
 
-    /**
-     * @inheritdoc
-     */
     public function getContentColumnType(): string
     {
         return Schema::TYPE_STRING;
     }
 
-    /**
-     * @return string
-     */
     public function getSvgIconPath(): string
     {
         return '@sproutbaseassets/icons/share.svg';
@@ -103,8 +86,6 @@ class EmailDropdown extends CraftDropdownField
     }
 
     /**
-     * @inheritdoc
-     *
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
@@ -188,8 +169,6 @@ class EmailDropdown extends CraftDropdownField
     }
 
     /**
-     * @inheritdoc
-     *
      * @return string
      * @throws LoaderError
      * @throws RuntimeError
@@ -237,9 +216,6 @@ class EmailDropdown extends CraftDropdownField
         return TemplateHelper::raw($rendered);
     }
 
-    /**
-     * @inheritdoc
-     */
     public function getTableAttributeHtml($value, ElementInterface $element): string
     {
         $html = '';
@@ -251,9 +227,6 @@ class EmailDropdown extends CraftDropdownField
         return $html;
     }
 
-    /**
-     * @inheritdoc
-     */
     public function getElementValidationRules(): array
     {
         return ['validateEmailDropdown'];
@@ -294,9 +267,6 @@ class EmailDropdown extends CraftDropdownField
         }
     }
 
-    /**
-     * @inheritdoc
-     */
     public function getCompatibleCraftFieldTypes(): array
     {
         return [

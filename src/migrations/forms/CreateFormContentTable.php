@@ -34,9 +34,6 @@ class CreateFormContentTable extends Migration
         $this->addForeignKey($this->db->getForeignKeyName($this->tableName, 'siteId'), $this->tableName, 'siteId', '{{%sites}}', 'id', 'CASCADE', 'CASCADE');
     }
 
-    /**
-     * @inheritdoc
-     */
     public function safeDown(): bool
     {
         return false;

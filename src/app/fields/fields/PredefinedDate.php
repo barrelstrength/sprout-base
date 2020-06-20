@@ -15,31 +15,19 @@ use Twig\Error\SyntaxError;
 use yii\base\InvalidConfigException;
 use yii\db\Schema;
 
-/**
- * @property string $contentColumnType
- * @property mixed $settingsHtml
- */
 class PredefinedDate extends BasePredefinedField
 {
-    /**
-     * @inheritDoc
-     */
     public static function displayName(): string
     {
         return Craft::t('sprout', 'Predefined Date (Sprout Fields)');
     }
 
-    /**
-     * @inheritDoc
-     */
     public function getContentColumnType(): string
     {
         return Schema::TYPE_DATETIME;
     }
 
     /**
-     * @inheritDoc
-     *
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
@@ -54,8 +42,6 @@ class PredefinedDate extends BasePredefinedField
     }
 
     /**
-     * @inheritDoc
-     *
      * @throws Exception
      */
     public function normalizeValue($value, ElementInterface $element = null)
@@ -88,7 +74,6 @@ class PredefinedDate extends BasePredefinedField
     }
 
     /**
-     * @inheritdoc
      * @throws InvalidConfigException
      */
     public function getTableAttributeHtml($value, ElementInterface $element): string

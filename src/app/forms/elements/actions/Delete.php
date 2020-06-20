@@ -29,32 +29,24 @@ class Delete extends ElementAction
      */
     public $successMessage;
 
-    /**
-     * @inheritdoc
-     */
     public static function isDestructive(): bool
     {
         return true;
     }
 
-    /**
-     * @inheritdoc
-     */
     public function getTriggerLabel(): string
     {
         return Craft::t('sprout', 'Delete…');
     }
 
-    /**
-     * @inheritdoc
-     */
     public function getConfirmationMessage()
     {
         return Craft::t('sprout', 'Are you sure you want to delete the selected forms?');
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
+     *
      * @throws Throwable
      */
     public function performAction(ElementQueryInterface $query): bool

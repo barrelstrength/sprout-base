@@ -76,8 +76,6 @@ class Invisible extends FormField implements PreviewableFieldInterface
     }
 
     /**
-     * @inheritdoc
-     *
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
@@ -93,8 +91,6 @@ class Invisible extends FormField implements PreviewableFieldInterface
     }
 
     /**
-     * @inheritdoc
-     *
      * @param                       $value
      * @param ElementInterface|null $element
      *
@@ -121,8 +117,6 @@ class Invisible extends FormField implements PreviewableFieldInterface
     }
 
     /**
-     * @inheritdoc
-     *
      * @return string
      * @throws LoaderError
      * @throws RuntimeError
@@ -139,12 +133,11 @@ class Invisible extends FormField implements PreviewableFieldInterface
     }
 
     /**
-     * @inheritdoc
-     *
      * @param            $value
+     * @param Entry $entry
      * @param array|null $renderingOptions
      *
-     * @return string
+     * @return Markup
      * @throws Throwable
      */
     public function getFrontEndInputHtml($value, Entry $entry, array $renderingOptions = null): Markup
@@ -180,9 +173,6 @@ class Invisible extends FormField implements PreviewableFieldInterface
         return parent::normalizeValue($value, $element);
     }
 
-    /**
-     * @inheritdoc
-     */
     public function getTableAttributeHtml($value, ElementInterface $element): string
     {
         $hiddenValue = '';
@@ -194,9 +184,6 @@ class Invisible extends FormField implements PreviewableFieldInterface
         return $hiddenValue;
     }
 
-    /**
-     * @inheritdoc
-     */
     public function getCompatibleCraftFieldTypes(): array
     {
         return [
@@ -206,7 +193,6 @@ class Invisible extends FormField implements PreviewableFieldInterface
     }
 
     /**
-     * @return string
      * @throws Throwable
      */
     private function preProcessInvisibleValue(): string

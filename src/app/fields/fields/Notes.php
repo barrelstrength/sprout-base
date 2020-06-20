@@ -52,17 +52,12 @@ class Notes extends Field
         return Craft::t('sprout', 'Notes (Sprout Fields)');
     }
 
-    /**
-     * @inheritdoc
-     */
     public static function hasContentColumn(): bool
     {
         return false;
     }
 
     /**
-     * @inheritdoc
-     *
      * @throws Exception
      * @throws InvalidConfigException
      * @throws LoaderError
@@ -84,8 +79,6 @@ class Notes extends Field
     }
 
     /**
-     * @inheritdoc
-     *
      * @param                       $value
      * @param ElementInterface|null $element
      *

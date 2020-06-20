@@ -29,24 +29,19 @@ class MarkAsSpam extends ElementAction
      */
     public $successMessage;
 
-    /**
-     * @inheritdoc
-     */
     public function getTriggerLabel(): string
     {
         return Craft::t('sprout', 'Mark as Spam');
     }
 
-    /**
-     * @inheritdoc
-     */
     public function getConfirmationMessage()
     {
         return Craft::t('sprout', 'Are you sure you want to mark the selected form entries as Spam?');
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
+     *
      * @throws Throwable
      */
     public function performAction(ElementQueryInterface $query): bool

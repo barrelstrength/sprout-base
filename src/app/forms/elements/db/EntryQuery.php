@@ -59,9 +59,6 @@ class EntryQuery extends ElementQuery
 
     private $excludeSpam = true;
 
-    /**
-     * @inheritdoc
-     */
     public function __construct($elementType, array $config = [])
     {
         // Default orderBy
@@ -133,9 +130,6 @@ class EntryQuery extends ElementQuery
         return $this;
     }
 
-    /**
-     * @inheritdoc
-     */
     protected function beforePrepare(): bool
     {
         $this->joinElementTable('sproutforms_entries');
@@ -243,8 +237,6 @@ class EntryQuery extends ElementQuery
     }
 
     /**
-     * @inheritDoc
-     *
      * @throws InvalidConfigException
      */
     protected function customFields(): array

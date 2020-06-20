@@ -43,33 +43,22 @@ class DefaultMailer extends Mailer implements NotificationEmailSenderInterface
      */
     protected $lists = [];
 
-    /**
-     * @inheritdoc
-     */
     public static function displayName(): string
     {
         return 'Sprout Email';
     }
 
-    /**
-     * @inheritdoc
-     */
     public function getDescription(): string
     {
         return Craft::t('sprout', 'Smart transactional email, easy recipient management, and advanced third party integrations.');
     }
 
-    /**
-     * @inheritdoc
-     */
     public function hasCpSection(): bool
     {
         return true;
     }
 
     /**
-     * @inheritdoc
-     *
      * @param array $settings
      *
      * @return Markup
@@ -91,8 +80,6 @@ class DefaultMailer extends Mailer implements NotificationEmailSenderInterface
     }
 
     /**
-     * @inheritdoc
-     *
      * @param EmailElement $notificationEmail
      *
      * @return bool
@@ -213,17 +200,11 @@ class DefaultMailer extends Mailer implements NotificationEmailSenderInterface
         return true;
     }
 
-    /**
-     * @inheritdoc
-     */
     public function hasInlineRecipients(): bool
     {
         return true;
     }
 
-    /**
-     * @return bool
-     */
     public function hasLists(): bool
     {
         return (new Query())
@@ -233,10 +214,6 @@ class DefaultMailer extends Mailer implements NotificationEmailSenderInterface
             ->exists();
     }
 
-    /**
-     * @inheritdoc
-     *
-     */
     public function getLists(): array
     {
 //        if (empty($this->lists)) {

@@ -25,16 +25,6 @@ use Twig\Error\SyntaxError;
 use Twig\Markup;
 use yii\base\Exception;
 
-/**
- *
- * @property array $elementValidationRules
- * @property string $contentColumnType
- * @property string $svgIconPath
- * @property array $compatibleCraftFields
- * @property array $compatibleCraftFieldTypes
- * @property null|string $settingsHtml
- * @property string $exampleInputHtml
- */
 class Address extends FormField implements PreviewableFieldInterface
 {
     use AddressFieldTrait;
@@ -44,33 +34,21 @@ class Address extends FormField implements PreviewableFieldInterface
      */
     public $cssClasses;
 
-    /**
-     * @inheritdoc
-     */
     public static function displayName(): string
     {
         return Craft::t('sprout', 'Address');
     }
 
-    /**
-     * @inheritdoc
-     */
     public static function hasContentColumn(): bool
     {
         return false;
     }
 
-    /**
-     * @inheritdoc
-     */
     public function hasMultipleLabels(): bool
     {
         return true;
     }
 
-    /**
-     * @return string
-     */
     public function getSvgIconPath(): string
     {
         return '@sproutbaseassets/icons/map-marker-alt.svg';
@@ -237,9 +215,7 @@ class Address extends FormField implements PreviewableFieldInterface
         return true;
     }
 
-    /**
-     * @inheritdoc
-     */
+
     public function getCompatibleCraftFieldTypes(): array
     {
         /** @noinspection ClassConstantCanBeUsedInspection */

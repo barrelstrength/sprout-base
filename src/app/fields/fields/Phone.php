@@ -19,13 +19,6 @@ use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
 use yii\base\Exception;
 
-/**
- *
- * @property array $elementValidationRules
- * @property string $contentColumnType
- * @property mixed $settingsHtml
- * @property array $countries
- */
 class Phone extends Field implements PreviewableFieldInterface
 {
     /**
@@ -114,9 +107,6 @@ class Phone extends Field implements PreviewableFieldInterface
         return SproutBase::$app->phoneField->getInputHtml($this, $value);
     }
 
-    /**
-     * @inheritdoc
-     */
     public function getElementValidationRules(): array
     {
         $rules = parent::getElementValidationRules();
@@ -151,9 +141,6 @@ class Phone extends Field implements PreviewableFieldInterface
         }
     }
 
-    /**
-     * @inheritdoc
-     */
     public function getTableAttributeHtml($value, ElementInterface $element): string
     {
         $html = '';

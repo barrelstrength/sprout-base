@@ -40,49 +40,32 @@ class EntriesSave extends NotificationEvent
 
     public $availableSections;
 
-    /**
-     * @inheritdoc
-     */
     public function getEventClassName()
     {
         return Entry::class;
     }
 
-    /**
-     * @inheritdoc
-     */
     public function getEventName()
     {
         return Entry::EVENT_AFTER_SAVE;
     }
 
-    /**
-     * @inheritdoc
-     */
     public function getEventHandlerClassName()
     {
         return ModelEvent::class;
     }
 
-    /**
-     * @return string
-     */
     public function getName(): string
     {
         return Craft::t('sprout', 'When an entry is saved');
     }
 
-    /**
-     * @return string
-     */
     public function getDescription(): string
     {
         return Craft::t('sprout', 'Triggered when an entry is saved.');
     }
 
     /**
-     * @inheritdoc
-     *
      * @param array $settings
      *
      * @return string

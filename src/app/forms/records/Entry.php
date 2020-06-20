@@ -27,11 +27,6 @@ use yii\db\ActiveQueryInterface;
  */
 class Entry extends ActiveRecord
 {
-    /**
-     * @inheritdoc
-     *
-     * @return string
-     */
     public static function tableName(): string
     {
         return '{{%sproutforms_entries}}';

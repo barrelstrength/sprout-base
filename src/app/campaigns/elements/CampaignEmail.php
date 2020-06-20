@@ -120,49 +120,31 @@ class CampaignEmail extends EmailElement
         return 'campaignEmail';
     }
 
-    /**
-     * @inheritdoc
-     */
     public static function hasContent(): bool
     {
         return true;
     }
 
-    /**
-     * @inheritdoc
-     */
     public static function hasTitles(): bool
     {
         return true;
     }
 
-    /**
-     * @inheritdoc
-     */
     public static function hasUris(): bool
     {
         return true;
     }
 
-    /**
-     * @inheritdoc
-     */
     public static function isLocalized(): bool
     {
         return true;
     }
 
-    /**
-     * @inheritdoc
-     */
     public static function hasStatuses(): bool
     {
         return true;
     }
 
-    /**
-     * @inheritdoc
-     */
     public static function statuses(): array
     {
         return [
@@ -205,9 +187,6 @@ class CampaignEmail extends EmailElement
         return $html;
     }
 
-    /**
-     * @inheritdoc
-     */
     protected static function defineSources(string $context = null): array
     {
         $sources = [
@@ -238,9 +217,6 @@ class CampaignEmail extends EmailElement
         return $sources;
     }
 
-    /**
-     * @inheritdoc
-     */
     protected static function defineActions(string $source = null): array
     {
         $actions = [];
@@ -255,10 +231,6 @@ class CampaignEmail extends EmailElement
         return $actions;
     }
 
-
-    /**
-     * @inheritdoc
-     */
     protected static function defineTableAttributes(): array
     {
         $attributes = [
@@ -275,9 +247,6 @@ class CampaignEmail extends EmailElement
         return $attributes;
     }
 
-    /**
-     * @inheritdoc
-     */
     protected static function defineSortOptions(): array
     {
         return [
@@ -295,9 +264,6 @@ class CampaignEmail extends EmailElement
         ];
     }
 
-    /**
-     * @inheritdoc
-     */
     public function getCpEditUrl()
     {
         return UrlHelper::cpUrl(
@@ -305,9 +271,6 @@ class CampaignEmail extends EmailElement
         );
     }
 
-    /**
-     * @inheritdoc
-     */
     public function beforeSave(bool $isNew): bool
     {
         $campaignTypeId = $this->campaignTypeId;
@@ -577,9 +540,6 @@ class CampaignEmail extends EmailElement
         return null;
     }
 
-    /**
-     * @inheritdoc
-     */
     public function datetimeAttributes(): array
     {
         $names = parent::datetimeAttributes();
@@ -611,9 +571,6 @@ class CampaignEmail extends EmailElement
         return ($this->getMailer() && $this->isContentReady());
     }
 
-    /**
-     * @inheritdoc
-     */
     public function getEmailTemplateId(): string
     {
         return $this->getCampaignType()->emailTemplateId;

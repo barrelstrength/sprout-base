@@ -26,57 +26,36 @@ use yii\web\User;
  */
 class UsersLogin extends NotificationEvent
 {
-    /**
-     * @inheritdoc
-     */
     public function getEventClassName()
     {
         return User::class;
     }
 
-    /**
-     * @inheritdoc
-     */
     public function getEventName()
     {
         return User::EVENT_AFTER_LOGIN;
     }
 
-    /**
-     * @inheritdoc
-     */
     public function getEventHandlerClassName()
     {
         return UserEvent::class;
     }
 
-    /**
-     * @inheritdoc
-     */
     public function getName(): string
     {
         return Craft::t('sprout', 'When a user is logged in.');
     }
 
-    /**
-     * @inheritdoc
-     */
     public function getDescription(): string
     {
         return Craft::t('sprout', 'Triggered when a user is logged in.');
     }
 
-    /**
-     * @inheritdoc
-     */
     public function getEventObject()
     {
         return $this->event->user;
     }
 
-    /**
-     * @inheritdoc
-     */
     public function getMockEventObject()
     {
         $criteria = UserRecord::find();

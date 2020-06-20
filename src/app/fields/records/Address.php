@@ -30,8 +30,6 @@ use craft\gql\types\DateTime;
 class Address extends ActiveRecord
 {
     /**
-     * @inheritdoc
-     *
      * @return string
      */
     public static function tableName(): string

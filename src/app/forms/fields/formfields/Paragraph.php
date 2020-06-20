@@ -28,19 +28,6 @@ use Twig\Markup;
 use yii\base\Exception;
 use yii\db\Schema;
 
-/**
- * Class PlainText
- *
- * @package Craft
- *
- * @property string $contentColumnType
- * @property string $svgIconPath
- * @property null|string $settingsHtml
- * @property array $compatibleCraftFields
- * @property array $compatibleConditions
- * @property array $compatibleCraftFieldTypes
- * @property mixed $exampleInputHtml
- */
 class Paragraph extends FormField implements PreviewableFieldInterface
 {
     /**
@@ -68,17 +55,11 @@ class Paragraph extends FormField implements PreviewableFieldInterface
      */
     public $columnType = Schema::TYPE_TEXT;
 
-    /**
-     * @inheritdoc
-     */
     public static function displayName(): string
     {
         return Craft::t('sprout', 'Paragraph');
     }
 
-    /**
-     * @inheritdoc
-     */
     public function defineRules(): array
     {
         $rules = parent::defineRules();
@@ -88,17 +69,11 @@ class Paragraph extends FormField implements PreviewableFieldInterface
         return $rules;
     }
 
-    /**
-     * @inheritdoc
-     */
     public function getContentColumnType(): string
     {
         return $this->columnType;
     }
 
-    /**
-     * @inheritdoc
-     */
     public function normalizeValue($value, ElementInterface $element = null)
     {
         if ($value !== null) {

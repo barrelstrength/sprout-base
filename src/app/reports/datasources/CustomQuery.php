@@ -24,17 +24,11 @@ class CustomQuery extends DataSource
         return Craft::t('sprout', 'Custom Query');
     }
 
-    /**
-     * @inheritdoc
-     */
     public function getDescription(): string
     {
         return Craft::t('sprout', 'Create reports using a custom database query');
     }
 
-    /**
-     * @inheritdoc
-     */
     public function isAllowHtmlEditable(): bool
     {
         return true;

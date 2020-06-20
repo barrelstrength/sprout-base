@@ -64,9 +64,6 @@ class OptIn extends FormField implements PreviewableFieldInterface
      */
     public $optInValueWhenFalse;
 
-    /**
-     * @inheritdoc
-     */
     public static function displayName(): string
     {
         return Craft::t('sprout', 'Opt-in');
@@ -89,33 +86,22 @@ class OptIn extends FormField implements PreviewableFieldInterface
         parent::init();
     }
 
-    /**
-     * @inheritdoc
-     */
     public function displayLabel(): bool
     {
         return false;
     }
 
-    /**
-     * @inheritdoc
-     */
     public function displayInstructionsField(): bool
     {
         return false;
     }
 
-    /**
-     * @return string
-     */
     public function getSvgIconPath(): string
     {
         return '@sproutbaseassets/icons/check-square.svg';
     }
 
     /**
-     * @inheritdoc
-     *
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError

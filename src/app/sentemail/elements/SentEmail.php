@@ -101,42 +101,25 @@ class SentEmail extends Element
      */
     protected $fields;
 
-    /**
-     * @inheritdoc
-     */
     public static function displayName(): string
     {
         return Craft::t('sprout', 'Sent Email');
     }
 
-    /**
-     * @return string
-     */
     public static function pluralDisplayName(): string
     {
         return Craft::t('sprout', 'Sent Emails');
     }
 
-    /**
-     * @return ElementQueryInterface
-     */
     public static function find(): ElementQueryInterface
     {
         return new SentEmailQuery(static::class);
     }
 
     /**
-     * @param ElementQueryInterface $elementQuery
-     * @param array|null $disabledElementIds
-     * @param array $viewState
-     * @param string|null $sourceKey
-     * @param string|null $context
-     * @param bool $includeContainer
-     * @param bool $showCheckboxes
+     * @inheritDoc
      *
-     * @return string
      * @throws InvalidConfigException
-     *
      */
     public static function indexHtml(
         ElementQueryInterface $elementQuery, /** @noinspection PhpOptionalBeforeRequiredParametersInspection */
@@ -157,7 +140,7 @@ class SentEmail extends Element
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     protected static function defineSources(string $context = null): array
     {
@@ -172,17 +155,11 @@ class SentEmail extends Element
         return $sources;
     }
 
-    /**
-     * @inheritdoc
-     */
     protected static function defineSearchableAttributes(): array
     {
         return ['toEmail', 'emailSubject'];
     }
 
-    /**
-     * @inheritdoc
-     */
     protected static function defineSortOptions(): array
     {
         $attributes = [
@@ -192,9 +169,6 @@ class SentEmail extends Element
         return $attributes;
     }
 
-    /**
-     * @inheritdoc
-     */
     protected static function defineTableAttributes(): array
     {
         $attributes = [
@@ -214,7 +188,7 @@ class SentEmail extends Element
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     protected static function defineActions(string $source = null): array
     {
@@ -233,18 +207,13 @@ class SentEmail extends Element
         return $this->getLocaleNiceDateTime();
     }
 
-    /**
-     * @inheritdoc
-     */
     public function getIsEditable(): bool
     {
         return true;
     }
 
     /**
-     * @param string $attribute
-     *
-     * @return string
+     * @inheritDoc
      */
     public function getTableAttributeHtml(string $attribute): string
     {

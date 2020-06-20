@@ -16,49 +16,31 @@ use yii\base\Event;
 
 class EntriesDelete extends NotificationEvent
 {
-    /**
-     * @inheritdoc
-     */
     public function getEventClassName()
     {
         return Entry::class;
     }
 
-    /**
-     * @inheritdoc
-     */
     public function getEventName()
     {
         return Entry::EVENT_AFTER_DELETE;
     }
 
-    /**
-     * @inheritdoc
-     */
     public function getEventHandlerClassName()
     {
         return Event::class;
     }
 
-    /**
-     * @inheritdoc
-     */
     public function getName(): string
     {
         return Craft::t('sprout', 'When an entry is deleted');
     }
 
-    /**
-     * @inheritdoc
-     */
     public function getDescription(): string
     {
         return Craft::t('sprout', 'Triggered when an entry is deleted.');
     }
 
-    /**
-     * @inheritdoc
-     */
     public function getEventObject()
     {
         $event = $this->event ?? null;
@@ -66,9 +48,6 @@ class EntriesDelete extends NotificationEvent
         return $event->sender ?? null;
     }
 
-    /**
-     * @inheritdoc
-     */
     public function getMockEventObject()
     {
         $criteria = Entry::find();

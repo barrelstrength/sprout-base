@@ -24,11 +24,6 @@ use craft\db\ActiveRecord;
  */
 class Rules extends ActiveRecord
 {
-    /**
-     * @inheritdoc
-     *
-     * @return string
-     */
     public static function tableName(): string
     {
         return '{{%sproutforms_rules}}';

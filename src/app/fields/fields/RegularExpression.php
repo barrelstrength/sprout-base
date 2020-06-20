@@ -74,9 +74,6 @@ class RegularExpression extends Field implements PreviewableFieldInterface
         return SproutBase::$app->regularExpressionField->getInputHtml($this, $value, $element);
     }
 
-    /**
-     * @inheritdoc
-     */
     public function getElementValidationRules(): array
     {
         $rules = parent::getElementValidationRules();
@@ -105,7 +102,7 @@ class RegularExpression extends Field implements PreviewableFieldInterface
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function getTableAttributeHtml($value, ElementInterface $element): string
     {

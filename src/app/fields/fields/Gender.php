@@ -43,8 +43,6 @@ class Gender extends Field
     }
 
     /**
-     * @inheritdoc
-     *
      * @param                       $value
      * @param ElementInterface|null $element
      *

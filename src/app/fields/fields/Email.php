@@ -82,9 +82,6 @@ class Email extends Field implements PreviewableFieldInterface
         return SproutBase::$app->emailField->getInputHtml($this, $value, $element);
     }
 
-    /**
-     * @inheritdoc
-     */
     public function getElementValidationRules(): array
     {
         $rules = parent::getElementValidationRules();
@@ -131,9 +128,6 @@ class Email extends Field implements PreviewableFieldInterface
         }
     }
 
-    /**
-     * @inheritdoc
-     */
     public function getTableAttributeHtml($value, ElementInterface $element): string
     {
         $html = '';

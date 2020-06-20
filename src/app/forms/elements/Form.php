@@ -102,8 +102,6 @@ class Form extends Element
     }
 
     /**
-     * @inheritdoc
-     *
      * @return FormQuery The newly created [[FormQuery]] instance.
      */
     public static function find(): ElementQueryInterface
@@ -153,9 +151,6 @@ class Form extends Element
         return ['name', 'handle'];
     }
 
-    /**
-     * @inheritdoc
-     */
     protected static function defineSortOptions(): array
     {
         $attributes = [
@@ -214,9 +209,6 @@ class Form extends Element
         return SproutBase::$app->forms->getContentTableName($this);
     }
 
-    /**
-     * @inheritdoc
-     */
     public function getCpEditUrl()
     {
         return UrlHelper::cpUrl(
@@ -254,7 +246,8 @@ class Form extends Element
     }
 
     /**
-     * @inheritdoc
+     * @param bool $isNew
+     *
      * @throws Exception
      */
     public function afterSave(bool $isNew)
@@ -407,9 +400,6 @@ class Form extends Element
         return SproutBase::$app->formRules->getRulesByFormId($this->id, FieldRule::class, true);
     }
 
-    /**
-     * @inheritdoc
-     */
     protected function tableAttributeHtml(string $attribute): string
     {
         switch ($attribute) {

@@ -32,19 +32,6 @@ use Twig\Markup;
 use yii\base\Exception;
 use yii\db\Schema;
 
-/**
- * Class SingleLine
- *
- * @package Craft
- *
- * @property string $contentColumnType
- * @property string $svgIconPath
- * @property mixed $settingsHtml
- * @property array $compatibleCraftFields
- * @property array $compatibleCraftFieldTypes
- * @property array $compatibleConditions
- * @property mixed $exampleInputHtml
- */
 class SingleLine extends FormField implements PreviewableFieldInterface
 {
     /**
@@ -165,9 +152,6 @@ class SingleLine extends FormField implements PreviewableFieldInterface
             ]);
     }
 
-    /**
-     * @inheritdoc
-     */
     public function getContentColumnType(): string
     {
         return $this->columnType;

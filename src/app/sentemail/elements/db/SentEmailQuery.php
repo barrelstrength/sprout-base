@@ -11,14 +11,10 @@ use craft\elements\db\ElementQuery;
 
 class SentEmailQuery extends ElementQuery
 {
-    /**
-     * @inheritdoc
-     */
-    protected $defaultOrderBy = ['sproutemail_sentemail.dateCreated' => SORT_DESC];
+    protected $defaultOrderBy = [
+        'sproutemail_sentemail.dateCreated' => SORT_DESC
+    ];
 
-    /**
-     * @inheritdoc
-     */
     protected function beforePrepare(): bool
     {
         $this->joinElementTable('sproutemail_sentemail');

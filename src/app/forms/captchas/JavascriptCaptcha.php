@@ -27,24 +27,17 @@ class JavascriptCaptcha extends Captcha
     const JAVASCRIPT_CAPTCHA_INPUT_KEY = 'sprout-forms-jck';
     const JAVASCRIPT_CAPTCHA_VALUE_PREFIX = 'sprout-forms-jcv';
 
-    /**
-     * @inheritdoc
-     */
     public function getName(): string
     {
         return 'Javascript Captcha';
     }
 
-    /**
-     * @inheritdoc
-     */
     public function getDescription(): string
     {
         return Craft::t('sprout', 'Prevent a form from being submmitted if a user does not have JavaScript enabled');
     }
 
     /**
-     * @inheritdoc
      * @throws MissingComponentException
      */
     public function getCaptchaHtml(): string

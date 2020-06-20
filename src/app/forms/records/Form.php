@@ -41,11 +41,6 @@ class Form extends ActiveRecord
 
     private $oldRecord;
 
-    /**
-     * @inheritdoc
-     *
-     * @return string
-     */
     public static function tableName(): string
     {
         return '{{%sproutforms_forms}}';

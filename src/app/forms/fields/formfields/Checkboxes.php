@@ -55,8 +55,6 @@ class Checkboxes extends CraftCheckboxesField
     }
 
     /**
-     * @inheritDoc
-     *
      * @return string
      * @throws LoaderError
      * @throws RuntimeError

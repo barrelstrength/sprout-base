@@ -128,9 +128,6 @@ class Template extends Field implements PreviewableFieldInterface
             ]);
     }
 
-    /**
-     * @inheritdoc
-     */
     public function getElementValidationRules(): array
     {
         $rules[] = 'validateTemplate';
@@ -162,9 +159,6 @@ class Template extends Field implements PreviewableFieldInterface
 //        }
     }
 
-    /**
-     * @inheritdoc
-     */
     public function getTableAttributeHtml($value, ElementInterface $element): string
     {
         $html = '';

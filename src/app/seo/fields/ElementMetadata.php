@@ -27,12 +27,6 @@ use Twig\Error\SyntaxError;
 use yii\base\Exception;
 use yii\base\InvalidConfigException;
 
-/**
- *
- * @property array $elementValidationRules
- * @property string $contentColumnType
- * @property null|string $settingsHtml
- */
 class ElementMetadata extends Field
 {
     public $optimizedTitleField;
@@ -71,17 +65,11 @@ class ElementMetadata extends Field
         parent::__construct($config);
     }
 
-    /**
-     * @return string
-     */
     public static function displayName(): string
     {
         return Craft::t('sprout', 'Metadata (Sprout SEO)');
     }
 
-    /**
-     * @return string
-     */
     public function getContentColumnType(): string
     {
         return Schema::TYPE_TEXT;

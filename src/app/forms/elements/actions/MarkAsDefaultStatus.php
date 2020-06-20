@@ -42,17 +42,11 @@ class MarkAsDefaultStatus extends ElementAction
         $this->entryStatus = SproutBase::$app->formEntryStatuses->getDefaultEntryStatus();
     }
 
-    /**
-     * @inheritdoc
-     */
     public function getTriggerLabel(): string
     {
         return Craft::t('sprout', 'Mark as '.$this->entryStatus->name);
     }
 
-    /**
-     * @inheritdoc
-     */
     public function getConfirmationMessage()
     {
         return Craft::t('sprout', 'Are you sure you want to mark the selected form entries as {statusName}', [
@@ -61,7 +55,8 @@ class MarkAsDefaultStatus extends ElementAction
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
+     *
      * @throws Throwable
      */
     public function performAction(ElementQueryInterface $query): bool
