@@ -470,7 +470,7 @@ class ReportsController extends Controller
         if (!$report) {
             throw new ElementNotFoundException('Report not found');
         }
-        
+
         $dataSource = SproutBase::$app->dataSources->getDataSourceById($report->dataSourceId);
 
         if (!$dataSource) {

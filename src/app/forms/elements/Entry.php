@@ -359,18 +359,12 @@ class Entry extends Element
 
     public function __toString()
     {
-        try {
-            // @todo - For some reason the Title returns null possible Craft3 bug
-            // @todo - Why do we need to call populateElementContent?
-            Craft::$app->getContent()->populateElementContent($this);
+        // @todo - make this work like Entry Type Title Format
+        // We currently run populateElementContent to get the Title to reflect
+        // the Title Format setting. We should be able to do this in some other way.
+        Craft::$app->getContent()->populateElementContent($this);
 
-            $string = (string)$this->id ?: static::class;
-
-            return $this->title ?: $string;
-        } catch (\Exception $e) {
-            // return empty to avoid errors when form is deleted
-            return '';
-        }
+        return parent::__toString();
     }
 
     /**
