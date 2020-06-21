@@ -59,7 +59,7 @@ class Report extends Element
 
     public $emailColumn;
 
-    public $settings;
+    protected $settings = [];
 
     public $dataSourceId;
 
@@ -379,25 +379,25 @@ class Report extends Element
             throw new NotFoundHttpException('Data Source not found.');
         }
 
-        $settingsArray = Json::decode($this->settings);
+        $settingsArray = $this->getSettings();
 
         $settings = $dataSource->prepSettings($settingsArray);
 
         return Craft::$app->getView()->renderObjectTemplate($this->nameFormat, $settings);
     }
 
-    /**
-     * @return mixed
-     */
-    public function getSettings()
+    public function getSettings(): array
     {
-        $settings = $this->settings;
+        return $this->settings;
+    }
 
-        if (is_string($this->settings)) {
-            $settings = Json::decode($this->settings);
+    public function setSettings($settings)
+    {
+        if (is_array($settings)) {
+            $this->settings = $settings;
+        } else {
+            $this->settings = json_decode($settings, true) ?? [];
         }
-
-        return $settings;
     }
 
     /**
@@ -461,7 +461,7 @@ class Report extends Element
         $reportRecord->sortColumn = $this->sortColumn;
         $reportRecord->delimiter = $this->delimiter;
         $reportRecord->emailColumn = $this->emailColumn;
-        $reportRecord->settings = $this->settings;
+        $reportRecord->settings = $this->getSettings();
         $reportRecord->enabled = $this->enabled;
         $reportRecord->save(false);
 

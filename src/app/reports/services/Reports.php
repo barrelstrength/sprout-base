@@ -219,13 +219,14 @@ class Reports extends Component
      *
      * @return bool
      */
-    protected function validateSettings(Report $report): bool
+    public function validateSettings(Report $report): bool
     {
         $errors = [];
 
         $dataSource = $report->getDataSource();
 
-        if ($dataSource && !$dataSource->validateSettings($report->settings, $errors)) {
+        // @todo - update DataSource to use default settings validation behavior
+        if ($dataSource && !$dataSource->validateSettings($report->getSettings(), $errors)) {
             $report->addError('settings', $errors);
 
             return false;

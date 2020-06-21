@@ -16,7 +16,6 @@ use barrelstrength\sproutbase\SproutBase;
 use Craft;
 use craft\errors\ElementNotFoundException;
 use craft\errors\MissingComponentException;
-use craft\helpers\Json;
 use craft\helpers\UrlHelper;
 use craft\web\Controller;
 use craft\web\Request;
@@ -27,7 +26,6 @@ use yii\web\BadRequestHttpException;
 use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
-use function json_decode;
 
 class ReportsController extends Controller
 {
@@ -238,13 +236,9 @@ class ReportsController extends Controller
         $visualizations = SproutBase::$app->visualizations->getVisualizations();
         $visualizationOptions = array_merge([['value' => '', 'label' => 'None']], $visualizations);
 
-        // @todo - review visualization implementation of settings here. conflicts with $settings variable passed to template below
-        if (is_array($reportElement->settings) === false) {
-            $settings = json_decode($reportElement->settings, true);
-        } else {
-            // @todo - we shouldn't be accessing $report here that should be resolved above
-            $settings = $report->settings;
-        }
+        // @todo - review visualization implementation of settings here
+        //         conflicts with $settings variable passed to template below
+        $settings = $reportElement->getSettings();
 
         //determine if the report settings have the basic visualization settings
         if ($settings === null || array_key_exists('visualization', $settings) === false) {
@@ -313,39 +307,31 @@ class ReportsController extends Controller
 
         $request = Craft::$app->getRequest();
 
-        $reportElement = new Report();
-
         $reportId = $request->getBodyParam('reportId');
         $settings = $request->getBodyParam('settings');
 
-        if ($reportId && $settings) {
-            /** @var Report $reportElement */
-            $reportElement = Craft::$app->elements->getElementById($reportId, Report::class);
+        /** @var Report $report */
+        $report = Craft::$app->elements->getElementById($reportId, Report::class);
+        $report->setSettings($settings);
 
-            if (!$reportElement) {
-                throw new NotFoundHttpException('No report exists with the ID: '.$reportId);
-            }
-
-            $reportElement->settings = is_array($settings) ? $settings : [];
-
-            if (SproutBase::$app->reports->saveReport($reportElement)) {
-                Craft::$app->getSession()->setNotice(Craft::t('sprout', 'Query updated.'));
-
-                return $this->redirectToPostedUrl($reportElement);
-            }
+        if (!$report) {
+            throw new NotFoundHttpException('No report exists with the ID: '.$reportId);
         }
 
-        // Encode back to object after validation for getResults method to recognize option object
-        $reportElement->settings = Json::encode($reportElement->settings);
+        if (!SproutBase::$app->reports->saveReport($report)) {
+            Craft::$app->getSession()->setError(Craft::t('sprout', 'Could not update report.'));
 
-        Craft::$app->getSession()->setError(Craft::t('sprout', 'Could not update report.'));
+            // Send the report back to the template
+            Craft::$app->getUrlManager()->setRouteParams([
+                'report' => $report,
+            ]);
 
-        // Send the report back to the template
-        Craft::$app->getUrlManager()->setRouteParams([
-            'report' => $reportElement,
-        ]);
+            return null;
+        }
 
-        return null;
+        Craft::$app->getSession()->setNotice(Craft::t('sprout', 'Query updated.'));
+
+        return $this->redirectToPostedUrl($report);
     }
 
     /**
@@ -364,7 +350,9 @@ class ReportsController extends Controller
 
         $report = $this->prepareFromPost();
 
-        if (!Craft::$app->getElements()->saveElement($report)) {
+        SproutBase::$app->reports->validateSettings($report);
+
+        if ($report->hasErrors() || !Craft::$app->getElements()->saveElement($report)) {
             Craft::$app->getSession()->setError(Craft::t('sprout', 'Couldn’t save report.'));
 
             // Send the report back to the template
@@ -478,24 +466,28 @@ class ReportsController extends Controller
 
         /** @var Report $report */
         $report = Craft::$app->elements->getElementById($reportId, Report::class);
-        $settings = Craft::$app->getRequest()->getBodyParam('settings') ?? [];
 
-        if ($report) {
-            $dataSource = SproutBase::$app->dataSources->getDataSourceById($report->dataSourceId);
-
-            if ($dataSource) {
-                $date = date('Ymd-his');
-
-                // Name the report using the $report toString method that will check both nameFormat and name
-                $filename = $report.'-'.$date;
-
-                $dataSource->isExport = true;
-                $labels = $dataSource->getDefaultLabels($report, $settings);
-                $values = $dataSource->getResults($report, $settings);
-
-                SproutBase::$app->exports->toCsv($values, $labels, $filename, $report->delimiter);
-            }
+        if (!$report) {
+            throw new ElementNotFoundException('Report not found');
         }
+        
+        $dataSource = SproutBase::$app->dataSources->getDataSourceById($report->dataSourceId);
+
+        if (!$dataSource) {
+            throw new NotFoundHttpException('Report not found');
+        }
+
+        $date = date('Ymd-his');
+
+        // Name the report using the $report toString method that
+        // will check both nameFormat and name
+        $filename = $report.'-'.$date;
+
+        $dataSource->isExport = true;
+        $labels = $dataSource->getDefaultLabels($report);
+        $values = $dataSource->getResults($report);
+
+        SproutBase::$app->exports->toCsv($values, $labels, $filename, $report->delimiter);
     }
 
     /**
@@ -530,7 +522,7 @@ class ReportsController extends Controller
         $report->nameFormat = $request->getBodyParam('nameFormat');
         $report->handle = $request->getBodyParam('handle');
         $report->description = $request->getBodyParam('description');
-        $report->settings = is_array($settings) ? $settings : [];
+        $report->setSettings($settings);
         $report->dataSourceId = $request->getBodyParam('dataSourceId');
         $report->enabled = $request->getBodyParam('enabled', false);
         $report->groupId = $request->getBodyParam('groupId');

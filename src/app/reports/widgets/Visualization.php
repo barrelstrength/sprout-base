@@ -72,6 +72,7 @@ class Visualization extends Widget
     {
         $dataSource = null;
 
+        /** @var Report $report */
         $report = Craft::$app->elements->getElementById($this->reportId, Report::class);
 
         if ($report) {
@@ -86,8 +87,8 @@ class Visualization extends Widget
             $labels = array_keys($firstItemInArray);
         }
 
-        $settings = json_decode($report->settings, true);
 
+        $settings = $report->getSettings();
         $visualization = false;
 
         if (array_key_exists('visualization', $settings)) {
