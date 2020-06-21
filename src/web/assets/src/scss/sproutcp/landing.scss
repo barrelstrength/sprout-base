@@ -1,4 +1,13 @@
-/* Override Default Craft Header */
+// Update default styles on landing page only
+html {
+    background-color: #fff;
+}
+
+#content {
+    box-shadow: none;
+}
+
+// Override Default Craft Header
 .sprout-landing-page #global-header,
 .sprout-landing-page header#header h1 {
     display: none !important;

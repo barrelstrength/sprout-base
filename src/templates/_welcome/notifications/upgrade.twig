@@ -3,7 +3,7 @@
 
 {% set title = "Upgrade to Sprout Email Pro"|t('sprout-sent-email') %}
 {% set bodyClass = 'sprout-landing-page' %}
-{% set assetUrl = view.getAssetManager().getPublishedUrl('@sproutbaseassets/sprout/screenshots', true) -%}
+{% set assetUrl = view.getAssetManager().getPublishedUrl('@sproutbase/web/assets/sprout/screenshots/', true) -%}
 {% set pluginStoreLink = currentUser.admin ? cpUrl('plugin-store/sprout-email') : 'https://plugins.craftcms.com/sprout-email' %}
 
 {% block content %}
@@ -22,7 +22,7 @@
         }) }}
 
         {{ sproutCp.featureImage({
-            imageUrl: assetUrl ~ '/email/sprout-email-feature.png',
+            imageUrl: assetUrl ~ '/notifications/sprout-email-feature.png',
             altText: 'Sprout Email for Craft CMS'|t('sprout-email')
         }) }}
 
