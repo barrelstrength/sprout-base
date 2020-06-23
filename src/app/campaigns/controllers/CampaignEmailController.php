@@ -130,21 +130,12 @@ class CampaignEmailController extends Controller
 
         $campaignEmail = $this->getCampaignEmailModel();
 
-        if (isset($campaignEmail)) {
-            $campaignEmail = $this->populateCampaignEmailModel($campaignEmail);
-        }
+        $campaignEmail = $this->populateCampaignEmailModel($campaignEmail);
 
-        if (Craft::$app->getRequest()->getBodyParam('saveAsNew')) {
-            $campaignEmail->saveAsNew = true;
-            $campaignEmail->id = null;
-        }
-
-        $session = Craft::$app->getSession();
-
-        if ($session and SproutBase::$app->campaignEmails->saveCampaignEmail($campaignEmail)) {
-            $session->setNotice(Craft::t('sprout', 'Campaign Email saved.'));
+        if (SproutBase::$app->campaignEmails->saveCampaignEmail($campaignEmail)) {
+            Craft::$app->getSession()->setNotice(Craft::t('sprout', 'Campaign Email saved.'));
         } else {
-            $session->setError(Craft::t('sprout', 'Could not save Campaign Email.'));
+            Craft::$app->getSession()->setError(Craft::t('sprout', 'Could not save Campaign Email.'));
 
             Craft::$app->getUrlManager()->setRouteParams([
                 'campaignEmail' => $campaignEmail,
@@ -426,10 +417,14 @@ class CampaignEmailController extends Controller
         }
 
         $fieldsLocation = Craft::$app->getRequest()->getParam('fieldsLocation', 'fields');
-
         $campaignEmail->setFieldValuesFromRequest($fieldsLocation);
 
         $campaignEmail->listSettings = Craft::$app->getRequest()->getBodyParam('lists');
+
+        if (Craft::$app->getRequest()->getBodyParam('saveAsNew')) {
+            $campaignEmail->saveAsNew = true;
+            $campaignEmail->id = null;
+        }
 
         return $campaignEmail;
     }

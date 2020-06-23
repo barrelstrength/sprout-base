@@ -80,20 +80,19 @@ class CampaignEmails extends Component
         if ($campaignEmail->saveAsNew) {
             // Prevent subjectLine to be appended by a number
             $campaignEmailRecord->subjectLine = $campaignEmail->subjectLine;
-
             $campaignEmail->title = $campaignEmail->subjectLine;
         }
 
         $campaignEmail->addErrors($campaignEmailRecord->getErrors());
 
-        if (!$campaignEmail->hasErrors()) {
-            try {
-                if (!Craft::$app->getElements()->saveElement($campaignEmail, false)) {
-                    return false;
-                }
-            } catch (\Exception $e) {
-                throw $e;
-            }
+        if ($campaignEmail->hasErrors()) {
+            return false;
+        }
+
+        try {
+            Craft::$app->getElements()->saveElement($campaignEmail, false);
+        } catch (\Exception $e) {
+            throw $e;
         }
 
         return true;
