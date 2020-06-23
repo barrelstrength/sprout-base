@@ -378,6 +378,24 @@ class CampaignEmail extends EmailElement
     }
 
     /**
+     * @inheritDoc
+     * @throws InvalidConfigException
+     */
+    public function getFieldLayout()
+    {
+        if (($fieldLayout = parent::getFieldLayout()) !== null) {
+            return $fieldLayout;
+        }
+        try {
+            $campaignType = $this->getCampaignType();
+        } catch (InvalidConfigException $e) {
+            // The campaign type was probably deleted
+            return null;
+        }
+        return $campaignType->getFieldLayout();
+    }
+
+    /**
      * @return bool
      */
     public function isContentReady(): bool
