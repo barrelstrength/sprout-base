@@ -13,6 +13,7 @@ use barrelstrength\sproutbase\SproutBase;
 use Craft;
 use craft\base\ElementInterface;
 use craft\helpers\ElementHelper;
+use craft\helpers\Json;
 use craft\web\Controller;
 use Throwable;
 use Twig\Error\LoaderError;
@@ -145,6 +146,47 @@ class CampaignEmailController extends Controller
         }
 
         return $this->redirectToPostedUrl($campaignEmail);
+    }
+
+    public function actionDeleteCampaignEmail()
+    {
+        $this->requirePostRequest();
+        $this->requirePermission('sprout:campaigns:editCampaigns');
+
+        $emailId = Craft::$app->getRequest()->getBodyParam('emailId');
+
+        /** @var CampaignEmail $campaignEmail */
+        $campaignEmail = Craft::$app->getElements()->getElementById($emailId, CampaignEmail::class);
+
+        if (!$campaignEmail) {
+            throw new InvalidArgumentException('No Campaign Email exists with the ID: '.$emailId);
+        }
+
+        if (!Craft::$app->getElements()->deleteElementById($emailId, CampaignEmail::class)) {
+
+            if (Craft::$app->getRequest()->getIsAjax()) {
+                return $this->asJson(['success' => false]);
+            }
+
+            Craft::info(Json::encode($campaignEmail->getErrors()), __METHOD__);
+
+            Craft::$app->getSession()->setNotice(Craft::t('sprout', 'Couldn’t delete campaign email.'));
+
+            // Send the entry back to the template
+            Craft::$app->getUrlManager()->setRouteParams([
+                'campaignEmail' => $campaignEmail,
+            ]);
+
+            return false;
+        }
+
+        if (Craft::$app->getRequest()->getIsAjax()) {
+            return $this->asJson(['success' => true]);
+        }
+
+        Craft::$app->getSession()->setNotice(Craft::t('sprout', 'Notification deleted.'));
+
+        return $this->redirectToPostedUrl();
     }
 
     /**
