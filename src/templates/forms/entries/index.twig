@@ -7,11 +7,11 @@
 {% set elementType = 'barrelstrength\\sproutbase\\app\\forms\\elements\\Entry' %}
 
 {% block actionButton %}
-    {% if not isPro %}
+    {% if config.isUpgradable() %}
         <div class="buttons">
             {{ sproutCp.upgradeToProButton({
-                url: cpUrl('sprout/upgrade/forms'),
-                title: "Upgrade to Sprout Forms PRO to manage Unlimited Forms"|t('sprout')
+                url: config.getUpgradeUrl(),
+                title: config.getUpgradeMessage()
             }) }}
         </div>
     {% endif %}

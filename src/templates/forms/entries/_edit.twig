@@ -6,8 +6,6 @@
 
 {% set selectedSubnavItem = 'entries' %}
 
-{% set canCreateForm = sprout.app.forms.canCreateForm() %}
-
 {% set crumbs = [
     { label: "Entries"|t('sprout'), url: cpUrl('sprout/forms/entries') }
 ] %}
@@ -38,12 +36,13 @@
             </div>
         {% endif %}
 
-        {% if not canCreateForm %}
+        {% if config.isUpgradable() %}
             {{ sproutCp.upgradeToProButton({
-                url: cpUrl('sprout/upgrade/forms'),
-                title: "Upgrade to Sprout Forms PRO to manage Unlimited Forms"|t('sprout')
+                url: config.getUpgradeUrl(),
+                title: config.getUpgradeMessage()
             }) }}
         {% endif %}
+
     </div>
 {% endblock %}
 

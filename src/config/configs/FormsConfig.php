@@ -55,6 +55,11 @@ class FormsConfig extends Config
         return Craft::t('sprout', 'Form builder and entry management');
     }
 
+    public function getUpgradeMessage(): string
+    {
+        return Craft::t('sprout', 'Upgrade to Sprout Forms PRO to manage Unlimited Forms');
+    }
+
     public function createSettingsModel()
     {
         return new FormsSettings();

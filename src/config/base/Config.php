@@ -183,5 +183,10 @@ abstract class Config extends Component implements ConfigInterface
     {
         return UrlHelper::cpUrl('sprout/upgrade/'.static::getKey());
     }
+
+    public function getUpgradeMessage(): string
+    {
+        return '';
+    }
 }
 

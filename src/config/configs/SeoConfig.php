@@ -38,6 +38,11 @@ class SeoConfig extends Config
         return Craft::t('sprout', 'Manage SEO metadata');
     }
 
+    public function getUpgradeMessage(): string
+    {
+        return Craft::t('sprout', 'Upgrade to Sprout SEO PRO to enable multiple Metadata field mappings, manage redirects, and generate sitemaps.');
+    }
+
     public function createSettingsModel()
     {
         return new SeoSettings();

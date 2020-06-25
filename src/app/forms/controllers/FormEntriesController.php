@@ -68,10 +68,10 @@ class FormEntriesController extends BaseController
             return Craft::$app->getResponse()->redirect(UrlHelper::cpUrl('sprout/forms'));
         }
 
-        $isPro = SproutBase::$app->config->isEdition('forms', Config::EDITION_PRO);
+        $config = SproutBase::$app->config->getConfigByKey('forms');
 
         return $this->renderTemplate('sprout/forms/entries/index', [
-            'isPro' => $isPro,
+            'config' => $$config,
         ]);
     }
 
@@ -154,6 +154,7 @@ class FormEntriesController extends BaseController
 
         $variables['tabs'] = $tabs;
         $variables['fieldLayoutTabs'] = $fieldLayoutTabs;
+        $variables['config'] = SproutBase::$app->config->getConfigByKey('forms');
 
         return $this->renderTemplate('sprout/forms/entries/_edit', $variables);
     }

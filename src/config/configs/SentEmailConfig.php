@@ -91,10 +91,11 @@ class SentEmailConfig extends Config
 
     public function setEdition()
     {
+        $sproutCampaignsIsPro = SproutBase::$app->config->isPluginEdition('sprout-campaigns', Config::EDITION_PRO);
         $sproutSentEmailIsPro = SproutBase::$app->config->isPluginEdition('sprout-sent-email', Config::EDITION_PRO);
         $sproutEmailIsPro = SproutBase::$app->config->isPluginEdition('sprout-email', Config::EDITION_PRO);
 
-        if ($sproutEmailIsPro || $sproutSentEmailIsPro) {
+        if ($sproutEmailIsPro || $sproutSentEmailIsPro || $sproutCampaignsIsPro) {
             $this->_edition = Config::EDITION_PRO;
         }
     }
