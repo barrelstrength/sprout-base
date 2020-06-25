@@ -185,6 +185,11 @@ class PreviewController extends Controller
             $variables['object'] = $email->getEventObject();
         }
 
+        // @todo - review logic
+        // Using verbatim fixes an issue if you are trying to output markdown with
+        // twig code examples. explore a a better way to do this, the normal
+        // element page renders fine so this shouldn't be necessary
+//        $output = Craft::$app->getView()->renderString('{% verbatim %}'.$output.'{% endverbatim %}', $variables);
         $output = Craft::$app->getView()->renderString($output, $variables);
 
         // Output it into a buffer, in case TasksService wants to close the connection prematurely
