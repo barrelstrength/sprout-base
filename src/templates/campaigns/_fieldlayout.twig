@@ -2,7 +2,6 @@
 {% from "_includes/forms" import textareaField %}
 
 {% if campaignEmail.getErrors('subjectLine') %}
-
     {% set subjectLineError = ['Subject Line cannot be blank.'|t('sprout')] %}
 {% endif %}
 
