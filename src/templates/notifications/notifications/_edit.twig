@@ -93,10 +93,10 @@
 
         </div>
 
-        {% if not isPro %}
+        {% if config.getEnableUpgradeMessages() and config.isUpgradable() %}
             {{ sproutCp.upgradeToProButton({
-                url: cpUrl('sprout/upgrade/email'),
-                title: "Upgrade to Sprout Sent Email PRO to manage Resend Emails"|t('sprout')
+                url: config.getUpgradeUrl(),
+                title: config.getUpgradeMessage()
             }) }}
         {% endif %}
     </div>
@@ -208,7 +208,7 @@
         {% if events|length %}
 
             {% set upgradeDescriptionEventId = '' %}
-            {% if not isPro %}
+            {% if not config.getIsPro() %}
                 {% set upgradeDescriptionEventId = ' <strong>Upgrade to PRO</strong> to use all Notification Events. '|t('sprout') %}
             {% endif %}
 

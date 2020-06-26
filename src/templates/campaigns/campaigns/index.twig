@@ -29,6 +29,13 @@
                     href="{{ url('sprout/settings/campaigns/campaign-types/edit/new') }}">{{ "New Campaign Type"|t('sprout') }}</a>
 
             {% endif %}
+
+            {% if config.getEnableUpgradeMessages() and config.isUpgradable() %}
+                {{ sproutCp.upgradeToProButton({
+                    url: config.getUpgradeUrl(),
+                    title: config.getUpgradeMessage()
+                }) }}
+            {% endif %}
         </div>
     </div>
 {% endblock %}

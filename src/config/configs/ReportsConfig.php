@@ -35,6 +35,11 @@ class ReportsConfig extends Config
         return Craft::t('sprout', 'View and manage reports');
     }
 
+    public function getUpgradeMessage(): string
+    {
+        return Craft::t('sprout', 'Upgrade to Sprout Reports PRO to access unlimited data sources and create visualizations.');
+    }
+
     public function createSettingsModel()
     {
         return new ReportsSettings();

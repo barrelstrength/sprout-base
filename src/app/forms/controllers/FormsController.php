@@ -80,7 +80,6 @@ class FormsController extends BaseController
 
         $form = SproutBase::$app->forms->getFormById($formId);
 
-        $isPro = SproutBase::$app->config->isEdition('forms', Config::EDITION_PRO);
         $config = SproutBase::$app->config->getConfigByKey('forms');
 
         return $this->renderTemplate('sprout/forms/forms/_settings/'.$subNavKey, [
@@ -91,7 +90,7 @@ class FormsController extends BaseController
             'rules' => SproutBase::$app->formRules->getRulesByFormId($formId),
             'ruleOptions' => SproutBase::$app->formRules->getRuleOptions(),
             'integrations' => SproutBase::$app->formIntegrations->getIntegrationsByFormId($formId),
-            'isPro' => $isPro,
+            'config' => $config,
         ]);
     }
 

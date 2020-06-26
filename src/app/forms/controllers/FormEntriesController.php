@@ -71,7 +71,7 @@ class FormEntriesController extends BaseController
         $config = SproutBase::$app->config->getConfigByKey('forms');
 
         return $this->renderTemplate('sprout/forms/entries/index', [
-            'config' => $$config,
+            'config' => $config,
         ]);
     }
 

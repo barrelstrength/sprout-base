@@ -35,6 +35,15 @@
         <a id="modify-settings-icon" class="btn" data-icon="settings"></a>
     {% endif %}
 
+    {% if config.getEnableUpgradeMessages() and config.isUpgradable() %}
+        <div class="buttons">
+            {{ sproutCp.upgradeToProButton({
+                url: config.getUpgradeUrl(),
+                title: config.getUpgradeMessage()
+            }) }}
+        </div>
+    {% endif %}
+
 {% endblock %}
 
 {% block content %}

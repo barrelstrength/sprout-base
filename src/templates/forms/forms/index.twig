@@ -15,7 +15,7 @@
         <a id="create-new-form" class="btn submit add icon {% if not canCreateForm %}sprout-disabled{% endif %}"
             href="{{ cpUrl('sprout/forms/new') }}">{{ "New Form"|t('sprout') }}</a>
 
-        {% if config.isUpgradable() %}
+        {% if config.getEnableUpgradeMessages() and config.isUpgradable() %}
             {{ sproutCp.upgradeToProButton({
                 url: config.getUpgradeUrl(),
                 title: config.getUpgradeMessage()

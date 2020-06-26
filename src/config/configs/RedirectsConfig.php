@@ -38,6 +38,11 @@ class RedirectsConfig extends Config
         return Craft::t('sprout', 'Manage redirects and track 404s');
     }
 
+    public function getUpgradeMessage(): string
+    {
+        return Craft::t('sprout', 'Upgrade to Sprout Redirects PRO to manage Unlimited Redirects.');
+    }
+
     public function getConfigGroup()
     {
         return new SeoConfig();

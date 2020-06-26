@@ -47,10 +47,10 @@
             {% endif %}
         </div>
 
-        {% if not isPro %}
+        {% if config.getEnableUpgradeMessages() and config.isUpgradable() %}
             {{ sproutCp.upgradeToProButton({
-                url: cpUrl('sprout/upgrade/sent-email'),
-                title: "Upgrade to Sprout Sent Email PRO to manage Resend Emails"|t('sprout')
+                url: config.getUpgradeUrl(),
+                title: config.getUpgradeMessage()
             }) }}
         {% endif %}
     </div>

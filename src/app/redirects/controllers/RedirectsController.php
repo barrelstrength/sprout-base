@@ -45,12 +45,12 @@ class RedirectsController extends Controller
             throw new ForbiddenHttpException('Unable to find site');
         }
 
-        $isPro = SproutBase::$app->config->isEdition('redirects', Config::EDITION_PRO);
+        $config = SproutBase::$app->config->getConfigByKey('redirects');
         $canCreateRedirects = SproutBase::$app->redirects->canCreateRedirects();
 
         return $this->renderTemplate('sprout/redirects/redirects/index', [
             'currentSite' => $currentSite,
-            'isPro' => $isPro,
+            'config' => $config,
             'canCreateRedirects' => $canCreateRedirects,
         ]);
     }
@@ -126,7 +126,7 @@ class RedirectsController extends Controller
             ],
         ];
 
-        $isPro = SproutBase::$app->config->isEdition('redirects', Config::EDITION_PRO);
+        $config = SproutBase::$app->config->getConfigByKey('redirects');
 
         return $this->renderTemplate('sprout/redirects/redirects/_edit', [
             'currentSite' => $currentSite,
@@ -136,7 +136,7 @@ class RedirectsController extends Controller
             'tabs' => $tabs,
             'continueEditingUrl' => $continueEditingUrl,
             'saveAsNewUrl' => $saveAsNewUrl,
-            'isPro' => $isPro,
+            'config' => $config,
         ]);
     }
 

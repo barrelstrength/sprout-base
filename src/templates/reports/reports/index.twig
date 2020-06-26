@@ -36,10 +36,10 @@
             </div>
         {% endif %}
 
-        {% if config.getEnableUpgradeMessages() and not config.getIsPro() %}
+        {% if config.getEnableUpgradeMessages() and config.isUpgradable() %}
             {{ sproutCp.upgradeToProButton({
                 url: config.getUpgradeUrl(),
-                title: "Upgrade to Sprout Reports PRO to access unlimited data sources and create visualizations."|t('sprout')
+                title: config.getUpgradeMessage()
             }) }}
         {% endif %}
 

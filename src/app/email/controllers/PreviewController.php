@@ -132,7 +132,7 @@ class PreviewController extends Controller
         $email = Craft::$app->getElements()->getElementById($emailId);
 
         if (!$email instanceof EmailElement) {
-            throw new ElementNotFoundException('Email not found using id '.$$emailId);
+            throw new ElementNotFoundException('Email not found using id '.$emailId);
         }
 
         $email->preparePreviewEmailElement($email);

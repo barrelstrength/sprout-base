@@ -36,11 +36,12 @@
 {% set docTitle = navItems[selectedTabHandle].title~' - '~title %}
 
 {% block actionButton %}
-    {% if not isPro %}
+
+    {% if config.getEnableUpgradeMessages() and config.isUpgradable() %}
         <div class="buttons">
             {{ sproutCp.upgradeToProButton({
-                url: cpUrl('sprout/upgrade/seo'),
-                title: "Upgrade to Sprout SEO to manage Unlimited Custom Metadata Mappings, Redirects, and XML Sitemaps."|t('sprout')
+                url: config.getUpgradeUrl(),
+                title: config.getUpgradeMessage()
             }) }}
         </div>
     {% endif %}

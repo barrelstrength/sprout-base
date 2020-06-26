@@ -27,11 +27,11 @@ use yii\web\Response;
 
 class NotificationsController extends Controller
 {
-    private $isPro;
+    private $_config;
 
     public function init()
     {
-        $this->isPro = SproutBase::$app->config->isEdition('notifications', Config::EDITION_PRO);
+        $this->_config = SproutBase::$app->config->getConfigByKey('notifications');
     }
 
     /**
@@ -43,7 +43,7 @@ class NotificationsController extends Controller
         $this->requirePermission('sprout:email:viewNotifications');
 
         return $this->renderTemplate('sprout/notifications/notifications/index', [
-            'isPro' => $this->isPro,
+            'config' => $this->_config,
         ]);
     }
 
@@ -72,7 +72,7 @@ class NotificationsController extends Controller
             'emailId' => $emailId,
             'notificationEmail' => $notificationEmail,
             'isNewNotificationEmail' => $isNewNotificationEmail,
-            'isPro' => $this->isPro,
+            'config' => $this->_config,
         ]);
     }
 
@@ -158,7 +158,7 @@ class NotificationsController extends Controller
             $eventOptions[] = [
                 'label' => $event->getName(),
                 'value' => $eventClass,
-                'disabled' => !$this->isPro && !in_array($eventClass, $allowedNotificationEventTypes, true),
+                'disabled' => !$this->_config && !in_array($eventClass, $allowedNotificationEventTypes, true),
             ];
         }
 
@@ -169,7 +169,7 @@ class NotificationsController extends Controller
             'tabs' => $tabs,
             'showPreviewBtn' => $showPreviewBtn,
             'shareUrl' => $shareUrl,
-            'isPro' => $this->isPro,
+            'config' => $this->_config,
         ]);
     }
 

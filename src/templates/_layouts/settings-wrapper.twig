@@ -9,7 +9,7 @@
         {% include actionButtonTemplate %}
     {% endif %}
 
-    {% if sproutConfig.isUpgradable() %}
+    {% if sproutConfig.getEnableUpgradeMessages() and sproutConfig.isUpgradable() %}
         {{ sproutCp.upgradeToProButton({
             url: sproutConfig.getUpgradeUrl()
         }) }}

@@ -40,10 +40,10 @@ class CampaignEmailController extends Controller
     {
         $this->requirePermission('sprout:campaigns:editCampaigns');
 
-        $isPro = SproutBase::$app->config->isEdition('campaigns', Config::EDITION_PRO);
+        $config = SproutBase::$app->config->getConfigByKey('campaigns');
 
         return $this->renderTemplate('sprout/campaigns/campaigns/index', [
-            'isPro' => $isPro,
+            'config' => $config,
         ]);
     }
 
@@ -97,6 +97,8 @@ class CampaignEmailController extends Controller
 
         $tabs = count($campaignEmail->getFieldLayoutTabs()) ? $campaignEmail->getFieldLayoutTabs() : $tabs;
 
+        $config = SproutBase::$app->config->getConfigByKey('campaigns');
+
         return $this->renderTemplate('sprout/campaigns/campaigns/_edit', [
             'campaignEmail' => $campaignEmail,
             'emailId' => $emailId,
@@ -104,6 +106,7 @@ class CampaignEmailController extends Controller
             'campaignType' => $campaignType,
             'showPreviewBtn' => $showPreviewBtn,
             'tabs' => $tabs,
+            'config' => $config
         ]);
     }
 

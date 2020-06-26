@@ -332,11 +332,11 @@ class OptimizeMetadata extends Component
 
         Craft::$app->view->setTemplatesPath($sproutSeoTemplatesPath);
 
-        $isPro = SproutBase::$app->config->isEdition('seo', Config::EDITION_PRO);
+        $config = SproutBase::$app->config->getConfigByKey('seo');
 
         $output = Craft::$app->view->renderTemplate('_special/metadata', [
             'metadata' => $metadata,
-            'isPro' => $isPro,
+            'config' => $config,
         ]);
 
         Craft::$app->view->setTemplatesPath(Craft::$app->path->getSiteTemplatesPath());

@@ -41,10 +41,10 @@
                 </ul>
             </div>
         </div>
-        {% if not isPro %}
+        {% if config.getEnableUpgradeMessages() and config.isUpgradable() %}
             {{ sproutCp.upgradeToProButton({
-                url: cpUrl('sprout-redirects/upgrade'),
-                title: "Upgrade to Sprout Redirects PRO to manage Unlimited Redirects"|t('sprout')
+                url: config.getUpgradeUrl(),
+                title: config.getUpgradeMessage()
             }) }}
         {% endif %}
     </div>

@@ -76,7 +76,7 @@
             {% endif %}
         </div>
 
-        {% if config.isUpgradable() %}
+        {% if config.getEnableUpgradeMessages() and config.isUpgradable() %}
             {{ sproutCp.upgradeToProButton({
                 url: config.getUpgradeUrl(),
                 title: config.getUpgradeMessage()

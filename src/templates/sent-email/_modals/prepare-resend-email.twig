@@ -45,7 +45,7 @@
             </div>
         {% endif %}
 
-        {% if not isPro %}
+        {% if config.getEnableUpgradeMessages() and config.isUpgradable() %}
             {{ sproutCp.upgradeToProCallout({
                 message: '<a href="'~cpUrl('sprout/upgrade/sent-email')~'">Upgrade to PRO</a> to resend email to users.'
             }) }}

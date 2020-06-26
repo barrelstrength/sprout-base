@@ -38,6 +38,11 @@ class SentEmailConfig extends Config
         return Craft::t('sprout', 'Track sent emails and resend messages');
     }
 
+    public function getUpgradeMessage(): string
+    {
+        return Craft::t('sprout', 'Upgrade to Sprout Sent Email PRO to manage Resend Emails.');
+    }
+
     public function getConfigGroup()
     {
         return new NotificationsConfig();

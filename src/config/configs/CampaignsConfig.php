@@ -42,6 +42,11 @@ class CampaignsConfig extends Config
         return Craft::t('sprout', 'Manage and send email marketing campaigns');
     }
 
+    public function getUpgradeMessage(): string
+    {
+        return Craft::t('sprout', 'Upgrade to Sprout Campaigns PRO to manage unlimited Campaigns using custom integrations.');
+    }
+
     public function getConfigGroup()
     {
         return new NotificationsConfig();

@@ -47,6 +47,11 @@ class NotificationsConfig extends Config
         return Craft::t('sprout', 'Manage and send notifications');
     }
 
+    public function getUpgradeMessage(): string
+    {
+        return Craft::t('sprout', 'Upgrade to Sprout Email PRO to send personalized notification emails using unlimited Notification Events.');
+    }
+
     public static function groupName(): string
     {
         return Craft::t('sprout', 'Email');

@@ -7,7 +7,7 @@
 {% set elementType = 'barrelstrength\\sproutbase\\app\\forms\\elements\\Entry' %}
 
 {% block actionButton %}
-    {% if config.isUpgradable() %}
+    {% if config.getEnableUpgradeMessages() and config.isUpgradable() %}
         <div class="buttons">
             {{ sproutCp.upgradeToProButton({
                 url: config.getUpgradeUrl(),

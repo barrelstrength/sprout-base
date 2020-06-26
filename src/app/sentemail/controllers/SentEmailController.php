@@ -42,10 +42,10 @@ class SentEmailController extends Controller
     {
         $this->requirePermission('sprout:sentEmail:viewSentEmail');
 
-        $isPro = SproutBase::$app->config->isEdition('sent-email', Config::EDITION_PRO);
+        $config = SproutBase::$app->config->getConfigByKey('sent-email');
 
         return $this->renderTemplate('sprout/sent-email/sent-email/index', [
-            'isPro' => $isPro,
+            'config' => $config,
         ]);
     }
 
@@ -210,11 +210,11 @@ class SentEmailController extends Controller
         $emailId = Craft::$app->getRequest()->getBodyParam('emailId');
         $sentEmail = Craft::$app->elements->getElementById($emailId, SentEmail::class);
 
-        $isPro = SproutBase::$app->config->isEdition('sent-email', Config::EDITION_PRO);
+        $config = SproutBase::$app->config->getConfigByKey('sent-email');
 
         $content = Craft::$app->getView()->renderTemplate('sprout/sent-email/_modals/prepare-resend-email', [
             'sentEmail' => $sentEmail,
-            'isPro' => $isPro,
+            'config' => $config,
         ]);
 
         $response = new ModalResponse();

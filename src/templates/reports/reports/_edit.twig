@@ -64,7 +64,7 @@
     <input type="hidden" name="action" value="sprout/reports/save-report">
     {{ redirectInput('sprout/reports') }}
 
-    <div class="button">
+    <div class="buttons">
         <div class="btngroup">
             <input type="submit" class="btn submit"
                 value="{{ "Save Report"|t('sprout') }}">
@@ -92,6 +92,13 @@
                 {% endif %}
             </div>
         </div>
+
+        {% if config.getEnableUpgradeMessages() and config.isUpgradable() %}
+            {{ sproutCp.upgradeToProButton({
+                url: config.getUpgradeUrl(),
+                title: config.getUpgradeMessage()
+            }) }}
+        {% endif %}
     </div>
 
 {% endblock %}

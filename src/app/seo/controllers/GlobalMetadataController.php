@@ -109,7 +109,7 @@ class GlobalMetadataController extends Controller
         $countryInputHtml = $addressFormatter->getCountryInputHtml();
         $addressFormHtml = $addressFormatter->getAddressFormHtml();
 
-        $config = SproutBase::$app->config->isEdition('seo', Config::EDITION_PRO);
+        $config = SproutBase::$app->config->getConfigByKey('seo');
 
         $addressJson = $address ? Json::encode($address) : null;
 
@@ -123,7 +123,7 @@ class GlobalMetadataController extends Controller
             'countryInputHtml' => Template::raw($countryInputHtml),
             'addressFormHtml' => Template::raw($addressFormHtml),
             'addressJson' => $addressJson,
-            'config' => $$config,
+            'config' => $config,
         ]);
     }
 

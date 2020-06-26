@@ -8,6 +8,8 @@
 {% set noMetadataFieldsExist = not fieldId and metadataFieldCount == 0 %}
 {% set thisIsTheOneMetadataField = fieldId and metadataFieldCount == 1 %}
 
+{% set isPro = config.getIsPro() %}
+
 {% if isPro or noMetadataFieldsExist or thisIsTheOneMetadataField %}
 
     {% if not isPro and not(noMetadataFieldsExist or thisIsTheOneMetadataField) %}
