@@ -21,6 +21,7 @@ use barrelstrength\sproutbase\config\models\settings\NotificationSettings;
 use barrelstrength\sproutbase\migrations\email\Install;
 use barrelstrength\sproutbase\SproutBase;
 use Craft;
+use craft\helpers\UrlHelper;
 
 class NotificationsConfig extends Config
 {
@@ -50,6 +51,11 @@ class NotificationsConfig extends Config
     public function getUpgradeMessage(): string
     {
         return Craft::t('sprout', 'Upgrade to Sprout Email PRO to send personalized notification emails using unlimited Notification Events.');
+    }
+
+    public function getUpgradeUrl(): string
+    {
+        return UrlHelper::cpUrl('sprout/upgrade/email');
     }
 
     public static function groupName(): string

@@ -8,7 +8,7 @@
 
 {% from _self import configWarning %}
 
-{% set isProBadge = not sproutConfig.isPro ? ' <span class="sprout-pro">PRO</span>' : '' %}
+{% set isProBadge = not sproutConfig.getIsPro() ? ' <span class="sprout-pro">PRO</span>' : '' %}
 
 {{ forms.textField({
     label: "Meta Description Length"|t('sprout'),
@@ -25,9 +25,9 @@
     label: "Automatically render metadata"|t('sprout') ~ isProBadge,
     instructions: "Sprout SEO prepares and outputs all of your metadata in your template. If you'd like to manage this output manually, you can disable this setting and enable the 'Enable custom metadata variable' setting below."|t('sprout'),
     name: 'enableRenderMetadata',
-    on: not sproutConfig.isPro ? true : (settings.enableRenderMetadata is empty ? false : true),
-    onLabel: "Enable"|t('sprout'),
-    disabled: not sproutConfig.isPro,
+    on: not sproutConfig.getIsPro() ? true : (settings.enableRenderMetadata is empty ? false : true),
+    onLabel: "Enable"|t('spr`out'),
+    disabled: not sproutConfig.getIsPro(),
     warning: config.enableRenderMetadata is defined ? configWarning('enableRenderMetadata')
 }) }}
 
@@ -36,9 +36,9 @@
     instructions: "Make a global `metadata` variable available to all of your templates. The `metadata` variable will contain page-specific Prioritized Metadata and Structured Data, and all of your Globals. Ensure the {% sproutseo 'optimize' %} tag is in your template to generate the `metadata` variable. If you plan to handle the `metadata` variable on your own, you may also want to disable the 'Automatically render metadata' setting above, to ensure you don't output your metadata twice."|t('sprout'),
     name: 'useMetadataVariable',
     toggle: 'settings-enablemetadatavariable',
-    on: not sproutConfig.isPro ? false : settings.useMetadataVariable,
+    on: not sproutConfig.getIsPro() ? false : settings.useMetadataVariable,
     onLabel: "Enable"|t('sprout'),
-    disabled: not sproutConfig.isPro,
+    disabled: not sproutConfig.getIsPro(),
     warning: config.useMetadataVariable is defined ? configWarning('useMetadataVariable')
 }) }}
 

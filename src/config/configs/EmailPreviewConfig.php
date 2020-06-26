@@ -20,7 +20,6 @@ class EmailPreviewConfig extends Config
         ];
     }
 
-
     public static function getKey(): string
     {
         return 'email-preview';
