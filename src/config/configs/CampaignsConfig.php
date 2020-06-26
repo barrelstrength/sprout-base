@@ -27,6 +27,14 @@ class CampaignsConfig extends Config
         ];
     }
 
+    public static function getSproutConfigs(): array
+    {
+        return [
+            EmailPreviewConfig::class,
+            FieldsConfig::class
+        ];
+    }
+
     public static function getKey(): string
     {
         return 'campaigns';

@@ -21,8 +21,6 @@ use barrelstrength\sproutbase\app\reports\services\DataSources;
 use barrelstrength\sproutbase\config\base\Config;
 use barrelstrength\sproutbase\config\configs\CampaignsConfig;
 use barrelstrength\sproutbase\config\configs\ControlPanelConfig;
-use barrelstrength\sproutbase\config\configs\EmailPreviewConfig;
-use barrelstrength\sproutbase\config\configs\FieldsConfig;
 use barrelstrength\sproutbase\config\configs\FormsConfig;
 use barrelstrength\sproutbase\config\configs\ListsConfig;
 use barrelstrength\sproutbase\config\configs\NotificationsConfig;
@@ -34,6 +32,7 @@ use barrelstrength\sproutbase\config\configs\SitemapsConfig;
 use barrelstrength\sproutbase\config\services\App;
 use barrelstrength\sproutbase\web\twig\Extension;
 use Craft;
+use craft\events\ExceptionEvent;
 use craft\events\RegisterComponentTypesEvent;
 use craft\events\RegisterCpNavItemsEvent;
 use craft\events\RegisterCpSettingsEvent;
@@ -52,6 +51,7 @@ use yii\base\Event;
 use yii\base\InvalidConfigException;
 use yii\base\Module;
 use yii\mail\BaseMailer;
+use yii\mail\MailEvent;
 
 class SproutBase extends Module
 {
@@ -59,10 +59,8 @@ class SproutBase extends Module
      * @var Config[] SPROUT_MODULES
      */
     const SPROUT_MODULES = [
-        CampaignsConfig::class,
         ControlPanelConfig::class,
-        EmailPreviewConfig::class,
-        FieldsConfig::class,
+        CampaignsConfig::class,
         FormsConfig::class,
         ListsConfig::class,
         NotificationsConfig::class,
@@ -156,21 +154,7 @@ class SproutBase extends Module
         Craft::setAlias('@sproutbaseassetbundles', $this->getBasePath().'/web/assetbundles');
         Craft::setAlias('@sproutbaselib', dirname(__DIR__).'/lib');
 
-        $cpSettings = self::$app->config->getCpSettings();
-        $controllerMap = [];
-        foreach (self::SPROUT_MODULES as $moduleClassName) {
-            $moduleControllerMap = $moduleClassName::getControllerMap();
-
-            // Skip disabled modules. Install all modules that don't have CP settings.
-            if ($moduleClassName::hasControlPanelSettings() === true &&
-                !$cpSettings->isModuleEnabled($moduleClassName::getKey())) {
-                continue;
-            }
-
-            foreach ($moduleControllerMap as $key => $className) {
-                $controllerMap[$key] = $className;
-            }
-        }
+        $controllerMap = self::$app->config->getComponentMap('getControllerMap');
 
         if (Craft::$app->getRequest()->getIsConsoleRequest()) {
             $this->controllerNamespace = 'sproutbase\\config\\console\\controllers';
@@ -179,7 +163,6 @@ class SproutBase extends Module
             $this->controllerMap = $controllerMap;
         }
 
-        // Load routes defined in 'system' modules
         Event::on(UrlManager::class, UrlManager::EVENT_REGISTER_CP_URL_RULES, static function(RegisterUrlRulesEvent $event) {
             $cpConfig = SproutBase::$app->config->getConfigByKey('control-panel');
             $event->rules = array_merge($event->rules, $cpConfig->getCpUrlRules());
@@ -204,17 +187,13 @@ class SproutBase extends Module
 
     public function initEmailEvents()
     {
-        Event::on(
-            Application::class,
-            Application::EVENT_INIT, [
-            self::$app->notificationEvents, 'registerNotificationEmailEventHandlers'
-        ]);
+        Event::on(Application::class, Application::EVENT_INIT, static function() {
+            SproutBase::$app->notificationEvents->registerNotificationEmailEventHandlers();
+        });
 
-        Event::on(
-            BaseMailer::class,
-            BaseMailer::EVENT_AFTER_SEND, [
-            self::$app->sentEmails, 'logSentEmail',
-        ]);
+        Event::on(BaseMailer::class, BaseMailer::EVENT_AFTER_SEND, static function(MailEvent $event) {
+        SproutBase::$app->sentEmails->handleLogSentEmail($event);
+    });
 
         Event::on(Mailers::class, Mailers::EVENT_REGISTER_MAILER_TYPES, static function(RegisterMailersEvent $event) {
             $event->mailers[] = new DefaultMailer();
@@ -244,15 +223,13 @@ class SproutBase extends Module
         });
 
         Event::on(Cp::class, Cp::EVENT_REGISTER_CP_SETTINGS, static function(RegisterCpSettingsEvent $event) {
-            if ($settingsPages = self::$app->config->getSproutCpSettings()) {
+            if ($settingsPages = SproutBase::$app->config->getSproutCpSettings()) {
                 $event->settings['Sprout Plugins'] = $settingsPages;
             }
         });
 
-        Event::on(
-            ErrorHandler::class,
-            ErrorHandler::EVENT_BEFORE_HANDLE_EXCEPTION, [
-            self::$app->redirects, 'handleRedirectsOnException',
-        ]);
+        Event::on(ErrorHandler::class, ErrorHandler::EVENT_BEFORE_HANDLE_EXCEPTION, static function(ExceptionEvent $event) {
+            SproutBase::$app->redirects->handleRedirectsOnException($event);
+        });
     }
 }

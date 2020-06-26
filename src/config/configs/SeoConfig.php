@@ -12,6 +12,8 @@ use barrelstrength\sproutbase\config\base\Config;
 use barrelstrength\sproutbase\config\models\settings\SeoSettings;
 use barrelstrength\sproutbase\migrations\metadata\Install;
 use barrelstrength\sproutbase\SproutBase;
+use barrelstrength\sproutbase\web\twig\variables\FormsVariable;
+use barrelstrength\sproutbase\web\twig\variables\SeoVariable;
 use Craft;
 
 class SeoConfig extends Config
@@ -20,6 +22,20 @@ class SeoConfig extends Config
     {
         return [
             'global-metadata' => GlobalMetadataController::class,
+        ];
+    }
+
+    public static function getVariableMap(): array
+    {
+        return [
+            'seo' => SeoVariable::class,
+        ];
+    }
+
+    public static function getSproutConfigs(): array
+    {
+        return [
+            FieldsConfig::class
         ];
     }
 

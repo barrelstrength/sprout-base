@@ -26,6 +26,7 @@ use Twig\Error\LoaderError;
 use Twig\Error\SyntaxError;
 use yii\base\Event;
 use yii\mail\MailEvent;
+use yii\mail\MessageInterface;
 
 class SentEmails extends Component
 {
@@ -45,7 +46,7 @@ class SentEmails extends Component
      * @return bool
      * @throws Throwable
      */
-    public function logSentEmail(MailEvent $event): bool
+    public function handleLogSentEmail(MailEvent $event)
     {
         $sentEmailSettings = SproutBase::$app->settings->getSettingsByKey('sent-email');
 
@@ -53,14 +54,24 @@ class SentEmails extends Component
             return false;
         }
 
-        /**
-         * @var $message Message
-         */
         $message = $event->message;
+        $success = $event->isSuccessful;
 
+        $this->logSentEmail($message, $success);
+    }
+
+    /**
+     * @param MessageInterface $message
+     *
+     * @return bool
+     * @throws Throwable
+     */
+    public function logSentEmail(MessageInterface $message, $success = false): bool
+    {
         $from = $message->getFrom();
         $fromEmail = '';
         $fromName = '';
+
         if ($from) {
             $fromEmail = ($res = array_keys($from)) ? $res[0] : '';
             $fromName = ($res = array_values($from)) ? $res[0] : '';
@@ -115,7 +126,7 @@ class SentEmails extends Component
 
         $deliveryStatuses = $infoTable->getDeliveryStatuses();
 
-        if ($event->isSuccessful) {
+        if ($success) {
             $infoTable->deliveryStatus = $deliveryStatuses['Sent'];
         } else {
             $infoTable->deliveryStatus = $deliveryStatuses['Error'];
@@ -165,13 +176,13 @@ class SentEmails extends Component
     /**
      * Save email snapshot using the Sent Email Element Type
      *
-     * @param Message $message
+     * @param MessageInterface $message
      * @param SentEmailInfoTable $infoTable
      *
      * @return SentEmail|bool
      * @throws Throwable
      */
-    public function saveSentEmail(Message $message, SentEmailInfoTable $infoTable)
+    public function saveSentEmail(MessageInterface $message, SentEmailInfoTable $infoTable)
     {
         $from = $message->getFrom();
         $fromEmail = '';
@@ -338,12 +349,12 @@ class SentEmails extends Component
     /**
      * Update the SproutEmail_SentEmailInfoTableModel based on the emailKey
      *
-     * @param Message $message
+     * @param MessageInterface $message
      * @param SentEmailInfoTable $infoTable
      *
      * @return SentEmailInfoTable
      */
-    public function updateInfoTableWithCraftInfo(Message $message, SentEmailInfoTable $infoTable): SentEmailInfoTable
+    public function updateInfoTableWithCraftInfo(MessageInterface $message, SentEmailInfoTable $infoTable): SentEmailInfoTable
     {
         $craftVersion = $this->getCraftVersion();
 

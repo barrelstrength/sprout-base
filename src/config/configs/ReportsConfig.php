@@ -16,6 +16,8 @@ use barrelstrength\sproutbase\config\base\Config;
 use barrelstrength\sproutbase\config\models\settings\ReportsSettings;
 use barrelstrength\sproutbase\migrations\reports\Install;
 use barrelstrength\sproutbase\SproutBase;
+use barrelstrength\sproutbase\web\twig\variables\FormsVariable;
+use barrelstrength\sproutbase\web\twig\variables\ReportsVariable;
 use Craft;
 
 class ReportsConfig extends Config
@@ -123,6 +125,13 @@ class ReportsConfig extends Config
         return [
             'reports' => ReportsController::class,
             'data-sources' => DataSourcesController::class,
+        ];
+    }
+
+    public static function getVariableMap(): array
+    {
+        return [
+            'reports' => ReportsVariable::class,
         ];
     }
 

@@ -23,6 +23,7 @@ use barrelstrength\sproutbase\config\controllers\SettingsController;
 use barrelstrength\sproutbase\config\models\settings\FormsSettings;
 use barrelstrength\sproutbase\migrations\forms\Install;
 use barrelstrength\sproutbase\SproutBase;
+use barrelstrength\sproutbase\web\twig\variables\FormsVariable;
 use Craft;
 
 class FormsConfig extends Config
@@ -37,6 +38,20 @@ class FormsConfig extends Config
             'form-groups' => FormGroupsController::class,
             'form-integrations' => FormIntegrationsController::class,
             'form-rules' => FormRulesController::class,
+        ];
+    }
+
+    public static function getVariableMap(): array
+    {
+        return [
+            'forms' => FormsVariable::class,
+        ];
+    }
+
+    public static function getSproutConfigs(): array
+    {
+        return [
+            FieldsConfig::class
         ];
     }
 

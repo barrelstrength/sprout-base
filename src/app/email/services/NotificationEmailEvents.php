@@ -92,22 +92,20 @@ class NotificationEmailEvents extends Component
      * 1. Get all Notification Email Event Types that we need to listen for
      * 2. Register an anonymous function to $this->registeredEvents for each event using Event::on
      * 3. Call our anonymous function when the event is triggered
-     *
-     * @return bool
      */
-    public function registerNotificationEmailEventHandlers(): bool
+    public function registerNotificationEmailEventHandlers()
     {
         $notificationSettings = SproutBase::$app->settings->getSettingsByKey('notifications');
 
         if (!$notificationSettings->getIsEnabled()) {
-            return false;
+            return;
         }
 
         $self = $this;
         $notificationEmailEventTypes = $this->getNotificationEmailEventTypes();
 
         if (empty($notificationEmailEventTypes)) {
-            return false;
+            return;
         }
 
         foreach ($notificationEmailEventTypes as $notificationEmailEventClassName) {
@@ -135,8 +133,6 @@ class NotificationEmailEvents extends Component
                 });
             }
         }
-
-        return true;
     }
 
     /**
@@ -222,7 +218,7 @@ class NotificationEmailEvents extends Component
                 $eventHandlerClass->event = $event;
 
                 if (!$eventHandlerClass->validate()) {
-                    Craft::error($eventHandlerClass->getName().' event does not validate: '.json_encode($eventHandlerClass->getErrors()), __METHOD__);
+                    Craft::info($eventHandlerClass->getName().' event does not validate: '.json_encode($eventHandlerClass->getErrors()), __METHOD__);
                     continue;
                 }
 
@@ -232,10 +228,13 @@ class NotificationEmailEvents extends Component
                 // Don't send emails for disabled notification email entries.
                 if (!$notificationEmail->isReady() ||
                     !$notificationEmail->sendRuleIsTrue()) {
+                    Craft::info($eventHandlerClass->getName().' event validates successfully but is disabled.', __METHOD__);
                     continue;
                 }
 
                 SproutBase::$app->notifications->sendNotificationViaMailer($notificationEmail);
+
+                Craft::info($eventHandlerClass->getName().' event validates successfully and has been sent.', __METHOD__);
 
                 $sendNotificationEmailEvent = new SendNotificationEmailEvent([
                     'event' => $event,

@@ -174,6 +174,16 @@ abstract class Config extends Component implements ConfigInterface
         return [];
     }
 
+    public static function getVariableMap(): array
+    {
+        return [];
+    }
+
+    public static function getSproutConfigs(): array
+    {
+        return [];
+    }
+
     public function isUpgradable(): bool
     {
         return $this->getEdition() !== self::EDITION_PRO;

@@ -23,13 +23,7 @@ class SproutVariable extends ServiceLocator
      */
     public function __construct($config = [])
     {
-        $components = [
-            'forms' => FormsVariable::class,
-            'reports' => ReportsVariable::class,
-            'seo' => SeoVariable::class,
-        ];
-
-        $config['components'] = $components;
+        $config['components'] = SproutBase::$app->config->getComponentMap('getVariableMap');
 
         parent::__construct($config);
     }

@@ -43,20 +43,22 @@ class Redirects extends Component
     protected $processRedirect = true;
 
     /**
-     * @param $event
+     * @param ExceptionEvent $event
      *
+     * @throws DeprecationException
+     * @throws ElementNotFoundException
      * @throws Exception
-     * @throws Throwable
-     * @throws SiteNotFoundException
      * @throws ExitException
      * @throws InvalidConfigException
+     * @throws SiteNotFoundException
+     * @throws Throwable
      */
     public function handleRedirectsOnException(ExceptionEvent $event)
     {
-        $request = Craft::$app->getRequest();
-
         /** @var RedirectsSettings $settings */
         $settings = SproutBase::$app->settings->getSettingsByKey('redirects');
+
+        $request = Craft::$app->getRequest();
 
         $enableRedirects = $settings->getIsEnabled() ? true : false;
 
@@ -65,11 +67,30 @@ class Redirects extends Component
             return;
         }
 
+        $this->processRedirectsOnException($event->exception);
+    }
+
+    /**
+     * @param \Exception $exception
+     *
+     * @throws DeprecationException
+     * @throws ElementNotFoundException
+     * @throws Exception
+     * @throws ExitException
+     * @throws InvalidConfigException
+     * @throws SiteNotFoundException
+     * @throws Throwable
+     */
+    public function processRedirectsOnException(\Exception $exception)
+    {
+        /** @var RedirectsSettings $settings */
+        $settings = SproutBase::$app->settings->getSettingsByKey('redirects');
+
+        $request = Craft::$app->getRequest();
+
         // Avoid counting redirects twice when Sprout SEO and Redirects are
         // both installed and both call `handleRedirectsOnException` each request
         $this->processRedirect = false;
-
-        $exception = $event->exception;
 
         // Rendering Twig can generate a 404 also: i.e. {% exit 404 %}
         if ($exception instanceof TwigRuntimeError) {

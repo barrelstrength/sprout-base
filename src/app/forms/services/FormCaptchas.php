@@ -53,21 +53,23 @@ class FormCaptchas extends Component
 
     public function handleFormCaptchasEvent(OnBeforeValidateEntryEvent $event)
     {
-        if (Craft::$app->getRequest()->getIsSiteRequest()) {
-            $enableCaptchas = (int)$event->form->enableCaptchas;
+        if (!Craft::$app->getRequest()->getIsSiteRequest()) {
+            return;
+        }
 
-            // Don't process captchas if the form is set to ignore them
-            if (!$enableCaptchas) {
-                return;
-            }
+        $enableCaptchas = (int)$event->form->enableCaptchas;
 
-            /** @var Captcha[] $captchas */
-            $captchas = SproutBase::$app->formCaptchas->getAllEnabledCaptchas();
+        // Don't process captchas if the form is set to ignore them
+        if (!$enableCaptchas) {
+            return;
+        }
 
-            foreach ($captchas as $captcha) {
-                $captcha->verifySubmission($event);
-                $event->entry->addCaptcha($captcha);
-            }
+        /** @var Captcha[] $captchas */
+        $captchas = SproutBase::$app->formCaptchas->getAllEnabledCaptchas();
+
+        foreach ($captchas as $captcha) {
+            $captcha->verifySubmission($event);
+            $event->entry->addCaptcha($captcha);
         }
     }
 

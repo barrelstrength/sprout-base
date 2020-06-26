@@ -85,29 +85,38 @@ class ElementMetadata extends Component
     }
 
     /**
-     * Re-save Elements after a field layout or Element Metadata field is updated
-     *
-     * This is necessary when an Element Metadata field is added to a Field Layout
-     * in a Section that Elements already exist, or if any changes are made to the
-     * Element Metadata field type.
-     *
      * @param FieldLayoutEvent $event
      *
      * @throws SiteNotFoundException
      */
-    public function resaveElementsAfterFieldLayoutIsSaved(FieldLayoutEvent $event)
-    {
+    public function handleResaveElementsAfterFieldLayoutIsSaved(FieldLayoutEvent $event) {
         $seoSettings = SproutBase::$app->settings->getSettingsByKey('seo');
 
         if (!$seoSettings->getIsEnabled()) {
             return;
         }
 
+        $this->resaveElementsAfterFieldLayoutIsSaved($event->layout);
+    }
+
+    /**
+     * Re-save Elements after a field layout or Element Metadata field is updated
+     *
+     * This is necessary when an Element Metadata field is added to a Field Layout
+     * in a Section that Elements already exist, or if any changes are made to the
+     * Element Metadata field type.
+     *
+     * @param FieldLayout $fieldLayout
+     *
+     * @throws SiteNotFoundException
+     */
+    public function resaveElementsAfterFieldLayoutIsSaved(FieldLayout $fieldLayout)
+    {
         /**
-         * The Field Layout event identifies the Element Type that the layout is for:
+         * The Field Layout event identifies the Element Type
+         * that the layout is for:
          * Category, Entry, Commerce_Product, etc.
          */
-        $fieldLayout = $event->layout;
         $elementType = $fieldLayout->type;
         $fieldLayoutFields = $fieldLayout->getFields();
         $hasElementMetadataField = false;

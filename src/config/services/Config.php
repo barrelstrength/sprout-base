@@ -550,4 +550,52 @@ class Config extends Component
 
         return $permissions;
     }
+
+    /**
+     * @param string $method
+     *
+     * @return array
+     */
+    public function getComponentMap(string $method): array
+    {
+        $cpSettings = SproutBase::$app->config->getCpSettings();
+
+        $sproutModules = SproutBase::SPROUT_MODULES;
+        $mapping = [];
+
+        foreach ($sproutModules as $moduleClassName) {
+            // Only load enabled, modules with control panel settings
+            // Any modules with no control panel settings should be added
+            // to barrelstrength\sproutbase\config\base\Config::getSproutConfigs()
+            // as config submodules
+            if ($moduleClassName::hasControlPanelSettings() === true &&
+                !$cpSettings->isModuleEnabled($moduleClassName::getKey())) {
+                continue;
+            }
+
+            if (!method_exists($moduleClassName, $method)) {
+                continue;
+            }
+
+            $moduleMap = $moduleClassName::$method();
+            $subModules = $moduleClassName::getSproutConfigs();
+
+            foreach ($moduleMap as $key => $className) {
+                $mapping[$key] = $className;
+
+                foreach ($subModules as $subModuleClassName) {
+                    if (!method_exists($moduleClassName, $method)) {
+                        continue;
+                    }
+
+                    $subModuleMap = $subModuleClassName::$method();
+                    foreach ($subModuleMap as $subKey => $subClassName) {
+                        $mapping[$subKey] = $subClassName;
+                    }
+                }
+            }
+        }
+
+        return $mapping;
+    }
 }

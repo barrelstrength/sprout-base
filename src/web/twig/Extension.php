@@ -7,10 +7,12 @@
 
 namespace barrelstrength\sproutbase\web\twig;
 
+use barrelstrength\sproutbase\SproutBase;
 use barrelstrength\sproutbase\web\twig\tokenparsers\SproutSeoTokenParser;
 use barrelstrength\sproutbase\web\twig\variables\SproutVariable;
 use Twig\Extension\AbstractExtension;
 use Twig\Extension\GlobalsInterface;
+use Craft;
 
 class Extension extends AbstractExtension implements GlobalsInterface
 {
@@ -23,8 +25,14 @@ class Extension extends AbstractExtension implements GlobalsInterface
 
     public function getTokenParsers(): array
     {
-        return [
-            new SproutSeoTokenParser(),
-        ];
+        $seoSettings = SproutBase::$app->settings->getSettingsByKey('seo');
+
+        if ($seoSettings->getIsEnabled()) {
+            return [
+                new SproutSeoTokenParser(),
+            ];
+        }
+
+        return [];
     }
 }
