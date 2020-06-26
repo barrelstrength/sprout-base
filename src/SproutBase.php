@@ -38,6 +38,7 @@ use craft\events\RegisterComponentTypesEvent;
 use craft\events\RegisterCpNavItemsEvent;
 use craft\events\RegisterCpSettingsEvent;
 use craft\events\RegisterTemplateRootsEvent;
+use craft\events\RegisterUrlRulesEvent;
 use craft\events\RegisterUserPermissionsEvent;
 use craft\helpers\ArrayHelper;
 use craft\i18n\PhpMessageSource;
@@ -45,6 +46,7 @@ use craft\services\UserPermissions;
 use craft\web\Application;
 use craft\web\ErrorHandler;
 use craft\web\twig\variables\Cp;
+use craft\web\UrlManager;
 use craft\web\View;
 use yii\base\Event;
 use yii\base\InvalidConfigException;
@@ -176,6 +178,12 @@ class SproutBase extends Module
             $this->controllerNamespace = 'sproutbase\\config\\controllers';
             $this->controllerMap = $controllerMap;
         }
+
+        // Load routes defined in 'system' modules
+        Event::on(UrlManager::class, UrlManager::EVENT_REGISTER_CP_URL_RULES, static function(RegisterUrlRulesEvent $event) {
+            $cpConfig = SproutBase::$app->config->getConfigByKey('control-panel');
+            $event->rules = array_merge($event->rules, $cpConfig->getCpUrlRules());
+        });
     }
 
     public function initPermissions()
