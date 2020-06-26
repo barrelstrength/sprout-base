@@ -97,6 +97,12 @@ class ElementMetadata extends Component
      */
     public function resaveElementsAfterFieldLayoutIsSaved(FieldLayoutEvent $event)
     {
+        $seoSettings = SproutBase::$app->settings->getSettingsByKey('seo');
+
+        if (!$seoSettings->getIsEnabled()) {
+            return;
+        }
+
         /**
          * The Field Layout event identifies the Element Type that the layout is for:
          * Category, Entry, Commerce_Product, etc.

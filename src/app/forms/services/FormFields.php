@@ -204,6 +204,17 @@ class FormFields extends Component
         return $this->registeredFields;
     }
 
+    public function handleRegisterFormFieldsEvent(RegisterFieldsEvent $event)
+    {
+        $fieldsByGroup = $this->getRegisteredFieldsByGroup();
+
+        foreach ($fieldsByGroup as $group) {
+            foreach ($group as $field) {
+                $event->fields[] = new $field;
+            }
+        }
+    }
+
     /**
      * @return array
      */

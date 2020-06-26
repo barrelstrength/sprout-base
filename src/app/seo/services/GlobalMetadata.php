@@ -15,6 +15,7 @@ use craft\base\Component;
 use craft\base\Field;
 use craft\db\Query;
 use craft\errors\SiteNotFoundException;
+use craft\events\SiteEvent;
 use craft\fields\Assets;
 use craft\fields\PlainText;
 use craft\helpers\Json;
@@ -671,6 +672,21 @@ class GlobalMetadata extends Component
         }
 
         return false;
+    }
+
+    public function handleDefaultSiteMetadata(SiteEvent $event) {
+
+        if (!$event->isNew) {
+            return;
+        }
+
+        $seoSettings = SproutBase::$app->settings->getSettingsByKey('seo');
+
+        if (!$seoSettings->getIsEnabled()) {
+            return;
+        }
+
+        $this->insertDefaultGlobalMetadata($event->site->id);
     }
 
     /**

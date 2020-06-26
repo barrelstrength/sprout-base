@@ -42,11 +42,17 @@ class SentEmails extends Component
     /**
      * @param MailEvent $event
      *
-     * @return null
+     * @return bool
      * @throws Throwable
      */
-    public function logSentEmail(MailEvent $event)
+    public function logSentEmail(MailEvent $event): bool
     {
+        $sentEmailSettings = SproutBase::$app->settings->getSettingsByKey('sent-email');
+
+        if (!$sentEmailSettings->getIsEnabled()) {
+            return false;
+        }
+
         /**
          * @var $message Message
          */
@@ -76,7 +82,7 @@ class SentEmails extends Component
 
         // Kill saving of info table on other sending modules
         if ($infoTable === null) {
-            return null;
+            return false;
         }
         // Sender Info
         $infoTable->senderName = $fromName;

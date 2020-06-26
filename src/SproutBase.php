@@ -10,12 +10,7 @@ namespace barrelstrength\sproutbase;
 use barrelstrength\sproutbase\app\campaigns\mailers\CopyPasteMailer;
 use barrelstrength\sproutbase\app\email\emailtemplates\BasicTemplates;
 use barrelstrength\sproutbase\app\email\events\NotificationEmailEvent;
-use barrelstrength\sproutbase\app\email\events\notificationevents\EntriesDelete;
 use barrelstrength\sproutbase\app\email\events\notificationevents\EntriesSave;
-use barrelstrength\sproutbase\app\email\events\notificationevents\Manual;
-use barrelstrength\sproutbase\app\email\events\notificationevents\UsersActivate;
-use barrelstrength\sproutbase\app\email\events\notificationevents\UsersDelete;
-use barrelstrength\sproutbase\app\email\events\notificationevents\UsersSave;
 use barrelstrength\sproutbase\app\email\events\RegisterMailersEvent;
 use barrelstrength\sproutbase\app\email\mailers\DefaultMailer;
 use barrelstrength\sproutbase\app\email\services\EmailTemplates;
@@ -55,7 +50,6 @@ use yii\base\Event;
 use yii\base\InvalidConfigException;
 use yii\base\Module;
 use yii\mail\BaseMailer;
-use yii\mail\MailEvent;
 
 class SproutBase extends Module
 {
@@ -202,20 +196,21 @@ class SproutBase extends Module
 
     public function initEmailEvents()
     {
-        Event::on(Application::class, Application::EVENT_INIT, static function() {
-            SproutBase::$app->notificationEvents->registerNotificationEmailEventHandlers();
-        });
+        Event::on(
+            Application::class,
+            Application::EVENT_INIT, [
+            self::$app->notificationEvents, 'registerNotificationEmailEventHandlers'
+        ]);
+
+        Event::on(
+            BaseMailer::class,
+            BaseMailer::EVENT_AFTER_SEND, [
+            self::$app->sentEmails, 'logSentEmail',
+        ]);
 
         Event::on(Mailers::class, Mailers::EVENT_REGISTER_MAILER_TYPES, static function(RegisterMailersEvent $event) {
             $event->mailers[] = new DefaultMailer();
             $event->mailers[] = new CopyPasteMailer();
-        });
-
-        Event::on(BaseMailer::class, BaseMailer::EVENT_AFTER_SEND, static function(MailEvent $event) {
-            $sentEmailSettings = SproutBase::$app->settings->getSettingsByKey('sent-email');
-            if ($sentEmailSettings->getIsEnabled()) {
-                SproutBase::$app->sentEmails->logSentEmail($event);
-            }
         });
 
         Event::on(EmailTemplates::class, EmailTemplates::EVENT_REGISTER_EMAIL_TEMPLATES, static function(RegisterComponentTypesEvent $event) {
@@ -224,11 +219,6 @@ class SproutBase extends Module
 
         Event::on(NotificationEmailEvents::class, NotificationEmailEvents::EVENT_REGISTER_EMAIL_EVENT_TYPES, static function(NotificationEmailEvent $event) {
             $event->events[] = EntriesSave::class;
-            $event->events[] = EntriesDelete::class;
-            $event->events[] = UsersSave::class;
-            $event->events[] = UsersDelete::class;
-            $event->events[] = UsersActivate::class;
-            $event->events[] = Manual::class;
         });
     }
 

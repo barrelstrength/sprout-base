@@ -11,6 +11,7 @@ use barrelstrength\sproutbase\app\forms\base\Integration;
 use barrelstrength\sproutbase\app\forms\base\IntegrationInterface;
 use barrelstrength\sproutbase\app\forms\elements\Entry;
 use barrelstrength\sproutbase\app\forms\events\OnAfterIntegrationSubmit;
+use barrelstrength\sproutbase\app\forms\events\OnSaveEntryEvent;
 use barrelstrength\sproutbase\app\forms\integrationtypes\MissingIntegration;
 use barrelstrength\sproutbase\app\forms\models\IntegrationLog;
 use barrelstrength\sproutbase\app\forms\records\Integration as IntegrationRecord;
@@ -272,6 +273,19 @@ class FormIntegrations extends Component
             ->all();
 
         return $integrationLogs;
+    }
+
+    /**
+     * @param OnSaveEntryEvent $event
+     *
+     * @throws Exception
+     * @throws InvalidConfigException
+     * @throws MissingComponentException
+     * @throws Throwable
+     */
+    public function handleFormIntegrations(OnSaveEntryEvent $event)
+    {
+        $this->runFormIntegrations($event->entry);
     }
 
     /**

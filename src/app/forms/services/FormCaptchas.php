@@ -7,11 +7,14 @@
 
 namespace barrelstrength\sproutbase\app\forms\services;
 
+use barrelstrength\sproutbase\app\forms\base\Captcha;
 use barrelstrength\sproutbase\app\forms\elements\Form;
 use barrelstrength\sproutbase\app\forms\elements\Form as FormElement;
+use barrelstrength\sproutbase\app\forms\events\OnBeforeValidateEntryEvent;
 use barrelstrength\sproutbase\SproutBase;
 use craft\events\RegisterComponentTypesEvent;
 use yii\base\Component;
+use Craft;
 
 class FormCaptchas extends Component
 {
@@ -46,6 +49,26 @@ class FormCaptchas extends Component
         }
 
         return $captchas;
+    }
+
+    public function handleFormCaptchasEvent(OnBeforeValidateEntryEvent $event)
+    {
+        if (Craft::$app->getRequest()->getIsSiteRequest()) {
+            $enableCaptchas = (int)$event->form->enableCaptchas;
+
+            // Don't process captchas if the form is set to ignore them
+            if (!$enableCaptchas) {
+                return;
+            }
+
+            /** @var Captcha[] $captchas */
+            $captchas = SproutBase::$app->formCaptchas->getAllEnabledCaptchas();
+
+            foreach ($captchas as $captcha) {
+                $captcha->verifySubmission($event);
+                $event->entry->addCaptcha($captcha);
+            }
+        }
     }
 
     /**
