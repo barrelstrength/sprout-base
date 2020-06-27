@@ -11,6 +11,7 @@ use barrelstrength\sproutbase\config\base\Config as BaseConfig;
 use barrelstrength\sproutbase\config\base\ConfigInterface;
 use barrelstrength\sproutbase\config\base\SproutBasePlugin;
 use barrelstrength\sproutbase\config\configs\ControlPanelConfig;
+use barrelstrength\sproutbase\config\configs\ReportsConfig;
 use barrelstrength\sproutbase\config\models\settings\ControlPanelSettings;
 use barrelstrength\sproutbase\SproutBase;
 use Craft;
@@ -113,8 +114,6 @@ class Config extends Component
     {
         $this->prepareContext($includeFileSettings);
 
-        $cpSettings = SproutBase::$app->config->getCpSettings();
-
         if ($this->_configLoadStatus === 'loaded' || $this->_configLoadStatus === 'loading') {
             return;
         }
@@ -127,7 +126,7 @@ class Config extends Component
         $cpConfig->setSettings($this->getCpSettings());
         $this->_configs['control-panel'] = $cpConfig;
 
-        foreach ($plugins as $plugin) {
+        foreach ($plugins as $pluginHandle => $plugin) {
 
             $isPluginEnabled = Craft::$app->getPlugins()->isPluginEnabled($plugin->handle);
             if (!$isPluginEnabled) {
@@ -137,28 +136,30 @@ class Config extends Component
             $configTypes = $plugin::getSproutConfigs();
 
             foreach ($configTypes as $configType) {
+
                 /** @var BaseConfig $config */
                 $config = new $configType();
 
-                $config->setEdition();
-
-                $moduleSettings = $cpSettings->modules[$config::getKey()] ?? null;
-
-                $alternateName = !empty($moduleSettings['alternateName'])
-                    ? $moduleSettings['alternateName']
-                    : null;
-                $enableUpgradeMessages = !empty($cpSettings['enableUpgradeMessages'])
-                    ? true
-                    : false;
-
-                $config->setAlternateName($alternateName);
-                $config->setEnableUpgradeMessages($enableUpgradeMessages);
-
-                if ($settings = SproutBase::$app->settings->getSettingsByConfig($config)) {
-                    $config->setSettings($settings);
+                if (isset($this->_configs[$config::getKey()])) {
+                    continue;
                 }
 
+                $this->populateConfig($config);
                 $this->_configs[$config::getKey()] = $config;
+
+                $subModuleConfigTypes = $config::getSproutConfigs();
+
+                foreach ($subModuleConfigTypes as $subModuleConfigType) {
+
+                    $subModulesConfig = new $subModuleConfigType();
+
+                    if (isset($this->_configs[$subModulesConfig::getKey()])) {
+                        continue;
+                    }
+
+                    $this->populateConfig($subModulesConfig);
+                    $this->_configs[$subModulesConfig::getKey()] = $subModulesConfig;
+                }
             }
         }
 
@@ -597,5 +598,31 @@ class Config extends Component
         }
 
         return $mapping;
+    }
+
+    /**
+     * @param BaseConfig $config
+     */
+    private function populateConfig(BaseConfig $config)
+    {
+        $cpSettings = SproutBase::$app->config->getCpSettings();
+
+        $config->setEdition();
+
+        $moduleSettings = $cpSettings->modules[$config::getKey()] ?? null;
+
+        $alternateName = !empty($moduleSettings['alternateName'])
+            ? $moduleSettings['alternateName']
+            : null;
+        $enableUpgradeMessages = !empty($cpSettings['enableUpgradeMessages'])
+            ? true
+            : false;
+
+        $config->setAlternateName($alternateName);
+        $config->setEnableUpgradeMessages($enableUpgradeMessages);
+
+        if ($settings = SproutBase::$app->settings->getSettingsByConfig($config)) {
+            $config->setSettings($settings);
+        }
     }
 }

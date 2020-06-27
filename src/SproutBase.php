@@ -143,7 +143,6 @@ class SproutBase extends Module
         $this->initPermissions();
         $this->initTemplateEvents();
         $this->initEmailEvents();
-        $this->initReportEvents();
         $this->initConfigEvents();
     }
 
@@ -206,13 +205,6 @@ class SproutBase extends Module
 
         Event::on(NotificationEmailEvents::class, NotificationEmailEvents::EVENT_REGISTER_EMAIL_EVENT_TYPES, static function(NotificationEmailEvent $event) {
             $event->events[] = EntriesSave::class;
-        });
-    }
-
-    public function initReportEvents()
-    {
-        Event::on(DataSources::class, DataSources::EVENT_REGISTER_DATA_SOURCES, static function(RegisterComponentTypesEvent $event) {
-            $event->types[] = CustomQuery::class;
         });
     }
 
