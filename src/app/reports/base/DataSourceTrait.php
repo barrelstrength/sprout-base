@@ -15,13 +15,6 @@ trait DataSourceTrait
     public $baseUrl;
 
     /**
-     * Allows a user to disable a Data Source from displaying in the New Report dropdown
-     *
-     * @return bool|mixed
-     */
-    public $allowNew;
-
-    /**
      * @var Plugin
      */
     protected $plugin;

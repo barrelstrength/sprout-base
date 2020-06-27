@@ -29,9 +29,6 @@
                 <th scope="col" data-attribute="datasource">{{ "Data Source"|t('sprout') }}</th>
                 <th scope="col" data-attribute="description">{{ "Description"|t('sprout') }}</th>
                 <th scope="col" data-attribute="totalReports">{{ "Reports"|t('sprout') }}</th>
-                <th scope="col" data-attribute="allowNew">{{ "Allow New?"|t('sprout') }}
-                    <span class="info">{{ "Allow users to create a new Report from this Data Source from the New Report dropdown. If disabled, any existing Reports using this Data Source will still be visible to all users in the list of Reports. Users with the 'Edit Data Sources' permission can always create a new Report from this page. "|t('sprout') }}</span>
-                </th>
 
                 {% if currentUser.can('sproutReports-editReports') %}
                     <th class="thin"></th>
@@ -46,14 +43,6 @@
                     <td style="word-wrap: break-word;">{{ dataSource.getDescription()|markdown }}</td>
 
                     <td>{{ dataSource.getReportCount() }}</td>
-                    <td data-type="{{ className(dataSource) }}">
-                        {{ forms.lightswitchField({
-                            id: dataSource.id,
-                            on: dataSource.allowNew,
-                            name: 'allowNew',
-                            small: true
-                        }) }}
-                    </td>
 
                     {% if currentUser.can('sproutReports-editReports') %}
                         <td>

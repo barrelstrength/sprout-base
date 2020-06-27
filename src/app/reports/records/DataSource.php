@@ -11,9 +11,7 @@ use craft\db\ActiveRecord;
 
 /**
  * @property int $id
- * @property int $pluginId
  * @property string $type
- * @property bool $allowNew
  */
 class DataSource extends ActiveRecord
 {

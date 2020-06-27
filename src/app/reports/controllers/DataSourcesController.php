@@ -52,12 +52,8 @@ class DataSourcesController extends Controller
         $request = Craft::$app->getRequest();
 
         $dataSourceType = $request->getBodyParam('dataSourceType');
-        $allowNew = $request->getBodyParam('allowNew');
-
-        $allowNew = empty($allowNew) ? false : true;
 
         $dataSource = new $dataSourceType();
-        $dataSource->allowNew = $allowNew;
 
         if (SproutBase::$app->dataSources->saveDataSource($dataSource)) {
             return $this->asJson(true);

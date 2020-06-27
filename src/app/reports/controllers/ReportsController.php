@@ -40,6 +40,8 @@ class ReportsController extends Controller
     {
         $this->requirePermission('sprout:reports:viewReports');
 
+        $currentUser = Craft::$app->getUser()->getIdentity();
+
         $dataSources = SproutBase::$app->dataSources->getDataSources();
 
         if ($groupId !== null) {
@@ -52,7 +54,9 @@ class ReportsController extends Controller
 
         foreach ($dataSources as $dataSource) {
 
-            if (!$dataSource->allowNew) {
+            $dataSourcePermission = 'sprout:reports:editDataSource:'.$dataSource->id;
+
+            if (!$currentUser->can($dataSourcePermission)) {
                 continue;
             }
 
@@ -61,8 +65,6 @@ class ReportsController extends Controller
                 'url' => UrlHelper::cpUrl('sprout/reports/'.$dataSource->id.'/new'),
             ];
         }
-
-        $currentUser = Craft::$app->getUser()->getIdentity();
 
         $config = SproutBase::$app->config->getConfigByKey('reports');
 

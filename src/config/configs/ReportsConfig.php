@@ -72,6 +72,15 @@ class ReportsConfig extends Config
 
     public function getUserPermissions(): array
     {
+        $dataSources = SproutBase::$app->dataSources->getDataSources();
+
+        $dataSourceAccessPermissions = [];
+        foreach ($dataSources as $dataSource) {
+            $dataSourceAccessPermissions['sprout:reports:editDataSource:'.$dataSource->id] = [
+                'label' => Craft::t('sprout', 'Edit '.$dataSource::displayName()),
+            ];
+        }
+
         return [
             // Reports
             'sprout:reports:viewReports' => [
@@ -86,6 +95,7 @@ class ReportsConfig extends Config
             // Data Sources
             'sprout:reports:editDataSources' => [
                 'label' => Craft::t('sprout', 'Edit Data Sources'),
+                'nested' => $dataSourceAccessPermissions,
             ],
         ];
     }

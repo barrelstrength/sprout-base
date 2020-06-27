@@ -385,10 +385,6 @@ class Install extends Migration
             SpamLogDataSource::class,
         ];
 
-        foreach ($dataSourceTypes as $dataSourceClass) {
-            /** @var DataSource $dataSource */
-            $dataSource = new $dataSourceClass();
-            SproutBase::$app->dataSources->saveDataSource($dataSource);
-        }
+        SproutBase::$app->dataSources->installDataSources($dataSourceTypes);
     }
 }

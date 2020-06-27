@@ -91,6 +91,7 @@ class DataSources extends Component
     public function initDataSources()
     {
         $config = SproutBase::$app->config->getConfigByKey('reports');
+        $currentUser = Craft::$app->getUser()->getIdentity();
 
         // Only load Sprout defined Data Sources first
         $registeredDataSources = $this->getRegisteredSproutDataSources();
@@ -124,8 +125,7 @@ class DataSources extends Component
         $installedDataSources = (new Query())
             ->select([
                 'id',
-                'type',
-                'allowNew'
+                'type'
             ])
             ->from([DataSourceRecord::tableName()])
             ->indexBy('type')
@@ -142,7 +142,6 @@ class DataSources extends Component
 
                 $installedDataSources[$registeredDataSource]['id'] = $dataSource->id;
                 $installedDataSources[$registeredDataSource]['type'] = $registeredDataSource;
-                $installedDataSources[$registeredDataSource]['allowNew'] = 1;
             }
         }
 
@@ -153,10 +152,15 @@ class DataSources extends Component
                 continue;
             }
 
+            $dataSourcePermission = 'sprout:reports:editDataSource:'.$installedDataSource['id'];
+
+            if (!$currentUser->can($dataSourcePermission)) {
+                continue;
+            }
+
             if (class_exists($dataSourceType)) {
                 $dataSources[$dataSourceType] = new $dataSourceType();
                 $dataSources[$dataSourceType]->id = $installedDataSource['id'];
-                $dataSources[$dataSourceType]->allowNew = $installedDataSource['allowNew'];
             } else {
                 Craft::error('Unable to find Data Source: '.$dataSourceType, __METHOD__);
                 $dataSources[MissingDataSource::class] = new MissingDataSource();
@@ -249,7 +253,6 @@ class DataSources extends Component
         }
 
         $dataSourceRecord->type = get_class($dataSource);
-        $dataSourceRecord->allowNew = $dataSource->allowNew ?? $dataSourceRecord->allowNew ?? true;
 
         if (!$dataSourceRecord->validate()) {
             $dataSource->addErrors($dataSourceRecord->getErrors());
