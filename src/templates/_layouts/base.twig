@@ -1,3 +1,5 @@
 {% extends "_layouts/cp" %}
 
+{% do view.registerAssetBundle("barrelstrength\\sproutbase\\web\\assetbundles\\sproutcp\\SproutCpAsset") %}
+
 {% set bodyClass = craft.app.request.getSegments()|slice(0, 3)|join(' ') %}

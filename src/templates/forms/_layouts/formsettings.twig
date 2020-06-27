@@ -1,8 +1,6 @@
 {% extends "sprout/_layouts/base" %}
 {% import "sprout/_includes/sproutcp" as sproutCp %}
 
-{% do view.registerAssetBundle("barrelstrength\\sproutbase\\web\\assetbundles\\sproutcp\\SproutCpAsset") %}
-
 {% set title  = "Settings"|t('sprout') %}
 {% set bodyClass = craft.app.request.getSegments()|slice(0, 4)|join(' ') %}
 {% set fullPageForm = true %}
@@ -76,5 +74,4 @@
 
 {% endset %}
 
-{% do view.registerAssetBundle("barrelstrength\\sproutbase\\web\\assetbundles\\sproutcp\\SproutCpAsset") %}
 {% do view.registerJs("new Craft.SproutForms.FormSettings();") %}

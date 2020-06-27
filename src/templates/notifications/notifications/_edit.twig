@@ -4,7 +4,8 @@
 {% import "sprout/fields/_includes/forms" as sproutFields %}
 {% import "sprout/_includes/sproutcp" as sproutCp %}
 
-{% do view.registerAssetBundle("barrelstrength\\sproutbase\\web\\assetbundles\\sproutcp\\SproutCpAsset") %}
+{% do view.registerAssetBundle("craft\\web\\assets\\fields\\FieldsAsset") %}
+{% do view.registerAssetBundle("barrelstrength\\sproutbase\\web\\assetbundles\\email\\EmailAsset") %}
 
 {% if notificationEmail.id is null %}
     {% set notificationId = 'new' %}
@@ -308,10 +309,6 @@
     </div>
 
 {% endblock %}
-
-{% do view.registerAssetBundle("barrelstrength\\sproutbase\\web\\assetbundles\\sproutcp\\SproutCpAsset") %}
-{% do view.registerAssetBundle("craft\\web\\assets\\fields\\FieldsAsset") %}
-{% do view.registerAssetBundle("barrelstrength\\sproutbase\\web\\assetbundles\\email\\EmailAsset") %}
 
 {% if not notificationEmail.slug %}
     {% js %}

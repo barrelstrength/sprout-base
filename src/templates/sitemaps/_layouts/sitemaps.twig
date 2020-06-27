@@ -2,6 +2,8 @@
 {% import "_includes/forms" as forms %}
 {% import "sprout/_includes/sproutcp" as sproutCp %}
 
+{% do view.registerAssetBundle("barrelstrength\\sproutbase\\web\\assetbundles\\sitemaps\\SitemapsAsset") %}
+
 {% set sectionLayout = craft.app.request.getSegment(2) %}
 {% set siteGroup = craft.app.sites.getGroupById(firstSiteInGroup.groupId) %}
 
@@ -156,6 +158,3 @@
     {% endif %}
 
 {% endblock %}
-
-{% do view.registerAssetBundle("barrelstrength\\sproutbase\\web\\assetbundles\\sproutcp\\SproutCpAsset") %}
-{% do view.registerAssetBundle("barrelstrength\\sproutbase\\web\\assetbundles\\sitemaps\\SitemapsAsset") %}

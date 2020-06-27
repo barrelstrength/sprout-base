@@ -53,9 +53,6 @@
 
 {% endblock %}
 
-{% do view.registerAssetBundle("barrelstrength\\sproutbase\\web\\assetbundles\\sproutcp\\SproutCpAsset") %}
-{% do view.registerAssetBundle("barrelstrength\\sproutbase\\web\\assetbundles\\groups\\GroupsAsset") %}
-
 {% js %}
     {% if not canCreateForm %}
         $('#create-new-form').click(function(e){

@@ -1,6 +1,9 @@
 {% import "_includes/forms" as forms %}
 {% import "sprout/_includes/sproutcp" as sproutCp %}
 
+{% do view.registerAssetBundle("barrelstrength\\sproutbase\\web\\assetbundles\\sproutcp\\SproutCpAsset") %}
+{% do view.registerAssetBundle("barrelstrength\\sproutbase\\web\\assetbundles\\reports\\SproutReportsAsset") %}
+
 {% set dateRange = options.dateRange is defined ? options.dateRange : 'customRange' %}
 
 {% if formOptions|length %}
@@ -53,6 +56,3 @@
     }) }}
 
 {% endif %}
-
-{% do view.registerAssetBundle("barrelstrength\\sproutbase\\web\\assetbundles\\sproutcp\\SproutCpAsset") %}
-{% do view.registerAssetBundle("barrelstrength\\sproutbase\\web\\assetbundles\\reports\\SproutReportsAsset") %}

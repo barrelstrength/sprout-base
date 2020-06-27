@@ -2,7 +2,6 @@
 {% import "_includes/forms" as forms %}
 {% import "sprout/_includes/sproutcp" as sproutCp %}
 
-{% do view.registerAssetBundle("barrelstrength\\sproutbase\\web\\assetbundles\\sproutcp\\SproutCpAsset") %}
 {% do view.registerAssetBundle("barrelstrength\\sproutbase\\web\\assetbundles\\redirects\\RedirectsAsset") %}
 
 {% set title = (redirect.id != "" ? "Edit Redirect"|t('sprout') : "Create a new redirect"|t('sprout')) %}

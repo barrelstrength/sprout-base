@@ -1,6 +1,11 @@
 {% extends "_layouts/cp" %}
 {% import "sprout/_includes/sproutcp" as sproutCp %}
 
+{% do view.registerAssetBundle("barrelstrength\\sproutbase\\web\\assetbundles\\sproutcp\\SproutCpAsset") %}
+{% do view.registerAssetBundle("barrelstrength\\sproutbase\\web\\assetbundles\\datatables\\DataTablesAsset") %}
+{% do view.registerAssetBundle("barrelstrength\\sproutbase\\web\\assetbundles\\apexcharts\\ApexChartsAsset") %}
+{% do view.registerAssetBundle("barrelstrength\\sproutbase\\web\\assetbundles\\reports\\SproutReportsAsset") %}
+
 {% set title  = report.name %}
 {% set bodyClass = 'sprout-reports-content' %}
 {% set selectedSubnavItem = craft.app.request.getSegment(2) %}
@@ -129,11 +134,6 @@
     </div>
 
 {% endblock %}
-
-{% do view.registerAssetBundle("barrelstrength\\sproutbase\\web\\assetbundles\\sproutcp\\SproutCpAsset") %}
-{% do view.registerAssetBundle("barrelstrength\\sproutbase\\web\\assetbundles\\datatables\\DataTablesAsset") %}
-{% do view.registerAssetBundle("barrelstrength\\sproutbase\\web\\assetbundles\\apexcharts\\ApexChartsAsset") %}
-{% do view.registerAssetBundle("barrelstrength\\sproutbase\\web\\assetbundles\\reports\\SproutReportsAsset") %}
 
 {% js on ready %}
     new SproutReportsDataTables({

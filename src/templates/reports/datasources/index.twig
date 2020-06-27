@@ -2,10 +2,24 @@
 
 {% extends "sprout/_layouts/base" %}
 {% import "_includes/forms" as forms %}
+{% import "sprout/_includes/sproutcp" as sproutCp %}
 
 {% set selectedSubnavItem = 'data-sources' %}
 
-{% set title  = "Data Sources"|t('sprout') %}
+{% set title = "Data Sources"|t('sprout') %}
+
+{% block actionButton %}
+
+    {% if config.getEnableUpgradeMessages() and config.isUpgradable() %}
+        <div class="buttons">
+            {{ sproutCp.upgradeToProButton({
+                url: config.getUpgradeUrl(),
+                title: config.getUpgradeMessage()
+            }) }}
+        </div>
+    {% endif %}
+
+{% endblock %}
 
 {% block content %}
     <div class="tableview">
@@ -26,10 +40,10 @@
             </thead>
             <tbody>
 
-            {% for id, dataSource in installedDataSources %}
+            {% for id, dataSource in dataSources %}
                 <tr>
                     <td><strong>{{ dataSource.displayName() }}</strong></td>
-                    <td>{{ dataSource.getDescription()|markdown }}</td>
+                    <td style="word-wrap: break-word;">{{ dataSource.getDescription()|markdown }}</td>
 
                     <td>{{ dataSource.getReportCount() }}</td>
                     <td data-type="{{ className(dataSource) }}">
@@ -64,44 +78,6 @@
             {% endfor %}
             </tbody>
         </table>
-
-        {% if uninstalledDataSources|length %}
-            <br>
-            <br>
-            <h3 style="text-transform: uppercase;">{{ "Uninstalled"|t('sprout') }}</h3>
-
-            <table class="data fullwidth">
-                <thead>
-                <tr>
-                    <th scope="col" data-attribute="datasource">{{ "Data Source"|t('sprout') }}</th>
-                    <th scope="col" data-attribute="description">{{ "Description"|t('sprout') }}</th>
-                    {% if currentUser.can('sproutReports-editReports') %}
-                        <th class="thin"></th>
-                    {% endif %}
-                </tr>
-                </thead>
-                <tbody>
-                {% for id, dataSource in uninstalledDataSources %}
-                    {% set dataSource = create(dataSource) %}
-                    <tr>
-                        <td><strong>{{ dataSource.displayName() }}</strong></td>
-                        <td>{{ dataSource.getDescription()|markdown }}</td>
-                        {% if currentUser.can('sproutReports-editReports') %}
-                            <td>
-                                <form method="post" accept-charset="UTF-8">
-                                    {{ csrfInput() }}
-                                    {{ redirectInput('sprout/reports/data-sources') }}
-                                    <input type="hidden" name="action" value="sprout/data-sources/install-data-source">
-                                    <input type="hidden" name="type" value="{{ className(dataSource) }}">
-                                    <input class="btn small" type="submit" value="{{ "Install"|t('sprout') }}">
-                                </form>
-                            </td>
-                        {% endif %}
-                    </tr>
-                {% endfor %}
-                </tbody>
-            </table>
-        {% endif %}
     </div>
 
     <div class="grid">

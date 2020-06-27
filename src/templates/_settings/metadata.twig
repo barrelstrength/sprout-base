@@ -1,5 +1,8 @@
 {% import "_includes/forms" as forms %}
 
+{% do view.registerAssetBundle("barrelstrength\\sproutbase\\web\\assetbundles\\sproutcp\\SproutCpAsset") %}
+{% do view.registerAssetBundle("barrelstrength\\sproutbase\\web\\assetbundles\\metadata\\MetadataAsset") %}
+
 {% macro configWarning(setting) -%}
     {{ "This is being overridden by the {setting} config setting."|t('sprout-forms-google-recaptcha', {
         setting: setting
@@ -65,6 +68,3 @@
     onLabel: "Enable"|t,
     warning: config.displayFieldHandles is defined ? configWarning('displayFieldHandles')
 }) }}
-
-{% do view.registerAssetBundle("barrelstrength\\sproutbase\\web\\assetbundles\\sproutcp\\SproutCpAsset") %}
-{% do view.registerAssetBundle("barrelstrength\\sproutbase\\web\\assetbundles\\metadata\\MetadataAsset") %}
