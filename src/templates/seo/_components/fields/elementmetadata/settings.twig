@@ -14,7 +14,8 @@
 
     {% if not isPro and not(noMetadataFieldsExist or thisIsTheOneMetadataField) %}
         {{ sproutCp.upgradeToProCallout({
-            message: '<a href="'~cpUrl('sprout/upgrade/seo')~'">Upgrade to PRO</a> to enable multiple Metadata field mappings, manage redirects, and generate sitemaps.'
+            message: config.getUpgradeMessage(),
+            cpUrl: config.getUpgradeUrl()
         }) }}
     {% endif %}
 
@@ -241,10 +242,12 @@
         max-width: 300px;
         }
     {% endcss %}
+
 {% else %}
 
     {{ sproutCp.upgradeToProCallout({
-        message: '<a href="'~cpUrl('sprout/upgrade/seo')~'">Upgrade to PRO</a> to add additional Metadata field mappings, manage redirects, and generate sitemaps.'
+        message: config.getUpgradeMessage(),
+        cpUrl: config.getUpgradeUrl()
     }) }}
 
 {% endif %}

@@ -37,7 +37,9 @@
 {% macro upgradeToProCallout(settings) %}
     <div class="sprout-upgrade-to-pro-callout">
         <span class="icon">{{ svg('@sproutbase/web/assets/sprout/icons/control-panel/icon-mask.svg') }}</span>
-        <p>{{ settings.message|markdown }}</p>
+        {% set upgradeLink = '<a href="' ~ settings.cpUrl ~ '">' ~ "Learn&nbsp;more."|t('sprout') ~ '</a>' %}
+        {% set body = settings.message ~ ' ' ~ upgradeLink %}
+        <p>{{ body|markdown }}</p>
     </div>
 {% endmacro %}
 

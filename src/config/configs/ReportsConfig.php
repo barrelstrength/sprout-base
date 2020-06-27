@@ -40,7 +40,7 @@ class ReportsConfig extends Config implements ConfigDataSourceInterface
 
     public function getUpgradeMessage(): string
     {
-        return Craft::t('sprout', 'Upgrade to Sprout Reports PRO to access unlimited data sources and create visualizations.');
+        return Craft::t('sprout', 'Upgrade to Sprout Reports PRO to enable unlimited custom reports, mailing list integrations, and visualizations.');
     }
 
     public function createSettingsModel()

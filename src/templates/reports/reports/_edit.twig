@@ -150,7 +150,8 @@
 
         {% if not isPro %}
             {{ sproutCp.upgradeToProCallout({
-                message: '<a href="'~cpUrl('sprout/upgrade/reports')~'">Upgrade to Sprout Reports PRO</a> to enable unlimited custom reports, mailing list integration, and visualizations.'
+                message: config.getUpgradeMessage(),
+                cpUrl: config.getUpgradeUrl()
             }) }}
 
             <hr>
@@ -190,7 +191,8 @@
 
         {% if not isPro %}
             {{ sproutCp.upgradeToProCallout({
-                message: '<a href="'~cpUrl('sprout/upgrade/reports')~'">Upgrade to Sprout Reports PRO</a> to enable unlimited custom reports, mailing list integration, and visualizations.'
+                message: config.getUpgradeMessage(),
+                cpUrl: config.getUpgradeUrl()
             }) }}
 
             <hr>
