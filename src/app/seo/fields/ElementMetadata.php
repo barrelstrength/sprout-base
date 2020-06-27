@@ -57,7 +57,7 @@ class ElementMetadata extends Field
 
     public static function displayName(): string
     {
-        return Craft::t('sprout', 'Metadata (Sprout SEO)');
+        return Craft::t('sprout', 'Metadata (Sprout)');
     }
 
     public function getContentColumnType(): string

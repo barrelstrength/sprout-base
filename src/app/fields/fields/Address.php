@@ -48,7 +48,7 @@ class Address extends Field implements PreviewableFieldInterface
 
     public static function displayName(): string
     {
-        return Craft::t('sprout', 'Address (Sprout Fields)');
+        return Craft::t('sprout', 'Address (Sprout)');
     }
 
     public static function hasContentColumn(): bool

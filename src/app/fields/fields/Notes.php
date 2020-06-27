@@ -44,7 +44,7 @@ class Notes extends Field
 
     public static function displayName(): string
     {
-        return Craft::t('sprout', 'Notes (Sprout Fields)');
+        return Craft::t('sprout', 'Notes (Sprout)');
     }
 
     public static function hasContentColumn(): bool

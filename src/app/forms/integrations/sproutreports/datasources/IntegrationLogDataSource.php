@@ -30,7 +30,7 @@ class IntegrationLogDataSource extends DataSource
      */
     public static function displayName(): string
     {
-        return Craft::t('sprout', 'Integration Log (Sprout Forms)');
+        return Craft::t('sprout', 'Form Integrations Log (Sprout)');
     }
 
     /**

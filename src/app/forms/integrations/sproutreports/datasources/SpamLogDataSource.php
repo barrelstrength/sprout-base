@@ -30,7 +30,7 @@ class SpamLogDataSource extends DataSource
      */
     public static function displayName(): string
     {
-        return Craft::t('sprout', 'Spam Log (Sprout Forms)');
+        return Craft::t('sprout', 'Form Spam Log (Sprout)');
     }
 
     /**

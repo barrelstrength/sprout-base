@@ -35,7 +35,7 @@ class RecentEntries extends Widget
 
     public static function displayName(): string
     {
-        return Craft::t('sprout', 'Recent Entries (Sprout Forms)');
+        return Craft::t('sprout', 'Recent Form Entries (Sprout)');
     }
 
     public static function icon()

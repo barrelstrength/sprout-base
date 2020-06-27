@@ -57,7 +57,7 @@ class SaveEntryEvent extends NotificationEvent
 
     public function getName(): string
     {
-        return Craft::t('sprout', 'When a form entry is saved (Sprout Forms)');
+        return Craft::t('sprout', 'When a form entry is saved (Sprout)');
     }
 
 

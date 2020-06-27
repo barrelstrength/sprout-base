@@ -42,7 +42,7 @@ class Name extends Field implements PreviewableFieldInterface
 
     public static function displayName(): string
     {
-        return Craft::t('sprout', 'Name (Sprout Fields)');
+        return Craft::t('sprout', 'Name (Sprout)');
     }
 
     /**

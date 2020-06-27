@@ -41,7 +41,7 @@ class RegularExpression extends Field implements PreviewableFieldInterface
      */
     public static function displayName(): string
     {
-        return Craft::t('sprout', 'Regular Expression (Sprout Fields)');
+        return Craft::t('sprout', 'Regular Expression (Sprout)');
     }
 
     /**

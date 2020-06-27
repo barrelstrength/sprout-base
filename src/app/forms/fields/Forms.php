@@ -16,7 +16,7 @@ class Forms extends BaseRelationField
 {
     public static function displayName(): string
     {
-        return Craft::t('sprout', 'Forms (Sprout Forms)');
+        return Craft::t('sprout', 'Forms (Sprout)');
     }
 
     public static function defaultSelectionLabel(): string

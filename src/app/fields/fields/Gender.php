@@ -27,7 +27,7 @@ class Gender extends Field
      */
     public static function displayName(): string
     {
-        return Craft::t('sprout', 'Gender (Sprout Fields)');
+        return Craft::t('sprout', 'Gender (Sprout)');
     }
 
     /**

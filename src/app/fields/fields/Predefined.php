@@ -34,7 +34,7 @@ class Predefined extends BasePredefinedField
 
     public static function displayName(): string
     {
-        return Craft::t('sprout', 'Predefined (Sprout Fields)');
+        return Craft::t('sprout', 'Predefined (Sprout)');
     }
 
     public function getContentColumnType(): string

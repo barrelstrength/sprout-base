@@ -42,7 +42,7 @@ class Url extends Field implements PreviewableFieldInterface
 
     public static function displayName(): string
     {
-        return Craft::t('sprout', 'URL (Sprout Fields)');
+        return Craft::t('sprout', 'URL (Sprout)');
     }
 
     /**

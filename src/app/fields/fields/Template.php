@@ -50,7 +50,7 @@ class Template extends Field implements PreviewableFieldInterface
      */
     public static function displayName(): string
     {
-        return Craft::t('sprout', 'Template (Sprout Fields)');
+        return Craft::t('sprout', 'Template (Sprout)');
     }
 
     public function init()

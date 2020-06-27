@@ -35,7 +35,7 @@ class EntriesDataSource extends DataSource
      */
     public static function displayName(): string
     {
-        return Craft::t('sprout', 'Entries (Sprout Forms)');
+        return Craft::t('sprout', 'Form Entries (Sprout)');
     }
 
     /**

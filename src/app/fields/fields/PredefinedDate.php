@@ -19,7 +19,7 @@ class PredefinedDate extends BasePredefinedField
 {
     public static function displayName(): string
     {
-        return Craft::t('sprout', 'Predefined Date (Sprout Fields)');
+        return Craft::t('sprout', 'Predefined Date (Sprout)');
     }
 
     public function getContentColumnType(): string

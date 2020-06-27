@@ -17,7 +17,7 @@ class BasicSproutFormsNotification extends EmailTemplates
      */
     public function getName(): string
     {
-        return Craft::t('sprout', 'Basic Notification (Sprout Forms)');
+        return Craft::t('sprout', 'Form Summary (Sprout)');
     }
 
     /**
