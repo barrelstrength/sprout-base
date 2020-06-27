@@ -12,6 +12,7 @@ use barrelstrength\sproutbase\app\reports\base\DataSourceInterface;
 use barrelstrength\sproutbase\app\reports\datasources\MissingDataSource;
 use barrelstrength\sproutbase\app\reports\records\DataSource as DataSourceRecord;
 use barrelstrength\sproutbase\app\reports\records\Report as ReportRecord;
+use barrelstrength\sproutbase\config\base\ConfigDataSourceInterface;
 use barrelstrength\sproutbase\SproutBase;
 use Craft;
 use craft\db\Query;
@@ -374,7 +375,7 @@ class DataSources extends Component
                 continue;
             }
 
-            if (!method_exists($config, 'getSupportedDataSourceTypes')) {
+            if (!$config instanceof ConfigDataSourceInterface) {
                 continue;
             }
 

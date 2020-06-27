@@ -19,6 +19,8 @@ use barrelstrength\sproutbase\app\forms\integrations\sproutreports\datasources\E
 use barrelstrength\sproutbase\app\forms\integrations\sproutreports\datasources\IntegrationLogDataSource;
 use barrelstrength\sproutbase\app\forms\integrations\sproutreports\datasources\SpamLogDataSource;
 use barrelstrength\sproutbase\config\base\Config;
+use barrelstrength\sproutbase\config\base\ConfigDataSourceInterface;
+use barrelstrength\sproutbase\config\base\ConfigNotificationEventInterface;
 use barrelstrength\sproutbase\config\controllers\SettingsController;
 use barrelstrength\sproutbase\config\models\settings\FormsSettings;
 use barrelstrength\sproutbase\migrations\forms\Install;
@@ -26,7 +28,7 @@ use barrelstrength\sproutbase\SproutBase;
 use barrelstrength\sproutbase\web\twig\variables\FormsVariable;
 use Craft;
 
-class FormsConfig extends Config
+class FormsConfig extends Config implements ConfigDataSourceInterface, ConfigNotificationEventInterface
 {
     public static function getControllerMap(): array
     {

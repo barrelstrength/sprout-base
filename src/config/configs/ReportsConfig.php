@@ -13,6 +13,7 @@ use barrelstrength\sproutbase\app\reports\datasources\CustomQuery;
 use barrelstrength\sproutbase\app\reports\datasources\CustomTwigTemplate;
 use barrelstrength\sproutbase\app\reports\datasources\Users;
 use barrelstrength\sproutbase\config\base\Config;
+use barrelstrength\sproutbase\config\base\ConfigDataSourceInterface;
 use barrelstrength\sproutbase\config\models\settings\ReportsSettings;
 use barrelstrength\sproutbase\migrations\reports\Install;
 use barrelstrength\sproutbase\SproutBase;
@@ -20,7 +21,7 @@ use barrelstrength\sproutbase\web\twig\variables\FormsVariable;
 use barrelstrength\sproutbase\web\twig\variables\ReportsVariable;
 use Craft;
 
-class ReportsConfig extends Config
+class ReportsConfig extends Config implements ConfigDataSourceInterface
 {
     public static function getKey(): string
     {

@@ -6,6 +6,7 @@ use barrelstrength\sproutbase\app\email\base\NotificationEvent;
 use barrelstrength\sproutbase\app\email\elements\NotificationEmail;
 use barrelstrength\sproutbase\app\email\events\NotificationEmailEvent;
 use barrelstrength\sproutbase\app\email\events\SendNotificationEmailEvent;
+use barrelstrength\sproutbase\config\base\ConfigNotificationEventInterface;
 use barrelstrength\sproutbase\SproutBase;
 use Craft;
 use craft\base\Component;
@@ -341,7 +342,7 @@ class NotificationEmailEvents extends Component
                 continue;
             }
 
-            if (!method_exists($config, 'getSupportedNotificationEventTypes')) {
+            if (!$config instanceof ConfigNotificationEventInterface) {
                 continue;
             }
 
