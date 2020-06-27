@@ -40,7 +40,7 @@ class ReportsController extends Controller
     {
         $this->requirePermission('sprout:reports:viewReports');
 
-        $dataSources = SproutBase::$app->dataSources->getInstalledDataSources();
+        $dataSources = SproutBase::$app->dataSources->getDataSources();
 
         if ($groupId !== null) {
             $reports = SproutBase::$app->reports->getReportsByGroupId($groupId);
@@ -49,11 +49,10 @@ class ReportsController extends Controller
         }
 
         $newReportOptions = [];
-        $allowedDataSourceIds = SproutBase::$app->reports->getAllowedDataSourceIds();
 
         foreach ($dataSources as $dataSource) {
 
-            if (!$dataSource->allowNew || !in_array($dataSource->id, $allowedDataSourceIds, true)) {
+            if (!$dataSource->allowNew) {
                 continue;
             }
 
@@ -561,21 +560,18 @@ class ReportsController extends Controller
      */
     private function processEditionChecks(Report $report)
     {
-        $isPro = SproutBase::$app->config->isEdition('reports', Config::EDITION_PRO);
+        $config = SproutBase::$app->config->getConfigByKey('reports');
 
         // No changes if Pro or if editing an existing report
-        if ($isPro || $report->id) {
+        if ($config->getIsPro() || $report->id) {
             return null;
         }
 
-        /** @var DataSource $dataSource */
         $dataSource = $report->getDataSource();
-        $dataSourceId = $dataSource->id;
+        $dataSources = SproutBase::$app->dataSources->getDataSources();
 
-        $allowedDataSourceIds = SproutBase::$app->reports->getAllowedDataSourceIds();
-
-        if (!in_array($dataSourceId, $allowedDataSourceIds, false)) {
-            return Craft::t('sprout', 'Upgrade to Sprout Reports PRO to use Custom Reports and Data Source integrations.');
+        if (!array_key_exists(get_class($dataSource), $dataSources)) {
+            return $config->getUpgradeMessage();
         }
 
         return null;

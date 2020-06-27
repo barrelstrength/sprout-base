@@ -106,8 +106,8 @@ class ReportQuery extends ElementQuery
         $isPro = SproutBase::$app->config->isEdition('reports', Config::EDITION_PRO);
 
         if (!$isPro) {
-            $allowedDataSourceIds = SproutBase::$app->reports->getAllowedDataSourceIds();
-            $defaultDataSourceIds = SproutBase::$app->reports->getDefaultDataSourceIds();
+            $allowedDataSourceIds = SproutBase::$app->dataSources->getAllowedDataSourceIds();
+            $defaultDataSourceIds = SproutBase::$app->dataSources->getDefaultDataSourceIds();
 
             // Restrict the query to Data Sources from enabled modules
             $dataSourceIdsCondition = [

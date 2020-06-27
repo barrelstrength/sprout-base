@@ -30,7 +30,151 @@ class DataSources extends Component
      */
     const EVENT_REGISTER_DATA_SOURCES = 'registerSproutReportsDataSources';
 
-    private $dataSources;
+    /**
+     * @var $_dataSources DataSource[]
+     */
+    private $_dataSources = [];
+
+    /**
+     * @var array
+     */
+    private $_allowedDataSourceIds;
+
+    /**
+     * @var array
+     */
+    private $_defaultDataSourceIds;
+
+    /**
+     * Returns all available Data Source classes
+     *
+     * @return string[]
+     */
+    public function getDataSourceTypes(): array
+    {
+        $event = new RegisterComponentTypesEvent([
+            'types' => [],
+        ]);
+
+        $this->trigger(self::EVENT_REGISTER_DATA_SOURCES, $event);
+
+        return $event->types;
+    }
+
+    public function getDataSources(): array
+    {
+        if (!$this->_dataSources) {
+            $this->initDataSources();
+        }
+
+        return $this->_dataSources;
+    }
+
+    public function getAllowedDataSourceIds(): array
+    {
+        if (!$this->_allowedDataSourceIds) {
+            $this->initDataSources();
+        }
+
+        return $this->_allowedDataSourceIds;
+    }
+
+    public function getDefaultDataSourceIds(): array
+    {
+        if (!$this->_defaultDataSourceIds) {
+            $this->initDataSources();
+        }
+
+        return $this->_defaultDataSourceIds;
+    }
+
+    public function initDataSources()
+    {
+        $config = SproutBase::$app->config->getConfigByKey('reports');
+
+        // Only load Sprout defined Data Sources first
+        $registeredDataSources = $this->getRegisteredSproutDataSources();
+
+        // Load all Data Sources if Reports Pro
+        if ($config->getIsPro()) {
+            $registeredDataSources = array_merge($registeredDataSources, $this->getDataSourceTypes());
+        }
+
+        // Identify all allowed data source IDs
+        $allowedDataSourceIds = (new Query())
+            ->select('id')
+            ->from('{{%sproutreports_datasources}}')
+            ->where(['in', 'type', $registeredDataSources])
+            ->column();
+
+        $this->_allowedDataSourceIds = $allowedDataSourceIds;
+
+        // Identify the default Data Source IDs
+        $reportsConfig = SproutBase::$app->config->getConfigByKey('reports');
+        $reportsDataSourceTypes = $reportsConfig->getSupportedDataSourceTypes();
+
+        $reportsDataSourceIds = (new Query())
+            ->select('id')
+            ->from('{{%sproutreports_datasources}}')
+            ->where(['in', 'type', $reportsDataSourceTypes])
+            ->column();
+
+        $this->_defaultDataSourceIds = $reportsDataSourceIds;
+
+        $installedDataSources = (new Query())
+            ->select([
+                'id',
+                'type',
+                'allowNew'
+            ])
+            ->from([DataSourceRecord::tableName()])
+            ->indexBy('type')
+            ->all();
+
+        $dataSources = [];
+
+        // Save any unsaved DataSources to the database and add them to our list
+        foreach ($registeredDataSources as $registeredDataSource) {
+            if (!isset($installedDataSources[$registeredDataSource])) {
+                /** @var DataSource $dataSource */
+                $dataSource = new $registeredDataSource();
+                $this->saveDataSource($dataSource);
+
+                $installedDataSources[$registeredDataSource]['id'] = $dataSource->id;
+                $installedDataSources[$registeredDataSource]['type'] = $registeredDataSource;
+                $installedDataSources[$registeredDataSource]['allowNew'] = 1;
+            }
+        }
+
+        // Determine if Data Sources from the database should be included in our list
+        foreach ($installedDataSources as $dataSourceType => $installedDataSource) {
+
+            if (!in_array($dataSourceType, $registeredDataSources, true)) {
+                continue;
+            }
+
+            if (class_exists($dataSourceType)) {
+                $dataSources[$dataSourceType] = new $dataSourceType();
+                $dataSources[$dataSourceType]->id = $installedDataSource['id'];
+                $dataSources[$dataSourceType]->allowNew = $installedDataSource['allowNew'];
+            } else {
+                Craft::error('Unable to find Data Source: '.$dataSourceType, __METHOD__);
+                $dataSources[MissingDataSource::class] = new MissingDataSource();
+                $dataSources[MissingDataSource::class]->id = $installedDataSource['id'];
+                $dataSources[MissingDataSource::class]->setDescription($dataSourceType);
+            }
+        }
+
+        uasort($dataSources, static function($a, $b) {
+            /**
+             * @var $a DataSource
+             * @var $b DataSource
+             */
+            return $a::displayName() <=> $b::displayName();
+        });
+
+        $this->_dataSources = $dataSources;
+    }
 
     /**
      * @param int $id
@@ -58,64 +202,6 @@ class DataSources extends Component
         }
 
         return null;
-    }
-
-    /**
-     * Returns all available Data Source classes
-     *
-     * @return string[]
-     */
-    public function getAllDataSourceTypes(): array
-    {
-        $event = new RegisterComponentTypesEvent([
-            'types' => [],
-        ]);
-
-        $this->trigger(self::EVENT_REGISTER_DATA_SOURCES, $event);
-
-        return $event->types;
-    }
-
-    /**
-     * Returns all Data Sources
-     *
-     * @return DataSource[]
-     */
-    public function getInstalledDataSources(): array
-    {
-        $query = (new Query())
-            ->select(['*'])
-            ->from([DataSourceRecord::tableName()]);
-
-        $dataSources = [];
-
-        foreach ($query->all() as $dataSource) {
-
-            $dataSourceType = $dataSource['type'];
-
-            if (class_exists($dataSourceType)) {
-                $dataSources[$dataSourceType] = new $dataSourceType();
-                $dataSources[$dataSourceType]->id = $dataSource['id'];
-                $dataSources[$dataSourceType]->allowNew = $dataSource['allowNew'];
-            } else {
-                Craft::error('Unable to find Data Source: '.$dataSourceType, __METHOD__);
-                $dataSources[MissingDataSource::class] = new MissingDataSource();
-                $dataSources[MissingDataSource::class]->id = $dataSource['id'];
-                $dataSources[MissingDataSource::class]->setDescription($dataSourceType);
-            }
-        }
-
-        $this->dataSources = $dataSources;
-
-        uasort($dataSources, static function($a, $b) {
-            /**
-             * @var $a DataSource
-             * @var $b DataSource
-             */
-            return $a::displayName() <=> $b::displayName();
-        });
-
-        return $dataSources;
     }
 
     /**
@@ -267,5 +353,33 @@ class DataSources extends Component
         }
 
         return true;
+    }
+
+    /**
+     * @return array
+     */
+    private function getRegisteredSproutDataSources(): array
+    {
+        $configs = SproutBase::$app->config->getConfigs(false);
+
+        $dataSourceTypes = [];
+
+        foreach ($configs as $config) {
+            $settings = $config->getSettings();
+
+            if (!$settings || ($settings && !$settings->getIsEnabled())) {
+                continue;
+            }
+
+            if (!method_exists($config, 'getSupportedDataSourceTypes')) {
+                continue;
+            }
+
+            foreach ($config->getSupportedDataSourceTypes() as $dataSourceType) {
+                $dataSourceTypes[] = $dataSourceType;
+            }
+        }
+
+        return array_filter($dataSourceTypes);
     }
 }

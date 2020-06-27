@@ -22,34 +22,6 @@ use yii\db\Transaction;
 class Reports extends Component
 {
     /**
-     * @var array
-     */
-    protected $_allowedDataSourceIds;
-
-    /**
-     * @var array
-     */
-    protected $_defaultDataSourceIds;
-
-    public function getAllowedDataSourceIds(): array
-    {
-        if (!$this->_allowedDataSourceIds) {
-            $this->populateDataSourceIds();
-        }
-
-        return $this->_allowedDataSourceIds;
-    }
-
-    public function getDefaultDataSourceIds(): array
-    {
-        if (!$this->_defaultDataSourceIds) {
-            $this->populateDataSourceIds();
-        }
-
-        return $this->_defaultDataSourceIds;
-    }
-
-    /**
      * @param Report $report
      *
      * @return bool
@@ -249,48 +221,5 @@ class Reports extends Component
         }
 
         return $reports;
-    }
-
-    private function populateDataSourceIds()
-    {
-        $configs = SproutBase::$app->config->getConfigs(false);
-
-        $dataSourceTypes = [];
-
-        foreach ($configs as $config) {
-            $settings = $config->getSettings();
-
-            if (!$settings || ($settings && !$settings->getIsEnabled())) {
-                continue;
-            }
-
-            if (!method_exists($config, 'getSupportedDataSourceTypes')) {
-                continue;
-            }
-
-            foreach ($config->getSupportedDataSourceTypes() as $dataSourceType) {
-                $dataSourceTypes[] = $dataSourceType;
-            }
-        }
-
-        $dataSourceTypes = array_filter($dataSourceTypes);
-
-        $dataSourceIds = (new Query())
-            ->select('id')
-            ->from('{{%sproutreports_datasources}}')
-            ->where(['in', 'type', $dataSourceTypes])
-            ->column();
-
-        $reportsConfig = SproutBase::$app->config->getConfigByKey('reports');
-        $reportsDataSourceTypes = $reportsConfig->getSupportedDataSourceTypes();
-
-        $reportsDataSourceIds = (new Query())
-            ->select('id')
-            ->from('{{%sproutreports_datasources}}')
-            ->where(['in', 'type', $reportsDataSourceTypes])
-            ->column();
-
-        $this->_allowedDataSourceIds = $dataSourceIds;
-        $this->_defaultDataSourceIds = $reportsDataSourceIds;
     }
 }

@@ -29,37 +29,14 @@ class DataSourcesController extends Controller
 
     public function actionDataSourcesIndexTemplate(): Response
     {
-        $dataSourceTypes = SproutBase::$app->dataSources->getAllDataSourceTypes();
+        $dataSources = SproutBase::$app->dataSources->getDataSources();
 
-        $installedDataSources = SproutBase::$app->dataSources->getInstalledDataSources();
-
-        // Get Data Sources that are registered but are not installed
-        $uninstalledDataSources = array_diff($dataSourceTypes, array_keys($installedDataSources));
+        $config = SproutBase::$app->config->getConfigByKey('reports');
 
         return $this->renderTemplate('sprout/reports/datasources/index', [
-            'installedDataSources' => $installedDataSources,
-            'uninstalledDataSources' => $uninstalledDataSources,
+            'dataSources' => $dataSources,
+            'config' => $config
         ]);
-    }
-
-    /**
-     * @return Response
-     * @throws MissingComponentException
-     * @throws BadRequestHttpException
-     */
-    public function actionInstallDataSource(): Response
-    {
-        $this->requirePostRequest();
-
-        $dataSourceType = Craft::$app->getRequest()->getRequiredBodyParam('type');
-
-        if (!SproutBase::$app->dataSources->installDataSources([$dataSourceType])) {
-            Craft::$app->getSession()->setError(Craft::t('sprout', 'Could not install Data Source.'));
-        } else {
-            Craft::$app->getSession()->setNotice(Craft::t('sprout', 'Data Source installed.'));
-        }
-
-        return $this->redirectToPostedUrl();
     }
 
     /**
