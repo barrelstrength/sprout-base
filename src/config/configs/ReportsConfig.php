@@ -113,7 +113,7 @@ class ReportsConfig extends Config
 
     public function setEdition()
     {
-        $sproutReportsIsPro = SproutBase::$app->config->isPluginEdition('sprout-reports', Config::EDITION_STANDARD);
+        $sproutReportsIsPro = SproutBase::$app->config->isPluginEdition('sprout-reports', Config::EDITION_PRO);
 
         if ($sproutReportsIsPro) {
             $this->_edition = Config::EDITION_PRO;
