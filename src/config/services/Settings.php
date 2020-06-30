@@ -115,6 +115,10 @@ class Settings extends Component
     {
         $settings = $this->getSettings($includeFileConfigSettings);
 
+        if (empty($settings[$handle])) {
+            throw new \InvalidArgumentException("`{$handle}` settings not found.");
+        }
+
         return $settings[$handle];
     }
 

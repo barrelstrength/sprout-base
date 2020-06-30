@@ -16,8 +16,6 @@ use barrelstrength\sproutbase\app\email\mailers\DefaultMailer;
 use barrelstrength\sproutbase\app\email\services\EmailTemplates;
 use barrelstrength\sproutbase\app\email\services\Mailers;
 use barrelstrength\sproutbase\app\email\services\NotificationEmailEvents;
-use barrelstrength\sproutbase\app\reports\datasources\CustomQuery;
-use barrelstrength\sproutbase\app\reports\services\DataSources;
 use barrelstrength\sproutbase\config\base\Config;
 use barrelstrength\sproutbase\config\configs\CampaignsConfig;
 use barrelstrength\sproutbase\config\configs\ControlPanelConfig;
@@ -191,8 +189,8 @@ class SproutBase extends Module
         });
 
         Event::on(BaseMailer::class, BaseMailer::EVENT_AFTER_SEND, static function(MailEvent $event) {
-        SproutBase::$app->sentEmails->handleLogSentEmail($event);
-    });
+            SproutBase::$app->sentEmails->handleLogSentEmail($event);
+        });
 
         Event::on(Mailers::class, Mailers::EVENT_REGISTER_MAILER_TYPES, static function(RegisterMailersEvent $event) {
             $event->mailers[] = new DefaultMailer();
