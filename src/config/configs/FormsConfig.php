@@ -50,7 +50,7 @@ class FormsConfig extends Config implements ConfigDataSourceInterface, ConfigNot
         ];
     }
 
-    public static function getSproutConfigs(): array
+    public static function getSproutConfigDependencies(): array
     {
         return [
             FieldsConfig::class

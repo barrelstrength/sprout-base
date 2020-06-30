@@ -147,7 +147,7 @@ class Config extends Component
                 $this->populateConfig($config);
                 $this->_configs[$config::getKey()] = $config;
 
-                $subModuleConfigTypes = $config::getSproutConfigs();
+                $subModuleConfigTypes = $config::getSproutConfigDependencies();
 
                 foreach ($subModuleConfigTypes as $subModuleConfigType) {
 
@@ -198,15 +198,34 @@ class Config extends Component
         $sproutConfigTypes = $plugin->getSproutConfigs();
 
         foreach ($sproutConfigTypes as $sproutConfigType) {
+            $sproutConfig = new $sproutConfigType();
+            $subModuleConfigTypes = $sproutConfigType::getSproutConfigDependencies();
 
             // Run the safeUp method if our module has an Install migration
-            if ($migration = $sproutConfigType->createInstallMigration()) {
+            if ($migration = $sproutConfig->createInstallMigration()) {
                 ob_start();
                 $migration->safeUp();
                 ob_end_clean();
+
+                $projectConfigSettingsKey = self::CONFIG_SPROUT_KEY.'.'.$sproutConfig::getKey();
+                $settings = $sproutConfig->createSettingsModel();
+                SproutBase::$app->settings->saveSettings($projectConfigSettingsKey, $settings);
             }
 
-            $this->addConfigSettingsToProjectConfig($sproutConfigType);
+            foreach ($subModuleConfigTypes as $subModuleConfigType) {
+                $subModuleConfig = new $subModuleConfigType();
+
+                // Run the safeUp method if our module has an Install migration
+                if ($migration = $subModuleConfig->createInstallMigration()) {
+                    ob_start();
+                    $migration->safeUp();
+                    ob_end_clean();
+
+                    $projectConfigSettingsKey = self::CONFIG_SPROUT_KEY.'.'.$subModuleConfig::getKey();
+                    $settings = $subModuleConfig->createSettingsModel();
+                    SproutBase::$app->settings->saveSettings($projectConfigSettingsKey, $settings);
+                }
+            }
         }
     }
 
@@ -214,7 +233,6 @@ class Config extends Component
      * Runs all Install::safeDown() migrations for Sprout Central plugins
      *
      * @param SproutBasePlugin $plugin
-     *
      */
     public function runUninstallMigrations(SproutBasePlugin $plugin)
     {
@@ -235,6 +253,21 @@ class Config extends Component
             }
 
             $this->removeConfigSettingsToProjectConfig($sproutConfigType);
+
+            $subModuleConfigTypes = $sproutConfigType::getSproutConfigDependencies();
+
+            foreach ($subModuleConfigTypes as $subModuleConfigType) {
+                $subModuleConfig = new $subModuleConfigType();
+
+                // Run the safeUp method if our module has an Install migration
+                if ($migration = $subModuleConfig->createInstallMigration()) {
+                    ob_start();
+                    $migration->safeDown();
+                    ob_end_clean();
+                }
+
+                $this->removeConfigSettingsToProjectConfig($subModuleConfigType);
+            }
         }
     }
 
@@ -444,7 +477,11 @@ class Config extends Component
         /** @var Plugin $plugin */
         $plugin = Craft::$app->plugins->getPlugin($pluginHandle);
 
-        return $plugin !== null ? $plugin->is($edition) : false;
+        if ($plugin === null) {
+            return false;
+        }
+
+        return $plugin->is($edition) ? true : false;
     }
 
     public function getEdition($handle): string
@@ -468,6 +505,11 @@ class Config extends Component
             $configTypes = $plugin::getSproutConfigs();
             foreach ($configTypes as $configType) {
                 $configDependencies[] = $configType;
+
+                $subModuleConfigTypes = $configType::getSproutConfigDependencies();
+                foreach ($subModuleConfigTypes as $subModuleConfigType) {
+                    $configDependencies[] = $subModuleConfigType;
+                }
             }
         }
 
@@ -579,7 +621,7 @@ class Config extends Component
             }
 
             $moduleMap = $moduleClassName::$method();
-            $subModules = $moduleClassName::getSproutConfigs();
+            $subModules = $moduleClassName::getSproutConfigDependencies();
 
             foreach ($moduleMap as $key => $className) {
                 $mapping[$key] = $className;

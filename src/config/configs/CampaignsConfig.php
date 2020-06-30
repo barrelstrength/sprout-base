@@ -27,7 +27,7 @@ class CampaignsConfig extends Config
         ];
     }
 
-    public static function getSproutConfigs(): array
+    public static function getSproutConfigDependencies(): array
     {
         return [
             EmailPreviewConfig::class,

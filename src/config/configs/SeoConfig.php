@@ -32,7 +32,7 @@ class SeoConfig extends Config
         ];
     }
 
-    public static function getSproutConfigs(): array
+    public static function getSproutConfigDependencies(): array
     {
         return [
             FieldsConfig::class

@@ -159,11 +159,6 @@ abstract class Config extends Component implements ConfigInterface
         return [];
     }
 
-    public function getSproutDependencies(): array
-    {
-        return [];
-    }
-
     public function getConfigSettings(): array
     {
         return [];
@@ -179,7 +174,7 @@ abstract class Config extends Component implements ConfigInterface
         return [];
     }
 
-    public static function getSproutConfigs(): array
+    public static function getSproutConfigDependencies(): array
     {
         return [];
     }

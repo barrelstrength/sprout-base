@@ -30,10 +30,8 @@ abstract class SproutBasePlugin extends Plugin
     }
 
     /**
-     * Implement this interface on all plugins so
-     * we can easily sort out all Sprout plugins
-     * from the list of all installed plugins and
-     * manage dependencies
+     * Implement this method on all SproutBasePlugin's so we can easily sort out all
+     * Sprout plugins from the list of all installed plugins and manage dependencies
      *
      * @return ConfigInterface[]
      */
@@ -44,40 +42,44 @@ abstract class SproutBasePlugin extends Plugin
 
     private function getCpUrlRules(): array
     {
-        $configTypes = static::getSproutConfigs();
+        return $this->prepareUrlRules(static::getSproutConfigs(), 'cp');
+    }
 
+    private function getSiteUrlRules(): array
+    {
+        return $this->prepareUrlRules(static::getSproutConfigs(), 'site');
+    }
+
+    /**
+     * Process the configs here, because we can't call getConfigs() yet
+     * The plugins are still loading.
+     *
+     * @param array $configTypes
+     *
+     * @return array
+     */
+    private function prepareUrlRules(array $configTypes, $mode): array
+    {
         $urlRules = [];
         foreach ($configTypes as $configType) {
             $config = new $configType();
-            $subModuleConfigTypes = $configType::getSproutConfigs();
+            $subModuleConfigTypes = $configType::getSproutConfigDependencies();
 
-            $rules = $config->getCpUrlRules();
+            $rules = $mode === 'cp'
+                ? $config->getCpUrlRules()
+                : $config->getSiteUrlRules();
             foreach ($rules as $route => $details) {
                 $urlRules[$route] = $details;
             }
 
             foreach ($subModuleConfigTypes as $subModuleConfigType) {
                 $subModuleConfig = new $subModuleConfigType();
-                $rules = $subModuleConfig->getCpUrlRules();
+                $rules = $mode === 'cp'
+                    ? $subModuleConfig->getCpUrlRules()
+                    : $config->getSiteUrlRules();
                 foreach ($rules as $route => $details) {
                     $urlRules[$route] = $details;
                 }
-            }
-        }
-
-        return $urlRules;
-    }
-
-    private function getSiteUrlRules(): array
-    {
-        $configTypes = static::getSproutConfigs();
-
-        $urlRules = [];
-        foreach ($configTypes as $configType) {
-            $config = new $configType();
-            $rules = $config->getSiteUrlRules();
-            foreach ($rules as $route => $details) {
-                $urlRules[$route] = $details;
             }
         }
 

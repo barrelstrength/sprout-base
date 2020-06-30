@@ -106,12 +106,11 @@ interface ConfigInterface
     public function getUserPermissions(): array;
 
     /**
-     * Returns a list of plugin dependencies to facilitate
-     * actions on install and uninstall
+     * Returns a list of modules that only need to be installed if this module is installed
      *
      * @return array
      */
-    public function getSproutDependencies(): array;
+    public static function getSproutConfigDependencies(): array;
 
     /**
      * Returns an array of settings that will be added to the
