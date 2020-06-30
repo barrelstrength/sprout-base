@@ -49,9 +49,19 @@ abstract class SproutBasePlugin extends Plugin
         $urlRules = [];
         foreach ($configTypes as $configType) {
             $config = new $configType();
+            $subModuleConfigTypes = $configType::getSproutConfigs();
+
             $rules = $config->getCpUrlRules();
             foreach ($rules as $route => $details) {
                 $urlRules[$route] = $details;
+            }
+
+            foreach ($subModuleConfigTypes as $subModuleConfigType) {
+                $subModuleConfig = new $subModuleConfigType();
+                $rules = $subModuleConfig->getCpUrlRules();
+                foreach ($rules as $route => $details) {
+                    $urlRules[$route] = $details;
+                }
             }
         }
 
