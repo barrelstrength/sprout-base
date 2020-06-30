@@ -1,0 +1,11 @@
+{% extends "sprout/_layouts/elementindex" %}
+
+{% set title = "Lists"|t('sprout') %}
+{% set elementType = 'barrelstrength\\sproutbase\\app\\lists\\elements\\ListElement' %}
+
+{% block actionButton %}
+    <div class="buttons">
+        <a class="btn submit add icon"
+            href="{{ cpUrl('sprout/lists/new') }}">{{ "New Subscriber List"|t('sprout') }}</a>
+    </div>
+{% endblock %}

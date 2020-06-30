@@ -1,0 +1,132 @@
+{% extends "sprout/_layouts/base" %}
+{% import "_includes/forms" as forms %}
+
+{% set crumbs = [
+    { label: "Subscribers"|t('sprout'), url: url('sprout/subscribers') }
+] %}
+
+{% set title = subscriber is not null ? 'Edit Subscriber'|t('sprout') : 'New Subscriber'|t('sprout') %}
+
+{% set selectedTab    = 'lists' %}
+{% set subscriberId = subscriber is not null ? subscriber.id : null %}
+{% set fullPageForm = true %}
+
+{% set saveShortcutRedirect = url('sprout/subscribers/edit/{id}') %}
+
+{% block actionButton %}
+    <div class="buttons">
+        <div class="btngroup submit">
+            <input type="submit" class="btn submit" value="{{ 'Save'|t('sprout') }}">
+
+            <div class="btn submit menubtn"></div>
+            <div class="menu">
+                <ul>
+                    <li><a class="formsubmit"
+                            data-redirect="{{ saveShortcutRedirect|hash }}">
+                            {{ "Save and continue editing"|t('sprout') }}</a>
+                    </li>
+                    <li><a class="formsubmit"
+                            data-redirect="{{ "sprout/subscribers/new"|hash }}">
+                            {{ "Save and add another"|t('sprout') }}</a>
+                    </li>
+                </ul>
+                <hr>
+                <ul>
+                    <li><a class="formsubmit error"
+                            data-action="sprout/subscribers/delete-subscriber"
+                            data-confirm="Are you sure you want to delete this Subscriber?"
+                            data-redirect="{{ 'sprout/subscribers'|hash }}">{{ "Delete"|t('sprout') }}</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+
+    <input type="hidden" id="action" name="action" value="sprout/subscribers/save-subscriber">
+    {{ redirectInput("sprout/subscribers") }}
+
+    {% if subscriber is not null %}
+        <input type="hidden" name="subscriberId" value="{{ subscriberId }}">
+    {% endif %}
+
+    <input type="hidden" name="listType" value="barrelstrength\sproutbase\app\lists\listtypes\SubscriberList">
+
+    <section id="default-fields">
+
+        {{ forms.textField({
+            label: "Email"|t('sprout'),
+            name: 'email',
+            id: 'email',
+            required: true,
+            autofocus: true,
+            value: subscriber is not null ? subscriber.email : null,
+            errors: subscriber is not null and subscriber.hasErrors('email') ? subscriber.getErrors('email') : null
+        }) }}
+
+        {{ forms.textField({
+            label: "First Name"|t('sprout'),
+            name: 'firstName',
+            id: 'firstName',
+            value: subscriber is not null ? subscriber.firstName : null,
+            errors: subscriber is not null and subscriber.hasErrors('firstName') ? subscriber.getErrors('firstName') : null
+        }) }}
+
+        {{ forms.textField({
+            label: "Last Name"|t('sprout'),
+            name: 'lastName',
+            id: 'lastName',
+            value: subscriber is not null ? subscriber.lastName : null,
+            errors: subscriber is not null and subscriber.hasErrors('lastName') ? subscriber.getErrors('lastName') : null
+        }) }}
+
+    </section>
+{% endblock %}
+{% block details %}
+
+
+
+    {% for listType in listTypes %}
+
+        {% set subscriberSettingsHtml = listType.getSubscriberSettingsHtml(subscriberId) %}
+
+        {% if subscriberSettingsHtml != '' %}
+
+            <div class="meta">
+                <div class="field">
+                    <div class="heading">{{ listType.displayName() }}</div>
+                    <div class="input">{{ subscriberSettingsHtml }}</div>
+                </div>
+            </div>
+
+        {% else %}
+
+            <div class="meta read-only">
+                <p>{{ "Create a [{listTypeName}]({newSubscriberList}) and your lists will display here in the sidebar."|t('sprout', {
+                        'listTypeName': listType.displayName(),
+                        'newSubscriberList': cpUrl('sprout/lists/new')
+                    })|markdown }}</p>
+
+                <ul>
+                    <li><input type="checkbox" class="checkbox" disabled>
+                        <label>{{ "List One"|t('sprout') }}</label>
+                    </li>
+                    <li><input type="checkbox" class="checkbox" disabled>
+                        <label>{{ "List Two"|t('sprout') }}</label>
+                    </li>
+                    <li><input type="checkbox" class="checkbox" disabled>
+                        <label>{{ "List Three"|t('sprout') }}</label>
+                    </li>
+                </ul>
+                <br>
+            </div>
+
+        {% endif %}
+
+    {% endfor %}
+
+    </div>
+
+{% endblock %}

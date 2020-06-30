@@ -1,0 +1,13 @@
+{% import "_includes/forms" as forms %}
+
+{{ forms.selectField({
+    label: "Subscriber List"|t('sprout'),
+    instructions: "Select the Subscriber List you want to make available as a Mailing List.",
+    name: "settings[subscriberListId]",
+    required: true,
+    first: true,
+    options: subscriberListOptions,
+    value: settings.subscriberListId ?? null,
+    errors: errors['subscriberListId'] is defined ? errors['subscriberListId'] : null,
+    warning: not subscriberListOptions ? 'Create a Subscriber Lists to select it here'|t('sprout') : null
+}) }}

@@ -32,6 +32,8 @@ use barrelstrength\sproutbase\app\forms\services\FormRules;
 use barrelstrength\sproutbase\app\forms\services\Forms;
 use barrelstrength\sproutbase\app\forms\services\FormTemplates;
 use barrelstrength\sproutbase\app\forms\services\FrontEndFields;
+use barrelstrength\sproutbase\app\lists\services\Lists;
+use barrelstrength\sproutbase\app\lists\services\Subscribers;
 use barrelstrength\sproutbase\app\redirects\services\Redirects;
 use barrelstrength\sproutbase\app\reports\services\DataSources;
 use barrelstrength\sproutbase\app\reports\services\Exports;
@@ -105,6 +107,10 @@ class App extends Component
         $this->sitemaps = new Sitemaps();
         $this->xmlSitemap = new XmlSitemap();
         $this->urlEnabledSections = new UrlEnabledSections();
+
+        // Lists
+        $this->lists = new Lists();
+        $this->subscribers = new Subscribers();
 
         // Sprout Base
         $this->config = new Config();
@@ -311,6 +317,16 @@ class App extends Component
      * @var UrlEnabledSections
      */
     public $urlEnabledSections;
+
+    /**
+     * @var Lists
+     */
+    public $lists;
+
+    /**
+     * @var Subscribers
+     */
+    public $subscribers;
 
     /**
      * @var Settings

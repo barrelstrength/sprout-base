@@ -11,7 +11,6 @@ use barrelstrength\sproutbase\config\base\Config as BaseConfig;
 use barrelstrength\sproutbase\config\base\ConfigInterface;
 use barrelstrength\sproutbase\config\base\SproutBasePlugin;
 use barrelstrength\sproutbase\config\configs\ControlPanelConfig;
-use barrelstrength\sproutbase\config\configs\ReportsConfig;
 use barrelstrength\sproutbase\config\models\settings\ControlPanelSettings;
 use barrelstrength\sproutbase\SproutBase;
 use Craft;
@@ -19,6 +18,7 @@ use craft\base\Plugin;
 use craft\helpers\ProjectConfig as ProjectConfigHelper;
 use craft\helpers\StringHelper;
 use craft\services\Plugins;
+use Throwable;
 use yii\base\Component;
 use yii\base\ErrorException;
 use yii\base\Exception;
@@ -89,7 +89,9 @@ class Config extends Component
      */
     public function getConfigs($includeFileSettings = true): array
     {
-        $this->initConfigs($includeFileSettings);
+        if (!$this->_configs) {
+            $this->initConfigs($includeFileSettings);
+        }
 
         return $this->_configs;
     }

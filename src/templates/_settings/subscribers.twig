@@ -1,0 +1,26 @@
+{% import "_includes/forms" as forms %}
+{% macro configWarning(setting) -%}
+    {{ "This is being overridden by the {setting} config setting."|t('sprout', {
+        setting: setting
+    })|raw }}
+{%- endmacro %}
+
+{% from _self import configWarning %}
+
+{{ forms.lightswitchField({
+    first: true,
+    label: "Enable User Sync"|t('sprout'),
+    instructions: "When you enable this setting Sprout Lists will create a relationship between a Sprout Subscriber and a matching Craft User, based on the email address. When Craft User emails are updated, they will also be updated for Sprout Subscribers. When emails are updated for a Sprout Subscriber, they will also be updated in the matching Craft User profiles. When Users are deleted the relationship in the Sprout Subscriber and the Craft User will be removed."|t('sprout'),
+    name: 'enableUserSync',
+    on: settings.enableUserSync,
+    warning: config.enableUserSync is defined ? configWarning('enableUserSync')
+}) }}
+
+{{ forms.lightswitchField({
+    first: true,
+    label: "Create Subscriber List Automatically"|t('sprout'),
+    instructions: "Subscriber Lists will be automatically created when a subscribe form is submitted and no matching List is found."|t('sprout'),
+    name: 'enableAutoList',
+    on: settings.enableAutoList,
+    warning: config.enableAutoList is defined ? configWarning('enableAutoList')
+}) }}
