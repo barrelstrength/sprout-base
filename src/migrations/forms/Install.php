@@ -24,6 +24,7 @@ use barrelstrength\sproutbase\app\reports\base\DataSource;
 use barrelstrength\sproutbase\SproutBase;
 use craft\db\Migration;
 use craft\db\Table;
+use Throwable;
 use yii\db\Exception;
 
 class Install extends Migration
@@ -43,12 +44,21 @@ class Install extends Migration
     /**
      * @return bool|void
      * @throws Exception
+     * @throws Throwable
      */
     public function safeDown()
     {
         SproutBase::$app->dataSources->deleteReportsByType(EntriesDataSource::class);
         SproutBase::$app->dataSources->deleteReportsByType(IntegrationLogDataSource::class);
         SproutBase::$app->dataSources->deleteReportsByType(SpamLogDataSource::class);
+
+        // @todo - do we need to delete forms via the service layer?
+        //         or are the Element table delete actions enough?
+//        $forms = SproutBase::$app->forms->getAllForms();
+//
+//        foreach ($forms as $form) {
+//            SproutBase::$app->forms->deleteForm($form);
+//        }
 
         // Delete Form Entry Elements
         $this->delete(Table::ELEMENTS, ['type' => Entry::class]);
