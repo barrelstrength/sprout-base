@@ -55,24 +55,44 @@ class Redirects extends Component
      */
     public function handleRedirectsOnException(ExceptionEvent $event)
     {
-        /** @var RedirectsSettings $settings */
-        $settings = SproutBase::$app->settings->getSettingsByKey('redirects');
-
+        $exception = $event->exception;
         $request = Craft::$app->getRequest();
 
-        $enableRedirects = $settings->getIsEnabled() ? true : false;
+        if ($exception instanceof TwigRuntimeError) {
+            // Rendering Twig can generate a 404 also: i.e. {% exit 404 %}
+            // If this is a Twig Runtime error, use the previous exception
+            $exception = $exception->getPrevious();
+        }
 
-        // Only handle front-end site requests that are not live preview
-        if (!$request->getIsSiteRequest() || $request->getIsLivePreview() || $this->processRedirect === false || $enableRedirects === false) {
+        // Check exception type first, the `redirects` settings below
+        // may not exist if an error was triggered while they were loading
+        if (!($exception instanceof HttpException && $exception->statusCode === 404)) {
             return;
         }
 
-        $this->processRedirectsOnException($event->exception);
+        // Only handle front-end site requests that are not live preview
+        if (!$request->getIsSiteRequest() || $request->getIsLivePreview()) {
+            return;
+        }
+
+        // Avoid counting redirects twice when Sprout SEO and Redirects are
+        // both installed and both call `handleRedirectsOnException` each request
+        if ($this->processRedirect === false) {
+            return;
+        }
+
+        /** @var RedirectsSettings $settings */
+        $settings = SproutBase::$app->settings->getSettingsByKey('redirects');
+        $enableRedirects = $settings->getIsEnabled() ? true : false;
+
+        if ($enableRedirects === false) {
+            return;
+        }
+
+        $this->processRedirectsForCurrentRequest();
     }
 
     /**
-     * @param \Exception $exception
-     *
      * @throws DeprecationException
      * @throws ElementNotFoundException
      * @throws Exception
@@ -81,72 +101,57 @@ class Redirects extends Component
      * @throws SiteNotFoundException
      * @throws Throwable
      */
-    public function processRedirectsOnException(\Exception $exception)
+    public function processRedirectsForCurrentRequest()
     {
+        $this->processRedirect = false;
+        $request = Craft::$app->getRequest();
+        $currentSite = Craft::$app->getSites()->getCurrentSite();
+
         /** @var RedirectsSettings $settings */
         $settings = SproutBase::$app->settings->getSettingsByKey('redirects');
 
-        $request = Craft::$app->getRequest();
-
-        // Avoid counting redirects twice when Sprout SEO and Redirects are
-        // both installed and both call `handleRedirectsOnException` each request
-        $this->processRedirect = false;
-
-        // Rendering Twig can generate a 404 also: i.e. {% exit 404 %}
-        if ($exception instanceof TwigRuntimeError) {
-            // If this is a Twig Runtime error, use the previous exception
-            $exception = $exception->getPrevious();
+        if ($settings->redirectMatchStrategy === 'urlWithoutQueryStrings') {
+            $path = $request->getPathInfo();
+            $absoluteUrl = UrlHelper::url($path);
+        } else {
+            $absoluteUrl = $request->getAbsoluteUrl();
         }
 
-        /**
-         * @var HttpException $exception
-         */
-        if ($exception instanceof HttpException && $exception->statusCode === 404) {
+        if ($settings->excludedUrlPatterns && $this->isExcludedUrlPattern($absoluteUrl, $settings)) {
+            return;
+        }
 
-            $currentSite = Craft::$app->getSites()->getCurrentSite();
+        // Check if the requested URL needs to be redirected
+        $redirect = SproutBase::$app->redirects->findUrl($absoluteUrl, $currentSite);
 
-            if ($settings->redirectMatchStrategy === 'urlWithoutQueryStrings') {
-                $path = $request->getPathInfo();
-                $absoluteUrl = UrlHelper::url($path);
+        if (!$redirect && isset($settings->enable404RedirectLog) && $settings->enable404RedirectLog) {
+            // Save new 404 Redirect
+            $redirect = SproutBase::$app->redirects->save404Redirect($absoluteUrl, $currentSite, $settings);
+        }
+
+        if (!$redirect) {
+            return;
+        }
+
+        SproutBase::$app->redirects->incrementCount($redirect);
+
+        if ($settings->queryStringStrategy === 'removeQueryStrings') {
+            $queryString = '';
+        } else {
+            $queryString = '?'.$request->getQueryStringWithoutPath();
+        }
+
+        if ($redirect->enabled && (int)$redirect->method !== 404) {
+            if (UrlHelper::isAbsoluteUrl($redirect->newUrl)) {
+                Craft::$app->getResponse()->redirect(
+                    $redirect->newUrl.$queryString, $redirect->method
+                );
             } else {
-                $absoluteUrl = $request->getAbsoluteUrl();
+                Craft::$app->getResponse()->redirect(
+                    $redirect->getAbsoluteNewUrl().$queryString, $redirect->method
+                );
             }
-
-            if ($settings->excludedUrlPatterns && $this->isExcludedUrlPattern($absoluteUrl, $settings)) {
-                return;
-            }
-
-            // Check if the requested URL needs to be redirected
-            $redirect = SproutBase::$app->redirects->findUrl($absoluteUrl, $currentSite);
-
-            if (!$redirect && isset($settings->enable404RedirectLog) && $settings->enable404RedirectLog) {
-                // Save new 404 Redirect
-                $redirect = SproutBase::$app->redirects->save404Redirect($absoluteUrl, $currentSite, $settings);
-            }
-
-            if ($redirect) {
-
-                SproutBase::$app->redirects->incrementCount($redirect);
-
-                if ($settings->queryStringStrategy === 'removeQueryStrings') {
-                    $queryString = '';
-                } else {
-                    $queryString = '?'.$request->getQueryStringWithoutPath();
-                }
-
-                if ($redirect->enabled && (int)$redirect->method !== 404) {
-                    if (UrlHelper::isAbsoluteUrl($redirect->newUrl)) {
-                        Craft::$app->getResponse()->redirect(
-                            $redirect->newUrl.$queryString, $redirect->method
-                        );
-                    } else {
-                        Craft::$app->getResponse()->redirect(
-                            $redirect->getAbsoluteNewUrl().$queryString, $redirect->method
-                        );
-                    }
-                    Craft::$app->end();
-                }
-            }
+            Craft::$app->end();
         }
     }
 
