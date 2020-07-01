@@ -135,12 +135,23 @@ class Config extends Component
                 continue;
             }
 
+            $currentUser = Craft::$app->getUser()->getIdentity();
+            $request = Craft::$app->getRequest();
+
             $configTypes = $plugin::getSproutConfigs();
 
             foreach ($configTypes as $configType) {
 
                 /** @var BaseConfig $config */
                 $config = new $configType();
+
+                $permissionKey = StringHelper::camelCase($config::getKey());
+                if ($request->getIsCpRequest() &&
+                    !$request->getIsActionRequest() &&
+                    $config::hasControlPanelSettings() &&
+                    !$currentUser->can('sprout:'.$permissionKey.':accessModule')) {
+                    continue;
+                }
 
                 if (isset($this->_configs[$config::getKey()])) {
                     continue;
@@ -153,14 +164,22 @@ class Config extends Component
 
                 foreach ($subModuleConfigTypes as $subModuleConfigType) {
 
-                    $subModulesConfig = new $subModuleConfigType();
+                    $subModuleConfig = new $subModuleConfigType();
 
-                    if (isset($this->_configs[$subModulesConfig::getKey()])) {
+                    $permissionKey = StringHelper::camelCase($subModuleConfig::getKey());
+                    if ($request->getIsCpRequest() &&
+                        !$request->getIsActionRequest() &&
+                        $subModuleConfig::hasControlPanelSettings() &&
+                        !$currentUser->can('sprout:'.$permissionKey.':accessModule')) {
                         continue;
                     }
 
-                    $this->populateConfig($subModulesConfig);
-                    $this->_configs[$subModulesConfig::getKey()] = $subModulesConfig;
+                    if (isset($this->_configs[$subModuleConfig::getKey()])) {
+                        continue;
+                    }
+
+                    $this->populateConfig($subModuleConfig);
+                    $this->_configs[$subModuleConfig::getKey()] = $subModuleConfig;
                 }
             }
         }
