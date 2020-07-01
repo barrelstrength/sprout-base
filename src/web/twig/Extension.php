@@ -27,15 +27,9 @@ class Extension extends AbstractExtension implements GlobalsInterface
 
     public function getTokenParsers(): array
     {
-        $seoSettings = SproutBase::$app->settings->getSettingsByKey('seo');
-
-        if ($seoSettings->getIsEnabled()) {
-            return [
-                new SproutSeoTokenParser(),
-            ];
-        }
-
-        return [];
+        return [
+            new SproutSeoTokenParser(),
+        ];
     }
 
     /**
