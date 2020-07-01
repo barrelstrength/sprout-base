@@ -122,7 +122,7 @@ abstract class ListType extends Component
      *
      * @return SubscriptionInterface
      * @example
-     * {% if craft.sproutLists.isSubscribed(params) %} ... {% endif %}
+     * {% if sprout.lists.isSubscribed(params) %} ... {% endif %}
      *
      */
     abstract public function populateSubscriptionFromCriteria(array $criteria = []): SubscriptionInterface;
