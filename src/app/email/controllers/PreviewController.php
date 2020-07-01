@@ -170,34 +170,21 @@ class PreviewController extends Controller
      */
     protected function showPreviewEmail(EmailElement $email, $fileExtension = 'html')
     {
+        if ($email instanceof NotificationEmail &&
+            $event = SproutBase::$app->notificationEvents->getEvent($email)) {
+            $email->setEventObject($event->getMockEventObject());
+        }
+
         if ($fileExtension == 'txt') {
             $output = $email->getEmailTemplates()->getTextBody();
         } else {
             $output = $email->getEmailTemplates()->getHtmlBody();
         }
 
-        $variables['email'] = $email;
-
-        if ($email instanceof NotificationEmail &&
-            $event = SproutBase::$app->notificationEvents->getEvent($email)) {
-            $email->setEventObject($event->getMockEventObject());
-
-            $variables['object'] = $email->getEventObject();
-        }
-
-        // @todo - review logic
-        // Using verbatim fixes an issue if you are trying to output markdown with
-        // twig code examples. explore a a better way to do this, the normal
-        // element page renders fine so this shouldn't be necessary
-//        $output = Craft::$app->getView()->renderString('{% verbatim %}'.$output.'{% endverbatim %}', $variables);
-        $output = Craft::$app->getView()->renderString($output, $variables);
-
-        // Output it into a buffer, in case TasksService wants to close the connection prematurely
+        // Output it into a buffer, in case TasksService
+        // wants to close the connection prematurely
         ob_start();
-
         echo $output;
-
-        // End the request
         Craft::$app->end();
     }
 }
