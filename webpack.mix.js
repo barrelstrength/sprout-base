@@ -4,6 +4,7 @@ require('laravel-mix-polyfill');
 
 /**
  * @param {Object} mix
+ * @param {method} mix.ts
  * @param {method} mix.sass
  * @param {method} mix.polyfill
  */
@@ -81,8 +82,8 @@ mix
     'src/web/assetbundles/reports/dist/css/visualizations.css')
 
   // Campaigns
-  .js([
-    'src/web/assets/src/js/campaigns/CopyPaste.js'
+  .ts([
+    'src/web/assets/src/js/campaigns/CopyPaste.ts'
   ], 'src/web/assetbundles/copypastemailer/dist/js/CopyPaste.js')
   .sass(
     'src/web/assets/src/scss/campaigns/copy-paste.scss',

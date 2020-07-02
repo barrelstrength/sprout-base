@@ -9,6 +9,8 @@
   },
   "dependencies": {},
   "devDependencies": {
+    "@types/jquery": "^3.5.0",
+    "@types/node": "^14.0.14",
     "apexcharts": "^3.19.0",
     "autoprefixer": "^9.7.6",
     "craftcms-sass": "^1.6.7",
@@ -21,6 +23,8 @@
     "resolve-url-loader": "^3.1.0",
     "sass": "^1.26.5",
     "sass-loader": "^7.3.1",
+    "ts-loader": "^7.0.5",
+    "typescript": "^3.9.6",
     "vue-template-compiler": "^2.6.10"
   }
 }
