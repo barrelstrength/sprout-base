@@ -230,7 +230,10 @@ class Config extends Component
 
                 $projectConfigSettingsKey = self::CONFIG_SPROUT_KEY.'.'.$sproutConfig::getKey();
                 $settings = $sproutConfig->createSettingsModel();
-                SproutBase::$app->settings->saveSettings($projectConfigSettingsKey, $settings);
+
+                if ($settings) {
+                    SproutBase::$app->settings->saveSettings($projectConfigSettingsKey, $settings);
+                }
             }
 
             foreach ($subModuleConfigTypes as $subModuleConfigType) {
@@ -244,7 +247,10 @@ class Config extends Component
 
                     $projectConfigSettingsKey = self::CONFIG_SPROUT_KEY.'.'.$subModuleConfig::getKey();
                     $settings = $subModuleConfig->createSettingsModel();
-                    SproutBase::$app->settings->saveSettings($projectConfigSettingsKey, $settings);
+
+                    if ($settings) {
+                        SproutBase::$app->settings->saveSettings($projectConfigSettingsKey, $settings);
+                    }
                 }
             }
         }
