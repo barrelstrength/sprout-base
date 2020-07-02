@@ -30,10 +30,13 @@ use barrelstrength\sproutbase\config\configs\SitemapsConfig;
 use barrelstrength\sproutbase\config\services\App;
 use barrelstrength\sproutbase\web\twig\Extension;
 use Craft;
+use craft\console\controllers\MigrateController;
+use craft\db\MigrationManager;
 use craft\events\ExceptionEvent;
 use craft\events\RegisterComponentTypesEvent;
 use craft\events\RegisterCpNavItemsEvent;
 use craft\events\RegisterCpSettingsEvent;
+use craft\events\RegisterMigratorEvent;
 use craft\events\RegisterTemplateRootsEvent;
 use craft\events\RegisterUrlRulesEvent;
 use craft\events\RegisterUserPermissionsEvent;
@@ -69,15 +72,14 @@ class SproutBase extends Module
         SitemapsConfig::class,
     ];
 
+    const MODULE_ID = 'sprout';
+    const MIGRATION_NAMESPACE = 'barrelstrength\\sproutbase\\migrations';
+    const MIGRATION_PATH = '@vendor/barrelstrength/sprout-base/src/migrations';
+
     /**
      * @var App
      */
     public static $app;
-
-    /**
-     * @var string
-     */
-    public $translationCategory = 'sprout';
 
     /**
      * @var string|null The translation category that this module translation messages should use. Defaults to the lowercase plugin handle.
@@ -90,7 +92,7 @@ class SproutBase extends Module
     public $sourceLanguage = 'en-US';
 
     /**
-     * This code was copied from craft/base/Plugin
+     * This code was largely copied from craft/base/Plugin
      *
      * @inheritDoc
      */
@@ -99,7 +101,7 @@ class SproutBase extends Module
         // Set some things early in case there are any settings, and the settings model's
         // init() method needs to call Craft::t() or Plugin::getInstance().
 
-        $this->t9nCategory = ArrayHelper::remove($config, 't9nCategory', $this->t9nCategory ?? strtolower($this->translationCategory));
+        $this->t9nCategory = ArrayHelper::remove($config, 't9nCategory', $this->t9nCategory ?? strtolower(self::MODULE_ID));
         $this->sourceLanguage = ArrayHelper::remove($config, 'sourceLanguage', $this->sourceLanguage);
 
         if (($basePath = ArrayHelper::remove($config, 'basePath')) !== null) {
@@ -208,6 +210,22 @@ class SproutBase extends Module
 
     public function initConfigEvents()
     {
+        Event::on(
+            MigrateController::class,
+            MigrateController::EVENT_REGISTER_MIGRATOR,
+            static function(RegisterMigratorEvent $event) {
+
+                if ($event->track === self::MODULE_ID) {
+                    $event->migrator = Craft::createObject([
+                        'class' => MigrationManager::class,
+                        'track' => self::MODULE_ID,
+                        'migrationNamespace' => self::MIGRATION_NAMESPACE,
+                        'migrationPath' => self::MIGRATION_PATH,
+                    ]);
+                    $event->handled = true;
+                }
+            });
+
         Event::on(Cp::class, Cp::EVENT_REGISTER_CP_NAV_ITEMS, static function(RegisterCpNavItemsEvent $event) {
             $event->navItems = SproutBase::$app->config->updateCpNavItems($event->navItems);
         });

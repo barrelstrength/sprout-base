@@ -7,10 +7,16 @@
 
 namespace barrelstrength\sproutbase\config\base;
 
+use barrelstrength\sproutbase\SproutBase;
+use Craft;
 use craft\base\Plugin;
+use craft\db\Migration;
+use craft\db\MigrationManager;
 use craft\events\RegisterUrlRulesEvent;
+use craft\helpers\FileHelper;
 use craft\web\UrlManager;
 use yii\base\Event;
+use yii\base\InvalidConfigException;
 
 abstract class SproutBasePlugin extends Plugin
 {
@@ -27,6 +33,46 @@ abstract class SproutBasePlugin extends Plugin
         Event::on(UrlManager::class, UrlManager::EVENT_REGISTER_SITE_URL_RULES, function(RegisterUrlRulesEvent $event) {
             $event->rules = array_merge($event->rules, $this->getSiteUrlRules());
         });
+    }
+
+    /**
+     * @return MigrationManager
+     * @throws InvalidConfigException
+     */
+    public function getMigrator(): MigrationManager
+    {
+        /** @var MigrationManager $migrationManager */
+        $migrationManager = Craft::createObject([
+            'class' => MigrationManager::class,
+            'track' => SproutBase::MODULE_ID,
+            'migrationNamespace' => SproutBase::MIGRATION_NAMESPACE,
+            'migrationPath' => SproutBase::MIGRATION_PATH,
+        ]);
+
+        return $migrationManager;
+    }
+
+    /**
+     * Plugins will manage their own Install migration which will
+     * trigger a check for all relevant module migrations
+     *
+     * @return Migration|mixed|null
+     */
+    protected function createInstallMigration()
+    {
+        $alias = '@vendor/barrelstrength/'.$this->getHandle().'/src/migrations/Install.php';
+        $path = FileHelper::normalizePath(Craft::getAlias($alias));
+
+        if (!is_file($path)) {
+            return null;
+        }
+
+        require_once $path;
+
+        $pluginNamespaceSegment = str_replace('-', '', $this->getHandle());
+        $class = 'barrelstrength\\'.$pluginNamespaceSegment.'\\migrations\\Install';
+
+        return new $class;
     }
 
     /**
