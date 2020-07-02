@@ -330,14 +330,6 @@ class Config extends Component
     {
         $configTypes = $this->getConfigs(false);
 
-        $cpConfig = $configTypes['control-panel'];
-
-        $settingsPages[] = [
-            'label' => $cpConfig::displayName(),
-            'url' => 'sprout/settings/'.$cpConfig::getKey(),
-            'icon' => Craft::getAlias('@sproutbaseassets/sprout/icons/'.$cpConfig::getKey().'/icon.svg'),
-        ];
-
         foreach ($configTypes as $configType) {
 
             $settings = $configType->getSettings();
