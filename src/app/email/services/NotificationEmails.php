@@ -117,7 +117,7 @@ class NotificationEmails extends Component
     {
         $notificationEmail = new NotificationEmail();
         $subjectLine = $subjectLine ?? Craft::t('sprout', 'Notification');
-        $handle = $handle ?? ElementHelper::createSlug($subjectLine);
+        $handle = $handle ?? ElementHelper::normalizeSlug($subjectLine);
 
         $subjectLine = $this->getFieldAsNew('subjectLine', $subjectLine);
 

@@ -14,6 +14,7 @@ use craft\base\Field;
 use craft\base\FieldInterface;
 use craft\db\Query;
 use craft\db\Table;
+use craft\helpers\Html;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
@@ -56,7 +57,7 @@ class Email extends Component
     {
         /** @var Field $field */
         $name = $field->handle;
-        $inputId = Craft::$app->getView()->formatInputId($name);
+        $inputId = Html::id($name);
         $namespaceInputId = Craft::$app->getView()->namespaceInputId($inputId);
 
         $fieldContext = SproutBase::$app->fieldUtilities->getFieldContext($field, $element);

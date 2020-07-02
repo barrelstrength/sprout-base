@@ -392,6 +392,7 @@ class CampaignEmail extends EmailElement
             // The campaign type was probably deleted
             return null;
         }
+
         return $campaignType->getFieldLayout();
     }
 

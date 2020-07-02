@@ -122,7 +122,7 @@ class IntegrationLogDataSource extends DataSource
         $forms = Form::find()->limit(null)->orderBy('name')->all();
 
         if (empty($settings)) {
-            $settings = (array)$this->report->getSettings();
+            $settings = $this->report->getSettings();
         }
 
         $formOptions[] = ['label' => 'All', 'value' => '*'];

@@ -12,7 +12,6 @@ use barrelstrength\sproutbase\config\base\Config;
 use barrelstrength\sproutbase\config\models\settings\SeoSettings;
 use barrelstrength\sproutbase\migrations\metadata\Install;
 use barrelstrength\sproutbase\SproutBase;
-use barrelstrength\sproutbase\web\twig\variables\FormsVariable;
 use barrelstrength\sproutbase\web\twig\variables\SeoVariable;
 use Craft;
 
@@ -35,7 +34,7 @@ class SeoConfig extends Config
     public static function getSproutConfigDependencies(): array
     {
         return [
-            FieldsConfig::class
+            FieldsConfig::class,
         ];
     }
 

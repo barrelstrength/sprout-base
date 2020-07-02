@@ -28,7 +28,7 @@ class ListsController extends Controller
      */
     protected $allowAnonymous = [
         'add',
-        'remove'
+        'remove',
     ];
 
     /**
@@ -69,7 +69,7 @@ class ListsController extends Controller
         return $this->renderTemplate('sprout/lists/lists/_edit', [
             'list' => $list,
             'redirectUrl' => $redirectUrl,
-            'continueEditingUrl' => $continueEditingUrl
+            'continueEditingUrl' => $continueEditingUrl,
         ]);
     }
 
@@ -94,7 +94,7 @@ class ListsController extends Controller
             Craft::$app->getSession()->setError(Craft::t('sprout', 'Unable to save list.'));
 
             Craft::$app->getUrlManager()->setRouteParams([
-                'list' => $list
+                'list' => $list,
             ]);
 
             return null;
@@ -127,7 +127,7 @@ class ListsController extends Controller
         if (!$listType->deleteList($list)) {
             if (Craft::$app->getRequest()->getIsAjax()) {
                 return $this->asJson([
-                    'success' => false
+                    'success' => false,
                 ]);
             }
 
@@ -138,7 +138,7 @@ class ListsController extends Controller
 
         if (Craft::$app->getRequest()->getIsAjax()) {
             return $this->asJson([
-                'success' => true
+                'success' => true,
             ]);
         }
 
@@ -170,12 +170,12 @@ class ListsController extends Controller
             if (Craft::$app->getRequest()->getIsAjax()) {
                 return $this->asJson([
                     'success' => false,
-                    'errors' => $subscription->getErrors()
+                    'errors' => $subscription->getErrors(),
                 ]);
             }
 
             Craft::$app->getUrlManager()->setRouteParams([
-                'subscription' => $subscription
+                'subscription' => $subscription,
             ]);
 
             return null;
@@ -183,7 +183,7 @@ class ListsController extends Controller
 
         if (Craft::$app->getRequest()->getIsAjax()) {
             return $this->asJson([
-                'success' => true
+                'success' => true,
             ]);
         }
 
@@ -211,12 +211,12 @@ class ListsController extends Controller
             if (Craft::$app->getRequest()->getIsAjax()) {
                 return $this->asJson([
                     'success' => false,
-                    'errors' => $subscription->getErrors()
+                    'errors' => $subscription->getErrors(),
                 ]);
             }
 
             Craft::$app->getUrlManager()->setRouteParams([
-                'subscription' => $subscription
+                'subscription' => $subscription,
             ]);
 
             return null;
@@ -224,7 +224,7 @@ class ListsController extends Controller
 
         if (Craft::$app->getRequest()->getIsAjax()) {
             return $this->asJson([
-                'success' => true
+                'success' => true,
             ]);
         }
 

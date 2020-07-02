@@ -65,7 +65,7 @@ class Subscribers extends Component
          * @var SubscribersRecord $subscriberRecord
          */
         $subscriberRecord = SubscribersRecord::find()->where([
-            'userId' => $user->id
+            'userId' => $user->id,
         ])->one();
 
         // If that doesn't work, try to find a user with a matching email address
@@ -74,7 +74,7 @@ class Subscribers extends Component
             $subscriberRecord = SubscribersRecord::find()
                 ->where([
                     'userId' => null,
-                    'email' => $user->email
+                    'email' => $user->email,
                 ])
                 ->one();
 

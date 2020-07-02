@@ -18,7 +18,6 @@ use craft\base\Plugin;
 use craft\helpers\ProjectConfig as ProjectConfigHelper;
 use craft\helpers\StringHelper;
 use craft\services\Plugins;
-use Throwable;
 use yii\base\Component;
 use yii\base\ErrorException;
 use yii\base\Exception;
@@ -359,7 +358,7 @@ class Config extends Component
             ];
         }
 
-        return $settingsPages;
+        return $settingsPages ?? [];
     }
 
     public function buildSproutNavItems(): array

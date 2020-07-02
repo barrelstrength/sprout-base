@@ -57,7 +57,7 @@ class SubscribersController extends Controller
 
         return $this->renderTemplate('sprout/lists/subscribers/_edit', [
             'subscriber' => $subscriber,
-            'listTypes' => $listTypes
+            'listTypes' => $listTypes,
         ]);
     }
 
@@ -84,7 +84,7 @@ class SubscribersController extends Controller
             Craft::$app->getSession()->setError(Craft::t('sprout', 'Unable to save subscriber.'));
 
             Craft::$app->getUrlManager()->setRouteParams([
-                'subscriber' => $subscriber
+                'subscriber' => $subscriber,
             ]);
 
             return null;
@@ -118,7 +118,7 @@ class SubscribersController extends Controller
             Craft::$app->getSession()->setError(Craft::t('sprout', 'Unable to delete subscriber.'));
 
             Craft::$app->getUrlManager()->setRouteParams([
-                'subscriber' => $subscriber
+                'subscriber' => $subscriber,
             ]);
         }
 

@@ -7,13 +7,11 @@
 
 namespace barrelstrength\sproutbase\web\twig;
 
-use barrelstrength\sproutbase\SproutBase;
 use barrelstrength\sproutbase\web\twig\tokenparsers\SproutSeoTokenParser;
 use barrelstrength\sproutbase\web\twig\variables\SproutVariable;
 use craft\helpers\StringHelper;
 use Twig\Extension\AbstractExtension;
 use Twig\Extension\GlobalsInterface;
-use Craft;
 use Twig\TwigFilter;
 
 class Extension extends AbstractExtension implements GlobalsInterface
@@ -41,7 +39,7 @@ class Extension extends AbstractExtension implements GlobalsInterface
     {
         return [
             // Sprout Lists
-            new TwigFilter('subscriberUserIds', [$this, 'subscriberUserIds'])
+            new TwigFilter('subscriberUserIds', [$this, 'subscriberUserIds']),
         ];
     }
 

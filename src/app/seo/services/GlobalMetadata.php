@@ -674,7 +674,8 @@ class GlobalMetadata extends Component
         return false;
     }
 
-    public function handleDefaultSiteMetadata(SiteEvent $event) {
+    public function handleDefaultSiteMetadata(SiteEvent $event)
+    {
 
         if (!$event->isNew) {
             return;

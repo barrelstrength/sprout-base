@@ -101,10 +101,11 @@ abstract class SproutBasePlugin extends Plugin
      * The plugins are still loading.
      *
      * @param array $configTypes
+     * @param string $mode
      *
      * @return array
      */
-    private function prepareUrlRules(array $configTypes, $mode): array
+    private function prepareUrlRules(array $configTypes, string $mode): array
     {
         $urlRules = [];
         foreach ($configTypes as $configType) {

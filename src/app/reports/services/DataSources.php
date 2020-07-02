@@ -126,7 +126,7 @@ class DataSources extends Component
         $installedDataSources = (new Query())
             ->select([
                 'id',
-                'type'
+                'type',
             ])
             ->from([DataSourceRecord::tableName()])
             ->indexBy('type')

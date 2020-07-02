@@ -14,6 +14,7 @@ use craft\base\Component;
 use craft\base\ElementInterface;
 use craft\base\Field;
 use craft\base\FieldInterface;
+use craft\helpers\Html;
 use craft\helpers\Json;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
@@ -116,7 +117,7 @@ class Name extends Component
     {
         /** @var Field $field */
         $name = $field->handle;
-        $inputId = Craft::$app->getView()->formatInputId($name);
+        $inputId = Html::id($name);
         $namespaceInputId = Craft::$app->getView()->namespaceInputId($inputId);
 
         $fieldContext = SproutBase::$app->fieldUtilities->getFieldContext($field, $element);

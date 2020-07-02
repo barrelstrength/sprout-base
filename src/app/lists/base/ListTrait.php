@@ -80,8 +80,8 @@ trait ListTrait
                     $subscription->addErrors([
                         'listId' => [
                             Craft::t('sprout', 'List does not exist.'),
-                            Craft::t('sprout', 'User not permitted to create List.')
-                        ]
+                            Craft::t('sprout', 'User not permitted to create List.'),
+                        ],
                     ]);
 
                     return false;
@@ -136,7 +136,7 @@ trait ListTrait
         // Delete the subscription that matches the List and Subscriber IDs
         $subscriptions = SubscriptionRecord::deleteAll([
             '[[listId]]' => $list->id,
-            '[[itemId]]' => $item->id
+            '[[itemId]]' => $item->id,
         ]);
 
         if ($subscriptions !== null) {
@@ -160,12 +160,12 @@ trait ListTrait
     {
         $query = ListElement::find()
             ->where([
-                'sproutlists_lists.type' => $subscription->listType
+                'sproutlists_lists.type' => $subscription->listType,
             ]);
 
         if ($subscription->listId) {
             $query->andWhere([
-                'sproutlists_lists.id' => $subscription->listId
+                'sproutlists_lists.id' => $subscription->listId,
             ]);
 
             /** @noinspection PhpIncompatibleReturnTypeInspection */
@@ -176,14 +176,14 @@ trait ListTrait
             $query->andWhere([
                 'and',
                 ['sproutlists_lists.elementId' => $subscription->elementId],
-                ['sproutlists_lists.handle' => $subscription->listHandle]
+                ['sproutlists_lists.handle' => $subscription->listHandle],
             ]);
         } else {
             // Give the user what we can, but this result may not be unique in all cases
             $query->andWhere([
                 'or',
                 ['sproutlists_lists.elementId' => $subscription->elementId],
-                ['sproutlists_lists.handle' => $subscription->listHandle]
+                ['sproutlists_lists.handle' => $subscription->listHandle],
             ]);
         }
 
@@ -200,7 +200,7 @@ trait ListTrait
     {
         return ListElement::find()
             ->where([
-                'sproutlists_lists.type' => get_class($this)
+                'sproutlists_lists.type' => get_class($this),
             ])->all();
     }
 
@@ -240,12 +240,12 @@ trait ListTrait
 
         if ($listRecord && $listRecord->delete()) {
             $subscriptions = SubscriptionRecord::find()->where([
-                'listId' => $list->id
+                'listId' => $list->id,
             ]);
 
             if ($subscriptions != null) {
                 SubscriptionRecord::deleteAll('[[listId]] = :listId', [
-                    ':listId' => $list->id
+                    ':listId' => $list->id,
                 ]);
             }
 
@@ -316,7 +316,7 @@ trait ListTrait
 
         return SubscriptionRecord::find()->where([
             'listId' => $list->id,
-            'itemId' => $item->id
+            'itemId' => $item->id,
         ])->exists();
     }
 

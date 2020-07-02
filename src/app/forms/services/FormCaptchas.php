@@ -12,9 +12,9 @@ use barrelstrength\sproutbase\app\forms\elements\Form;
 use barrelstrength\sproutbase\app\forms\elements\Form as FormElement;
 use barrelstrength\sproutbase\app\forms\events\OnBeforeValidateEntryEvent;
 use barrelstrength\sproutbase\SproutBase;
+use Craft;
 use craft\events\RegisterComponentTypesEvent;
 use yii\base\Component;
-use Craft;
 
 class FormCaptchas extends Component
 {

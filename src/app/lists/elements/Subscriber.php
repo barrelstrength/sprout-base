@@ -117,8 +117,8 @@ class Subscriber extends Element implements SubscriberInterface
         $sources = [
             [
                 'key' => '*',
-                'label' => Craft::t('sprout', 'All Subscribers')
-            ]
+                'label' => Craft::t('sprout', 'All Subscribers'),
+            ],
         ];
 
         $listType = SproutBase::$app->lists->getListType(SubscriberList::class);
@@ -126,12 +126,12 @@ class Subscriber extends Element implements SubscriberInterface
         /** @var ListElement[] $lists */
         $lists = ListElement::find()
             ->where([
-                'sproutlists_lists.type' => SubscriberList::class
+                'sproutlists_lists.type' => SubscriberList::class,
             ])->all();
 
         if (!empty($lists)) {
             $sources[] = [
-                'heading' => $listType::displayName()
+                'heading' => $listType::displayName(),
             ];
 
             foreach ($lists as $list) {
@@ -139,7 +139,7 @@ class Subscriber extends Element implements SubscriberInterface
                     'key' => 'lists:'.$list->id,
                     'label' => $list->name,
                     'data' => ['handle' => $list->handle],
-                    'criteria' => ['listId' => $list->id]
+                    'criteria' => ['listId' => $list->id],
                 ];
 
                 $sources[] = $source;
@@ -159,7 +159,7 @@ class Subscriber extends Element implements SubscriberInterface
             'firstName' => ['label' => Craft::t('sprout', 'First Name')],
             'lastName' => ['label' => Craft::t('sprout', 'Last Name')],
             'dateCreated' => ['label' => Craft::t('sprout', 'Date Created')],
-            'dateUpdated' => ['label' => Craft::t('sprout', 'Date Updated')]
+            'dateUpdated' => ['label' => Craft::t('sprout', 'Date Updated')],
         ];
 
         return $attributes;
@@ -311,7 +311,7 @@ class Subscriber extends Element implements SubscriberInterface
                 [
                     'email' => $subscriberRecord->email ?? $user->email,
                     'firstName' => $subscriberRecord->firstName ?? $user->firstName,
-                    'lastName' => $subscriberRecord->lastName ?? $user->lastName
+                    'lastName' => $subscriberRecord->lastName ?? $user->lastName,
                 ],
                 ['id' => $subscriberRecord->userId],
                 [],
@@ -328,7 +328,7 @@ class Subscriber extends Element implements SubscriberInterface
                 ->leftJoin(ListElementRecord::tableName().' list', '[[subscription.listId]] = [[list.id]]')
                 ->where([
                     'list.type' => SubscriberList::class,
-                    'subscription.itemId' => $this->id
+                    'subscription.itemId' => $this->id,
                 ])
                 ->distinct()
                 ->column();
@@ -364,7 +364,7 @@ class Subscriber extends Element implements SubscriberInterface
         $rules[] = [
             ['email'],
             UniqueValidator::class,
-            'targetClass' => SubscribersRecord::class
+            'targetClass' => SubscribersRecord::class,
         ];
 
         return $rules;

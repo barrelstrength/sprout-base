@@ -9,7 +9,6 @@ use barrelstrength\sproutbase\app\email\elements\NotificationEmail;
 use barrelstrength\sproutbase\app\email\emailtemplates\BasicTemplates;
 use barrelstrength\sproutbase\app\email\mailers\DefaultMailer;
 use barrelstrength\sproutbase\app\email\models\ModalResponse;
-use barrelstrength\sproutbase\config\base\Config;
 use barrelstrength\sproutbase\SproutBase;
 use Craft;
 use craft\errors\MissingComponentException;
@@ -219,7 +218,7 @@ class NotificationsController extends Controller
         }
 
         if ($notificationEmail->slug === null) {
-            $notificationEmail->slug = ElementHelper::createSlug($notificationEmail->subjectLine);
+            $notificationEmail->slug = ElementHelper::normalizeSlug($notificationEmail->subjectLine);
         }
 
         $fieldsLocation = Craft::$app->getRequest()->getBodyParam('fieldsLocation', 'fields');

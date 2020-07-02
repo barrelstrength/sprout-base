@@ -9,6 +9,10 @@ namespace barrelstrength\sproutbase\app\forms\records;
 
 use craft\db\ActiveRecord;
 
+/**
+ * @property $entryId
+ * @property $type
+ */
 class EntriesSpamLog extends ActiveRecord
 {
     public static function tableName(): string

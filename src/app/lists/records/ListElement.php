@@ -16,15 +16,15 @@ use yii\db\ActiveQueryInterface;
 /**
  * Class ListElement record.
  *
- * @property int                  $id
- * @property int                  $elementId
- * @property string               $type
- * @property string               $name
- * @property string               $handle
+ * @property int $id
+ * @property int $elementId
+ * @property string $type
+ * @property string $name
+ * @property string $handle
  * @property ActiveQueryInterface $element
  * @property ActiveQueryInterface $subscribers
  * @property ActiveQueryInterface $listsWithSubscribers
- * @property int                  $count
+ * @property int $count
  */
 class ListElement extends ActiveRecord
 {

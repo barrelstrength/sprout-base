@@ -7,11 +7,9 @@
 
 namespace barrelstrength\sproutbase\app\reports\controllers;
 
-use barrelstrength\sproutbase\app\reports\base\DataSource;
 use barrelstrength\sproutbase\app\reports\base\Visualization;
 use barrelstrength\sproutbase\app\reports\elements\Report;
 use barrelstrength\sproutbase\app\reports\models\ReportGroup;
-use barrelstrength\sproutbase\config\base\Config;
 use barrelstrength\sproutbase\SproutBase;
 use Craft;
 use craft\errors\ElementNotFoundException;

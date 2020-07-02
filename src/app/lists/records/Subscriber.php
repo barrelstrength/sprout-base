@@ -17,11 +17,11 @@ use yii\db\ActiveQueryInterface;
 /**
  * Class Subscriber record.
  *
- * @property int                  $id
- * @property int                  $userId
- * @property string               $email
- * @property string               $firstName
- * @property string               $lastName
+ * @property int $id
+ * @property int $userId
+ * @property string $email
+ * @property string $firstName
+ * @property string $lastName
  * @property ActiveQueryInterface $element
  * @property ActiveQueryInterface $lists
  */

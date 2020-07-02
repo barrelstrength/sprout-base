@@ -39,7 +39,7 @@ class Lists extends Component
     public function getAllListTypes(): array
     {
         $event = new RegisterListTypesEvent([
-            'listTypes' => []
+            'listTypes' => [],
         ]);
 
         $this->trigger(self::EVENT_REGISTER_LIST_TYPES, $event);
@@ -92,7 +92,7 @@ class Lists extends Component
             $listRecord = ListsRecord::findOne($listId);
         } else if (is_string($listId)) {
             $listRecord = ListsRecord::find()->where([
-                'handle' => $listId
+                'handle' => $listId,
             ])->one();
         }
 

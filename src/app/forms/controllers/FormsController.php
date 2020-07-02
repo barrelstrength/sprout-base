@@ -8,7 +8,6 @@
 namespace barrelstrength\sproutbase\app\forms\controllers;
 
 use barrelstrength\sproutbase\app\forms\elements\Form;
-use barrelstrength\sproutbase\config\base\Config;
 use barrelstrength\sproutbase\SproutBase;
 use Craft;
 use craft\base\ElementInterface;

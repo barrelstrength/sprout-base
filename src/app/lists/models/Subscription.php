@@ -97,21 +97,21 @@ class Subscription extends Model implements SubscriptionInterface
         $rules[] = [
             ['email'],
             'required',
-            'on' => [self::SCENARIO_SUBSCRIBER]
+            'on' => [self::SCENARIO_SUBSCRIBER],
         ];
         $rules[] = [
             ['listId'],
             'required',
             'when' => static function() {
                 return !self::SCENARIO_SUBSCRIBER;
-            }
+            },
         ];
         $rules[] = [['email'], 'email'];
         $rules[] = [
             ['listId', 'itemId'],
             UniqueValidator::class,
             'targetClass' => SubscriptionRecord::class,
-            'targetAttribute' => ['listId', 'itemId']
+            'targetAttribute' => ['listId', 'itemId'],
         ];
 
         return $rules;

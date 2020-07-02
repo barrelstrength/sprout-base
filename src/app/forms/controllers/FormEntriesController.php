@@ -12,7 +12,6 @@ use barrelstrength\sproutbase\app\forms\elements\Entry as EntryElement;
 use barrelstrength\sproutbase\app\forms\elements\Form as FormElement;
 use barrelstrength\sproutbase\app\forms\events\OnBeforePopulateEntryEvent;
 use barrelstrength\sproutbase\app\forms\events\OnBeforeValidateEntryEvent;
-use barrelstrength\sproutbase\config\base\Config;
 use barrelstrength\sproutbase\config\models\settings\FormsSettings;
 use barrelstrength\sproutbase\SproutBase;
 use Craft;

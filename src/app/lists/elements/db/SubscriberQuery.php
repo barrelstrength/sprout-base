@@ -66,7 +66,7 @@ class SubscriberQuery extends ElementQuery
             'sproutlists_subscribers.firstName',
             'sproutlists_subscribers.lastName',
             'sproutlists_subscribers.dateCreated',
-            'sproutlists_subscribers.dateUpdated'
+            'sproutlists_subscribers.dateUpdated',
         ]);
 
         if ($this->listId) {
@@ -80,7 +80,7 @@ class SubscriberQuery extends ElementQuery
             $this->subQuery->andWhere([
                 'in',
                 'sproutlists_subscribers.id',
-                array_unique($subscriberIds, SORT_REGULAR)
+                array_unique($subscriberIds, SORT_REGULAR),
             ]);
         }
 

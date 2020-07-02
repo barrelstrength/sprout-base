@@ -35,7 +35,7 @@ class DataSourcesController extends Controller
 
         return $this->renderTemplate('sprout/reports/datasources/index', [
             'dataSources' => $dataSources,
-            'config' => $config
+            'config' => $config,
         ]);
     }
 

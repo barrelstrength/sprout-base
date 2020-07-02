@@ -14,6 +14,7 @@ use craft\base\ElementInterface;
 use craft\base\Field;
 use craft\base\PreviewableFieldInterface;
 use craft\helpers\ArrayHelper;
+use craft\helpers\Html;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use SplFileInfo;
@@ -92,7 +93,7 @@ class Template extends Field implements PreviewableFieldInterface
     public function getInputHtml($value, ElementInterface $element = null): string
     {
         $name = $this->handle;
-        $inputId = Craft::$app->getView()->formatInputId($name);
+        $inputId = Html::id($name);
         $namespaceInputId = Craft::$app->getView()->namespaceInputId($inputId);
 
         $fieldContext = SproutBase::$app->fieldUtilities->getFieldContext($this, $element);

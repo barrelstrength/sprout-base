@@ -11,6 +11,7 @@ use barrelstrength\sproutbase\SproutBase;
 use Craft;
 use craft\base\ElementInterface;
 use craft\base\Field;
+use craft\helpers\Html;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
@@ -54,7 +55,7 @@ class Url extends Component
     public function getInputHtml(Field $field, $value, ElementInterface $element = null): string
     {
         $name = $field->handle;
-        $inputId = Craft::$app->getView()->formatInputId($name);
+        $inputId = Html::id($name);
         $namespaceInputId = Craft::$app->getView()->namespaceInputId($inputId);
 
         $fieldContext = SproutBase::$app->fieldUtilities->getFieldContext($field, $element);

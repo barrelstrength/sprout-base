@@ -13,6 +13,7 @@ use Craft;
 use craft\base\ElementInterface;
 use craft\base\Field;
 use craft\base\FieldInterface;
+use craft\helpers\Html;
 use craft\helpers\Json;
 use libphonenumber\NumberParseException;
 use libphonenumber\PhoneNumberFormat;
@@ -60,8 +61,8 @@ class Phone extends Component
     {
         /** @var Field $field */
         $name = $field->handle;
-        $countryId = Craft::$app->getView()->formatInputId($name.'-country');
-        $inputId = Craft::$app->getView()->formatInputId($name);
+        $countryId = Html::id($name.'-country');
+        $inputId = Html::id($name);
         $namespaceInputId = Craft::$app->getView()->namespaceInputId($inputId);
         $namespaceCountryId = Craft::$app->getView()->namespaceInputId($countryId);
         $countries = $this->getCountries();

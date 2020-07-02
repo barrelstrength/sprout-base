@@ -29,7 +29,7 @@ use yii\web\BadRequestHttpException;
 /**
  *
  * @property string $name
- * @property array  $listsWithSubscribers
+ * @property array $listsWithSubscribers
  * @property string $handle
  */
 class SubscriberList extends BaseSubscriberList
@@ -112,14 +112,14 @@ class SubscriberList extends BaseSubscriberList
 
         if ($subscription->email) {
             $query->andWhere([
-                'sproutlists_subscribers.email' => $subscription->email
+                'sproutlists_subscribers.email' => $subscription->email,
             ]);
         } else {
             $query->andWhere([
-                'sproutlists_subscribers.id' => $subscriberId
+                'sproutlists_subscribers.id' => $subscriberId,
             ])
                 ->orWhere([
-                    'sproutlists_subscribers.userId' => $subscriberId
+                    'sproutlists_subscribers.userId' => $subscriberId,
                 ]);
         }
 
@@ -187,7 +187,7 @@ class SubscriberList extends BaseSubscriberList
 
         /** @var ListElement[] $lists */
         $lists = ListElement::find()->where([
-            'sproutlists_lists.type' => __CLASS__
+            'sproutlists_lists.type' => __CLASS__,
         ])->all();
 
         $options = [];
@@ -196,7 +196,7 @@ class SubscriberList extends BaseSubscriberList
             foreach ($lists as $list) {
                 $options[] = [
                     'label' => sprintf('%s', $list->name),
-                    'value' => $list->id
+                    'value' => $list->id,
                 ];
             }
         }
@@ -208,7 +208,7 @@ class SubscriberList extends BaseSubscriberList
 
         $html = Craft::$app->getView()->renderTemplate('sprout/lists/subscribers/_subscriberlists', [
             'options' => $options,
-            'values' => $listIds
+            'values' => $listIds,
         ]);
 
         return Template::raw($html);
@@ -256,10 +256,10 @@ class SubscriberList extends BaseSubscriberList
 
             // Clean up everything else that relates to this subscriber
             SubscriberRecord::deleteAll('[[id]] = :subscriberId', [
-                ':subscriberId' => $subscriber->id
+                ':subscriberId' => $subscriber->id,
             ]);
             SubscriptionRecord::deleteAll('[[listId]] = :listId', [
-                ':listId' => $subscriber->id
+                ':listId' => $subscriber->id,
             ]);
 
             $this->updateCount();

@@ -25,6 +25,7 @@ use craft\base\FieldInterface;
 use craft\db\Query;
 use craft\db\Table;
 use craft\errors\SiteNotFoundException;
+use craft\helpers\Html;
 use craft\helpers\Template;
 use Exception;
 use Throwable;
@@ -358,7 +359,7 @@ class Address extends Component
         /** @var $this Field */
         $name = $field->handle;
 
-        $inputId = Craft::$app->getView()->formatInputId($name);
+        $inputId = Html::id($name);
         $namespaceInputName = Craft::$app->getView()->namespaceInputName($inputId);
         $namespaceInputId = Craft::$app->getView()->namespaceInputId($inputId);
 

@@ -31,7 +31,7 @@ class CampaignsConfig extends Config
     {
         return [
             EmailPreviewConfig::class,
-            FieldsConfig::class
+            FieldsConfig::class,
         ];
     }
 

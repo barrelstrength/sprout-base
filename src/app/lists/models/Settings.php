@@ -11,9 +11,9 @@ use Craft;
 use craft\base\Model;
 
 /**
- * @property bool   $enableUserSync
- * @property bool   $enableAutoList
- * @property array  $settingsNavItems
+ * @property bool $enableUserSync
+ * @property bool $enableAutoList
+ * @property array $settingsNavItems
  */
 class Settings extends Model
 {
@@ -45,8 +45,8 @@ class Settings extends Model
                 'label' => Craft::t('sprout', 'General'),
                 'url' => 'sprout/settings/lists/general',
                 'selected' => 'general',
-                'template' => 'sprout/lists/settings/general'
-            ]
+                'template' => 'sprout/lists/settings/general',
+            ],
         ];
     }
 }

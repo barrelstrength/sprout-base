@@ -8,10 +8,10 @@ use barrelstrength\sproutbase\app\campaigns\models\CampaignType;
 use barrelstrength\sproutbase\app\email\base\Mailer;
 use barrelstrength\sproutbase\app\email\mailers\DefaultMailer;
 use barrelstrength\sproutbase\app\email\models\ModalResponse;
-use barrelstrength\sproutbase\config\base\Config;
 use barrelstrength\sproutbase\SproutBase;
 use Craft;
 use craft\base\ElementInterface;
+use craft\errors\MissingComponentException;
 use craft\helpers\ElementHelper;
 use craft\helpers\Json;
 use craft\web\Controller;
@@ -106,7 +106,7 @@ class CampaignEmailController extends Controller
             'campaignType' => $campaignType,
             'showPreviewBtn' => $showPreviewBtn,
             'tabs' => $tabs,
-            'config' => $config
+            'config' => $config,
         ]);
     }
 
@@ -151,6 +151,13 @@ class CampaignEmailController extends Controller
         return $this->redirectToPostedUrl($campaignEmail);
     }
 
+    /**
+     * @return bool|Response
+     * @throws BadRequestHttpException
+     * @throws ForbiddenHttpException
+     * @throws Throwable
+     * @throws MissingComponentException
+     */
     public function actionDeleteCampaignEmail()
     {
         $this->requirePostRequest();
@@ -458,7 +465,7 @@ class CampaignEmailController extends Controller
         $campaignEmail->title = $campaignEmail->subjectLine;
 
         if ($campaignEmail->slug === null) {
-            $campaignEmail->slug = ElementHelper::createSlug($campaignEmail->subjectLine);
+            $campaignEmail->slug = ElementHelper::normalizeSlug($campaignEmail->subjectLine);
         }
 
         $fieldsLocation = Craft::$app->getRequest()->getParam('fieldsLocation', 'fields');

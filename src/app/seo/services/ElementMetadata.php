@@ -89,7 +89,8 @@ class ElementMetadata extends Component
      *
      * @throws SiteNotFoundException
      */
-    public function handleResaveElementsAfterFieldLayoutIsSaved(FieldLayoutEvent $event) {
+    public function handleResaveElementsAfterFieldLayoutIsSaved(FieldLayoutEvent $event)
+    {
         $seoSettings = SproutBase::$app->settings->getSettingsByKey('seo');
 
         if (!$seoSettings->getIsEnabled()) {

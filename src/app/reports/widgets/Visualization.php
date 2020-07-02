@@ -15,7 +15,6 @@ use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
 use yii\base\Exception;
-use function json_decode;
 
 class Visualization extends Widget
 {

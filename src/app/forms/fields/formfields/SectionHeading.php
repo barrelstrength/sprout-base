@@ -12,6 +12,7 @@ use barrelstrength\sproutbase\app\forms\elements\Entry;
 use barrelstrength\sproutbase\web\assetbundles\quill\QuillAsset;
 use Craft;
 use craft\base\ElementInterface;
+use craft\helpers\Html;
 use craft\helpers\Template as TemplateHelper;
 use ReflectionClass;
 use ReflectionException;
@@ -110,7 +111,7 @@ class SectionHeading extends FormField
         $reflect = new ReflectionClass($this);
         $name = $reflect->getShortName();
 
-        $inputId = Craft::$app->getView()->formatInputId($name);
+        $inputId = Html::id($name);
         $view = Craft::$app->getView();
         $namespaceInputId = $view->namespaceInputId($inputId);
 
@@ -147,7 +148,7 @@ class SectionHeading extends FormField
     public function getInputHtml($value, ElementInterface $element = null): string
     {
         $name = $this->handle;
-        $inputId = Craft::$app->getView()->formatInputId($name);
+        $inputId = Html::id($name);
         $namespaceInputId = Craft::$app->getView()->namespaceInputId($inputId);
 
         if ($this->notes === null) {

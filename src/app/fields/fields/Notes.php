@@ -13,6 +13,7 @@ use craft\base\ElementInterface;
 use craft\base\Field;
 use craft\errors\DeprecationException;
 use craft\helpers\FileHelper;
+use craft\helpers\Html;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
@@ -87,7 +88,7 @@ class Notes extends Field
     public function getInputHtml($value, ElementInterface $element = null): string
     {
         $name = $this->handle;
-        $inputId = Craft::$app->getView()->formatInputId($name);
+        $inputId = Html::id($name);
         $namespaceInputId = Craft::$app->getView()->namespaceInputId($inputId);
         $selectedStyle = $this->_getConfig();
         $selectedStyleCss = '';

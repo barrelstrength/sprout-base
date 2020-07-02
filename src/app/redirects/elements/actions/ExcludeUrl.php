@@ -14,7 +14,6 @@ use Craft;
 use craft\base\ElementAction;
 use craft\elements\db\ElementQueryInterface;
 use Exception;
-use GuzzleHttp\Exception\BadResponseException;
 use Throwable;
 use yii\base\InvalidConfigException;
 use yii\db\Transaction;

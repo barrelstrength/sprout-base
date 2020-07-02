@@ -20,7 +20,6 @@ use barrelstrength\sproutbase\app\forms\records\FormGroup as FormGroupRecord;
 use barrelstrength\sproutbase\app\forms\records\Integration as IntegrationRecord;
 use barrelstrength\sproutbase\app\forms\records\IntegrationLog as IntegrationLogRecord;
 use barrelstrength\sproutbase\app\forms\records\Rules as RulesRecord;
-use barrelstrength\sproutbase\app\reports\base\DataSource;
 use barrelstrength\sproutbase\SproutBase;
 use craft\db\Migration;
 use craft\db\Table;

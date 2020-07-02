@@ -102,7 +102,7 @@ class ListElement extends Element implements ListInterface
             'type',
             'elementId',
             'handle',
-            'count'
+            'count',
         ];
     }
 
@@ -116,8 +116,8 @@ class ListElement extends Element implements ListInterface
         $sources = [
             [
                 'key' => '*',
-                'label' => Craft::t('sprout', 'All lists')
-            ]
+                'label' => Craft::t('sprout', 'All lists'),
+            ],
         ];
 
         $listTypes = SproutBase::$app->lists->getAllListTypes();
@@ -125,7 +125,7 @@ class ListElement extends Element implements ListInterface
         if (!empty($listTypes)) {
 
             $sources[] = [
-                'heading' => 'List Types'
+                'heading' => 'List Types',
             ];
 
             foreach ($listTypes as $listType) {
@@ -133,7 +133,7 @@ class ListElement extends Element implements ListInterface
                     'key' => 'lists:'.$listType->getClassName(),
                     'label' => $listType::displayName(),
                     'data' => ['type' => $listType->getClassName()],
-                    'criteria' => ['type' => $listType->getClassName()]
+                    'criteria' => ['type' => $listType->getClassName()],
                 ];
 
                 $sources[] = $source;
@@ -151,7 +151,7 @@ class ListElement extends Element implements ListInterface
         return [
             'name' => ['label' => Craft::t('sprout', 'Name')],
             'count' => ['label' => Craft::t('sprout', 'Count')],
-            'dateCreated' => ['label' => Craft::t('sprout', 'Date Created')]
+            'dateCreated' => ['label' => Craft::t('sprout', 'Date Created')],
         ];
     }
 
@@ -168,7 +168,7 @@ class ListElement extends Element implements ListInterface
             'handle' => ['label' => Craft::t('sprout', 'List Handle')],
             'view' => ['label' => Craft::t('sprout', 'View Subscribers')],
             'count' => ['label' => Craft::t('sprout', 'Count')],
-            'dateCreated' => ['label' => Craft::t('sprout', 'Date Created')]
+            'dateCreated' => ['label' => Craft::t('sprout', 'Date Created')],
         ];
 
         return $attributes;
@@ -243,7 +243,7 @@ class ListElement extends Element implements ListInterface
             ->from([SubscriptionRecord::tableName()])
             ->where([
                 'listId' => $this->id,
-                'itemId' => $subscriberOrItem->getId()
+                'itemId' => $subscriberOrItem->getId(),
             ])
             ->exists();
 
@@ -349,13 +349,13 @@ class ListElement extends Element implements ListInterface
         $rules[] = [['name', 'handle'], 'required'];
         $rules[] = [
             ['handle'],
-            SlugValidator::class
+            SlugValidator::class,
         ];
         $rules[] = [
             ['elementId', 'handle'],
             UniqueValidator::class,
             'targetClass' => ListsRecord::class,
-            'targetAttribute' => ['elementId', 'handle']
+            'targetAttribute' => ['elementId', 'handle'],
         ];
 
         return $rules;

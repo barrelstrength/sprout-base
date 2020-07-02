@@ -17,7 +17,6 @@ use craft\errors\SiteNotFoundException;
 use craft\helpers\App;
 use craft\helpers\Json;
 use craft\mail\Mailer as CraftMailer;
-use craft\mail\Message;
 use craft\mail\transportadapters\BaseTransportAdapter;
 use craft\mail\transportadapters\Smtp;
 use Exception;
@@ -62,6 +61,7 @@ class SentEmails extends Component
 
     /**
      * @param MessageInterface $message
+     * @param bool $success
      *
      * @return bool
      * @throws Throwable

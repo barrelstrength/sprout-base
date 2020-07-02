@@ -11,7 +11,6 @@ use barrelstrength\sproutbase\app\reports\elements\Report;
 use barrelstrength\sproutbase\app\reports\records\DataSource as DataSourceRecord;
 use barrelstrength\sproutbase\app\reports\records\Report as ReportRecord;
 use barrelstrength\sproutbase\app\reports\records\ReportGroup as ReportGroupRecord;
-use barrelstrength\sproutbase\SproutBase;
 use Craft;
 use craft\db\Query;
 use Throwable;

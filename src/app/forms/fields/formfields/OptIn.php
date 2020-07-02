@@ -20,6 +20,7 @@ use craft\fields\Dropdown as CraftDropdown;
 use craft\fields\Lightswitch as CraftLightswitch;
 use craft\fields\PlainText as CraftPlainText;
 use craft\fields\RadioButtons as CraftRadioButtons;
+use craft\helpers\Html;
 use craft\helpers\Template as TemplateHelper;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
@@ -120,7 +121,7 @@ class OptIn extends FormField implements PreviewableFieldInterface
     public function getInputHtml($value, ElementInterface $element = null): string
     {
         $name = $this->handle;
-        $inputId = Craft::$app->getView()->formatInputId($name);
+        $inputId = Html::id($name);
         $namespaceInputId = Craft::$app->getView()->namespaceInputId($inputId);
 
         return Craft::$app->getView()->renderTemplate('sprout/fields/_components/fields/formfields/optin/input',

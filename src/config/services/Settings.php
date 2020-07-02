@@ -13,6 +13,7 @@ use barrelstrength\sproutbase\config\base\Settings as BaseSettings;
 use barrelstrength\sproutbase\SproutBase;
 use Craft;
 use craft\helpers\ProjectConfig as ProjectConfigHelper;
+use InvalidArgumentException;
 use yii\base\Component;
 use yii\base\ErrorException;
 use yii\base\Exception;
@@ -116,7 +117,7 @@ class Settings extends Component
         $settings = $this->getSettings($includeFileConfigSettings);
 
         if (empty($settings[$handle])) {
-            throw new \InvalidArgumentException("`{$handle}` settings not found.");
+            throw new InvalidArgumentException("`{$handle}` settings not found.");
         }
 
         return $settings[$handle];

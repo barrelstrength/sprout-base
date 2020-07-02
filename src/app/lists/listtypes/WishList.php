@@ -21,7 +21,7 @@ use yii\web\BadRequestHttpException;
 /**
  *
  * @property string $name
- * @property array  $listsWithSubscribers
+ * @property array $listsWithSubscribers
  * @property string $handle
  */
 class WishList extends ListType

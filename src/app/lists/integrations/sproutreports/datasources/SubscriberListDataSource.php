@@ -7,11 +7,11 @@
 
 namespace barrelstrength\sproutbase\app\lists\integrations\sproutreports\datasources;
 
-use barrelstrength\sproutbase\app\reports\base\DataSource;
-use barrelstrength\sproutbase\app\reports\elements\Report;
 use barrelstrength\sproutbase\app\lists\listtypes\SubscriberList;
 use barrelstrength\sproutbase\app\lists\records\ListElement as ListElementRecord;
 use barrelstrength\sproutbase\app\lists\records\Subscriber as SubscriberRecord;
+use barrelstrength\sproutbase\app\reports\base\DataSource;
+use barrelstrength\sproutbase\app\reports\elements\Report;
 use Craft;
 use craft\db\Query;
 use Exception;
@@ -72,7 +72,7 @@ class SubscriberListDataSource extends DataSource
         /** @var ListElementRecord $listRecord */
         $listRecord = ListElementRecord::find()
             ->where([
-                'id' => $reportSettings['subscriberListId']
+                'id' => $reportSettings['subscriberListId'],
             ])
             ->one();
 
@@ -100,18 +100,18 @@ class SubscriberListDataSource extends DataSource
         $subscriberListOptions = (new Query())
             ->select([
                 'lists.name AS label',
-                'lists.id AS value'
+                'lists.id AS value',
             ])
             ->from(ListElementRecord::tableName().' lists')
             ->leftJoin('{{%elements}} elements', '[[elements.id]] = [[lists.id]]')
             ->where([
                 'lists.type' => SubscriberList::class,
-                'elements.dateDeleted' => null
+                'elements.dateDeleted' => null,
             ])
             ->all();
 
         return Craft::$app->getView()->renderTemplate('sprout/lists/_integrations/sproutreports/datasources/SubscriberList/settings', [
-            'subscriberListOptions' => $subscriberListOptions
+            'subscriberListOptions' => $subscriberListOptions,
         ]);
     }
 

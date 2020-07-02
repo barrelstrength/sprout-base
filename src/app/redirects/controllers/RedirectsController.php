@@ -8,7 +8,6 @@
 namespace barrelstrength\sproutbase\app\redirects\controllers;
 
 use barrelstrength\sproutbase\app\redirects\elements\Redirect;
-use barrelstrength\sproutbase\config\base\Config;
 use barrelstrength\sproutbase\SproutBase;
 use Craft;
 use craft\errors\SiteNotFoundException;

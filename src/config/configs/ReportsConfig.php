@@ -17,7 +17,6 @@ use barrelstrength\sproutbase\config\base\ConfigDataSourceInterface;
 use barrelstrength\sproutbase\config\models\settings\ReportsSettings;
 use barrelstrength\sproutbase\migrations\reports\Install;
 use barrelstrength\sproutbase\SproutBase;
-use barrelstrength\sproutbase\web\twig\variables\FormsVariable;
 use barrelstrength\sproutbase\web\twig\variables\ReportsVariable;
 use Craft;
 

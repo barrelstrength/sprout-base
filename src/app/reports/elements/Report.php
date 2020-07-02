@@ -17,7 +17,6 @@ use barrelstrength\sproutbase\SproutBase;
 use Craft;
 use craft\base\Element;
 use craft\elements\db\ElementQueryInterface;
-use craft\helpers\Json;
 use craft\helpers\UrlHelper;
 use craft\validators\HandleValidator;
 use craft\validators\UniqueValidator;
@@ -525,8 +524,9 @@ class Report extends Element
             ],
         ]);
 
-        if ($this->dataSource instanceof DataSource) {
-            $settingsHtml = $this->dataSource->getSettingsHtml();
+        $dataSource = $this->getDataSource();
+        if ($dataSource instanceof DataSource) {
+            $settingsHtml = $dataSource->getSettingsHtml();
             if ($settingsHtml) {
                 $html .= $settingsHtml;
             }

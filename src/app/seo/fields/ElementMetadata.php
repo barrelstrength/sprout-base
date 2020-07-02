@@ -19,6 +19,7 @@ use craft\base\ElementInterface;
 use craft\base\Field;
 use craft\db\mysql\Schema;
 use craft\errors\SiteNotFoundException;
+use craft\helpers\Html;
 use craft\helpers\Json;
 use Throwable;
 use Twig\Error\LoaderError;
@@ -185,7 +186,7 @@ class ElementMetadata extends Field
     public function getInputHtml($value, ElementInterface $element = null): string
     {
         $name = $this->handle;
-        $inputId = Craft::$app->view->formatInputId($name);
+        $inputId = Html::id($name);
         $namespaceInputName = Craft::$app->view->namespaceInputName($inputId);
         $namespaceInputId = Craft::$app->view->namespaceInputId($inputId);
 

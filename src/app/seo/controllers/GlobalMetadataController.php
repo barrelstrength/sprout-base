@@ -11,7 +11,6 @@ use barrelstrength\sproutbase\app\fields\models\Address;
 use barrelstrength\sproutbase\app\fields\models\Address as AddressModel;
 use barrelstrength\sproutbase\app\fields\services\AddressFormatter;
 use barrelstrength\sproutbase\app\seo\models\Globals;
-use barrelstrength\sproutbase\config\base\Config;
 use barrelstrength\sproutbase\SproutBase;
 use Craft;
 use craft\errors\SiteNotFoundException;

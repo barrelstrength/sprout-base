@@ -91,7 +91,7 @@ class ListElementQuery extends ElementQuery
             'sproutlists_lists.type',
             'sproutlists_lists.name',
             'sproutlists_lists.handle',
-            'sproutlists_lists.count'
+            'sproutlists_lists.count',
         ]);
 
         if ($this->type) {

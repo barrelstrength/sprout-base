@@ -16,6 +16,7 @@ use craft\base\PreviewableFieldInterface;
 use craft\errors\MissingComponentException;
 use craft\fields\Dropdown as CraftDropdown;
 use craft\fields\PlainText as CraftPlainText;
+use craft\helpers\Html;
 use craft\helpers\Template as TemplateHelper;
 use Exception;
 use Throwable;
@@ -95,7 +96,7 @@ class Invisible extends FormField implements PreviewableFieldInterface
     public function getInputHtml($value, ElementInterface $element = null): string
     {
         $name = $this->handle;
-        $inputId = Craft::$app->getView()->formatInputId($name);
+        $inputId = Html::id($name);
         $namespaceInputId = Craft::$app->getView()->namespaceInputId($inputId);
 
         return Craft::$app->getView()->renderTemplate('sprout/fields/_components/fields/formfields/invisible/input',
