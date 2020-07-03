@@ -11,8 +11,8 @@ require('laravel-mix-polyfill');
 mix
 
   // General Resources
-  .js([
-    'src/web/assets/src/js/sproutcp/Groups.js'
+  .ts([
+    'src/web/assets/src/js/sproutcp/Groups.ts'
   ], 'src/web/assetbundles/groups/dist/js/Groups.js')
   .sass(
     'src/web/assets/src/scss/sproutcp/sprout-cp.scss',

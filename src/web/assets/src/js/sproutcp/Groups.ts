@@ -1,9 +1,12 @@
-/* global Craft */
+declare var Garnish: any;
+
+interface Window {
+  settings: any;
+}
 
 /**
  * Manage groups based off the Craft fields.js file
  */
-
 if (typeof Craft.SproutBase === typeof undefined) {
   Craft.SproutBase = {};
 }
@@ -16,7 +19,7 @@ if (typeof Craft.SproutBase === typeof undefined) {
     $selectedGroup: null,
     $groupSettingsBtn: null,
 
-    init: function(settings) {
+    init: function(settings: any) {
 
       // Make settings globally available
       window.settings = settings;
@@ -38,7 +41,7 @@ if (typeof Craft.SproutBase === typeof undefined) {
 
         const menuBtn = this.$groupSettingsBtn.data('menubtn');
 
-        menuBtn.settings.onOptionSelect = $.proxy(function(elem) {
+        menuBtn.settings.onOptionSelect = $.proxy(function(elem: any) {
 
           const $elem = $(elem);
 
@@ -61,6 +64,7 @@ if (typeof Craft.SproutBase === typeof undefined) {
     },
 
     addNewGroup: function() {
+      let self = this;
       const name = this.promptForGroupName('');
 
       if (name) {
@@ -68,12 +72,13 @@ if (typeof Craft.SproutBase === typeof undefined) {
           name: name,
         };
 
-        Craft.postActionRequest(settings.newGroupAction, data, $.proxy(function(response) {
+        Craft.postActionRequest(window.settings.newGroupAction, data, $.proxy(function(response: any) {
+
           if (response.success) {
-            location.href = Craft.getUrl(settings.newGroupOnSuccessUrlBase);
+            location.href = Craft.getUrl(window.settings.newGroupOnSuccessUrlBase);
           } else {
             const errors = this.flattenErrors(response.errors);
-            alert(Craft.t('sprout', settings.newGroupOnErrorMessage) + "\n\n" + errors.join("\n"));
+            alert(Craft.t('sprout', window.settings.newGroupOnErrorMessage) + "\n\n" + errors.join("\n"));
           }
 
         }, this));
@@ -81,6 +86,8 @@ if (typeof Craft.SproutBase === typeof undefined) {
     },
 
     renameSelectedGroup: function() {
+      let self = this;
+
       const oldName = this.$selectedGroup.text(),
         newName = this.promptForGroupName(oldName);
 
@@ -90,34 +97,35 @@ if (typeof Craft.SproutBase === typeof undefined) {
           name: newName,
         };
 
-        Craft.postActionRequest(settings.renameGroupAction, data, $.proxy(function(response) {
+        Craft.postActionRequest(window.settings.renameGroupAction, data, $.proxy(function(response: any) {
           if (response.success) {
             this.$selectedGroup.text(response.group.name);
-            Craft.cp.displayNotice(Craft.t('sprout', (settings.renameGroupOnSuccessMessage)));
+            Craft.cp.displayNotice(Craft.t('sprout', (window.settings.renameGroupOnSuccessMessage)));
           } else {
             const errors = this.flattenErrors(response.errors);
-            alert(Craft.t('sprout', settings.renameGroupOnErrorMessage) + "\n\n" + errors.join("\n"));
+            alert(Craft.t('sprout', window.settings.renameGroupOnErrorMessage) + "\n\n" + errors.join("\n"));
           }
 
         }, this));
       }
     },
 
-    promptForGroupName: function(oldName) {
-      return prompt(Craft.t('sprout', settings.promptForGroupNameMessage), oldName);
+    promptForGroupName: function(oldName: any) {
+      return prompt(Craft.t('sprout', window.settings.promptForGroupNameMessage), oldName);
     },
 
     deleteSelectedGroup: function() {
-      if (confirm(Craft.t('sprout', settings.deleteGroupConfirmMessage))) {
+      let self = this;
+      if (confirm(Craft.t('sprout', window.settings.deleteGroupConfirmMessage))) {
         const data = {
           id: this.$selectedGroup.data('id'),
         };
 
-        Craft.postActionRequest(settings.deleteGroupAction, data, $.proxy(function(response) {
+        Craft.postActionRequest(window.settings.deleteGroupAction, data, $.proxy(function(response: any) {
           if (response.success) {
-            location.href = Craft.getUrl(settings.deleteGroupOnSuccessUrl);
+            location.href = Craft.getUrl(window.settings.deleteGroupOnSuccessUrl);
           } else {
-            alert(Craft.t('sprout', settings.deleteGroupOnErrorMessage));
+            alert(Craft.t('sprout', window.settings.deleteGroupOnErrorMessage));
           }
         }, this));
       }
@@ -133,11 +141,11 @@ if (typeof Craft.SproutBase === typeof undefined) {
       }
     },
 
-    flattenErrors: function(responseErrors) {
-      let errors = [];
+    flattenErrors: function(responseErrors: any) {
+      let errors: any[] = [];
 
       for (let attribute in responseErrors) {
-        errors = errors.concat(response.errors[attribute]);
+        errors = errors.concat(this.response.errors[attribute]);
       }
 
       return errors;
