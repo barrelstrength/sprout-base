@@ -17,6 +17,7 @@ use craft\helpers\FileHelper;
 use craft\web\UrlManager;
 use yii\base\Event;
 use yii\base\InvalidConfigException;
+use barrelstrength\sproutbase\migrations\install\Install as SproutBaseInstall;
 
 abstract class SproutBasePlugin extends Plugin
 {
@@ -60,19 +61,12 @@ abstract class SproutBasePlugin extends Plugin
      */
     protected function createInstallMigration()
     {
-        $alias = '@vendor/barrelstrength/'.$this->getHandle().'/src/migrations/Install.php';
+        $alias = '@vendor/barrelstrength/sproutbase/src/migrations/install/Install.php';
         $path = FileHelper::normalizePath(Craft::getAlias($alias));
-
-        if (!is_file($path)) {
-            return null;
-        }
 
         require_once $path;
 
-        $pluginNamespaceSegment = str_replace('-', '', $this->getHandle());
-        $class = 'barrelstrength\\'.$pluginNamespaceSegment.'\\migrations\\Install';
-
-        return new $class;
+        return new SproutBaseInstall($this);
     }
 
     /**

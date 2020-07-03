@@ -224,7 +224,8 @@ class SproutBase extends Module
                     ]);
                     $event->handled = true;
                 }
-            });
+            }
+        );
 
         Event::on(Cp::class, Cp::EVENT_REGISTER_CP_NAV_ITEMS, static function(RegisterCpNavItemsEvent $event) {
             $event->navItems = SproutBase::$app->config->updateCpNavItems($event->navItems);
