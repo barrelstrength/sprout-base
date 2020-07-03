@@ -12,7 +12,7 @@ use barrelstrength\sproutbase\app\campaigns\controllers\CampaignTypeController;
 use barrelstrength\sproutbase\app\campaigns\mailers\CopyPasteMailer;
 use barrelstrength\sproutbase\config\base\Config;
 use barrelstrength\sproutbase\config\models\settings\CampaignsSettings;
-use barrelstrength\sproutbase\migrations\campaigns\Install;
+use barrelstrength\sproutbase\migrations\install\campaigns\Install;
 use barrelstrength\sproutbase\SproutBase;
 use Craft;
 

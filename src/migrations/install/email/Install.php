@@ -5,7 +5,7 @@
  * @license https://craftcms.github.io/license
  */
 
-namespace barrelstrength\sproutbase\migrations\email;
+namespace barrelstrength\sproutbase\migrations\install\email;
 
 use barrelstrength\sproutbase\app\email\elements\NotificationEmail;
 use barrelstrength\sproutbase\app\email\records\NotificationEmail as NotificationEmailRecord;

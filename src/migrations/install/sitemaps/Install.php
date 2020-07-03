@@ -5,7 +5,7 @@
  * @license https://craftcms.github.io/license
  */
 
-namespace barrelstrength\sproutbase\migrations\sitemaps;
+namespace barrelstrength\sproutbase\migrations\install\sitemaps;
 
 use barrelstrength\sproutbase\app\sitemaps\records\SitemapSection as SitemapSectionRecord;
 use craft\db\Migration;

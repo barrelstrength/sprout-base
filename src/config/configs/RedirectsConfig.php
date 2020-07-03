@@ -10,7 +10,7 @@ namespace barrelstrength\sproutbase\config\configs;
 use barrelstrength\sproutbase\app\redirects\controllers\RedirectsController;
 use barrelstrength\sproutbase\config\base\Config;
 use barrelstrength\sproutbase\config\models\settings\RedirectsSettings;
-use barrelstrength\sproutbase\migrations\redirects\Install;
+use barrelstrength\sproutbase\migrations\install\redirects\Install;
 use barrelstrength\sproutbase\SproutBase;
 use Craft;
 

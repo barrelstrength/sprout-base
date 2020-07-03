@@ -5,7 +5,7 @@
  * @license https://craftcms.github.io/license
  */
 
-namespace barrelstrength\sproutbase\migrations\fields;
+namespace barrelstrength\sproutbase\migrations\install\fields;
 
 use barrelstrength\sproutbase\app\fields\records\Address as AddressRecord;
 use craft\db\Migration;

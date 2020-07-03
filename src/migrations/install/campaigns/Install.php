@@ -5,7 +5,7 @@
  * @license https://craftcms.github.io/license
  */
 
-namespace barrelstrength\sproutbase\migrations\campaigns;
+namespace barrelstrength\sproutbase\migrations\install\campaigns;
 
 use barrelstrength\sproutbase\app\campaigns\elements\CampaignEmail;
 use barrelstrength\sproutbase\app\campaigns\records\CampaignEmail as CampaignEmailRecord;

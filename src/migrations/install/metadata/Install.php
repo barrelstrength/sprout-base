@@ -5,7 +5,7 @@
  * @license https://craftcms.github.io/license
  */
 
-namespace barrelstrength\sproutbase\migrations\metadata;
+namespace barrelstrength\sproutbase\migrations\install\metadata;
 
 use barrelstrength\sproutbase\app\seo\records\GlobalMetadata as GlobalMetadataRecord;
 use barrelstrength\sproutbase\SproutBase;

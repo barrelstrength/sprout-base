@@ -10,7 +10,7 @@ namespace barrelstrength\sproutbase\config\configs;
 use barrelstrength\sproutbase\app\seo\controllers\GlobalMetadataController;
 use barrelstrength\sproutbase\config\base\Config;
 use barrelstrength\sproutbase\config\models\settings\SeoSettings;
-use barrelstrength\sproutbase\migrations\metadata\Install;
+use barrelstrength\sproutbase\migrations\install\metadata\Install;
 use barrelstrength\sproutbase\SproutBase;
 use barrelstrength\sproutbase\web\twig\variables\SeoVariable;
 use Craft;

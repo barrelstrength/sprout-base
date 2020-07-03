@@ -5,7 +5,7 @@
  * @license https://craftcms.github.io/license
  */
 
-namespace barrelstrength\sproutbase\migrations\forms;
+namespace barrelstrength\sproutbase\migrations\install\forms;
 
 use craft\db\Migration;
 

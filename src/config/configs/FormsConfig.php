@@ -23,7 +23,7 @@ use barrelstrength\sproutbase\config\base\ConfigDataSourceInterface;
 use barrelstrength\sproutbase\config\base\ConfigNotificationEventInterface;
 use barrelstrength\sproutbase\config\controllers\SettingsController;
 use barrelstrength\sproutbase\config\models\settings\FormsSettings;
-use barrelstrength\sproutbase\migrations\forms\Install;
+use barrelstrength\sproutbase\migrations\install\forms\Install;
 use barrelstrength\sproutbase\SproutBase;
 use barrelstrength\sproutbase\web\twig\variables\FormsVariable;
 use Craft;

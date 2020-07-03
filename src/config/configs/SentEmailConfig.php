@@ -10,7 +10,7 @@ namespace barrelstrength\sproutbase\config\configs;
 use barrelstrength\sproutbase\app\sentemail\controllers\SentEmailController;
 use barrelstrength\sproutbase\config\base\Config;
 use barrelstrength\sproutbase\config\models\settings\SentEmailSettings;
-use barrelstrength\sproutbase\migrations\sentemail\Install;
+use barrelstrength\sproutbase\migrations\install\sentemail\Install;
 use barrelstrength\sproutbase\SproutBase;
 use Craft;
 

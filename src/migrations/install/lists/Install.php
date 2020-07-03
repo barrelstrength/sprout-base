@@ -5,7 +5,7 @@
  * @license   https://craftcms.github.io/license
  */
 
-namespace barrelstrength\sproutbase\migrations\lists;
+namespace barrelstrength\sproutbase\migrations\install\lists;
 
 use barrelstrength\sproutbase\app\lists\records\ListElement as ListElementRecord;
 use barrelstrength\sproutbase\app\lists\records\Subscriber as SubscriberRecord;

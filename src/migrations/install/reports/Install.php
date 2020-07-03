@@ -5,7 +5,7 @@
  * @license https://craftcms.github.io/license
  */
 
-namespace barrelstrength\sproutbase\migrations\reports;
+namespace barrelstrength\sproutbase\migrations\install\reports;
 
 use barrelstrength\sproutbase\app\reports\elements\Report;
 use barrelstrength\sproutbase\app\reports\records\DataSource as DataSourceRecord;

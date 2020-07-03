@@ -14,7 +14,7 @@ use barrelstrength\sproutbase\app\forms\records\Form as FormRecord;
 use barrelstrength\sproutbase\app\forms\records\Integration as IntegrationRecord;
 use barrelstrength\sproutbase\app\forms\rules\FieldRule;
 use barrelstrength\sproutbase\config\base\Config;
-use barrelstrength\sproutbase\migrations\forms\CreateFormContentTable;
+use barrelstrength\sproutbase\migrations\install\forms\CreateFormContentTable;
 use barrelstrength\sproutbase\SproutBase;
 use Craft;
 use craft\base\ElementInterface;

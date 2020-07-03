@@ -5,7 +5,7 @@
  * @license https://craftcms.github.io/license
  */
 
-namespace barrelstrength\sproutbase\migrations\sentemail;
+namespace barrelstrength\sproutbase\migrations\install\sentemail;
 
 use barrelstrength\sproutbase\app\sentemail\elements\SentEmail;
 use barrelstrength\sproutbase\app\sentemail\records\SentEmail as SentEmailRecord;

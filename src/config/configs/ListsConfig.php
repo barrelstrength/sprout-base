@@ -13,7 +13,7 @@ use barrelstrength\sproutbase\app\lists\integrations\sproutreports\datasources\S
 use barrelstrength\sproutbase\app\lists\web\twig\variables\ListsVariable;
 use barrelstrength\sproutbase\config\base\Config;
 use barrelstrength\sproutbase\config\models\settings\ListsSettings;
-use barrelstrength\sproutbase\migrations\lists\Install;
+use barrelstrength\sproutbase\migrations\install\lists\Install;
 use Craft;
 
 class ListsConfig extends Config
