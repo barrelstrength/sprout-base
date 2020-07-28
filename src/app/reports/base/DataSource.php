@@ -74,7 +74,7 @@ abstract class DataSource extends SavableComponent implements DataSourceInterfac
     /**
      * @inheritDoc
      */
-    public function getDefaultLabels(Report $report, array $settings = []): array
+    public function getDefaultLabels(Report $report): array
     {
         return [];
     }

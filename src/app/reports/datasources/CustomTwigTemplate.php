@@ -32,8 +32,10 @@ class CustomTwigTemplate extends DataSource
      *
      * @throws \yii\base\Exception
      */
-    public function getDefaultLabels(Report $report, array $settings = []): array
+    public function getDefaultLabels(Report $report): array
     {
+        $settings = $report->getSettings();
+
         if (!SproutBase::$app->twigDataSource->hasRun) {
             $this->processFrontEndResultsTemplate($report, $settings);
             SproutBase::$app->twigDataSource->hasRun = true;
