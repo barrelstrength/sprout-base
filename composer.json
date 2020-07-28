@@ -18,7 +18,7 @@
         "rss": "https://github.com/barrelstrength/sprout-base/commits/v2.atom"
     },
     "require": {
-        "craftcms/cms": "^3.1.0",
+        "craftcms/cms": "^3.5.0",
         "php-science/textrank": "^1.0.4",
         "league/html-to-markdown": "^4.6.2",
         "commerceguys/addressing": "^1.0.6",
