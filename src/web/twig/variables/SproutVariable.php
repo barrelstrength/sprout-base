@@ -7,10 +7,17 @@
 
 namespace barrelstrength\sproutbase\web\twig\variables;
 
+use barrelstrength\sproutbase\app\lists\web\twig\variables\ListsVariable;
 use barrelstrength\sproutbase\config\services\App as SproutBaseApp;
 use barrelstrength\sproutbase\SproutBase;
 use yii\di\ServiceLocator;
 
+/**
+ * @property FormsVariable $forms
+ * @property ListsVariable $lists
+ * @property ReportsVariable $reports
+ * @property SeoVariable $seo
+ */
 class SproutVariable extends ServiceLocator
 {
     /**
