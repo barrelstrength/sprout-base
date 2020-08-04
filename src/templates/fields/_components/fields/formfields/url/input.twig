@@ -18,10 +18,10 @@
 {% js %}
 
     (function() {
-    new SproutUrlField("{{ namespaceInputId }}", "{{ id }}", "{{ element.id ?? null }}", "{{ name }}", "{{ fieldContext }}");
+    new Craft.SproutUrlField("{{ namespaceInputId }}", "{{ id }}", "{{ element.id ?? null }}", "{{ name }}", "{{ fieldContext }}");
 
     $('input#{{ namespaceInputId }}').on('input', function () {
-    new SproutUrlField("{{ namespaceInputId }}", "{{ id }}", "{{ element.id ?? null }}", "{{ name }}", "{{ fieldContext }}");
+    new Craft.SproutUrlField("{{ namespaceInputId }}", "{{ id }}", "{{ element.id ?? null }}", "{{ name }}", "{{ fieldContext }}");
     });
     })();
 

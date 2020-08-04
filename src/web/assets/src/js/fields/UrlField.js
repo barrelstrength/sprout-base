@@ -1,10 +1,10 @@
 /* global Craft */
 
-if (typeof SproutUrlField === typeof undefined) {
-  SproutUrlField = {};
+if (typeof Craft.SproutUrlField === typeof undefined) {
+  Craft.SproutUrlField = {};
 }
 
-SproutUrlField = Garnish.Base.extend({
+Craft.SproutUrlField = Garnish.Base.extend({
 
   init: function(namespaceInputId, id, elementId, fieldHandle, fieldContext) {
     this.checkSproutUrlField(namespaceInputId, id, elementId, fieldHandle, fieldContext);

@@ -1,10 +1,10 @@
 /* global Craft */
 
-if (typeof SproutRegularExpressionField === typeof undefined) {
-  SproutRegularExpressionField = {};
+if (typeof Craft.SproutRegularExpressionField === typeof undefined) {
+  Craft.SproutRegularExpressionField = {};
 }
 
-SproutRegularExpressionField = Garnish.Base.extend({
+Craft.SproutRegularExpressionField = Garnish.Base.extend({
 
   init: function(id, fieldHandle, fieldContext) {
     this.checkSproutRegularExpressionField(id, fieldHandle, fieldContext);

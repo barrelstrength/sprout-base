@@ -1,10 +1,10 @@
 /* global Craft */
 
-if (typeof SproutEmailField === typeof undefined) {
-  SproutEmailField = {};
+if (typeof Craft.SproutEmailField === typeof undefined) {
+  Craft.SproutEmailField = {};
 }
 
-SproutEmailField = Garnish.Base.extend({
+Craft.SproutEmailField = Garnish.Base.extend({
 
   init: function(namespaceInputId, id, elementId, fieldHandle, fieldContext) {
     this.checkSproutEmailField(namespaceInputId, id, elementId, fieldHandle, fieldContext);

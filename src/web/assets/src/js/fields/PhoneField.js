@@ -1,10 +1,10 @@
 /* global Craft */
 
-if (typeof SproutPhoneField === typeof undefined) {
-  SproutPhoneField = {};
+if (typeof Craft.SproutPhoneField === typeof undefined) {
+  Craft.SproutPhoneField = {};
 }
 
-SproutPhoneField = Garnish.Base.extend({
+Craft.SproutPhoneField = Garnish.Base.extend({
 
   init: function(namespaceInputId, countryId) {
     let sproutPhoneFieldId = '#' + namespaceInputId;
