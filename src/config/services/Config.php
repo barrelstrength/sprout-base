@@ -86,10 +86,10 @@ class Config extends Component
      *     'sitemaps' => SitemapsConfig()
      * ]
      */
-    public function getConfigs($includeFileSettings = true): array
+    public function getConfigs($includeFileSettings = true, $ignoreUserPermissions = false): array
     {
         if (!$this->_configs) {
-            $this->initConfigs($includeFileSettings);
+            $this->initConfigs($includeFileSettings, $ignoreUserPermissions);
         }
 
         return $this->_configs;
@@ -111,7 +111,7 @@ class Config extends Component
     /**
      * @param bool $includeFileSettings
      */
-    private function initConfigs($includeFileSettings = true)
+    private function initConfigs($includeFileSettings = true, $ignoreUserPermissions = false)
     {
         $this->prepareContext($includeFileSettings);
 
@@ -135,6 +135,7 @@ class Config extends Component
             }
 
             $currentUser = Craft::$app->getUser()->getIdentity();
+
             $request = Craft::$app->getRequest();
 
             $configTypes = $plugin::getSproutConfigs();
@@ -144,12 +145,21 @@ class Config extends Component
                 /** @var BaseConfig $config */
                 $config = new $configType();
 
-                $permissionKey = StringHelper::camelCase($config::getKey());
                 if ($request->getIsCpRequest() &&
                     !$request->getIsActionRequest() &&
-                    $config::hasControlPanelSettings() &&
-                    !$currentUser->can('sprout:'.$permissionKey.':accessModule')) {
+                    !$config::hasControlPanelSettings()) {
                     continue;
+                }
+
+                if (!$ignoreUserPermissions) {
+                    $permissionKey = StringHelper::camelCase($config::getKey());
+                    $currentUserCanAccessModule = $currentUser !== null
+                        ? $currentUser->can('sprout:'.$permissionKey.':accessModule')
+                        : false;
+
+                    if (!$currentUserCanAccessModule) {
+                        continue;
+                    }
                 }
 
                 if (isset($this->_configs[$config::getKey()])) {
@@ -168,8 +178,11 @@ class Config extends Component
                     $permissionKey = StringHelper::camelCase($subModuleConfig::getKey());
                     if ($request->getIsCpRequest() &&
                         !$request->getIsActionRequest() &&
-                        $subModuleConfig::hasControlPanelSettings() &&
-                        !$currentUser->can('sprout:'.$permissionKey.':accessModule')) {
+                        !$subModuleConfig::hasControlPanelSettings()) {
+                        continue;
+                    }
+
+                    if (!$ignoreUserPermissions && !$currentUser->can('sprout:'.$permissionKey.':accessModule')) {
                         continue;
                     }
 

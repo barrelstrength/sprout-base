@@ -96,7 +96,7 @@ class NotificationEmailEvents extends Component
      */
     public function registerNotificationEmailEventHandlers()
     {
-        $notificationSettings = SproutBase::$app->settings->getSettingsByKey('notifications');
+        $notificationSettings = SproutBase::$app->settings->getSettingsByKey('notifications', true, true);
 
         if (!$notificationSettings->getIsEnabled()) {
             return;

@@ -40,6 +40,7 @@ class Settings extends Component
      * Gets settings as defined in project config
      *
      * @param bool $includeFileConfigSettings
+     * @param bool $ignoreUserPermissions
      *
      * @return array [
      *     'campaigns' => new CampaignsSetting,
@@ -55,9 +56,9 @@ class Settings extends Component
      *     'sitemaps' => new SitemapsSettings
      * ]
      */
-    public function getSettings($includeFileConfigSettings = true): array
+    public function getSettings($includeFileConfigSettings = true, $ignoreUserPermissions = false): array
     {
-        $configTypes = SproutBase::$app->config->getConfigs($includeFileConfigSettings);
+        $configTypes = SproutBase::$app->config->getConfigs($includeFileConfigSettings, $ignoreUserPermissions);
 
         $settings = [];
 
@@ -109,12 +110,13 @@ class Settings extends Component
      * ];
      *
      * @param bool $includeFileConfigSettings
+     * @param bool $ignoreUserPermissions
      *
      * @return BaseSettings
      */
-    public function getSettingsByKey($handle, $includeFileConfigSettings = true): BaseSettings
+    public function getSettingsByKey($handle, $includeFileConfigSettings = true, $ignoreUserPermissions = false): BaseSettings
     {
-        $settings = $this->getSettings($includeFileConfigSettings);
+        $settings = $this->getSettings($includeFileConfigSettings, $ignoreUserPermissions);
 
         if (empty($settings[$handle])) {
             throw new InvalidArgumentException("`{$handle}` settings not found.");
