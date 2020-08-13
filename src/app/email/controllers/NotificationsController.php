@@ -30,6 +30,8 @@ class NotificationsController extends Controller
 
     public function init()
     {
+        parent::init();
+
         $this->_config = SproutBase::$app->config->getConfigByKey('notifications');
     }
 
