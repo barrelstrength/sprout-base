@@ -244,6 +244,7 @@ class Config extends Component
                 $settings = $sproutConfig->createSettingsModel();
 
                 if ($settings) {
+                    $settings->beforeAddDefaultSettings();
                     SproutBase::$app->settings->saveSettings($projectConfigSettingsKey, $settings);
                 }
             }
@@ -261,6 +262,7 @@ class Config extends Component
                     $settings = $subModuleConfig->createSettingsModel();
 
                     if ($settings) {
+                        $settings->beforeAddDefaultSettings();
                         SproutBase::$app->settings->saveSettings($projectConfigSettingsKey, $settings);
                     }
                 }
@@ -318,18 +320,18 @@ class Config extends Component
      * @throws NotSupportedException
      * @throws ServerErrorHttpException
      */
-    public function addConfigSettingsToProjectConfig(ConfigInterface $config)
-    {
-        if ($settings = $config->createSettingsModel()) {
-
-            $settings->beforeAddDefaultSettings();
-
-            $projectConfigSettingsKey = self::CONFIG_SPROUT_KEY.'.'.$config::getKey();
-            $newSettings = ProjectConfigHelper::packAssociativeArrays($settings->toArray());
-
-            Craft::$app->getProjectConfig()->set($projectConfigSettingsKey, $newSettings, "Added default Sprout Settings for “{$config::getKey()}”");
-        }
-    }
+//    public function addConfigSettingsToProjectConfig(ConfigInterface $config)
+//    {
+//        if ($settings = $config->createSettingsModel()) {
+//
+//            $settings->beforeAddDefaultSettings();
+//
+//            $projectConfigSettingsKey = self::CONFIG_SPROUT_KEY.'.'.$config::getKey();
+//            $newSettings = ProjectConfigHelper::packAssociativeArrays($settings->toArray());
+//
+//            Craft::$app->getProjectConfig()->set($projectConfigSettingsKey, $newSettings, "Added default Sprout Settings for “{$config::getKey()}”");
+//        }
+//    }
 
     /**
      * @param ConfigInterface $config
