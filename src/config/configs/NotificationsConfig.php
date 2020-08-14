@@ -92,10 +92,10 @@ class NotificationsConfig extends Config
     public function getUserPermissions(): array
     {
         return [
-            'sprout:notifications:viewNotifications' => [
+            'sprout:email:viewNotifications' => [
                 'label' => Craft::t('sprout', 'View Notification Emails'),
                 'nested' => [
-                    'sprout:notifications:editNotifications' => [
+                    'sprout:email:editNotifications' => [
                         'label' => Craft::t('sprout', 'Edit Notification Emails'),
                     ],
                 ],
