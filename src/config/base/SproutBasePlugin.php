@@ -61,7 +61,7 @@ abstract class SproutBasePlugin extends Plugin
      */
     protected function createInstallMigration()
     {
-        $alias = '@vendor/barrelstrength/sproutbase/src/migrations/install/Install.php';
+        $alias = '@vendor/barrelstrength/sprout-base/src/migrations/install/Install.php';
         $path = FileHelper::normalizePath(Craft::getAlias($alias));
 
         require_once $path;
