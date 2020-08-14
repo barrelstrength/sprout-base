@@ -588,11 +588,13 @@ class Config extends Component
         // Control Panel module has unique needs when returning settings
         $moduleSettings = $cpSettings->modules;
 
-        // Update settings to be indexed by module key
-        $moduleKeys = array_column($moduleSettings, 'moduleKey');
-        $moduleSettings = array_combine($moduleKeys, $moduleSettings);
+        if ($moduleSettings !== null) {
+            // Update settings to be indexed by module key
+            $moduleKeys = array_column($moduleSettings, 'moduleKey');
+            $moduleSettings = array_combine($moduleKeys, $moduleSettings);
 
-        $cpSettings->modules = $moduleSettings;
+            $cpSettings->modules = $moduleSettings;
+        }
 
         $this->_cpSettings = $cpSettings;
 
