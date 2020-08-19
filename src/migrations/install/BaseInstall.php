@@ -15,7 +15,7 @@ use yii\base\Exception;
 use yii\base\NotSupportedException;
 use yii\web\ServerErrorHttpException;
 
-class Install extends Migration
+class BaseInstall extends Migration
 {
     private $plugin;
 
