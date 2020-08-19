@@ -423,7 +423,7 @@ class Redirects extends Component
         $redirect->oldUrl = $uri;
         $redirect->newUrl = '/';
         $redirect->method = RedirectMethods::PageNotFound;
-        $redirect->matchStrategy = 0;
+        $redirect->matchStrategy = null;
         $redirect->enabled = 0;
         $redirect->count = 0;
         $redirect->siteId = $site->id;
