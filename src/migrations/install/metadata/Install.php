@@ -26,7 +26,6 @@ class Install extends Migration
             $this->createTable(GlobalMetadataRecord::tableName(), [
                 'id' => $this->primaryKey(),
                 'siteId' => $this->integer()->notNull(),
-                'meta' => $this->text(),
                 'identity' => $this->text(),
                 'ownership' => $this->text(),
                 'contacts' => $this->text(),
