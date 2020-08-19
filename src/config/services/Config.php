@@ -280,22 +280,24 @@ class Config extends Component
         $sproutConfigTypes = $plugin->getSproutConfigs();
 
         foreach ($sproutConfigTypes as $sproutConfigType) {
-            $isDependencyInUse = SproutBase::$app->config->isDependencyInUse('sprout-seo', $sproutConfigType);
+            $isDependencyInUse = SproutBase::$app->config->isDependencyInUse($plugin->handle, $sproutConfigType);
 
             if ($isDependencyInUse) {
                 continue;
             }
 
+            $sproutConfig = new $sproutConfigType();
+
             // Run the safeDown method if our module has an Install migration
-            if ($migration = $sproutConfigType->createInstallMigration()) {
+            if ($migration = $sproutConfig->createInstallMigration()) {
                 ob_start();
                 $migration->safeDown();
                 ob_end_clean();
             }
 
-            $this->removeConfigSettingsToProjectConfig($sproutConfigType);
+            $this->removeConfigSettingsToProjectConfig($sproutConfig);
 
-            $subModuleConfigTypes = $sproutConfigType::getSproutConfigDependencies();
+            $subModuleConfigTypes = $sproutConfig::getSproutConfigDependencies();
 
             foreach ($subModuleConfigTypes as $subModuleConfigType) {
                 $subModuleConfig = new $subModuleConfigType();
@@ -307,7 +309,7 @@ class Config extends Component
                     ob_end_clean();
                 }
 
-                $this->removeConfigSettingsToProjectConfig($subModuleConfigType);
+                $this->removeConfigSettingsToProjectConfig($subModuleConfig);
             }
         }
     }
