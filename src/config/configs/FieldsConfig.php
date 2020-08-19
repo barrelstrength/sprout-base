@@ -10,7 +10,7 @@ namespace barrelstrength\sproutbase\config\configs;
 use barrelstrength\sproutbase\app\fields\controllers\AddressController;
 use barrelstrength\sproutbase\app\fields\controllers\FieldsController;
 use barrelstrength\sproutbase\config\base\Config;
-use barrelstrength\sproutbase\migrations\install\fields\Install;
+use barrelstrength\sproutbase\migrations\install\FieldsInstall;
 use Craft;
 
 class FieldsConfig extends Config
@@ -40,7 +40,7 @@ class FieldsConfig extends Config
 
     public function createInstallMigration()
     {
-        return new Install();
+        return new FieldsInstall();
     }
 
     public function getSettingsNavItem(): array

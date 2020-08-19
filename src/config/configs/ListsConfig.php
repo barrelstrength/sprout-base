@@ -13,7 +13,7 @@ use barrelstrength\sproutbase\app\lists\integrations\sproutreports\datasources\S
 use barrelstrength\sproutbase\app\lists\web\twig\variables\ListsVariable;
 use barrelstrength\sproutbase\config\base\Config;
 use barrelstrength\sproutbase\config\models\settings\ListsSettings;
-use barrelstrength\sproutbase\migrations\install\lists\Install;
+use barrelstrength\sproutbase\migrations\install\ListsInstall;
 use Craft;
 
 class ListsConfig extends Config
@@ -55,7 +55,7 @@ class ListsConfig extends Config
 
     public function createInstallMigration()
     {
-        return new Install();
+        return new ListsInstall();
     }
 
     public function getCpNavItem(): array

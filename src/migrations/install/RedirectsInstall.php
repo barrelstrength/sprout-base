@@ -5,14 +5,14 @@
  * @license https://craftcms.github.io/license
  */
 
-namespace barrelstrength\sproutbase\migrations\install\redirects;
+namespace barrelstrength\sproutbase\migrations\install;
 
 use barrelstrength\sproutbase\app\redirects\elements\Redirect;
 use barrelstrength\sproutbase\app\redirects\records\Redirects as RedirectsRecord;
 use craft\db\Migration;
 use craft\db\Table;
 
-class Install extends Migration
+class RedirectsInstall extends Migration
 {
     /**
      * @return bool|void

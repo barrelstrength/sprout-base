@@ -12,7 +12,7 @@ use barrelstrength\sproutbase\app\fields\controllers\FieldsController;
 use barrelstrength\sproutbase\app\seo\controllers\GlobalMetadataController;
 use barrelstrength\sproutbase\config\base\Config;
 use barrelstrength\sproutbase\config\models\settings\SeoSettings;
-use barrelstrength\sproutbase\migrations\install\metadata\Install;
+use barrelstrength\sproutbase\migrations\install\MetadataInstall;
 use barrelstrength\sproutbase\SproutBase;
 use barrelstrength\sproutbase\web\twig\variables\SeoVariable;
 use Craft;
@@ -62,7 +62,7 @@ class SeoConfig extends Config
 
     public function createInstallMigration()
     {
-        return new Install();
+        return new MetadataInstall();
     }
 
     public function getCpNavItem(): array

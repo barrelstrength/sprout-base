@@ -5,7 +5,7 @@
  * @license https://craftcms.github.io/license
  */
 
-namespace barrelstrength\sproutbase\migrations\install\forms;
+namespace barrelstrength\sproutbase\migrations\install;
 
 use barrelstrength\sproutbase\app\forms\elements\Entry;
 use barrelstrength\sproutbase\app\forms\elements\Form;
@@ -26,7 +26,7 @@ use craft\db\Table;
 use Throwable;
 use yii\db\Exception;
 
-class Install extends Migration
+class FormsInstall extends Migration
 {
     /**
      * @return bool|void

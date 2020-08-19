@@ -18,7 +18,7 @@ use barrelstrength\sproutbase\app\email\events\notificationevents\UsersLogin;
 use barrelstrength\sproutbase\app\email\events\notificationevents\UsersSave;
 use barrelstrength\sproutbase\config\base\Config;
 use barrelstrength\sproutbase\config\models\settings\NotificationSettings;
-use barrelstrength\sproutbase\migrations\install\email\Install;
+use barrelstrength\sproutbase\migrations\install\EmailInstall;
 use barrelstrength\sproutbase\SproutBase;
 use Craft;
 use craft\helpers\UrlHelper;
@@ -78,7 +78,7 @@ class NotificationsConfig extends Config
 
     public function createInstallMigration()
     {
-        return new Install();
+        return new EmailInstall();
     }
 
     public function getCpNavItem(): array

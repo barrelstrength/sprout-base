@@ -5,12 +5,12 @@
  * @license https://craftcms.github.io/license
  */
 
-namespace barrelstrength\sproutbase\migrations\install\fields;
+namespace barrelstrength\sproutbase\migrations\install;
 
 use barrelstrength\sproutbase\app\fields\records\Address as AddressRecord;
 use craft\db\Migration;
 
-class Install extends Migration
+class FieldsInstall extends Migration
 {
     public function safeUp()
     {

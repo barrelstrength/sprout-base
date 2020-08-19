@@ -5,14 +5,14 @@
  * @license https://craftcms.github.io/license
  */
 
-namespace barrelstrength\sproutbase\migrations\install\sitemaps;
+namespace barrelstrength\sproutbase\migrations\install;
 
 use barrelstrength\sproutbase\app\sitemaps\records\SitemapSection as SitemapSectionRecord;
 use craft\db\Migration;
 use craft\db\Table;
 use Throwable;
 
-class Install extends Migration
+class SitemapsInstall extends Migration
 {
     /**
      * @return bool|void

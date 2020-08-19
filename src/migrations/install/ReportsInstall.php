@@ -5,7 +5,7 @@
  * @license https://craftcms.github.io/license
  */
 
-namespace barrelstrength\sproutbase\migrations\install\reports;
+namespace barrelstrength\sproutbase\migrations\install;
 
 use barrelstrength\sproutbase\app\reports\elements\Report;
 use barrelstrength\sproutbase\app\reports\records\DataSource as DataSourceRecord;
@@ -14,7 +14,7 @@ use barrelstrength\sproutbase\app\reports\records\ReportGroup as ReportGroupReco
 use craft\db\Migration;
 use craft\db\Table;
 
-class Install extends Migration
+class ReportsInstall extends Migration
 {
     public function safeUp()
     {

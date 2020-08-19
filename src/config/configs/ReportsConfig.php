@@ -15,7 +15,7 @@ use barrelstrength\sproutbase\app\reports\datasources\Users;
 use barrelstrength\sproutbase\config\base\Config;
 use barrelstrength\sproutbase\config\base\ConfigDataSourceInterface;
 use barrelstrength\sproutbase\config\models\settings\ReportsSettings;
-use barrelstrength\sproutbase\migrations\install\reports\Install;
+use barrelstrength\sproutbase\migrations\install\ReportsInstall;
 use barrelstrength\sproutbase\SproutBase;
 use barrelstrength\sproutbase\web\twig\variables\ReportsVariable;
 use Craft;
@@ -49,7 +49,7 @@ class ReportsConfig extends Config implements ConfigDataSourceInterface
 
     public function createInstallMigration()
     {
-        return new Install();
+        return new ReportsInstall();
     }
 
     public function getCpNavItem(): array

@@ -5,7 +5,7 @@
  * @license https://craftcms.github.io/license
  */
 
-namespace barrelstrength\sproutbase\migrations\install\campaigns;
+namespace barrelstrength\sproutbase\migrations\install;
 
 use barrelstrength\sproutbase\app\campaigns\elements\CampaignEmail;
 use barrelstrength\sproutbase\app\campaigns\records\CampaignEmail as CampaignEmailRecord;
@@ -13,7 +13,7 @@ use barrelstrength\sproutbase\app\campaigns\records\CampaignType as CampaignType
 use craft\db\Migration;
 use craft\db\Table;
 
-class Install extends Migration
+class CampaignsInstall extends Migration
 {
     public function safeUp()
     {

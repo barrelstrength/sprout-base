@@ -12,7 +12,7 @@ use barrelstrength\sproutbase\app\sitemaps\controllers\XmlSitemapController;
 use barrelstrength\sproutbase\config\base\Config;
 use barrelstrength\sproutbase\config\base\Settings;
 use barrelstrength\sproutbase\config\models\settings\SitemapsSettings;
-use barrelstrength\sproutbase\migrations\install\sitemaps\Install;
+use barrelstrength\sproutbase\migrations\install\SitemapsInstall;
 use barrelstrength\sproutbase\SproutBase;
 use Craft;
 use craft\helpers\ProjectConfig as ProjectConfigHelper;
@@ -54,7 +54,7 @@ class SitemapsConfig extends Config
 
     public function createInstallMigration()
     {
-        return new Install();
+        return new SitemapsInstall();
     }
 
     public function getCpNavItem(): array

@@ -5,14 +5,14 @@
  * @license https://craftcms.github.io/license
  */
 
-namespace barrelstrength\sproutbase\migrations\install\sentemail;
+namespace barrelstrength\sproutbase\migrations\install;
 
 use barrelstrength\sproutbase\app\sentemail\elements\SentEmail;
 use barrelstrength\sproutbase\app\sentemail\records\SentEmail as SentEmailRecord;
 use craft\db\Migration;
 use craft\db\Table;
 
-class Install extends Migration
+class SentEmailInstall extends Migration
 {
     public function safeUp()
     {

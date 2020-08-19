@@ -5,7 +5,7 @@
  * @license https://craftcms.github.io/license
  */
 
-namespace barrelstrength\sproutbase\migrations\install\metadata;
+namespace barrelstrength\sproutbase\migrations\install;
 
 use barrelstrength\sproutbase\app\seo\records\GlobalMetadata as GlobalMetadataRecord;
 use barrelstrength\sproutbase\SproutBase;
@@ -14,7 +14,7 @@ use craft\db\Migration;
 use craft\db\Table;
 use Throwable;
 
-class Install extends Migration
+class MetadataInstall extends Migration
 {
     /**
      * @return bool|void

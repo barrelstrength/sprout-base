@@ -10,7 +10,7 @@ namespace barrelstrength\sproutbase\config\configs;
 use barrelstrength\sproutbase\app\redirects\controllers\RedirectsController;
 use barrelstrength\sproutbase\config\base\Config;
 use barrelstrength\sproutbase\config\models\settings\RedirectsSettings;
-use barrelstrength\sproutbase\migrations\install\redirects\Install;
+use barrelstrength\sproutbase\migrations\install\RedirectsInstall;
 use barrelstrength\sproutbase\SproutBase;
 use Craft;
 
@@ -55,7 +55,7 @@ class RedirectsConfig extends Config
 
     public function createInstallMigration()
     {
-        return new Install();
+        return new RedirectsInstall();
     }
 
     public function getCpNavItem(): array

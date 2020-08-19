@@ -5,14 +5,14 @@
  * @license https://craftcms.github.io/license
  */
 
-namespace barrelstrength\sproutbase\migrations\install\email;
+namespace barrelstrength\sproutbase\migrations\install;
 
 use barrelstrength\sproutbase\app\email\elements\NotificationEmail;
 use barrelstrength\sproutbase\app\email\records\NotificationEmail as NotificationEmailRecord;
 use craft\db\Migration;
 use craft\db\Table;
 
-class Install extends Migration
+class EmailInstall extends Migration
 {
     public function safeUp()
     {
