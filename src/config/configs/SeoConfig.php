@@ -7,6 +7,8 @@
 
 namespace barrelstrength\sproutbase\config\configs;
 
+use barrelstrength\sproutbase\app\fields\controllers\AddressController;
+use barrelstrength\sproutbase\app\fields\controllers\FieldsController;
 use barrelstrength\sproutbase\app\seo\controllers\GlobalMetadataController;
 use barrelstrength\sproutbase\config\base\Config;
 use barrelstrength\sproutbase\config\models\settings\SeoSettings;
@@ -21,6 +23,8 @@ class SeoConfig extends Config
     {
         return [
             'global-metadata' => GlobalMetadataController::class,
+            'fields' => FieldsController::class,
+            'fields-address' => AddressController::class,
         ];
     }
 
@@ -28,13 +32,6 @@ class SeoConfig extends Config
     {
         return [
             'seo' => SeoVariable::class,
-        ];
-    }
-
-    public static function getSproutConfigDependencies(): array
-    {
-        return [
-            FieldsConfig::class,
         ];
     }
 
