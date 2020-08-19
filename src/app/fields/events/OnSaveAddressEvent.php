@@ -8,6 +8,7 @@
 namespace barrelstrength\sproutbase\app\fields\events;
 
 use barrelstrength\sproutbase\app\fields\models\Address;
+use craft\base\Element;
 use yii\base\Event;
 
 class OnSaveAddressEvent extends Event
@@ -16,4 +17,9 @@ class OnSaveAddressEvent extends Event
      * @var Address
      */
     public $address;
+
+    /**
+     * @var Element
+     */
+    public $element;
 }

@@ -264,14 +264,13 @@ class Address extends Component
 
     /**
      * @param AddressModel $model
-     * @param              $source
+     * @param Element $element
      */
-    public function afterSaveAddress(AddressModel $model, $source)
+    public function afterSaveAddress(AddressModel $model, $element)
     {
         $event = new OnSaveAddressEvent([
-            'model' => $model,
             'address' => $model,
-            'source' => $source,
+            'element' => $element,
         ]);
 
         $this->trigger(self::EVENT_ON_SAVE_ADDRESS, $event);
