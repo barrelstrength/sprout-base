@@ -692,6 +692,8 @@ class GlobalMetadata extends Component
 
     /**
      * @param int $siteId
+     *
+     * @throws Exception
      */
     public function insertDefaultGlobalMetadata(int $siteId)
     {
@@ -713,6 +715,6 @@ class GlobalMetadata extends Component
             'social' => null,
             'robots' => null,
             'settings' => $defaultSettings,
-        ]);
+        ])->execute();
     }
 }
