@@ -45,6 +45,9 @@ class Config extends Component
 
     private $_cpSettingsLoadStatus = 'not-loaded';
 
+    /**
+     * @return ControlPanelSettings
+     */
     public function getCpSettings(): ControlPanelSettings
     {
         if (!$this->_cpSettings) {
@@ -71,6 +74,8 @@ class Config extends Component
 
     /**
      * @param bool $includeFileSettings
+     *
+     * @param bool $ignoreUserPermissions
      *
      * @return array [
      *     'campaigns' => CampaignsConfig(),
@@ -232,41 +237,55 @@ class Config extends Component
 
         foreach ($sproutConfigTypes as $sproutConfigType) {
             $sproutConfig = new $sproutConfigType();
+            $this->runInstallMigration($sproutConfig);
+
             $subModuleConfigTypes = $sproutConfigType::getSproutConfigDependencies();
-
-            // Run the safeUp method if our module has an Install migration
-            if ($migration = $sproutConfig->createInstallMigration()) {
-                ob_start();
-                $migration->safeUp();
-                ob_end_clean();
-
-                $projectConfigSettingsKey = self::CONFIG_SPROUT_KEY.'.'.$sproutConfig::getKey();
-                $settings = $sproutConfig->createSettingsModel();
-
-                if ($settings) {
-                    $settings->beforeAddDefaultSettings();
-                    SproutBase::$app->settings->saveSettings($projectConfigSettingsKey, $settings);
-                }
-            }
 
             foreach ($subModuleConfigTypes as $subModuleConfigType) {
                 $subModuleConfig = new $subModuleConfigType();
-
-                // Run the safeUp method if our module has an Install migration
-                if ($migration = $subModuleConfig->createInstallMigration()) {
-                    ob_start();
-                    $migration->safeUp();
-                    ob_end_clean();
-
-                    $projectConfigSettingsKey = self::CONFIG_SPROUT_KEY.'.'.$subModuleConfig::getKey();
-                    $settings = $subModuleConfig->createSettingsModel();
-
-                    if ($settings) {
-                        $settings->beforeAddDefaultSettings();
-                        SproutBase::$app->settings->saveSettings($projectConfigSettingsKey, $settings);
-                    }
-                }
+                $this->runInstallMigration($subModuleConfig);
             }
+        }
+    }
+
+    /**
+     * @param $sproutConfig
+     *
+     * @throws ErrorException
+     * @throws Exception
+     * @throws NotSupportedException
+     * @throws ServerErrorHttpException
+     */
+    public function runInstallMigration($sproutConfig) {
+
+        $cpSettings = SproutBase::$app->config->getCpSettings();
+        $cpSettingsProjectConfigKey = self::CONFIG_SPROUT_KEY.'.control-panel';
+
+        if ($cpSettings->isModuleInstalled($sproutConfig->getKey())) {
+            return;
+        }
+
+        // Run the safeUp method if our module has an Install migration
+        if ($migration = $sproutConfig->createInstallMigration()) {
+            ob_start();
+            $migration->safeUp();
+            ob_end_clean();
+
+            $projectConfigSettingsKey = self::CONFIG_SPROUT_KEY.'.'.$sproutConfig::getKey();
+            $settings = $sproutConfig->createSettingsModel();
+
+            if ($settings) {
+                $settings->beforeAddDefaultSettings();
+                SproutBase::$app->settings->saveSettings($projectConfigSettingsKey, $settings);
+            }
+
+            $cpSettings['modules'][$sproutConfig->getKey()] = [
+                'alternateName' => '',
+                'enabled' => 1,
+                'moduleKey' => $sproutConfig->getKey(),
+            ];
+
+            SproutBase::$app->settings->saveSettings($cpSettingsProjectConfigKey, $cpSettings);
         }
     }
 
@@ -313,27 +332,6 @@ class Config extends Component
             }
         }
     }
-
-    /**
-     * @param ConfigInterface $config
-     *
-     * @throws ErrorException
-     * @throws Exception
-     * @throws NotSupportedException
-     * @throws ServerErrorHttpException
-     */
-//    public function addConfigSettingsToProjectConfig(ConfigInterface $config)
-//    {
-//        if ($settings = $config->createSettingsModel()) {
-//
-//            $settings->beforeAddDefaultSettings();
-//
-//            $projectConfigSettingsKey = self::CONFIG_SPROUT_KEY.'.'.$config::getKey();
-//            $newSettings = ProjectConfigHelper::packAssociativeArrays($settings->toArray());
-//
-//            Craft::$app->getProjectConfig()->set($projectConfigSettingsKey, $newSettings, "Added default Sprout Settings for “{$config::getKey()}”");
-//        }
-//    }
 
     /**
      * @param ConfigInterface $config

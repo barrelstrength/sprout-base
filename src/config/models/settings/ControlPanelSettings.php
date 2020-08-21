@@ -21,7 +21,7 @@ class ControlPanelSettings extends Settings
 {
     public $modules;
 
-    public $enableUpgradeMessages = false;
+    public $enableUpgradeMessages = true;
 
     /**
      * @return array|array[]
@@ -106,6 +106,15 @@ class ControlPanelSettings extends Settings
     {
         if (isset($this->modules[$key])) {
             return (bool)$this->modules[$key]['enabled'];
+        }
+
+        return false;
+    }
+
+    public function isModuleInstalled($key): bool
+    {
+        if (isset($this->modules[$key])) {
+            return true;
         }
 
         return false;
