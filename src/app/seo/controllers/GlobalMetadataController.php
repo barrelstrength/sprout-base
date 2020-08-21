@@ -149,6 +149,8 @@ class GlobalMetadataController extends Controller
         if ($address) {
             if (isset($address['delete']) && $address['delete']) {
                 $postData['identity']['address'] = null;
+            } elseif ($this->isDefaultAddress($address)) {
+                $postData['identity']['address'] = null;
             } else {
                 unset(
                     $address['id'],
@@ -267,5 +269,33 @@ class GlobalMetadataController extends Controller
         return $this->asJson([
             'html' => $addressDisplayHtml,
         ]);
+    }
+
+    /**
+     * Crudely checks if the user updated the address field
+     *
+     * @param $address
+     *
+     * @return bool
+     */
+    private function isDefaultAddress($address): bool
+    {
+        // If one of the two default values have been changed, the user added an custom address
+        if ((isset($address['countryCode']) && $address['countryCode'] !== 'US') ||
+            (isset($address['administrativeAreaCode']) && $address['administrativeAreaCode'] !== 'AL')) {
+            return false;
+        }
+
+        // If not, make sure we have some other new value
+        if (
+            (isset($address['address1']) && $address['address1'] !== '') ||
+            (isset($address['address2']) && $address['address2'] !== '') ||
+            (isset($address['locality']) && $address['locality'] !== '') ||
+            (isset($address['postalCode']) && $address['postalCode'] !== '')
+        ) {
+            return false;
+        }
+
+        return true;
     }
 }
