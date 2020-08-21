@@ -66,8 +66,8 @@ class CampaignsInstall extends Migration
         // Delete Notification Email Elements
         $this->delete(Table::ELEMENTS, ['type' => CampaignEmail::class]);
 
-        $this->dropTableIfExists('{{%sproutemail_campaigntypes}}');
-        $this->dropTableIfExists('{{%sproutemail_campaignemails}}');
+        $this->dropTableIfExists(CampaignTypeRecord::tableName());
+        $this->dropTableIfExists(CampaignEmailRecord::tableName());
 //        $this->dropTableIfExists('{{%sproutemail_mailers}}');
     }
 }

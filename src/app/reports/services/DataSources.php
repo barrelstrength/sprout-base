@@ -105,7 +105,7 @@ class DataSources extends Component
         // Identify all allowed data source IDs
         $allowedDataSourceIds = (new Query())
             ->select('id')
-            ->from('{{%sproutreports_datasources}}')
+            ->from(DataSourceRecord::tableName())
             ->where(['in', 'type', $registeredDataSources])
             ->column();
 
@@ -117,7 +117,7 @@ class DataSources extends Component
 
         $reportsDataSourceIds = (new Query())
             ->select('id')
-            ->from('{{%sproutreports_datasources}}')
+            ->from(DataSourceRecord::tableName())
             ->where(['in', 'type', $reportsDataSourceTypes])
             ->column();
 

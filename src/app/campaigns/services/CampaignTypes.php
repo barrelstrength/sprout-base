@@ -149,11 +149,9 @@ class CampaignTypes extends Component
     {
         try {
             Craft::$app->getDb()->createCommand()
-                ->delete(
-                    'sproutemail_campaigntypes',
-                    [
-                        'id' => $campaignTypeId,
-                    ])
+                ->delete(CampaignTypeRecord::tableName(), [
+                    'id' => $campaignTypeId,
+                ])
                 ->execute();
 
             return true;
