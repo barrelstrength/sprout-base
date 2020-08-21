@@ -7,13 +7,13 @@
 
 namespace barrelstrength\sproutbase\app\redirects\elements;
 
-use barrelstrength\sproutbase\app\redirects\elements\actions\ChangePermanentMethod;
-use barrelstrength\sproutbase\app\redirects\elements\actions\ChangeTemporaryMethod;
+use barrelstrength\sproutbase\app\redirects\elements\actions\ChangePermanentStatusCode;
+use barrelstrength\sproutbase\app\redirects\elements\actions\ChangeTemporaryStatusCode;
 use barrelstrength\sproutbase\app\redirects\elements\actions\ExcludeUrl;
 use barrelstrength\sproutbase\app\redirects\elements\actions\HardDelete;
 use barrelstrength\sproutbase\app\redirects\elements\actions\SetStatus;
 use barrelstrength\sproutbase\app\redirects\elements\db\RedirectQuery;
-use barrelstrength\sproutbase\app\redirects\enums\RedirectMethods;
+use barrelstrength\sproutbase\app\redirects\enums\RedirectStatusCodes;
 use barrelstrength\sproutbase\app\redirects\records\Redirects as RedirectRecord;
 use barrelstrength\sproutbase\config\base\Config;
 use barrelstrength\sproutbase\SproutBase;
@@ -47,7 +47,7 @@ class Redirect extends Element
     /**
      * @var int
      */
-    public $method;
+    public $statusCode;
 
     /**
      * @var bool
@@ -119,7 +119,7 @@ class Redirect extends Element
         $attributes = [
             'oldUrl' => Craft::t('sprout', 'Old Url'),
             'newUrl' => Craft::t('sprout', 'New Url'),
-            'method' => Craft::t('sprout', 'Method'),
+            'statusCode' => Craft::t('sprout', 'Status Code'),
             'count' => Craft::t('sprout', 'Count'),
             'dateLastUsed' => Craft::t('sprout', 'Date Last Used'),
             'test' => Craft::t('sprout', 'Test'),
@@ -133,14 +133,14 @@ class Redirect extends Element
 
     public static function defineSearchableAttributes(): array
     {
-        return ['oldUrl', 'newUrl', 'method', 'matchStrategy'];
+        return ['oldUrl', 'newUrl', 'statusCode', 'matchStrategy'];
     }
 
     protected static function defineDefaultTableAttributes(string $source): array
     {
         $tableAttributes[] = 'oldUrl';
         $tableAttributes[] = 'newUrl';
-        $tableAttributes[] = 'method';
+        $tableAttributes[] = 'statusCode';
         $tableAttributes[] = 'count';
         $tableAttributes[] = 'dateLastUsed';
         $tableAttributes[] = 'test';
@@ -153,7 +153,7 @@ class Redirect extends Element
         $attributes = [
             'oldUrl' => Craft::t('sprout', 'Old Url'),
             'newUrl' => Craft::t('sprout', 'New Url'),
-            'method' => Craft::t('sprout', 'Method'),
+            'statusCode' => Craft::t('sprout', 'Status Code'),
             [
                 'label' => Craft::t('sprout', 'Count'),
                 'orderBy' => 'sprout_redirects.count',
@@ -179,26 +179,26 @@ class Redirect extends Element
                 'structureId' => SproutBase::$app->redirects->getStructureId(),
                 'structureEditable' => true,
                 'criteria' => [
-                    'method' => [301, 302],
+                    'statusCode' => [301, 302],
                 ],
                 'defaultSort' => ['count', 'desc'],
             ],
         ];
 
         $sources[] = [
-            'heading' => Craft::t('sprout', 'Methods'),
+            'heading' => Craft::t('sprout', 'Status Codes'),
         ];
 
-        $methods = SproutBase::$app->redirects->getMethods();
+        $statusCodes = SproutBase::$app->redirects->getStatusCodes();
 
-        foreach ($methods as $code => $method) {
+        foreach ($statusCodes as $code => $statusCode) {
 
-            $key = 'method:'.$code;
+            $key = 'statusCode:'.$code;
 
             $sources[] = [
                 'key' => $key,
-                'label' => $method,
-                'criteria' => ['method' => $code],
+                'label' => $statusCode,
+                'criteria' => ['statusCode' => $code],
                 'structureEditable' => true,
                 'defaultSort' => ['count', 'desc'],
             ];
@@ -223,15 +223,15 @@ class Redirect extends Element
             'label' => Craft::t('sprout', 'Edit Redirect'),
         ]);
 
-        // Change Permanent Method
+        // Change Permanent Status Code
         $actions[] = Craft::$app->getElements()->createAction([
-            'type' => ChangePermanentMethod::class,
+            'type' => ChangePermanentStatusCode::class,
             'successMessage' => Craft::t('sprout', 'Redirects updated.'),
         ]);
 
-        // Change Temporary Method
+        // Change Temporary Status Code
         $actions[] = Craft::$app->getElements()->createAction([
-            'type' => ChangeTemporaryMethod::class,
+            'type' => ChangeTemporaryStatusCode::class,
             'successMessage' => Craft::t('sprout', 'Redirects updated.'),
         ]);
 
@@ -242,7 +242,7 @@ class Redirect extends Element
             'successMessage' => Craft::t('sprout', 'Redirects deleted.'),
         ]);
 
-        if ($source === 'method:404') {
+        if ($source === 'statusCode:404') {
             $actions[] = Craft::$app->getElements()->createAction([
                 'type' => ExcludeUrl::class,
                 'successMessage' => Craft::t('sprout', 'Added to Excluded URL Patterns setting.'),
@@ -317,11 +317,11 @@ class Redirect extends Element
      */
     public function getEditorHtml(): string
     {
-        $methodOptions = SproutBase::$app->redirects->getMethods();
+        $statusCodeOptions = SproutBase::$app->redirects->getStatusCodes();
 
         $html = Craft::$app->view->renderTemplate('sprout/redirects/redirects/_editor', [
             'redirect' => $this,
-            'methodOptions' => $methodOptions,
+            'statusCodeOptions' => $statusCodeOptions,
         ]);
 
         // Everything else
@@ -388,7 +388,7 @@ class Redirect extends Element
 
         $record->oldUrl = $this->oldUrl;
         $record->newUrl = $this->newUrl;
-        $record->method = $this->method;
+        $record->statusCode = $this->statusCode;
         $record->matchStrategy = $this->matchStrategy;
         $record->count = $this->count;
         $record->lastRemoteIpAddress = $settings->trackRemoteIp ? $this->lastRemoteIpAddress : null;
@@ -412,10 +412,10 @@ class Redirect extends Element
      *
      * @param $attribute
      */
-    public function validateMethod($attribute)
+    public function validateStatusCode($attribute)
     {
-        if ($this->enabled && $this->$attribute == RedirectMethods::PageNotFound) {
-            $this->addError($attribute, 'Cannot enable a 404 Redirect. Update Redirect method.');
+        if ($this->enabled && $this->$attribute == RedirectStatusCodes::PageNotFound) {
+            $this->addError($attribute, 'Cannot enable a 404 Redirect. Update Redirect status code.');
         }
     }
 
@@ -428,7 +428,7 @@ class Redirect extends Element
     {
         $isPro = SproutBase::$app->config->isEdition('redirects', Config::EDITION_PRO);
 
-        if ((!$isPro) && (int)$this->method !== RedirectMethods::PageNotFound) {
+        if ((!$isPro) && (int)$this->statusCode !== RedirectStatusCodes::PageNotFound) {
 
             $count = SproutBase::$app->redirects->getTotalNon404Redirects();
 
@@ -547,8 +547,8 @@ class Redirect extends Element
         $rules = parent::defineRules();
 
         $rules[] = [['oldUrl'], 'required'];
-        $rules[] = ['method', 'validateMethod'];
-        $rules[] = ['method', 'validateEdition'];
+        $rules[] = ['statusCode', 'validateStatusCode'];
+        $rules[] = ['statusCode', 'validateEdition'];
         $rules[] = ['oldUrl', 'uniqueUrl'];
         $rules[] = ['newUrl', 'hasTrailingSlashIfAbsolute'];
 

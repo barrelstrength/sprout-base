@@ -7,14 +7,14 @@
 
 namespace barrelstrength\sproutbase\app\redirects\elements\actions;
 
-use barrelstrength\sproutbase\app\redirects\enums\RedirectMethods;
+use barrelstrength\sproutbase\app\redirects\enums\RedirectStatusCodes;
 use barrelstrength\sproutbase\SproutBase;
 use Craft;
 use craft\base\ElementAction;
 use craft\elements\db\ElementQueryInterface;
 use yii\db\Exception;
 
-class ChangeTemporaryMethod extends ElementAction
+class ChangeTemporaryStatusCode extends ElementAction
 {
     /**
      * @var string|null The confirmation message that should be shown before the elements get deleted
@@ -28,7 +28,7 @@ class ChangeTemporaryMethod extends ElementAction
 
     public function getTriggerLabel(): string
     {
-        return Craft::t('sprout', 'Update Method to 302');
+        return Craft::t('sprout', 'Update Status Code to 302');
     }
 
     public function getConfirmationMessage()
@@ -52,10 +52,9 @@ class ChangeTemporaryMethod extends ElementAction
             return false;
         }
 
-        // Call updateMethods service
-        $response = SproutBase::$app->redirects->updateRedirectMethod($elementIds, RedirectMethods::Temporary);
+        $response = SproutBase::$app->redirects->updateRedirectStatusCode($elementIds, RedirectStatusCodes::Temporary);
 
-        $message = SproutBase::$app->redirects->getMethodUpdateResponse($response);
+        $message = SproutBase::$app->redirects->getStatusCodeUpdateResponse($response);
 
         $this->setMessage($message);
 

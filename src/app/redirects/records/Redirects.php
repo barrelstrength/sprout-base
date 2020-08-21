@@ -16,7 +16,7 @@ use yii\db\ActiveQueryInterface;
  * @property int $id
  * @property string $oldUrl
  * @property string $newUrl
- * @property int $method
+ * @property int $statusCode
  * @property bool $matchStrategy
  * @property ActiveQueryInterface $element
  * @property int $count

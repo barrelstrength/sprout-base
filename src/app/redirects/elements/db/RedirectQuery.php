@@ -16,7 +16,7 @@ class RedirectQuery extends ElementQuery
 
     public $newUrl;
 
-    public $method;
+    public $statusCode;
 
     public $matchStrategy;
 
@@ -59,7 +59,7 @@ class RedirectQuery extends ElementQuery
             'sprout_redirects.id',
             'sprout_redirects.oldUrl',
             'sprout_redirects.newUrl',
-            'sprout_redirects.method',
+            'sprout_redirects.statusCode',
             'sprout_redirects.matchStrategy',
             'sprout_redirects.count',
             'sprout_redirects.dateLastUsed',
@@ -86,9 +86,9 @@ class RedirectQuery extends ElementQuery
             );
         }
 
-        if ($this->method) {
+        if ($this->statusCode) {
             $this->subQuery->andWhere(Db::parseParam(
-                'sprout_redirects.method', $this->method)
+                'sprout_redirects.statusCode', $this->statusCode)
             );
         }
 

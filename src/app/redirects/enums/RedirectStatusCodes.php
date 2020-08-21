@@ -7,7 +7,7 @@
 
 namespace barrelstrength\sproutbase\app\redirects\enums;
 
-abstract class RedirectMethods
+abstract class RedirectStatusCodes
 {
     const Permanent = 301;
     const Temporary = 302;

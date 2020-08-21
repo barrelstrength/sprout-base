@@ -7,14 +7,14 @@
 
 namespace barrelstrength\sproutbase\app\redirects\elements\actions;
 
-use barrelstrength\sproutbase\app\redirects\enums\RedirectMethods;
+use barrelstrength\sproutbase\app\redirects\enums\RedirectStatusCodes;
 use barrelstrength\sproutbase\SproutBase;
 use Craft;
 use craft\base\ElementAction;
 use craft\elements\db\ElementQueryInterface;
 use yii\db\Exception;
 
-class ChangePermanentMethod extends ElementAction
+class ChangePermanentStatusCode extends ElementAction
 {
     /**
      * @var string|null The confirmation message that should be shown before the elements get deleted
@@ -31,7 +31,7 @@ class ChangePermanentMethod extends ElementAction
      */
     public function getTriggerLabel(): string
     {
-        return Craft::t('sprout', 'Update Method to 301');
+        return Craft::t('sprout', 'Update Status Code to 301');
     }
 
     /**
@@ -59,9 +59,9 @@ class ChangePermanentMethod extends ElementAction
             return false;
         }
 
-        $response = SproutBase::$app->redirects->updateRedirectMethod($elementIds, RedirectMethods::Permanent);
+        $response = SproutBase::$app->redirects->updateRedirectStatusCode($elementIds, RedirectStatusCodes::Permanent);
 
-        $message = SproutBase::$app->redirects->getMethodUpdateResponse($response);
+        $message = SproutBase::$app->redirects->getStatusCodeUpdateResponse($response);
 
         $this->setMessage($message);
 

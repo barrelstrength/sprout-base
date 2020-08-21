@@ -81,7 +81,7 @@ class RedirectsController extends Controller
             throw new ForbiddenHttpException('Unable to identify current site.');
         }
 
-        $methodOptions = SproutBase::$app->redirects->getMethods();
+        $statusCodeOptions = SproutBase::$app->redirects->getStatusCodes();
 
         // Now let's set up the actual redirect
         if ($redirect === null) {
@@ -130,7 +130,7 @@ class RedirectsController extends Controller
         return $this->renderTemplate('sprout/redirects/redirects/_edit', [
             'currentSite' => $currentSite,
             'redirect' => $redirect,
-            'methodOptions' => $methodOptions,
+            'statusCodeOptions' => $statusCodeOptions,
             'crumbs' => $crumbs,
             'tabs' => $tabs,
             'continueEditingUrl' => $continueEditingUrl,
@@ -179,7 +179,7 @@ class RedirectsController extends Controller
         $redirect->siteId = $siteId ?? $defaultSiteId;
         $redirect->oldUrl = $oldUrl;
         $redirect->newUrl = $newUrl;
-        $redirect->method = Craft::$app->getRequest()->getRequiredBodyParam('method');
+        $redirect->statusCode = Craft::$app->getRequest()->getRequiredBodyParam('statusCode');
         $redirect->matchStrategy = Craft::$app->getRequest()->getBodyParam('matchStrategy', 'exactMatch');
 
         $redirect->enabled = Craft::$app->getRequest()->getBodyParam('enabled');

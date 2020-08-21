@@ -24,7 +24,7 @@ class RedirectsInstall extends Migration
                 'id' => $this->primaryKey(),
                 'oldUrl' => $this->string()->notNull(),
                 'newUrl' => $this->string(),
-                'method' => $this->integer(),
+                'statusCode' => $this->integer(),
                 'matchStrategy' => $this->string()->defaultValue('exactMatch'),
                 'count' => $this->integer()->defaultValue(0),
                 'lastRemoteIpAddress' => $this->string(),

@@ -8,7 +8,7 @@
 namespace barrelstrength\sproutbase\app\redirects\services;
 
 use barrelstrength\sproutbase\app\redirects\elements\Redirect;
-use barrelstrength\sproutbase\app\redirects\enums\RedirectMethods;
+use barrelstrength\sproutbase\app\redirects\enums\RedirectStatusCodes;
 use barrelstrength\sproutbase\app\redirects\records\Redirects as RedirectRecord;
 use barrelstrength\sproutbase\config\base\Config;
 use barrelstrength\sproutbase\config\models\settings\RedirectsSettings;
@@ -141,14 +141,14 @@ class Redirects extends Component
             $queryString = '?'.$request->getQueryStringWithoutPath();
         }
 
-        if ($redirect->enabled && (int)$redirect->method !== 404) {
+        if ($redirect->enabled && (int)$redirect->statusCode !== 404) {
             if (UrlHelper::isAbsoluteUrl($redirect->newUrl)) {
                 Craft::$app->getResponse()->redirect(
-                    $redirect->newUrl.$queryString, $redirect->method
+                    $redirect->newUrl.$queryString, $redirect->statusCode
                 );
             } else {
                 Craft::$app->getResponse()->redirect(
-                    $redirect->getAbsoluteNewUrl().$queryString, $redirect->method
+                    $redirect->getAbsoluteNewUrl().$queryString, $redirect->statusCode
                 );
             }
             Craft::$app->end();
@@ -175,7 +175,7 @@ class Redirects extends Component
                 'redirects.id',
                 'redirects.oldUrl',
                 'redirects.newUrl',
-                'redirects.method',
+                'redirects.statusCode',
                 'redirects.matchStrategy',
                 'redirects.count',
                 'elements.enabled',
@@ -200,7 +200,7 @@ class Redirects extends Component
         $pageNotFoundRedirects = [];
 
         foreach ($allRedirects as $redirect) {
-            if ($redirect['method'] === '404') {
+            if ($redirect['statusCode'] === '404') {
                 $pageNotFoundRedirects[] = $redirect;
             } else {
                 $redirects[] = $redirect;
@@ -267,42 +267,42 @@ class Redirects extends Component
     }
 
     /**
-     * Get Redirect methods
+     * Get Redirect status codes
      *
      * @return array
      */
-    public function getMethods(): array
+    public function getStatusCodes(): array
     {
-        $methods = [
-            Craft::t('sprout', RedirectMethods::Permanent) => 'Permanent',
-            Craft::t('sprout', RedirectMethods::Temporary) => 'Temporary',
-            Craft::t('sprout', RedirectMethods::PageNotFound) => 'Page Not Found',
+        $statusCodes = [
+            Craft::t('sprout', RedirectStatusCodes::Permanent) => 'Permanent',
+            Craft::t('sprout', RedirectStatusCodes::Temporary) => 'Temporary',
+            Craft::t('sprout', RedirectStatusCodes::PageNotFound) => 'Page Not Found',
         ];
 
-        $newMethods = [];
+        $newStatusCodes = [];
 
-        foreach ($methods as $key => $value) {
+        foreach ($statusCodes as $key => $value) {
             $value = preg_replace('/([a-z])([A-Z])/', '$1 $2', $value);
-            $newMethods[$key] = $key.' - '.$value;
+            $newStatusCodes[$key] = $key.' - '.$value;
         }
 
-        return $newMethods;
+        return $newStatusCodes;
     }
 
     /**
-     * Update the current method in the record
+     * Update the current statusCode in the record
      *
      * @param $ids
-     * @param $newMethod
+     * @param $statusCode
      *
      * @return int
      * @throws \yii\db\Exception
      */
-    public function updateRedirectMethod($ids, $newMethod): int
+    public function updateRedirectStatusCode($ids, $statusCode): int
     {
         $response = Craft::$app->db->createCommand()->update(
             RedirectRecord::tableName(),
-            ['method' => $newMethod],
+            ['statusCode' => $statusCode],
             ['in', 'id', $ids]
         )->execute();
 
@@ -310,19 +310,19 @@ class Redirects extends Component
     }
 
     /**
-     * Get Method Update Response from elementaction
+     * Get Status Code Response for element action
      *
      * @param bool
      *
      * @return string
      */
-    public function getMethodUpdateResponse($status): string
+    public function getStatusCodeUpdateResponse($status): string
     {
         $response = null;
         if ($status) {
-            $response = Craft::t('sprout', 'Redirect method updated.');
+            $response = Craft::t('sprout', 'Redirect status code updated.');
         } else {
-            $response = Craft::t('sprout', 'Unable to update Redirect method.');
+            $response = Craft::t('sprout', 'Unable to update Redirect status code.');
         }
 
         return $response;
@@ -422,7 +422,7 @@ class Redirects extends Component
 
         $redirect->oldUrl = $uri;
         $redirect->newUrl = '/';
-        $redirect->method = RedirectMethods::PageNotFound;
+        $redirect->statusCode = RedirectStatusCodes::PageNotFound;
         $redirect->matchStrategy = null;
         $redirect->enabled = 0;
         $redirect->count = 0;
@@ -527,8 +527,8 @@ class Redirects extends Component
     public function getTotalNon404Redirects()
     {
         $count = Redirect::find()
-            ->where('method !=:method', [
-                ':method' => RedirectMethods::PageNotFound,
+            ->where('statusCode !=:statusCode', [
+                ':statusCode' => RedirectStatusCodes::PageNotFound,
             ])
             ->anyStatus()
             ->count();
@@ -563,7 +563,7 @@ class Redirects extends Component
         foreach ($siteIds as $currentSiteId) {
 
             $query = Redirect::find()
-                ->where(['method' => RedirectMethods::PageNotFound])
+                ->where(['statusCode' => RedirectStatusCodes::PageNotFound])
                 ->andWhere(['siteId' => $currentSiteId]);
 
             // Don't delete these Redirects

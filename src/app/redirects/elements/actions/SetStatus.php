@@ -8,7 +8,7 @@
 namespace barrelstrength\sproutbase\app\redirects\elements\actions;
 
 use barrelstrength\sproutbase\app\redirects\elements\Redirect;
-use barrelstrength\sproutbase\app\redirects\enums\RedirectMethods;
+use barrelstrength\sproutbase\app\redirects\enums\RedirectStatusCodes;
 use barrelstrength\sproutbase\app\redirects\enums\RedirectStatuses;
 use barrelstrength\sproutbase\app\redirects\validators\StatusValidator;
 use Craft;
@@ -79,8 +79,8 @@ class SetStatus extends ElementAction
             /** @var Redirect $redirect */
             $redirect = Craft::$app->getElements()->getElementById($redirectId, Redirect::class, $query->siteId);
 
-            if ((int)$redirect->method === RedirectMethods::PageNotFound) {
-                $this->setMessage(Craft::t('sprout', 'Unable to enable a 404. Update redirect method.'));
+            if ((int)$redirect->statusCode === RedirectStatusCodes::PageNotFound) {
+                $this->setMessage(Craft::t('sprout', 'Unable to enable a 404. Update redirect status code.'));
 
                 return false;
             }
