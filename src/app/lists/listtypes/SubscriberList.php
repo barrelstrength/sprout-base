@@ -112,15 +112,15 @@ class SubscriberList extends BaseSubscriberList
 
         if ($subscription->email) {
             $query->andWhere([
-                'sproutlists_subscribers.email' => $subscription->email,
+                'sprout_subscribers.email' => $subscription->email,
             ]);
         } else {
             $query->andWhere([
-                'sproutlists_subscribers.id' => $subscriberId,
+                'sprout_subscribers.id' => $subscriberId,
             ])
-                ->orWhere([
-                    'sproutlists_subscribers.userId' => $subscriberId,
-                ]);
+            ->orWhere([
+                'sprout_subscribers.userId' => $subscriberId,
+            ]);
         }
 
         /** @var Subscriber $subscriber */
@@ -187,7 +187,7 @@ class SubscriberList extends BaseSubscriberList
 
         /** @var ListElement[] $lists */
         $lists = ListElement::find()->where([
-            'sproutlists_lists.type' => __CLASS__,
+            'sprout_lists.type' => __CLASS__,
         ])->all();
 
         $options = [];

@@ -36,7 +36,7 @@ class Report extends ActiveRecord
      */
     public static function tableName(): string
     {
-        return '{{%sproutreports_reports}}';
+        return '{{%sprout_reports}}';
     }
 
     /**

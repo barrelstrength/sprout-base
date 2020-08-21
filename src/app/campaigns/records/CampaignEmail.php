@@ -31,7 +31,7 @@ class CampaignEmail extends ActiveRecord
      */
     public static function tableName(): string
     {
-        return '{{%sproutemail_campaignemails}}';
+        return '{{%sprout_campaignemails}}';
     }
 
     /**

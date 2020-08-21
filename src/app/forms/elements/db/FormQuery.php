@@ -8,10 +8,13 @@
 namespace barrelstrength\sproutbase\app\forms\elements\db;
 
 use barrelstrength\sproutbase\app\forms\models\FormGroup;
+use barrelstrength\sproutbase\app\forms\records\Entry as EntryRecord;
+use barrelstrength\sproutbase\app\forms\records\Form as FormRecord;
 use barrelstrength\sproutbase\app\forms\records\FormGroup as FormGroupRecord;
 use barrelstrength\sproutbase\config\base\Config;
 use barrelstrength\sproutbase\SproutBase;
 use craft\db\Query;
+use craft\db\Table;
 use craft\elements\db\ElementQuery;
 use craft\helpers\Db;
 
@@ -115,7 +118,7 @@ class FormQuery extends ElementQuery
     {
         // Default orderBy
         if (!isset($config['orderBy'])) {
-            $config['orderBy'] = 'sproutforms_forms.name';
+            $config['orderBy'] = 'sprout_forms.name';
         }
 
         parent::__construct($elementType, $config);
@@ -202,51 +205,60 @@ class FormQuery extends ElementQuery
             return false;
         }
 
-        $this->joinElementTable('sproutforms_forms');
+        $this->joinElementTable('sprout_forms');
 
         $this->query->select([
-            'sproutforms_forms.groupId',
-            'sproutforms_forms.id',
-            'sproutforms_forms.fieldLayoutId',
-            'sproutforms_forms.groupId',
-            'sproutforms_forms.name',
-            'sproutforms_forms.handle',
-            'sproutforms_forms.titleFormat',
-            'sproutforms_forms.displaySectionTitles',
-            'sproutforms_forms.redirectUri',
-            'sproutforms_forms.saveData',
-            'sproutforms_forms.submissionMethod',
-            'sproutforms_forms.errorDisplayMethod',
-            'sproutforms_forms.successMessage',
-            'sproutforms_forms.errorMessage',
-            'sproutforms_forms.submitButtonText',
-            'sproutforms_forms.formTemplateId',
-            'sproutforms_forms.enableCaptchas',
+            'sprout_forms.groupId',
+            'sprout_forms.id',
+            'sprout_forms.fieldLayoutId',
+            'sprout_forms.groupId',
+            'sprout_forms.name',
+            'sprout_forms.handle',
+            'sprout_forms.titleFormat',
+            'sprout_forms.displaySectionTitles',
+            'sprout_forms.redirectUri',
+            'sprout_forms.saveData',
+            'sprout_forms.submissionMethod',
+            'sprout_forms.errorDisplayMethod',
+            'sprout_forms.successMessage',
+            'sprout_forms.errorMessage',
+            'sprout_forms.submitButtonText',
+            'sprout_forms.formTemplateId',
+            'sprout_forms.enableCaptchas',
         ]);
 
         if ($this->totalEntries) {
             $this->query->addSelect('COUNT(entries.id) totalEntries');
-            $this->query->leftJoin('sproutforms_entries entries', '[[entries.formId]] = [[sproutforms_forms.id]]');
+            $this->query->leftJoin(EntryRecord::tableName().' entries', '[[entries.formId]] = [[sprout_forms.id]]');
         }
+
         if ($this->numberOfFields) {
             $this->query->addSelect('COUNT(fields.id) numberOfFields');
-            $this->query->leftJoin('fieldlayoutfields fields', '[[fields.layoutId]] = [[sproutforms_forms.fieldLayoutId]]');
+            $this->query->leftJoin(Table::FIELDLAYOUTFIELDS.' fields', '[[fields.layoutId]] = [[sprout_forms.fieldLayoutId]]');
         }
 
         if ($this->fieldLayoutId) {
-            $this->subQuery->andWhere(Db::parseParam('sproutforms_forms.fieldLayoutId', $this->fieldLayoutId));
+            $this->subQuery->andWhere(Db::parseParam(
+                'sprout_forms.fieldLayoutId', $this->fieldLayoutId
+            ));
         }
 
         if ($this->groupId) {
-            $this->subQuery->andWhere(Db::parseParam('sproutforms_forms.groupId', $this->groupId));
+            $this->subQuery->andWhere(Db::parseParam(
+                'sprout_forms.groupId', $this->groupId
+            ));
         }
 
         if ($this->handle) {
-            $this->subQuery->andWhere(Db::parseParam('sproutforms_forms.handle', $this->handle));
+            $this->subQuery->andWhere(Db::parseParam(
+                'sprout_forms.handle', $this->handle
+            ));
         }
 
         if ($this->name) {
-            $this->subQuery->andWhere(Db::parseParam('sproutforms_forms.name', $this->name));
+            $this->subQuery->andWhere(Db::parseParam(
+                'sprout_forms.name', $this->name
+            ));
         }
 
         $isPro = SproutBase::$app->config->isEdition('forms', Config::EDITION_PRO);

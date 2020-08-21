@@ -33,7 +33,7 @@ class ListElement extends ActiveRecord
      */
     public static function tableName(): string
     {
-        return '{{%sproutlists_lists}}';
+        return '{{%sprout_lists}}';
     }
 
     /**

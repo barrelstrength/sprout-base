@@ -7,6 +7,7 @@
 
 namespace barrelstrength\sproutbase\app\lists\elements\db;
 
+use barrelstrength\sproutbase\app\lists\records\ListElement as ListElementRecord;
 use craft\elements\db\ElementQuery;
 use craft\helpers\Db;
 
@@ -84,27 +85,33 @@ class ListElementQuery extends ElementQuery
      */
     protected function beforePrepare(): bool
     {
-        $this->joinElementTable('sproutlists_lists');
+        $this->joinElementTable('sprout_lists');
 
         $this->query->select([
-            'sproutlists_lists.elementId',
-            'sproutlists_lists.type',
-            'sproutlists_lists.name',
-            'sproutlists_lists.handle',
-            'sproutlists_lists.count',
+            'sprout_lists.elementId',
+            'sprout_lists.type',
+            'sprout_lists.name',
+            'sprout_lists.handle',
+            'sprout_lists.count',
         ]);
 
         if ($this->type) {
             $listClass = new $this->type();
-            $this->subQuery->andWhere(['sproutlists_lists.type' => get_class($listClass)]);
+            $this->subQuery->andWhere([
+                'sprout_lists.type' => get_class($listClass)
+            ]);
         }
 
         if ($this->elementId) {
-            $this->subQuery->andWhere(Db::parseParam('sproutlists_lists.elementId', $this->elementId));
+            $this->subQuery->andWhere(Db::parseParam(
+                'sprout_lists.elementId', $this->elementId
+            ));
         }
 
         if ($this->handle) {
-            $this->subQuery->andWhere(Db::parseParam('sproutlists_lists.handle', $this->handle));
+            $this->subQuery->andWhere(Db::parseParam(
+                'sprout_lists.handle', $this->handle
+            ));
         }
 
         return parent::beforePrepare();

@@ -23,7 +23,7 @@ class ReportGroup extends ActiveRecord
      */
     public static function tableName(): string
     {
-        return '{{%sproutreports_reportgroups}}';
+        return '{{%sprout_reportgroups}}';
     }
 
     public function getReports(): ActiveQuery

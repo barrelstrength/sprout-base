@@ -7,6 +7,7 @@
 
 namespace barrelstrength\sproutbase\app\lists\elements\db;
 
+use barrelstrength\sproutbase\app\lists\records\Subscriber as SubscriberRecord;
 use barrelstrength\sproutbase\app\lists\records\Subscription as SubscriptionRecord;
 use craft\db\Query;
 use craft\elements\db\ElementQuery;
@@ -58,15 +59,15 @@ class SubscriberQuery extends ElementQuery
      */
     protected function beforePrepare(): bool
     {
-        $this->joinElementTable('sproutlists_subscribers');
+        $this->joinElementTable('sprout_subscribers');
 
         $this->query->select([
-            'sproutlists_subscribers.userId',
-            'sproutlists_subscribers.email',
-            'sproutlists_subscribers.firstName',
-            'sproutlists_subscribers.lastName',
-            'sproutlists_subscribers.dateCreated',
-            'sproutlists_subscribers.dateUpdated',
+            'sprout_subscribers.userId',
+            'sprout_subscribers.email',
+            'sprout_subscribers.firstName',
+            'sprout_subscribers.lastName',
+            'sprout_subscribers.dateCreated',
+            'sprout_subscribers.dateUpdated',
         ]);
 
         if ($this->listId) {
@@ -79,13 +80,15 @@ class SubscriberQuery extends ElementQuery
             // Only return subscribers that match this query
             $this->subQuery->andWhere([
                 'in',
-                'sproutlists_subscribers.id',
+                'sprout_subscribers.id',
                 array_unique($subscriberIds, SORT_REGULAR),
             ]);
         }
 
         if ($this->email) {
-            $this->subQuery->andWhere(Db::parseParam('sproutlists_subscribers.email', $this->email, '=', true));
+            $this->subQuery->andWhere(Db::parseParam(
+                'sprout_subscribers.email', $this->email, '=', true
+            ));
         }
 
         return parent::beforePrepare();

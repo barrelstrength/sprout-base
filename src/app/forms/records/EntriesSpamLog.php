@@ -17,6 +17,6 @@ class EntriesSpamLog extends ActiveRecord
 {
     public static function tableName(): string
     {
-        return '{{%sproutforms_entries_spam_log}}';
+        return '{{%sprout_formentries_spam_log}}';
     }
 }

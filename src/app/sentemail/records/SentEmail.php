@@ -33,7 +33,7 @@ class SentEmail extends ActiveRecord
      */
     public static function tableName(): string
     {
-        return '{{%sproutemail_sentemail}}';
+        return '{{%sprout_sentemail}}';
     }
 
     /**

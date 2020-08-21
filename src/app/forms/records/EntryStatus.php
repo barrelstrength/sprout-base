@@ -29,6 +29,6 @@ class EntryStatus extends ActiveRecord
      */
     public static function tableName(): string
     {
-        return '{{%sproutforms_entrystatuses}}';
+        return '{{%sprout_formentries_statuses}}';
     }
 }

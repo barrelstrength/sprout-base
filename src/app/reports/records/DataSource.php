@@ -20,6 +20,6 @@ class DataSource extends ActiveRecord
      */
     public static function tableName(): string
     {
-        return '{{%sproutreports_datasources}}';
+        return '{{%sprout_datasources}}';
     }
 }

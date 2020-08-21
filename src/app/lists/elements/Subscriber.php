@@ -126,7 +126,7 @@ class Subscriber extends Element implements SubscriberInterface
         /** @var ListElement[] $lists */
         $lists = ListElement::find()
             ->where([
-                'sproutlists_lists.type' => SubscriberList::class,
+                'sprout_lists.type' => SubscriberList::class,
             ])->all();
 
         if (!empty($lists)) {

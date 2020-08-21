@@ -63,7 +63,7 @@ class EntryQuery extends ElementQuery
     {
         // Default orderBy
         if (!isset($config['orderBy'])) {
-            $config['orderBy'] = 'sproutforms_entries.id';
+            $config['orderBy'] = 'sprout_formentries.id';
         }
 
         parent::__construct($elementType, $config);
@@ -132,7 +132,7 @@ class EntryQuery extends ElementQuery
 
     protected function beforePrepare(): bool
     {
-        $this->joinElementTable('sproutforms_entries');
+        $this->joinElementTable('sprout_formentries');
 
         // Figure out which content table to use
         $this->contentTable = null;
@@ -158,56 +158,56 @@ class EntryQuery extends ElementQuery
         }
 
         $this->query->select([
-            'sproutforms_entries.statusId',
-            'sproutforms_entries.formId',
-            'sproutforms_entries.ipAddress',
-            'sproutforms_entries.userAgent',
-            'sproutforms_entries.dateCreated',
-            'sproutforms_entries.dateUpdated',
-            'sproutforms_entries.uid',
-            'sproutforms_forms.name as formName',
-            'sproutforms_forms.handle as formHandle',
-            'sproutforms_forms.groupId as formGroupId',
-            'sproutforms_entrystatuses.handle as statusHandle',
+            'sprout_formentries.statusId',
+            'sprout_formentries.formId',
+            'sprout_formentries.ipAddress',
+            'sprout_formentries.userAgent',
+            'sprout_formentries.dateCreated',
+            'sprout_formentries.dateUpdated',
+            'sprout_formentries.uid',
+            'sprout_forms.name as formName',
+            'sprout_forms.handle as formHandle',
+            'sprout_forms.groupId as formGroupId',
+            'sprout_formentries_statuses.handle as statusHandle',
         ]);
 
-        $this->query->innerJoin(FormRecord::tableName().' sproutforms_forms', '[[sproutforms_forms.id]] = [[sproutforms_entries.formId]]');
-        $this->query->innerJoin(EntryStatusRecord::tableName().' sproutforms_entrystatuses', '[[sproutforms_entrystatuses.id]] = [[sproutforms_entries.statusId]]');
+        $this->query->innerJoin(FormRecord::tableName().' sprout_forms', '[[sprout_forms.id]] = [[sprout_formentries.formId]]');
+        $this->query->innerJoin(EntryStatusRecord::tableName().' sprout_formentries_statuses', '[[sprout_formentries_statuses.id]] = [[sprout_formentries.statusId]]');
 
         $this->query->andWhere(Db::parseParam(
-            '[[sproutforms_forms.saveData]]', true
+            '[[sprout_forms.saveData]]', true
         ));
 
-        $this->subQuery->innerJoin(FormRecord::tableName().' sproutforms_forms', '[[sproutforms_forms.id]] = [[sproutforms_entries.formId]]');
-        $this->subQuery->innerJoin(EntryStatusRecord::tableName().' sproutforms_entrystatuses', '[[sproutforms_entrystatuses.id]] = [[sproutforms_entries.statusId]]');
+        $this->subQuery->innerJoin(FormRecord::tableName().' sprout_forms', '[[sprout_forms.id]] = [[sprout_formentries.formId]]');
+        $this->subQuery->innerJoin(EntryStatusRecord::tableName().' sprout_formentries_statuses', '[[sprout_formentries_statuses.id]] = [[sprout_formentries.statusId]]');
 
         if ($this->formId) {
             $this->subQuery->andWhere(Db::parseParam(
-                'sproutforms_entries.formId', $this->formId
+                'sprout_formentries.formId', $this->formId
             ));
         }
 
         if ($this->id) {
             $this->subQuery->andWhere(Db::parseParam(
-                'sproutforms_entries.id', $this->id
+                'sprout_formentries.id', $this->id
             ));
         }
 
         if ($this->formHandle) {
             $this->query->andWhere(Db::parseParam(
-                'sproutforms_forms.handle', $this->formHandle
+                'sprout_forms.handle', $this->formHandle
             ));
         }
 
         if ($this->formName) {
             $this->query->andWhere(Db::parseParam(
-                'sproutforms_forms.name', $this->formName
+                'sprout_forms.name', $this->formName
             ));
         }
 
         if ($this->statusId) {
             $this->subQuery->andWhere(Db::parseParam(
-                'sproutforms_entries.statusId', $this->statusId
+                'sprout_formentries.statusId', $this->statusId
             ));
         }
 
@@ -221,7 +221,7 @@ class EntryQuery extends ElementQuery
 
         if ($this->excludeSpam) {
             $this->subQuery->andWhere(Db::parseParam(
-                'sproutforms_entries.statusId', $spamStatusId, '!='
+                'sprout_formentries.statusId', $spamStatusId, '!='
             ));
         }
 
@@ -234,7 +234,7 @@ class EntryQuery extends ElementQuery
      */
     protected function statusCondition(string $status)
     {
-        return Db::parseParam('sproutforms_entrystatuses.handle', $status);
+        return Db::parseParam('sprout_formentries_statuses.handle', $status);
     }
 
     /**

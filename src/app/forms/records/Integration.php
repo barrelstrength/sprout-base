@@ -24,6 +24,6 @@ class Integration extends ActiveRecord
 {
     public static function tableName(): string
     {
-        return '{{%sproutforms_integrations}}';
+        return '{{%sprout_forms_integrations}}';
     }
 }

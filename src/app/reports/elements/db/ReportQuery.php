@@ -8,6 +8,7 @@
 namespace barrelstrength\sproutbase\app\reports\elements\db;
 
 use barrelstrength\sproutbase\app\reports\records\DataSource as DataSourceRecord;
+use barrelstrength\sproutbase\app\reports\records\Report as ReportRecord;
 use barrelstrength\sproutbase\config\base\Config;
 use barrelstrength\sproutbase\SproutBase;
 use craft\db\Query;
@@ -57,42 +58,42 @@ class ReportQuery extends ElementQuery
      */
     protected function beforePrepare(): bool
     {
-        $this->joinElementTable('sproutreports_reports');
+        $this->joinElementTable('sprout_reports');
 
         $this->query->select([
-            'sproutreports_reports.dataSourceId',
-            'sproutreports_reports.name',
-            'sproutreports_reports.hasNameFormat',
-            'sproutreports_reports.nameFormat',
-            'sproutreports_reports.handle',
-            'sproutreports_reports.description',
-            'sproutreports_reports.allowHtml',
-            'sproutreports_reports.sortOrder',
-            'sproutreports_reports.sortColumn',
-            'sproutreports_reports.delimiter',
-            'sproutreports_reports.emailColumn',
-            'sproutreports_reports.settings',
-            'sproutreports_reports.groupId',
-            'sproutreports_reports.enabled',
+            'sprout_reports.dataSourceId',
+            'sprout_reports.name',
+            'sprout_reports.hasNameFormat',
+            'sprout_reports.nameFormat',
+            'sprout_reports.handle',
+            'sprout_reports.description',
+            'sprout_reports.allowHtml',
+            'sprout_reports.sortOrder',
+            'sprout_reports.sortColumn',
+            'sprout_reports.delimiter',
+            'sprout_reports.emailColumn',
+            'sprout_reports.settings',
+            'sprout_reports.groupId',
+            'sprout_reports.enabled',
         ]);
 
-        $this->query->innerJoin(DataSourceRecord::tableName().' sproutreports_datasources', '[[sproutreports_datasources.id]] = [[sproutreports_reports.dataSourceId]]');
+        $this->query->innerJoin(DataSourceRecord::tableName().' sprout_datasources', '[[sprout_datasources.id]] = [[sprout_reports.dataSourceId]]');
 
         if ($this->groupId) {
             $this->query->andWhere(Db::parseParam(
-                '[[sproutreports_reports.groupId]]', $this->groupId)
+                '[[sprout_reports.groupId]]', $this->groupId)
             );
         }
 
         if ($this->emailColumn) {
             $this->query->andWhere(Db::parseParam(
-                '[[sproutreports_reports.emailColumn]]', $this->emailColumn
+                '[[sprout_reports.emailColumn]]', $this->emailColumn
             ));
         }
 
         if ($this->dataSourceId) {
             $this->query->andWhere(Db::parseParam(
-                '[[sproutreports_reports.dataSourceId]]', $this->dataSourceId)
+                '[[sprout_reports.dataSourceId]]', $this->dataSourceId)
             );
         }
 
@@ -111,13 +112,13 @@ class ReportQuery extends ElementQuery
 
             // Restrict the query to Data Sources from enabled modules
             $dataSourceIdsCondition = [
-                'in', '[[sproutreports_reports.dataSourceId]]', $allowedDataSourceIds,
+                'in', '[[sprout_reports.dataSourceId]]', $allowedDataSourceIds,
             ];
             $this->query->andWhere($dataSourceIdsCondition);
 
             $totalAdditional = (new Query())
                 ->select('*')
-                ->from('{{%sproutreports_reports}}')
+                ->from(ReportRecord::tableName())
                 ->where([
                     'not', Db::parseParam('[[dataSourceId]]', $defaultDataSourceIds),
                 ])

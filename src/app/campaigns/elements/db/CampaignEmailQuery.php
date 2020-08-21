@@ -2,6 +2,7 @@
 
 namespace barrelstrength\sproutbase\app\campaigns\elements\db;
 
+use barrelstrength\sproutbase\app\campaigns\records\CampaignEmail as CampaignEmailRecord;
 use craft\elements\db\ElementQuery;
 use craft\helpers\Db;
 
@@ -13,27 +14,29 @@ class CampaignEmailQuery extends ElementQuery
 
     protected function beforePrepare(): bool
     {
-        $this->joinElementTable('sproutemail_campaignemails');
+        $this->joinElementTable('sprout_campaignemails');
 
         $this->query->select([
-            'sproutemail_campaignemails.subjectLine',
-            'sproutemail_campaignemails.campaignTypeId',
-            'sproutemail_campaignemails.recipients',
-            'sproutemail_campaignemails.emailSettings',
-            'sproutemail_campaignemails.defaultBody',
-            'sproutemail_campaignemails.listSettings',
-            'sproutemail_campaignemails.fromName',
-            'sproutemail_campaignemails.fromEmail',
-            'sproutemail_campaignemails.replyToEmail',
-            'sproutemail_campaignemails.enableFileAttachments',
-            'sproutemail_campaignemails.dateScheduled',
-            'sproutemail_campaignemails.dateSent',
-            'sproutemail_campaignemails.dateCreated',
-            'sproutemail_campaignemails.dateUpdated',
+            'sprout_campaignemails.subjectLine',
+            'sprout_campaignemails.campaignTypeId',
+            'sprout_campaignemails.recipients',
+            'sprout_campaignemails.emailSettings',
+            'sprout_campaignemails.defaultBody',
+            'sprout_campaignemails.listSettings',
+            'sprout_campaignemails.fromName',
+            'sprout_campaignemails.fromEmail',
+            'sprout_campaignemails.replyToEmail',
+            'sprout_campaignemails.enableFileAttachments',
+            'sprout_campaignemails.dateScheduled',
+            'sprout_campaignemails.dateSent',
+            'sprout_campaignemails.dateCreated',
+            'sprout_campaignemails.dateUpdated',
         ]);
 
         if ($this->campaignTypeId) {
-            $this->subQuery->andWhere(Db::parseParam('sproutemail_campaignemails.campaignTypeId', $this->campaignTypeId));
+            $this->subQuery->andWhere(Db::parseParam(
+                'sprout_campaignemails.campaignTypeId', $this->campaignTypeId
+            ));
         }
 
         return parent::beforePrepare();

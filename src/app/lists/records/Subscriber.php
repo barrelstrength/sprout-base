@@ -32,7 +32,7 @@ class Subscriber extends ActiveRecord
      */
     public static function tableName(): string
     {
-        return '{{%sproutlists_subscribers}}';
+        return '{{%sprout_subscribers}}';
     }
 
     /**

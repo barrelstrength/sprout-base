@@ -26,6 +26,6 @@ class Rules extends ActiveRecord
 {
     public static function tableName(): string
     {
-        return '{{%sproutforms_rules}}';
+        return '{{%sprout_forms_rules}}';
     }
 }

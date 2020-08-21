@@ -22,7 +22,7 @@ class FormGroup extends ActiveRecord
      */
     public static function tableName(): string
     {
-        return '{{%sproutforms_formgroups}}';
+        return '{{%sprout_formgroups}}';
     }
 
 }

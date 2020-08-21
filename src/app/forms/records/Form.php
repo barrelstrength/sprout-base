@@ -43,7 +43,7 @@ class Form extends ActiveRecord
 
     public static function tableName(): string
     {
-        return '{{%sproutforms_forms}}';
+        return '{{%sprout_forms}}';
     }
 
     /**

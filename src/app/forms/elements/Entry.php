@@ -281,9 +281,9 @@ class Entry extends Element
     protected static function defineSortOptions(): array
     {
         $attributes = [
-            'sproutforms_forms.name' => Craft::t('sprout', 'Form Name'),
-            'sproutforms_entries.dateCreated' => Craft::t('sprout', 'Date Created'),
-            'sproutforms_entries.dateUpdated' => Craft::t('sprout', 'Date Updated'),
+            'sprout_forms.name' => Craft::t('sprout', 'Form Name'),
+            'sprout_formentries.dateCreated' => Craft::t('sprout', 'Date Created'),
+            'sprout_formentries.dateUpdated' => Craft::t('sprout', 'Date Updated'),
         ];
 
         return $attributes;

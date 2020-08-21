@@ -160,12 +160,12 @@ trait ListTrait
     {
         $query = ListElement::find()
             ->where([
-                'sproutlists_lists.type' => $subscription->listType,
+                'sprout_lists.type' => $subscription->listType,
             ]);
 
         if ($subscription->listId) {
             $query->andWhere([
-                'sproutlists_lists.id' => $subscription->listId,
+                'sprout_lists.id' => $subscription->listId,
             ]);
 
             /** @noinspection PhpIncompatibleReturnTypeInspection */
@@ -175,15 +175,15 @@ trait ListTrait
         if ($subscription->elementId && $subscription->listHandle) {
             $query->andWhere([
                 'and',
-                ['sproutlists_lists.elementId' => $subscription->elementId],
-                ['sproutlists_lists.handle' => $subscription->listHandle],
+                ['sprout_lists.elementId' => $subscription->elementId],
+                ['sprout_lists.handle' => $subscription->listHandle],
             ]);
         } else {
             // Give the user what we can, but this result may not be unique in all cases
             $query->andWhere([
                 'or',
-                ['sproutlists_lists.elementId' => $subscription->elementId],
-                ['sproutlists_lists.handle' => $subscription->listHandle],
+                ['sprout_lists.elementId' => $subscription->elementId],
+                ['sprout_lists.handle' => $subscription->listHandle],
             ]);
         }
 
@@ -200,7 +200,7 @@ trait ListTrait
     {
         return ListElement::find()
             ->where([
-                'sproutlists_lists.type' => get_class($this),
+                'sprout_lists.type' => get_class($this),
             ])->all();
     }
 

@@ -23,6 +23,6 @@ class IntegrationLog extends ActiveRecord
 {
     public static function tableName(): string
     {
-        return '{{%sproutforms_integrations_log}}';
+        return '{{%sprout_forms_integrations_log}}';
     }
 }

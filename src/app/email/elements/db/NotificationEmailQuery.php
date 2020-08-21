@@ -2,6 +2,7 @@
 
 namespace barrelstrength\sproutbase\app\email\elements\db;
 
+use barrelstrength\sproutbase\app\email\records\NotificationEmail as NotificationEmailRecord;
 use craft\base\Element;
 use craft\elements\db\ElementQuery;
 
@@ -12,28 +13,28 @@ class NotificationEmailQuery extends ElementQuery
      */
     protected function beforePrepare(): bool
     {
-        $this->joinElementTable('sproutemail_notificationemails');
+        $this->joinElementTable('sprout_notificationemails');
 
         $this->query->select([
-            'sproutemail_notificationemails.titleFormat',
-            'sproutemail_notificationemails.emailTemplateId',
-            'sproutemail_notificationemails.eventId',
-            'sproutemail_notificationemails.settings',
-            'sproutemail_notificationemails.sendRule',
-            'sproutemail_notificationemails.subjectLine',
-            'sproutemail_notificationemails.defaultBody',
-            'sproutemail_notificationemails.sendMethod',
-            'sproutemail_notificationemails.recipients',
-            'sproutemail_notificationemails.cc',
-            'sproutemail_notificationemails.bcc',
-            'sproutemail_notificationemails.listSettings',
-            'sproutemail_notificationemails.fromName',
-            'sproutemail_notificationemails.fromEmail',
-            'sproutemail_notificationemails.replyToEmail',
-            'sproutemail_notificationemails.enableFileAttachments',
-            'sproutemail_notificationemails.dateCreated',
-            'sproutemail_notificationemails.dateUpdated',
-            'sproutemail_notificationemails.fieldLayoutId',
+            'sprout_notificationemails.titleFormat',
+            'sprout_notificationemails.emailTemplateId',
+            'sprout_notificationemails.eventId',
+            'sprout_notificationemails.settings',
+            'sprout_notificationemails.sendRule',
+            'sprout_notificationemails.subjectLine',
+            'sprout_notificationemails.defaultBody',
+            'sprout_notificationemails.sendMethod',
+            'sprout_notificationemails.recipients',
+            'sprout_notificationemails.cc',
+            'sprout_notificationemails.bcc',
+            'sprout_notificationemails.listSettings',
+            'sprout_notificationemails.fromName',
+            'sprout_notificationemails.fromEmail',
+            'sprout_notificationemails.replyToEmail',
+            'sprout_notificationemails.enableFileAttachments',
+            'sprout_notificationemails.dateCreated',
+            'sprout_notificationemails.dateUpdated',
+            'sprout_notificationemails.fieldLayoutId',
         ]);
 
         return parent::beforePrepare();

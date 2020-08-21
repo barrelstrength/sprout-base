@@ -296,7 +296,9 @@ class SentEmails extends Component
         $ids = SentEmail::find()
             ->limit(null)
             ->offset($sentEmailsLimit)
-            ->orderBy(['sproutemail_sentemail.dateCreated' => SORT_DESC])
+            ->orderBy([
+                'sprout_sentemail.dateCreated' => SORT_DESC
+            ])
             ->anyStatus()
             ->siteId(Craft::$app->getSites()->getCurrentSite()->id)
             ->ids();
