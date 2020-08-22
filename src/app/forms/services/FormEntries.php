@@ -244,7 +244,7 @@ class FormEntries extends Component
             ->limit(null)
             ->offset($spamLimit)
             ->status(EntryStatus::SPAM_STATUS_HANDLE)
-            ->orderBy(['sprout_formentries.dateCreated' => SORT_DESC])
+            ->orderBy(['sprout_form_entries.dateCreated' => SORT_DESC])
             ->ids();
 
         $purgeElements = new PurgeElements();

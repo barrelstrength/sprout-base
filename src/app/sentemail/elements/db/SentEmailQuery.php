@@ -13,26 +13,26 @@ use craft\elements\db\ElementQuery;
 class SentEmailQuery extends ElementQuery
 {
     protected $defaultOrderBy = [
-        'sprout_sentemail.dateCreated' => SORT_DESC,
+        'sprout_sent_emails.dateCreated' => SORT_DESC,
     ];
 
     protected function beforePrepare(): bool
     {
-        $this->joinElementTable('sprout_sentemail');
+        $this->joinElementTable('sprout_sent_emails');
 
         $this->query->select([
-            'sprout_sentemail.id',
-            'sprout_sentemail.title',
-            'sprout_sentemail.emailSubject',
-            'sprout_sentemail.fromEmail',
-            'sprout_sentemail.fromName',
-            'sprout_sentemail.toEmail',
-            'sprout_sentemail.body',
-            'sprout_sentemail.htmlBody',
-            'sprout_sentemail.info',
-            'sprout_sentemail.status',
-            'sprout_sentemail.dateCreated',
-            'sprout_sentemail.dateUpdated',
+            'sprout_sent_emails.id',
+            'sprout_sent_emails.title',
+            'sprout_sent_emails.emailSubject',
+            'sprout_sent_emails.fromEmail',
+            'sprout_sent_emails.fromName',
+            'sprout_sent_emails.toEmail',
+            'sprout_sent_emails.body',
+            'sprout_sent_emails.htmlBody',
+            'sprout_sent_emails.info',
+            'sprout_sent_emails.status',
+            'sprout_sent_emails.dateCreated',
+            'sprout_sent_emails.dateUpdated',
         ]);
 
         return parent::beforePrepare();

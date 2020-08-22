@@ -40,7 +40,7 @@ class CampaignType extends ActiveRecord
      */
     public static function tableName(): string
     {
-        return '{{%sprout_campaigntypes}}';
+        return '{{%sprout_campaign_types}}';
     }
 
     /**

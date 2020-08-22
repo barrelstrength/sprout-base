@@ -17,7 +17,7 @@ class NotificationEmail extends ActiveRecord
      */
     public static function tableName(): string
     {
-        return '{{%sprout_notificationemails}}';
+        return '{{%sprout_notification_emails}}';
     }
 
     /**

@@ -63,7 +63,7 @@ class EntryQuery extends ElementQuery
     {
         // Default orderBy
         if (!isset($config['orderBy'])) {
-            $config['orderBy'] = 'sprout_formentries.id';
+            $config['orderBy'] = 'sprout_form_entries.id';
         }
 
         parent::__construct($elementType, $config);
@@ -132,7 +132,7 @@ class EntryQuery extends ElementQuery
 
     protected function beforePrepare(): bool
     {
-        $this->joinElementTable('sprout_formentries');
+        $this->joinElementTable('sprout_form_entries');
 
         // Figure out which content table to use
         $this->contentTable = null;
@@ -158,38 +158,38 @@ class EntryQuery extends ElementQuery
         }
 
         $this->query->select([
-            'sprout_formentries.statusId',
-            'sprout_formentries.formId',
-            'sprout_formentries.ipAddress',
-            'sprout_formentries.userAgent',
-            'sprout_formentries.dateCreated',
-            'sprout_formentries.dateUpdated',
-            'sprout_formentries.uid',
+            'sprout_form_entries.statusId',
+            'sprout_form_entries.formId',
+            'sprout_form_entries.ipAddress',
+            'sprout_form_entries.userAgent',
+            'sprout_form_entries.dateCreated',
+            'sprout_form_entries.dateUpdated',
+            'sprout_form_entries.uid',
             'sprout_forms.name as formName',
             'sprout_forms.handle as formHandle',
             'sprout_forms.groupId as formGroupId',
-            'sprout_formentries_statuses.handle as statusHandle',
+            'sprout_form_entries_statuses.handle as statusHandle',
         ]);
 
-        $this->query->innerJoin(FormRecord::tableName().' sprout_forms', '[[sprout_forms.id]] = [[sprout_formentries.formId]]');
-        $this->query->innerJoin(EntryStatusRecord::tableName().' sprout_formentries_statuses', '[[sprout_formentries_statuses.id]] = [[sprout_formentries.statusId]]');
+        $this->query->innerJoin(FormRecord::tableName().' sprout_forms', '[[sprout_forms.id]] = [[sprout_form_entries.formId]]');
+        $this->query->innerJoin(EntryStatusRecord::tableName().' sprout_form_entries_statuses', '[[sprout_form_entries_statuses.id]] = [[sprout_form_entries.statusId]]');
 
         $this->query->andWhere(Db::parseParam(
             '[[sprout_forms.saveData]]', true
         ));
 
-        $this->subQuery->innerJoin(FormRecord::tableName().' sprout_forms', '[[sprout_forms.id]] = [[sprout_formentries.formId]]');
-        $this->subQuery->innerJoin(EntryStatusRecord::tableName().' sprout_formentries_statuses', '[[sprout_formentries_statuses.id]] = [[sprout_formentries.statusId]]');
+        $this->subQuery->innerJoin(FormRecord::tableName().' sprout_forms', '[[sprout_forms.id]] = [[sprout_form_entries.formId]]');
+        $this->subQuery->innerJoin(EntryStatusRecord::tableName().' sprout_form_entries_statuses', '[[sprout_form_entries_statuses.id]] = [[sprout_form_entries.statusId]]');
 
         if ($this->formId) {
             $this->subQuery->andWhere(Db::parseParam(
-                'sprout_formentries.formId', $this->formId
+                'sprout_form_entries.formId', $this->formId
             ));
         }
 
         if ($this->id) {
             $this->subQuery->andWhere(Db::parseParam(
-                'sprout_formentries.id', $this->id
+                'sprout_form_entries.id', $this->id
             ));
         }
 
@@ -207,7 +207,7 @@ class EntryQuery extends ElementQuery
 
         if ($this->statusId) {
             $this->subQuery->andWhere(Db::parseParam(
-                'sprout_formentries.statusId', $this->statusId
+                'sprout_form_entries.statusId', $this->statusId
             ));
         }
 
@@ -221,7 +221,7 @@ class EntryQuery extends ElementQuery
 
         if ($this->excludeSpam) {
             $this->subQuery->andWhere(Db::parseParam(
-                'sprout_formentries.statusId', $spamStatusId, '!='
+                'sprout_form_entries.statusId', $spamStatusId, '!='
             ));
         }
 
@@ -234,7 +234,7 @@ class EntryQuery extends ElementQuery
      */
     protected function statusCondition(string $status)
     {
-        return Db::parseParam('sprout_formentries_statuses.handle', $status);
+        return Db::parseParam('sprout_form_entries_statuses.handle', $status);
     }
 
     /**

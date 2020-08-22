@@ -282,8 +282,8 @@ class Entry extends Element
     {
         $attributes = [
             'sprout_forms.name' => Craft::t('sprout', 'Form Name'),
-            'sprout_formentries.dateCreated' => Craft::t('sprout', 'Date Created'),
-            'sprout_formentries.dateUpdated' => Craft::t('sprout', 'Date Updated'),
+            'sprout_form_entries.dateCreated' => Craft::t('sprout', 'Date Created'),
+            'sprout_form_entries.dateUpdated' => Craft::t('sprout', 'Date Updated'),
         ];
 
         return $attributes;

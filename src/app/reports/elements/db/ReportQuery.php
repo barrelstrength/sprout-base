@@ -77,7 +77,7 @@ class ReportQuery extends ElementQuery
             'sprout_reports.enabled',
         ]);
 
-        $this->query->innerJoin(DataSourceRecord::tableName().' sprout_datasources', '[[sprout_datasources.id]] = [[sprout_reports.dataSourceId]]');
+        $this->query->innerJoin(DataSourceRecord::tableName().' sprout_data_sources', '[[sprout_data_sources.id]] = [[sprout_reports.dataSourceId]]');
 
         if ($this->groupId) {
             $this->query->andWhere(Db::parseParam(

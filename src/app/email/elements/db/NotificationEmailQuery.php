@@ -13,28 +13,28 @@ class NotificationEmailQuery extends ElementQuery
      */
     protected function beforePrepare(): bool
     {
-        $this->joinElementTable('sprout_notificationemails');
+        $this->joinElementTable('sprout_notification_emails');
 
         $this->query->select([
-            'sprout_notificationemails.titleFormat',
-            'sprout_notificationemails.emailTemplateId',
-            'sprout_notificationemails.eventId',
-            'sprout_notificationemails.settings',
-            'sprout_notificationemails.sendRule',
-            'sprout_notificationemails.subjectLine',
-            'sprout_notificationemails.defaultBody',
-            'sprout_notificationemails.sendMethod',
-            'sprout_notificationemails.recipients',
-            'sprout_notificationemails.cc',
-            'sprout_notificationemails.bcc',
-            'sprout_notificationemails.listSettings',
-            'sprout_notificationemails.fromName',
-            'sprout_notificationemails.fromEmail',
-            'sprout_notificationemails.replyToEmail',
-            'sprout_notificationemails.enableFileAttachments',
-            'sprout_notificationemails.dateCreated',
-            'sprout_notificationemails.dateUpdated',
-            'sprout_notificationemails.fieldLayoutId',
+            'sprout_notification_emails.titleFormat',
+            'sprout_notification_emails.emailTemplateId',
+            'sprout_notification_emails.eventId',
+            'sprout_notification_emails.settings',
+            'sprout_notification_emails.sendRule',
+            'sprout_notification_emails.subjectLine',
+            'sprout_notification_emails.defaultBody',
+            'sprout_notification_emails.sendMethod',
+            'sprout_notification_emails.recipients',
+            'sprout_notification_emails.cc',
+            'sprout_notification_emails.bcc',
+            'sprout_notification_emails.listSettings',
+            'sprout_notification_emails.fromName',
+            'sprout_notification_emails.fromEmail',
+            'sprout_notification_emails.replyToEmail',
+            'sprout_notification_emails.enableFileAttachments',
+            'sprout_notification_emails.dateCreated',
+            'sprout_notification_emails.dateUpdated',
+            'sprout_notification_emails.fieldLayoutId',
         ]);
 
         return parent::beforePrepare();

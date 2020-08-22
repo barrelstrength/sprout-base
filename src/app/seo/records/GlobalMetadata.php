@@ -18,6 +18,6 @@ class GlobalMetadata extends ActiveRecord
      */
     public static function tableName(): string
     {
-        return '{{%sprout_globalmetadata}}';
+        return '{{%sprout_global_metadata}}';
     }
 }

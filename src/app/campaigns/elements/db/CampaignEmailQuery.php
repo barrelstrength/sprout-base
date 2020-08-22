@@ -14,28 +14,28 @@ class CampaignEmailQuery extends ElementQuery
 
     protected function beforePrepare(): bool
     {
-        $this->joinElementTable('sprout_campaignemails');
+        $this->joinElementTable('sprout_campaign_emails');
 
         $this->query->select([
-            'sprout_campaignemails.subjectLine',
-            'sprout_campaignemails.campaignTypeId',
-            'sprout_campaignemails.recipients',
-            'sprout_campaignemails.emailSettings',
-            'sprout_campaignemails.defaultBody',
-            'sprout_campaignemails.listSettings',
-            'sprout_campaignemails.fromName',
-            'sprout_campaignemails.fromEmail',
-            'sprout_campaignemails.replyToEmail',
-            'sprout_campaignemails.enableFileAttachments',
-            'sprout_campaignemails.dateScheduled',
-            'sprout_campaignemails.dateSent',
-            'sprout_campaignemails.dateCreated',
-            'sprout_campaignemails.dateUpdated',
+            'sprout_campaign_emails.subjectLine',
+            'sprout_campaign_emails.campaignTypeId',
+            'sprout_campaign_emails.recipients',
+            'sprout_campaign_emails.emailSettings',
+            'sprout_campaign_emails.defaultBody',
+            'sprout_campaign_emails.listSettings',
+            'sprout_campaign_emails.fromName',
+            'sprout_campaign_emails.fromEmail',
+            'sprout_campaign_emails.replyToEmail',
+            'sprout_campaign_emails.enableFileAttachments',
+            'sprout_campaign_emails.dateScheduled',
+            'sprout_campaign_emails.dateSent',
+            'sprout_campaign_emails.dateCreated',
+            'sprout_campaign_emails.dateUpdated',
         ]);
 
         if ($this->campaignTypeId) {
             $this->subQuery->andWhere(Db::parseParam(
-                'sprout_campaignemails.campaignTypeId', $this->campaignTypeId
+                'sprout_campaign_emails.campaignTypeId', $this->campaignTypeId
             ));
         }
 

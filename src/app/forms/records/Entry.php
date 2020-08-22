@@ -29,7 +29,7 @@ class Entry extends ActiveRecord
 {
     public static function tableName(): string
     {
-        return '{{%sprout_formentries}}';
+        return '{{%sprout_form_entries}}';
     }
 
     /**
