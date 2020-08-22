@@ -110,14 +110,5 @@ class ControlPanelSettings extends Settings
 
         return false;
     }
-
-    public function isModuleInstalled($key): bool
-    {
-        if (isset($this->modules[$key])) {
-            return true;
-        }
-
-        return false;
-    }
 }
 

@@ -7,17 +7,21 @@
 
 namespace barrelstrength\sproutbase\config\base;
 
+use barrelstrength\sproutbase\migrations\install\BaseInstall as SproutBaseInstall;
 use barrelstrength\sproutbase\SproutBase;
 use Craft;
 use craft\base\Plugin;
 use craft\db\Migration;
 use craft\db\MigrationManager;
+use craft\db\Query;
+use craft\db\Table;
+use craft\errors\MigrationException;
 use craft\events\RegisterUrlRulesEvent;
 use craft\helpers\FileHelper;
 use craft\web\UrlManager;
 use yii\base\Event;
 use yii\base\InvalidConfigException;
-use barrelstrength\sproutbase\migrations\install\BaseInstall as SproutBaseInstall;
+use yii\base\NotSupportedException;
 
 abstract class SproutBasePlugin extends Plugin
 {
@@ -34,6 +38,53 @@ abstract class SproutBasePlugin extends Plugin
         Event::on(UrlManager::class, UrlManager::EVENT_REGISTER_SITE_URL_RULES, function(RegisterUrlRulesEvent $event) {
             $event->rules = array_merge($event->rules, $this->getSiteUrlRules());
         });
+    }
+
+    /**
+     * Override default install behavior because:
+     *
+     * - Sprout base uses the same BaseInstall migration for all plugins
+     * - The default install() method always tries to add the BaseInstall migration
+     *   to the migration table and throws an error if we are skipping it
+     * - We need to allow the install script to confirm with the user
+     *   that the new plugin they added is installed AND skip adding our
+     *   BaseInstall migration to the migration history.
+     *
+     * @warning - this method may require updates if it is changed in future Craft releases
+     *
+     * @return bool|false|void|null
+     * @throws InvalidConfigException
+     * @throws NotSupportedException
+     */
+    public function install()
+    {
+        if ($this->beforeInstall() === false) {
+            return false;
+        }
+
+        if (!$this->sproutBaseInstallHasRun()) {
+            $migrator = $this->getMigrator();
+
+            // Run the install migration, if there is one
+            if (($migration = $this->createInstallMigration()) !== null) {
+                try {
+                    $migrator->migrateUp($migration);
+                } catch (MigrationException $e) {
+                    return false;
+                }
+            }
+
+            // Mark all existing migrations as applied
+            foreach ($migrator->getNewMigrations() as $name) {
+                $migrator->addMigrationHistory($name);
+            }
+        }
+
+        $this->isInstalled = true;
+
+        $this->afterInstall();
+
+        return null;
     }
 
     /**
@@ -67,6 +118,22 @@ abstract class SproutBasePlugin extends Plugin
         require_once $path;
 
         return new SproutBaseInstall($this);
+    }
+
+
+    /**
+     * @return bool
+     */
+    public function sproutBaseInstallHasRun(): bool
+    {
+        return (new Query())
+            ->select('*')
+            ->from(Table::MIGRATIONS)
+            ->where([
+                'track' => 'sprout',
+                'name' => 'BaseInstall',
+            ])
+            ->exists();
     }
 
     /**

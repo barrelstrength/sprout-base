@@ -8,21 +8,15 @@
 namespace barrelstrength\sproutbase\config\services;
 
 use barrelstrength\sproutbase\config\base\Config as BaseConfig;
-use barrelstrength\sproutbase\config\base\ConfigInterface;
 use barrelstrength\sproutbase\config\base\SproutBasePlugin;
 use barrelstrength\sproutbase\config\configs\ControlPanelConfig;
 use barrelstrength\sproutbase\config\models\settings\ControlPanelSettings;
 use barrelstrength\sproutbase\SproutBase;
 use Craft;
 use craft\base\Plugin;
-use craft\helpers\ProjectConfig as ProjectConfigHelper;
 use craft\helpers\StringHelper;
 use craft\services\Plugins;
 use yii\base\Component;
-use yii\base\ErrorException;
-use yii\base\Exception;
-use yii\base\NotSupportedException;
-use yii\web\ServerErrorHttpException;
 
 class Config extends Component
 {
@@ -202,145 +196,6 @@ class Config extends Component
         }
 
         $this->_configLoadStatus = 'loaded';
-    }
-
-    /**
-     * Returns true if the given dependency exists in any other plugin
-     *
-     * @param        $pluginHandle
-     * @param string $configType
-     *
-     * @return bool
-     */
-    public function isDependencyInUse($pluginHandle, string $configType): bool
-    {
-        $dependenciesInUse = $this->getDependenciesInUse($pluginHandle);
-
-        if (in_array($configType, $dependenciesInUse, true)) {
-            return true;
-        }
-
-        return false;
-    }
-
-    /**
-     * @param SproutBasePlugin $plugin
-     *
-     * @throws ErrorException
-     * @throws Exception
-     * @throws NotSupportedException
-     * @throws ServerErrorHttpException
-     */
-    public function runInstallMigrations(SproutBasePlugin $plugin)
-    {
-        $sproutConfigTypes = $plugin->getSproutConfigs();
-
-        foreach ($sproutConfigTypes as $sproutConfigType) {
-            $sproutConfig = new $sproutConfigType();
-            $this->runInstallMigration($sproutConfig);
-
-            $subModuleConfigTypes = $sproutConfigType::getSproutConfigDependencies();
-
-            foreach ($subModuleConfigTypes as $subModuleConfigType) {
-                $subModuleConfig = new $subModuleConfigType();
-                $this->runInstallMigration($subModuleConfig);
-            }
-        }
-    }
-
-    /**
-     * @param $sproutConfig
-     *
-     * @throws ErrorException
-     * @throws Exception
-     * @throws NotSupportedException
-     * @throws ServerErrorHttpException
-     */
-    public function runInstallMigration($sproutConfig) {
-
-        $cpSettings = SproutBase::$app->config->getCpSettings();
-        $cpSettingsProjectConfigKey = self::CONFIG_SPROUT_KEY.'.control-panel';
-
-        if ($cpSettings->isModuleInstalled($sproutConfig->getKey())) {
-            return;
-        }
-
-        // Run the safeUp method if our module has an Install migration
-        if ($migration = $sproutConfig->createInstallMigration()) {
-            ob_start();
-            $migration->safeUp();
-            ob_end_clean();
-
-            $projectConfigSettingsKey = self::CONFIG_SPROUT_KEY.'.'.$sproutConfig::getKey();
-            $settings = $sproutConfig->createSettingsModel();
-
-            if ($settings) {
-                $settings->beforeAddDefaultSettings();
-                SproutBase::$app->settings->saveSettings($projectConfigSettingsKey, $settings);
-            }
-
-            $cpSettings->modules[$sproutConfig->getKey()] = [
-                'alternateName' => '',
-                'enabled' => 1,
-                'moduleKey' => $sproutConfig->getKey(),
-            ];
-
-            SproutBase::$app->settings->saveSettings($cpSettingsProjectConfigKey, $cpSettings);
-        }
-    }
-
-    /**
-     * Runs all Install::safeDown() migrations for Sprout Central plugins
-     *
-     * @param SproutBasePlugin $plugin
-     */
-    public function runUninstallMigrations(SproutBasePlugin $plugin)
-    {
-        $sproutConfigTypes = $plugin->getSproutConfigs();
-
-        foreach ($sproutConfigTypes as $sproutConfigType) {
-            $isDependencyInUse = SproutBase::$app->config->isDependencyInUse($plugin->handle, $sproutConfigType);
-
-            if ($isDependencyInUse) {
-                continue;
-            }
-
-            $sproutConfig = new $sproutConfigType();
-
-            // Run the safeDown method if our module has an Install migration
-            if ($migration = $sproutConfig->createInstallMigration()) {
-                ob_start();
-                $migration->safeDown();
-                ob_end_clean();
-            }
-
-            $this->removeConfigSettingsToProjectConfig($sproutConfig);
-
-            $subModuleConfigTypes = $sproutConfig::getSproutConfigDependencies();
-
-            foreach ($subModuleConfigTypes as $subModuleConfigType) {
-                $subModuleConfig = new $subModuleConfigType();
-
-                // Run the safeUp method if our module has an Install migration
-                if ($migration = $subModuleConfig->createInstallMigration()) {
-                    ob_start();
-                    $migration->safeDown();
-                    ob_end_clean();
-                }
-
-                $this->removeConfigSettingsToProjectConfig($subModuleConfig);
-            }
-        }
-    }
-
-    /**
-     * @param ConfigInterface $config
-     */
-    public function removeConfigSettingsToProjectConfig(ConfigInterface $config)
-    {
-        $projectConfigSettingsKey = self::CONFIG_SPROUT_KEY.'.'.$config::getKey();
-
-        Craft::$app->getProjectConfig()->remove($projectConfigSettingsKey);
     }
 
     /**

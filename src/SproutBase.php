@@ -19,6 +19,8 @@ use barrelstrength\sproutbase\app\email\services\NotificationEmailEvents;
 use barrelstrength\sproutbase\config\base\Config;
 use barrelstrength\sproutbase\config\configs\CampaignsConfig;
 use barrelstrength\sproutbase\config\configs\ControlPanelConfig;
+use barrelstrength\sproutbase\config\configs\EmailPreviewConfig;
+use barrelstrength\sproutbase\config\configs\FieldsConfig;
 use barrelstrength\sproutbase\config\configs\FormsConfig;
 use barrelstrength\sproutbase\config\configs\ListsConfig;
 use barrelstrength\sproutbase\config\configs\NotificationsConfig;
@@ -57,11 +59,29 @@ use yii\mail\MailEvent;
 class SproutBase extends Module
 {
     /**
+     * $var array SPROUT_PLUGIN_IDS
+     */
+    const SPROUT_PLUGIN_IDS = [
+        'sprout-campaigns',
+        'sprout-email',
+        'sprout-fields',
+        'sprout-forms',
+        'sprout-lists',
+        'sprout-sent-email',
+        'sprout-redirects',
+        'sprout-reports',
+        'sprout-seo',
+        'sprout-sitemaps'
+    ];
+
+    /**
      * @var Config[] SPROUT_MODULES
      */
     const SPROUT_MODULES = [
-        ControlPanelConfig::class,
         CampaignsConfig::class,
+        ControlPanelConfig::class,
+        EmailPreviewConfig::class,
+        FieldsConfig::class,
         FormsConfig::class,
         ListsConfig::class,
         NotificationsConfig::class,
