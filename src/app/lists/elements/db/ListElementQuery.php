@@ -7,7 +7,6 @@
 
 namespace barrelstrength\sproutbase\app\lists\elements\db;
 
-use barrelstrength\sproutbase\app\lists\records\ListElement as ListElementRecord;
 use craft\elements\db\ElementQuery;
 use craft\helpers\Db;
 
@@ -98,7 +97,7 @@ class ListElementQuery extends ElementQuery
         if ($this->type) {
             $listClass = new $this->type();
             $this->subQuery->andWhere([
-                'sprout_lists.type' => get_class($listClass)
+                'sprout_lists.type' => get_class($listClass),
             ]);
         }
 

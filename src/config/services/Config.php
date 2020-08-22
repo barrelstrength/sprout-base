@@ -109,6 +109,7 @@ class Config extends Component
 
     /**
      * @param bool $includeFileSettings
+     * @param bool $ignoreUserPermissions
      */
     private function initConfigs($includeFileSettings = true, $ignoreUserPermissions = false)
     {
@@ -377,31 +378,6 @@ class Config extends Component
         $config = $this->getConfigByKey($handle);
 
         return $config->getEdition();
-    }
-
-    private function getDependenciesInUse($pluginHandle): array
-    {
-        $plugins = $this->getSproutBasePlugins();
-
-        $configDependencies = [];
-        foreach ($plugins as $key => $plugin) {
-            // Exclude the plugin called in this method
-            if ($plugin->getHandle() === $pluginHandle) {
-                continue;
-            }
-
-            $configTypes = $plugin::getSproutConfigs();
-            foreach ($configTypes as $configType) {
-                $configDependencies[] = $configType;
-
-                $subModuleConfigTypes = $configType::getSproutConfigDependencies();
-                foreach ($subModuleConfigTypes as $subModuleConfigType) {
-                    $configDependencies[] = $subModuleConfigType;
-                }
-            }
-        }
-
-        return array_unique($configDependencies);
     }
 
     /**

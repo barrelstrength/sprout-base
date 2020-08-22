@@ -2,7 +2,6 @@
 
 namespace barrelstrength\sproutbase\app\email\elements\db;
 
-use barrelstrength\sproutbase\app\email\records\NotificationEmail as NotificationEmailRecord;
 use craft\base\Element;
 use craft\elements\db\ElementQuery;
 

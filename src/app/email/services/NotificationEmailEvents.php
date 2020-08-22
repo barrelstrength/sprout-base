@@ -12,6 +12,7 @@ use Craft;
 use craft\base\Component;
 use craft\helpers\ArrayHelper;
 use craft\helpers\Json;
+use InvalidArgumentException;
 use Throwable;
 use yii\base\Event;
 
@@ -98,7 +99,7 @@ class NotificationEmailEvents extends Component
     {
         try {
             $notificationSettings = SproutBase::$app->settings->getSettingsByKey('notifications', true, true);
-        } catch(\InvalidArgumentException $exception) {
+        } catch (InvalidArgumentException $exception) {
             return;
         }
 

@@ -172,7 +172,6 @@ class RegularExpression extends FormField implements PreviewableFieldInterface
      */
     public function getCompatibleCraftFieldTypes(): array
     {
-        /** @noinspection ClassConstantCanBeUsedInspection */
         return [
             CraftPlainText::class,
             'barrelstrength\\sproutfields\\fields\\RegularExpression',

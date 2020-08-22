@@ -353,7 +353,6 @@ class Subscriber extends Element implements SubscriberInterface
 
     /**
      * @return array
-     * @throws InvalidConfigException
      */
     protected function defineRules(): array
     {

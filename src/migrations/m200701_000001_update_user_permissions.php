@@ -4,8 +4,6 @@
  * @license   https://craftcms.github.io/license
  */
 
-/** @noinspection ClassConstantCanBeUsedInspection */
-
 namespace barrelstrength\sproutbase\migrations;
 
 use craft\db\Migration;
@@ -57,7 +55,7 @@ class m200701_000001_update_user_permissions extends Migration
             // Sitemaps
             'sitemaps' => [
                 'sproutSitemaps-editSitemaps' => 'sprout:sitemaps:editSitemaps',
-                'sproutSeo-editSitemaps' => 'sprout:sitemaps:editSitemaps'
+                'sproutSeo-editSitemaps' => 'sprout:sitemaps:editSitemaps',
             ],
 
             // SEO
@@ -66,19 +64,13 @@ class m200701_000001_update_user_permissions extends Migration
             ],
         ];
 
-        /**
-         * [
-         *   'sproutforms-viewentries' => '26'
-         *   'sproutforms-viewnotifications' => '24'
-         * ]
-         */
         $permissions = (new Query())
             ->select([
                 'id',
             ])
             ->from([Table::USERPERMISSIONS])
             ->where([
-                'like', 'name', 'sprout%', false
+                'like', 'name', 'sprout%', false,
             ])
             ->indexBy('name')
             ->column();
@@ -97,13 +89,13 @@ class m200701_000001_update_user_permissions extends Migration
 
                 // Update permission names one by one so we can also add accessModule permissions
                 $this->update(Table::USERPERMISSIONS, [
-                    'name' => $newPermissionName
+                    'name' => $newPermissionName,
                 ], ['id' => $permissionId], [], false);
             }
 
             // Add accessModule permissions
             $this->insert(Table::USERPERMISSIONS, [
-                'name' => 'sprout:'.$pluginHandle.':accessModule'
+                'name' => 'sprout:'.$pluginHandle.':accessModule',
             ]);
             $accessModulePermissionId = $this->db->getLastInsertID(Table::USERPERMISSIONS);
 
@@ -111,7 +103,7 @@ class m200701_000001_update_user_permissions extends Migration
                 ->select(['id'])
                 ->from([Table::USERPERMISSIONS])
                 ->where([
-                    'name' => 'accessplugin-sprout-'.$pluginHandle
+                    'name' => 'accessplugin-sprout-'.$pluginHandle,
                 ])
                 ->scalar();
 
@@ -121,7 +113,7 @@ class m200701_000001_update_user_permissions extends Migration
                 ->select(['groupId'])
                 ->from([Table::USERPERMISSIONS_USERGROUPS])
                 ->where([
-                    'permissionId' => $accessPluginPermissionId
+                    'permissionId' => $accessPluginPermissionId,
                 ])
                 ->column();
 
@@ -140,7 +132,7 @@ class m200701_000001_update_user_permissions extends Migration
                 ->select(['userId'])
                 ->from([Table::USERPERMISSIONS_USERS])
                 ->where([
-                    'permissionId' => $accessPluginPermissionId
+                    'permissionId' => $accessPluginPermissionId,
                 ])
                 ->column();
 
@@ -155,7 +147,7 @@ class m200701_000001_update_user_permissions extends Migration
 
             // Remove access plugin permission that is no longer in use
             $this->delete(Table::USERPERMISSIONS, [
-                'id' => $accessPluginPermissionId
+                'id' => $accessPluginPermissionId,
             ]);
         }
     }

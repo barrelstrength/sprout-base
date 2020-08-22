@@ -215,10 +215,8 @@ class Address extends FormField implements PreviewableFieldInterface
         return true;
     }
 
-
     public function getCompatibleCraftFieldTypes(): array
     {
-        /** @noinspection ClassConstantCanBeUsedInspection */
         return [
             'barrelstrength\\sproutfields\\fields\\Address',
         ];

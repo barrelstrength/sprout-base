@@ -13,6 +13,7 @@ use Craft;
 use craft\db\Migration;
 use craft\db\Table;
 use Throwable;
+use yii\db\Exception;
 
 class MetadataInstall extends Migration
 {
@@ -52,6 +53,9 @@ class MetadataInstall extends Migration
         $this->dropTableIfExists(GlobalMetadataRecord::tableName());
     }
 
+    /**
+     * @throws Exception
+     */
     public function insertDefaultGlobalMetadata()
     {
         $siteIds = Craft::$app->getSites()->allSiteIds;

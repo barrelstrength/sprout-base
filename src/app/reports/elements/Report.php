@@ -27,7 +27,6 @@ use Throwable;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
-use yii\base\InvalidConfigException;
 use yii\web\NotFoundHttpException;
 
 class Report extends Element
@@ -540,7 +539,6 @@ class Report extends Element
 
     /**
      * @return array
-     * @throws InvalidConfigException
      */
     protected function defineRules(): array
     {

@@ -591,7 +591,6 @@ class Entry extends Element
     }
 
     /**
-     * @throws InvalidConfigException
      */
     protected function defineRules(): array
     {

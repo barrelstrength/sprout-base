@@ -117,8 +117,8 @@ class SubscriberList extends BaseSubscriberList
         } else {
             $query->andWhere([
                 'sprout_subscribers.id' => $subscriberId,
-            ])
-            ->orWhere([
+            ]);
+            $query->orWhere([
                 'sprout_subscribers.userId' => $subscriberId,
             ]);
         }

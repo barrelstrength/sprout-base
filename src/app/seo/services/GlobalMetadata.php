@@ -674,6 +674,11 @@ class GlobalMetadata extends Component
         return false;
     }
 
+    /**
+     * @param SiteEvent $event
+     *
+     * @throws Exception
+     */
     public function handleDefaultSiteMetadata(SiteEvent $event)
     {
 

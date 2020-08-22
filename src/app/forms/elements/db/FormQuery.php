@@ -9,7 +9,6 @@ namespace barrelstrength\sproutbase\app\forms\elements\db;
 
 use barrelstrength\sproutbase\app\forms\models\FormGroup;
 use barrelstrength\sproutbase\app\forms\records\Entry as EntryRecord;
-use barrelstrength\sproutbase\app\forms\records\Form as FormRecord;
 use barrelstrength\sproutbase\app\forms\records\FormGroup as FormGroupRecord;
 use barrelstrength\sproutbase\config\base\Config;
 use barrelstrength\sproutbase\SproutBase;

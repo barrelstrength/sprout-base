@@ -71,7 +71,7 @@ class SproutBase extends Module
         'sprout-redirects',
         'sprout-reports',
         'sprout-seo',
-        'sprout-sitemaps'
+        'sprout-sitemaps',
     ];
 
     /**

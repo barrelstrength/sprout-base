@@ -17,17 +17,17 @@ class m200701_000001_update_widget_types extends Migration
         $types = [
             [
                 'oldType' => 'barrelstrength\sproutbasereports\widgets\Number',
-                'newType' => 'barrelstrength\sproutbase\app\reports\widgets\Number'
+                'newType' => 'barrelstrength\sproutbase\app\reports\widgets\Number',
             ],
             [
                 'oldType' => 'barrelstrength\sproutbasereports\widgets\Visualization',
-                'newType' => 'barrelstrength\sproutbase\app\reports\widgets\Visualization'
+                'newType' => 'barrelstrength\sproutbase\app\reports\widgets\Visualization',
             ],
         ];
 
         foreach ($types as $type) {
             $this->update('{{%widgets}}', [
-                'type' => $type['newType']
+                'type' => $type['newType'],
             ], ['type' => $type['oldType']], [], false);
         }
     }

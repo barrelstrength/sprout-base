@@ -1,155 +1,155 @@
 declare var Garnish: any;
 
 interface Window {
-  settings: any;
+    settings: any;
 }
 
 /**
  * Manage groups based off the Craft fields.js file
  */
 if (typeof Craft.SproutBase === typeof undefined) {
-  Craft.SproutBase = {};
+    Craft.SproutBase = {};
 }
 
-(function() {
+(function () {
 
-  Craft.SproutBase.GroupsAdmin = Garnish.Base.extend({
+    Craft.SproutBase.GroupsAdmin = Garnish.Base.extend({
 
-    $groups: null,
-    $selectedGroup: null,
-    $groupSettingsBtn: null,
+        $groups: null,
+        $selectedGroup: null,
+        $groupSettingsBtn: null,
 
-    init: function(settings: any) {
+        init: function (settings: any) {
 
-      // Make settings globally available
-      window.settings = settings;
+            // Make settings globally available
+            window.settings = settings;
 
-      // Ensure that 'menubtn' classes get registered
-      Craft.initUiElements();
+            // Ensure that 'menubtn' classes get registered
+            Craft.initUiElements();
 
-      this.$groups = $(settings.groupsSelector);
-      this.$selectedGroup = this.$groups.find('a.sel:first');
-      this.addListener($(settings.newGroupButtonSelector), 'activate', 'addNewGroup');
+            this.$groups = $(settings.groupsSelector);
+            this.$selectedGroup = this.$groups.find('a.sel:first');
+            this.addListener($(settings.newGroupButtonSelector), 'activate', 'addNewGroup');
 
-      this.$groupSettingsBtn = $(settings.groupSettingsSelector);
+            this.$groupSettingsBtn = $(settings.groupSettingsSelector);
 
-      // Should we display the Groups Setting Selector or not?
-      this.toggleGroupSettingsSelector();
-      this.addListener(this.$groups, 'click', 'toggleGroupSettingsSelector');
+            // Should we display the Groups Setting Selector or not?
+            this.toggleGroupSettingsSelector();
+            this.addListener(this.$groups, 'click', 'toggleGroupSettingsSelector');
 
-      if (this.$groupSettingsBtn.length) {
+            if (this.$groupSettingsBtn.length) {
 
-        const menuBtn = this.$groupSettingsBtn.data('menubtn');
+                const menuBtn = this.$groupSettingsBtn.data('menubtn');
 
-        menuBtn.settings.onOptionSelect = $.proxy(function(elem: any) {
+                menuBtn.settings.onOptionSelect = $.proxy(function (elem: any) {
 
-          const $elem = $(elem);
+                    const $elem = $(elem);
 
-          if ($elem.hasClass('disabled')) {
-            return;
-          }
+                    if ($elem.hasClass('disabled')) {
+                        return;
+                    }
 
-          switch ($(elem).data('action')) {
-            case 'rename': {
-              this.renameSelectedGroup();
-              break;
+                    switch ($(elem).data('action')) {
+                        case 'rename': {
+                            this.renameSelectedGroup();
+                            break;
+                        }
+                        case 'delete': {
+                            this.deleteSelectedGroup();
+                            break;
+                        }
+                    }
+                }, this);
             }
-            case 'delete': {
-              this.deleteSelectedGroup();
-              break;
+        },
+
+        addNewGroup: function () {
+            let self = this;
+            const name = this.promptForGroupName('');
+
+            if (name) {
+                const data = {
+                    name: name,
+                };
+
+                Craft.postActionRequest(window.settings.newGroupAction, data, $.proxy(function (response: any) {
+
+                    if (response.success) {
+                        location.href = Craft.getUrl(window.settings.newGroupOnSuccessUrlBase);
+                    } else {
+                        const errors = this.flattenErrors(response.errors);
+                        alert(Craft.t('sprout', window.settings.newGroupOnErrorMessage) + "\n\n" + errors.join("\n"));
+                    }
+
+                }, this));
             }
-          }
-        }, this);
-      }
-    },
+        },
 
-    addNewGroup: function() {
-      let self = this;
-      const name = this.promptForGroupName('');
+        renameSelectedGroup: function () {
+            let self = this;
 
-      if (name) {
-        const data = {
-          name: name,
-        };
+            const oldName = this.$selectedGroup.text(),
+                newName = this.promptForGroupName(oldName);
 
-        Craft.postActionRequest(window.settings.newGroupAction, data, $.proxy(function(response: any) {
+            if (newName && newName !== oldName) {
+                const data = {
+                    id: this.$selectedGroup.data('id'),
+                    name: newName,
+                };
 
-          if (response.success) {
-            location.href = Craft.getUrl(window.settings.newGroupOnSuccessUrlBase);
-          } else {
-            const errors = this.flattenErrors(response.errors);
-            alert(Craft.t('sprout', window.settings.newGroupOnErrorMessage) + "\n\n" + errors.join("\n"));
-          }
+                Craft.postActionRequest(window.settings.renameGroupAction, data, $.proxy(function (response: any) {
+                    if (response.success) {
+                        this.$selectedGroup.text(response.group.name);
+                        Craft.cp.displayNotice(Craft.t('sprout', (window.settings.renameGroupOnSuccessMessage)));
+                    } else {
+                        const errors = this.flattenErrors(response.errors);
+                        alert(Craft.t('sprout', window.settings.renameGroupOnErrorMessage) + "\n\n" + errors.join("\n"));
+                    }
 
-        }, this));
-      }
-    },
+                }, this));
+            }
+        },
 
-    renameSelectedGroup: function() {
-      let self = this;
+        promptForGroupName: function (oldName: any) {
+            return prompt(Craft.t('sprout', window.settings.promptForGroupNameMessage), oldName);
+        },
 
-      const oldName = this.$selectedGroup.text(),
-        newName = this.promptForGroupName(oldName);
+        deleteSelectedGroup: function () {
+            let self = this;
+            if (confirm(Craft.t('sprout', window.settings.deleteGroupConfirmMessage))) {
+                const data = {
+                    id: this.$selectedGroup.data('id'),
+                };
 
-      if (newName && newName !== oldName) {
-        const data = {
-          id: this.$selectedGroup.data('id'),
-          name: newName,
-        };
+                Craft.postActionRequest(window.settings.deleteGroupAction, data, $.proxy(function (response: any) {
+                    if (response.success) {
+                        location.href = Craft.getUrl(window.settings.deleteGroupOnSuccessUrl);
+                    } else {
+                        alert(Craft.t('sprout', window.settings.deleteGroupOnErrorMessage));
+                    }
+                }, this));
+            }
+        },
 
-        Craft.postActionRequest(window.settings.renameGroupAction, data, $.proxy(function(response: any) {
-          if (response.success) {
-            this.$selectedGroup.text(response.group.name);
-            Craft.cp.displayNotice(Craft.t('sprout', (window.settings.renameGroupOnSuccessMessage)));
-          } else {
-            const errors = this.flattenErrors(response.errors);
-            alert(Craft.t('sprout', window.settings.renameGroupOnErrorMessage) + "\n\n" + errors.join("\n"));
-          }
+        toggleGroupSettingsSelector: function () {
+            this.$selectedGroup = this.$groups.find('a.sel:first');
 
-        }, this));
-      }
-    },
+            if (this.$selectedGroup.data('key') === '*' || this.$selectedGroup.data('readonly')) {
+                $(this.$groupSettingsBtn).addClass('hidden');
+            } else {
+                $(this.$groupSettingsBtn).removeClass('hidden');
+            }
+        },
 
-    promptForGroupName: function(oldName: any) {
-      return prompt(Craft.t('sprout', window.settings.promptForGroupNameMessage), oldName);
-    },
+        flattenErrors: function (responseErrors: any) {
+            let errors: any[] = [];
 
-    deleteSelectedGroup: function() {
-      let self = this;
-      if (confirm(Craft.t('sprout', window.settings.deleteGroupConfirmMessage))) {
-        const data = {
-          id: this.$selectedGroup.data('id'),
-        };
+            for (let attribute in responseErrors) {
+                errors = errors.concat(this.response.errors[attribute]);
+            }
 
-        Craft.postActionRequest(window.settings.deleteGroupAction, data, $.proxy(function(response: any) {
-          if (response.success) {
-            location.href = Craft.getUrl(window.settings.deleteGroupOnSuccessUrl);
-          } else {
-            alert(Craft.t('sprout', window.settings.deleteGroupOnErrorMessage));
-          }
-        }, this));
-      }
-    },
-
-    toggleGroupSettingsSelector: function() {
-      this.$selectedGroup = this.$groups.find('a.sel:first');
-
-      if (this.$selectedGroup.data('key') === '*' || this.$selectedGroup.data('readonly')) {
-        $(this.$groupSettingsBtn).addClass('hidden');
-      } else {
-        $(this.$groupSettingsBtn).removeClass('hidden');
-      }
-    },
-
-    flattenErrors: function(responseErrors: any) {
-      let errors: any[] = [];
-
-      for (let attribute in responseErrors) {
-        errors = errors.concat(this.response.errors[attribute]);
-      }
-
-      return errors;
-    },
-  });
+            return errors;
+        },
+    });
 
 })();

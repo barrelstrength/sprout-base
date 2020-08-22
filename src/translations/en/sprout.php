@@ -1377,5 +1377,12 @@ Shorthand syntax: {title}',
     'Element ID' => 'Element ID',
     'Unable to save subscription while saving subscriber.' => 'Unable to save subscription while saving subscriber.',
     'Learn&nbsp;more.' => 'Learn&nbsp;more.',
-    'Upgrade to Sprout Campaigns PRO to manage unlimited Campaigns using custom integrations.' => 'Upgrade to Sprout Campaigns PRO to manage unlimited Campaigns using custom integrations.'
+    'Upgrade to Sprout Campaigns PRO to manage unlimited Campaigns using custom integrations.' => 'Upgrade to Sprout Campaigns PRO to manage unlimited Campaigns using custom integrations.',
+    'Unable to update Redirect status code.' => 'Unable to update Redirect status code.',
+    'Status Code' => 'Status Code',
+    'Unable to enable a 404. Update redirect status code.' => 'Unable to enable a 404. Update redirect status code.',
+    'Update Status Code to 302' => 'Update Status Code to 302',
+    'Update Status Code to 301' => 'Update Status Code to 301',
+    'Redirect status code updated.' => 'Redirect status code updated.',
+    'Status Codes' => 'Status Codes'
 ];

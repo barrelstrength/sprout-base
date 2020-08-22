@@ -7,7 +7,6 @@
 
 namespace barrelstrength\sproutbase\app\redirects\elements\db;
 
-use barrelstrength\sproutbase\app\redirects\records\Redirects as RedirectsRecord;
 use craft\elements\db\ElementQuery;
 use craft\helpers\Db;
 

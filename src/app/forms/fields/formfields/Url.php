@@ -191,7 +191,6 @@ class Url extends FormField implements PreviewableFieldInterface
      */
     public function getCompatibleCraftFieldTypes(): array
     {
-        /** @noinspection ClassConstantCanBeUsedInspection */
         return [
             CraftPlainText::class,
             CraftUrl::class,

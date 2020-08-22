@@ -1,13 +1,24 @@
-<?php /** @noinspection PhpDeprecationInspection */
+<?php
 
 namespace barrelstrength\sproutbase\migrations;
 
 use Craft;
 use craft\db\Migration;
 use craft\db\Query;
+use yii\base\ErrorException;
+use yii\base\Exception;
+use yii\base\NotSupportedException;
+use yii\web\ServerErrorHttpException;
 
 class m200700_000000_migrate_settings_to_project_config extends Migration
 {
+    /**
+     * @return bool
+     * @throws ErrorException
+     * @throws Exception
+     * @throws NotSupportedException
+     * @throws ServerErrorHttpException
+     */
     public function safeUp(): bool
     {
         $oldSettings = (new Query())

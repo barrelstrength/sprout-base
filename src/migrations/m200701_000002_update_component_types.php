@@ -111,7 +111,7 @@ class m200701_000002_update_component_types extends Migration
                         'oldType' => 'barrelstrength\sproutforms\integrations\sproutemail\events\notificationevents\SaveEntryEvent',
                         'newType' => 'barrelstrength\sproutbase\app\forms\integrations\sproutemail\events\notificationevents\SaveEntryEvent',
                     ],
-                ]
+                ],
             ],
             'sproutforms_forms' => [
                 'formTemplateId' => [
@@ -125,8 +125,8 @@ class m200701_000002_update_component_types extends Migration
 //                        'oldType' => 'barrelstrength\sproutforms\formtemplates\CustomTemplates',
 //                        'newType' => 'barrelstrength\sproutbase\app\forms\formtemplates\CustomTemplates',
 //                    ],
-                ]
-            ]
+                ],
+            ],
         ];
 
         foreach ($components as $dbTableName => $columns) {

@@ -540,7 +540,6 @@ class Redirect extends Element
 
     /**
      * @return array
-     * @throws InvalidConfigException
      */
     protected function defineRules(): array
     {

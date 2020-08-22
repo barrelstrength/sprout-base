@@ -23,12 +23,14 @@ class BaseInstall extends Migration
 {
     private $plugin;
 
-    public function __construct(SproutBasePlugin $plugin, $config = []) {
+    public function __construct(SproutBasePlugin $plugin, $config = [])
+    {
 
         $this->plugin = $plugin;
 
         parent::__construct($config);
     }
+
     /**
      * @throws ErrorException
      * @throws NotSupportedException

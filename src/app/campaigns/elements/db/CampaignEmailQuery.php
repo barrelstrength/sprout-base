@@ -2,7 +2,6 @@
 
 namespace barrelstrength\sproutbase\app\campaigns\elements\db;
 
-use barrelstrength\sproutbase\app\campaigns\records\CampaignEmail as CampaignEmailRecord;
 use craft\elements\db\ElementQuery;
 use craft\helpers\Db;
 

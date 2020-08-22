@@ -7,7 +7,6 @@
 
 namespace barrelstrength\sproutbase\app\lists\elements\db;
 
-use barrelstrength\sproutbase\app\lists\records\Subscriber as SubscriberRecord;
 use barrelstrength\sproutbase\app\lists\records\Subscription as SubscriptionRecord;
 use craft\db\Query;
 use craft\elements\db\ElementQuery;

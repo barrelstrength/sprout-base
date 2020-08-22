@@ -63,7 +63,6 @@ class CampaignEmailController extends Controller
         // that we don't want to overwrite.
         if (!$campaignEmail) {
             if (is_numeric($emailId)) {
-                /** @noinspection CallableParameterUseCaseInTypeContextInspection */
                 $campaignEmail = SproutBase::$app->campaignEmails->getCampaignEmailById($emailId);
             } else {
                 $campaignEmail = new CampaignEmail();

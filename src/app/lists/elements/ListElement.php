@@ -25,7 +25,6 @@ use craft\models\FieldLayout;
 use craft\validators\SlugValidator;
 use craft\validators\UniqueValidator;
 use Exception;
-use yii\base\InvalidConfigException;
 use yii\web\ErrorHandler;
 
 /**
@@ -340,7 +339,6 @@ class ListElement extends Element implements ListInterface
 
     /**
      * @return array
-     * @throws InvalidConfigException
      */
     protected function defineRules(): array
     {

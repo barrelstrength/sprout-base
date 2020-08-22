@@ -604,7 +604,6 @@ class CampaignEmail extends EmailElement
 
     /**
      * @return array
-     * @throws InvalidConfigException
      */
     protected function defineRules(): array
     {

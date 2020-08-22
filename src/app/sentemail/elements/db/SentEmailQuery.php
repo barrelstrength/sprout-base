@@ -7,7 +7,6 @@
 
 namespace barrelstrength\sproutbase\app\sentemail\elements\db;
 
-use barrelstrength\sproutbase\app\sentemail\records\SentEmail as SentEmailRecord;
 use craft\elements\db\ElementQuery;
 
 class SentEmailQuery extends ElementQuery

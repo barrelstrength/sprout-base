@@ -297,7 +297,7 @@ class SentEmails extends Component
             ->limit(null)
             ->offset($sentEmailsLimit)
             ->orderBy([
-                'sprout_sent_emails.dateCreated' => SORT_DESC
+                'sprout_sent_emails.dateCreated' => SORT_DESC,
             ])
             ->anyStatus()
             ->siteId(Craft::$app->getSites()->getCurrentSite()->id)
