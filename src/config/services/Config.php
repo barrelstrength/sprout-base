@@ -279,7 +279,7 @@ class Config extends Component
                 SproutBase::$app->settings->saveSettings($projectConfigSettingsKey, $settings);
             }
 
-            $cpSettings['modules'][$sproutConfig->getKey()] = [
+            $cpSettings->modules[$sproutConfig->getKey()] = [
                 'alternateName' => '',
                 'enabled' => 1,
                 'moduleKey' => $sproutConfig->getKey(),
