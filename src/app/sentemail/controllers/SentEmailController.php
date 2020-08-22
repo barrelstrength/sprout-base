@@ -130,7 +130,7 @@ class SentEmailController extends Controller
                 $email->setSubject($sentEmail->title);
                 $email->setFrom([$sentEmail->fromEmail => $sentEmail->fromName]);
                 $email->setTo($recipientEmail);
-                $email->setTextBody($sentEmail->body);
+                $email->setTextBody($sentEmail->textBody);
                 $email->setHtmlBody($sentEmail->htmlBody);
 
                 $infoTable = SproutBase::$app->sentEmails->createInfoTableModel('Sprout');

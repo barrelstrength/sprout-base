@@ -220,7 +220,7 @@ class SentEmails extends Component
         $sentEmail = new SentEmail();
 
         $sentEmail->title = $subject;
-        $sentEmail->emailSubject = $subject;
+        $sentEmail->subjectLine = $subject;
         $sentEmail->fromEmail = $fromEmail;
         $sentEmail->fromName = $fromName;
         $sentEmail->toEmail = $toEmail;
@@ -230,7 +230,7 @@ class SentEmails extends Component
 
         if ($body) {
             $sentEmail->htmlBody = $body;
-            $sentEmail->body = $body;
+            $sentEmail->textBody = $body;
         } else if ($children) {
             foreach ($children as $child) {
                 if ($child->getContentType() == 'text/html') {
@@ -238,7 +238,7 @@ class SentEmails extends Component
                 }
 
                 if ($child->getContentType() == 'text/plain') {
-                    $sentEmail->body = $child->getBody();
+                    $sentEmail->textBody = $child->getBody();
                 }
             }
         }
@@ -394,14 +394,14 @@ class SentEmails extends Component
     {
         if ($emailModel->htmlBody) {
             $renderedHtmlBody = Craft::$app->getView()->renderString($emailModel->htmlBody, $variables);
-            $renderedTextBody = Craft::$app->getView()->renderString($emailModel->body, $variables);
+            $renderedTextBody = Craft::$app->getView()->renderString($emailModel->textBody, $variables);
         } else {
-            $renderedHtmlBody = Craft::$app->getView()->renderString($emailModel->body, $variables);
-            $renderedTextBody = Craft::$app->getView()->renderString($emailModel->body, $variables);
+            $renderedHtmlBody = Craft::$app->getView()->renderString($emailModel->textBody, $variables);
+            $renderedTextBody = Craft::$app->getView()->renderString($emailModel->textBody, $variables);
         }
 
         $emailModel->htmlBody = $renderedHtmlBody;
-        $emailModel->body = $renderedTextBody;
+        $emailModel->textBody = $renderedTextBody;
 
         return $emailModel;
     }

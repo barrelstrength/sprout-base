@@ -146,7 +146,7 @@ abstract class EmailTemplates
 
         // Converts html body to text email if no .txt
         if ($textEmailTemplateExists) {
-            $body = Craft::$app->getView()->renderTemplate($textEmailTemplate, [
+            $textBody = Craft::$app->getView()->renderTemplate($textEmailTemplate, [
                 'email' => $this->email,
                 'object' => $this->email->getEventObject(),
             ]);
@@ -160,13 +160,13 @@ abstract class EmailTemplates
             // things in Markdown, like <p> tags or <h1> tags and not just <td> or <div>, etc.
             $markdown = $converter->convert($htmlBody);
 
-            $body = trim($markdown);
+            $textBody = trim($markdown);
         }
 
         $view->setTemplateMode($oldTemplateMode);
         $view->setTemplatesPath($oldTemplatePath);
 
         $this->setHtmlBody($htmlBody);
-        $this->setTextBody($body);
+        $this->setTextBody($textBody);
     }
 }

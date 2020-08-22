@@ -41,7 +41,7 @@ class SentEmail extends Element
     /**
      * @var string
      */
-    public $emailSubject;
+    public $subjectLine;
 
     /**
      * @var bool
@@ -68,7 +68,7 @@ class SentEmail extends Element
     /**
      * @var string
      */
-    public $body;
+    public $textBody;
 
     /**
      * @var string
@@ -151,7 +151,7 @@ class SentEmail extends Element
 
     protected static function defineSearchableAttributes(): array
     {
-        return ['toEmail', 'emailSubject'];
+        return ['toEmail', 'subjectLine'];
     }
 
     protected static function defineSortOptions(): array
@@ -168,7 +168,7 @@ class SentEmail extends Element
         $attributes = [
             'dateSent' => ['label' => Craft::t('sprout', 'Date Sent')],
             'toEmail' => ['label' => Craft::t('sprout', 'Recipient')],
-            'emailSubject' => ['label' => Craft::t('sprout', 'Subject')],
+            'subjectLine' => ['label' => Craft::t('sprout', 'Subject')],
             'info' => ['label' => Craft::t('sprout', 'Details')],
         ];
 
@@ -283,11 +283,11 @@ class SentEmail extends Element
         }
 
         $record->title = $this->title;
-        $record->emailSubject = $this->emailSubject;
+        $record->subjectLine = $this->subjectLine;
         $record->fromEmail = $this->fromEmail;
         $record->fromName = $this->fromName;
         $record->toEmail = $this->toEmail;
-        $record->body = $this->body;
+        $record->textBody = $this->textBody;
         $record->htmlBody = $this->htmlBody;
         $record->info = $this->info;
         $record->status = $this->status;

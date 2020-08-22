@@ -14,11 +14,11 @@ use yii\db\ActiveQueryInterface;
 /**
  * @property                              $id           int
  * @property                              $title        string
- * @property                              $emailSubject string
+ * @property                              $subjectLine string
  * @property                              $fromEmail    string
  * @property                              $fromName     string
  * @property                              $toEmail      string
- * @property                              $body         string
+ * @property                              $textBody     string
  * @property                              $htmlBody     string
  * @property                              $info         string
  * @property                              $status       string

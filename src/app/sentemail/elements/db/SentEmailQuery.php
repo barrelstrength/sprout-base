@@ -23,11 +23,11 @@ class SentEmailQuery extends ElementQuery
         $this->query->select([
             'sprout_sent_emails.id',
             'sprout_sent_emails.title',
-            'sprout_sent_emails.emailSubject',
+            'sprout_sent_emails.subjectLine',
             'sprout_sent_emails.fromEmail',
             'sprout_sent_emails.fromName',
             'sprout_sent_emails.toEmail',
-            'sprout_sent_emails.body',
+            'sprout_sent_emails.textBody',
             'sprout_sent_emails.htmlBody',
             'sprout_sent_emails.info',
             'sprout_sent_emails.status',

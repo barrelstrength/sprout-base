@@ -20,11 +20,11 @@ class SentEmailInstall extends Migration
             $this->createTable(SentEmailRecord::tableName(), [
                 'id' => $this->primaryKey(),
                 'title' => $this->string(),
-                'emailSubject' => $this->string(),
+                'subjectLine' => $this->string(),
                 'fromEmail' => $this->string(),
                 'fromName' => $this->string(),
                 'toEmail' => $this->string(),
-                'body' => $this->text(),
+                'textBody' => $this->text(),
                 'htmlBody' => $this->text(),
                 'info' => $this->text(),
                 'status' => $this->string(),
