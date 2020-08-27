@@ -103,7 +103,7 @@ class CampaignsConfig extends Config
                 'sprout/campaign-email/campaign-email-index-template',
 
             // DB Settings
-            'sprout/settings/<configKey:campaigns>/<subNavKey:campaign-types>/edit/<campaignTypeId:\d+>' => [
+            'sprout/settings/<configKey:campaigns>/<subNavKey:campaign-types>/edit/<campaignTypeId:\d+|new>' => [
                 'route' => 'sprout/campaign-type/edit-campaign-type',
             ],
         ];
