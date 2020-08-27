@@ -12,6 +12,7 @@ use Craft;
 use craft\errors\MissingComponentException;
 use craft\web\Controller;
 use yii\base\Exception;
+use yii\base\InvalidConfigException;
 use yii\web\BadRequestHttpException;
 use yii\web\ForbiddenHttpException;
 use yii\web\Response;
@@ -20,11 +21,14 @@ class DataSourcesController extends Controller
 {
     /**
      * @throws ForbiddenHttpException
+     * @throws InvalidConfigException
      */
     public function init()
     {
         // All Data Source actions require sproutReports-editDataSources permission
         $this->requirePermission('sprout:reports:editDataSources');
+
+        parent::init();
     }
 
     public function actionDataSourcesIndexTemplate(): Response
