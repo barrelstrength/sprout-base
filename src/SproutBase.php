@@ -78,18 +78,18 @@ class SproutBase extends Module
      * @var Config[] SPROUT_MODULES
      */
     const SPROUT_MODULES = [
-        CampaignsConfig::class,
         ControlPanelConfig::class,
         EmailPreviewConfig::class,
         FieldsConfig::class,
-        FormsConfig::class,
-        ListsConfig::class,
-        NotificationsConfig::class,
-        RedirectsConfig::class,
         ReportsConfig::class,
+        NotificationsConfig::class,
+        CampaignsConfig::class,
         SentEmailConfig::class,
-        SeoConfig::class,
+        ListsConfig::class,
+        RedirectsConfig::class,
         SitemapsConfig::class,
+        SeoConfig::class,
+        FormsConfig::class,
     ];
 
     const MODULE_ID = 'sprout';
