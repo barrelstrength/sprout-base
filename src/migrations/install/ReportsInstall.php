@@ -55,14 +55,13 @@ class ReportsInstall extends Migration
                 'uid' => $this->uid(),
             ]);
 
-            $this->createIndex($this->db->getIndexName(ReportGroupRecord::tableName(), 'name', false, true), ReportGroupRecord::tableName(), 'name');
+            $this->createIndex($this->db->getIndexName(ReportGroupRecord::tableName(), 'name'), ReportGroupRecord::tableName(), 'name');
         }
 
         if (!$this->getDb()->tableExists(DataSourceRecord::tableName())) {
             $this->createTable(DataSourceRecord::tableName(), [
                 'id' => $this->primaryKey(),
                 'type' => $this->string(),
-                'allowNew' => $this->boolean(),
                 'dateCreated' => $this->dateTime()->notNull(),
                 'dateUpdated' => $this->dateTime()->notNull(),
                 'uid' => $this->uid(),
