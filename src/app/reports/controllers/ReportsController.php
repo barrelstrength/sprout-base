@@ -535,7 +535,12 @@ class ReportsController extends Controller
             throw new NotFoundHttpException('Date Source not found.');
         }
 
-        $report->emailColumn = !$dataSource->isEmailColumnEditable() ? $dataSource->getDefaultEmailColumn() : $request->getBodyParam('emailColumn');
+        $emailColumn = $request->getBodyParam('emailColumn');
+        $emailColumn = !empty($emailColumn) ? $emailColumn : null;
+
+        $report->emailColumn = !$dataSource->isEmailColumnEditable()
+            ? $dataSource->getDefaultEmailColumn()
+            : $emailColumn;
 
         $report->allowHtml = $request->getBodyParam('allowHtml', $dataSource->getDefaultAllowHtml());
 
