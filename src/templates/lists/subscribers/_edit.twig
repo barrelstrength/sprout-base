@@ -2,7 +2,7 @@
 {% import "_includes/forms" as forms %}
 
 {% set crumbs = [
-    { label: "Subscribers"|t('sprout'), url: url('sprout/subscribers') }
+    { label: "Subscribers"|t('sprout'), url: url('sprout/lists/subscribers') }
 ] %}
 
 {% set title = subscriber is not null ? 'Edit Subscriber'|t('sprout') : 'New Subscriber'|t('sprout') %}
@@ -11,7 +11,7 @@
 {% set subscriberId = subscriber is not null ? subscriber.id : null %}
 {% set fullPageForm = true %}
 
-{% set saveShortcutRedirect = url('sprout/subscribers/edit/{id}') %}
+{% set saveShortcutRedirect = url('sprout/lists/subscribers/edit/{id}') %}
 
 {% block actionButton %}
     <div class="buttons">
@@ -26,16 +26,16 @@
                             {{ "Save and continue editing"|t('sprout') }}</a>
                     </li>
                     <li><a class="formsubmit"
-                            data-redirect="{{ "sprout/subscribers/new"|hash }}">
+                            data-redirect="{{ "sprout/lists/subscribers/new"|hash }}">
                             {{ "Save and add another"|t('sprout') }}</a>
                     </li>
                 </ul>
                 <hr>
                 <ul>
                     <li><a class="formsubmit error"
-                            data-action="sprout/subscribers/delete-subscriber"
+                            data-action="sprout/lists/subscribers/delete-subscriber"
                             data-confirm="Are you sure you want to delete this Subscriber?"
-                            data-redirect="{{ 'sprout/subscribers'|hash }}">{{ "Delete"|t('sprout') }}</a>
+                            data-redirect="{{ 'sprout/lists/subscribers'|hash }}">{{ "Delete"|t('sprout') }}</a>
                     </li>
                 </ul>
             </div>
@@ -45,8 +45,8 @@
 
 {% block content %}
 
-    <input type="hidden" id="action" name="action" value="sprout/subscribers/save-subscriber">
-    {{ redirectInput("sprout/subscribers") }}
+    <input type="hidden" id="action" name="action" value="sprout/lists/subscribers/save-subscriber">
+    {{ redirectInput("sprout/lists/subscribers") }}
 
     {% if subscriber is not null %}
         <input type="hidden" name="subscriberId" value="{{ subscriberId }}">
