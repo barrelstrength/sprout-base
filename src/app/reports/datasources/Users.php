@@ -61,11 +61,11 @@ class Users extends DataSource
             $userGroupsByName[$userGroup->name] = 0;
         }
 
-        $selectQueryString = "users.id,
+        $selectQueryString = 'users.id,
             users.username AS Username,
             users.email AS Email,
-            (users.firstName) AS 'First Name',
-            (users.lastName) AS 'Last Name'";
+            (users.firstName) AS [[First Name]],
+            (users.lastName) AS [[Last Name]]';
 
         if ($displayUserGroupColumns) {
             $selectQueryString .= ',users.admin AS Admin';
@@ -75,14 +75,14 @@ class Users extends DataSource
         $userQuery = $query
             ->select($selectQueryString)
             ->from('{{%users}} users')
-            ->join('LEFT JOIN', '{{%usergroups_users}} usergroups_users', 'users.id = usergroups_users.userId');
+            ->join('LEFT JOIN', '{{%usergroups_users}} usergroups_users', 'users.id = [[usergroups_users.userId]]');
 
         if (is_array($userGroupIds)) {
-            $userQuery->where(['in', 'usergroups_users.groupId', $userGroupIds]);
+            $userQuery->where(['in', '[[usergroups_users.groupId]]', $userGroupIds]);
         }
 
         if ($includeAdmins) {
-            $userQuery->orWhere('users.admin = 1');
+            $userQuery->orWhere(['users.admin', true]);
         }
 
         $userQuery->groupBy('users.id');
@@ -101,7 +101,7 @@ class Users extends DataSource
         $userGroupsMapQuery = $query
             ->select('*')
             ->from('{{%usergroups_users}} usergroups_users')
-            ->join('LEFT JOIN', '{{%usergroups}} usergroups', 'usergroups.id = usergroups_users.groupId')
+            ->join('LEFT JOIN', '{{%usergroups}} usergroups', 'usergroups.id = [[usergroups_users.groupId]]')
             ->all();
 
         // Create a map of all users and which user groups they are in
