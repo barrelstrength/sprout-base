@@ -91,6 +91,8 @@ class SettingsController extends Controller
         $this->selectedSidebarItem = $this->settingsSectionHandle ?? 'general';
 
         $this->plugin = Craft::$app->getPlugins()->getPlugin($pluginHandle);
+
+        parent::init();
     }
 
     /**
