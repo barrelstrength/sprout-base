@@ -2,6 +2,11 @@
 
 A collection of common classes and libraries for the Sprout Plugins Suite for Craft CMS.
 
+## Resources
+
+- Report issues to the appropriate Sprout plugin repository.
+- Pull Requests should reference an open issue in the appropriate Sprout plugin repository
+
 ## Usage
 
 Include Sprout Base in your Sprout plugin composer.json file:
